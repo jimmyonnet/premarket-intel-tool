@@ -27,6 +27,17 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      # wantgoo.com's quote page 403s a plain requests.get() from this
+      # runner (confirmed live, TLS/browser-fingerprint bot detection --
+      # see tx_night_session.py's module docstring and README). A real
+      # headless Chromium gets past it, so every collect run needs the
+      # browser installed fresh (this is a throwaway VM each run --
+      # nothing persists between runs without extra caching, which isn't
+      # set up here to keep this workflow simple). --with-deps also pulls
+      # in the OS-level shared libraries headless Chromium needs that
+      # ubuntu-latest doesn't ship by default.
+      - run: playwright install --with-deps chromium
+
       - name: Take one snapshot
         run: python scripts/tx_night_session.py collect --data-dir data/night_session
 
