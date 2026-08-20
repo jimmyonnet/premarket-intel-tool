@@ -98,14 +98,23 @@ def find_table_after_heading(soup, heading_substring: str):
 
 
 def rows_as_dicts(table, columns):
-    """Iterate <tr> in <tbody>, zip cell text with `columns` names."""
+    """Iterate <tr> in <tbody>, zip cell text with `columns` names.
+
+    Confirmed against the live site (2026-08-20): the two "away from
+    disposal" tables interleave each real data row with a second, hidden
+    <tr> holding the "▶" expandable detail panel (collapses to a single
+    <td colspan=...> with a long calculation breakdown). That row only
+    produces 1 cell, so requiring an exact column-count match both drops
+    it and guards against any other row shape that doesn't match what we
+    expect, rather than silently emitting a mostly-empty row.
+    """
     out = []
     if table is None:
         return out
     body = table.find("tbody") or table
     for tr in body.find_all("tr"):
         cells = [td.get_text(strip=True) for td in tr.find_all("td")]
-        if not cells:
+        if len(cells) != len(columns):
             continue
         row = dict(zip(columns, cells))
         out.append(row)
