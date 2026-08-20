@@ -67,6 +67,31 @@
   td.condition{color:var(--muted); font-size:12px; max-width:340px;}
   .empty-row td{color:var(--muted); font-style:italic; text-align:center; padding:16px;}
   .badge{display:inline-block; font-size:10px; padding:1px 6px; border-radius:4px; border:1px solid var(--line); color:var(--muted); font-family:var(--font-mono);}
+
+  /* tables on narrow screens don't reflow -- they scroll horizontally
+     within their own card instead of breaking the page layout. min-width
+     keeps columns from being squished unreadably thin before the scroll
+     kicks in. */
+  .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  .table-scroll table{min-width:540px;}
+  .scroll-hint{display:none;}
+
+  /* mobile: reclaim horizontal space (tighter padding/type), let tiles
+     pack 2-up instead of stacking to 1 column. Tables are handled above
+     via .table-scroll, not here -- they keep desktop-size columns and
+     scroll instead of shrinking past readability. */
+  @media (max-width: 480px){
+    body{padding:16px 10px 48px;}
+    h1{font-size:18px;}
+    .card{padding:14px;}
+    .tiles{grid-template-columns:repeat(auto-fit, minmax(110px,1fr));}
+    .spark-stats{gap:8px 14px;}
+    table{font-size:12px;}
+    th{padding:6px 8px;}
+    td{padding:7px 8px;}
+    td.condition{max-width:160px;}
+    .scroll-hint{display:block; font-size:11px; color:var(--muted); text-align:right; margin-top:6px;}
+  }
 </style>
 </head>
 <body>
@@ -74,7 +99,7 @@
 
   <header>
     <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 2026/08/20 20:36</div>
+    <div class="generated">產生時間 2026/08/20 21:44</div>
   </header>
 
   
@@ -100,32 +125,32 @@
         
         <div class="tile">
           <div class="name">道瓊工業指數</div>
-          <div class="value">53,463.05</div>
-          <div class="delta rise">+119.65 (+0.22%)</div>
+          <div class="value">53,127.72</div>
+          <div class="delta fall">-335.33 (-0.63%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">S&amp;P 500指數</div>
-          <div class="value">7,707.98</div>
-          <div class="delta rise">+16.22 (+0.21%)</div>
+          <div class="value">7,695.43</div>
+          <div class="delta fall">-12.55 (-0.16%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">NASDAQ指數</div>
-          <div class="value">26,331.09</div>
-          <div class="delta rise">+41.38 (+0.16%)</div>
+          <div class="value">26,250.46</div>
+          <div class="delta fall">-80.63 (-0.31%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">費城半導體指數</div>
-          <div class="value">11,738.23</div>
-          <div class="delta fall">-254.24 (-2.12%)</div>
+          <div class="value">11,788.02</div>
+          <div class="delta rise">+49.79 (+0.42%)</div>
         </div>
         
         
@@ -165,6 +190,7 @@
 
     <div class="card">
       <h2>差1次就處置 <span class="sub">8 檔</span></h2>
+      <div class="table-scroll">
       <table>
         <thead><tr><th>市場</th><th>代號</th><th>名稱</th><th>收盤</th><th>條件</th><th>最快處置</th></tr></thead>
         <tbody>
@@ -243,11 +269,14 @@
           
         </tbody>
       </table>
+      </div>
+      <div class="scroll-hint">← 左右滑動看更多欄位 →</div>
     </div>
 
     
     <div class="card">
-      <h2>目前處置中 <span class="sub">4 檔出關 · 分盤交易</span></h2>
+      <h2>今日出關 <span class="sub">4 檔 · 分盤交易</span></h2>
+      <div class="table-scroll">
       <table>
         <thead><tr><th>市場</th><th>代號</th><th>名稱</th><th>撮合</th><th>開始</th><th>結束</th><th>出關日</th><th>剩餘</th><th>處置原因</th></tr></thead>
         <tbody>
@@ -302,6 +331,8 @@
           
         </tbody>
       </table>
+      </div>
+      <div class="scroll-hint">← 左右滑動看更多欄位 →</div>
     </div>
 
   </section>
