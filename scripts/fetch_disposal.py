@@ -114,7 +114,12 @@ def rows_as_dicts(table, columns):
     body = table.find("tbody") or table
     for tr in body.find_all("tr"):
         cells = [td.get_text(strip=True) for td in tr.find_all("td")]
-        if len(cells) != len(columns):
+        # Real data rows have >= len(columns) cells (there may be extra
+        # trailing icon/info cells on the live site beyond what we name --
+        # zip() below just ignores those). The collapsed "▶" detail rows
+        # have exactly 1 cell, always < len(columns), so this drops them
+        # without needing to know the live site's exact real cell count.
+        if len(cells) < len(columns):
             continue
         row = dict(zip(columns, cells))
         out.append(row)
