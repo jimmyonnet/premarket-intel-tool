@@ -178,12 +178,13 @@
       </table>
     </div>
 
+    {% set exiting_today = disposal.currently_in_disposal|selectattr('trading_days_left', 'equalto', '出關')|list %}
     <div class="card">
-      <h2>目前處置中 <span class="sub">{{ disposal.currently_in_disposal|length }} 檔 · 分盤交易</span></h2>
+      <h2>目前處置中 <span class="sub">{{ exiting_today|length }} 檔出關 · 分盤交易</span></h2>
       <table>
         <thead><tr><th>市場</th><th>代號</th><th>名稱</th><th>撮合</th><th>開始</th><th>結束</th><th>出關日</th><th>剩餘</th><th>處置原因</th></tr></thead>
         <tbody>
-          {% for row in disposal.currently_in_disposal %}
+          {% for row in exiting_today %}
           <tr>
             <td>{{ row.market }}</td>
             <td class="code">{{ row.code }}</td>
@@ -191,12 +192,12 @@
             <td>{{ row.matching }}</td>
             <td class="num">{{ row.start_date }}</td>
             <td class="num">{{ row.end_date }}</td>
-            <td class="{{ 'exit-today' if row.trading_days_left == '出關' else 'num' }}">{{ row.exit_date }}</td>
-            <td class="num">{% if row.trading_days_left == '出關' %}<span class="badge">出關</span>{% else %}{{ row.trading_days_left }}{% endif %}</td>
+            <td class="exit-today">{{ row.exit_date }}</td>
+            <td class="num"><span class="badge">出關</span></td>
             <td class="condition">{{ row.reason }}</td>
           </tr>
           {% else %}
-          <tr class="empty-row"><td colspan="9">目前沒有處置中的股票</td></tr>
+          <tr class="empty-row"><td colspan="9">今天沒有股票出關</td></tr>
           {% endfor %}
         </tbody>
       </table>
