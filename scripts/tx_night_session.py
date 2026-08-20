@@ -167,7 +167,15 @@ def cmd_collect(args):
     else:
         if requests is None:
             raise RuntimeError("requests not installed")
-        resp = requests.get(WTXP_URL, headers=HEADERS, timeout=20)
+        # Second fix attempt (2026-08-20): a full browser-like header set
+        # alone still got 403 from the GitHub Actions runner (see README) --
+        # next hypothesis is a lightweight session/cookie check rather than
+        # a hard IP block. Warm up with a homepage visit first so any
+        # Set-Cookie challenge is satisfied before requesting the real page,
+        # same as a browser would do on first navigation to the site.
+        session = requests.Session()
+        session.get("https://www.wantgoo.com/", headers=HEADERS, timeout=20)
+        resp = session.get(WTXP_URL, headers=HEADERS, timeout=20)
         resp.raise_for_status()
         text = get_text(resp.text)
 
