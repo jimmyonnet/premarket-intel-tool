@@ -6,27 +6,27 @@
   "us_indices": {
     "dow": {
       "name": "道瓊工業指數",
-      "value": 53127.72,
-      "change": -335.33,
-      "change_pct": -0.63
+      "value": 52759.21,
+      "change": -703.84,
+      "change_pct": -1.32
     },
     "sp500": {
       "name": "S&P 500指數",
-      "value": 7695.43,
-      "change": -12.55,
-      "change_pct": -0.16
+      "value": 7641.16,
+      "change": -66.82,
+      "change_pct": -0.87
     },
     "nasdaq": {
       "name": "NASDAQ指數",
-      "value": 26250.46,
-      "change": -80.63,
-      "change_pct": -0.31
+      "value": 26067.17,
+      "change": -263.92,
+      "change_pct": -1.0
     },
     "sox": {
       "name": "費城半導體指數",
-      "value": 11788.02,
-      "change": 49.79,
-      "change_pct": 0.42
+      "value": 11800.02,
+      "change": 61.79,
+      "change_pct": 0.53
     }
   },
   "asia_open": {
