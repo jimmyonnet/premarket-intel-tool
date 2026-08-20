@@ -43,11 +43,29 @@ except ImportError:
     requests = None
 
 WTXP_URL = "https://www.wantgoo.com/futures/wtxp&"
+# Confirmed live (2026-08-20): the first scheduled collect-night-session run
+# failed with "403 Forbidden" using only a User-Agent header, even though
+# the exact same URL loads fine in a real browser (no captcha/challenge
+# page -- checked directly). This is a much fuller browser-realistic header
+# set to test whether the block is header-based (a WAF checking for
+# missing Accept/Referer/Sec-Fetch-* that a bare requests.get() doesn't
+# send) or IP-based (wantgoo blocking the GitHub Actions runner's
+# datacenter IP range outright, which no header set can fix). See README
+# for what happens if this still 403s after this change.
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
         "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Referer": "https://www.wantgoo.com/",
+    "Connection": "keep-alive",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "same-origin",
+    "Sec-Fetch-User": "?1",
 }
 
 TAIPEI = datetime.timezone(datetime.timedelta(hours=8))
