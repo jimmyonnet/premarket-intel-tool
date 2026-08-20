@@ -16,7 +16,20 @@ Usage:
         --indices indices.json \
         --night-session night_session.json \
         --disposal disposal.json \
+        --pressplay pressplay.json \
         --out ../docs/index.html
+
+Note on --pressplay (Part 3): unlike the other three sources, this arg is
+OPTIONAL and defaults to None. fetch_pressplay_groups.py's login step can
+fail for real reasons outside our control (see that script's KNOWN RISK
+docstring) -- when it does, the workflow writes an empty {} instead of
+aborting, and this script must render a clean empty state rather than
+crashing the whole page build over a missing Part 3 section. See
+_empty_pressplay_section() / the pressplay dict built in main() below: the
+template is only ever handed a fully-populated structure, never a bare {}
+or missing key, specifically to avoid a Jinja2 Undefined chained-attribute
+crash (confirmed locally: `{{ data.missing_key.sub_key }}` raises
+UndefinedError even though `{{ data.missing_key }}` alone does not).
 """
 import argparse
 import json
@@ -71,7 +84,7 @@ def build_sparkline(points, width=680, height=180, pad=28):
             hhmm = datetime.fromisoformat(ts).strftime("%H:%M")
         except ValueError:
             hhmm = ""
-        dots.append({"x": round(x, 1), "y": round(y, 1), "label": f"{hhmm}  {p['price']:.0f}"})
+        dots.append({ "x": round(x, 1), "y": round(y, 1), "label": f"{hhmm}  {p['price']:.0f}"})
 
     prev_close_y = None
     if prev_close is not None:
@@ -93,6 +106,10 @@ def build_sparkline(points, width=680, height=180, pad=28):
         "last_dot": dots[-1] if dots else None,
         "is_rise": is_rise,
     }
+
+
+def _empty_pressplay_section():
+    return {"raw_tokens": [], "matched": [], "unmatched": []}
 
 
 def load_json(path):
@@ -120,6 +137,10 @@ def main():
     ap.add_argument("--indices", required=True)
     ap.add_argument("--night-session", required=True)
     ap.add_argument("--disposal", required=True)
+    ap.add_argument(
+        "--pressplay", default=None,
+        help="optional: Part 3 PressPlay group-list JSON; omitted/missing/empty renders an empty Part 3 state",
+    )
     ap.add_argument("--out", required=True)
     ap.add_argument(
         "--template-dir",
@@ -130,6 +151,16 @@ def main():
     indices = load_json(args.indices) or {}
     night = load_json(args.night_session) or {}
     disposal = load_json(args.disposal) or {}
+    pressplay_raw = load_json(args.pressplay) or {}
+    # Fully pre-default every nested key the template touches -- see the
+    # module docstring's note on --pressplay for why this can't be left to
+    # the template's own `or {}` fallbacks.
+    pressplay = {
+        "source_article": pressplay_raw.get("source_article") or {},
+        "chengwaye_date": pressplay_raw.get("chengwaye_date"),
+        "not_found_group": pressplay_raw.get("not_found_group") or _empty_pressplay_section(),
+        "found_group": pressplay_raw.get("found_group") or _empty_pressplay_section(),
+    }
 
     spark = build_sparkline(night.get("points") or [])
 
@@ -147,6 +178,7 @@ def main():
         spark=spark,
         disposal=disposal,
         date_check=disposal.get("date_check", {}),
+        pressplay=pressplay,
     )
 
     out_path = Path(args.out)
