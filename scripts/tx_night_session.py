@@ -44,6 +44,28 @@ was NOT enough evidence, only inspecting the actual committed data file
 caught it. Fixed by polling for real content with `page.wait_for_function()`
 instead of trusting a fixed delay (see `fetch_with_browser()` below).
 
+THIRD ISSUE, found on the first live run of the `wait_for_function` fix
+above (same day, 2026-08-20): that run failed outright with
+`Page.wait_for_function: Timeout 15000ms exceeded` -- the 開盤/open value
+never showed up within 15s on the actual GitHub Actions runner, even
+though the same page populates within a couple seconds in a real user
+browser (confirmed live). This is a LOUDER failure than the second bug
+(the job now correctly fails instead of silently writing nulls), but still
+not working data. Two changes made in response, NOT yet confirmed by a
+live run: (1) a longer 20s timeout, in case this is plain network latency
+on the runner rather than a hard block; (2) the standard Playwright
+headless-detection mitigation (`--disable-blink-features=
+AutomationControlled` plus hiding `navigator.webdriver` via
+`page.add_init_script()`), on the theory that wantgoo's live-quote JS
+itself may check for automation markers before opening its data
+connection -- the original 403 already proved this site does bot
+detection at the network layer, so a second, JS-level check gating just
+the live-data call (as opposed to the static page shell) is plausible. If
+`wait_for_function` still times out after this, diagnostics (navigator.
+webdriver, page title, body length) are now printed to stderr before the
+exception propagates, so the next investigation has evidence to start from
+instead of another blind guess.
+
 Trade-off: `collect` now needs `playwright install --with-deps chromium` in
 the workflow (see collect-night-session.yml) and each run is slower
 (~30-60s browser launch+install vs. a plain HTTP GET), but this repo is
@@ -69,9 +91,10 @@ import sys
 from pathlib import Path
 
 try:
-    from playwright.sync_api import sync_playwright
+    from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 except ImportError:
     sync_playwright = None
+    PlaywrightTimeoutError = Exception
 
 WTXP_URL = "https://www.wantgoo.com/futures/wtxp&"
 
@@ -81,10 +104,12 @@ TAIPEI = datetime.timezone(datetime.timedelta(hours=8))
 def fetch_with_browser(url: str) -> str:
     """Fetch `url` with a real headless Chromium (Playwright) and return the
     rendered page's HTML. See the module docstring's "FETCH METHOD" section
-    for why this replaced a plain `requests.get()` (403 from this specific
-    endpoint, confirmed not fixable with headers alone), and why it polls
-    for real content instead of trusting a fixed delay (this page is
-    client-side rendered -- confirmed live, see module docstring).
+    for the full history -- why this replaced a plain `requests.get()`
+    (403, confirmed not fixable with headers alone), why it polls for real
+    content instead of trusting a fixed delay (this page is client-side
+    rendered), and why it now also hides common headless-automation markers
+    and logs diagnostics on timeout ("THIRD ISSUE" -- unconfirmed by a live
+    run as of this writing).
     """
     if sync_playwright is None:
         raise RuntimeError(
@@ -92,9 +117,19 @@ def fetch_with_browser(url: str) -> str:
             "`playwright install --with-deps chromium` (see requirements.txt)"
         )
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        browser = p.chromium.launch(
+            args=["--disable-blink-features=AutomationControlled"]
+        )
         try:
             page = browser.new_page(locale="zh-TW")
+            # Hide the most common headless-Chromium tell before any page
+            # script runs, in case wantgoo's live-quote JS checks for it
+            # before opening its data connection (see module docstring's
+            # "THIRD ISSUE" -- unconfirmed, this is the untested half of
+            # that fix).
+            page.add_init_script(
+                "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+            )
             page.goto(url, wait_until="domcontentloaded", timeout=30000)
             # Client-side rendered -- the c-model="..." value spans are
             # empty in the initial HTML and get filled in later by JS
@@ -102,14 +137,31 @@ def fetch_with_browser(url: str) -> str:
             # the 開盤 (open) span until it has real text instead of
             # trusting a fixed wait_for_timeout, which was proven
             # unreliable -- it produced an all-null snapshot on the first
-            # live run.
-            page.wait_for_function(
-                """() => {
-                    const el = document.querySelector('[c-model="open"]');
-                    return !!el && el.textContent.trim().length > 0;
-                }""",
-                timeout=15000,
-            )
+            # live run. 20s (up from the first live attempt's 15s, which
+            # timed out -- see "THIRD ISSUE"): generous enough for runner
+            # network latency without stalling a 30-min-cadence job for long
+            # if the page truly never populates.
+            try:
+                page.wait_for_function(
+                    """() => {
+                        const el = document.querySelector('[c-model="open"]');
+                        return !!el && el.textContent.trim().length > 0;
+                    }""",
+                    timeout=20000,
+                )
+            except PlaywrightTimeoutError:
+                # Leave evidence for the next investigation instead of
+                # failing blind a second time (see "THIRD ISSUE").
+                debug = page.evaluate(
+                    """() => ({
+                        webdriver: navigator.webdriver,
+                        openText: (document.querySelector('[c-model="open"]') || {}).textContent,
+                        bodyLength: document.body ? document.body.innerHTML.length : 0,
+                        title: document.title,
+                    })"""
+                )
+                print(f"DEBUG wait_for_function timed out; page state: {debug}", file=sys.stderr)
+                raise
             return page.content()
         finally:
             browser.close()
