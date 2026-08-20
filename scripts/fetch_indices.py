@@ -82,18 +82,24 @@ def get_text(html: str) -> str:
 def parse_markets_block(text: str, targets):
     """
     Pattern (markets page, after get_text -- blank lines collapse but order
-    is preserved):
+    is preserved). Confirmed against the live site (2026-08-20): change and
+    (change%) render as two SEPARATE text nodes/lines, not one "119.65
+    (0.22%)" run -- the original regex required them adjacent with no
+    whitespace and silently matched nothing as a result.
         道瓊工業指數
         53,463.05
-        119.65(0.22%)
+        119.65
+        (0.22%)
     """
     results = {}
     for label, key in targets:
         # Find the label, then look ahead (within a short window) for a
-        # "value" line followed by a "change(change%)" line.
+        # "value" line followed by a "change" line followed by a "(change%)"
+        # line -- allow whitespace/newlines between change and its "(...%)",
+        # since the live page puts them on separate lines.
         m = re.search(
             re.escape(label)
-            + r"\s*\n+\s*([\d,]+\.\d+)\s*\n+\s*(-?[\d,]+\.\d+)\(([\-\d.]+)%\)",
+            + r"\s*\n+\s*([\d,]+\.\d+)\s*\n+\s*(-?[\d,]+\.\d+)\s*\(([\-\d.]+)%\)",
             text,
         )
         if not m:
