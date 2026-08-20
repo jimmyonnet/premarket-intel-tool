@@ -25,8 +25,8 @@
     "sox": {
       "name": "費城半導體指數",
       "value": 11738.23,
-      "change": 254.24,
-      "change_pct": 2.12
+      "change": -254.24,
+      "change_pct": -2.12
     }
   },
   "asia_open": {
