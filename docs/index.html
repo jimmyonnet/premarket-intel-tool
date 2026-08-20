@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>盤前情報準備台</title>
+<style>
+  :root{
+    --ink:#0B0E14; --panel:#151A24; --panel-2:#1B2130; --line:#262D3D;
+    --text:#ECEFF3; --muted:#8B93A6; --rise:#F0453A; --fall:#29D398; --amber:#E8B339;
+    --font-ui: -apple-system, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    --font-mono: "SF Mono", "Cascadia Code", Consolas, monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--ink); color:var(--text);
+    font-family:var(--font-ui); line-height:1.5; padding:24px 16px 64px;
+  }
+  .wrap{max-width:900px; margin:0 auto;}
+  header{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--line);}
+  h1{font-size:20px; margin:0; letter-spacing:.02em;}
+  .generated{color:var(--muted); font-size:12px; font-family:var(--font-mono);}
+  .part-title{font-size:14px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin:32px 0 12px;}
+  .part-title:first-of-type{margin-top:0;}
+  section.part{margin-bottom:8px;}
+
+  .warning-banner{background:rgba(240,69,58,.12); border:1px solid var(--rise); color:var(--rise); padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:16px;}
+  .ok-banner{background:rgba(41,211,152,.08); border:1px solid var(--line); color:var(--muted); padding:8px 14px; border-radius:8px; font-size:12px; margin-bottom:16px; font-family:var(--font-mono);}
+
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px; margin-bottom:16px;}
+  .card h2{font-size:14px; margin:0 0 14px; color:var(--text); font-weight:600;}
+  .card h2 .sub{color:var(--muted); font-weight:400; font-size:12px; margin-left:8px;}
+
+  /* stat tiles */
+  .tiles{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:10px;}
+  .tile{background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:12px 14px;}
+  .tile .name{font-size:12px; color:var(--muted); margin-bottom:6px;}
+  .tile .value{font-family:var(--font-mono); font-size:18px; font-weight:600;}
+  .tile .delta{font-family:var(--font-mono); font-size:12px; margin-top:4px;}
+  .tile .updated{font-size:10px; color:var(--muted); margin-top:6px; font-family:var(--font-mono);}
+  .rise{color:var(--rise);}
+  .fall{color:var(--fall);}
+  .flat{color:var(--muted);}
+  .missing{color:var(--muted); font-style:italic; font-size:12px;}
+
+  /* sparkline */
+  .spark-wrap{margin-bottom:14px;}
+  .spark-stats{display:flex; gap:18px; font-family:var(--font-mono); font-size:12px; color:var(--muted); margin-top:8px; flex-wrap:wrap;}
+  .spark-stats b{color:var(--text); font-weight:600;}
+  svg.spark{width:100%; height:auto; display:block;}
+  svg.spark .line{fill:none; stroke:var(--amber); stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
+  svg.spark .refline{stroke:var(--muted); stroke-width:1; stroke-dasharray:3,4; opacity:.6;}
+  svg.spark .dot{fill:var(--ink); stroke-width:2;}
+  svg.spark .dot.rise{stroke:var(--rise);}
+  svg.spark .dot.fall{stroke:var(--fall);}
+  svg.spark .endlabel{font-family:var(--font-mono); font-size:11px; fill:var(--muted);}
+
+  /* tables */
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th{text-align:left; color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:6px 10px; border-bottom:1px solid var(--line);}
+  td{padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top;}
+  tr:last-child td{border-bottom:none;}
+  td.code{font-family:var(--font-mono); color:var(--muted);}
+  td.name{font-weight:600;}
+  td.num{font-family:var(--font-mono); text-align:right;}
+  td.exit-today{color:var(--amber); font-weight:700; font-family:var(--font-mono);}
+  td.condition{color:var(--muted); font-size:12px; max-width:340px;}
+  .empty-row td{color:var(--muted); font-style:italic; text-align:center; padding:16px;}
+  .badge{display:inline-block; font-size:10px; padding:1px 6px; border-radius:4px; border:1px solid var(--line); color:var(--muted); font-family:var(--font-mono);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>盤前情報準備台</h1>
+    <div class="generated">產生時間 2026/08/20 19:24</div>
+  </header>
+
+  
+  <div class="ok-banner">✓ 處置股資料日期核對通過（下拉選單：None → 適用 08/20）</div>
+  
+
+  <div class="part-title">第一部分</div>
+  <section class="part">
+
+    <div class="card">
+      <h2>台指期夜盤走勢 <span class="sub">WTXP& · 玩股網</span></h2>
+      
+      <p class="missing">尚無夜盤資料點（collect-night-session 這個工作流程還沒跑過，或今晚是非交易夜）。</p>
+      
+    </div>
+
+    <div class="card">
+      <h2>美股四大指數 <span class="sub">前一夜收盤</span></h2>
+      <div class="tiles">
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>日股／韓股 08:00 開盤走勢</h2>
+      <div class="tiles">
+        
+        
+        <div class="tile">
+          <div class="name">日經225指數</div>
+          <div class="value">66,216.79</div>
+          <div class="delta rise">+890.37 (+1.36%)</div>
+          <div class="updated">08/20 14:45</div>
+        </div>
+        
+        
+        
+        <div class="tile">
+          <div class="name">韓國綜合指數</div>
+          <div class="value">6,852.58</div>
+          <div class="delta rise">+381.41 (+5.89%)</div>
+          <div class="updated">08/20 17:05</div>
+        </div>
+        
+        
+      </div>
+      
+      <p class="missing">缺少欄位：dow、sp500、nasdaq、sox（來源頁面格式可能變了，需要人工檢查）</p>
+      
+    </div>
+
+  </section>
+
+  <div class="part-title">第二部分</div>
+  <section class="part">
+
+    <div class="card">
+      <h2>差1次就處置 <span class="sub">0 檔</span></h2>
+      <table>
+        <thead><tr><th>市場</th><th>代號</th><th>名稱</th><th>收盤</th><th>條件</th><th>最快處置</th></tr></thead>
+        <tbody>
+          
+          <tr class="empty-row"><td colspan="6">今天沒有差1次就處置的股票</td></tr>
+          
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <h2>目前處置中 <span class="sub">0 檔 · 分盤交易</span></h2>
+      <table>
+        <thead><tr><th>市場</th><th>代號</th><th>名稱</th><th>撮合</th><th>開始</th><th>結束</th><th>出關日</th><th>剩餘</th><th>處置原因</th></tr></thead>
+        <tbody>
+          
+          <tr class="empty-row"><td colspan="9">目前沒有處置中的股票</td></tr>
+          
+        </tbody>
+      </table>
+    </div>
+
+  </section>
+
+</div>
+</body>
+</html>

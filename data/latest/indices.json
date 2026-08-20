@@ -1,0 +1,34 @@
+{
+  "source": {
+    "markets": "https://tw.stock.yahoo.com/markets/",
+    "world_indices": "https://tw.stock.yahoo.com/world-indices"
+  },
+  "us_indices": {
+    "dow": null,
+    "sp500": null,
+    "nasdaq": null,
+    "sox": null
+  },
+  "asia_open": {
+    "nikkei225": {
+      "name": "日經225指數",
+      "value": 66216.79,
+      "change": 890.37,
+      "change_pct": 1.36,
+      "updated_cst": "08/20 14:45"
+    },
+    "kospi": {
+      "name": "韓國綜合指數",
+      "value": 6852.58,
+      "change": 381.41,
+      "change_pct": 5.89,
+      "updated_cst": "08/20 17:05"
+    }
+  },
+  "_missing_fields": [
+    "dow",
+    "sp500",
+    "nasdaq",
+    "sox"
+  ]
+}
