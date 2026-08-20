@@ -17,10 +17,8 @@ morning build step (`build_page.py`) just reads back all of that day's
 snapshots to draw the chart.
 
 FETCH METHOD -- headless browser, not requests (changed 2026-08-20):
-The single-quote snapshot page (`https://www.wantgoo.com/futures/wtxp&`) is
-server-rendered -- open/high/low/current/volume are plain text in the
-initial HTML, same verification method as fetch_indices.py. That page loads
-fine in a real browser. But a plain `requests.get()` to it gets 403
+The single-quote snapshot page (`https://www.wantgoo.com/futures/wtxp&`)
+loads fine in a real browser. But a plain `requests.get()` to it gets 403
 Forbidden from a GitHub Actions runner, confirmed on the actual first
 scheduled run, not assumed. Two real fix attempts on `requests` both still
 403'd (see README for the full history: full browser-style headers, then a
@@ -30,12 +28,27 @@ fingerprint bot detection on that specific endpoint rather than a blocked
 IP range or a missing header. That kind of check is set at the TLS
 handshake / HTTP engine level, below where `requests` headers apply, so no
 amount of header tuning could satisfy it. Switching the fetch to a real
-headless Chromium via Playwright (`fetch_with_browser()` below) fixed it --
-confirmed live on GitHub Actions, not assumed. Trade-off: `collect` now
-needs `playwright install --with-deps chromium` in the workflow (see
-collect-night-session.yml) and each run is slower (~30-60s browser
-launch+install vs. a plain HTTP GET), but this repo is public so GitHub
-Actions minutes are unlimited regardless -- correctness over speed here.
+headless Chromium via Playwright (`fetch_with_browser()` below) fixed the
+403 -- confirmed live on GitHub Actions, not assumed.
+
+SECOND BUG, found right after the 403 fix (same day, 2026-08-20): the first
+Playwright version used a fixed `page.wait_for_timeout(1500)` after
+`domcontentloaded`, assuming (like fetch_indices.py's Yahoo pages) this
+page is server-rendered. It isn't -- confirmed by fetching the raw pre-JS
+HTTP response (`fetch(location.href)` in a real browser) and finding the
+value spans completely empty in the initial HTML (e.g.
+`<span c-model=open></span>`); the numbers are filled in later by
+client-side JS (websocket or poll). The job still reported `success` (exit
+0, no exception) while writing an all-null snapshot -- job status alone
+was NOT enough evidence, only inspecting the actual committed data file
+caught it. Fixed by polling for real content with `page.wait_for_function()`
+instead of trusting a fixed delay (see `fetch_with_browser()` below).
+
+Trade-off: `collect` now needs `playwright install --with-deps chromium` in
+the workflow (see collect-night-session.yml) and each run is slower
+(~30-60s browser launch+install vs. a plain HTTP GET), but this repo is
+public so GitHub Actions minutes are unlimited regardless -- correctness
+over speed here.
 
 Usage:
     # one snapshot, appended to data/night_session/<target-date>.jsonl
@@ -69,7 +82,9 @@ def fetch_with_browser(url: str) -> str:
     """Fetch `url` with a real headless Chromium (Playwright) and return the
     rendered page's HTML. See the module docstring's "FETCH METHOD" section
     for why this replaced a plain `requests.get()` (403 from this specific
-    endpoint, confirmed not fixable with headers alone).
+    endpoint, confirmed not fixable with headers alone), and why it polls
+    for real content instead of trusting a fixed delay (this page is
+    client-side rendered -- confirmed live, see module docstring).
     """
     if sync_playwright is None:
         raise RuntimeError(
@@ -81,11 +96,20 @@ def fetch_with_browser(url: str) -> str:
         try:
             page = browser.new_page(locale="zh-TW")
             page.goto(url, wait_until="domcontentloaded", timeout=30000)
-            # Server-rendered -- values are already in the HTML at this
-            # point (verified during design) -- but give any live-quote
-            # hydration a brief moment to settle rather than trusting the
-            # very first paint.
-            page.wait_for_timeout(1500)
+            # Client-side rendered -- the c-model="..." value spans are
+            # empty in the initial HTML and get filled in later by JS
+            # (confirmed live: see module docstring's "SECOND BUG"). Poll
+            # the 開盤 (open) span until it has real text instead of
+            # trusting a fixed wait_for_timeout, which was proven
+            # unreliable -- it produced an all-null snapshot on the first
+            # live run.
+            page.wait_for_function(
+                """() => {
+                    const el = document.querySelector('[c-model="open"]');
+                    return !!el && el.textContent.trim().length > 0;
+                }""",
+                timeout=15000,
+            )
             return page.content()
         finally:
             browser.close()
