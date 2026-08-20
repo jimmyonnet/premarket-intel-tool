@@ -68,11 +68,32 @@ def previous_trading_day(d: datetime.date) -> datetime.date:
 
 
 def find_table_after_heading(soup, heading_substring: str):
-    for tag in soup.find_all(["h1", "h2", "h3"]):
-        if heading_substring in tag.get_text():
-            nxt = tag.find_next("table")
-            if nxt is not None:
-                return nxt
+    """Locate the table that follows a section label containing
+    `heading_substring`, without assuming the label is an h1/h2/h3.
+
+    Confirmed against the live site (2026-08-20): chengwaye.com's section
+    labels ("🔴 差1次就處置 (1 檔)" etc.) are plain styled <div>s, not real
+    heading tags -- the original h1/h2/h3-only search matched nothing and
+    silently produced empty lists. Two strategies, tried in order:
+      1. A single leaf text node containing the substring (the common case
+         -- the emoji/label/count are one contiguous run of text).
+      2. Fallback for markup that splits the label across inline children:
+         scan every tag whose full text contains the substring and take the
+         innermost one (shortest get_text()), which find_next() from directly.
+    """
+    node = soup.find(string=lambda s: s and heading_substring in s)
+    if node is not None:
+        nxt = node.find_next("table")
+        if nxt is not None:
+            return nxt
+
+    candidates = [t for t in soup.find_all(True) if heading_substring in t.get_text()]
+    if candidates:
+        innermost = min(candidates, key=lambda t: len(t.get_text()))
+        nxt = innermost.find_next("table")
+        if nxt is not None:
+            return nxt
+
     return None
 
 
