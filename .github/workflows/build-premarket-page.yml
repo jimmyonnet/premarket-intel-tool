@@ -30,6 +30,9 @@ jobs:
 
       - run: pip install -r requirements.txt
 
+      - name: Install Playwright's Chromium (needed for Part 3's PressPlay login)
+        run: playwright install --with-deps chromium
+
       - name: Figure out today's date (Asia/Taipei)
         id: date
         run: echo "today=$(TZ=Asia/Taipei date +%F)" >> "$GITHUB_OUTPUT"
@@ -53,12 +56,27 @@ jobs:
           python scripts/fetch_disposal.py --skip-date-check \
             > data/latest/disposal.json
 
+      - name: Fetch Part 3 -- PressPlay group lists
+        # Allowed to fail without blocking Part 1/2: PressPlay login
+        # automation carries real, accepted risk (ToS + GitHub Actions'
+        # datacenter IPs getting flagged -- see fetch_pressplay_groups.py's
+        # module docstring, KNOWN RISK). On failure this falls back to an
+        # empty JSON; build_page.py and the template both render a clean
+        # "no data yet" Part 3 instead of the whole page build crashing.
+        env:
+          PRESSPLAY_EMAIL: ${{ secrets.PRESSPLAY_EMAIL }}
+          PRESSPLAY_PASSWORD: ${{ secrets.PRESSPLAY_PASSWORD }}
+        run: |
+          python scripts/fetch_pressplay_groups.py > data/latest/pressplay.json \
+            || echo '{}' > data/latest/pressplay.json
+
       - name: Build page
         run: |
           python scripts/build_page.py \
             --indices data/latest/indices.json \
             --night-session data/latest/night_session.json \
             --disposal data/latest/disposal.json \
+            --pressplay data/latest/pressplay.json \
             --out docs/index.html
 
       - name: Commit page + raw data snapshot
