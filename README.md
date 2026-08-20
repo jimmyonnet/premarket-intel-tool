@@ -1,6 +1,6 @@
-# 盤前情報準備台 — Part 1 + Part 2
+# 盤前情報準備台 — Part 1 + Part 2 + Part 3
 
-每個交易日早上自動產生一頁盤前情報，內容涵蓋（目前只做了你確認的前兩部分）：
+每個交易日早上自動產生一頁盤前情報，內容涵蓋：
 
 **第一部分**
 - 台指期夜盤走勢圖（WTXP&，玩股網）
@@ -11,9 +11,17 @@
 - 差1次就處置的個股
 - 目前處置中、且「剩餘」欄位顯示出關的個股
 
+**第三部分**
+- PressPlay 最新一篇盤前文章裡的兩份族群清單（「目前沒找到族群」／「目前發現
+  有族群」）
+- 把清單裡的每一檔逐一比對 chengwaye.com/daily 當天成交行情，補上收盤、量、
+  外資／投信／自營、AI理由等欄位；比對不到的（可能是打錯字或非台股代號）會
+  另外列出來，不會悄悄漏掉
+
 跑在 GitHub Actions 上，全部免費，不需要 DeepSeek／Groq／Gemini 的 API key ——
-這兩部分的資料來源都是純文字網頁，不需要 OCR 或摘要，用不到那些 key。等做到
-第三、四部分（跟漲籌碼、統一期貨的圖片型報告）才會用到。
+第一、二部分的資料來源都是純文字網頁，不需要 OCR 或摘要；第三部分要登入
+PressPlay 讀文章內容，所以多了兩個帳密 Secrets（見下方部署步驟），但一樣不需要
+任何 AI API key。等做到第四部分（統一期貨的圖片型報告）才會用到 Gemini。
 
 ## 部署步驟（你要做的事）
 
@@ -22,19 +30,27 @@
    `main` 、資料夾選 `/docs`，存檔。
 3. 到 **Settings → Actions → General**，確認 "Workflow permissions" 是
    "Read and write permissions"（兩個 workflow 都需要 push 回 repo，預設有時是唯讀）。
-4. 完成。兩個 workflow 會照排程自動跑；也可以到 Actions 頁籤手動點
-   "Run workflow" 立刻測試，不用等排程時間到。
-5. 跑過一次 build-premarket-page 之後，頁面網址會是
-   `https://<你的帳號>.github.io/<repo名稱>/`。
+4. 到 **Settings → Secrets and variables → Actions**，新增兩個 Repository
+   secrets（第三部分要登入 PressPlay 才抓得到族群清單；這兩個值只有你自己
+   輸入，我不會看到也不會寫進程式碼）：
+   - `PRESSPLAY_EMAIL`：你的 PressPlay 登入帳號（email）
+   - `PRESSPLAY_PASSWORD`：你的 PressPlay 登入密碼
 
-不需要設定任何 Secrets。
+   沒設定這兩個 Secrets 也不會壞——第三部分會自動顯示「尚無資料」，第一、
+   二部分照常運作（細節見下方「已知需制」第 5 點）。
+5. 完成。兩個 workflow 會照排程自動跑；也可以到 Actions 頁籤手動點
+   "Run workflow" 立刻測試，不用等排程時間到。
+6. 跑過一次 build-premarket-page 之後，頁面網址會是
+   `https://<你的帳號>.github.io/<repo名稱>/`。
 
 ## 兩個 workflow 在做什麼
 
 - **collect-night-session.yml**：平日 15:00–05:00（台北時間）每 30 分鐘跑一次，
   抓一次台指期夜盤即時報價，累加寫進 `data/night_session/<日期>.jsonl`。
 - **build-premarket-page.yml**：平日早上 07:35（台北時間）跑一次，抓美股/日韓
-  指數、組合當晚累積的夜盤數據、抓處置股清單，組出 `docs/index.html` 並 commit。
+  指數、組合當晚累積的夜盤數據、抓處置股清單，登入 PressPlay 讀最新一篇盤前
+  文章的族群清單並比對 chengwaye.com 當天成交，組出 `docs/index.html` 並
+  commit。
 
 ## 已知限制（老實跟你說）
 
@@ -80,7 +96,7 @@
      不會卡住的驗證關卡前面。有先試過「隱藏無頭瀏覽器的常見破綻
      （navigator.webdriver 等自動化標記）＋拉長等待時間」，這輪也已經
      實測過還是被擋，代表破綻藏得不夠，或者根本上這一關是看 IP 名聲而非
-     瀏覽器指紋，調瀏覽器行為救不回來。
+     瀏覽器指紋，調瀏覽器行為救不图來。
 
    **目前狀態（2026-08-20，你已決定）：先擱置這個功能**。`collect-
    night-session.yml` 已經手動停用（GitHub Actions 頁面上會顯示
@@ -135,9 +151,31 @@
    遇到假日照樣會跑，只是抓到的資料沒意義（例如處置股頁面日期核對會失敗、觸發
    上面第 3 點的警告條），不會出錯，但也不會自動跳過。
 
+5. **第三部分（PressPlay 族群清單）有兩個刻意接受的風險，已經跟你確認過**：
+
+   - **PressPlay 服務條款風險**：第三部分用 Playwright 自動登入 PressPlay 讀
+     文章內容，不是官方提供的 API，屬於自動化存取，理論上可能違反其服務條款
+     （例如帳號被停權）。這個風險你已經確認接受。
+   - **GitHub Actions 機房 IP 可能被擋**：跟上面第 1 點「台指期夜盤」踩過的坑
+     類似，PressPlay 的登入頁如果也有 Cloudflare 之類的 bot 防護，GitHub
+     Actions 的機房 IP 就有被判定成可疑來源、卡在驗證頁的可能——實際會不會
+     發生要等排程真的跑過才知道，目前還沒實測過正式排程環境。
+
+   **設計上已經做了容錯**：PressPlay 登入或抓取失敗（帳密錯誤、ToS 擋下、
+   IP 被擋，不管哪一種）都不會讓整頁失敗——`fetch_pressplay_groups.py` 失敗
+   時 workflow 自動回退成空 JSON，第三部分改顯示「尚無資料（PressPlay 收集
+   流程還沒跑過，或今天沒有盤前文章）」，第一、二部分照常運作、不受影響。
+
+   **想暫停/關閉第三部分**：到 repo 的 **Settings → Secrets and variables →
+   Actions**，把 `PRESSPLAY_EMAIL`／`PRESSPLAY_PASSWORD` 這兩個 Secrets 刪掉
+   即可——腳本抓不到帳密會報清楚的錯誤，自動回退成空 JSON，第一、二部分不受
+   影響。想整頁（含第一、二部分）都停掉，才需要到 Actions →
+   build-premarket-page → 右上角「...」→ Disable workflow（跟上面第 1 點
+   停用夜盤收集的做法一樣）。
+
 ## 本機測試（離線，不連網）
 
-`fixtures/` 資料夾存了每個來源的樣本內容，可以離線測試三支抓取腳本：
+`fixtures/` 資料夾存了每個來源的樣本內容，可以離線測試抓取腳本：
 
 ```bash
 pip install -r requirements.txt
@@ -145,9 +183,15 @@ pip install -r requirements.txt
 python scripts/fetch_indices.py --fixture-dir fixtures
 python scripts/tx_night_session.py collect --fixture fixtures/wantgoo_wtxp.txt --date 2026-08-21 --data-dir /tmp/night_test
 python scripts/fetch_disposal.py --fixture fixtures/chengwaye_disposal.html --today 2026-08-20
+python scripts/fetch_pressplay_groups.py --fixture-article fixtures/pressplay_article.txt --fixture-daily fixtures/chengwaye_daily.html
 ```
+
+第三部分的離線測試不會真的登入 PressPlay——`--fixture-article` 直接餵一篇
+文章的純文字內容，跳過瀏覽器登入與抓取那段。想測試真的登入流程，本機另外設
+`PRESSPLAY_EMAIL`／`PRESSPLAY_PASSWORD` 環境變數、拿掉這兩個 `--fixture-*`
+參數執行即可，但沒事不需要這樣做——正式排程會自己跑。
 
 ## 還沒做的部分
 
-第三部分（跟漲籌碼）跟第四部分（大盤走勢，含統一期貨的圖片型盤前晨報）還沒
-討論資料來源，統一期貨那塊是圖片型報告，到時候會用到 Gemini 的圖片辨識能力。
+第四部分（大盤走勢，含統一期貨的圖片型盤前晨報）還沒討論資料來源，那塊是
+圖片型報告，到時候會用到 Gemini 的圖片辨識能力。
