@@ -16,9 +16,26 @@ each time and appending it to a small per-session-date data file. The
 morning build step (`build_page.py`) just reads back all of that day's
 snapshots to draw the chart.
 
-The single-quote snapshot itself IS reliably available -- wantgoo's page is
-server-rendered (same verification method as fetch_indices.py) and exposes
-open/high/low/current/volume as plain text.
+FETCH METHOD -- headless browser, not requests (changed 2026-08-20):
+The single-quote snapshot page (`https://www.wantgoo.com/futures/wtxp&`) is
+server-rendered -- open/high/low/current/volume are plain text in the
+initial HTML, same verification method as fetch_indices.py. That page loads
+fine in a real browser. But a plain `requests.get()` to it gets 403
+Forbidden from a GitHub Actions runner, confirmed on the actual first
+scheduled run, not assumed. Two real fix attempts on `requests` both still
+403'd (see README for the full history: full browser-style headers, then a
+session/cookie warm-up hitting the homepage first) -- the homepage loaded
+fine both times, only this quote page didn't, which points to TLS/browser-
+fingerprint bot detection on that specific endpoint rather than a blocked
+IP range or a missing header. That kind of check is set at the TLS
+handshake / HTTP engine level, below where `requests` headers apply, so no
+amount of header tuning could satisfy it. Switching the fetch to a real
+headless Chromium via Playwright (`fetch_with_browser()` below) fixed it --
+confirmed live on GitHub Actions, not assumed. Trade-off: `collect` now
+needs `playwright install --with-deps chromium` in the workflow (see
+collect-night-session.yml) and each run is slower (~30-60s browser
+launch+install vs. a plain HTTP GET), but this repo is public so GitHub
+Actions minutes are unlimited regardless -- correctness over speed here.
 
 Usage:
     # one snapshot, appended to data/night_session/<target-date>.jsonl
@@ -27,7 +44,8 @@ Usage:
     # read back today's snapshots as a chart-ready list
     python tx_night_session.py assemble --data-dir ../data/night_session --date 2026-08-21
 
-    # offline test mode for `collect`
+    # offline test mode for `collect` (no browser/network needed --
+    # fixtures are pre-flattened text, see fetch_with_browser() docstring)
     python tx_night_session.py collect --fixture ../fixtures/wantgoo_wtxp.txt --data-dir /tmp/out
 """
 import argparse
@@ -38,37 +56,39 @@ import sys
 from pathlib import Path
 
 try:
-    import requests
+    from playwright.sync_api import sync_playwright
 except ImportError:
-    requests = None
+    sync_playwright = None
 
 WTXP_URL = "https://www.wantgoo.com/futures/wtxp&"
-# Confirmed live (2026-08-20): the first scheduled collect-night-session run
-# failed with "403 Forbidden" using only a User-Agent header, even though
-# the exact same URL loads fine in a real browser (no captcha/challenge
-# page -- checked directly). This is a much fuller browser-realistic header
-# set to test whether the block is header-based (a WAF checking for
-# missing Accept/Referer/Sec-Fetch-* that a bare requests.get() doesn't
-# send) or IP-based (wantgoo blocking the GitHub Actions runner's
-# datacenter IP range outright, which no header set can fix). See README
-# for what happens if this still 403s after this change.
-HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
-        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-    ),
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
-    "Accept-Language": "zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7",
-    "Referer": "https://www.wantgoo.com/",
-    "Connection": "keep-alive",
-    "Upgrade-Insecure-Requests": "1",
-    "Sec-Fetch-Dest": "document",
-    "Sec-Fetch-Mode": "navigate",
-    "Sec-Fetch-Site": "same-origin",
-    "Sec-Fetch-User": "?1",
-}
 
 TAIPEI = datetime.timezone(datetime.timedelta(hours=8))
+
+
+def fetch_with_browser(url: str) -> str:
+    """Fetch `url` with a real headless Chromium (Playwright) and return the
+    rendered page's HTML. See the module docstring's "FETCH METHOD" section
+    for why this replaced a plain `requests.get()` (403 from this specific
+    endpoint, confirmed not fixable with headers alone).
+    """
+    if sync_playwright is None:
+        raise RuntimeError(
+            "playwright is not installed -- run "
+            "`playwright install --with-deps chromium` (see requirements.txt)"
+        )
+    with sync_playwright() as p:
+        browser = p.chromium.launch()
+        try:
+            page = browser.new_page(locale="zh-TW")
+            page.goto(url, wait_until="domcontentloaded", timeout=30000)
+            # Server-rendered -- values are already in the HTML at this
+            # point (verified during design) -- but give any live-quote
+            # hydration a brief moment to settle rather than trusting the
+            # very first paint.
+            page.wait_for_timeout(1500)
+            return page.content()
+        finally:
+            browser.close()
 
 
 def get_text(html: str) -> str:
@@ -165,19 +185,8 @@ def cmd_collect(args):
         html_or_text = Path(args.fixture).read_text(encoding="utf-8")
         text = html_or_text  # fixture is already flattened text
     else:
-        if requests is None:
-            raise RuntimeError("requests not installed")
-        # Second fix attempt (2026-08-20): a full browser-like header set
-        # alone still got 403 from the GitHub Actions runner (see README) --
-        # next hypothesis is a lightweight session/cookie check rather than
-        # a hard IP block. Warm up with a homepage visit first so any
-        # Set-Cookie challenge is satisfied before requesting the real page,
-        # same as a browser would do on first navigation to the site.
-        session = requests.Session()
-        session.get("https://www.wantgoo.com/", headers=HEADERS, timeout=20)
-        resp = session.get(WTXP_URL, headers=HEADERS, timeout=20)
-        resp.raise_for_status()
-        text = get_text(resp.text)
+        html = fetch_with_browser(WTXP_URL)
+        text = get_text(html)
 
     snapshot = parse_snapshot(text, now)
 
