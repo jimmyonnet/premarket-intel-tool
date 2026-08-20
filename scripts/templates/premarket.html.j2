@@ -67,6 +67,7 @@
   td.condition{color:var(--muted); font-size:12px; max-width:340px;}
   .empty-row td{color:var(--muted); font-style:italic; text-align:center; padding:16px;}
   .badge{display:inline-block; font-size:10px; padding:1px 6px; border-radius:4px; border:1px solid var(--line); color:var(--muted); font-family:var(--font-mono);}
+  .source-note{color:var(--muted); font-size:12px; margin:4px 0 0;}
 
   /* tables on narrow screens don't reflow -- they scroll horizontally
      within their own card instead of breaking the page layout. min-width
@@ -233,6 +234,85 @@
       </div>
       {% if exiting_today %}<div class="scroll-hint">← 左右滑動看更多欄位 →</div>{% endif %}
     </div>
+
+  </section>
+
+  <div class="part-title">第三部分</div>
+  <section class="part">
+
+    <div class="card">
+      <h2>目前沒找到族群 <span class="sub">{{ pressplay.not_found_group.matched|length }}/{{ pressplay.not_found_group.raw_tokens|length }} 檔已比對</span></h2>
+      {% if pressplay.source_article.title %}
+      <div class="table-scroll">
+      <table>
+        <thead><tr><th>所</th><th>代號</th><th>名稱</th><th>收盤</th><th>量(張)</th><th>外資</th><th>投信</th><th>自營</th><th>AI 理由</th><th>族群</th></tr></thead>
+        <tbody>
+          {% for row in pressplay.not_found_group.matched %}
+          <tr>
+            <td>{{ row.market }}</td>
+            <td class="code">{{ row.code }}</td>
+            <td class="name">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">疑似打錯字</span>{% endif %}</td>
+            <td class="num">{{ row.close }}</td>
+            <td class="num">{{ row.volume }}</td>
+            <td class="num">{{ row.foreign }}</td>
+            <td class="num">{{ row.trust }}</td>
+            <td class="num">{{ row.dealer }}</td>
+            <td class="condition">{{ row.ai_reason }}</td>
+            <td>{{ row.group }}</td>
+          </tr>
+          {% else %}
+          <tr class="empty-row"><td colspan="10">今天此區塊沒有標的</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+      {% if pressplay.not_found_group.matched %}<div class="scroll-hint">← 左右滑動看更多欄位 →</div>{% endif %}
+      {% if pressplay.not_found_group.unmatched %}
+      <p class="missing">未比對到：{{ pressplay.not_found_group.unmatched|join('、') }}（原文可能打錯字或非台股代號，請自行到 chengwaye.com 確認）</p>
+      {% endif %}
+      {% else %}
+      <p class="missing">尚無資料（PressPlay 收集流程還沒跑過，或今天沒有盤前文章）。</p>
+      {% endif %}
+    </div>
+
+    <div class="card">
+      <h2>目前發現有族群 <span class="sub">{{ pressplay.found_group.matched|length }}/{{ pressplay.found_group.raw_tokens|length }} 檔已比對</span></h2>
+      {% if pressplay.source_article.title %}
+      <div class="table-scroll">
+      <table>
+        <thead><tr><th>所</th><th>代號</th><th>名稱</th><th>收盤</th><th>量(張)</th><th>外資</th><th>投信</th><th>自營</th><th>AI 理由</th><th>族群</th></tr></thead>
+        <tbody>
+          {% for row in pressplay.found_group.matched %}
+          <tr>
+            <td>{{ row.market }}</td>
+            <td class="code">{{ row.code }}</td>
+            <td class="name">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">疑似打錯字</span>{% endif %}</td>
+            <td class="num">{{ row.close }}</td>
+            <td class="num">{{ row.volume }}</td>
+            <td class="num">{{ row.foreign }}</td>
+            <td class="num">{{ row.trust }}</td>
+            <td class="num">{{ row.dealer }}</td>
+            <td class="condition">{{ row.ai_reason }}</td>
+            <td>{{ row.group }}</td>
+          </tr>
+          {% else %}
+          <tr class="empty-row"><td colspan="10">今天此區塊沒有標的</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+      {% if pressplay.found_group.matched %}<div class="scroll-hint">← 左右滑動看更多欄位 →</div>{% endif %}
+      {% if pressplay.found_group.unmatched %}
+      <p class="missing">未比對到：{{ pressplay.found_group.unmatched|join('、') }}（原文可能打錯字或非台股代號，請自行到 chengwaye.com 確認）</p>
+      {% endif %}
+      {% else %}
+      <p class="missing">尚無資料（PressPlay 收集流程還沒跑過，或今天沒有盤前文章）。</p>
+      {% endif %}
+    </div>
+
+    {% if pressplay.source_article.title %}
+    <p class="missing">資料來源：{{ pressplay.source_article.title }}{% if pressplay.chengwaye_date %} · chengwaye.com 適用 {{ pressplay.chengwaye_date }}{% endif %}</p>
+    {% endif %}
 
   </section>
 
