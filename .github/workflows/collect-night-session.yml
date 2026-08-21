@@ -2,11 +2,6 @@ name: Collect TX night-session snapshot
 
 # Runs every 30 minutes through the TAIFEX night session (盤後/夜盤).
 # 15:00-05:00 Taipei time == 07:00-21:00 UTC on the SAME UTC calendar day
-# (Taipei is UTC+8, so the whole overnight window never crosses a UTC
-# midnight -- convenient, no day-rollover math needed here).
-# Mon-Fri UTC covers all 5 prep-nights (Fri evening preps the following
-# Monday's session). Taiwan market holidays are NOT accounted for -- a
-# holiday-eve run will just collect data nobody reads; harmless.
 on:
   schedule:
     - cron: "*/30 7-20 * * 1-5"
@@ -26,17 +21,6 @@ jobs:
           python-version: "3.12"
 
       - run: pip install -r requirements.txt
-
-      # wantgoo.com's quote page 403s a plain requests.get() from this
-      # runner (confirmed live, TLS/browser-fingerprint bot detection --
-      # see tx_night_session.py's module docstring and README). A real
-      # headless Chromium gets past it, so every collect run needs the
-      # browser installed fresh (this is a throwaway VM each run --
-      # nothing persists between runs without extra caching, which isn't
-      # set up here to keep this workflow simple). --with-deps also pulls
-      # in the OS-level shared libraries headless Chromium needs that
-      # ubuntu-latest doesn't ship by default.
-      - run: playwright install --with-deps chromium
 
       - name: Take one snapshot
         run: python scripts/tx_night_session.py collect --data-dir data/night_session
