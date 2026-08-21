@@ -21,22 +21,15 @@
       "date": "2026-08-21",
       "time": "16:00",
       "all_day": false,
-      "summary": "欧元区-服务业采购经理人指数[NMI]",
-      "description": "前值:  51.7\nMM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar"
+      "summary": "欧元区-制造业采购经理人指数[PMI]",
+      "description": "市场预期: 51.8\n前值:  51.9\nMM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar"
     },
     {
       "date": "2026-08-21",
       "time": "16:00",
       "all_day": false,
-      "summary": "欧元区-制造业采购经理人指数[PMI]",
-      "description": "市场预期: 51.8\n前值:  51.9\nMM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar"
-    },
-    {
-      "date": "2026-08-26",
-      "time": "20:30",
-      "all_day": false,
-      "summary": "美国-实际国内生产总值[GDP]-(SAAR, 季增年化季环比)",
-      "description": "市场预期: 1.50%\n前值:  1.50%\nMM图表连结: https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar"
+      "summary": "欧元区-服务业采购经理人指数[NMI]",
+      "description": "前值:  51.7\nMM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar"
     },
     {
       "date": "2026-08-26",
@@ -44,6 +37,13 @@
       "all_day": false,
       "summary": "美国-个人消费支出物价指数[PCE]-(同比)",
       "description": "前值:  3.67%\nMM图表连结: https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-26",
+      "time": "20:30",
+      "all_day": false,
+      "summary": "美国-实际国内生产总值[GDP]-(SAAR, 季增年化季环比)",
+      "description": "市场预期: 1.50%\n前值:  1.50%\nMM图表连结: https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar"
     },
     {
       "date": "2026-08-26",

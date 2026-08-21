@@ -110,17 +110,39 @@
   .dual-panel{display:flex; gap:16px; align-items:flex-start;}
   .dual-panel-col{flex:1; min-width:0;}
 
-  /* Part 4: financial calendar, grouped by date (one row per date, all
-     that date's events listed underneath -- a user-maintained Google
-     Calendar feed can list several events on the same day). */
-  .cal-day{display:flex; gap:14px; padding:10px 0; border-bottom:1px solid var(--line);}
+  /* Part 4: financial calendar. Two parts: a real Sun-Sat weekly grid
+     (below) so it actually reads as a calendar at a glance, plus an
+     agenda list grouped by date with full event text underneath (a
+     user-maintained Google Calendar feed can list several events on the
+     same day, and grid cells are far too narrow -- ~1/7th of the card --
+     for Chinese-language event titles). Event-having grid cells link
+     down to their row in the agenda list via #cal-YYYY-MM-DD, a plain
+     HTML anchor scroll -- no JS, consistent with the rest of this static
+     page. */
+  .cal-grid{margin-bottom:18px;}
+  .cal-grid-head, .cal-grid-row{display:grid; grid-template-columns:repeat(7, 1fr); gap:4px;}
+  .cal-grid-head{margin-bottom:4px;}
+  .cal-grid-h{text-align:center; font-size:11px; color:var(--muted); padding:2px 0;}
+  .cal-grid-row{margin-bottom:4px;}
+  .cal-cell{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; aspect-ratio:1; padding:4px 2px; border-radius:8px; background:var(--panel-2); border:1px solid var(--line); text-decoration:none;}
+  .cal-cell.out{opacity:.35;}
+  .cal-cell.today{border-color:var(--amber); box-shadow:inset 0 0 0 1px var(--amber);}
+  .cal-cell.has-events{cursor:pointer;}
+  .cal-cell.has-events:hover{border-color:var(--amber);}
+  .cal-cell-num{font-family:var(--font-mono); font-size:12px; color:var(--text);}
+  .cal-cell.today .cal-cell-num{color:var(--amber); font-weight:700;}
+  .cal-cell-dots{display:flex; gap:2px; align-items:center; height:5px;}
+  .cal-cell-dots .dot{width:5px; height:5px; border-radius:50%; background:var(--amber);}
+  .cal-cell-more{font-size:9px; color:var(--muted); font-family:var(--font-mono); margin-left:1px;}
+
+  .cal-day{display:flex; gap:14px; padding:10px 0; border-bottom:1px solid var(--line); scroll-margin-top:12px;}
   .cal-day:last-child{border-bottom:none;}
   .cal-date{flex:0 0 72px; font-family:var(--font-mono); font-size:12px; color:var(--muted); padding-top:2px;}
   .cal-date.today{color:var(--amber); font-weight:700;}
   .cal-day-events{flex:1; min-width:0; display:flex; flex-direction:column; gap:6px;}
   .cal-summary{font-size:13px; font-weight:600;}
   .cal-time{font-family:var(--font-mono); font-weight:400; color:var(--muted); font-size:12px; margin-left:6px;}
-  .cal-desc{font-size:12px; color:var(--muted); margin-top:2px;}
+  .cal-desc{font-size:12px; color:var(--muted); margin-top:2px; white-space:pre-line;}
 
   /* mobile: reclaim horizontal space (tighter padding/type), let tiles
      pack 2-up instead of stacking to 1 column. Tables are handled above
@@ -139,6 +161,9 @@
     .scroll-hint{display:block; font-size:11px; color:var(--muted); text-align:right; margin-top:6px;}
     .dual-panel{flex-direction:column;}
     .cal-day{flex-direction:column; gap:2px;}
+    .cal-grid-head, .cal-grid-row{gap:3px;}
+    .cal-cell{padding:3px 1px;}
+    .cal-cell-num{font-size:11px;}
   }
 </style>
 </head>
@@ -147,11 +172,13 @@
 
   <header>
     <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 2026/08/21 19:13</div>
+    <div class="generated">產生時間 2026/08/21 19:30</div>
   </header>
 
   
-  <div class="ok-banner">✓ 處置股資料日期核對通過（下拉選單：None → 適用 08/21）</div>
+  <div class="warning-banner">
+    ⚠ 處置股資料日期核對失敗 — 頁面顯示適用 08/24，但今天是 2026-08-21。第二部分資料可能不是最新的，請自行到 chengwaye.com 確認。
+  </div>
   
 
   <div class="part-title">第一部分</div>
@@ -235,12 +262,12 @@
   <section class="part">
 
     <div class="card">
-      <h2>🔴 差1次就處置 <span class="sub">8 檔</span></h2>
+      <h2>🔴 差1次就處置 <span class="sub">5 檔</span></h2>
       <div class="table-scroll">
       <table>
         <thead><tr>
           <th>所</th><th>代號</th><th>名稱</th><th class="num">收盤</th>
-          <th>08-21 處置標準條件（本站估算）</th>
+          <th>08-24 處置標準條件（本站估算）</th>
           <th class="num">最快處置</th>
           <th class="badge-col" title="連續3日第1款">3①</th>
           <th class="badge-col" title="連續5日（第1~7款）">5</th>
@@ -250,12 +277,126 @@
         <tbody>
           
           <tr>
-            <td>市</td>
-            <td class="code">2455</td>
-            <td class="name">全新</td>
-            <td class="num">412.0</td>
-            <td class="condition"><span style="color:var(--muted)">① 08-21不符合</span><span style="color:var(--muted)">③④⑤⑦ 08-21不符合</span><span style="color:var(--amber)">⑥ 量≥9,245張</span></td>
-            <td class="num">08-24 第2次2分</td>
+            <td>櫃</td>
+            <td class="code">⏸3490</td>
+            <td class="name">單井</td>
+            <td class="num">53.9</td>
+            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--fall)">53.0↑(-1.7%)</span></td>
+            <td class="num">08-25 第2次2分</td>
+            
+            <td class="badge-col" title="連續3日第1款 2/3">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/3</span>
+              
+            </td>
+            
+            <td class="badge-col" title="連續5日（第1~7款） 2/5">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/5</span>
+              
+            </td>
+            
+            <td class="badge-col" title="10日內6次（第1~7款） 2/6">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/6</span>
+              
+            </td>
+            
+            <td class="badge-col" title="30日內12次（第1~7款） 2/12">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/12</span>
+              
+            </td>
+            
+          </tr>
+          
+          <tr>
+            <td>櫃</td>
+            <td class="code">3625</td>
+            <td class="name">西勝</td>
+            <td class="num">11.10</td>
+            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">11.55↓(+4.1%)</span></td>
+            <td class="num">08-25 第1次10分</td>
+            
+            <td class="badge-col" title="連續3日第1款 2/3">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/3</span>
+              
+            </td>
+            
+            <td class="badge-col" title="連續5日（第1~7款） 2/5">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/5</span>
+              
+            </td>
+            
+            <td class="badge-col" title="10日內6次（第1~7款） 2/6">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/6</span>
+              
+            </td>
+            
+            <td class="badge-col" title="30日內12次（第1~7款） 2/12">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/12</span>
+              
+            </td>
+            
+          </tr>
+          
+          <tr>
+            <td>櫃</td>
+            <td class="code">4304</td>
+            <td class="name">勝昱</td>
+            <td class="num">25.70</td>
+            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span></td>
+            <td class="num">08-25 第1次2分</td>
+            
+            <td class="badge-col" title="連續3日第1款 2/3">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/3</span>
+              
+            </td>
+            
+            <td class="badge-col" title="連續5日（第1~7款） 2/5">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/5</span>
+              
+            </td>
+            
+            <td class="badge-col" title="10日內6次（第1~7款） 2/6">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/6</span>
+              
+            </td>
+            
+            <td class="badge-col" title="30日內12次（第1~7款） 2/12">
+              
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <span class="badge-frac">2/12</span>
+              
+            </td>
+            
+          </tr>
+          
+          <tr>
+            <td>櫃</td>
+            <td class="code">4971</td>
+            <td class="name">IET-KY</td>
+            <td class="num">588</td>
+            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">597↑(+1.5%)</span><span style="color:var(--muted)">②不符合</span><span style="color:var(--muted)">③④⑤⑦</span><span style="color:var(--rise)">621↑(+5.6%)</span><span style="color:var(--amber)">需量≥2,360張</span><span style="color:var(--amber)">+但書</span><span style="color:var(--amber)">⑥ 量≥2,359張</span></td>
+            <td class="num">08-25 第2次2分</td>
             
             <td class="badge-col" title="連續3日第1款 0/3">
               
@@ -271,17 +412,17 @@
               
             </td>
             
-            <td class="badge-col" title="10日內6次（第1~7款） 5/6">
+            <td class="badge-col" title="10日內6次（第1~7款） 4/6">
               
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-              <span class="badge-frac">5/6</span>
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
+              <span class="badge-frac">4/6</span>
               
             </td>
             
-            <td class="badge-col" title="30日內12次（第1~7款） 5/12">
+            <td class="badge-col" title="30日內12次（第1~7款） 4/12">
               
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">5/12</span>
+              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+              <span class="badge-frac">4/12</span>
               
             </td>
             
@@ -289,239 +430,11 @@
           
           <tr>
             <td>市</td>
-            <td class="code">2493</td>
-            <td class="name">揚博</td>
-            <td class="num">183.0</td>
-            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--fall)">168.5↓(-7.9%)</span></td>
-            <td class="num">08-24 第1次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 2/3">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 2/5">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 2/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 3/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">3/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">⏸3498</td>
-            <td class="name">陽程</td>
-            <td class="num">183.5</td>
-            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">192.0↑(+4.6%)</span></td>
-            <td class="num">08-24 第2次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 2/3">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 2/5">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 2/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 2/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">3508</td>
-            <td class="name">位速</td>
-            <td class="num">25.00</td>
-            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--fall)">23.35↑(-6.6%)</span></td>
-            <td class="num">08-24 第1次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 2/3">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 2/5">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 2/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 2/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">5314</td>
-            <td class="name">世紀*</td>
-            <td class="num">23.65</td>
+            <td class="code">⏸6225</td>
+            <td class="name">天瀚</td>
+            <td class="num">64.7</td>
             <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span></td>
-            <td class="num">08-24 第1次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 2/3">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-              <span class="badge-frac">2/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 3/5">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">3/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 3/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">3/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 3/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">3/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">5321</td>
-            <td class="name">美而快</td>
-            <td class="num">71.9</td>
-            <td class="condition"><span style="color:var(--muted)">②</span><span style="color:var(--rise)">72.0↑(+0.1%)</span><span style="color:var(--muted)">①不符合</span><span style="color:var(--muted)">③④⑤⑦ 08-21不符合</span><span style="color:var(--muted)">⑥ 不符合（PB明日不可達，量未達）</span></td>
-            <td class="num">08-24 第1次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 0/3">
-              
-              <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">0/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 1/5">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 5/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-              <span class="badge-frac">5/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 5/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">5/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>市</td>
-            <td class="code">6834</td>
-            <td class="name">天二科技</td>
-            <td class="num">93.5</td>
-            <td class="condition"><span style="color:var(--muted)">②</span><span style="color:var(--rise)">101.0↑(+8.0%)</span><span style="color:var(--muted)">①不符合</span><span style="color:var(--muted)">③④⑤⑦ 08-21不符合</span><span style="color:var(--muted)">⑥ 不符合（PE/PB明日不可達，量未達）</span></td>
-            <td class="num">08-24 第1次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 0/3">
-              
-              <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">0/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 0/5">
-              
-              <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">0/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 5/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-              <span class="badge-frac">5/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 5/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">5/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">7792</td>
-            <td class="name">安葆</td>
-            <td class="num">297.5</td>
-            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">303.5↑(+2.0%)</span></td>
-            <td class="num">08-24 第1次2分</td>
+            <td class="num">08-25 第2次25分</td>
             
             <td class="badge-col" title="連續3日第1款 2/3">
               
@@ -561,58 +474,46 @@
 
     
     <div class="card">
-      <h2>⚫ 今日出關 <span class="sub">4 檔</span></h2>
+      <h2>⚫ 今日出關 <span class="sub">3 檔</span></h2>
       <div class="table-scroll">
       <table>
         <thead><tr><th>市場</th><th>代號</th><th>名稱</th><th>撮合</th><th class="num">開始</th><th class="num">結束</th><th class="num">出關日</th><th class="num">剩餘交易日</th><th>處置原因</th></tr></thead>
         <tbody>
           
           <tr>
-            <td>市</td>
-            <td class="code">3026</td>
-            <td class="name">禾伸堂</td>
+            <td>櫃</td>
+            <td class="code">3163</td>
+            <td class="name">波若威</td>
             <td>2分</td>
-            <td class="num">08-14</td>
-            <td class="num">08-20</td>
-            <td class="num exit-today">08-21</td>
+            <td class="num">08-13</td>
+            <td class="num">08-21</td>
+            <td class="num exit-today">08-24</td>
             <td class="num"><span class="badge exit-today-badge">出關</span></td>
-            <td class="condition">連續3日第1款｜第2次處置</td>
+            <td class="condition">連續5日｜第1次處置</td>
           </tr>
           
           <tr>
             <td>櫃</td>
-            <td class="code">4979</td>
-            <td class="name">華星光</td>
+            <td class="code">4931</td>
+            <td class="name">新盛力</td>
             <td>2分</td>
-            <td class="num">08-14</td>
-            <td class="num">08-20</td>
-            <td class="num exit-today">08-21</td>
+            <td class="num">08-13</td>
+            <td class="num">08-21</td>
+            <td class="num exit-today">08-24</td>
             <td class="num"><span class="badge exit-today-badge">出關</span></td>
-            <td class="condition">連續5日｜第2次處置</td>
+            <td class="condition">連續3日第一款｜第1次處置</td>
           </tr>
           
           <tr>
             <td>櫃</td>
-            <td class="code">4991</td>
-            <td class="name">環宇-KY</td>
+            <td class="code">6716</td>
+            <td class="name">應廣</td>
             <td>2分</td>
-            <td class="num">08-14</td>
-            <td class="num">08-20</td>
-            <td class="num exit-today">08-21</td>
+            <td class="num">08-17</td>
+            <td class="num">08-21</td>
+            <td class="num exit-today">08-24</td>
             <td class="num"><span class="badge exit-today-badge">出關</span></td>
-            <td class="condition">連續5日｜第2次處置</td>
-          </tr>
-          
-          <tr>
-            <td>市</td>
-            <td class="code">6213</td>
-            <td class="name">聯茂</td>
-            <td>2分</td>
-            <td class="num">08-14</td>
-            <td class="num">08-20</td>
-            <td class="num exit-today">08-21</td>
-            <td class="num"><span class="badge exit-today-badge">出關</span></td>
-            <td class="condition">連續3日第1款｜第2次處置</td>
+            <td class="condition">連續3日第一款｜第1次處置</td>
           </tr>
           
         </tbody>
@@ -1935,9 +1836,165 @@
 
     <div class="card">
       <h2>財經行事曆 <span class="sub">08-21 ~ 09-04 · 21 筆</span></h2>
+
+      
+      <div class="cal-grid">
+        <div class="cal-grid-head">
+          <div class="cal-grid-h">日</div><div class="cal-grid-h">一</div><div class="cal-grid-h">二</div><div class="cal-grid-h">三</div><div class="cal-grid-h">四</div><div class="cal-grid-h">五</div><div class="cal-grid-h">六</div>
+        </div>
+        
+        <div class="cal-grid-row">
+          
+          
+          <div class="cal-cell out">
+            <span class="cal-cell-num">8/16</span>
+          </div>
+          
+          
+          
+          <div class="cal-cell out">
+            <span class="cal-cell-num">17</span>
+          </div>
+          
+          
+          
+          <div class="cal-cell out">
+            <span class="cal-cell-num">18</span>
+          </div>
+          
+          
+          
+          <div class="cal-cell out">
+            <span class="cal-cell-num">19</span>
+          </div>
+          
+          
+          
+          <div class="cal-cell out">
+            <span class="cal-cell-num">20</span>
+          </div>
+          
+          
+          
+          <a class="cal-cell has-events today" href="#cal-2026-08-21">
+            <span class="cal-cell-num">21</span>
+            <span class="cal-cell-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="cal-cell-more">+1</span></span>
+          </a>
+          
+          
+          
+          <div class="cal-cell">
+            <span class="cal-cell-num">22</span>
+          </div>
+          
+          
+        </div>
+        
+        <div class="cal-grid-row">
+          
+          
+          <div class="cal-cell">
+            <span class="cal-cell-num">23</span>
+          </div>
+          
+          
+          
+          <div class="cal-cell">
+            <span class="cal-cell-num">24</span>
+          </div>
+          
+          
+          
+          <div class="cal-cell">
+            <span class="cal-cell-num">25</span>
+          </div>
+          
+          
+          
+          <a class="cal-cell has-events" href="#cal-2026-08-26">
+            <span class="cal-cell-num">26</span>
+            <span class="cal-cell-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+          </a>
+          
+          
+          
+          <a class="cal-cell has-events" href="#cal-2026-08-27">
+            <span class="cal-cell-num">27</span>
+            <span class="cal-cell-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+          </a>
+          
+          
+          
+          <a class="cal-cell has-events" href="#cal-2026-08-28">
+            <span class="cal-cell-num">28</span>
+            <span class="cal-cell-dots"><span class="dot"></span></span>
+          </a>
+          
+          
+          
+          <div class="cal-cell">
+            <span class="cal-cell-num">29</span>
+          </div>
+          
+          
+        </div>
+        
+        <div class="cal-grid-row">
+          
+          
+          <div class="cal-cell">
+            <span class="cal-cell-num">30</span>
+          </div>
+          
+          
+          
+          <a class="cal-cell has-events" href="#cal-2026-08-31">
+            <span class="cal-cell-num">31</span>
+            <span class="cal-cell-dots"><span class="dot"></span><span class="dot"></span></span>
+          </a>
+          
+          
+          
+          <a class="cal-cell has-events" href="#cal-2026-09-01">
+            <span class="cal-cell-num">9/1</span>
+            <span class="cal-cell-dots"><span class="dot"></span><span class="dot"></span></span>
+          </a>
+          
+          
+          
+          <a class="cal-cell has-events" href="#cal-2026-09-02">
+            <span class="cal-cell-num">2</span>
+            <span class="cal-cell-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+          </a>
+          
+          
+          
+          <a class="cal-cell has-events" href="#cal-2026-09-03">
+            <span class="cal-cell-num">3</span>
+            <span class="cal-cell-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></span>
+          </a>
+          
+          
+          
+          <div class="cal-cell">
+            <span class="cal-cell-num">4</span>
+          </div>
+          
+          
+          
+          <div class="cal-cell out">
+            <span class="cal-cell-num">5</span>
+          </div>
+          
+          
+        </div>
+        
+      </div>
+      
+
       
       
-      <div class="cal-day">
+      <div class="cal-day" id="cal-2026-08-21">
         <div class="cal-date today">08/21<br><span class="badge exit-today-badge">今天</span></div>
         <div class="cal-day-events">
           
@@ -1956,36 +2013,36 @@ MM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/500
           </div>
           
           <div>
-            <div class="cal-summary">欧元区-服务业采购经理人指数[NMI]<span class="cal-time">16:00</span></div>
-            <div class="cal-desc">前值:  51.7
-MM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar</div>
-          </div>
-          
-          <div>
             <div class="cal-summary">欧元区-制造业采购经理人指数[PMI]<span class="cal-time">16:00</span></div>
             <div class="cal-desc">市场预期: 51.8
 前值:  51.9
 MM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar</div>
           </div>
           
+          <div>
+            <div class="cal-summary">欧元区-服务业采购经理人指数[NMI]<span class="cal-time">16:00</span></div>
+            <div class="cal-desc">前值:  51.7
+MM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar</div>
+          </div>
+          
         </div>
       </div>
       
-      <div class="cal-day">
+      <div class="cal-day" id="cal-2026-08-26">
         <div class="cal-date">08/26</div>
         <div class="cal-day-events">
+          
+          <div>
+            <div class="cal-summary">美国-个人消费支出物价指数[PCE]-(同比)<span class="cal-time">20:30</span></div>
+            <div class="cal-desc">前值:  3.67%
+MM图表连结: https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar</div>
+          </div>
           
           <div>
             <div class="cal-summary">美国-实际国内生产总值[GDP]-(SAAR, 季增年化季环比)<span class="cal-time">20:30</span></div>
             <div class="cal-desc">市场预期: 1.50%
 前值:  1.50%
 MM图表连结: https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar</div>
-          </div>
-          
-          <div>
-            <div class="cal-summary">美国-个人消费支出物价指数[PCE]-(同比)<span class="cal-time">20:30</span></div>
-            <div class="cal-desc">前值:  3.67%
-MM图表连结: https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar</div>
           </div>
           
           <div>
@@ -1997,7 +2054,7 @@ MM图表连结: https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-
         </div>
       </div>
       
-      <div class="cal-day">
+      <div class="cal-day" id="cal-2026-08-27">
         <div class="cal-date">08/27</div>
         <div class="cal-day-events">
           
@@ -2022,7 +2079,7 @@ MM图表连结: https://sc.macromicro.me/collections/4/us-employ-relative/19/ini
         </div>
       </div>
       
-      <div class="cal-day">
+      <div class="cal-day" id="cal-2026-08-28">
         <div class="cal-date">08/28</div>
         <div class="cal-day-events">
           
@@ -2035,7 +2092,7 @@ MM图表连结: https://sc.macromicro.me/collections/36/eu-economic-sentiment-re
         </div>
       </div>
       
-      <div class="cal-day">
+      <div class="cal-day" id="cal-2026-08-31">
         <div class="cal-date">08/31</div>
         <div class="cal-day-events">
           
@@ -2054,7 +2111,7 @@ MM图表连结: https://sc.macromicro.me/collections/25/cn-industry-relative/233
         </div>
       </div>
       
-      <div class="cal-day">
+      <div class="cal-day" id="cal-2026-09-01">
         <div class="cal-date">09/01</div>
         <div class="cal-day-events">
           
@@ -2073,7 +2130,7 @@ MM图表连结: https://sc.macromicro.me/collections/8/us-industry-relative/54/i
         </div>
       </div>
       
-      <div class="cal-day">
+      <div class="cal-day" id="cal-2026-09-02">
         <div class="cal-date">09/02</div>
         <div class="cal-day-events">
           
@@ -2098,7 +2155,7 @@ MM图表连结: https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-
         </div>
       </div>
       
-      <div class="cal-day">
+      <div class="cal-day" id="cal-2026-09-03">
         <div class="cal-date">09/03</div>
         <div class="cal-day-events">
           
