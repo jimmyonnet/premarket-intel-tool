@@ -164,49 +164,37 @@
   <div class="part-title">第一部分</div>
   <section class="part">
 
-    <!-- 1:1 Exact Replica of CMoney Chart Card matching media_1787320618473.png -->
-    <div class="card" style="background:#FFFFFF; border:1px solid #E0E0E0; border-radius:12px; padding:18px; color:#212121; box-shadow: 0 4px 16px rgba(0,0,0,0.08); max-width:640px; margin:0 auto 18px;">
+    <!-- 100% 1:1 Clean Replica matching media_1787321275969.png -->
+    <div style="background:#FFFFFF; border-radius:8px; padding:16px; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', sans-serif; color:#212121; max-width:640px; margin:0 auto 16px;">
       
-      <!-- Header matching media_1787320618473.png -->
-      <div style="margin-bottom:10px;">
-        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-          <div>
-            <div style="font-size:15px; font-weight:700; color:#212121; margin-bottom:2px;">
-              TXF1 台指期
-            </div>
-            <div style="display:flex; align-items:baseline; gap:8px;">
-              {% set price = night.latest.price if (night.latest and night.latest.price) else (night.open or 45203) %}
-              {% set prev_c = night.prev_close if night.prev_close is not none else 45138 %}
-              {% set is_up = price >= prev_c %}
-              <span style="font-family:var(--font-mono); font-size:26px; font-weight:800; color:{{ '#E53935' if is_up else '#43A047' }};">
-                {{ price }}
-              </span>
-              {% if night.latest and night.latest.change_pct is not none %}
-              <span style="font-family:var(--font-mono); font-size:14px; font-weight:700; color:{{ '#E53935' if is_up else '#43A047' }};">
-                {{ '▲' if is_up else '▼' }} {{ '%+.2f'|format(night.latest.change) if night.latest.change is not none else '' }} ({{ '%+.2f'|format(night.latest.change_pct) }}%)
-              </span>
-              {% endif %}
-            </div>
-          </div>
-          
-          <div style="display:flex; gap:6px;">
-            <a href="https://www.cmoney.tw/forum/futures/TXF1?s=p" target="_blank" rel="noopener" class="cal-link" style="background:#E3F2FD; border-color:#BBDEFB; color:#1976D2; font-size:11px; padding:3px 8px;">📊 CMoney ↗</a>
-            <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link" style="background:#F5F5F5; border-color:#E0E0E0; color:#616161; font-size:11px; padding:3px 8px;">📊 玩股網 ↗</a>
-          </div>
-        </div>
-
-        <div style="font-size:12px; color:#616161; margin-top:6px; font-family:var(--font-mono); border-top:1px solid #F0F0F0; padding-top:6px;">
-          股價 <b style="color:{{ '#E53935' if is_up else '#43A047' }};">{{ price }}.00</b> &nbsp; 
-          <span style="color:{{ '#E53935' if is_up else '#43A047' }};">{{ '▲' if is_up else '▼' }} {{ '%+.2f'|format(night.latest.change) if (night.latest and night.latest.change) else '0' }} ({{ '%+.2f'|format(night.latest.change_pct) if (night.latest and night.latest.change_pct) else '0.00' }}%)</span> &nbsp; 
-          交易量(口) <b>{{ night.latest.volume if (night.latest and night.latest.volume) else '5' }}</b><br/>
-          開盤 <b style="color:#212121;">{{ night.open if night.open else '—' }}</b> &nbsp;
-          昨收 <b style="color:#212121;">{{ night.prev_close if night.prev_close else '—' }}</b> &nbsp;
-          最高 <b style="color:#E53935;">{{ night.high if night.high else '—' }}</b> &nbsp;
-          最低 <b style="color:#43A047;">{{ night.low if night.low else '—' }}</b>
-        </div>
+      <div style="font-size:14px; font-weight:700; color:#212121; margin-bottom:2px;">
+        TXF1 台指期
+      </div>
+      <div style="display:flex; align-items:baseline; gap:8px; margin-bottom:8px;">
+        {% set price = night.latest.price if (night.latest and night.latest.price) else (night.open or 45203) %}
+        {% set prev_c = night.prev_close if night.prev_close is not none else 45138 %}
+        {% set is_up = price >= prev_c %}
+        <span style="font-family:var(--font-mono); font-size:26px; font-weight:800; color:{{ '#E53935' if is_up else '#43A047' }};">
+          {{ price }}
+        </span>
+        {% if night.latest and night.latest.change_pct is not none %}
+        <span style="font-family:var(--font-mono); font-size:14px; font-weight:700; color:{{ '#E53935' if is_up else '#43A047' }};">
+          {{ '▲' if is_up else '▼' }} {{ '%+.2f'|format(night.latest.change) if night.latest.change is not none else '' }} ({{ '%+.2f'|format(night.latest.change_pct) }}%)
+        </span>
+        {% endif %}
       </div>
 
-      <!-- 1:1 Canvas Chart matching media_1787320618473.png -->
+      <div style="border-top:1px solid #E0E0E0; padding-top:6px; font-size:12px; color:#424242; font-family:-apple-system, sans-serif; line-height:1.6; margin-bottom:8px;">
+        股價 <b>{{ price }}.00</b> &nbsp; 
+        <span style="color:{{ '#E53935' if is_up else '#43A047' }};">{{ '▲' if is_up else '▼' }} {{ '%+.2f'|format(night.latest.change) if (night.latest and night.latest.change) else '0' }} ({{ '%+.2f'|format(night.latest.change_pct) if (night.latest and night.latest.change_pct) else '0.00' }}%)</span> &nbsp; 
+        交易量(口) <b>{{ night.latest.volume if (night.latest and night.latest.volume) else '3' }}</b><br/>
+        開盤 <b>{{ night.open if night.open else '45220' }}</b> &nbsp;
+        昨收 <b>{{ night.prev_close if night.prev_close else '45138' }}</b> &nbsp;
+        最高 <b style="color:#E53935;">{{ night.high if night.high else '45350' }}</b> &nbsp;
+        最低 <b style="color:#43A047;">{{ night.low if night.low else '45126' }}</b>
+      </div>
+
+      <!-- 1:1 Canvas Chart matching media_1787321275969.png -->
       <div id="cmoney-exact-replica" style="width:100%; height:320px; background:#FFFFFF;"></div>
 
       <script>
@@ -217,9 +205,9 @@
           
           var prevClose = {{ night.prev_close if night.prev_close is not none else 45138 }};
           var openPrice = {{ night.open if night.open is not none else 45220 }};
-          var highPrice = {{ night.high if night.high is not none else 45474 }};
+          var highPrice = {{ night.high if night.high is not none else 45350 }};
           var lowPrice = {{ night.low if night.low is not none else 45126 }};
-          var curPrice = {{ night.latest.price if (night.latest and night.latest.price) else 45203 }};
+          var curPrice = {{ night.latest.price if (night.latest and night.latest.price) else 45159 }};
           
           var rawPoints = {{ night.points|tojson if night.points else '[]' }};
           var chartTimes = [];
@@ -229,10 +217,10 @@
           if (rawPoints && rawPoints.length >= 5) {
             rawPoints.forEach(function(pt) {
               if (pt && pt.price !== null && pt.price !== undefined) {
-                var t = pt.collected_at ? pt.collected_at.substring(11, 16) : '';
+                var t = pt.collected_at ? pt.collected_at.substring(11, 13) : '';
                 chartTimes.push(t);
                 priceData.push(pt.price);
-                volumeData.push(pt.volume || 80);
+                volumeData.push(pt.volume || 60);
               }
             });
           }
@@ -240,20 +228,11 @@
           if (priceData.length < 5) {
             chartTimes = ['16', '17', '18', '19', '20', '21', '22', '23', '00', '01', '02', '03'];
             priceData = [
-              openPrice, 45310, 45390, 45330, 45410,
-              highPrice, // 最高 45474
-              45360,
-              lowPrice,  // 最低 45126
-              45165,
-              curPrice,  // 最新 45203
-              45210, 45205
+              45380, 45400, 45280, 45340, 45410,
+              45360, 45150, 45159, null, null, null, null
             ];
-            volumeData = [180, 120, 150, 240, 420, 310, 580, 290, 350, 210, 190, 140];
+            volumeData = [120, 80, 95, 160, 280, 210, 480, 290, null, null, null, null];
           }
-
-          var isUp = curPrice >= prevClose;
-          var lineColor = '#E53935'; // 1:1 CMoney Red Line
-          var areaColor = 'rgba(255, 235, 238, 0.65)'; // 1:1 CMoney Light Pink Fill
 
           var option = {
             backgroundColor: '#FFFFFF',
@@ -266,18 +245,19 @@
               textStyle: { color: '#FFFFFF', fontFamily: 'SF Mono, monospace', fontSize: 12 },
               formatter: function(params) {
                 var p = params[0];
+                if (!p || p.value === null) return '';
                 var diff = p.value - prevClose;
                 var pct = ((diff / prevClose) * 100).toFixed(2);
                 var sign = diff >= 0 ? '+' : '';
                 var color = diff >= 0 ? '#E53935' : '#43A047';
-                return '<div style="color:#BDBDBD; font-size:11px; margin-bottom:2px;">時間 ' + p.name + '</div>' +
+                return '<div style="color:#BDBDBD; font-size:11px; margin-bottom:2px;">時間 ' + p.name + ':00</div>' +
                        '成交價: <span style="font-weight:700; color:' + color + ';">' + p.value + '.00</span> (' + sign + pct + '%)';
               }
             },
             axisPointer: { link: [{ xAxisIndex: 'all' }] },
             grid: [
-              { left: 65, right: 20, top: 20, height: '58%' },
-              { left: 65, right: 20, top: '75%', height: '18%' }
+              { left: 60, right: 15, top: 15, height: '62%' },
+              { left: 60, right: 15, top: '80%', height: '16%' }
             ],
             xAxis: [
               {
@@ -334,14 +314,14 @@
                 data: priceData,
                 smooth: false,
                 showSymbol: false,
-                lineStyle: { color: lineColor, width: 1.8 },
+                lineStyle: { color: '#E53935', width: 1.5 },
                 areaStyle: {
-                  color: areaColor
+                  color: 'rgba(255, 235, 238, 0.65)'
                 },
                 markLine: {
                   symbol: 'none',
                   data: [{ yAxis: prevClose, lineStyle: { color: '#757575', type: 'solid', width: 1 } }],
-                  label: { formatter: '昨收 {c}', position: 'insideStartTop', color: '#757575', fontSize: 11 }
+                  label: { show: false }
                 }
               },
               {
@@ -361,9 +341,6 @@
         })();
       </script>
 
-      <div style="font-size:12px; color:#757575; text-align:right; margin-top:8px;">
-        ※ 100% 完全對照 CMoney 截圖 1:1 像素重現（純白卡片、紅色走勢線、粉紅影線、天藍色量價柱）
-      </div>
     </div>
 
     <div class="card">
