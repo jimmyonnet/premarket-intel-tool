@@ -84,7 +84,7 @@ def build_sparkline(points, width=680, height=180, pad=28):
             hhmm = datetime.fromisoformat(ts).strftime("%H:%M")
         except ValueError:
             hhmm = ""
-        dots.append({ "x": round(x, 1), "y": round(y, 1), "label": f"{hhmm}  {p['price']:.0f}"})
+        dots.append({"x": round(x, 1), "y": round(y, 1), "label": f"{hhmm}  {p['price']:.0f}"})
 
     prev_close_y = None
     if prev_close is not None:
@@ -110,6 +110,169 @@ def build_sparkline(points, width=680, height=180, pad=28):
 
 def _empty_pressplay_section():
     return {"raw_tokens": [], "matched": [], "unmatched": []}
+
+
+def build_bubble_chart(buyers, sellers, max_each=6, width=680, height=150):
+    """
+    Simplified diverging 買超/賣超 bubble chart (Part 3 extra section):
+    buy-side (red) bubbles left of center, sell-side (green) bubbles right
+    of center. Bubble AREA is sqrt(|net|)-scaled (reads as roughly
+    proportional to net volume, same spirit as the source site's
+    per-broker bubble strip) but X-POSITION is even rank-based spacing,
+    NOT value-scaled -- deliberately, so that a cluster of brokers with
+    similar-magnitude net volume (common in real data) doesn't collapse
+    into an unreadable pile of overlapping circles/labels. Rank order
+    (already sorted by |net| descending by the source) still reads
+    left-to-right as "most to least", just on an even grid. All geometry
+    computed here so the template stays dumb (same pattern as
+    build_sparkline above).
+
+    buyers/sellers are the raw chengwaye entries (net/buyV/sellV in
+    SHARES); only the first `max_each` of each are plotted, to keep a
+    static SVG legible -- the full top-15 lists are in the tables below.
+    """
+    buyers = (buyers or [])[:max_each]
+    sellers = (sellers or [])[:max_each]
+    if not buyers and not sellers:
+        return None
+
+    def lots(shares):
+        return (shares or 0) / 1000.0
+
+    all_abs = [abs(lots(b.get("net"))) for b in buyers] + [abs(lots(s.get("net"))) for s in sellers]
+    max_abs = max(all_abs) if all_abs else 0.0
+    if max_abs <= 0:
+        max_abs = 1.0
+
+    r_min, r_max = 8, 22
+    cx0, cy0 = width / 2, height / 2 - 6
+    gap = 46  # distance from center to the nearest (rank-1) slot
+    plot_half = width / 2 - 38  # distance from center to the outermost slot
+    n_slots = max_each
+    slot_step = (plot_half - gap) / (n_slots - 1) if n_slots > 1 else 0.0
+
+    def scale(v):
+        return (abs(v) / max_abs) ** 0.5
+
+    def make_bubble(entry, side, idx):
+        net_lots = lots(entry.get("net"))
+        r = r_min + (r_max - r_min) * scale(net_lots)
+        offset = gap + slot_step * idx
+        cx = cx0 - offset if side == "buy" else cx0 + offset
+        cy = cy0 + (9 if idx % 2 else -9)
+        sign = "+" if net_lots >= 0 else ""
+        name = (entry.get("name") or "").strip()
+        return {
+            "cx": round(cx, 1),
+            "cy": round(cy, 1),
+            "r": round(r, 1),
+            "side": side,
+            "name": name[:5],
+            "value_label": f"{sign}{net_lots:,.0f}",
+        }
+
+    bubbles = [make_bubble(b, "buy", i) for i, b in enumerate(buyers)]
+    bubbles += [make_bubble(s, "sell", i) for i, s in enumerate(sellers)]
+
+    return {"width": width, "height": height, "center_x": cx0, "bubbles": bubbles}
+
+
+def _fmt_lots(shares):
+    """Shares -> 張(lots) display string, matching how every other table
+    on this page shows volume (site's raw JSON is in shares; /1000)."""
+    if shares is None:
+        return "—"
+    return f"{shares / 1000.0:,.0f}"
+
+
+def _fmt_net_lots(shares):
+    if shares is None:
+        return "—"
+    lots = shares / 1000.0
+    sign = "+" if lots >= 0 else ""
+    return f"{sign}{lots:,.0f}"
+
+
+def _fmt_broker_price(p):
+    if p is None:
+        return "—"
+    return f"{p:g}"
+
+
+def _fmt_broker_rows(entries, kind):
+    """Raw chengwaye buyers/sellers/daytraders entries -> display-ready
+    row dicts (all formatting done here, not in the template)."""
+    out = []
+    for e in entries or []:
+        row = {
+            "name": (e.get("name") or "").strip(),
+            "buyV": _fmt_lots(e.get("buyV")),
+            "buyP": _fmt_broker_price(e.get("buyP")),
+            "sellV": _fmt_lots(e.get("sellV")),
+            "sellP": _fmt_broker_price(e.get("sellP")),
+        }
+        if kind == "daytraders":
+            row["total"] = _fmt_lots(e.get("total"))
+        else:
+            row["net"] = _fmt_net_lots(e.get("net"))
+        out.append(row)
+    return out
+
+
+def build_institutional_section(pressplay, chengwaye_daily):
+    """
+    Part 3 extra: per-stock 法人買賣Top15／當沖Top10 detail, for every
+    stock already shown in Part 3 (found_group.matched + not_found_group.
+    matched, i.e. "顯示在盤前文章的標的") that also has data in chengwaye.
+    com/daily's same-day 28-stock list. Stocks without a data match are
+    silently skipped (not shown as "no data") -- this is the scope the
+    user confirmed. See fetch_chengwaye_daily.py's module docstring for
+    why there is no 總損益 (day-trade P&L) field: it isn't in the source
+    data, and this deliberately never estimates one.
+    """
+    codes_data = (chengwaye_daily or {}).get("codes") or {}
+    if not codes_data:
+        return {"stocks": [], "candidate_count": 0, "matched_count": 0, "page_date": None}
+
+    candidates = []
+    seen_codes = set()
+    for row in (
+        (pressplay.get("not_found_group", {}).get("matched") or [])
+        + (pressplay.get("found_group", {}).get("matched") or [])
+    ):
+        code = row.get("code")
+        if not code or code in seen_codes:
+            continue
+        seen_codes.add(code)
+        candidates.append(row)
+
+    items = []
+    for row in candidates:
+        cw = codes_data.get(row.get("code"))
+        if not cw:
+            continue
+        buyers = cw.get("buyers") or []
+        sellers = cw.get("sellers") or []
+        daytraders = cw.get("daytraders") or []
+        items.append({
+            "code": row.get("code"),
+            "name": row.get("name") or cw.get("name") or row.get("code"),
+            "market": row.get("market"),
+            "foreign": row.get("foreign"),
+            "trust": row.get("trust"),
+            "dealer": row.get("dealer"),
+            "buyers": _fmt_broker_rows(buyers[:15], "buyers"),
+            "sellers": _fmt_broker_rows(sellers[:15], "sellers"),
+            "daytraders": _fmt_broker_rows(daytraders[:10], "daytraders"),
+            "bubble": build_bubble_chart(buyers, sellers),
+        })
+
+    return {
+        "stocks": items,
+        "candidate_count": len(candidates),
+        "matched_count": len(items),
+        "page_date": (chengwaye_daily or {}).get("page_date"),
+    }
 
 
 def load_json(path):
@@ -141,6 +304,11 @@ def main():
         "--pressplay", default=None,
         help="optional: Part 3 PressPlay group-list JSON; omitted/missing/empty renders an empty Part 3 state",
     )
+    ap.add_argument(
+        "--chengwaye-daily", default=None,
+        help="optional: Part 3 extra -- chengwaye.com/daily 法人買賣/當沖 detail JSON; "
+        "omitted/missing/empty just skips this sub-section",
+    )
     ap.add_argument("--out", required=True)
     ap.add_argument(
         "--template-dir",
@@ -164,6 +332,9 @@ def main():
 
     spark = build_sparkline(night.get("points") or [])
 
+    chengwaye_daily = load_json(args.chengwaye_daily) or {}
+    institutional = build_institutional_section(pressplay, chengwaye_daily)
+
     now = datetime.now(TAIPEI)
 
     env = Environment(loader=FileSystemLoader(args.template_dir), autoescape=True)
@@ -179,6 +350,7 @@ def main():
         disposal=disposal,
         date_check=disposal.get("date_check", {}),
         pressplay=pressplay,
+        institutional=institutional,
     )
 
     out_path = Path(args.out)
