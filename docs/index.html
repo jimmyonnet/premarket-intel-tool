@@ -4,6 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>盤前情報準備台</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#131824">
+<link rel="apple-touch-icon" href="https://www.twse.com.tw/favicon.ico">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').then(function(registration) {
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  }
+</script>
+
 <style>
   :root{
     --ink:#0B0E14; --panel:#131824; --panel-2:#1A2132; --line:#253046;
@@ -154,7 +168,7 @@
 
   <header>
     <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 2026/08/22 00:39</div>
+    <div class="generated">產生時間 2026/08/22 02:21</div>
   </header>
 
   
@@ -163,6 +177,29 @@
   </div>
   
 
+  
+  
+  <div style="background:var(--panel-2); padding:12px 16px; border-radius:8px; border:1px solid var(--line); margin-bottom:20px; display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between;">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="font-size:14px; color:var(--muted); font-weight:600;">昨收大盤</span>
+      <span style="font-size:16px; font-weight:700; color:var(--red);">
+        45224.29 (+504.89)
+      </span>
+    </div>
+    <div style="display:flex; gap:16px; font-size:13px; font-weight:600;">
+      
+      <div style="display:flex; gap:6px;">
+        <span style="color:var(--muted);">外資</span>
+        <span style="color:var(--red);">+283.05億</span>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <span style="color:var(--muted);">投信</span>
+        <span style="color:var(--red);">+21.01億</span>
+      </div>
+      
+    </div>
+  </div>
+  
   <div class="part-title">美股四大指數</div>
   <section class="part">
 
@@ -178,32 +215,32 @@
         
         <div class="tile">
           <div class="name">道瓊工業指數</div>
-          <div class="value">53,134.01</div>
-          <div class="delta rise">+374.80 (+0.71%)</div>
+          <div class="value">53,207.02</div>
+          <div class="delta rise">+447.81 (+0.85%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">S&amp;P 500指數</div>
-          <div class="value">7,673.69</div>
-          <div class="delta rise">+32.53 (+0.43%)</div>
+          <div class="value">7,672.55</div>
+          <div class="delta rise">+31.39 (+0.41%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">NASDAQ指數</div>
-          <div class="value">26,134.83</div>
-          <div class="delta rise">+67.66 (+0.26%)</div>
+          <div class="value">26,158.84</div>
+          <div class="delta rise">+91.67 (+0.35%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">費城半導體指數</div>
-          <div class="value">11,774.46</div>
-          <div class="delta fall">-25.56 (-0.22%)</div>
+          <div class="value">11,739.11</div>
+          <div class="delta fall">-60.91 (-0.52%)</div>
         </div>
         
         

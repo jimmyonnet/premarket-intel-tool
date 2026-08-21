@@ -1,0 +1,21 @@
+{
+  "name": "盤前戰情室",
+  "short_name": "戰情室",
+  "description": "每日盤前情報準備台",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#131824",
+  "theme_color": "#131824",
+  "icons": [
+    {
+      "src": "https://www.twse.com.tw/favicon.ico",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://www.twse.com.tw/favicon.ico",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

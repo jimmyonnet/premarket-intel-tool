@@ -297,6 +297,7 @@ def main():
     )
     ap.add_argument("--financials", required=False, help="Path to financials.json")
     ap.add_argument("--news", required=False, help="Path to news.json")
+    ap.add_argument("--twse-summary", required=False, help="Path to twse_summary.json")
     ap.add_argument("--out", required=True)
     ap.add_argument(
         "--template-dir",
@@ -325,7 +326,8 @@ def main():
 
     calendar_raw = load_json(args.calendar)
     financials_data = load_json(args.financials) if args.financials else {}
-    news_data = load_json(args.news) if args.news else [] or {}
+    news_data = load_json(args.news) if args.news else []
+    twse_data = load_json(args.twse_summary) if args.twse_summary else {} or {}
     calendar_section = {
         "today": calendar_raw.get("today"),
         "range_end": calendar_raw.get("range_end"),
@@ -354,6 +356,7 @@ def main():
         calendar=calendar_section,
         financials=financials_data,
         news=news_data,
+        twse=twse_data,
     )
 
     out_path = Path(args.out)

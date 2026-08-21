@@ -236,6 +236,45 @@ def fetch(url: str, fixture_path: Path = None) -> str:
     return resp.text
 
 
+
+def fetch_adrs():
+    adrs = {
+        "tsmc": {"ticker": "TSM", "name": "台積電 ADR"},
+        "umc": {"ticker": "UMC", "name": "聯電 ADR"},
+        "ase": {"ticker": "ASX", "name": "日月光 ADR"}
+    }
+    results = {}
+    import urllib.request
+    import json
+    import sys
+    
+    # We must use HEADERS
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    }
+    
+    for key, info in adrs.items():
+        url = f"https://query2.finance.yahoo.com/v8/finance/chart/{info['ticker']}?interval=1d&range=1d"
+        req = urllib.request.Request(url, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=10) as response:
+                data = json.loads(response.read().decode())
+                meta = data['chart']['result'][0]['meta']
+                reg_price = meta['regularMarketPrice']
+                prev_close = meta['chartPreviousClose']
+                change = reg_price - prev_close
+                change_pct = (change / prev_close) * 100
+                results[key] = {
+                    "name": info["name"],
+                    "value": round(reg_price, 2),
+                    "change": round(change, 2),
+                    "change_pct": round(change_pct, 2)
+                }
+        except Exception as e:
+            print(f"Failed to fetch ADR {info['ticker']}: {e}", file=sys.stderr)
+    return results
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument(
@@ -274,11 +313,15 @@ def main():
     # carries a per-row timestamp, fall back to markets page.
     nikkei = world_indices.get("nikkei225") or us_indices.get("nikkei225")
 
+    adrs = fetch_adrs()
+    
     out = {
+        "adrs": fetch_adrs(),
         "source": {
             "markets": MARKETS_URL,
             "world_indices": WORLD_INDICES_URL,
         },
+        "adrs": adrs,
         "us_indices": {
             "dow": us_indices.get("dow"),
             "sp500": us_indices.get("sp500"),

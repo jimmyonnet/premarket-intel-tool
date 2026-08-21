@@ -4,6 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>盤前情報準備台</title>
+
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#131824">
+<link rel="apple-touch-icon" href="https://www.twse.com.tw/favicon.ico">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').then(function(registration) {
+      console.log('ServiceWorker registration successful with scope: ', registration.scope);
+    }, function(err) {
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  }
+</script>
+
 <style>
   :root{
     --ink:#0B0E14; --panel:#131824; --panel-2:#1A2132; --line:#253046;
@@ -165,6 +179,29 @@
   <div class="ok-banner">✓ 處置股資料日期核對通過（下拉選單：{{ date_check.page_dropdown_selected }} → 適用 {{ date_check.page_says_applies_to }}）</div>
   {% endif %}
 
+  
+  {% if twse and twse.twii %}
+  <div style="background:var(--panel-2); padding:12px 16px; border-radius:8px; border:1px solid var(--line); margin-bottom:20px; display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between;">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="font-size:14px; color:var(--muted); font-weight:600;">昨收大盤</span>
+      <span style="font-size:16px; font-weight:700; color:{% if twse.twii.change > 0 %}var(--red){% elif twse.twii.change < 0 %}var(--green){% else %}var(--text){% endif %};">
+        {{ twse.twii.price }} ({% if twse.twii.change > 0 %}+{% endif %}{{ twse.twii.change }})
+      </span>
+    </div>
+    <div style="display:flex; gap:16px; font-size:13px; font-weight:600;">
+      {% if twse.inst.foreign %}
+      <div style="display:flex; gap:6px;">
+        <span style="color:var(--muted);">外資</span>
+        <span style="color:{% if twse.inst.foreign > 0 %}var(--red){% else %}var(--green){% endif %};">{% if twse.inst.foreign > 0 %}+{% endif %}{{ twse.inst.foreign }}億</span>
+      </div>
+      <div style="display:flex; gap:6px;">
+        <span style="color:var(--muted);">投信</span>
+        <span style="color:{% if twse.inst.trust > 0 %}var(--red){% else %}var(--green){% endif %};">{% if twse.inst.trust > 0 %}+{% endif %}{{ twse.inst.trust }}億</span>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
   <div class="part-title">美股四大指數</div>
   <section class="part">
 

@@ -42,6 +42,9 @@ jobs:
         id: date
         run: echo "today=$(TZ=Asia/Taipei date +%F)" >> "$GITHUB_OUTPUT"
 
+      - name: Fetch Part 0 -- TWSE yesterday recap
+        run: |
+          python scripts/fetch_twse_summary.py || echo '{}' > data/latest/twse_summary.json
       - name: Fetch Part 1 -- indices
         run: python scripts/fetch_indices.py > data/latest/indices.json
 
@@ -97,6 +100,9 @@ jobs:
         run: |
           python scripts/fetch_financials.py || echo '{}' > data/latest/financials.json
           python scripts/build_embeds.py
+      - name: Fetch Part 0 -- TWSE yesterday recap
+        run: |
+          python scripts/fetch_twse_summary.py || echo '{}' > data/latest/twse_summary.json
       - name: Fetch Part 1.5 -- overnight news
         run: |
           python scripts/fetch_news.py || echo '[]' > data/latest/news.json
@@ -111,6 +117,7 @@ jobs:
             --calendar data/latest/calendar.json \
             --financials data/latest/financials.json \
             --news data/latest/news.json \
+            --twse-summary data/latest/twse_summary.json \
             --out docs/index.html
 
       - name: Commit page + raw data snapshot

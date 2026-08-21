@@ -56,7 +56,7 @@ def score_news(title):
         if kw in title_upper: score += 3
         
     # 台股核心 (+3)
-    for kw in ["台積電", "TSMC", "聯發科", "鴻海", "廣達", "外資", "大盤", "台股"]:
+    for kw in ["台積電", "TSMC", "聯發科", "鴻海", "廣達", "外資", "大盤", "台股", "CoWoS", "CPO", "矽光子", "水冷", "散熱", "機器人", "FOPLP", "面板級封裝"]:
         if kw in title_upper: score += 3
         
     # 強烈情緒字眼 (+2)
