@@ -187,7 +187,7 @@
       <h2>差1次就處置 <span class="sub">{{ disposal.one_flag_from_disposal|length }} 檔</span></h2>
       <div class="table-scroll">
       <table>
-        <thead><tr><th>市場</th><th>代號</th><th>名稱</th><th>收盤</th><th>條件</th><th>最快處置</th></tr></thead>
+        <thead><tr><th>所</th><th>代號</th><th>名稱</th><th>收盤</th><th>{{ (date_check.page_says_applies_to.replace('/', '-') + ' ') if date_check.page_says_applies_to else '' }}處置標準條件（本站估算）</th><th>最快處置</th></tr></thead>
         <tbody>
           {% for row in disposal.one_flag_from_disposal %}
           <tr>
