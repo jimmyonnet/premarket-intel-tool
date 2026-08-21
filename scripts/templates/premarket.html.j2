@@ -254,7 +254,7 @@
         </tbody>
       </table>
       </div>
-      {% if disposal.one_flag_from_disposal %}<div class="scroll-hint">← 左右滑動看更多欄位 →</div>{% endif %}
+      {% if disposal.one_flag_from_disposal %}{% endif %}
     </div>
 
     {% set exiting_today = disposal.currently_in_disposal | selectattr('trading_days_left', 'equalto', '出關') | list %}
@@ -282,7 +282,7 @@
         </tbody>
       </table>
       </div>
-      {% if exiting_today %}<div class="scroll-hint">← 左右滑動看更多欄位 →</div>{% endif %}
+      {% if exiting_today %}{% endif %}
     </div>
 
   </section>
@@ -295,7 +295,7 @@
       {% if pressplay.source_article.title %}
       <div class="table-scroll">
       <table>
-        <thead><tr><th>所</th><th>代號</th><th>名稱</th><th class="num">收盤</th><th class="num">量(張)</th><th class="num">外資</th><th class="num">投信</th><th class="num">自營</th><th>AI 理由</th><th>族群</th></tr></thead>
+        <thead><tr><th>所</th><th>代號</th><th>名稱</th><th class="num">收盤</th><th class="num">量(張)</th><th class="num">外資</th><th class="num">投信</th><th class="num">自營</th></tr></thead>
         <tbody>
           {% for row in pressplay.not_found_group.matched %}
           <tr>
@@ -307,16 +307,15 @@
             <td class="num">{{ row.foreign }}</td>
             <td class="num">{{ row.trust }}</td>
             <td class="num">{{ row.dealer }}</td>
-            <td class="condition">{{ row.ai_reason }}</td>
-            <td>{{ row.group }}</td>
+            
           </tr>
           {% else %}
-          <tr class="empty-row"><td colspan="10">今天此區塊沒有標的</td></tr>
+          <tr class="empty-row"><td colspan="8">今天此區塊沒有標的</td></tr>
           {% endfor %}
         </tbody>
       </table>
       </div>
-      {% if pressplay.not_found_group.matched %}<div class="scroll-hint">← 左右滑動看更多欄位 →</div>{% endif %}
+      {% if pressplay.not_found_group.matched %}{% endif %}
       {% if pressplay.not_found_group.unmatched %}
       <p class="missing">未比對到：{{ pressplay.not_found_group.unmatched|join('、') }}（原文可能打錯字或非台股代號，請自行到 chengwaye.com 確認）</p>
       {% endif %}
@@ -330,7 +329,7 @@
       {% if pressplay.source_article.title %}
       <div class="table-scroll">
       <table>
-        <thead><tr><th>所</th><th>代號</th><th>名稱</th><th class="num">收盤</th><th class="num">量(張)</th><th class="num">外資</th><th class="num">投信</th><th class="num">自營</th><th>AI 理由</th><th>族群</th></tr></thead>
+        <thead><tr><th>所</th><th>代號</th><th>名稱</th><th class="num">收盤</th><th class="num">量(張)</th><th class="num">外資</th><th class="num">投信</th><th class="num">自營</th></tr></thead>
         <tbody>
           {% for row in pressplay.found_group.matched %}
           <tr>
@@ -342,16 +341,15 @@
             <td class="num">{{ row.foreign }}</td>
             <td class="num">{{ row.trust }}</td>
             <td class="num">{{ row.dealer }}</td>
-            <td class="condition">{{ row.ai_reason }}</td>
-            <td>{{ row.group }}</td>
+            
           </tr>
           {% else %}
-          <tr class="empty-row"><td colspan="10">今天此區塊沒有標的</td></tr>
+          <tr class="empty-row"><td colspan="8">今天此區塊沒有標的</td></tr>
           {% endfor %}
         </tbody>
       </table>
       </div>
-      {% if pressplay.found_group.matched %}<div class="scroll-hint">← 左右滑動看更多欄位 →</div>{% endif %}
+      {% if pressplay.found_group.matched %}{% endif %}
       {% if pressplay.found_group.unmatched %}
       <p class="missing">未比對到：{{ pressplay.found_group.unmatched|join('、') }}（原文可能打錯字或非台股代號，請自行到 chengwaye.com 確認）</p>
       {% endif %}
@@ -483,6 +481,7 @@
       {% endif %}
 
       {% if calendar.events %}
+      <div style="max-height: 400px; overflow-y: auto; padding-right: 8px; margin-top: 16px;">
       {% for date, evs in calendar.events|groupby('date') %}
       <div class="cal-day" id="cal-{{ date }}">
         <div class="cal-date{{ ' today' if date == calendar.today else '' }}">{{ date[5:].replace('-', '/') }}{% if date == calendar.today %}<br><span class="badge exit-today-badge">今天</span>{% endif %}</div>
@@ -509,6 +508,7 @@
         </div>
       </div>
       {% endfor %}
+      </div>
       {% else %}
       <p class="missing">尚無資料（行事曆來源還沒抓過，或近期沒有排定事件）。</p>
       {% endif %}
