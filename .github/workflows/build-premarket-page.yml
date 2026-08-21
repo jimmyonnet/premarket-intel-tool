@@ -70,6 +70,105 @@ jobs:
           python scripts/fetch_pressplay_groups.py > data/latest/pressplay.json \
             || echo '{}' > data/latest/pressplay.json
 
+      - name: Fetch Part 3 extra -- chengwaye.com/daily 法人買賣/當沖 detail
+        # Public page, no login -- allowed to fail without blocking the
+        # rest of the build (same fallback pattern as Part 3 above);
+        # build_page.py/the template just skip this sub-section when the
+        # JSON is empty.
+        run: |
+          python scripts/fetch_chengwaye_daily.py > data/latest/chengwaye_daily.json \
+            || echo '{}' > data/latest/chengwaye_daily.json
+
+      - name: Build page
+        run: |
+          python scripts/build_page.py \
+            --indices data/latest/indices.json \
+            --night-session data/latest/night_session.json \
+            --disposal data/latest/disposal.json \
+            --pressplay data/latest/pressplay.json \
+            --chengwaye-daily data/latest/chengwaye_daily.json \
+            --out docs/index.html
+
+      - name: Commit page + raw data snapshot
+        run: |
+          git config user.name "premarket-intel-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add docs/index.html data/latest/
+          git diff --cached --quiet && echo "no change" && exit 0
+          git commit -m "build premarket page for ${{ steps.date.outputs.today }}"
+          git push
+name: Build premarket page
+
+# Runs once each weekday morning before market prep. 07:35 Taipei time ==
+# 23:35 UTC the PREVIOUS UTC calendar day (Taipei is UTC+8), so the UTC
+# weekday is shifted back by one vs. the Taipei weekday this fires for:
+#   UTC Sun 23:35 -> Taipei Mon 07:35
+#   UTC Mon 23:35 -> Taipei Tue 07:35
+#   UTC Tue 23:35 -> Taipei Wed 07:35
+#   UTC Wed 23:35 -> Taipei Thu 07:35
+#   UTC Thu 23:35 -> Taipei Fri 07:35
+# Taiwan market holidays are NOT accounted for (see README) -- on a holiday
+# this will still run and publish a page nobody needed; harmless.
+on:
+  schedule:
+    - cron: "35 23 * * 0-4"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install -r requirements.txt
+
+      - name: Install Playwright's Chromium (needed for Part 3's PressPlay login)
+        run: playwright install --with-deps chromium
+
+      - name: Figure out today's date (Asia/Taipei)
+        id: date
+        run: echo "today=$(TZ=Asia/Taipei date +%F)" >> "$GITHUB_OUTPUT"
+
+      - name: Fetch Part 1 -- indices
+        run: python scripts/fetch_indices.py > data/latest/indices.json
+
+      - name: Assemble Part 1 -- TX night session series
+        run: |
+          python scripts/tx_night_session.py assemble \
+            --data-dir data/night_session \
+            --date "${{ steps.date.outputs.today }}" \
+            > data/latest/night_session.json
+
+      - name: Fetch Part 2 -- disposal forecast
+        # --skip-date-check: if chengwaye.com's date context looks wrong we
+        # still want *a* page this morning -- build_page.py surfaces the
+        # mismatch as a visible warning banner instead of us publishing
+        # nothing. See README "About the date-check" section.
+        run: |
+          python scripts/fetch_disposal.py --skip-date-check \
+            > data/latest/disposal.json
+
+      - name: Fetch Part 3 -- PressPlay group lists
+        # Allowed to fail without blocking Part 1/2: PressPlay login
+        # automation carries real, accepted risk (ToS + GitHub Actions'
+        # datacenter IPs getting flagged -- see fetch_pressplay_groups.py's
+        # module docstring, KNOWN RISK). On failure this falls back to an
+        # empty JSON; build_page.py and the template both render a clean
+        # "no data yet" Part 3 instead of the whole page build crashing.
+        env:
+          PRESSPLAY_EMAIL: ${{ secrets.PRESSPLAY_EMAIL }}
+          PRESSPLAY_PASSWORD: ${{ secrets.PRESSPLAY_PASSWORD }}
+        run: |
+          python scripts/fetch_pressplay_groups.py > data/latest/pressplay.json \
+            || echo '{}' > data/latest/pressplay.json
+
       - name: Build page
         run: |
           python scripts/build_page.py \
