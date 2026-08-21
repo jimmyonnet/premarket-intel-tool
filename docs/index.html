@@ -135,6 +135,8 @@
 
   .cal-summary{font-size:14px; font-weight:600; color:var(--text);}
   .cal-desc{font-size:12px; color:var(--muted); margin-top:4px; white-space:pre-line; line-height:1.4;}
+  .cal-link{display:inline-flex; align-items:center; gap:4px; font-size:12px; color:var(--amber); text-decoration:none; background:rgba(232,179,57,0.1); border:1px solid rgba(232,179,57,0.3); padding:3px 8px; border-radius:6px; font-weight:500; transition:all 0.15s ease; margin-top:6px;}
+  .cal-link:hover{background:rgba(232,179,57,0.2); border-color:var(--amber); text-decoration:none;}
 
   @media (max-width: 480px){
     body{padding:16px 10px 48px;}
@@ -160,7 +162,7 @@
 
   <header>
     <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 2026/08/21 21:03</div>
+    <div class="generated">產生時間 2026/08/21 21:07</div>
   </header>
 
   
@@ -173,42 +175,17 @@
   <section class="part">
 
     <div class="card">
-      <h2>台指期夜盤走勢 <span class="sub">TAIFEX · 期交所即時行情</span></h2>
+      <h2>台指期夜盤走勢 <span class="sub">TAIFEX · 期交所即時行情與 TradingView 線圖</span></h2>
       
-      <!-- TradingView Widget BEGIN -->
-      <div class="tradingview-widget-container" style="height:280px; margin-bottom:16px; border-radius:8px; overflow:hidden;">
-        <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px); width:100%;"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
-        {
-          "symbols": [
-            [
-              "台指期近一",
-              "TAIFEX:TX1!|1D"
-            ]
-          ],
-          "chartOnly": false,
-          "width": "100%",
-          "height": "100%",
-          "locale": "zh_TW",
-          "colorTheme": "dark",
-          "gridLineColor": "rgba(38, 45, 61, 0.5)",
-          "fontColor": "#8B93A6",
-          "trendLineColor": "#E8B339",
-          "underLineColor": "rgba(232, 179, 57, 0.12)",
-          "isTransparent": true,
-          "autosize": true
-        }
-        </script>
+      <div style="height:320px; margin-bottom:16px; border-radius:8px; overflow:hidden; background:#151A24;">
+        <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_tx1&symbol=TAIFEX%3ATX1!&interval=60&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=151A24&theme=dark&style=1&timezone=Asia%2FTaipei" style="width: 100%; height: 100%; border: none;"></iframe>
       </div>
-      <!-- TradingView Widget END -->
 
       <div class="spark-stats">
         <span>開盤 <b>45220.0</b></span>
         <span>最高 <b>45474.0</b></span>
         <span>最低 <b>45191.0</b></span>
         <span>昨收 <b>45138.0</b></span>
-        
-        <span>最新 <b class="rise">45401.0 (+0.58%)</b></span>
         
       </div>
     </div>
@@ -2027,10 +2004,14 @@
               
               <span class="cal-cat-badge">總經數據</span>
             </div>
-            <div class="cal-summary">日本-制造业采购经理人指数[PMI]</div>
-            <div class="cal-desc">市场预期: 55.1
-前值:  54.5
-MM图表连结: https://sc.macromicro.me/collections/58/jp-manufacturing-service/797/jp-pmi?utm_medium=calendar</div>
+            <div class="cal-summary">日本-製造業採購經理人指數[PMI]</div>
+            <div class="cal-desc">市場預期: 55.1
+前值:  54.5</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/58/jp-manufacturing-service/797/jp-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
           <div class="cal-event-card cat-econ">
@@ -2040,10 +2021,30 @@ MM图表连结: https://sc.macromicro.me/collections/58/jp-manufacturing-service
               
               <span class="cal-cat-badge">總經數據</span>
             </div>
-            <div class="cal-summary">德国-制造业采购经理人指数[PMI]</div>
-            <div class="cal-desc">市场预期: 52.1
-前值:  52.2
-MM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/500/eu-de-germany-pmi?utm_medium=calendar</div>
+            <div class="cal-summary">德國-製造業採購經理人指數[PMI]</div>
+            <div class="cal-desc">市場預期: 52.1
+前值:  52.2</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/42/eu-industry-relative/500/eu-de-germany-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
+          </div>
+          
+          <div class="cal-event-card cat-general">
+            <div class="cal-header-row">
+              
+              <span class="cal-time-pill">16:00</span>
+              
+              <span class="cal-cat-badge">事件</span>
+            </div>
+            <div class="cal-summary">歐元區-服務業採購經理人指數[NMI]</div>
+            <div class="cal-desc">前值:  51.7</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
           <div class="cal-event-card cat-econ">
@@ -2053,22 +2054,14 @@ MM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/500
               
               <span class="cal-cat-badge">總經數據</span>
             </div>
-            <div class="cal-summary">欧元区-服务业采购经理人指数[NMI]</div>
-            <div class="cal-desc">前值:  51.7
-MM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar</div>
-          </div>
-          
-          <div class="cal-event-card cat-econ">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">16:00</span>
-              
-              <span class="cal-cat-badge">總經數據</span>
+            <div class="cal-summary">歐元區-製造業採購經理人指數[PMI]</div>
+            <div class="cal-desc">市場預期: 51.8
+前值:  51.9</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
             </div>
-            <div class="cal-summary">欧元区-制造业采购经理人指数[PMI]</div>
-            <div class="cal-desc">市场预期: 51.8
-前值:  51.9
-MM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar</div>
+            
           </div>
           
         </div>
@@ -2085,9 +2078,13 @@ MM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499
               
               <span class="cal-cat-badge">總經數據</span>
             </div>
-            <div class="cal-summary">美国-个人消费支出物价指数[PCE]-(同比)</div>
-            <div class="cal-desc">前值:  3.67%
-MM图表连结: https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar</div>
+            <div class="cal-summary">美國-个人消费支出物价指數[PCE]-(年增率(YoY))</div>
+            <div class="cal-desc">前值:  3.67%</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
           <div class="cal-event-card cat-econ">
@@ -2097,10 +2094,14 @@ MM图表连结: https://sc.macromicro.me/collections/5/us-price-relative/25/pce-
               
               <span class="cal-cat-badge">總經數據</span>
             </div>
-            <div class="cal-summary">美国-实际国内生产总值[GDP]-(SAAR, 季增年化季环比)</div>
-            <div class="cal-desc">市场预期: 1.50%
-前值:  1.50%
-MM图表连结: https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar</div>
+            <div class="cal-summary">美國-實際国内生產總值[GDP]-(SAAR, 季增年化季月增率(MoM))</div>
+            <div class="cal-desc">市場預期: 1.50%
+前值:  1.50%</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
           <div class="cal-event-card cat-general">
@@ -2110,9 +2111,13 @@ MM图表连结: https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-g
               
               <span class="cal-cat-badge">事件</span>
             </div>
-            <div class="cal-summary">美国-原油库存(周变动)</div>
-            <div class="cal-desc">前值:  4405.0k
-MM图表连结: https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-inventory?utm_medium=calendar</div>
+            <div class="cal-summary">美國-原油庫存(週變動)</div>
+            <div class="cal-desc">前值:  4405.0k</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-inventory?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
         </div>
@@ -2129,9 +2134,13 @@ MM图表连结: https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-
               
               <span class="cal-cat-badge">事件</span>
             </div>
-            <div class="cal-summary">中国-工业企业利润(累计同比)</div>
-            <div class="cal-desc">前值:  18.70%
-MM图表连结: https://sc.macromicro.me/collections/25/cn-industry-relative/259/cn-industrial-enterprises-total-profits?utm_medium=calendar</div>
+            <div class="cal-summary">中國-工業企業利潤(累計年增率(YoY))</div>
+            <div class="cal-desc">前值:  18.70%</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/259/cn-industrial-enterprises-total-profits?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
           <div class="cal-event-card cat-general">
@@ -2141,9 +2150,13 @@ MM图表连结: https://sc.macromicro.me/collections/25/cn-industry-relative/259
               
               <span class="cal-cat-badge">事件</span>
             </div>
-            <div class="cal-summary">台湾-景气对策信号分数</div>
-            <div class="cal-desc">前值:  41.0
-MM图表连结: https://sc.macromicro.me/collections/10/tw-monitoring-indicators-relative/79/tw-monitoring-indicators?utm_medium=calendar</div>
+            <div class="cal-summary">台灣-景氣對策信號分數</div>
+            <div class="cal-desc">前值:  41.0</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/10/tw-monitoring-indicators-relative/79/tw-monitoring-indicators?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
           <div class="cal-event-card cat-general">
@@ -2153,9 +2166,13 @@ MM图表连结: https://sc.macromicro.me/collections/10/tw-monitoring-indicators
               
               <span class="cal-cat-badge">事件</span>
             </div>
-            <div class="cal-summary">美国-初次申请失业救济金人数</div>
-            <div class="cal-desc">前值:  206000.0
-MM图表连结: https://sc.macromicro.me/collections/4/us-employ-relative/19/initial-jobless-claims?utm_medium=calendar</div>
+            <div class="cal-summary">美國-初次申請失業救濟金人數</div>
+            <div class="cal-desc">前值:  206000.0</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/4/us-employ-relative/19/initial-jobless-claims?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
         </div>
@@ -2172,9 +2189,13 @@ MM图表连结: https://sc.macromicro.me/collections/4/us-employ-relative/19/ini
               
               <span class="cal-cat-badge">事件</span>
             </div>
-            <div class="cal-summary">欧元区-经济信心指数</div>
-            <div class="cal-desc">前值:  96.9
-MM图表连结: https://sc.macromicro.me/collections/36/eu-economic-sentiment-relative/420/eu-ea19-euro-area-economic-sentiment?utm_medium=calendar</div>
+            <div class="cal-summary">歐元區-经济信心指數</div>
+            <div class="cal-desc">前值:  96.9</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/36/eu-economic-sentiment-relative/420/eu-ea19-euro-area-economic-sentiment?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
         </div>
@@ -2184,18 +2205,6 @@ MM图表连结: https://sc.macromicro.me/collections/36/eu-economic-sentiment-re
         <div class="cal-date">08/31</div>
         <div class="cal-day-events">
           
-          <div class="cal-event-card cat-general">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">09:30</span>
-              
-              <span class="cal-cat-badge">事件</span>
-            </div>
-            <div class="cal-summary">中国-官方非制造业采购经理人指数[NMI]</div>
-            <div class="cal-desc">前值:  49.0
-MM图表连结: https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar</div>
-          </div>
-          
           <div class="cal-event-card cat-econ">
             <div class="cal-header-row">
               
@@ -2203,9 +2212,29 @@ MM图表连结: https://sc.macromicro.me/collections/25/cn-industry-relative/233
               
               <span class="cal-cat-badge">總經數據</span>
             </div>
-            <div class="cal-summary">中国-官方制造业采购经理人指数[PMI]</div>
-            <div class="cal-desc">前值:  49.2
-MM图表连结: https://sc.macromicro.me/collections/25/cn-industry-relative/232/cn-pmi-caixin?utm_medium=calendar</div>
+            <div class="cal-summary">中國-官方製造業採購經理人指數[PMI]</div>
+            <div class="cal-desc">前值:  49.2</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/232/cn-pmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
+          </div>
+          
+          <div class="cal-event-card cat-general">
+            <div class="cal-header-row">
+              
+              <span class="cal-time-pill">09:30</span>
+              
+              <span class="cal-cat-badge">事件</span>
+            </div>
+            <div class="cal-summary">中國-官方非製造業採購經理人指數[NMI]</div>
+            <div class="cal-desc">前值:  49.0</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
         </div>
@@ -2222,9 +2251,13 @@ MM图表连结: https://sc.macromicro.me/collections/25/cn-industry-relative/232
               
               <span class="cal-cat-badge">總經數據</span>
             </div>
-            <div class="cal-summary">台湾-制造业采购经理人指数[PMI]</div>
-            <div class="cal-desc">前值:  61.5
-MM图表连结: https://sc.macromicro.me/collections/16/tw-industry-relative/126/tw-pmi?utm_medium=calendar</div>
+            <div class="cal-summary">台灣-製造業採購經理人指數[PMI]</div>
+            <div class="cal-desc">前值:  61.5</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/16/tw-industry-relative/126/tw-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
           <div class="cal-event-card cat-econ">
@@ -2234,9 +2267,13 @@ MM图表连结: https://sc.macromicro.me/collections/16/tw-industry-relative/126
               
               <span class="cal-cat-badge">總經數據</span>
             </div>
-            <div class="cal-summary">美国-ISM制造业指数[PMI]</div>
-            <div class="cal-desc">前值:  55.6
-MM图表连结: https://sc.macromicro.me/collections/8/us-industry-relative/54/ism?utm_medium=calendar</div>
+            <div class="cal-summary">美國-ISM製造業指數[PMI]</div>
+            <div class="cal-desc">前值:  55.6</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/8/us-industry-relative/54/ism?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
         </div>
@@ -2253,9 +2290,13 @@ MM图表连结: https://sc.macromicro.me/collections/8/us-industry-relative/54/i
               
               <span class="cal-cat-badge">事件</span>
             </div>
-            <div class="cal-summary">美国-ADP非农就业人口 (月变动)</div>
-            <div class="cal-desc">前值:  44000.0
-MM图表连结: https://sc.macromicro.me/collections/4/us-employ-relative/36/adp?utm_medium=calendar</div>
+            <div class="cal-summary">美國-ADP非农就业人口 (月变动)</div>
+            <div class="cal-desc">前值:  44000.0</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/4/us-employ-relative/36/adp?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
           <div class="cal-event-card cat-general">
@@ -2266,8 +2307,12 @@ MM图表连结: https://sc.macromicro.me/collections/4/us-employ-relative/36/adp
               <span class="cal-cat-badge">事件</span>
             </div>
             <div class="cal-summary">加拿大-基准利率</div>
-            <div class="cal-desc">前值:  2.25%
-MM图表连结: https://sc.macromicro.me/collections/400/mm-cad/4331/ca-overnight-interest-rate?utm_medium=calendar</div>
+            <div class="cal-desc">前值:  2.25%</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/400/mm-cad/4331/ca-overnight-interest-rate?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
           <div class="cal-event-card cat-general">
@@ -2277,9 +2322,13 @@ MM图表连结: https://sc.macromicro.me/collections/400/mm-cad/4331/ca-overnigh
               
               <span class="cal-cat-badge">事件</span>
             </div>
-            <div class="cal-summary">美国-原油库存(周变动)</div>
-            <div class="cal-desc">前值:  4405.0k
-MM图表连结: https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-inventory?utm_medium=calendar</div>
+            <div class="cal-summary">美國-原油庫存(週變動)</div>
+            <div class="cal-desc">前值:  4405.0k</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-inventory?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
         </div>
@@ -2289,15 +2338,20 @@ MM图表连结: https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-
         <div class="cal-date">09/03</div>
         <div class="cal-day-events">
           
-          <div class="cal-event-card cat-econ">
+          <div class="cal-event-card cat-general">
             <div class="cal-header-row">
               
               <span class="cal-time-pill">02:00</span>
               
-              <span class="cal-cat-badge">總經數據</span>
+              <span class="cal-cat-badge">事件</span>
             </div>
-            <div class="cal-summary">美国美联储褐皮书</div>
-            <div class="cal-desc">MM图表连结: https://sc.macromicro.me/collections/2/us-gdp-relative?utm_medium=calendar</div>
+            <div class="cal-summary">美國美联储褐皮书</div>
+            
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/2/us-gdp-relative?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
           <div class="cal-event-card cat-general">
@@ -2307,8 +2361,13 @@ MM图表连结: https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-
               
               <span class="cal-cat-badge">事件</span>
             </div>
-            <div class="cal-summary">美国-初次申请失业救济金人数</div>
-            <div class="cal-desc">MM图表连结: https://sc.macromicro.me/collections/4/us-employ-relative/19/initial-jobless-claims?utm_medium=calendar</div>
+            <div class="cal-summary">美國-初次申請失業救濟金人數</div>
+            
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/4/us-employ-relative/19/initial-jobless-claims?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
           <div class="cal-event-card cat-econ">
@@ -2318,9 +2377,13 @@ MM图表连结: https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-
               
               <span class="cal-cat-badge">總經數據</span>
             </div>
-            <div class="cal-summary">美国-ISM服务业指数[Services PMI]</div>
-            <div class="cal-desc">前值: 54.1
-MM图表连结: https://sc.macromicro.me/collections/8/us-industry-relative/55/ism-nonmanu?utm_medium=calendar</div>
+            <div class="cal-summary">美國-ISM服務業指數[Services PMI]</div>
+            <div class="cal-desc">前值: 54.1</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/8/us-industry-relative/55/ism-nonmanu?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
           </div>
           
         </div>

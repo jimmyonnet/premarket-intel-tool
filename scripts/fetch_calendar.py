@@ -10,11 +10,13 @@ recurring_ical_events -- plain icalendar does not expand RRULEs) to a
 flat list of event occurrences whose local (Asia/Taipei) date falls
 within [today, today + --days-ahead], sorted by date then time.
 
-Includes automatic event category classification (FED/央行, 總經數據, 期貨結算, 個股/法說).
+Includes automatic event category classification (FED/央行, 總經數據, 期貨結算, 個股/法說),
+Simplified to Traditional Chinese conversion, and MM link extraction.
 """
 import argparse
 import datetime
 import json
+import re
 from pathlib import Path
 
 import requests
@@ -29,6 +31,57 @@ DEFAULT_ICS_URL = (
 TAIPEI = datetime.timezone(datetime.timedelta(hours=8))
 DEFAULT_DAYS_AHEAD = 14
 HEADERS = {"User-Agent": "premarket-intel-tool (+github actions calendar sync)"}
+
+S2TW_MAP = {
+    "MM图表连结": "MM圖表連結",
+    "图表": "圖表",
+    "连结": "連結",
+    "市场": "市場",
+    "预期": "預期",
+    "制造业": "製造業",
+    "采购": "採購",
+    "经理人": "經理人",
+    "指数": "指數",
+    "欧元区": "歐元區",
+    "德国": "德國",
+    "美国": "美國",
+    "中国": "中國",
+    "台湾": "台灣",
+    "环比": "月增率(MoM)",
+    "同比": "年增率(YoY)",
+    "申请": "申請",
+    "救济金": "救濟金",
+    "人数": "人數",
+    "失业": "失業",
+    "库存": "庫存",
+    "周变动": "週變動",
+    "工业": "工業",
+    "企业": "企業",
+    "利润": "利潤",
+    "累计": "累計",
+    "景气": "景氣",
+    "对策": "對策",
+    "信号": "信號",
+    "分数": "分數",
+    "零售": "零售",
+    "销售": "銷售",
+    "订单": "訂單",
+    "耐用品": "耐用品",
+    "服务业": "服務業",
+    "实际": "實際",
+    "生产": "生產",
+    "总值": "總值",
+    "季环比": "季增率(QoQ)",
+    "原油": "原油",
+}
+
+
+def s2tw(text: str) -> str:
+    if not text:
+        return text
+    for s, tw in S2TW_MAP.items():
+        text = text.replace(s, tw)
+    return text
 
 
 def fetch_ics_bytes(url: str, fixture: Path = None) -> bytes:
@@ -74,6 +127,18 @@ def extract_events(ics_bytes: bytes, start_date, end_date):
         if not summary:
             continue
         description = str(comp.get("description", "") or "").strip()
+
+        # Convert Simplified to Traditional Chinese
+        summary = s2tw(summary)
+        description = s2tw(description)
+
+        # Extract MM link if present
+        mm_link = None
+        link_match = re.search(r"https?://[^\s]+", description)
+        if link_match:
+            mm_link = link_match.group(0)
+            description = re.sub(r"(MM\s*圖表連結|MM\s*图表连结)?:\s*https?://[^\s]+", "", description).strip()
+
         cat_info = classify_event(summary, description)
 
         events.append({
@@ -82,6 +147,7 @@ def extract_events(ics_bytes: bytes, start_date, end_date):
             "all_day": all_day,
             "summary": summary,
             "description": description[:200] or None,
+            "mm_link": mm_link,
             "category": cat_info["category"],
             "category_name": cat_info["category_name"],
         })
