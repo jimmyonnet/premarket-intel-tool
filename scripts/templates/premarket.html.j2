@@ -77,6 +77,24 @@
   .table-scroll table{min-width:540px;}
   .scroll-hint{display:none;}
 
+  /* Part 3 extra: per-stock 法人買賣/當沖 detail (collapsed by default,
+     native <details>/<summary> -- no JS needed on this static site). */
+  .inst-detail{border-top:1px solid var(--line); padding:10px 0 2px;}
+  .inst-detail:first-of-type{border-top:none; padding-top:0;}
+  .inst-detail summary{cursor:pointer; font-size:13px; font-weight:600; padding:4px 0;}
+  .inst-body{margin-top:12px;}
+  .inst-body > *{margin-bottom:14px;}
+  .inst-body > *:last-child{margin-bottom:0;}
+  .sub-label{font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:600;}
+  .bubble-chart{width:100%; height:auto; display:block;}
+  .bubble-chart .bubble-axis{stroke:var(--line); stroke-width:1; stroke-dasharray:3,4;}
+  .bubble-chart .bubble{fill-opacity:.72; stroke-width:1;}
+  .bubble-chart .bubble.buy{fill:var(--rise); stroke:var(--rise);}
+  .bubble-chart .bubble.sell{fill:var(--fall); stroke:var(--fall);}
+  .bubble-chart .bubble-name{font-size:11px; fill:var(--muted); font-family:var(--font-ui);}
+  .bubble-chart .bubble-value{font-size:10px; fill:var(--text); font-family:var(--font-mono); font-weight:600;}
+  .bubble-chart .bubble-side-label{font-size:11px; fill:var(--muted); font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.04em;}
+
   /* mobile: reclaim horizontal space (tighter padding/type), let tiles
      pack 2-up instead of stacking to 1 column. Tables are handled above
      via .table-scroll, not here -- they keep desktop-size columns and
@@ -309,6 +327,105 @@
       <p class="missing">尚無資料（PressPlay 收集流程還沒跑過，或今天沒有盤前文章）。</p>
       {% endif %}
     </div>
+
+    {% if institutional.stocks %}
+    <div class="card">
+      <h2>個股法人買賣＋當沖明細 <span class="sub">{{ institutional.matched_count }}/{{ institutional.candidate_count }} 檔有資料{% if institutional.page_date %} · chengwaye.com 資料日期 {{ institutional.page_date }}{% endif %}</span></h2>
+      {% for item in institutional.stocks %}
+      <details class="inst-detail">
+        <summary>{{ item.market }} {{ item.code }} {{ item.name }}　外資 {{ item.foreign }}／投信 {{ item.trust }}／自營 {{ item.dealer }}</summary>
+        <div class="inst-body">
+          {% if item.bubble %}
+          <div>
+            <div class="sub-label">買超／賣超氣泡圖（簡化版，張數 sqrt 比例）</div>
+            <svg class="bubble-chart" viewBox="0 0 {{ item.bubble.width }} {{ item.bubble.height }}" preserveAspectRatio="xMidYMid meet">
+              <line class="bubble-axis" x1="{{ item.bubble.center_x }}" y1="6" x2="{{ item.bubble.center_x }}" y2="{{ item.bubble.height - 6 }}"/>
+              <text class="bubble-side-label buy" x="8" y="16">買超</text>
+              <text class="bubble-side-label sell" x="{{ item.bubble.width - 8 }}" y="16" text-anchor="end">賣超</text>
+              {% for b in item.bubble.bubbles %}
+              <circle class="bubble {{ b.side }}" cx="{{ b.cx }}" cy="{{ b.cy }}" r="{{ b.r }}"/>
+              <text class="bubble-name" x="{{ b.cx }}" y="{{ b.cy - b.r - 6 }}" text-anchor="middle">{{ b.name }}</text>
+              <text class="bubble-value" x="{{ b.cx }}" y="{{ b.cy + b.r + 13 }}" text-anchor="middle">{{ b.value_label }}</text>
+              {% endfor %}
+            </svg>
+          </div>
+          {% endif %}
+
+          <div>
+            <div class="sub-label">買超 Top15</div>
+            <div class="table-scroll">
+            <table>
+              <thead><tr><th>券商</th><th>買超</th><th>買均</th><th>買張</th><th>賣張</th><th>賣均</th></tr></thead>
+              <tbody>
+                {% for r in item.buyers %}
+                <tr>
+                  <td class="name">{{ r.name }}</td>
+                  <td class="num rise">{{ r.net }}</td>
+                  <td class="num">{{ r.buyP }}</td>
+                  <td class="num">{{ r.buyV }}</td>
+                  <td class="num">{{ r.sellV }}</td>
+                  <td class="num">{{ r.sellP }}</td>
+                </tr>
+                {% else %}
+                <tr class="empty-row"><td colspan="6">無資料</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            </div>
+          </div>
+
+          <div>
+            <div class="sub-label">賣超 Top15</div>
+            <div class="table-scroll">
+            <table>
+              <thead><tr><th>券商</th><th>賣超</th><th>買均</th><th>買張</th><th>賣張</th><th>賣均</th></tr></thead>
+              <tbody>
+                {% for r in item.sellers %}
+                <tr>
+                  <td class="name">{{ r.name }}</td>
+                  <td class="num fall">{{ r.net }}</td>
+                  <td class="num">{{ r.buyP }}</td>
+                  <td class="num">{{ r.buyV }}</td>
+                  <td class="num">{{ r.sellV }}</td>
+                  <td class="num">{{ r.sellP }}</td>
+                </tr>
+                {% else %}
+                <tr class="empty-row"><td colspan="6">無資料</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            </div>
+          </div>
+
+          <div>
+            <div class="sub-label">當沖 Top10</div>
+            <div class="table-scroll">
+            <table>
+              <thead><tr><th>券商</th><th>交易總數</th><th>買張</th><th>買均</th><th>賣張</th><th>賣均</th></tr></thead>
+              <tbody>
+                {% for r in item.daytraders %}
+                <tr>
+                  <td class="name">{{ r.name }}</td>
+                  <td class="num">{{ r.total }}</td>
+                  <td class="num">{{ r.buyV }}</td>
+                  <td class="num">{{ r.buyP }}</td>
+                  <td class="num">{{ r.sellV }}</td>
+                  <td class="num">{{ r.sellP }}</td>
+                </tr>
+                {% else %}
+                <tr class="empty-row"><td colspan="6">無資料</td></tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            </div>
+            <p class="source-note">原網頁另有「總損益」欄位；此欄位無法從可取得的資料可靠推算，避免顯示錯誤數字，故先省略。</p>
+          </div>
+        </div>
+      </details>
+      {% endfor %}
+      <p class="source-note">資料來源：chengwaye.com/daily（僅涵蓋當日28檔清單，未在清單中的標的不會顯示此區塊）。</p>
+    </div>
+    {% endif %}
 
     {% if pressplay.source_article.title %}
     <p class="missing">資料來源：{{ pressplay.source_article.title }}{% if pressplay.chengwaye_date %} · chengwaye.com 適用 {{ pressplay.chengwaye_date }}{% endif %}</p>
