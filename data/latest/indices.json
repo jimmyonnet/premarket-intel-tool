@@ -7,7 +7,7 @@
     "dow": {
       "name": "道瓊工業指數",
       "value": 52759.21,
-      "change": -703.84,
+      "change": -703.89,
       "change_pct": -1.32
     },
     "sp500": {
@@ -32,17 +32,17 @@
   "asia_open": {
     "nikkei225": {
       "name": "日經225指數",
-      "value": 65491.41,
-      "change": -725.38,
-      "change_pct": -1.1,
-      "updated_cst": "08/21 08:59"
+      "value": 65901.16,
+      "change": -315.63,
+      "change_pct": -0.48,
+      "updated_cst": "08/21 13:26"
     },
     "kospi": {
       "name": "韓國綜合指數",
-      "value": 6860.27,
-      "change": 7.69,
-      "change_pct": 0.11,
-      "updated_cst": "08/21 08:54"
+      "value": 6948.71,
+      "change": 96.13,
+      "change_pct": 1.4,
+      "updated_cst": "08/21 13:21"
     }
   },
   "_missing_fields": []
