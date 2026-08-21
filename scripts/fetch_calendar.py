@@ -10,14 +10,7 @@ recurring_ical_events -- plain icalendar does not expand RRULEs) to a
 flat list of event occurrences whose local (Asia/Taipei) date falls
 within [today, today + --days-ahead], sorted by date then time.
 
-Like Part 3's PressPlay/chengwaye_daily fetches, this is allowed to fail
-without blocking the rest of the page build -- the GitHub Actions step
-falls back to an empty JSON on error, and build_page.py/the template
-both render a clean "no events" Part 4 rather than crashing the whole
-page over an unreachable or malformed calendar feed.
-
-Usage:
-    python fetch_calendar.py [--ics-url URL] [--fixture PATH] [--today YYYY-MM-DD] [--days-ahead N]
+Includes automatic event category classification (FED/央行, 總經數據, 期貨結算, 個股/法說).
 """
 import argparse
 import datetime
@@ -46,11 +39,20 @@ def fetch_ics_bytes(url: str, fixture: Path = None) -> bytes:
     return resp.content
 
 
+def classify_event(summary: str, description: str) -> dict:
+    text = f"{summary} {description or ''}".upper()
+    if any(k in text for k in ["FED", "聯準會", "FOMC", "鮑爾", "POWELL", "利率決議", "降息", "升息", "央行"]):
+        return {"category": "fed", "category_name": "FED/央行"}
+    if any(k in text for k in ["CPI", "PCE", "PPI", "非農", "GDP", "PMI", "失業率", "零售", "工廠訂單", "耐用品"]):
+        return {"category": "econ", "category_name": "總經數據"}
+    if any(k in text for k in ["結算", "期指", "選擇權", "摩台", "台指期", "SETTLEMENT", "FUTURES"]):
+        return {"category": "futures", "category_name": "期貨結算"}
+    if any(k in text for k in ["法說", "財報", "除權息", "股東會", "庫藏股", "營收", "新股上市", "掛牌", "EARNING"]):
+        return {"category": "stock", "category_name": "個股/法說"}
+    return {"category": "general", "category_name": "事件"}
+
+
 def extract_events(ics_bytes: bytes, start_date, end_date):
-    """All event occurrences (recurring events expanded) whose local date
-    falls in [start_date, end_date] inclusive, sorted by date then time
-    (all-day events sort before timed events on the same date, since a
-    missing time string sorts before any "HH:MM")."""
     cal = icalendar.Calendar.from_ical(ics_bytes)
     occurrences = recurring_ical_events.of(cal).between(start_date, end_date)
 
@@ -66,18 +68,22 @@ def extract_events(ics_bytes: bytes, start_date, end_date):
             ev_date, time_str = dt.date(), dt.strftime("%H:%M")
 
         if ev_date < start_date or ev_date > end_date:
-            continue  # timezone conversion can shift a UTC date across the boundary
+            continue
 
         summary = str(comp.get("summary", "") or "").strip()
         if not summary:
             continue
         description = str(comp.get("description", "") or "").strip()
+        cat_info = classify_event(summary, description)
+
         events.append({
             "date": ev_date.isoformat(),
             "time": time_str,
             "all_day": all_day,
             "summary": summary,
             "description": description[:200] or None,
+            "category": cat_info["category"],
+            "category_name": cat_info["category_name"],
         })
 
     events.sort(key=lambda e: (e["date"], e["time"] or ""))
