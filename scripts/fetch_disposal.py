@@ -67,6 +67,37 @@ def previous_trading_day(d: datetime.date) -> datetime.date:
     return pd
 
 
+BADGE_SPECS = [
+    (6, "3①"),
+    (7, "5"),
+    (8, "6"),
+    (9, "12"),
+]
+
+
+def parse_badge_title(td):
+    """The "3①/5/6/12" progress-dot cells (連續3日第1款／連續5日／10日內6
+    次／30日內12次) render their X/Y value only inside a child <div
+    title="連續5日（第1~7款） 4/5">, as a JS-free flex row of small filled/
+    unfilled dot <span>s -- there is no visible text, so get_text() alone
+    returns "". Confirmed against the live site (2026-08-21) that this
+    title attribute is present in the raw server HTML (checked via the
+    page's own fetch(), not just the post-hydration DOM), so plain
+    requests+BeautifulSoup can read it same as everything else here.
+    Returns None if the cell/div/title isn't there (layout changed --
+    degrade gracefully, same philosophy as the rest of this file)."""
+    if td is None:
+        return None
+    div = td.find("div")
+    title = (div.get("title") if div is not None else None) or td.get("title")
+    if not title:
+        return None
+    m = re.search(r"(\d+)\s*/\s*(\d+)\s*$", title)
+    if not m:
+        return {"title": title, "current": None, "threshold": None}
+    return {"title": title, "current": int(m.group(1)), "threshold": int(m.group(2))}
+
+
 def find_table_after_heading(soup, heading_substring: str):
     """Locate the table that follows a section label containing
     `heading_substring`, without assuming the label is an h1/h2/h3.
@@ -97,7 +128,7 @@ def find_table_after_heading(soup, heading_substring: str):
     return None
 
 
-def rows_as_dicts(table, columns):
+def rows_as_dicts(table, columns, with_badges=False):
     """Iterate <tr> in <tbody>, zip cell text with `columns` names.
 
     Confirmed against the live site (2026-08-20): the two "away from
@@ -107,13 +138,21 @@ def rows_as_dicts(table, columns):
     produces 1 cell, so requiring an exact column-count match both drops
     it and guards against any other row shape that doesn't match what we
     expect, rather than silently emitting a mostly-empty row.
+
+    with_badges=True additionally reads the 4 "3①/5/6/12" progress-dot
+    cells at fixed positions (see BADGE_SPECS/parse_badge_title) into a
+    row["badges"] list of {short, title, current, threshold} dicts, in
+    the same left-to-right order as the source page's columns. Used by
+    the two "away from disposal" tables only -- parse_active's table has
+    no such cells.
     """
     out = []
     if table is None:
         return out
     body = table.find("tbody") or table
     for tr in body.find_all("tr"):
-        cells = [td.get_text(strip=True) for td in tr.find_all("td")]
+        tds = tr.find_all("td")
+        cells = [td.get_text(strip=True) for td in tds]
         # Real data rows have >= len(columns) cells (there may be extra
         # trailing icon/info cells on the live site beyond what we name --
         # zip() below just ignores those). The collapsed "▶" detail rows
@@ -122,6 +161,16 @@ def rows_as_dicts(table, columns):
         if len(cells) < len(columns):
             continue
         row = dict(zip(columns, cells))
+        if with_badges:
+            row["badges"] = []
+            for idx, short in BADGE_SPECS:
+                b = parse_badge_title(tds[idx]) if idx < len(tds) else None
+                row["badges"].append({
+                    "short": short,
+                    "title": (b or {}).get("title"),
+                    "current": (b or {}).get("current"),
+                    "threshold": (b or {}).get("threshold"),
+                })
         out.append(row)
     return out
 
@@ -129,13 +178,13 @@ def rows_as_dicts(table, columns):
 def parse_one_away(soup):
     table = find_table_after_heading(soup, "差1次就處置")
     columns = ["market", "code", "name", "close", "condition", "earliest_disposal"]
-    return rows_as_dicts(table, columns)
+    return rows_as_dicts(table, columns, with_badges=True)
 
 
 def parse_two_away(soup):
     table = find_table_after_heading(soup, "差2次處置")
     columns = ["market", "code", "name", "close", "condition", "earliest_disposal"]
-    return rows_as_dicts(table, columns)
+    return rows_as_dicts(table, columns, with_badges=True)
 
 
 def parse_active(soup):
