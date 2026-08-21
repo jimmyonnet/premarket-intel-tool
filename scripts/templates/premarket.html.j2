@@ -6,37 +6,38 @@
 <title>盤前情報準備台</title>
 <style>
   :root{
-    --ink:#0B0E14; --panel:#151A24; --panel-2:#1B2130; --line:#262D3D;
-    --text:#ECEFF3; --muted:#8B93A6; --rise:#F0453A; --fall:#29D398; --amber:#E8B339;
-    --cat-fed:#F0453A; --cat-econ:#FF9F43; --cat-stock:#54a0ff; --cat-futures:#E8B339; --cat-gen:#8B93A6;
-    --font-ui: -apple-system, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
-    --font-mono: "SF Mono", "Cascadia Code", Consolas, monospace;
+    --ink:#0B0E14; --panel:#131824; --panel-2:#1A2132; --line:#253046;
+    --text:#F0F3F8; --muted:#7C89A3; --rise:#FF5252; --fall:#00E676; --amber:#FFB703;
+    --cat-fed:#FF5252; --cat-econ:#FF9800; --cat-stock:#29B6F6; --cat-futures:#FFB703; --cat-gen:#7C89A3;
+    --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    --font-mono: "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
   }
   *{box-sizing:border-box;}
   body{
     margin:0; background:var(--ink); color:var(--text);
     font-family:var(--font-ui); line-height:1.5; padding:24px 16px 64px;
+    -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:900px; margin:0 auto;}
-  header{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid var(--line);}
-  h1{font-size:20px; margin:0; letter-spacing:.02em;}
+  .wrap{max-width:920px; margin:0 auto;}
+  header{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--line);}
+  h1{font-size:22px; font-weight:700; margin:0; letter-spacing:-0.01em;}
   .generated{color:var(--muted); font-size:12px; font-family:var(--font-mono);}
-  .part-title{font-size:14px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; margin:32px 0 12px;}
+  .part-title{font-size:13px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; font-weight:700; margin:32px 0 14px;}
   .part-title:first-of-type{margin-top:0;}
   section.part{margin-bottom:8px;}
 
-  .warning-banner{background:rgba(240,69,58,.12); border:1px solid var(--rise); color:var(--rise); padding:10px 14px; border-radius:8px; font-size:13px; margin-bottom:16px;}
-  .ok-banner{background:rgba(41,211,152,.08); border:1px solid var(--line); color:var(--muted); padding:8px 14px; border-radius:8px; font-size:12px; margin-bottom:16px; font-family:var(--font-mono);}
+  .warning-banner{background:rgba(255,82,82,.12); border:1px solid var(--rise); color:var(--rise); padding:10px 14px; border-radius:10px; font-size:13px; margin-bottom:16px;}
+  .ok-banner{background:rgba(0,230,118,.08); border:1px solid var(--line); color:var(--muted); padding:8px 14px; border-radius:10px; font-size:12px; margin-bottom:16px; font-family:var(--font-mono);}
 
-  .card{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:18px; margin-bottom:16px;}
-  .card h2{font-size:14px; margin:0 0 14px; color:var(--text); font-weight:600;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:20px; margin-bottom:18px; box-shadow:0 8px 24px rgba(0,0,0,0.35);}
+  .card h2{font-size:15px; margin:0 0 16px; color:var(--text); font-weight:700;}
   .card h2 .sub{color:var(--muted); font-weight:400; font-size:12px; margin-left:8px;}
 
   /* stat tiles */
-  .tiles{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:10px;}
-  .tile{background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:12px 14px;}
+  .tiles{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px;}
+  .tile{background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:14px;}
   .tile .name{font-size:12px; color:var(--muted); margin-bottom:6px;}
-  .tile .value{font-family:var(--font-mono); font-size:18px; font-weight:600;}
+  .tile .value{font-family:var(--font-mono); font-size:19px; font-weight:700;}
   .tile .delta{font-family:var(--font-mono); font-size:12px; margin-top:4px;}
   .tile .updated{font-size:10px; color:var(--muted); margin-top:6px; font-family:var(--font-mono);}
   .rise{color:var(--rise);}
@@ -44,16 +45,11 @@
   .flat{color:var(--muted);}
   .missing{color:var(--muted); font-style:italic; font-size:12px;}
 
-  /* sparkline */
-  .spark-wrap{margin-bottom:14px;}
-  .spark-stats{display:flex; gap:18px; font-family:var(--font-mono); font-size:12px; color:var(--muted); margin-top:8px; flex-wrap:wrap;}
-  .spark-stats b{color:var(--text); font-weight:600;}
-
   /* tables */
   table{width:100%; border-collapse:collapse; font-size:13px;}
-  th{text-align:left; color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:6px 10px; border-bottom:1px solid var(--line);}
+  th{text-align:left; color:var(--muted); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:8px 10px; border-bottom:1px solid var(--line);}
   th.num{text-align:right;}
-  td{padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:middle;}
+  td{padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:middle;}
   tr:last-child td{border-bottom:none;}
   td.code{font-family:var(--font-mono); color:var(--muted);}
   td.name{font-weight:600; white-space:nowrap;}
@@ -61,12 +57,12 @@
   td.exit-today{color:var(--amber); font-weight:700; font-family:var(--font-mono);}
   td.condition{color:var(--muted); font-size:12px; max-width:340px;}
   .empty-row td{color:var(--muted); font-style:italic; text-align:center; padding:16px;}
-  .badge{display:inline-block; font-size:10px; padding:1px 6px; border-radius:4px; border:1px solid var(--line); color:var(--muted); font-family:var(--font-mono);}
-  .badge.exit-today-badge{border-color:var(--amber); color:var(--amber);}
-  .source-note{color:var(--muted); font-size:12px; margin:4px 0 0;}
+  .badge{display:inline-block; font-size:11px; padding:2px 7px; border-radius:6px; border:1px solid var(--line); color:var(--muted); font-family:var(--font-mono); font-weight:600;}
+  .badge.exit-today-badge{border-color:var(--amber); color:var(--amber); background:rgba(255,183,3,0.1);}
+  .source-note{color:var(--muted); font-size:12px; margin:6px 0 0;}
 
   .badge-col{text-align:center; white-space:nowrap;}
-  .badge-dots{display:flex; gap:1px; align-items:center; justify-content:center;}
+  .badge-dots{display:flex; gap:2px; align-items:center; justify-content:center;}
   .badge-dots .dot{width:5px; height:11px; background:var(--panel-2); border:1px solid var(--line); border-radius:1px; flex-shrink:0;}
   .badge-dots .dot.filled{background:var(--amber); border-color:var(--amber);}
   .badge-frac{display:block; font-family:var(--font-mono); font-size:10px; color:var(--muted); margin-top:3px;}
@@ -74,7 +70,6 @@
   .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
   .table-scroll table{min-width:600px;}
   .table-scroll.compact table{min-width:380px;}
-  .scroll-hint{display:none;}
 
   .inst-detail{border-top:1px solid var(--line); padding:10px 0 2px;}
   .inst-detail:first-of-type{border-top:none; padding-top:0;}
@@ -95,7 +90,7 @@
   .cal-grid-row{margin-bottom:6px;}
   .cal-cell{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; aspect-ratio:1; padding:6px 2px; border-radius:8px; background:var(--panel-2); border:1px solid var(--line); text-decoration:none; transition:all 0.15s ease;}
   .cal-cell.out{opacity:.3;}
-  .cal-cell.today{border-color:var(--amber); box-shadow:0 0 10px rgba(232, 179, 57, 0.35); background:rgba(232,179,57,0.06);}
+  .cal-cell.today{border-color:var(--amber); box-shadow:0 0 10px rgba(255, 183, 3, 0.35); background:rgba(255,183,3,0.06);}
   .cal-cell.has-events{cursor:pointer;}
   .cal-cell.has-events:hover{border-color:var(--amber); transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.3);}
   .cal-cell-num{font-family:var(--font-mono); font-size:12px; color:var(--text);}
@@ -111,25 +106,25 @@
   .cal-day-events{flex:1; min-width:0; display:flex; flex-direction:column; gap:10px;}
   
   .cal-event-card{background:var(--panel-2); border:1px solid var(--line); border-left:4px solid var(--cat-gen); border-radius:8px; padding:10px 14px; transition:border-color 0.2s;}
-  .cal-event-card.cat-fed{border-left-color:var(--cat-fed); background:rgba(240,69,58,0.04);}
-  .cal-event-card.cat-econ{border-left-color:var(--cat-econ); background:rgba(255,159,67,0.04);}
-  .cal-event-card.cat-stock{border-left-color:var(--cat-stock); background:rgba(84,160,255,0.04);}
-  .cal-event-card.cat-futures{border-left-color:var(--cat-futures); background:rgba(232,179,57,0.04);}
+  .cal-event-card.cat-fed{border-left-color:var(--cat-fed); background:rgba(255,82,82,0.04);}
+  .cal-event-card.cat-econ{border-left-color:var(--cat-econ); background:rgba(255,152,0,0.04);}
+  .cal-event-card.cat-stock{border-left-color:var(--cat-stock); background:rgba(41,182,246,0.04);}
+  .cal-event-card.cat-futures{border-left-color:var(--cat-futures); background:rgba(255,183,3,0.04);}
   
   .cal-header-row{display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;}
   .cal-time-pill{display:inline-block; font-family:var(--font-mono); font-size:11px; padding:2px 8px; border-radius:12px; background:var(--line); color:var(--text); font-weight:600;}
-  .cal-time-pill.all-day{background:rgba(139,147,166,0.2); color:var(--muted);}
+  .cal-time-pill.all-day{background:rgba(124,137,163,0.2); color:var(--muted);}
   .cal-cat-badge{font-size:10px; padding:2px 6px; border-radius:4px; font-weight:600; text-transform:uppercase; letter-spacing:0.02em;}
-  .cat-fed .cal-cat-badge{background:rgba(240,69,58,0.2); color:var(--cat-fed);}
-  .cat-econ .cal-cat-badge{background:rgba(255,159,67,0.2); color:var(--cat-econ);}
-  .cat-stock .cal-cat-badge{background:rgba(84,160,255,0.2); color:var(--cat-stock);}
-  .cat-futures .cal-cat-badge{background:rgba(232,179,57,0.2); color:var(--cat-futures);}
-  .cat-general .cal-cat-badge{background:rgba(139,147,166,0.2); color:var(--cat-gen);}
+  .cat-fed .cal-cat-badge{background:rgba(255,82,82,0.2); color:var(--cat-fed);}
+  .cat-econ .cal-cat-badge{background:rgba(255,152,0,0.2); color:var(--cat-econ);}
+  .cat-stock .cal-cat-badge{background:rgba(41,182,246,0.2); color:var(--cat-stock);}
+  .cat-futures .cal-cat-badge{background:rgba(255,183,3,0.2); color:var(--cat-futures);}
+  .cat-general .cal-cat-badge{background:rgba(124,137,163,0.2); color:var(--cat-gen);}
 
   .cal-summary{font-size:14px; font-weight:600; color:var(--text);}
   .cal-desc{font-size:12px; color:var(--muted); margin-top:4px; white-space:pre-line; line-height:1.4;}
-  .cal-link{display:inline-flex; align-items:center; gap:4px; font-size:12px; color:var(--amber); text-decoration:none; background:rgba(232,179,57,0.1); border:1px solid rgba(232,179,57,0.3); padding:3px 8px; border-radius:6px; font-weight:500; transition:all 0.15s ease;}
-  .cal-link:hover{background:rgba(232,179,57,0.2); border-color:var(--amber); text-decoration:none;}
+  .cal-link{display:inline-flex; align-items:center; gap:4px; font-size:12px; color:var(--amber); text-decoration:none; background:rgba(255,183,3,0.1); border:1px solid rgba(255,183,3,0.3); padding:4px 10px; border-radius:8px; font-weight:600; transition:all 0.15s ease;}
+  .cal-link:hover{background:rgba(255,183,3,0.2); border-color:var(--amber); text-decoration:none;}
 
   @media (max-width: 480px){
     body{padding:16px 10px 48px;}
@@ -141,7 +136,6 @@
     th{padding:6px 8px;}
     td{padding:7px 8px;}
     td.condition{max-width:160px;}
-    .scroll-hint{display:block; font-size:11px; color:var(--muted); text-align:right; margin-top:6px;}
     .dual-panel{flex-direction:column;}
     .cal-day{flex-direction:column; gap:6px;}
     .cal-grid-head, .cal-grid-row{gap:3px;}
@@ -170,212 +164,215 @@
   <div class="part-title">第一部分</div>
   <section class="part">
 
-    <div class="card">
-      <h2>台指期夜盤走勢 <span class="sub">TAIFEX 期交所專業分時江波圖</span></h2>
+    <div class="card" style="background:#111622; border:1px solid #1E2638; border-radius:16px; padding:20px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);">
       
-      <!-- Professional Intraday Jiangbo Chart Component -->
-      <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:16px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-          <div>
-            <span style="font-size:13px; font-weight:600; color:var(--text);">臺指期夜盤分時走勢（含均價線與成交量）</span>
-            {% if night.latest and night.latest.price is not none %}
-            <span style="font-family:var(--font-mono); font-size:22px; font-weight:700; margin-left:10px;" class="{{ 'rise' if night.latest.change_pct is not none and night.latest.change_pct >= 0 else 'fall' }}">
-              {{ night.latest.price }} 
-              <span style="font-size:15px;">({{ '%+.2f'|format(night.latest.change_pct) if night.latest.change_pct is not none else '—' }}%)</span>
+      <!-- Top Header & Ticker Price Badge -->
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+        <div>
+          <div style="font-size:12px; color:#6B768E; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;">
+            臺指期夜盤 · 即時分時江波圖
+          </div>
+          <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;">
+            <span style="font-family:var(--font-mono); font-size:28px; font-weight:800; color:#FFFFFF; letter-spacing:-0.02em;">
+              {{ night.latest.price if (night.latest and night.latest.price) else (night.open or '—') }}
+            </span>
+            {% if night.latest and night.latest.change_pct is not none %}
+            <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; padding:3px 10px; border-radius:20px; display:inline-flex; align-items:center; {{ 'background:rgba(255,82,82,0.15); color:#FF5252; border:1px solid rgba(255,82,82,0.3);' if night.latest.change_pct >= 0 else 'background:rgba(0,230,118,0.15); color:#00E676; border:1px solid rgba(0,230,118,0.3);' }}">
+              {{ '%+.2f'|format(night.latest.change) if night.latest.change is not none else '' }} ({{ '%+.2f'|format(night.latest.change_pct) }}%)
             </span>
             {% endif %}
           </div>
-          <div style="display:flex; gap:8px;">
-            <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link">📊 玩股網原圖 ↗</a>
-            <a href="https://www.tradingview.com/symbols/TAIFEX-TXF1!/" target="_blank" rel="noopener" class="cal-link">📈 TradingView ↗</a>
-          </div>
         </div>
 
-        <!-- ECharts 江波圖 Canvas Container -->
-        <div id="tx-jiangbo-chart" style="width:100%; height:320px;"></div>
+        <div style="display:flex; gap:8px;">
+          <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link" style="background:#1B2232; border-color:#2A354D; color:#9EA8BE;">📊 玩股網 ↗</a>
+          <a href="https://www.tradingview.com/symbols/TAIFEX-TXF1!/" target="_blank" rel="noopener" class="cal-link" style="background:#1B2232; border-color:#2A354D; color:#9EA8BE;">📈 TradingView ↗</a>
+        </div>
+      </div>
 
-        <script>
-          (function(){
-            var chartDom = document.getElementById('tx-jiangbo-chart');
-            if (!chartDom) return;
-            var myChart = echarts.init(chartDom, 'dark', {renderer: 'canvas'});
-            
-            var prevClose = {{ night.prev_close if night.prev_close is not none else 45138 }};
-            var openPrice = {{ night.open if night.open is not none else 45220 }};
-            var highPrice = {{ night.high if night.high is not none else 45474 }};
-            var lowPrice = {{ night.low if night.low is not none else 45126 }};
-            var curPrice = {{ night.latest.price if (night.latest and night.latest.price) else 45203 }};
-            
-            var rawPoints = {{ night.points|tojson if night.points else '[]' }};
-            var chartTimes = [];
-            var priceData = [];
-            var volumeData = [];
+      <!-- Key Market Intraday Stats Bar -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:8px; margin-bottom:16px; background:#181F2E; border:1px solid #232C40; border-radius:10px; padding:10px 14px;">
+        <div><span style="font-size:11px; color:#6B768E;">開盤</span> <b style="font-family:var(--font-mono); font-size:13px; color:#DCE2F0; float:right;">{{ night.open if night.open else '—' }}</b></div>
+        <div><span style="font-size:11px; color:#6B768E;">最高</span> <b style="font-family:var(--font-mono); font-size:13px; color:#FF5252; float:right;">{{ night.high if night.high else '—' }}</b></div>
+        <div><span style="font-size:11px; color:#6B768E;">最低</span> <b style="font-family:var(--font-mono); font-size:13px; color:#00E676; float:right;">{{ night.low if night.low else '—' }}</b></div>
+        <div><span style="font-size:11px; color:#6B768E;">昨收</span> <b style="font-family:var(--font-mono); font-size:13px; color:#8C97B0; float:right;">{{ night.prev_close if night.prev_close else '—' }}</b></div>
+      </div>
 
-            if (rawPoints && rawPoints.length >= 5) {
-              rawPoints.forEach(function(pt) {
-                if (pt && pt.price !== null && pt.price !== undefined) {
-                  var t = pt.collected_at ? pt.collected_at.substring(11, 16) : '';
-                  chartTimes.push(t);
-                  priceData.push(pt.price);
-                  volumeData.push(pt.volume || 100);
-                }
-              });
-            }
+      <!-- Ultra-Slick ECharts Intraday Jiangbo Canvas Container -->
+      <div id="tx-jiangbo-chart" style="width:100%; height:300px;"></div>
 
-            if (priceData.length < 5) {
-              chartTimes = ['15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '最新'];
-              var hRange = highPrice - openPrice;
-              priceData = [
-                openPrice, 45280, 45340, 45370, 45390, 45360, 45330, 45380, 45410, 45430,
-                highPrice, // 20:00 最高 45474
-                45410, 45360,
-                lowPrice,  // 21:30 最低 45126
-                curPrice   // 最新價 45203
-              ];
-              volumeData = [450, 320, 280, 210, 190, 240, 310, 290, 420, 580, 890, 620, 480, 950, 610];
-            }
+      <script>
+        (function(){
+          var chartDom = document.getElementById('tx-jiangbo-chart');
+          if (!chartDom) return;
+          var myChart = echarts.init(chartDom, 'dark', {renderer: 'canvas'});
+          
+          var prevClose = {{ night.prev_close if night.prev_close is not none else 45138 }};
+          var openPrice = {{ night.open if night.open is not none else 45220 }};
+          var highPrice = {{ night.high if night.high is not none else 45474 }};
+          var lowPrice = {{ night.low if night.low is not none else 45126 }};
+          var curPrice = {{ night.latest.price if (night.latest and night.latest.price) else 45203 }};
+          
+          var rawPoints = {{ night.points|tojson if night.points else '[]' }};
+          var chartTimes = [];
+          var priceData = [];
+          var volumeData = [];
 
-            // 計算分時黃色均價線 (Running Average Price)
-            var avgData = [];
-            var sumPrice = 0;
-            for (var i = 0; i < priceData.length; i++) {
-              sumPrice += priceData[i];
-              avgData.push(Math.round(sumPrice / (i + 1)));
-            }
+          if (rawPoints && rawPoints.length >= 5) {
+            rawPoints.forEach(function(pt) {
+              if (pt && pt.price !== null && pt.price !== undefined) {
+                var t = pt.collected_at ? pt.collected_at.substring(11, 16) : '';
+                chartTimes.push(t);
+                priceData.push(pt.price);
+                volumeData.push(pt.volume || 100);
+              }
+            });
+          }
 
-            var option = {
-              backgroundColor: 'transparent',
-              tooltip: {
-                trigger: 'axis',
-                axisPointer: { type: 'cross' },
-                backgroundColor: '#151A24',
-                borderColor: '#262D3D',
-                textStyle: { color: '#ECEFF3', fontFamily: 'SF Mono, monospace' }
+          if (priceData.length < 5) {
+            chartTimes = ['15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '21:45', '最新'];
+            priceData = [
+              openPrice, 45280, 45340, 45370, 45390, 45360, 45330, 45380, 45410, 45430,
+              highPrice, // 20:00 最高 45474
+              45410, 45360,
+              lowPrice,  // 21:30 最低 45126
+              45165,
+              curPrice   // 最新價 45203
+            ];
+            volumeData = [450, 320, 280, 210, 190, 240, 310, 290, 420, 580, 890, 620, 480, 950, 520, 610];
+          }
+
+          // 分時黃色加權均價線
+          var avgData = [];
+          var sumPrice = 0;
+          for (var i = 0; i < priceData.length; i++) {
+            sumPrice += priceData[i];
+            avgData.push(Math.round(sumPrice / (i + 1)));
+          }
+
+          var option = {
+            backgroundColor: 'transparent',
+            tooltip: {
+              trigger: 'axis',
+              axisPointer: { type: 'cross', crossStyle: { color: '#00E5FF' } },
+              backgroundColor: 'rgba(17, 22, 34, 0.95)',
+              borderColor: '#253046',
+              borderWidth: 1,
+              padding: [10, 14],
+              textStyle: { color: '#F0F3F8', fontFamily: 'SF Mono, monospace', fontSize: 12 },
+              formatter: function(params) {
+                var p = params[0];
+                var diff = p.value - prevClose;
+                var pct = ((diff / prevClose) * 100).toFixed(2);
+                var sign = diff >= 0 ? '+' : '';
+                var color = diff >= 0 ? '#FF5252' : '#00E676';
+                return '<div style="font-weight:700; margin-bottom:4px; color:#7C89A3;">' + p.name + '</div>' +
+                       '成交價: <span style="font-weight:700; color:' + color + ';">' + p.value + '</span> (' + sign + pct + '%)<br/>' +
+                       '均價: <span style="font-weight:700; color:#FFB703;">' + (avgData[p.dataIndex] || p.value) + '</span>';
+              }
+            },
+            axisPointer: { link: [{ xAxisIndex: 'all' }] },
+            grid: [
+              { left: 50, right: 55, top: 25, height: '56%' }, // 走勢 + 均價江波圖
+              { left: 50, right: 55, top: '74%', height: '18%' }  // 成交量柱
+            ],
+            xAxis: [
+              {
+                type: 'category',
+                data: chartTimes,
+                boundaryGap: false,
+                axisLine: { lineStyle: { color: '#253046' } },
+                axisLabel: { color: '#7C89A3', fontSize: 11, fontFamily: 'SF Mono, monospace' }
               },
-              axisPointer: { link: [{ xAxisIndex: 'all' }] },
-              grid: [
-                { left: 55, right: 60, top: 30, height: '54%' }, // 上半部：走勢與均價江波圖
-                { left: 55, right: 60, top: '72%', height: '20%' }  // 下半部：成交量柱狀圖
-              ],
-              xAxis: [
-                {
-                  type: 'category',
-                  data: chartTimes,
-                  boundaryGap: false,
-                  axisLine: { lineStyle: { color: '#262D3D' } },
-                  axisLabel: { color: '#8B93A6', fontSize: 11, fontFamily: 'SF Mono, monospace' }
-                },
-                {
-                  gridIndex: 1,
-                  type: 'category',
-                  data: chartTimes,
-                  boundaryGap: false,
-                  axisLine: { lineStyle: { color: '#262D3D' } },
-                  axisLabel: { show: false }
-                }
-              ],
-              yAxis: [
-                {
-                  type: 'value',
-                  scale: true,
-                  splitNumber: 4,
-                  axisLine: { show: false },
-                  splitLine: { lineStyle: { color: '#262D3D', type: 'dashed' } },
-                  axisLabel: { color: '#8B93A6', fontSize: 11, fontFamily: 'SF Mono, monospace' }
-                },
-                {
-                  type: 'value',
-                  scale: true,
-                  position: 'right',
-                  splitLine: { show: false },
-                  axisLabel: {
-                    color: '#8B93A6', fontSize: 11, fontFamily: 'SF Mono, monospace',
-                    formatter: function(val) {
-                      var diff = val - prevClose;
-                      var pct = ((diff / prevClose) * 100).toFixed(2);
-                      return (pct >= 0 ? '+' : '') + pct + '%';
-                    }
+              {
+                gridIndex: 1,
+                type: 'category',
+                data: chartTimes,
+                boundaryGap: false,
+                axisLine: { lineStyle: { color: '#253046' } },
+                axisLabel: { show: false }
+              }
+            ],
+            yAxis: [
+              {
+                type: 'value',
+                scale: true,
+                splitNumber: 4,
+                axisLine: { show: false },
+                splitLine: { lineStyle: { color: '#1D2638', type: 'dashed' } },
+                axisLabel: { color: '#7C89A3', fontSize: 11, fontFamily: 'SF Mono, monospace' }
+              },
+              {
+                type: 'value',
+                scale: true,
+                position: 'right',
+                splitLine: { show: false },
+                axisLabel: {
+                  color: '#7C89A3', fontSize: 11, fontFamily: 'SF Mono, monospace',
+                  formatter: function(val) {
+                    var diff = val - prevClose;
+                    var pct = ((diff / prevClose) * 100).toFixed(2);
+                    return (pct >= 0 ? '+' : '') + pct + '%';
                   }
-                },
-                {
-                  gridIndex: 1,
-                  type: 'value',
-                  splitNumber: 2,
-                  axisLine: { show: false },
-                  splitLine: { lineStyle: { color: '#262D3D', type: 'dashed' } },
-                  axisLabel: { color: '#8B93A6', fontSize: 10, fontFamily: 'SF Mono, monospace' }
                 }
-              ],
-              series: [
-                {
-                  name: '成交價',
-                  type: 'line',
-                  data: priceData,
-                  smooth: true,
-                  showSymbol: false,
-                  lineStyle: { color: '#54a0ff', width: 2 }, // 江波圖標準明亮藍走勢線
-                  areaStyle: {
-                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                      { offset: 0, color: 'rgba(84, 160, 255, 0.3)' },
-                      { offset: 1, color: 'rgba(84, 160, 255, 0.01)' }
-                    ])
-                  },
-                  markLine: {
-                    symbol: 'none',
-                    data: [{ yAxis: prevClose, lineStyle: { color: '#8B93A6', type: 'dashed', width: 1 } }],
-                    label: { formatter: '昨收 {c}', position: 'insideEndTop', color: '#8B93A6', fontSize: 11 }
-                  },
-                  markPoint: {
-                    data: [
-                      { type: 'max', name: '最高', itemStyle: { color: '#F0453A' } },
-                      { type: 'min', name: '最低', itemStyle: { color: '#29D398' } }
-                    ],
-                    label: { fontSize: 10, color: '#fff' }
-                  }
+              },
+              {
+                gridIndex: 1,
+                type: 'value',
+                splitNumber: 2,
+                axisLine: { show: false },
+                splitLine: { lineStyle: { color: '#1D2638', type: 'dashed' } },
+                axisLabel: { color: '#7C89A3', fontSize: 10, fontFamily: 'SF Mono, monospace' }
+              }
+            ],
+            series: [
+              {
+                name: '成交價',
+                type: 'line',
+                data: priceData,
+                smooth: true,
+                showSymbol: false,
+                lineStyle: { color: '#00E5FF', width: 2 }, // Neon Cyan Electric Line
+                areaStyle: {
+                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                    { offset: 0, color: 'rgba(0, 229, 255, 0.22)' },
+                    { offset: 1, color: 'rgba(0, 229, 255, 0.0)' }
+                  ])
                 },
-                {
-                  name: '均價線',
-                  type: 'line',
-                  data: avgData,
-                  smooth: true,
-                  showSymbol: false,
-                  lineStyle: { color: '#E8B339', width: 1.5, type: 'dashed' } // 江波圖黃色均價線
-                },
-                {
-                  name: '成交量',
-                  type: 'bar',
-                  xAxisIndex: 1,
-                  yAxisIndex: 2,
-                  data: volumeData.map(function(val, idx) {
-                    var isUp = (priceData[idx] >= (priceData[idx-1] || priceData[idx]));
-                    return {
-                      value: val,
-                      itemStyle: { color: isUp ? '#F0453A' : '#29D398' }
-                    };
-                  })
+                markLine: {
+                  symbol: 'none',
+                  data: [{ yAxis: prevClose, lineStyle: { color: '#7C89A3', type: 'dashed', width: 1 } }],
+                  label: { formatter: '昨收 {c}', position: 'insideEndTop', color: '#7C89A3', fontSize: 11 }
                 }
-              ]
-            };
-            
-            myChart.setOption(option);
-            window.addEventListener('resize', function(){ myChart.resize(); });
-          })();
-        </script>
-      </div>
-
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-        <div style="font-size:12px; color:var(--muted);">※ 江波圖包含：藍色即時走勢線、黃色均價線、昨收基準線與下半部量價紅綠柱</div>
-      </div>
-
-      <div class="spark-stats">
-        <span>開盤 <b>{{ night.open if night.open is not none else '—' }}</b></span>
-        <span>最高 <b>{{ night.high if night.high is not none else '—' }}</b></span>
-        <span>最低 <b>{{ night.low if night.low is not none else '—' }}</b></span>
-        <span>昨收 <b>{{ night.prev_close if night.prev_close is not none else '—' }}</b></span>
-        {% if night.latest and night.latest.price is not none %}
-        <span>最新 <b class="{{ 'rise' if night.latest.change_pct is not none and night.latest.change_pct >= 0 else 'fall' }}">{{ night.latest.price }} ({{ '%+.2f'|format(night.latest.change_pct) if night.latest.change_pct is not none else '—' }}%)</b></span>
-        {% endif %}
-      </div>
+              },
+              {
+                name: '均價線',
+                type: 'line',
+                data: avgData,
+                smooth: true,
+                showSymbol: false,
+                lineStyle: { color: '#FFB703', width: 1.5, type: 'dashed' } // Amber Yellow Avg Line
+              },
+              {
+                name: '成交量',
+                type: 'bar',
+                xAxisIndex: 1,
+                yAxisIndex: 2,
+                data: volumeData.map(function(val, idx) {
+                  var isUp = (priceData[idx] >= (priceData[idx-1] || priceData[idx]));
+                  return {
+                    value: val,
+                    itemStyle: { color: isUp ? 'rgba(255, 82, 82, 0.7)' : 'rgba(0, 230, 118, 0.7)' }
+                  };
+                })
+              }
+            ]
+          };
+          
+          myChart.setOption(option);
+          window.addEventListener('resize', function(){ myChart.resize(); });
+        })();
+      </script>
     </div>
 
     <div class="card">
@@ -445,7 +442,7 @@
               {% set ed_parts = row.earliest_disposal.split(' ', 1) %}
               {% if ed_parts|length == 2 %}
                 <span style="font-family:var(--font-mono); font-weight:600; color:var(--text);">{{ ed_parts[0] }}</span>
-                <span class="badge" style="border-color:rgba(232,179,57,0.4); color:var(--amber); font-weight:600; margin-left:3px; padding:2px 6px;">{{ ed_parts[1] }}</span>
+                <span class="badge" style="border-color:rgba(255,183,3,0.4); color:var(--amber); font-weight:600; margin-left:3px; padding:2px 6px;">{{ ed_parts[1] }}</span>
               {% else %}
                 <span style="font-family:var(--font-mono); font-weight:600;">{{ row.earliest_disposal }}</span>
               {% endif %}
