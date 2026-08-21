@@ -163,64 +163,7 @@
   <div class="part-title">第一部分</div>
   <section class="part">
 
-    <!-- Ultimate Scalable Perfect Crop for CMoney Chart -->
-    <div style="background:#FFFFFF; border-radius:12px; padding:12px; max-width:640px; margin:0 auto 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.08);">
-      
-      <!-- Responsive wrapper that maintains dynamic height based on scale -->
-      <div id="cmoney-cropper" style="width: 100%; overflow: hidden; position: relative; background: #FFFFFF; border-radius: 8px;">
-        
-        <!-- Inner div FIXED to desktop size. CMoney layout is locked. -->
-        <div id="cmoney-inner" style="width: 860px; height: 500px; position: absolute; top: 0; left: 0; transform-origin: top left;">
-          
-          <iframe id="cm-iframe" src="https://www.cmoney.tw/forum/futures/TXF1?s=p" 
-                  style="position: absolute; top: -140px; left: -10px; width: 1030px; height: 1200px; border: none; background: transparent; pointer-events: none;"
-                  scrolling="no">
-          </iframe>
-
-        </div>
-      </div>
-
-      <!-- Micro-adjustment controls to fix crop perfectly -->
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; border-top:1px solid #F0F0F0; padding-top:8px;">
-        <div style="font-size:11px; color:#9E9E9E; font-family:var(--font-ui);">※ 完美擷取真實即時江波圖 (Live Crop)</div>
-        <div style="display:flex; gap:4px;">
-          <button onclick="adjustCrop(0, -10)" style="font-size:11px; padding:3px 8px; border:1px solid #E0E0E0; background:#FAFAFA; border-radius:4px; color:#616161; cursor:pointer;">↑ 上移</button>
-          <button onclick="adjustCrop(0, 10)" style="font-size:11px; padding:3px 8px; border:1px solid #E0E0E0; background:#FAFAFA; border-radius:4px; color:#616161; cursor:pointer;">↓ 下移</button>
-          <button onclick="adjustCrop(-10, 0)" style="font-size:11px; padding:3px 8px; border:1px solid #E0E0E0; background:#FAFAFA; border-radius:4px; color:#616161; cursor:pointer;">← 左移</button>
-          <button onclick="adjustCrop(10, 0)" style="font-size:11px; padding:3px 8px; border:1px solid #E0E0E0; background:#FAFAFA; border-radius:4px; color:#616161; cursor:pointer;">→ 右移</button>
-        </div>
-      </div>
-
-      <script>
-        var currentTop = -140;
-        var currentLeft = -10;
-        
-        function resizeCropper() {
-          var cropper = document.getElementById('cmoney-cropper');
-          var inner = document.getElementById('cmoney-inner');
-          if(!cropper || !inner) return;
-          var w = cropper.clientWidth;
-          
-          // If inner width is 860px (desktop chart width), scale down to fit clientWidth
-          var baseWidth = 860;
-          var scale = w / baseWidth; 
-          inner.style.transform = 'scale(' + scale + ')';
-          
-          // Set cropper height to match scaled height of the chart block (about 480px tall)
-          cropper.style.height = (480 * scale) + 'px'; 
-        }
-
-        function adjustCrop(dx, dy) {
-          currentLeft += dx;
-          currentTop += dy;
-          document.getElementById('cm-iframe').style.left = currentLeft + 'px';
-          document.getElementById('cm-iframe').style.top = currentTop + 'px';
-        }
-
-        window.addEventListener('resize', resizeCropper);
-        resizeCropper();
-      </script>
-    </div>
+    <!-- Removed TXF1 Chart based on user request -->
 
     <div class="card">
       <h2>美股四大指數 <span class="sub">前一夜收盤</span></h2>
