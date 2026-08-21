@@ -143,7 +143,6 @@
     .cal-cell-num{font-size:11px;}
   }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -166,228 +165,31 @@
 
     <div class="card" style="background:#111622; border:1px solid #1E2638; border-radius:16px; padding:20px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);">
       
-      <!-- Top Header & Ticker Price Badge -->
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
-        <div>
-          <div style="font-size:12px; color:#6B768E; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;">
-            臺指期夜盤 · 即時分時江波走勢圖
-          </div>
-          <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;">
-            <span style="font-family:var(--font-mono); font-size:28px; font-weight:800; color:#FFFFFF; letter-spacing:-0.02em;">
-              {{ night.latest.price if (night.latest and night.latest.price) else (night.open or '—') }}
-            </span>
-            {% if night.latest and night.latest.change_pct is not none %}
-            <span style="font-family:var(--font-mono); font-size:13px; font-weight:700; padding:3px 10px; border-radius:20px; display:inline-flex; align-items:center; {{ 'background:rgba(255,82,82,0.15); color:#FF5252; border:1px solid rgba(255,82,82,0.3);' if night.latest.change_pct >= 0 else 'background:rgba(0,230,118,0.15); color:#00E676; border:1px solid rgba(0,230,118,0.3);' }}">
-              {{ '%+.2f'|format(night.latest.change) if night.latest.change is not none else '' }} ({{ '%+.2f'|format(night.latest.change_pct) }}%)
-            </span>
-            {% endif %}
-          </div>
+      <!-- Top Header -->
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
+        <div style="font-size:15px; font-weight:700; color:#FFFFFF;">
+          台指期夜盤 (TXF1) 分時江波走勢圖
         </div>
 
         <div style="display:flex; gap:8px; flex-wrap:wrap;">
-          <a href="https://www.cmoney.tw/forum/futures/TXF1?s=p" target="_blank" rel="noopener" class="cal-link" style="background:#1B2232; border-color:#2A354D; color:#9EA8BE;">📊 CMoney ↗</a>
+          <a href="https://www.cmoney.tw/forum/futures/TXF1?s=p" target="_blank" rel="noopener" class="cal-link" style="background:#FFB703; border-color:#FFB703; color:#111622; font-weight:700;">📊 CMoney 原圖 ↗</a>
           <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link" style="background:#1B2232; border-color:#2A354D; color:#9EA8BE;">📊 玩股網 ↗</a>
           <a href="https://www.tradingview.com/symbols/TAIFEX-TXF1!/" target="_blank" rel="noopener" class="cal-link" style="background:#1B2232; border-color:#2A354D; color:#9EA8BE;">📈 TradingView ↗</a>
         </div>
       </div>
 
-      <!-- Key Market Intraday Stats Bar -->
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(100px, 1fr)); gap:8px; margin-bottom:16px; background:#181F2E; border:1px solid #232C40; border-radius:10px; padding:10px 14px;">
-        <div><span style="font-size:11px; color:#6B768E;">開盤</span> <b style="font-family:var(--font-mono); font-size:13px; color:#DCE2F0; float:right;">{{ night.open if night.open else '—' }}</b></div>
-        <div><span style="font-size:11px; color:#6B768E;">最高</span> <b style="font-family:var(--font-mono); font-size:13px; color:#FF5252; float:right;">{{ night.high if night.high else '—' }}</b></div>
-        <div><span style="font-size:11px; color:#6B768E;">最低</span> <b style="font-family:var(--font-mono); font-size:13px; color:#00E676; float:right;">{{ night.low if night.low else '—' }}</b></div>
-        <div><span style="font-size:11px; color:#6B768E;">昨收</span> <b style="font-family:var(--font-mono); font-size:13px; color:#8C97B0; float:right;">{{ night.prev_close if night.prev_close else '—' }}</b></div>
+      <!-- Precise Cropped CMoney Chart Container (Matching media_1787320618473.png) -->
+      <div style="max-width:540px; margin:0 auto; overflow:hidden; border-radius:12px; background:#ffffff; box-shadow:0 4px 20px rgba(0,0,0,0.4); position:relative;">
+        <div style="height:445px; width:100%; overflow:hidden; position:relative;">
+          <iframe src="https://www.cmoney.tw/forum/futures/TXF1?s=p" 
+                  style="width: 780px; height: 1100px; border: none; position: absolute; top: -115px; left: -10px;"
+                  title="CMoney 台指期夜盤走勢圖精準擷取">
+          </iframe>
+        </div>
       </div>
 
-      <!-- Native Clean High-Resolution Canvas Jiangbo Chart -->
-      <div id="tx-jiangbo-chart" style="width:100%; height:320px;"></div>
-
-      <script>
-        (function(){
-          var chartDom = document.getElementById('tx-jiangbo-chart');
-          if (!chartDom) return;
-          var myChart = echarts.init(chartDom, 'dark', {renderer: 'canvas'});
-          
-          var prevClose = {{ night.prev_close if night.prev_close is not none else 45138 }};
-          var openPrice = {{ night.open if night.open is not none else 45220 }};
-          var highPrice = {{ night.high if night.high is not none else 45474 }};
-          var lowPrice = {{ night.low if night.low is not none else 45126 }};
-          var curPrice = {{ night.latest.price if (night.latest and night.latest.price) else 45203 }};
-          
-          var rawPoints = {{ night.points|tojson if night.points else '[]' }};
-          var chartTimes = [];
-          var priceData = [];
-          var volumeData = [];
-
-          if (rawPoints && rawPoints.length >= 5) {
-            rawPoints.forEach(function(pt) {
-              if (pt && pt.price !== null && pt.price !== undefined) {
-                var t = pt.collected_at ? pt.collected_at.substring(11, 16) : '';
-                chartTimes.push(t);
-                priceData.push(pt.price);
-                volumeData.push(pt.volume || 100);
-              }
-            });
-          }
-
-          if (priceData.length < 5) {
-            chartTimes = ['15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '21:30', '21:45', '最新'];
-            priceData = [
-              openPrice, 45310, 45390, 45330, 45410,
-              highPrice, // 最高 45474
-              45360,
-              lowPrice,  // 最低 45126
-              45165,
-              curPrice   // 最新 45203
-            ];
-            volumeData = [450, 280, 190, 310, 420, 890, 480, 950, 520, 610];
-          }
-
-          // 分時黃色加權均價線
-          var avgData = [];
-          var sumPrice = 0;
-          for (var i = 0; i < priceData.length; i++) {
-            sumPrice += priceData[i];
-            avgData.push(Math.round(sumPrice / (i + 1)));
-          }
-
-          var isRise = curPrice >= prevClose;
-          var lineColor = isRise ? '#FF5252' : '#00E676';
-          var areaColor = isRise ? 'rgba(255, 82, 82, 0.18)' : 'rgba(0, 230, 118, 0.18)';
-
-          var option = {
-            backgroundColor: 'transparent',
-            tooltip: {
-              trigger: 'axis',
-              axisPointer: { type: 'cross', crossStyle: { color: '#00E5FF' } },
-              backgroundColor: 'rgba(17, 22, 34, 0.95)',
-              borderColor: '#253046',
-              borderWidth: 1,
-              padding: [10, 14],
-              textStyle: { color: '#F0F3F8', fontFamily: 'SF Mono, monospace', fontSize: 12 },
-              formatter: function(params) {
-                var p = params[0];
-                var diff = p.value - prevClose;
-                var pct = ((diff / prevClose) * 100).toFixed(2);
-                var sign = diff >= 0 ? '+' : '';
-                var color = diff >= 0 ? '#FF5252' : '#00E676';
-                return '<div style="font-weight:700; margin-bottom:4px; color:#7C89A3;">時間 ' + p.name + '</div>' +
-                       '成交價: <span style="font-weight:700; color:' + color + ';">' + p.value + '</span> (' + sign + pct + '%)<br/>' +
-                       '均價: <span style="font-weight:700; color:#FFB703;">' + (avgData[p.dataIndex] || p.value) + '</span>';
-              }
-            },
-            axisPointer: { link: [{ xAxisIndex: 'all' }] },
-            grid: [
-              { left: 55, right: 60, top: 25, height: '56%' },
-              { left: 55, right: 60, top: '74%', height: '18%' }
-            ],
-            xAxis: [
-              {
-                type: 'category',
-                data: chartTimes,
-                boundaryGap: false,
-                axisLine: { lineStyle: { color: '#253046' } },
-                axisLabel: { color: '#7C89A3', fontSize: 11, fontFamily: 'SF Mono, monospace' }
-              },
-              {
-                gridIndex: 1,
-                type: 'category',
-                data: chartTimes,
-                boundaryGap: false,
-                axisLine: { lineStyle: { color: '#253046' } },
-                axisLabel: { show: false }
-              }
-            ],
-            yAxis: [
-              {
-                type: 'value',
-                scale: true,
-                splitNumber: 4,
-                axisLine: { show: false },
-                splitLine: { lineStyle: { color: '#1D2638', type: 'dashed' } },
-                axisLabel: { color: '#7C89A3', fontSize: 11, fontFamily: 'SF Mono, monospace' }
-              },
-              {
-                type: 'value',
-                scale: true,
-                position: 'right',
-                splitLine: { show: false },
-                axisLabel: {
-                  color: '#7C89A3', fontSize: 11, fontFamily: 'SF Mono, monospace',
-                  formatter: function(val) {
-                    var diff = val - prevClose;
-                    var pct = ((diff / prevClose) * 100).toFixed(2);
-                    return (pct >= 0 ? '+' : '') + pct + '%';
-                  }
-                }
-              },
-              {
-                gridIndex: 1,
-                type: 'value',
-                splitNumber: 2,
-                axisLine: { show: false },
-                splitLine: { lineStyle: { color: '#1D2638', type: 'dashed' } },
-                axisLabel: { color: '#7C89A3', fontSize: 10, fontFamily: 'SF Mono, monospace' }
-              }
-            ],
-            series: [
-              {
-                name: '成交價',
-                type: 'line',
-                data: priceData,
-                smooth: true,
-                showSymbol: false,
-                lineStyle: { color: lineColor, width: 2.2 },
-                areaStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    { offset: 0, color: areaColor },
-                    { offset: 1, color: 'rgba(255, 52, 52, 0.0)' }
-                  ])
-                },
-                markLine: {
-                  symbol: 'none',
-                  data: [{ yAxis: prevClose, lineStyle: { color: '#7C89A3', type: 'dashed', width: 1 } }],
-                  label: { formatter: '昨收 {c}', position: 'insideEndTop', color: '#7C89A3', fontSize: 11 }
-                },
-                markPoint: {
-                  data: [
-                    { type: 'max', name: '最高', itemStyle: { color: '#FF5252' } },
-                    { type: 'min', name: '最低', itemStyle: { color: '#00E676' } }
-                  ],
-                  label: { fontSize: 10, color: '#fff' }
-                }
-              },
-              {
-                name: '均價線',
-                type: 'line',
-                data: avgData,
-                smooth: true,
-                showSymbol: false,
-                lineStyle: { color: '#FFB703', width: 1.5, type: 'dashed' }
-              },
-              {
-                name: '成交量',
-                type: 'bar',
-                xAxisIndex: 1,
-                yAxisIndex: 2,
-                data: volumeData.map(function(val, idx) {
-                  var isUp = (priceData[idx] >= (priceData[idx-1] || priceData[idx]));
-                  return {
-                    value: val,
-                    itemStyle: { color: isUp ? 'rgba(255, 82, 82, 0.6)' : 'rgba(0, 230, 118, 0.6)' }
-                  };
-                })
-              }
-            ]
-          };
-          
-          myChart.setOption(option);
-          window.addEventListener('resize', function(){ myChart.resize(); });
-        })();
-      </script>
-
-      <div style="font-size:12px; color:#6B768E; text-align:right; margin-top:8px;">
-        ※ 線圖採原生 HTML5 Canvas 渲染，100% 免疫外站 iframe 捲軸與對話框干擾
+      <div style="font-size:12px; color:#6B768E; text-align:right; margin-top:12px;">
+        ※ 精準擷取 CMoney 股市爆料同學會 (TXF1) 原生即時江波圖區塊
       </div>
     </div>
 
