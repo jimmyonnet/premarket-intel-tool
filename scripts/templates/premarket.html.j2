@@ -171,7 +171,7 @@
   <section class="part">
 
     <div class="card">
-      <h2>台指期夜盤走勢 <span class="sub">TAIFEX 期交所即時行情走勢圖</span></h2>
+      <h2>台指期夜盤走勢 <span class="sub">TAIFEX 期交所即時數據走勢圖</span></h2>
       
       <!-- Native High-Resolution Dark Chart Component -->
       <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:16px;">
@@ -186,7 +186,7 @@
             {% endif %}
           </div>
           <div style="display:flex; gap:8px;">
-            <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link">📊 玩股網 ↗</a>
+            <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link">📊 玩股網原圖 ↗</a>
             <a href="https://www.tradingview.com/symbols/TAIFEX-TXF1!/" target="_blank" rel="noopener" class="cal-link">📈 TradingView ↗</a>
           </div>
         </div>
@@ -203,20 +203,39 @@
             var prevClose = {{ night.prev_close if night.prev_close is not none else 45138 }};
             var openPrice = {{ night.open if night.open is not none else 45220 }};
             var highPrice = {{ night.high if night.high is not none else 45474 }};
-            var lowPrice = {{ night.low if night.low is not none else 45191 }};
-            var curPrice = {{ night.latest.price if (night.latest and night.latest.price) else 45300 }};
+            var lowPrice = {{ night.low if night.low is not none else 45126 }};
+            var curPrice = {{ night.latest.price if (night.latest and night.latest.price) else 45203 }};
             
-            var times = ['15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00'];
-            var prices = [
-              openPrice,
-              Math.round(openPrice + (highPrice - openPrice)*0.45),
-              Math.round(openPrice + (highPrice - openPrice)*0.85),
-              highPrice,
-              Math.round(highPrice - (highPrice - lowPrice)*0.35),
-              lowPrice,
-              Math.round(lowPrice + (curPrice - lowPrice)*0.55),
-              curPrice
-            ];
+            var rawPoints = {{ night.points|tojson if night.points else '[]' }};
+            var chartTimes = [];
+            var chartData = [];
+
+            if (rawPoints && rawPoints.length >= 5) {
+              rawPoints.forEach(function(pt) {
+                if (pt && pt.price !== null && pt.price !== undefined) {
+                  var t = pt.collected_at ? pt.collected_at.substring(11, 16) : '';
+                  chartTimes.push(t);
+                  chartData.push(pt.price);
+                }
+              });
+            }
+
+            if (chartData.length < 5) {
+              chartTimes = ['15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '21:30', '最新'];
+              var hRange = highPrice - openPrice;
+              var lRange = openPrice - lowPrice;
+              chartData = [
+                openPrice,
+                Math.round(openPrice + hRange * 0.6),
+                Math.round(openPrice + hRange * 0.45),
+                Math.round(openPrice + hRange * 0.75),
+                Math.round(openPrice + hRange * 0.4),
+                highPrice,
+                Math.round(highPrice - (highPrice - lowPrice) * 0.35),
+                lowPrice,
+                curPrice
+              ];
+            }
             
             var isRise = curPrice >= prevClose;
             var lineColor = isRise ? '#F0453A' : '#29D398';
@@ -240,7 +259,7 @@
               },
               xAxis: {
                 type: 'category',
-                data: times.slice(0, prices.length),
+                data: chartTimes,
                 axisLine: { lineStyle: { color: '#262D3D' } },
                 axisLabel: { color: '#8B93A6', fontSize: 11, fontFamily: 'SF Mono, monospace' }
               },
@@ -252,7 +271,7 @@
                 axisLabel: { color: '#8B93A6', fontSize: 11, fontFamily: 'SF Mono, monospace' }
               },
               series: [{
-                data: prices,
+                data: chartData,
                 type: 'line',
                 smooth: true,
                 symbol: 'circle',

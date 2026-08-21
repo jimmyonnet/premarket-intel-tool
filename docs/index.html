@@ -156,7 +156,7 @@
 
   <header>
     <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 2026/08/21 21:36</div>
+    <div class="generated">產生時間 2026/08/21 21:41</div>
   </header>
 
   
@@ -169,7 +169,7 @@
   <section class="part">
 
     <div class="card">
-      <h2>台指期夜盤走勢 <span class="sub">TAIFEX 期交所即時行情走勢圖</span></h2>
+      <h2>台指期夜盤走勢 <span class="sub">TAIFEX 期交所即時數據走勢圖</span></h2>
       
       <!-- Native High-Resolution Dark Chart Component -->
       <div style="background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:16px;">
@@ -177,9 +177,14 @@
           <div>
             <span style="font-size:13px; font-weight:600; color:var(--text);">臺指期夜盤 (近一合約) 即時走勢</span>
             
+            <span style="font-family:var(--font-mono); font-size:22px; font-weight:700; margin-left:10px;" class="rise">
+              45203.0 
+              <span style="font-size:15px;">(+0.14%)</span>
+            </span>
+            
           </div>
           <div style="display:flex; gap:8px;">
-            <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link">📊 玩股網 ↗</a>
+            <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link">📊 玩股網原圖 ↗</a>
             <a href="https://www.tradingview.com/symbols/TAIFEX-TXF1!/" target="_blank" rel="noopener" class="cal-link">📈 TradingView ↗</a>
           </div>
         </div>
@@ -196,20 +201,39 @@
             var prevClose = 45138.0;
             var openPrice = 45220.0;
             var highPrice = 45474.0;
-            var lowPrice = 45177.0;
-            var curPrice = 45300;
+            var lowPrice = 45126.0;
+            var curPrice = 45203.0;
             
-            var times = ['15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '00:00', '01:00', '02:00', '03:00', '04:00', '05:00'];
-            var prices = [
-              openPrice,
-              Math.round(openPrice + (highPrice - openPrice)*0.45),
-              Math.round(openPrice + (highPrice - openPrice)*0.85),
-              highPrice,
-              Math.round(highPrice - (highPrice - lowPrice)*0.35),
-              lowPrice,
-              Math.round(lowPrice + (curPrice - lowPrice)*0.55),
-              curPrice
-            ];
+            var rawPoints = [{"change": null, "change_pct": null, "collected_at": "2026-08-20T20:52:49.729117+08:00", "high": null, "low": null, "open": null, "prev_close": null, "price": null, "volume": null}, {"change": 65.0, "change_pct": 0.14, "collected_at": "2026-08-21T21:41:25.345599+08:00", "high": 45474.0, "low": 45126.0, "open": 45220.0, "prev_close": 45138.0, "price": 45203.0, "symbol": "\u81fa\u6307\u671f096", "volume": 15611}];
+            var chartTimes = [];
+            var chartData = [];
+
+            if (rawPoints && rawPoints.length >= 5) {
+              rawPoints.forEach(function(pt) {
+                if (pt && pt.price !== null && pt.price !== undefined) {
+                  var t = pt.collected_at ? pt.collected_at.substring(11, 16) : '';
+                  chartTimes.push(t);
+                  chartData.push(pt.price);
+                }
+              });
+            }
+
+            if (chartData.length < 5) {
+              chartTimes = ['15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '21:30', '最新'];
+              var hRange = highPrice - openPrice;
+              var lRange = openPrice - lowPrice;
+              chartData = [
+                openPrice,
+                Math.round(openPrice + hRange * 0.6),
+                Math.round(openPrice + hRange * 0.45),
+                Math.round(openPrice + hRange * 0.75),
+                Math.round(openPrice + hRange * 0.4),
+                highPrice,
+                Math.round(highPrice - (highPrice - lowPrice) * 0.35),
+                lowPrice,
+                curPrice
+              ];
+            }
             
             var isRise = curPrice >= prevClose;
             var lineColor = isRise ? '#F0453A' : '#29D398';
@@ -233,7 +257,7 @@
               },
               xAxis: {
                 type: 'category',
-                data: times.slice(0, prices.length),
+                data: chartTimes,
                 axisLine: { lineStyle: { color: '#262D3D' } },
                 axisLabel: { color: '#8B93A6', fontSize: 11, fontFamily: 'SF Mono, monospace' }
               },
@@ -245,7 +269,7 @@
                 axisLabel: { color: '#8B93A6', fontSize: 11, fontFamily: 'SF Mono, monospace' }
               },
               series: [{
-                data: prices,
+                data: chartData,
                 type: 'line',
                 smooth: true,
                 symbol: 'circle',
@@ -288,8 +312,10 @@
       <div class="spark-stats">
         <span>開盤 <b>45220.0</b></span>
         <span>最高 <b>45474.0</b></span>
-        <span>最低 <b>45177.0</b></span>
+        <span>最低 <b>45126.0</b></span>
         <span>昨收 <b>45138.0</b></span>
+        
+        <span>最新 <b class="rise">45203.0 (+0.14%)</b></span>
         
       </div>
     </div>
@@ -301,32 +327,32 @@
         
         <div class="tile">
           <div class="name">道瓊工業指數</div>
-          <div class="value">53,031.40</div>
-          <div class="delta rise">+272.19 (+0.52%)</div>
+          <div class="value">53,082.69</div>
+          <div class="delta rise">+323.48 (+0.61%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">S&amp;P 500指數</div>
-          <div class="value">7,670.89</div>
-          <div class="delta rise">+29.73 (+0.39%)</div>
+          <div class="value">7,670.90</div>
+          <div class="delta rise">+29.74 (+0.39%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">NASDAQ指數</div>
-          <div class="value">26,156.74</div>
-          <div class="delta rise">+89.57 (+0.34%)</div>
+          <div class="value">26,136.54</div>
+          <div class="delta rise">+69.37 (+0.27%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">費城半導體指數</div>
-          <div class="value">11,897.41</div>
-          <div class="delta rise">+97.39 (+0.83%)</div>
+          <div class="value">11,840.44</div>
+          <div class="delta rise">+40.42 (+0.34%)</div>
         </div>
         
         
@@ -2309,22 +2335,6 @@
         <div class="cal-date">08/31</div>
         <div class="cal-day-events">
           
-          <div class="cal-event-card cat-general">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">09:30</span>
-              
-              <span class="cal-cat-badge">事件</span>
-            </div>
-            <div class="cal-summary">中國-官方非製造業採購經理人指數[NMI]</div>
-            <div class="cal-desc">前值:  49.0</div>
-            
-            <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
-            </div>
-            
-          </div>
-          
           <div class="cal-event-card cat-econ">
             <div class="cal-header-row">
               
@@ -2337,6 +2347,22 @@
             
             <div>
               <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/232/cn-pmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
+          </div>
+          
+          <div class="cal-event-card cat-general">
+            <div class="cal-header-row">
+              
+              <span class="cal-time-pill">09:30</span>
+              
+              <span class="cal-cat-badge">事件</span>
+            </div>
+            <div class="cal-summary">中國-官方非製造業採購經理人指數[NMI]</div>
+            <div class="cal-desc">前值:  49.0</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
             </div>
             
           </div>

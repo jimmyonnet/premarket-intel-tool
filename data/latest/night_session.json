@@ -11,21 +11,34 @@
       "high": null,
       "low": null,
       "volume": null
+    },
+    {
+      "collected_at": "2026-08-21T21:41:25.345599+08:00",
+      "symbol": "臺指期096",
+      "price": 45203.0,
+      "change": 65.0,
+      "change_pct": 0.14,
+      "open": 45220.0,
+      "prev_close": 45138.0,
+      "high": 45474.0,
+      "low": 45126.0,
+      "volume": 15611
     }
   ],
   "open": 45220.0,
   "prev_close": 45138.0,
   "high": 45474.0,
-  "low": 45191.0,
+  "low": 45126.0,
   "latest": {
-    "collected_at": "2026-08-20T20:52:49.729117+08:00",
-    "price": null,
-    "change": null,
-    "change_pct": null,
-    "open": null,
-    "prev_close": null,
-    "high": null,
-    "low": null,
-    "volume": null
+    "collected_at": "2026-08-21T21:41:25.345599+08:00",
+    "symbol": "臺指期096",
+    "price": 45203.0,
+    "change": 65.0,
+    "change_pct": 0.14,
+    "open": 45220.0,
+    "prev_close": 45138.0,
+    "high": 45474.0,
+    "low": 45126.0,
+    "volume": 15611
   }
 }
