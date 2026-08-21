@@ -88,6 +88,11 @@
      kicks in. */
   .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
   .table-scroll table{min-width:540px;}
+  /* buyers/sellers Top15 tables have only 6 narrow columns (vs. other
+     tables' wider mix) -- a lower min-width lets both sides of
+     .dual-panel fit without needing their own horizontal scroll at
+     normal page widths. */
+  .table-scroll.compact table{min-width:380px;}
   .scroll-hint{display:none;}
 
   /* Part 3 extra: per-stock 法人買賣/當沖 detail (collapsed by default,
@@ -99,15 +104,11 @@
   .inst-body > *{margin-bottom:14px;}
   .inst-body > *:last-child{margin-bottom:0;}
   .sub-label{font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:600;}
-  .bubble-chart{width:100%; height:auto; display:block;}
-  .bubble-chart .bubble-axis{stroke:var(--line); stroke-width:1; stroke-dasharray:3,4;}
-  .bubble-chart .bubble-grid{stroke:var(--line); stroke-width:1; stroke-dasharray:2,3; opacity:.55;}
-  .bubble-chart .bubble-tick{font-size:9px; fill:var(--muted); font-family:var(--font-mono); paint-order:stroke; stroke:var(--panel); stroke-width:3px; stroke-linejoin:round;}
-  .bubble-chart .bubble{fill-opacity:.72; stroke-width:1;}
-  .bubble-chart .bubble.buy{fill:var(--rise); stroke:var(--rise);}
-  .bubble-chart .bubble.sell{fill:var(--fall); stroke:var(--fall);}
-  .bubble-chart .bubble-name{font-size:11px; fill:var(--muted); font-family:var(--font-ui); paint-order:stroke; stroke:var(--panel); stroke-width:3px; stroke-linejoin:round;}
-  .bubble-chart .bubble-side-label{font-size:11px; fill:var(--muted); font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.04em;}
+
+  /* 買超/賣超 Top15 side by side, matching the source site's layout so
+     the two lists can be compared directly instead of stacked. */
+  .dual-panel{display:flex; gap:16px; align-items:flex-start;}
+  .dual-panel-col{flex:1; min-width:0;}
 
   /* mobile: reclaim horizontal space (tighter padding/type), let tiles
      pack 2-up instead of stacking to 1 column. Tables are handled above
@@ -124,6 +125,7 @@
     td{padding:7px 8px;}
     td.condition{max-width:160px;}
     .scroll-hint{display:block; font-size:11px; color:var(--muted); text-align:right; margin-top:6px;}
+    .dual-panel{flex-direction:column;}
   }
 </style>
 </head>
@@ -132,7 +134,7 @@
 
   <header>
     <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 2026/08/21 14:39</div>
+    <div class="generated">產生時間 2026/08/21 18:27</div>
   </header>
 
   
@@ -195,18 +197,18 @@
         
         <div class="tile">
           <div class="name">日經225指數</div>
-          <div class="value">66,015.30</div>
-          <div class="delta fall">-201.49 (-0.30%)</div>
-          <div class="updated">08/21 14:23</div>
+          <div class="value">66,016.36</div>
+          <div class="delta fall">-200.43 (-0.30%)</div>
+          <div class="updated">08/21 14:45</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">韓國綜合指數</div>
-          <div class="value">6,903.31</div>
-          <div class="delta rise">+50.73 (+0.74%)</div>
-          <div class="updated">08/21 14:18</div>
+          <div class="value">6,912.95</div>
+          <div class="delta rise">+60.37 (+0.88%)</div>
+          <div class="updated">08/21 17:05</div>
         </div>
         
         
@@ -239,7 +241,7 @@
             <td class="code">2455</td>
             <td class="name">全新</td>
             <td class="num">412.0</td>
-            <td class="condition">① 08-21不符合③④⑤⑦ 08-21不符合⑥ 量≥9,245張</td>
+            <td class="condition"><span style="color:var(--muted)">① 08-21不符合</span><span style="color:var(--muted)">③④⑤⑦ 08-21不符合</span><span style="color:var(--amber)">⑥ 量≥9,245張</span></td>
             <td class="num">08-24 第2次2分</td>
             
             <td class="badge-col" title="連續3日第1款 0/3">
@@ -277,7 +279,7 @@
             <td class="code">2493</td>
             <td class="name">揚博</td>
             <td class="num">183.0</td>
-            <td class="condition">①168.5↓(-7.9%)</td>
+            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--fall)">168.5↓(-7.9%)</span></td>
             <td class="num">08-24 第1次2分</td>
             
             <td class="badge-col" title="連續3日第1款 2/3">
@@ -315,7 +317,7 @@
             <td class="code">⏸3498</td>
             <td class="name">陽程</td>
             <td class="num">183.5</td>
-            <td class="condition">①192.0↑(+4.6%)</td>
+            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">192.0↑(+4.6%)</span></td>
             <td class="num">08-24 第2次2分</td>
             
             <td class="badge-col" title="連續3日第1款 2/3">
@@ -353,7 +355,7 @@
             <td class="code">3508</td>
             <td class="name">位速</td>
             <td class="num">25.00</td>
-            <td class="condition">①23.35↑(-6.6%)</td>
+            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--fall)">23.35↑(-6.6%)</span></td>
             <td class="num">08-24 第1次2分</td>
             
             <td class="badge-col" title="連續3日第1款 2/3">
@@ -391,7 +393,7 @@
             <td class="code">5314</td>
             <td class="name">世紀*</td>
             <td class="num">23.65</td>
-            <td class="condition">①符合（即使跌停仍符合）</td>
+            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span></td>
             <td class="num">08-24 第1次2分</td>
             
             <td class="badge-col" title="連續3日第1款 2/3">
@@ -429,7 +431,7 @@
             <td class="code">5321</td>
             <td class="name">美而快</td>
             <td class="num">71.9</td>
-            <td class="condition">②72.0↑(+0.1%)①不符合③④⑤⑦ 08-21不符合⑥ 不符合（PB明日不可達，量未達）</td>
+            <td class="condition"><span style="color:var(--muted)">②</span><span style="color:var(--rise)">72.0↑(+0.1%)</span><span style="color:var(--muted)">①不符合</span><span style="color:var(--muted)">③④⑤⑦ 08-21不符合</span><span style="color:var(--muted)">⑥ 不符合（PB明日不可達，量未達）</span></td>
             <td class="num">08-24 第1次2分</td>
             
             <td class="badge-col" title="連續3日第1款 0/3">
@@ -467,7 +469,7 @@
             <td class="code">6834</td>
             <td class="name">天二科技</td>
             <td class="num">93.5</td>
-            <td class="condition">②101.0↑(+8.0%)①不符合③④⑤⑦ 08-21不符合⑥ 不符合（PE/PB明日不可達，量未達）</td>
+            <td class="condition"><span style="color:var(--muted)">②</span><span style="color:var(--rise)">101.0↑(+8.0%)</span><span style="color:var(--muted)">①不符合</span><span style="color:var(--muted)">③④⑤⑦ 08-21不符合</span><span style="color:var(--muted)">⑥ 不符合（PE/PB明日不可達，量未達）</span></td>
             <td class="num">08-24 第1次2分</td>
             
             <td class="badge-col" title="連續3日第1款 0/3">
@@ -505,7 +507,7 @@
             <td class="code">7792</td>
             <td class="name">安葆</td>
             <td class="num">297.5</td>
-            <td class="condition">①303.5↑(+2.0%)</td>
+            <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">303.5↑(+2.0%)</span></td>
             <td class="num">08-24 第1次2分</td>
             
             <td class="badge-col" title="連續3日第1款 2/3">
@@ -544,333 +546,9 @@
       <div class="scroll-hint">← 左右滑動看更多欄位 →</div>
     </div>
 
+    
     <div class="card">
-      <h2>🟡 差2次處置 <span class="sub">8 檔</span></h2>
-      <div class="table-scroll">
-      <table>
-        <thead><tr>
-          <th>所</th><th>代號</th><th>名稱</th><th class="num">收盤</th>
-          <th>08-21 注意股觸發價（本站估算）</th>
-          <th class="num">最快處置</th>
-          <th class="badge-col" title="連續3日第1款">3①</th>
-          <th class="badge-col" title="連續5日（第1~7款）">5</th>
-          <th class="badge-col" title="10日內6次（第1~7款）">6</th>
-          <th class="badge-col" title="30日內12次（第1~7款）">12</th>
-        </tr></thead>
-        <tbody>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">3081</td>
-            <td class="name">聯亞</td>
-            <td class="num">2780</td>
-            <td class="condition">① 08-21不符合③④⑤⑦ 08-21不符合⑥ 量≥5,088張</td>
-            <td class="num">08-25 第2次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 0/3">
-              
-              <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">0/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 0/5">
-              
-              <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">0/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 4/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">4/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 4/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">4/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>市</td>
-            <td class="code">3229</td>
-            <td class="name">晟鈦</td>
-            <td class="num">56.9</td>
-            <td class="condition">①② 08-21不符合③④⑤⑦ 08-21不符合⑥ 不符合（PE/PB明日不可達，量未達）</td>
-            <td class="num">08-25 第1次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 0/3">
-              
-              <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">0/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 0/5">
-              
-              <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">0/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 4/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">4/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 4/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">4/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">3234</td>
-            <td class="name">光環</td>
-            <td class="num">151.0</td>
-            <td class="condition">① 08-21不符合③④⑤⑦ 08-21不符合⑥ 量≥5,574張</td>
-            <td class="num">08-25 第1次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 0/3">
-              
-              <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">0/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 0/5">
-              
-              <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">0/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 4/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">4/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 4/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">4/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">⏸3490</td>
-            <td class="name">單井</td>
-            <td class="num">49.15</td>
-            <td class="condition">①49.35↑(+0.4%)②不符合③④⑤⑦47.85↑(-2.6%)需量≥2,751張+但書⑥ 不符合（PE/PB明日不可達，量已達標）</td>
-            <td class="num">08-25 第2次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 1/3">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 1/5">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 1/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 1/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">3625</td>
-            <td class="name">西勝</td>
-            <td class="num">11.75</td>
-            <td class="condition">①12.20↓(+3.8%)③④⑤⑦12.55↓(+6.8%)需量≥5,685張+但書⑥ 不符合（PB明日不可達，量未達）</td>
-            <td class="num">08-25 第1次10分</td>
-            
-            <td class="badge-col" title="連續3日第1款 1/3">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 1/5">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 1/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 1/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">4304</td>
-            <td class="name">勝昱</td>
-            <td class="num">23.40</td>
-            <td class="condition">①21.50↑(-8.1%)②不符合③④⑤⑦跌停仍過價格條件，需量≥141張 +量差幅/週轉差幅/分點/券資比⑥ 不符合（PB明日不可達，量未達）</td>
-            <td class="num">08-25 第1次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 1/3">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 1/5">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 1/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 1/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">4971</td>
-            <td class="name">IET-KY</td>
-            <td class="num">580</td>
-            <td class="condition">①614↑(+5.9%)②不符合③④⑤⑦637↑(+9.8%)需量≥2,360張+但書⑥ 量≥2,359張</td>
-            <td class="num">08-25 第2次2分</td>
-            
-            <td class="badge-col" title="連續3日第1款 0/3">
-              
-              <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">0/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 3/5">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">3/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 3/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">3/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 3/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">3/12</span>
-              
-            </td>
-            
-          </tr>
-          
-          <tr>
-            <td>市</td>
-            <td class="code">⏸6225</td>
-            <td class="name">天瀚</td>
-            <td class="num">58.9</td>
-            <td class="condition">①符合（即使跌停仍符合）②59.0↑(+0.2%)③④⑤⑦跌停仍過價格條件，需量≥240張 +量差幅/週轉差幅/分點/券資比⑥ 量≥3,000張</td>
-            <td class="num">08-25 第2次25分</td>
-            
-            <td class="badge-col" title="連續3日第1款 1/3">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/3</span>
-              
-            </td>
-            
-            <td class="badge-col" title="連續5日（第1~7款） 1/5">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/5</span>
-              
-            </td>
-            
-            <td class="badge-col" title="10日內6次（第1~7款） 1/6">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/6</span>
-              
-            </td>
-            
-            <td class="badge-col" title="30日內12次（第1~7款） 1/12">
-              
-              <div class="badge-dots"><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-              <span class="badge-frac">1/12</span>
-              
-            </td>
-            
-          </tr>
-          
-        </tbody>
-      </table>
-      </div>
-      <div class="scroll-hint">← 左右滑動看更多欄位 →</div>
-    </div>
-
-    <div class="card">
-      <h2>⚫ 目前處置中 <span class="sub">13 檔 · 分盤交易</span></h2>
+      <h2>⚫ 今日出關 <span class="sub">4 檔</span></h2>
       <div class="table-scroll">
       <table>
         <thead><tr><th>市場</th><th>代號</th><th>名稱</th><th>撮合</th><th class="num">開始</th><th class="num">結束</th><th class="num">出關日</th><th class="num">剩餘交易日</th><th>處置原因</th></tr></thead>
@@ -924,114 +602,6 @@
             <td class="condition">連續3日第1款｜第2次處置</td>
           </tr>
           
-          <tr>
-            <td>櫃</td>
-            <td class="code">3163</td>
-            <td class="name">波若威</td>
-            <td>2分</td>
-            <td class="num">08-13</td>
-            <td class="num">08-21</td>
-            <td class="num">08-24</td>
-            <td class="num">1天</td>
-            <td class="condition">連續5日｜第1次處置</td>
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">4931</td>
-            <td class="name">新盛力</td>
-            <td>2分</td>
-            <td class="num">08-13</td>
-            <td class="num">08-21</td>
-            <td class="num">08-24</td>
-            <td class="num">1天</td>
-            <td class="condition">連續3日第一款｜第1次處置</td>
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">6716</td>
-            <td class="name">應廣</td>
-            <td>2分</td>
-            <td class="num">08-17</td>
-            <td class="num">08-21</td>
-            <td class="num">08-24</td>
-            <td class="num">1天</td>
-            <td class="condition">連續3日第一款｜第1次處置</td>
-          </tr>
-          
-          <tr>
-            <td>市</td>
-            <td class="code">7795</td>
-            <td class="name">長廣</td>
-            <td>2分</td>
-            <td class="num">08-18</td>
-            <td class="num">08-24</td>
-            <td class="num">08-25</td>
-            <td class="num">2天</td>
-            <td class="condition">連續3日第1款｜第1次處置</td>
-          </tr>
-          
-          <tr>
-            <td>市</td>
-            <td class="code">8033</td>
-            <td class="name">雷虎</td>
-            <td>2分</td>
-            <td class="num">08-18</td>
-            <td class="num">08-24</td>
-            <td class="num">08-25</td>
-            <td class="num">2天</td>
-            <td class="condition">連續5日（第1~7款）｜第2次處置</td>
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">3498</td>
-            <td class="name">陽程</td>
-            <td>2分</td>
-            <td class="num">08-19</td>
-            <td class="num">08-25</td>
-            <td class="num">08-26</td>
-            <td class="num">3天</td>
-            <td class="condition">連續3日第一款｜第1次處置</td>
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">3490</td>
-            <td class="name">單井</td>
-            <td>2分</td>
-            <td class="num">08-20</td>
-            <td class="num">08-26</td>
-            <td class="num">08-27</td>
-            <td class="num">4天</td>
-            <td class="condition">連續3日第一款｜第1次處置</td>
-          </tr>
-          
-          <tr>
-            <td>櫃</td>
-            <td class="code">5475</td>
-            <td class="name">德宏</td>
-            <td>2分</td>
-            <td class="num">08-20</td>
-            <td class="num">08-26</td>
-            <td class="num">08-27</td>
-            <td class="num">4天</td>
-            <td class="condition">連續3日第一款｜第2次處置</td>
-          </tr>
-          
-          <tr>
-            <td>市</td>
-            <td class="code">6225</td>
-            <td class="name">天瀚</td>
-            <td>25分</td>
-            <td class="num">08-20</td>
-            <td class="num">08-26</td>
-            <td class="num">08-27</td>
-            <td class="num">4天</td>
-            <td class="condition">連續3日第1款｜變更交易方法｜第1次處置</td>
-          </tr>
-          
         </tbody>
       </table>
       </div>
@@ -1044,7 +614,7 @@
   <section class="part">
 
     <div class="card">
-      <h2>目前沒找到族群 <span class="sub">4/4 檔已比對</span></h2>
+      <h2>目前沒找到族群 <span class="sub">3/4 檔已比對</span></h2>
       
       <div class="table-scroll">
       <table>
@@ -1055,37 +625,24 @@
             <td>市</td>
             <td class="code">2426</td>
             <td class="name">鼎元</td>
-            <td class="num">74.8</td>
-            <td class="num">29,242</td>
-            <td class="num">+3,750</td>
+            <td class="num">82.2</td>
+            <td class="num">28,510</td>
+            <td class="num">+6,273</td>
             <td class="num">0</td>
-            <td class="num">-35</td>
-            <td class="condition">LED與光電元件題材輪動，面板光電族群買盤集中。</td>
+            <td class="num">-5</td>
+            <td class="condition">LED與光電元件題材持續輪動，面板光電族群買盤集中。</td>
             <td>📺 面板光電</td>
-          </tr>
-          
-          <tr>
-            <td>市</td>
-            <td class="code">2851</td>
-            <td class="name">中再保</td>
-            <td class="num">44.2</td>
-            <td class="num">4,828</td>
-            <td class="num">-568</td>
-            <td class="num">0</td>
-            <td class="num">+43</td>
-            <td class="condition">再保險與保險業務題材受到金融族群輪動帶動，資金聚焦金融證券股。</td>
-            <td>🏦 金融證券</td>
           </tr>
           
           <tr>
             <td>櫃</td>
             <td class="code">5314</td>
             <td class="name">世紀*</td>
-            <td class="num">23.65</td>
-            <td class="num">4,007</td>
-            <td class="num">-34</td>
+            <td class="num">26</td>
+            <td class="num">1,841</td>
+            <td class="num">-27</td>
             <td class="num">0</td>
-            <td class="num">+584</td>
+            <td class="num">-30</td>
             <td class="condition">光碟與光儲存產品題材延續輪動，光碟片族群獲買盤關注。</td>
             <td>💿 光碟片</td>
           </tr>
@@ -1094,11 +651,11 @@
             <td>櫃</td>
             <td class="code">3441</td>
             <td class="name">聯一光</td>
-            <td class="num">97.3</td>
-            <td class="num">17,226</td>
-            <td class="num">+1,584</td>
+            <td class="num">107</td>
+            <td class="num">48,653</td>
+            <td class="num">+390</td>
             <td class="num">0</td>
-            <td class="num">+8</td>
+            <td class="num">-7</td>
             <td class="condition">光學元件與鏡頭應用題材帶動族群輪動，光學鏡頭股買盤集中。</td>
             <td>📷 光學鏡頭</td>
           </tr>
@@ -1107,6 +664,8 @@
       </table>
       </div>
       <div class="scroll-hint">← 左右滑動看更多欄位 →</div>
+      
+      <p class="missing">未比對到：2851（原文可能打錯字或非台股代號，請自行到 chengwaye.com 確認）</p>
       
       
     </div>
@@ -1131,412 +690,710 @@
 
     
     <div class="card">
-      <h2>個股法人買賣＋當沖明細 <span class="sub">4/4 檔有資料 · chengwaye.com 資料日期 2026/08/20</span></h2>
+      <h2>個股法人買賣＋當沖明細 <span class="sub">3/3 檔有資料 · chengwaye.com 資料日期 2026/08/21</span></h2>
       
       <details class="inst-detail">
-        <summary>市 2426 鼎元　外資 +3,750／投信 0／自營 -35</summary>
+        <summary>市 2426 鼎元　外資 +6,273／投信 0／自營 -5</summary>
         <div class="inst-body">
-          
-          <div>
-            <div class="sub-label">買超／賣超氣泡圖（Y軸＝均價，X軸／面積＝買賣超張數 sqrt 比例）</div>
-            <svg class="bubble-chart" viewBox="0 0 680 494.1" preserveAspectRatio="xMidYMid meet">
-              
-              <line class="bubble-grid" x1="0" y1="244.7" x2="680" y2="244.7"/>
-              <text class="bubble-tick" x="2" y="241.7">74.2</text>
-              
-              <line class="bubble-grid" x1="0" y1="179.1" x2="680" y2="179.1"/>
-              <text class="bubble-tick" x="2" y="176.1">74.4</text>
-              
-              <line class="bubble-grid" x1="0" y1="113.6" x2="680" y2="113.6"/>
-              <text class="bubble-tick" x="2" y="110.6">74.6</text>
-              
-              <line class="bubble-grid" x1="0" y1="48.0" x2="680" y2="48.0"/>
-              <text class="bubble-tick" x="2" y="45.0">74.8</text>
-              
-              
-              <line class="bubble-grid" x1="266.7" y1="18" x2="266.7" y2="472.1"/>
-              <text class="bubble-tick" x="266.7" y="488.1" text-anchor="middle">200</text>
-              
-              <line class="bubble-grid" x1="445.3" y1="18" x2="445.3" y2="472.1"/>
-              <text class="bubble-tick" x="445.3" y="488.1" text-anchor="middle">200</text>
-              
-              <line class="bubble-grid" x1="214.7" y1="18" x2="214.7" y2="472.1"/>
-              <text class="bubble-tick" x="214.7" y="488.1" text-anchor="middle">500</text>
-              
-              <line class="bubble-grid" x1="497.3" y1="18" x2="497.3" y2="472.1"/>
-              <text class="bubble-tick" x="497.3" y="488.1" text-anchor="middle">500</text>
-              
-              <line class="bubble-grid" x1="156.2" y1="18" x2="156.2" y2="472.1"/>
-              <text class="bubble-tick" x="156.2" y="488.1" text-anchor="middle">1000</text>
-              
-              <line class="bubble-grid" x1="555.8" y1="18" x2="555.8" y2="472.1"/>
-              <text class="bubble-tick" x="555.8" y="488.1" text-anchor="middle">1000</text>
-              
-              <line class="bubble-grid" x1="73.5" y1="18" x2="73.5" y2="472.1"/>
-              <text class="bubble-tick" x="73.5" y="488.1" text-anchor="middle">2000</text>
-              
-              <line class="bubble-grid" x1="638.5" y1="18" x2="638.5" y2="472.1"/>
-              <text class="bubble-tick" x="638.5" y="488.1" text-anchor="middle">2000</text>
-              
-              <line class="bubble-axis" x1="356.0" y1="18" x2="356.0" y2="472.1"/>
-              <text class="bubble-side-label buy" x="4" y="11">買超</text>
-              <text class="bubble-side-label sell" x="676" y="11" text-anchor="end">賣超</text>
-              
-              <circle class="bubble buy" cx="53.2" cy="48.0" r="17.9"><title>統 一　+2,297 張｜均價 74.8</title></circle>
-              <text class="bubble-name" x="53.2" y="24.1" text-anchor="middle">統 一</text>
-              
-              <circle class="bubble buy" cx="148.8" cy="98.0" r="14.1"><title>台新證券　+1,076 張｜均價 74.8</title></circle>
-              <text class="bubble-name" x="148.8" y="77.9" text-anchor="middle">台新證券</text>
-              
-              <circle class="bubble buy" cx="192.1" cy="142.5" r="12.4"><title>合庫高雄　+673 張｜均價 74.8</title></circle>
-              <text class="bubble-name" x="192.1" y="124.1" text-anchor="middle">合庫高雄</text>
-              
-              <circle class="bubble buy" cx="245.5" cy="183.2" r="10.3"><title>凱基敦北　+306 張｜均價 74.8</title></circle>
-              <text class="bubble-name" x="245.5" y="166.89999999999998" text-anchor="middle">凱基敦北</text>
-              
-              <circle class="bubble buy" cx="147.8" cy="225.7" r="14.2"><title>港商野村　+1,086 張｜均價 74.79</title></circle>
-              <text class="bubble-name" x="147.8" y="205.5" text-anchor="middle">港商野村</text>
-              
-              <circle class="bubble buy" cx="200.7" cy="270.0" r="12.1"><title>中國信託　+604 張｜均價 74.79</title></circle>
-              <text class="bubble-name" x="200.7" y="251.89999999999998" text-anchor="middle">中國信託</text>
-              
-              <circle class="bubble buy" cx="50.0" cy="318.1" r="18.0"><title>永豐金　+2,346 張｜均價 74.78</title></circle>
-              <text class="bubble-name" x="50.0" y="294.1" text-anchor="middle">永豐金</text>
-              
-              <circle class="bubble buy" cx="245.0" cy="364.5" r="10.4"><title>國泰綜合　+309 張｜均價 74.78</title></circle>
-              <text class="bubble-name" x="245.0" y="348.1" text-anchor="middle">國泰綜合</text>
-              
-              <circle class="bubble buy" cx="191.6" cy="405.3" r="12.4"><title>摩根大通　+677 張｜均價 74.74</title></circle>
-              <text class="bubble-name" x="191.6" y="386.90000000000003" text-anchor="middle">摩根大通</text>
-              
-              <circle class="bubble buy" cx="95.9" cy="451.9" r="16.2"><title>凱基台北　+1,695 張｜均價 74.71</title></circle>
-              <text class="bubble-name" x="95.9" y="429.7" text-anchor="middle">凱基台北</text>
-              
-              <circle class="bubble sell" cx="497.6" cy="48.0" r="11.6"><title>台新屏東　-502 張｜均價 74.8</title></circle>
-              <text class="bubble-name" x="497.6" y="30.4" text-anchor="middle">台新屏東</text>
-              
-              <circle class="bubble sell" cx="451.4" cy="87.3" r="9.7"><title>國票北高　-228 張｜均價 74.8</title></circle>
-              <text class="bubble-name" x="451.4" y="71.6" text-anchor="middle">國票北高</text>
-              
-              <circle class="bubble sell" cx="434.6" cy="124.1" r="9.1"><title>康 和　-155 張｜均價 74.8</title></circle>
-              <text class="bubble-name" x="434.6" y="109.0" text-anchor="middle">康 和</text>
-              
-              <circle class="bubble sell" cx="428.6" cy="160.0" r="8.8"><title>元大基隆　-132 張｜均價 74.8</title></circle>
-              <text class="bubble-name" x="428.6" y="145.2" text-anchor="middle">元大基隆</text>
-              
-              <circle class="bubble sell" cx="428.3" cy="195.6" r="8.8"><title>富邦　-131 張｜均價 74.79</title></circle>
-              <text class="bubble-name" x="428.3" y="180.79999999999998" text-anchor="middle">富邦</text>
-              
-              <circle class="bubble sell" cx="449.1" cy="232.1" r="9.7"><title>國泰敦南　-217 張｜均價 74.78</title></circle>
-              <text class="bubble-name" x="449.1" y="216.4" text-anchor="middle">國泰敦南</text>
-              
-              <circle class="bubble sell" cx="450.2" cy="269.5" r="9.7"><title>凱基三重　-223 張｜均價 74.74</title></circle>
-              <text class="bubble-name" x="450.2" y="253.8" text-anchor="middle">凱基三重</text>
-              
-              <circle class="bubble sell" cx="482.0" cy="308.1" r="10.9"><title>凱基信義　-398 張｜均價 74.67</title></circle>
-              <text class="bubble-name" x="482.0" y="291.20000000000005" text-anchor="middle">凱基信義</text>
-              
-              <circle class="bubble sell" cx="428.6" cy="345.8" r="8.8"><title>花旗環球　-132 張｜均價 74.6</title></circle>
-              <text class="bubble-name" x="428.6" y="331.0" text-anchor="middle">花旗環球</text>
-              
-              <circle class="bubble sell" cx="431.0" cy="381.5" r="8.9"><title>富邦台中　-141 張｜均價 74.19</title></circle>
-              <text class="bubble-name" x="431.0" y="366.6" text-anchor="middle">富邦台中</text>
-              
-            </svg>
+
+          <div class="dual-panel">
+            <div class="dual-panel-col">
+              <div class="sub-label">買超 Top15</div>
+              <div class="table-scroll compact">
+              <table>
+                <thead><tr><th>券商</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+                <tbody>
+                  
+                  <tr>
+                    <td class="name">摩根大通</td>
+                    <td class="num rise">+2,234</td>
+                    <td class="num">81.87</td>
+                    <td class="num">2,255</td>
+                    <td class="num">21</td>
+                    <td class="num">82.1</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">凱基台北</td>
+                    <td class="num rise">+1,317</td>
+                    <td class="num">81.95</td>
+                    <td class="num">1,929</td>
+                    <td class="num">612</td>
+                    <td class="num">82.11</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">美商高盛</td>
+                    <td class="num rise">+1,310</td>
+                    <td class="num">81.81</td>
+                    <td class="num">1,383</td>
+                    <td class="num">73</td>
+                    <td class="num">81.87</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">富邦</td>
+                    <td class="num rise">+1,111</td>
+                    <td class="num">82.08</td>
+                    <td class="num">1,506</td>
+                    <td class="num">395</td>
+                    <td class="num">82.13</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">國票安和</td>
+                    <td class="num rise">+1,042</td>
+                    <td class="num">82.04</td>
+                    <td class="num">1,113</td>
+                    <td class="num">71</td>
+                    <td class="num">81.41</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">台灣摩根</td>
+                    <td class="num rise">+890</td>
+                    <td class="num">82.1</td>
+                    <td class="num">932</td>
+                    <td class="num">42</td>
+                    <td class="num">82.01</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">凱基站前</td>
+                    <td class="num rise">+741</td>
+                    <td class="num">81.67</td>
+                    <td class="num">995</td>
+                    <td class="num">254</td>
+                    <td class="num">82.14</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">美林</td>
+                    <td class="num rise">+674</td>
+                    <td class="num">82.1</td>
+                    <td class="num">759</td>
+                    <td class="num">85</td>
+                    <td class="num">82.1</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大</td>
+                    <td class="num rise">+627</td>
+                    <td class="num">81.96</td>
+                    <td class="num">5,958</td>
+                    <td class="num">5,331</td>
+                    <td class="num">82.14</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">富邦南屯</td>
+                    <td class="num rise">+444</td>
+                    <td class="num">81.98</td>
+                    <td class="num">473</td>
+                    <td class="num">29</td>
+                    <td class="num">82.07</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">凱基城中</td>
+                    <td class="num rise">+350</td>
+                    <td class="num">82.02</td>
+                    <td class="num">371</td>
+                    <td class="num">21</td>
+                    <td class="num">81.8</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">永豐金</td>
+                    <td class="num rise">+242</td>
+                    <td class="num">82.15</td>
+                    <td class="num">392</td>
+                    <td class="num">150</td>
+                    <td class="num">81.72</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">港商野村</td>
+                    <td class="num rise">+181</td>
+                    <td class="num">81.77</td>
+                    <td class="num">229</td>
+                    <td class="num">48</td>
+                    <td class="num">81.6</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">永豐信義</td>
+                    <td class="num rise">+170</td>
+                    <td class="num">81.95</td>
+                    <td class="num">182</td>
+                    <td class="num">12</td>
+                    <td class="num">82.02</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">統一南京</td>
+                    <td class="num rise">+149</td>
+                    <td class="num">81.62</td>
+                    <td class="num">206</td>
+                    <td class="num">57</td>
+                    <td class="num">80.28</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              </div>
+            </div>
+
+            <div class="dual-panel-col">
+              <div class="sub-label">賣超 Top15</div>
+              <div class="table-scroll compact">
+              <table>
+                <thead><tr><th>券商</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+                <tbody>
+                  
+                  <tr>
+                    <td class="name">台新證券</td>
+                    <td class="num fall">-1,110</td>
+                    <td class="num">82.18</td>
+                    <td class="num">237</td>
+                    <td class="num">1,347</td>
+                    <td class="num">80.65</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">統 一</td>
+                    <td class="num fall">-823</td>
+                    <td class="num">81.91</td>
+                    <td class="num">40</td>
+                    <td class="num">863</td>
+                    <td class="num">80.84</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">凱基敦北</td>
+                    <td class="num fall">-309</td>
+                    <td class="num">82.2</td>
+                    <td class="num">205</td>
+                    <td class="num">514</td>
+                    <td class="num">80.8</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">玉山台南</td>
+                    <td class="num fall">-253</td>
+                    <td class="num">82.13</td>
+                    <td class="num">9</td>
+                    <td class="num">262</td>
+                    <td class="num">82.18</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">永豐萬盛</td>
+                    <td class="num fall">-187</td>
+                    <td class="num">82.09</td>
+                    <td class="num">22</td>
+                    <td class="num">209</td>
+                    <td class="num">82.2</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">國泰敦南</td>
+                    <td class="num fall">-184</td>
+                    <td class="num">81.77</td>
+                    <td class="num">279</td>
+                    <td class="num">463</td>
+                    <td class="num">82</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大竹科</td>
+                    <td class="num fall">-157</td>
+                    <td class="num">82.19</td>
+                    <td class="num">15</td>
+                    <td class="num">172</td>
+                    <td class="num">82.2</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">富邦南京</td>
+                    <td class="num fall">-139</td>
+                    <td class="num">82.03</td>
+                    <td class="num">162</td>
+                    <td class="num">301</td>
+                    <td class="num">81.62</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大大里</td>
+                    <td class="num fall">-130</td>
+                    <td class="num">81.1</td>
+                    <td class="num">14</td>
+                    <td class="num">145</td>
+                    <td class="num">82.16</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">群益板橋</td>
+                    <td class="num fall">-127</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">127</td>
+                    <td class="num">82.2</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">康和台中</td>
+                    <td class="num fall">-119</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">119</td>
+                    <td class="num">82.17</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">群益</td>
+                    <td class="num fall">-114</td>
+                    <td class="num">80.5</td>
+                    <td class="num">605</td>
+                    <td class="num">720</td>
+                    <td class="num">81.93</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">新光高雄</td>
+                    <td class="num fall">-106</td>
+                    <td class="num">82.09</td>
+                    <td class="num">7</td>
+                    <td class="num">113</td>
+                    <td class="num">81.93</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大經國</td>
+                    <td class="num fall">-98</td>
+                    <td class="num">82.17</td>
+                    <td class="num">26</td>
+                    <td class="num">124</td>
+                    <td class="num">82.16</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">聯邦大業</td>
+                    <td class="num fall">-98</td>
+                    <td class="num">82.2</td>
+                    <td class="num">1</td>
+                    <td class="num">98</td>
+                    <td class="num">82.2</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              </div>
+            </div>
           </div>
-          
 
           <div>
-            <div class="sub-label">買超 Top15</div>
+            <div class="sub-label">當沖 Top10</div>
             <div class="table-scroll">
             <table>
-              <thead><tr><th>券商</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+              <thead><tr><th>券商</th><th class="num">交易總數</th><th class="num">買張</th><th class="num">買均</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
               <tbody>
                 
                 <tr>
-                  <td class="name">永豐金</td>
-                  <td class="num rise">+2,346</td>
-                  <td class="num">74.78</td>
-                  <td class="num">2,469</td>
-                  <td class="num">123</td>
-                  <td class="num">74.79</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">統 一</td>
-                  <td class="num rise">+2,297</td>
-                  <td class="num">74.8</td>
-                  <td class="num">4,398</td>
-                  <td class="num">2,101</td>
-                  <td class="num">74.8</td>
+                  <td class="name">元大</td>
+                  <td class="num">11,289</td>
+                  <td class="num">5,958</td>
+                  <td class="num">81.96</td>
+                  <td class="num">5,331</td>
+                  <td class="num">82.14</td>
                 </tr>
                 
                 <tr>
                   <td class="name">凱基台北</td>
-                  <td class="num rise">+1,695</td>
-                  <td class="num">74.71</td>
-                  <td class="num">2,217</td>
-                  <td class="num">522</td>
-                  <td class="num">74.68</td>
+                  <td class="num">2,541</td>
+                  <td class="num">1,929</td>
+                  <td class="num">81.95</td>
+                  <td class="num">612</td>
+                  <td class="num">82.11</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">港商野村</td>
-                  <td class="num rise">+1,086</td>
-                  <td class="num">74.79</td>
-                  <td class="num">1,192</td>
-                  <td class="num">106</td>
-                  <td class="num">74.66</td>
+                  <td class="name">群益</td>
+                  <td class="num">1,325</td>
+                  <td class="num">605</td>
+                  <td class="num">80.5</td>
+                  <td class="num">720</td>
+                  <td class="num">81.93</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">台新證券</td>
-                  <td class="num rise">+1,076</td>
-                  <td class="num">74.8</td>
-                  <td class="num">1,241</td>
-                  <td class="num">165</td>
-                  <td class="num">74.74</td>
+                  <td class="name">富邦敦南</td>
+                  <td class="num">995</td>
+                  <td class="num">543</td>
+                  <td class="num">82.19</td>
+                  <td class="num">452</td>
+                  <td class="num">81.95</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">摩根大通</td>
-                  <td class="num rise">+677</td>
-                  <td class="num">74.74</td>
-                  <td class="num">728</td>
-                  <td class="num">51</td>
-                  <td class="num">74.6</td>
+                  <td class="name">元大新莊</td>
+                  <td class="num">853</td>
+                  <td class="num">420</td>
+                  <td class="num">82.2</td>
+                  <td class="num">433</td>
+                  <td class="num">82.1</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">合庫高雄</td>
-                  <td class="num rise">+673</td>
-                  <td class="num">74.8</td>
-                  <td class="num">692</td>
-                  <td class="num">19</td>
-                  <td class="num">74.79</td>
+                  <td class="name">富邦</td>
+                  <td class="num">1,901</td>
+                  <td class="num">1,506</td>
+                  <td class="num">82.08</td>
+                  <td class="num">395</td>
+                  <td class="num">82.13</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">中國信託</td>
-                  <td class="num rise">+604</td>
-                  <td class="num">74.79</td>
-                  <td class="num">701</td>
-                  <td class="num">97</td>
-                  <td class="num">74.78</td>
+                  <td class="name">國泰敦南</td>
+                  <td class="num">743</td>
+                  <td class="num">279</td>
+                  <td class="num">81.77</td>
+                  <td class="num">463</td>
+                  <td class="num">82</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">國泰綜合</td>
-                  <td class="num rise">+309</td>
-                  <td class="num">74.78</td>
-                  <td class="num">322</td>
-                  <td class="num">13</td>
-                  <td class="num">74.8</td>
+                  <td class="name">新 光</td>
+                  <td class="num">590</td>
+                  <td class="num">259</td>
+                  <td class="num">82.06</td>
+                  <td class="num">331</td>
+                  <td class="num">82.02</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">凱基敦北</td>
-                  <td class="num rise">+306</td>
-                  <td class="num">74.8</td>
-                  <td class="num">362</td>
-                  <td class="num">56</td>
-                  <td class="num">74.8</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大竹科</td>
-                  <td class="num rise">+227</td>
-                  <td class="num">74.8</td>
-                  <td class="num">402</td>
-                  <td class="num">175</td>
-                  <td class="num">74.79</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">瑞銀</td>
-                  <td class="num rise">+213</td>
-                  <td class="num">74.34</td>
-                  <td class="num">258</td>
-                  <td class="num">45</td>
-                  <td class="num">74.53</td>
+                  <td class="name">凱基站前</td>
+                  <td class="num">1,249</td>
+                  <td class="num">995</td>
+                  <td class="num">81.67</td>
+                  <td class="num">254</td>
+                  <td class="num">82.14</td>
                 </tr>
                 
                 <tr>
                   <td class="name">台新建北</td>
-                  <td class="num rise">+212</td>
-                  <td class="num">74.79</td>
-                  <td class="num">230</td>
-                  <td class="num">18</td>
-                  <td class="num">74.77</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">新 光</td>
-                  <td class="num rise">+198</td>
-                  <td class="num">74.8</td>
-                  <td class="num">313</td>
-                  <td class="num">115</td>
-                  <td class="num">74.79</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大忠孝</td>
-                  <td class="num rise">+197</td>
-                  <td class="num">74.8</td>
-                  <td class="num">216</td>
-                  <td class="num">19</td>
-                  <td class="num">74.58</td>
+                  <td class="num">573</td>
+                  <td class="num">334</td>
+                  <td class="num">81.16</td>
+                  <td class="num">239</td>
+                  <td class="num">80.76</td>
                 </tr>
                 
               </tbody>
             </table>
             </div>
+            <p class="source-note">原網頁另有「總損益」欄位；此欄位無法從可取得的資料可靠推算，避免顯示錯誤數字，故先省略。</p>
           </div>
+        </div>
+      </details>
+      
+      <details class="inst-detail">
+        <summary>櫃 5314 世紀*　外資 -27／投信 0／自營 -30</summary>
+        <div class="inst-body">
 
-          <div>
-            <div class="sub-label">賣超 Top15</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                
-                <tr>
-                  <td class="name">台新屏東</td>
-                  <td class="num fall">-502</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">502</td>
-                  <td class="num">74.8</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">凱基信義</td>
-                  <td class="num fall">-398</td>
-                  <td class="num">74.8</td>
-                  <td class="num">100</td>
-                  <td class="num">498</td>
-                  <td class="num">74.67</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國票北高</td>
-                  <td class="num fall">-228</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">228</td>
-                  <td class="num">74.8</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">凱基三重</td>
-                  <td class="num fall">-223</td>
-                  <td class="num">74.8</td>
-                  <td class="num">1</td>
-                  <td class="num">224</td>
-                  <td class="num">74.74</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國泰敦南</td>
-                  <td class="num fall">-217</td>
-                  <td class="num">74.78</td>
-                  <td class="num">177</td>
-                  <td class="num">395</td>
-                  <td class="num">74.78</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">康 和</td>
-                  <td class="num fall">-155</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">155</td>
-                  <td class="num">74.8</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦台中</td>
-                  <td class="num fall">-141</td>
-                  <td class="num">74.8</td>
-                  <td class="num">15</td>
-                  <td class="num">156</td>
-                  <td class="num">74.19</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">花旗環球</td>
-                  <td class="num fall">-132</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">132</td>
-                  <td class="num">74.6</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大基隆</td>
-                  <td class="num fall">-132</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">132</td>
-                  <td class="num">74.8</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦</td>
-                  <td class="num fall">-131</td>
-                  <td class="num">74.78</td>
-                  <td class="num">3,481</td>
-                  <td class="num">3,612</td>
-                  <td class="num">74.79</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">玉山景美</td>
-                  <td class="num fall">-126</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">126</td>
-                  <td class="num">74.8</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">統一松江</td>
-                  <td class="num fall">-118</td>
-                  <td class="num">74.8</td>
-                  <td class="num">1</td>
-                  <td class="num">119</td>
-                  <td class="num">74.8</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦仁愛</td>
-                  <td class="num fall">-115</td>
-                  <td class="num">74.74</td>
-                  <td class="num">30</td>
-                  <td class="num">145</td>
-                  <td class="num">74.31</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦竹北</td>
-                  <td class="num fall">-107</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">107</td>
-                  <td class="num">74.8</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦台北</td>
-                  <td class="num fall">-107</td>
-                  <td class="num">74.7</td>
-                  <td class="num">1</td>
-                  <td class="num">108</td>
-                  <td class="num">74.75</td>
-                </tr>
-                
-              </tbody>
-            </table>
+          <div class="dual-panel">
+            <div class="dual-panel-col">
+              <div class="sub-label">買超 Top15</div>
+              <div class="table-scroll compact">
+              <table>
+                <thead><tr><th>券商</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+                <tbody>
+                  
+                  <tr>
+                    <td class="name">凱基城中</td>
+                    <td class="num rise">+1,000</td>
+                    <td class="num">26</td>
+                    <td class="num">1,000</td>
+                    <td class="num">0</td>
+                    <td class="num">—</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">富邦台北</td>
+                    <td class="num rise">+575</td>
+                    <td class="num">26</td>
+                    <td class="num">582</td>
+                    <td class="num">7</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">台新松德</td>
+                    <td class="num rise">+129</td>
+                    <td class="num">26</td>
+                    <td class="num">129</td>
+                    <td class="num">0</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">國票</td>
+                    <td class="num rise">+35</td>
+                    <td class="num">26</td>
+                    <td class="num">37</td>
+                    <td class="num">2</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">光和嘉義</td>
+                    <td class="num rise">+30</td>
+                    <td class="num">26</td>
+                    <td class="num">30</td>
+                    <td class="num">0</td>
+                    <td class="num">—</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">永全南崁</td>
+                    <td class="num rise">+8</td>
+                    <td class="num">26</td>
+                    <td class="num">8</td>
+                    <td class="num">0</td>
+                    <td class="num">—</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">富邦板橋</td>
+                    <td class="num rise">+7</td>
+                    <td class="num">26</td>
+                    <td class="num">7</td>
+                    <td class="num">0</td>
+                    <td class="num">—</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">統一東湖</td>
+                    <td class="num rise">+5</td>
+                    <td class="num">26</td>
+                    <td class="num">5</td>
+                    <td class="num">0</td>
+                    <td class="num">—</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大北投</td>
+                    <td class="num rise">+5</td>
+                    <td class="num">26</td>
+                    <td class="num">10</td>
+                    <td class="num">5</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">統一嘉義</td>
+                    <td class="num rise">+3</td>
+                    <td class="num">26</td>
+                    <td class="num">3</td>
+                    <td class="num">0</td>
+                    <td class="num">—</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">兆豐台中港</td>
+                    <td class="num rise">+3</td>
+                    <td class="num">26</td>
+                    <td class="num">3</td>
+                    <td class="num">0</td>
+                    <td class="num">—</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">統一內湖</td>
+                    <td class="num rise">+3</td>
+                    <td class="num">26</td>
+                    <td class="num">5</td>
+                    <td class="num">2</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大</td>
+                    <td class="num rise">+3</td>
+                    <td class="num">26</td>
+                    <td class="num">3</td>
+                    <td class="num">0</td>
+                    <td class="num">—</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">第一金彰化</td>
+                    <td class="num rise">+2</td>
+                    <td class="num">26</td>
+                    <td class="num">2</td>
+                    <td class="num">0</td>
+                    <td class="num">—</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">兆豐</td>
+                    <td class="num rise">+2</td>
+                    <td class="num">26</td>
+                    <td class="num">2</td>
+                    <td class="num">0</td>
+                    <td class="num">—</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              </div>
+            </div>
+
+            <div class="dual-panel-col">
+              <div class="sub-label">賣超 Top15</div>
+              <div class="table-scroll compact">
+              <table>
+                <thead><tr><th>券商</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+                <tbody>
+                  
+                  <tr>
+                    <td class="name">兆豐東門</td>
+                    <td class="num fall">-370</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">370</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">群益館前</td>
+                    <td class="num fall">-210</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">210</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">統一</td>
+                    <td class="num fall">-124</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">124</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">富邦仁愛</td>
+                    <td class="num fall">-100</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">100</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">永豐金大園</td>
+                    <td class="num fall">-100</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">100</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">凱基站前</td>
+                    <td class="num fall">-81</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">81</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">富邦南屯</td>
+                    <td class="num fall">-42</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">42</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">凱基台北</td>
+                    <td class="num fall">-42</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">42</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">第一金中壢</td>
+                    <td class="num fall">-42</td>
+                    <td class="num">26</td>
+                    <td class="num">1</td>
+                    <td class="num">43</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">凱基台南</td>
+                    <td class="num fall">-37</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">37</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大大同</td>
+                    <td class="num fall">-29</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">29</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">摩根士丹利</td>
+                    <td class="num fall">-26</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">26</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">永昌大安</td>
+                    <td class="num fall">-24</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">24</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">永豐金</td>
+                    <td class="num fall">-22</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">22</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大板橋三</td>
+                    <td class="num fall">-17</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                    <td class="num">17</td>
+                    <td class="num">26</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              </div>
             </div>
           </div>
 
@@ -1548,1516 +1405,400 @@
               <tbody>
                 
                 <tr>
-                  <td class="name">富邦</td>
-                  <td class="num">7,093</td>
-                  <td class="num">3,481</td>
-                  <td class="num">74.78</td>
-                  <td class="num">3,612</td>
-                  <td class="num">74.79</td>
+                  <td class="name">富邦台北</td>
+                  <td class="num">589</td>
+                  <td class="num">582</td>
+                  <td class="num">26</td>
+                  <td class="num">7</td>
+                  <td class="num">26</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">統 一</td>
-                  <td class="num">6,499</td>
-                  <td class="num">4,398</td>
-                  <td class="num">74.8</td>
-                  <td class="num">2,101</td>
-                  <td class="num">74.8</td>
+                  <td class="name">元大北投</td>
+                  <td class="num">15</td>
+                  <td class="num">10</td>
+                  <td class="num">26</td>
+                  <td class="num">5</td>
+                  <td class="num">26</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">美商高盛</td>
-                  <td class="num">1,382</td>
-                  <td class="num">712</td>
-                  <td class="num">74.46</td>
-                  <td class="num">670</td>
-                  <td class="num">74.76</td>
+                  <td class="name">國泰敦南</td>
+                  <td class="num">10</td>
+                  <td class="num">5</td>
+                  <td class="num">26</td>
+                  <td class="num">5</td>
+                  <td class="num">26</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">元大</td>
-                  <td class="num">1,443</td>
-                  <td class="num">786</td>
-                  <td class="num">74.72</td>
-                  <td class="num">657</td>
-                  <td class="num">74.59</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國票綜合</td>
-                  <td class="num">1,134</td>
-                  <td class="num">555</td>
-                  <td class="num">74.8</td>
-                  <td class="num">579</td>
-                  <td class="num">74.79</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">凱基台北</td>
-                  <td class="num">2,739</td>
-                  <td class="num">2,217</td>
-                  <td class="num">74.71</td>
-                  <td class="num">522</td>
-                  <td class="num">74.68</td>
+                  <td class="name">國票</td>
+                  <td class="num">39</td>
+                  <td class="num">37</td>
+                  <td class="num">26</td>
+                  <td class="num">2</td>
+                  <td class="num">26</td>
                 </tr>
                 
                 <tr>
                   <td class="name">凱基市政</td>
-                  <td class="num">637</td>
-                  <td class="num">314</td>
-                  <td class="num">74.8</td>
-                  <td class="num">323</td>
-                  <td class="num">74.8</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦嘉義</td>
-                  <td class="num">591</td>
-                  <td class="num">292</td>
-                  <td class="num">74.79</td>
-                  <td class="num">299</td>
-                  <td class="num">74.73</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">台新松德</td>
-                  <td class="num">623</td>
-                  <td class="num">277</td>
-                  <td class="num">74.8</td>
-                  <td class="num">346</td>
-                  <td class="num">74.62</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦南屯</td>
-                  <td class="num">509</td>
-                  <td class="num">281</td>
-                  <td class="num">74.79</td>
-                  <td class="num">228</td>
-                  <td class="num">74.28</td>
-                </tr>
-                
-              </tbody>
-            </table>
-            </div>
-            <p class="source-note">原網頁另有「總損益」欄位；此欄位無法從可取得的資料可靠推算，避免顯示錯誤數字，故先省略。</p>
-          </div>
-        </div>
-      </details>
-      
-      <details class="inst-detail">
-        <summary>市 2851 中再保　外資 -568／投信 0／自營 +43</summary>
-        <div class="inst-body">
-          
-          <div>
-            <div class="sub-label">買超／賣超氣泡圖（Y軸＝均價，X軸／面積＝買賣超張數 sqrt 比例）</div>
-            <svg class="bubble-chart" viewBox="0 0 680 559.0" preserveAspectRatio="xMidYMid meet">
-              
-              <line class="bubble-grid" x1="0" y1="268.0" x2="680" y2="268.0"/>
-              <text class="bubble-tick" x="2" y="265.0">43</text>
-              
-              <line class="bubble-grid" x1="0" y1="168.0" x2="680" y2="168.0"/>
-              <text class="bubble-tick" x="2" y="165.0">44</text>
-              
-              <line class="bubble-grid" x1="0" y1="68.0" x2="680" y2="68.0"/>
-              <text class="bubble-tick" x="2" y="65.0">45</text>
-              
-              
-              <line class="bubble-grid" x1="267.5" y1="18" x2="267.5" y2="537.0"/>
-              <text class="bubble-tick" x="267.5" y="553.0" text-anchor="middle">100</text>
-              
-              <line class="bubble-grid" x1="444.5" y1="18" x2="444.5" y2="537.0"/>
-              <text class="bubble-tick" x="444.5" y="553.0" text-anchor="middle">100</text>
-              
-              <line class="bubble-grid" x1="230.9" y1="18" x2="230.9" y2="537.0"/>
-              <text class="bubble-tick" x="230.9" y="553.0" text-anchor="middle">200</text>
-              
-              <line class="bubble-grid" x1="481.1" y1="18" x2="481.1" y2="537.0"/>
-              <text class="bubble-tick" x="481.1" y="553.0" text-anchor="middle">200</text>
-              
-              <line class="bubble-grid" x1="158.2" y1="18" x2="158.2" y2="537.0"/>
-              <text class="bubble-tick" x="158.2" y="553.0" text-anchor="middle">500</text>
-              
-              <line class="bubble-grid" x1="553.8" y1="18" x2="553.8" y2="537.0"/>
-              <text class="bubble-tick" x="553.8" y="553.0" text-anchor="middle">500</text>
-              
-              <line class="bubble-grid" x1="76.3" y1="18" x2="76.3" y2="537.0"/>
-              <text class="bubble-tick" x="76.3" y="553.0" text-anchor="middle">1000</text>
-              
-              <line class="bubble-grid" x1="635.7" y1="18" x2="635.7" y2="537.0"/>
-              <text class="bubble-tick" x="635.7" y="553.0" text-anchor="middle">1000</text>
-              
-              <line class="bubble-axis" x1="356.0" y1="18" x2="356.0" y2="537.0"/>
-              <text class="bubble-side-label buy" x="4" y="11">買超</text>
-              <text class="bubble-side-label sell" x="676" y="11" text-anchor="end">賣超</text>
-              
-              <circle class="bubble buy" cx="50.0" cy="148.0" r="18.0"><title>台新松德　+1,197 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="50.0" y="124.0" text-anchor="middle">台新松德</text>
-              
-              <circle class="bubble buy" cx="109.2" cy="199.7" r="15.7"><title>富邦台北　+778 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="109.2" y="178.0" text-anchor="middle">富邦台北</text>
-              
-              <circle class="bubble buy" cx="182.2" cy="246.2" r="12.8"><title>群益開元　+386 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="182.2" y="227.39999999999998" text-anchor="middle">群益開元</text>
-              
-              <circle class="bubble buy" cx="203.8" cy="289.0" r="12.0"><title>永豐中正　+296 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="203.8" y="271.0" text-anchor="middle">永豐中正</text>
-              
-              <circle class="bubble buy" cx="224.2" cy="330.2" r="11.2"><title>華南永昌　+222 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="224.2" y="313.0" text-anchor="middle">華南永昌</text>
-              
-              <circle class="bubble buy" cx="230.9" cy="370.3" r="10.9"><title>群益　+200 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="230.9" y="353.40000000000003" text-anchor="middle">群益</text>
-              
-              <circle class="bubble buy" cx="230.9" cy="410.1" r="10.9"><title>兆豐大同　+200 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="230.9" y="393.20000000000005" text-anchor="middle">兆豐大同</text>
-              
-              <circle class="bubble buy" cx="251.7" cy="449.1" r="10.1"><title>凱基雙和　+139 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="251.7" y="433.0" text-anchor="middle">凱基雙和</text>
-              
-              <circle class="bubble buy" cx="264.1" cy="486.8" r="9.6"><title>中信託忠　+108 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="264.1" y="471.2" text-anchor="middle">中信託忠</text>
-              
-              <circle class="bubble buy" cx="270.7" cy="523.7" r="9.3"><title>元大六合　+93 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="270.7" y="508.4000000000001" text-anchor="middle">元大六合</text>
-              
-              <circle class="bubble sell" cx="520.2" cy="148.0" r="12.4"><title>兆豐忠孝　-345 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="520.2" y="129.6" text-anchor="middle">兆豐忠孝</text>
-              
-              <circle class="bubble sell" cx="509.2" cy="190.4" r="12.0"><title>聯邦興中　-300 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="509.2" y="172.4" text-anchor="middle">聯邦興中</text>
-              
-              <circle class="bubble sell" cx="507.5" cy="232.3" r="11.9"><title>凱基台北　-293 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="507.5" y="214.4" text-anchor="middle">凱基台北</text>
-              
-              <circle class="bubble sell" cx="470.6" cy="272.7" r="10.5"><title>元大上新　-168 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="470.6" y="256.2" text-anchor="middle">元大上新</text>
-              
-              <circle class="bubble sell" cx="469.3" cy="311.6" r="10.4"><title>臺銀高雄　-164 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="469.3" y="295.20000000000005" text-anchor="middle">臺銀高雄</text>
-              
-              <circle class="bubble sell" cx="467.5" cy="350.4" r="10.4"><title>美商高盛　-159 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="467.5" y="334.0" text-anchor="middle">美商高盛</text>
-              
-              <circle class="bubble sell" cx="463.2" cy="389.0" r="10.2"><title>第一安和　-147 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="463.2" y="372.8" text-anchor="middle">第一安和</text>
-              
-              <circle class="bubble sell" cx="455.3" cy="427.1" r="9.9"><title>國票南京　-126 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="455.3" y="411.20000000000005" text-anchor="middle">國票南京</text>
-              
-              <circle class="bubble sell" cx="444.9" cy="464.5" r="9.5"><title>第一光復　-101 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="444.9" y="449.0" text-anchor="middle">第一光復</text>
-              
-              <circle class="bubble sell" cx="436.6" cy="501.2" r="9.2"><title>中信託高　-83 張｜均價 44.2</title></circle>
-              <text class="bubble-name" x="436.6" y="486.0" text-anchor="middle">中信託高</text>
-              
-            </svg>
-          </div>
-          
-
-          <div>
-            <div class="sub-label">買超 Top15</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                
-                <tr>
-                  <td class="name">台新松德</td>
-                  <td class="num rise">+1,197</td>
-                  <td class="num">44.2</td>
-                  <td class="num">1,197</td>
-                  <td class="num">0</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦台北</td>
-                  <td class="num rise">+778</td>
-                  <td class="num">44.2</td>
-                  <td class="num">784</td>
                   <td class="num">6</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">群益開元</td>
-                  <td class="num rise">+386</td>
-                  <td class="num">44.2</td>
-                  <td class="num">402</td>
-                  <td class="num">16</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">永豐中正</td>
-                  <td class="num rise">+296</td>
-                  <td class="num">44.2</td>
-                  <td class="num">300</td>
                   <td class="num">4</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">華南永昌</td>
-                  <td class="num rise">+222</td>
-                  <td class="num">44.2</td>
-                  <td class="num">224</td>
+                  <td class="num">26</td>
                   <td class="num">2</td>
-                  <td class="num">44.2</td>
+                  <td class="num">26</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">群益</td>
-                  <td class="num rise">+200</td>
-                  <td class="num">44.2</td>
-                  <td class="num">200</td>
-                  <td class="num">0</td>
-                  <td class="num">—</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">兆豐大同</td>
-                  <td class="num rise">+200</td>
-                  <td class="num">44.2</td>
-                  <td class="num">200</td>
-                  <td class="num">0</td>
-                  <td class="num">—</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">凱基雙和</td>
-                  <td class="num rise">+139</td>
-                  <td class="num">44.2</td>
-                  <td class="num">140</td>
-                  <td class="num">1</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">中信託忠</td>
-                  <td class="num rise">+108</td>
-                  <td class="num">44.2</td>
-                  <td class="num">110</td>
-                  <td class="num">2</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大六合</td>
-                  <td class="num rise">+93</td>
-                  <td class="num">44.2</td>
-                  <td class="num">100</td>
+                  <td class="name">統一內湖</td>
                   <td class="num">7</td>
-                  <td class="num">44.2</td>
+                  <td class="num">5</td>
+                  <td class="num">26</td>
+                  <td class="num">2</td>
+                  <td class="num">26</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">華南東勢</td>
-                  <td class="num rise">+89</td>
-                  <td class="num">44.2</td>
-                  <td class="num">90</td>
-                  <td class="num">1</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">群益大安</td>
-                  <td class="num rise">+89</td>
-                  <td class="num">44.2</td>
-                  <td class="num">89</td>
-                  <td class="num">0</td>
-                  <td class="num">—</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">致和高雄</td>
-                  <td class="num rise">+84</td>
-                  <td class="num">44.2</td>
-                  <td class="num">84</td>
-                  <td class="num">0</td>
-                  <td class="num">—</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">統 一</td>
-                  <td class="num rise">+68</td>
-                  <td class="num">44.2</td>
-                  <td class="num">201</td>
-                  <td class="num">133</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">凱基城中</td>
-                  <td class="num rise">+59</td>
-                  <td class="num">44.2</td>
-                  <td class="num">60</td>
-                  <td class="num">1</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-              </tbody>
-            </table>
-            </div>
-          </div>
-
-          <div>
-            <div class="sub-label">賣超 Top15</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                
-                <tr>
-                  <td class="name">兆豐忠孝</td>
-                  <td class="num fall">-345</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">345</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">聯邦興中</td>
-                  <td class="num fall">-300</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">300</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">凱基台北</td>
-                  <td class="num fall">-293</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">293</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大上新</td>
-                  <td class="num fall">-168</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">168</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">臺銀高雄</td>
-                  <td class="num fall">-164</td>
-                  <td class="num">44.2</td>
+                  <td class="name">元大大里</td>
                   <td class="num">4</td>
-                  <td class="num">168</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">美商高盛</td>
-                  <td class="num fall">-159</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">159</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">第一安和</td>
-                  <td class="num fall">-147</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">147</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國票南京</td>
-                  <td class="num fall">-126</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">126</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">第一光復</td>
-                  <td class="num fall">-101</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">101</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">中信託高</td>
-                  <td class="num fall">-83</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">83</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大德芳</td>
-                  <td class="num fall">-83</td>
-                  <td class="num">44.2</td>
-                  <td class="num">1</td>
-                  <td class="num">84</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">統一屏東</td>
-                  <td class="num fall">-80</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">80</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">兆豐台中</td>
-                  <td class="num fall">-76</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">76</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">永豐松山</td>
-                  <td class="num fall">-76</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">76</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">台灣摩根</td>
-                  <td class="num fall">-73</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">73</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-              </tbody>
-            </table>
-            </div>
-          </div>
-
-          <div>
-            <div class="sub-label">當沖 Top10</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">交易總數</th><th class="num">買張</th><th class="num">買均</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                
-                <tr>
-                  <td class="name">統 一</td>
-                  <td class="num">334</td>
-                  <td class="num">201</td>
-                  <td class="num">44.2</td>
-                  <td class="num">133</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">永豐中壢</td>
-                  <td class="num">65</td>
-                  <td class="num">45</td>
-                  <td class="num">44.2</td>
-                  <td class="num">20</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">群益開元</td>
-                  <td class="num">418</td>
-                  <td class="num">402</td>
-                  <td class="num">44.2</td>
-                  <td class="num">16</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大</td>
-                  <td class="num">53</td>
-                  <td class="num">41</td>
-                  <td class="num">44.2</td>
-                  <td class="num">12</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國泰敦南</td>
-                  <td class="num">52</td>
-                  <td class="num">12</td>
-                  <td class="num">44.2</td>
-                  <td class="num">40</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大永春</td>
-                  <td class="num">21</td>
-                  <td class="num">11</td>
-                  <td class="num">44.2</td>
-                  <td class="num">10</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">新 光</td>
-                  <td class="num">37</td>
-                  <td class="num">28</td>
-                  <td class="num">44.2</td>
-                  <td class="num">9</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大六合</td>
-                  <td class="num">107</td>
-                  <td class="num">100</td>
-                  <td class="num">44.2</td>
-                  <td class="num">7</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦台北</td>
-                  <td class="num">790</td>
-                  <td class="num">784</td>
-                  <td class="num">44.2</td>
-                  <td class="num">6</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">臺銀民權</td>
-                  <td class="num">10</td>
-                  <td class="num">5</td>
-                  <td class="num">44.2</td>
-                  <td class="num">5</td>
-                  <td class="num">44.2</td>
-                </tr>
-                
-              </tbody>
-            </table>
-            </div>
-            <p class="source-note">原網頁另有「總損益」欄位；此欄位無法從可取得的資料可靠推算，避免顯示錯誤數字，故先省略。</p>
-          </div>
-        </div>
-      </details>
-      
-      <details class="inst-detail">
-        <summary>櫃 5314 世紀*　外資 -34／投信 0／自營 +584</summary>
-        <div class="inst-body">
-          
-          <div>
-            <div class="sub-label">買超／賣超氣泡圖（Y軸＝均價，X軸／面積＝買賣超張數 sqrt 比例）</div>
-            <svg class="bubble-chart" viewBox="0 0 680 525.1" preserveAspectRatio="xMidYMid meet">
-              
-              <line class="bubble-grid" x1="0" y1="213.0" x2="680" y2="213.0"/>
-              <text class="bubble-tick" x="2" y="210.0">23</text>
-              
-              <line class="bubble-grid" x1="0" y1="113.0" x2="680" y2="113.0"/>
-              <text class="bubble-tick" x="2" y="110.0">24</text>
-              
-              
-              <line class="bubble-grid" x1="285.3" y1="18" x2="285.3" y2="503.1"/>
-              <text class="bubble-tick" x="285.3" y="519.1" text-anchor="middle">100</text>
-              
-              <line class="bubble-grid" x1="426.7" y1="18" x2="426.7" y2="503.1"/>
-              <text class="bubble-tick" x="426.7" y="519.1" text-anchor="middle">100</text>
-              
-              <line class="bubble-grid" x1="256.0" y1="18" x2="256.0" y2="503.1"/>
-              <text class="bubble-tick" x="256.0" y="519.1" text-anchor="middle">200</text>
-              
-              <line class="bubble-grid" x1="456.0" y1="18" x2="456.0" y2="503.1"/>
-              <text class="bubble-tick" x="456.0" y="519.1" text-anchor="middle">200</text>
-              
-              <line class="bubble-grid" x1="197.9" y1="18" x2="197.9" y2="503.1"/>
-              <text class="bubble-tick" x="197.9" y="519.1" text-anchor="middle">500</text>
-              
-              <line class="bubble-grid" x1="514.1" y1="18" x2="514.1" y2="503.1"/>
-              <text class="bubble-tick" x="514.1" y="519.1" text-anchor="middle">500</text>
-              
-              <line class="bubble-grid" x1="132.4" y1="18" x2="132.4" y2="503.1"/>
-              <text class="bubble-tick" x="132.4" y="519.1" text-anchor="middle">1000</text>
-              
-              <line class="bubble-grid" x1="579.6" y1="18" x2="579.6" y2="503.1"/>
-              <text class="bubble-tick" x="579.6" y="519.1" text-anchor="middle">1000</text>
-              
-              <line class="bubble-axis" x1="356.0" y1="18" x2="356.0" y2="503.1"/>
-              <text class="bubble-side-label buy" x="4" y="11">買超</text>
-              <text class="bubble-side-label sell" x="676" y="11" text-anchor="end">賣超</text>
-              
-              <circle class="bubble buy" cx="50.0" cy="148.0" r="18.0"><title>台新松德　+1,873 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="50.0" y="124.0" text-anchor="middle">台新松德</text>
-              
-              <circle class="bubble buy" cx="173.0" cy="197.2" r="13.2"><title>國票　+670 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="173.0" y="178.0" text-anchor="middle">國票</text>
-              
-              <circle class="bubble buy" cx="290.8" cy="237.0" r="8.6"><title>群益　+85 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="290.8" y="222.4" text-anchor="middle">群益</text>
-              
-              <circle class="bubble buy" cx="292.0" cy="272.1" r="8.5"><title>群益大安　+82 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="292.0" y="257.6" text-anchor="middle">群益大安</text>
-              
-              <circle class="bubble buy" cx="304.0" cy="306.6" r="8.0"><title>元大內湖　+54 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="304.0" y="292.6" text-anchor="middle">元大內湖</text>
-              
-              <circle class="bubble buy" cx="305.0" cy="340.6" r="8.0"><title>群益中壢　+52 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="305.0" y="326.6" text-anchor="middle">群益中壢</text>
-              
-              <circle class="bubble buy" cx="310.7" cy="374.4" r="7.8"><title>元大台中港　+41 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="310.7" y="360.59999999999997" text-anchor="middle">元大台中港</text>
-              
-              <circle class="bubble buy" cx="313.6" cy="407.9" r="7.7"><title>合庫台南　+36 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="313.6" y="394.2" text-anchor="middle">合庫台南</text>
-              
-              <circle class="bubble buy" cx="314.2" cy="441.2" r="7.6"><title>國泰敦南　+35 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="314.2" y="427.59999999999997" text-anchor="middle">國泰敦南</text>
-              
-              <circle class="bubble buy" cx="317.3" cy="474.3" r="7.5"><title>光和嘉義　+30 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="317.3" y="460.8" text-anchor="middle">光和嘉義</text>
-              
-              <circle class="bubble sell" cx="568.4" cy="148.0" r="14.3"><title>凱基台北　-902 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="568.4" y="127.69999999999999" text-anchor="middle">凱基台北</text>
-              
-              <circle class="bubble sell" cx="498.3" cy="191.9" r="11.6"><title>統一城中　-405 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="498.3" y="174.3" text-anchor="middle">統一城中</text>
-              
-              <circle class="bubble sell" cx="493.1" cy="232.9" r="11.4"><title>國票安和　-376 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="493.1" y="215.5" text-anchor="middle">國票安和</text>
-              
-              <circle class="bubble sell" cx="490.7" cy="273.6" r="11.3"><title>國票敦北　-363 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="490.7" y="256.3" text-anchor="middle">國票敦北</text>
-              
-              <circle class="bubble sell" cx="476.6" cy="313.6" r="10.7"><title>富邦　-291 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="476.6" y="296.90000000000003" text-anchor="middle">富邦</text>
-              
-              <circle class="bubble sell" cx="463.2" cy="352.5" r="10.2"><title>統一　-230 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="463.2" y="336.3" text-anchor="middle">統一</text>
-              
-              <circle class="bubble sell" cx="426.4" cy="389.5" r="8.8"><title>台新信義　-99 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="426.4" y="374.7" text-anchor="middle">台新信義</text>
-              
-              <circle class="bubble sell" cx="406.0" cy="424.3" r="8.0"><title>國票南崁　-50 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="406.0" y="410.3" text-anchor="middle">國票南崁</text>
-              
-              <circle class="bubble sell" cx="400.2" cy="458.0" r="7.7"><title>德信中正　-39 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="400.2" y="444.3" text-anchor="middle">德信中正</text>
-              
-              <circle class="bubble sell" cx="400.2" cy="491.4" r="7.7"><title>元大沙鹿　-39 張｜均價 23.65</title></circle>
-              <text class="bubble-name" x="400.2" y="477.7" text-anchor="middle">元大沙鹿</text>
-              
-            </svg>
-          </div>
-          
-
-          <div>
-            <div class="sub-label">買超 Top15</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                
-                <tr>
-                  <td class="name">台新松德</td>
-                  <td class="num rise">+1,873</td>
-                  <td class="num">23.65</td>
-                  <td class="num">1,873</td>
-                  <td class="num">0</td>
-                  <td class="num">—</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國票</td>
-                  <td class="num rise">+670</td>
-                  <td class="num">23.65</td>
-                  <td class="num">677</td>
-                  <td class="num">7</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">群益</td>
-                  <td class="num rise">+85</td>
-                  <td class="num">23.65</td>
-                  <td class="num">93</td>
-                  <td class="num">8</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">群益大安</td>
-                  <td class="num rise">+82</td>
-                  <td class="num">23.65</td>
-                  <td class="num">82</td>
-                  <td class="num">0</td>
-                  <td class="num">—</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大內湖</td>
-                  <td class="num rise">+54</td>
-                  <td class="num">23.65</td>
-                  <td class="num">55</td>
-                  <td class="num">1</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">群益中壢</td>
-                  <td class="num rise">+52</td>
-                  <td class="num">23.65</td>
-                  <td class="num">52</td>
-                  <td class="num">0</td>
-                  <td class="num">—</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大台中港</td>
-                  <td class="num rise">+41</td>
-                  <td class="num">23.65</td>
-                  <td class="num">41</td>
-                  <td class="num">0</td>
-                  <td class="num">—</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">合庫台南</td>
-                  <td class="num rise">+36</td>
-                  <td class="num">23.65</td>
-                  <td class="num">40</td>
-                  <td class="num">4</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國泰敦南</td>
-                  <td class="num rise">+35</td>
-                  <td class="num">23.65</td>
-                  <td class="num">66</td>
-                  <td class="num">31</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">光和嘉義</td>
-                  <td class="num rise">+30</td>
-                  <td class="num">23.65</td>
-                  <td class="num">30</td>
-                  <td class="num">0</td>
-                  <td class="num">—</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">台新大昌</td>
-                  <td class="num rise">+29</td>
-                  <td class="num">23.65</td>
-                  <td class="num">30</td>
-                  <td class="num">1</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦花蓮</td>
-                  <td class="num rise">+23</td>
-                  <td class="num">23.65</td>
-                  <td class="num">23</td>
-                  <td class="num">0</td>
-                  <td class="num">—</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">永豐金三重</td>
-                  <td class="num rise">+21</td>
-                  <td class="num">23.65</td>
-                  <td class="num">21</td>
-                  <td class="num">0</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦青埔</td>
-                  <td class="num rise">+19</td>
-                  <td class="num">23.65</td>
-                  <td class="num">20</td>
-                  <td class="num">1</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦台中</td>
-                  <td class="num rise">+15</td>
-                  <td class="num">23.65</td>
-                  <td class="num">16</td>
-                  <td class="num">1</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-              </tbody>
-            </table>
-            </div>
-          </div>
-
-          <div>
-            <div class="sub-label">賣超 Top15</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                
-                <tr>
-                  <td class="name">凱基台北</td>
-                  <td class="num fall">-902</td>
-                  <td class="num">23.65</td>
-                  <td class="num">62</td>
-                  <td class="num">964</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">統一城中</td>
-                  <td class="num fall">-405</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">405</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國票安和</td>
-                  <td class="num fall">-376</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">376</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國票敦北</td>
-                  <td class="num fall">-363</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">363</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦</td>
-                  <td class="num fall">-291</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">291</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">統一</td>
-                  <td class="num fall">-230</td>
-                  <td class="num">23.65</td>
-                  <td class="num">1</td>
-                  <td class="num">231</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">台新信義</td>
-                  <td class="num fall">-99</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">99</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國票南崁</td>
-                  <td class="num fall">-50</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">50</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">德信中正</td>
-                  <td class="num fall">-39</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">39</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大沙鹿</td>
-                  <td class="num fall">-39</td>
-                  <td class="num">23.65</td>
-                  <td class="num">1</td>
-                  <td class="num">40</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">群益新莊</td>
-                  <td class="num fall">-33</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">33</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國票台南</td>
-                  <td class="num fall">-31</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">31</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">第一金證券</td>
-                  <td class="num fall">-30</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">30</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">美林證券</td>
-                  <td class="num fall">-27</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">27</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦羅東</td>
-                  <td class="num fall">-24</td>
-                  <td class="num">23.65</td>
-                  <td class="num">3</td>
-                  <td class="num">27</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-              </tbody>
-            </table>
-            </div>
-          </div>
-
-          <div>
-            <div class="sub-label">當沖 Top10</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">交易總數</th><th class="num">買張</th><th class="num">買均</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                
-                <tr>
-                  <td class="name">凱基台北</td>
-                  <td class="num">1,026</td>
-                  <td class="num">62</td>
-                  <td class="num">23.65</td>
-                  <td class="num">964</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國泰敦南</td>
-                  <td class="num">98</td>
-                  <td class="num">66</td>
-                  <td class="num">23.65</td>
-                  <td class="num">31</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">統一嘉義</td>
-                  <td class="num">38</td>
-                  <td class="num">22</td>
-                  <td class="num">23.65</td>
-                  <td class="num">16</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">兆豐桃園</td>
-                  <td class="num">25</td>
-                  <td class="num">16</td>
-                  <td class="num">23.65</td>
-                  <td class="num">9</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">群益</td>
-                  <td class="num">101</td>
-                  <td class="num">93</td>
-                  <td class="num">23.65</td>
-                  <td class="num">8</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國票</td>
-                  <td class="num">684</td>
-                  <td class="num">677</td>
-                  <td class="num">23.65</td>
-                  <td class="num">7</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">凱基城中</td>
-                  <td class="num">18</td>
-                  <td class="num">7</td>
-                  <td class="num">23.65</td>
-                  <td class="num">11</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">兆豐小港</td>
-                  <td class="num">27</td>
-                  <td class="num">7</td>
-                  <td class="num">23.65</td>
-                  <td class="num">20</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">合庫嘉義</td>
-                  <td class="num">10</td>
-                  <td class="num">5</td>
-                  <td class="num">23.65</td>
-                  <td class="num">5</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦桃園</td>
-                  <td class="num">12</td>
-                  <td class="num">7</td>
-                  <td class="num">23.65</td>
-                  <td class="num">5</td>
-                  <td class="num">23.65</td>
-                </tr>
-                
-              </tbody>
-            </table>
-            </div>
-            <p class="source-note">原網頁另有「總損益」欄位；此欄位無法從可取得的資料可靠推算，避免顯示錯誤數字，故先省略。</p>
-          </div>
-        </div>
-      </details>
-      
-      <details class="inst-detail">
-        <summary>櫃 3441 聯一光　外資 +1,584／投信 0／自營 +8</summary>
-        <div class="inst-body">
-          
-          <div>
-            <div class="sub-label">買超／賣超氣泡圖（Y軸＝均價，X軸／面積＝買賣超張數 sqrt 比例）</div>
-            <svg class="bubble-chart" viewBox="0 0 680 445.0" preserveAspectRatio="xMidYMid meet">
-              
-              <line class="bubble-grid" x1="0" y1="248.0" x2="680" y2="248.0"/>
-              <text class="bubble-tick" x="2" y="245.0">94</text>
-              
-              <line class="bubble-grid" x1="0" y1="124.5" x2="680" y2="124.5"/>
-              <text class="bubble-tick" x="2" y="121.5">96</text>
-              
-              
-              <line class="bubble-grid" x1="281.2" y1="18" x2="281.2" y2="423.0"/>
-              <text class="bubble-tick" x="281.2" y="439.0" text-anchor="middle">100</text>
-              
-              <line class="bubble-grid" x1="430.8" y1="18" x2="430.8" y2="423.0"/>
-              <text class="bubble-tick" x="430.8" y="439.0" text-anchor="middle">100</text>
-              
-              <line class="bubble-grid" x1="250.2" y1="18" x2="250.2" y2="423.0"/>
-              <text class="bubble-tick" x="250.2" y="439.0" text-anchor="middle">200</text>
-              
-              <line class="bubble-grid" x1="461.8" y1="18" x2="461.8" y2="423.0"/>
-              <text class="bubble-tick" x="461.8" y="439.0" text-anchor="middle">200</text>
-              
-              <line class="bubble-grid" x1="188.7" y1="18" x2="188.7" y2="423.0"/>
-              <text class="bubble-tick" x="188.7" y="439.0" text-anchor="middle">500</text>
-              
-              <line class="bubble-grid" x1="523.3" y1="18" x2="523.3" y2="423.0"/>
-              <text class="bubble-tick" x="523.3" y="439.0" text-anchor="middle">500</text>
-              
-              <line class="bubble-grid" x1="119.4" y1="18" x2="119.4" y2="423.0"/>
-              <text class="bubble-tick" x="119.4" y="439.0" text-anchor="middle">1000</text>
-              
-              <line class="bubble-grid" x1="592.6" y1="18" x2="592.6" y2="423.0"/>
-              <text class="bubble-tick" x="592.6" y="439.0" text-anchor="middle">1000</text>
-              
-              <line class="bubble-axis" x1="356.0" y1="18" x2="356.0" y2="423.0"/>
-              <text class="bubble-side-label buy" x="4" y="11">買超</text>
-              <text class="bubble-side-label sell" x="676" y="11" text-anchor="end">賣超</text>
-              
-              <circle class="bubble buy" cx="50.0" cy="48.0" r="18.0"><title>富邦　+1,673 張｜均價 97.24</title></circle>
-              <text class="bubble-name" x="50.0" y="24.0" text-anchor="middle">富邦</text>
-              
-              <circle class="bubble buy" cx="250.8" cy="94.1" r="10.1"><title>元大竹科　+198 張｜均價 97.16</title></circle>
-              <text class="bubble-name" x="250.8" y="78.0" text-anchor="middle">元大竹科</text>
-              
-              <circle class="bubble buy" cx="280.1" cy="131.2" r="9.0"><title>台新松江　+103 張｜均價 96.94</title></circle>
-              <text class="bubble-name" x="280.1" y="116.19999999999999" text-anchor="middle">台新松江</text>
-              
-              <circle class="bubble buy" cx="249.9" cy="168.4" r="10.2"><title>兆豐嘉義　+201 張｜均價 96.58</title></circle>
-              <text class="bubble-name" x="249.9" y="152.20000000000002" text-anchor="middle">兆豐嘉義</text>
-              
-              <circle class="bubble buy" cx="181.7" cy="209.4" r="12.8"><title>凱基台北　+543 張｜均價 95.91</title></circle>
-              <text class="bubble-name" x="181.7" y="190.6" text-anchor="middle">凱基台北</text>
-              
-              <circle class="bubble buy" cx="186.2" cy="252.9" r="12.7"><title>美商高盛亞　+515 張｜均價 95.74</title></circle>
-              <text class="bubble-name" x="186.2" y="234.20000000000002" text-anchor="middle">美商高盛亞</text>
-              
-              <circle class="bubble buy" cx="245.8" cy="293.9" r="10.3"><title>元大　+217 張｜均價 95.6</title></circle>
-              <text class="bubble-name" x="245.8" y="277.59999999999997" text-anchor="middle">元大</text>
-              
-              <circle class="bubble buy" cx="265.2" cy="331.8" r="9.6"><title>新光　+147 張｜均價 95.29</title></circle>
-              <text class="bubble-name" x="265.2" y="316.2" text-anchor="middle">新光</text>
-              
-              <circle class="bubble buy" cx="210.7" cy="371.1" r="11.7"><title>摩根大通　+377 張｜均價 95.23</title></circle>
-              <text class="bubble-name" x="210.7" y="353.40000000000003" text-anchor="middle">摩根大通</text>
-              
-              <circle class="bubble buy" cx="277.2" cy="409.9" r="9.1"><title>美林證券　+111 張｜均價 94.43</title></circle>
-              <text class="bubble-name" x="277.2" y="394.79999999999995" text-anchor="middle">美林證券</text>
-              
-              <circle class="bubble sell" cx="427.8" cy="64.7" r="8.8"><title>凱基新豐　-92 張｜均價 96.97</title></circle>
-              <text class="bubble-name" x="427.8" y="49.900000000000006" text-anchor="middle">凱基新豐</text>
-              
-              <circle class="bubble sell" cx="410.5" cy="99.6" r="8.1"><title>富邦台中　-53 張｜均價 96.9</title></circle>
-              <text class="bubble-name" x="410.5" y="85.5" text-anchor="middle">富邦台中</text>
-              
-              <circle class="bubble sell" cx="428.7" cy="134.6" r="8.9"><title>國泰館前　-94 張｜均價 96.69</title></circle>
-              <text class="bubble-name" x="428.7" y="119.69999999999999" text-anchor="middle">國泰館前</text>
-              
-              <circle class="bubble sell" cx="450.0" cy="171.2" r="9.7"><title>第一金新竹　-158 張｜均價 96.36</title></circle>
-              <text class="bubble-name" x="450.0" y="155.5" text-anchor="middle">第一金新竹</text>
-              
-              <circle class="bubble sell" cx="414.4" cy="207.2" r="8.3"><title>國泰敦南　-61 張｜均價 96.26</title></circle>
-              <text class="bubble-name" x="414.4" y="192.89999999999998" text-anchor="middle">國泰敦南</text>
-              
-              <circle class="bubble sell" cx="416.3" cy="241.9" r="8.4"><title>玉山大里　-65 張｜均價 95.34</title></circle>
-              <text class="bubble-name" x="416.3" y="227.5" text-anchor="middle">玉山大里</text>
-              
-              <circle class="bubble sell" cx="416.2" cy="276.7" r="8.4"><title>永豐金松山　-65 張｜均價 95.28</title></circle>
-              <text class="bubble-name" x="416.2" y="262.3" text-anchor="middle">永豐金松山</text>
-              
-              <circle class="bubble sell" cx="410.5" cy="311.2" r="8.1"><title>群益台南　-53 張｜均價 94.76</title></circle>
-              <text class="bubble-name" x="410.5" y="297.09999999999997" text-anchor="middle">群益台南</text>
-              
-              <circle class="bubble sell" cx="444.6" cy="346.8" r="9.5"><title>永豐金屏東　-140 張｜均價 94.62</title></circle>
-              <text class="bubble-name" x="444.6" y="331.3" text-anchor="middle">永豐金屏東</text>
-              
-              <circle class="bubble sell" cx="417.2" cy="382.7" r="8.4"><title>台中銀員林　-67 張｜均價 94</title></circle>
-              <text class="bubble-name" x="417.2" y="368.3" text-anchor="middle">台中銀員林</text>
-              
-            </svg>
-          </div>
-          
-
-          <div>
-            <div class="sub-label">買超 Top15</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                
-                <tr>
-                  <td class="name">富邦</td>
-                  <td class="num rise">+1,673</td>
-                  <td class="num">97.24</td>
-                  <td class="num">1,875</td>
-                  <td class="num">202</td>
-                  <td class="num">97.29</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">凱基台北</td>
-                  <td class="num rise">+543</td>
-                  <td class="num">95.91</td>
-                  <td class="num">1,195</td>
-                  <td class="num">652</td>
-                  <td class="num">95.15</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">美商高盛亞</td>
-                  <td class="num rise">+515</td>
-                  <td class="num">95.74</td>
-                  <td class="num">761</td>
-                  <td class="num">246</td>
-                  <td class="num">95.03</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">摩根大通</td>
-                  <td class="num rise">+377</td>
-                  <td class="num">95.23</td>
-                  <td class="num">387</td>
-                  <td class="num">10</td>
-                  <td class="num">94.55</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大</td>
-                  <td class="num rise">+217</td>
-                  <td class="num">95.6</td>
-                  <td class="num">994</td>
-                  <td class="num">777</td>
-                  <td class="num">95</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">兆豐嘉義</td>
-                  <td class="num rise">+201</td>
-                  <td class="num">96.58</td>
-                  <td class="num">231</td>
-                  <td class="num">30</td>
-                  <td class="num">95.5</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大竹科</td>
-                  <td class="num rise">+198</td>
-                  <td class="num">97.16</td>
-                  <td class="num">210</td>
-                  <td class="num">12</td>
-                  <td class="num">96.08</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">新光</td>
-                  <td class="num rise">+147</td>
-                  <td class="num">95.29</td>
-                  <td class="num">293</td>
-                  <td class="num">146</td>
-                  <td class="num">95.76</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">美林證券</td>
-                  <td class="num rise">+111</td>
-                  <td class="num">94.43</td>
-                  <td class="num">302</td>
-                  <td class="num">191</td>
-                  <td class="num">96.1</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">台新松江</td>
-                  <td class="num rise">+103</td>
-                  <td class="num">96.94</td>
-                  <td class="num">103</td>
-                  <td class="num">0</td>
-                  <td class="num">—</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">凱基信義</td>
-                  <td class="num rise">+100</td>
-                  <td class="num">97.08</td>
-                  <td class="num">400</td>
-                  <td class="num">300</td>
-                  <td class="num">97.09</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大新竹</td>
-                  <td class="num rise">+73</td>
-                  <td class="num">95.25</td>
-                  <td class="num">94</td>
-                  <td class="num">21</td>
-                  <td class="num">93.87</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">星洲瑞銀</td>
-                  <td class="num rise">+65</td>
-                  <td class="num">95.06</td>
-                  <td class="num">110</td>
-                  <td class="num">45</td>
-                  <td class="num">95.74</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">群益永和</td>
-                  <td class="num rise">+62</td>
-                  <td class="num">96.73</td>
-                  <td class="num">71</td>
-                  <td class="num">9</td>
-                  <td class="num">95.86</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國票和平</td>
-                  <td class="num rise">+62</td>
-                  <td class="num">95.6</td>
-                  <td class="num">69</td>
-                  <td class="num">7</td>
-                  <td class="num">96.02</td>
-                </tr>
-                
-              </tbody>
-            </table>
-            </div>
-          </div>
-
-          <div>
-            <div class="sub-label">賣超 Top15</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                
-                <tr>
-                  <td class="name">第一金新竹</td>
-                  <td class="num fall">-158</td>
-                  <td class="num">94.65</td>
-                  <td class="num">8</td>
-                  <td class="num">166</td>
-                  <td class="num">96.36</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">永豐金屏東</td>
-                  <td class="num fall">-140</td>
-                  <td class="num">—</td>
-                  <td class="num">0</td>
-                  <td class="num">140</td>
-                  <td class="num">94.62</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國泰館前</td>
-                  <td class="num fall">-94</td>
-                  <td class="num">96.24</td>
-                  <td class="num">28</td>
-                  <td class="num">122</td>
-                  <td class="num">96.69</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">凱基新豐</td>
-                  <td class="num fall">-92</td>
-                  <td class="num">96.8</td>
-                  <td class="num">7</td>
-                  <td class="num">99</td>
-                  <td class="num">96.97</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">台中銀員林</td>
-                  <td class="num fall">-67</td>
-                  <td class="num">95.4</td>
                   <td class="num">2</td>
-                  <td class="num">69</td>
-                  <td class="num">94</td>
+                  <td class="num">26</td>
+                  <td class="num">2</td>
+                  <td class="num">26</td>
+                </tr>
+                
+                <tr>
+                  <td class="name">凱基松山</td>
+                  <td class="num">2</td>
+                  <td class="num">1</td>
+                  <td class="num">26</td>
+                  <td class="num">1</td>
+                  <td class="num">26</td>
+                </tr>
+                
+                <tr>
+                  <td class="name">第一金中壢</td>
+                  <td class="num">44</td>
+                  <td class="num">1</td>
+                  <td class="num">26</td>
+                  <td class="num">43</td>
+                  <td class="num">26</td>
                 </tr>
                 
                 <tr>
                   <td class="name">玉山大里</td>
-                  <td class="num fall">-65</td>
-                  <td class="num">94.8</td>
-                  <td class="num">14</td>
-                  <td class="num">79</td>
-                  <td class="num">95.34</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">永豐金松山</td>
-                  <td class="num fall">-65</td>
-                  <td class="num">94.75</td>
-                  <td class="num">50</td>
-                  <td class="num">115</td>
-                  <td class="num">95.28</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國泰敦南</td>
-                  <td class="num fall">-61</td>
-                  <td class="num">95.03</td>
-                  <td class="num">352</td>
-                  <td class="num">413</td>
-                  <td class="num">96.26</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">群益台南</td>
-                  <td class="num fall">-53</td>
-                  <td class="num">95.05</td>
+                  <td class="num">3</td>
+                  <td class="num">1</td>
+                  <td class="num">26</td>
                   <td class="num">2</td>
-                  <td class="num">55</td>
-                  <td class="num">94.76</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦台中</td>
-                  <td class="num fall">-53</td>
-                  <td class="num">94.89</td>
-                  <td class="num">11</td>
-                  <td class="num">64</td>
-                  <td class="num">96.9</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">永豐金台南</td>
-                  <td class="num fall">-52</td>
-                  <td class="num">95.3</td>
-                  <td class="num">12</td>
-                  <td class="num">64</td>
-                  <td class="num">96.24</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">國泰台南</td>
-                  <td class="num fall">-50</td>
-                  <td class="num">94.85</td>
-                  <td class="num">19</td>
-                  <td class="num">69</td>
-                  <td class="num">96.12</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">元大南京</td>
-                  <td class="num fall">-49</td>
-                  <td class="num">94.28</td>
-                  <td class="num">6</td>
-                  <td class="num">55</td>
-                  <td class="num">93.68</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">富邦敦南</td>
-                  <td class="num fall">-48</td>
-                  <td class="num">97.26</td>
-                  <td class="num">276</td>
-                  <td class="num">324</td>
-                  <td class="num">97</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">統一板橋</td>
-                  <td class="num fall">-48</td>
-                  <td class="num">96.63</td>
-                  <td class="num">17</td>
-                  <td class="num">65</td>
-                  <td class="num">94.87</td>
+                  <td class="num">26</td>
                 </tr>
                 
               </tbody>
             </table>
+            </div>
+            <p class="source-note">原網頁另有「總損益」欄位；此欄位無法從可取得的資料可靠推算，避免顯示錯誤數字，故先省略。</p>
+          </div>
+        </div>
+      </details>
+      
+      <details class="inst-detail">
+        <summary>櫃 3441 聯一光　外資 +390／投信 0／自營 -7</summary>
+        <div class="inst-body">
+
+          <div class="dual-panel">
+            <div class="dual-panel-col">
+              <div class="sub-label">買超 Top15</div>
+              <div class="table-scroll compact">
+              <table>
+                <thead><tr><th>券商</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+                <tbody>
+                  
+                  <tr>
+                    <td class="name">凱基信義</td>
+                    <td class="num rise">+706</td>
+                    <td class="num">100.92</td>
+                    <td class="num">806</td>
+                    <td class="num">100</td>
+                    <td class="num">107</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">港商野村</td>
+                    <td class="num rise">+472</td>
+                    <td class="num">102.34</td>
+                    <td class="num">687</td>
+                    <td class="num">215</td>
+                    <td class="num">98.7</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">星洲瑞銀</td>
+                    <td class="num rise">+307</td>
+                    <td class="num">100.67</td>
+                    <td class="num">510</td>
+                    <td class="num">203</td>
+                    <td class="num">101.55</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">摩根大通</td>
+                    <td class="num rise">+258</td>
+                    <td class="num">104.38</td>
+                    <td class="num">829</td>
+                    <td class="num">571</td>
+                    <td class="num">99.45</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">台新城東</td>
+                    <td class="num rise">+192</td>
+                    <td class="num">99.39</td>
+                    <td class="num">229</td>
+                    <td class="num">37</td>
+                    <td class="num">101.34</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">摩根士丹利</td>
+                    <td class="num rise">+171</td>
+                    <td class="num">100.2</td>
+                    <td class="num">251</td>
+                    <td class="num">80</td>
+                    <td class="num">100.79</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">兆豐西螺</td>
+                    <td class="num rise">+142</td>
+                    <td class="num">101.7</td>
+                    <td class="num">143</td>
+                    <td class="num">1</td>
+                    <td class="num">98.6</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">永豐金內湖</td>
+                    <td class="num rise">+120</td>
+                    <td class="num">100.39</td>
+                    <td class="num">143</td>
+                    <td class="num">23</td>
+                    <td class="num">104.24</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">台新五權西</td>
+                    <td class="num rise">+105</td>
+                    <td class="num">100.25</td>
+                    <td class="num">123</td>
+                    <td class="num">18</td>
+                    <td class="num">103.36</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">華南永昌</td>
+                    <td class="num rise">+94</td>
+                    <td class="num">102.91</td>
+                    <td class="num">221</td>
+                    <td class="num">127</td>
+                    <td class="num">99.74</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">永豐金敦南</td>
+                    <td class="num rise">+79</td>
+                    <td class="num">101.04</td>
+                    <td class="num">269</td>
+                    <td class="num">190</td>
+                    <td class="num">99.99</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">兆豐松德</td>
+                    <td class="num rise">+79</td>
+                    <td class="num">98.85</td>
+                    <td class="num">126</td>
+                    <td class="num">47</td>
+                    <td class="num">102.24</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大大里</td>
+                    <td class="num rise">+71</td>
+                    <td class="num">98.9</td>
+                    <td class="num">142</td>
+                    <td class="num">71</td>
+                    <td class="num">100.17</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大竹科</td>
+                    <td class="num rise">+56</td>
+                    <td class="num">105.23</td>
+                    <td class="num">316</td>
+                    <td class="num">260</td>
+                    <td class="num">99.24</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">新光</td>
+                    <td class="num rise">+53</td>
+                    <td class="num">99.45</td>
+                    <td class="num">854</td>
+                    <td class="num">801</td>
+                    <td class="num">99.89</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              </div>
+            </div>
+
+            <div class="dual-panel-col">
+              <div class="sub-label">賣超 Top15</div>
+              <div class="table-scroll compact">
+              <table>
+                <thead><tr><th>券商</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+                <tbody>
+                  
+                  <tr>
+                    <td class="name">富邦</td>
+                    <td class="num fall">-1,628</td>
+                    <td class="num">103.95</td>
+                    <td class="num">827</td>
+                    <td class="num">2,455</td>
+                    <td class="num">100.86</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">美商高盛亞</td>
+                    <td class="num fall">-451</td>
+                    <td class="num">99.8</td>
+                    <td class="num">561</td>
+                    <td class="num">1,012</td>
+                    <td class="num">99.14</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大</td>
+                    <td class="num fall">-384</td>
+                    <td class="num">99.42</td>
+                    <td class="num">3,459</td>
+                    <td class="num">3,843</td>
+                    <td class="num">99.33</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">兆豐嘉義</td>
+                    <td class="num fall">-187</td>
+                    <td class="num">100.71</td>
+                    <td class="num">45</td>
+                    <td class="num">232</td>
+                    <td class="num">98.44</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">群益館前</td>
+                    <td class="num fall">-111</td>
+                    <td class="num">98.5</td>
+                    <td class="num">281</td>
+                    <td class="num">392</td>
+                    <td class="num">98.53</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">美林證券</td>
+                    <td class="num fall">-91</td>
+                    <td class="num">99.52</td>
+                    <td class="num">68</td>
+                    <td class="num">159</td>
+                    <td class="num">99.52</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">台新松江</td>
+                    <td class="num fall">-91</td>
+                    <td class="num">101.57</td>
+                    <td class="num">138</td>
+                    <td class="num">229</td>
+                    <td class="num">99.96</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">凱基台北</td>
+                    <td class="num fall">-87</td>
+                    <td class="num">99.58</td>
+                    <td class="num">3,372</td>
+                    <td class="num">3,459</td>
+                    <td class="num">99.36</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">群益永和</td>
+                    <td class="num fall">-65</td>
+                    <td class="num">99.12</td>
+                    <td class="num">25</td>
+                    <td class="num">90</td>
+                    <td class="num">100.17</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">元大大甲</td>
+                    <td class="num fall">-57</td>
+                    <td class="num">99.81</td>
+                    <td class="num">88</td>
+                    <td class="num">145</td>
+                    <td class="num">98.83</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">國票彰化</td>
+                    <td class="num fall">-52</td>
+                    <td class="num">99.17</td>
+                    <td class="num">12</td>
+                    <td class="num">64</td>
+                    <td class="num">98.84</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">永全八德</td>
+                    <td class="num fall">-49</td>
+                    <td class="num">99.02</td>
+                    <td class="num">20</td>
+                    <td class="num">69</td>
+                    <td class="num">97.6</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">凱基中港</td>
+                    <td class="num fall">-48</td>
+                    <td class="num">100.03</td>
+                    <td class="num">22</td>
+                    <td class="num">70</td>
+                    <td class="num">100.33</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">凱基站前</td>
+                    <td class="num fall">-44</td>
+                    <td class="num">100.49</td>
+                    <td class="num">356</td>
+                    <td class="num">400</td>
+                    <td class="num">100.03</td>
+                  </tr>
+                  
+                  <tr>
+                    <td class="name">富邦虎尾</td>
+                    <td class="num fall">-42</td>
+                    <td class="num">98.66</td>
+                    <td class="num">62</td>
+                    <td class="num">104</td>
+                    <td class="num">100.92</td>
+                  </tr>
+                  
+                </tbody>
+              </table>
+              </div>
             </div>
           </div>
 
@@ -3069,93 +1810,93 @@
               <tbody>
                 
                 <tr>
-                  <td class="name">統一</td>
-                  <td class="num">2,478</td>
-                  <td class="num">1,256</td>
-                  <td class="num">97.27</td>
-                  <td class="num">1,222</td>
-                  <td class="num">97.02</td>
-                </tr>
-                
-                <tr>
                   <td class="name">元大</td>
-                  <td class="num">1,771</td>
-                  <td class="num">994</td>
-                  <td class="num">95.6</td>
-                  <td class="num">777</td>
-                  <td class="num">95</td>
+                  <td class="num">7,302</td>
+                  <td class="num">3,459</td>
+                  <td class="num">99.42</td>
+                  <td class="num">3,843</td>
+                  <td class="num">99.33</td>
                 </tr>
                 
                 <tr>
                   <td class="name">凱基台北</td>
-                  <td class="num">1,847</td>
-                  <td class="num">1,195</td>
-                  <td class="num">95.91</td>
-                  <td class="num">652</td>
-                  <td class="num">95.15</td>
+                  <td class="num">6,831</td>
+                  <td class="num">3,372</td>
+                  <td class="num">99.58</td>
+                  <td class="num">3,459</td>
+                  <td class="num">99.36</td>
                 </tr>
                 
                 <tr>
                   <td class="name">國泰敦南</td>
-                  <td class="num">766</td>
-                  <td class="num">352</td>
-                  <td class="num">95.03</td>
-                  <td class="num">413</td>
-                  <td class="num">96.26</td>
-                </tr>
-                
-                <tr>
-                  <td class="name">凱基信義</td>
-                  <td class="num">700</td>
-                  <td class="num">400</td>
-                  <td class="num">97.08</td>
-                  <td class="num">300</td>
-                  <td class="num">97.09</td>
+                  <td class="num">3,120</td>
+                  <td class="num">1,574</td>
+                  <td class="num">99.08</td>
+                  <td class="num">1,545</td>
+                  <td class="num">99.93</td>
                 </tr>
                 
                 <tr>
                   <td class="name">群益</td>
-                  <td class="num">574</td>
-                  <td class="num">293</td>
-                  <td class="num">95.49</td>
-                  <td class="num">281</td>
-                  <td class="num">95.28</td>
+                  <td class="num">2,125</td>
+                  <td class="num">1,060</td>
+                  <td class="num">101.65</td>
+                  <td class="num">1,065</td>
+                  <td class="num">99.14</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">富邦敦南</td>
-                  <td class="num">600</td>
-                  <td class="num">276</td>
-                  <td class="num">97.26</td>
-                  <td class="num">324</td>
-                  <td class="num">97</td>
+                  <td class="name">富邦</td>
+                  <td class="num">3,282</td>
+                  <td class="num">827</td>
+                  <td class="num">103.95</td>
+                  <td class="num">2,455</td>
+                  <td class="num">100.86</td>
+                </tr>
+                
+                <tr>
+                  <td class="name">新光</td>
+                  <td class="num">1,655</td>
+                  <td class="num">854</td>
+                  <td class="num">99.45</td>
+                  <td class="num">801</td>
+                  <td class="num">99.89</td>
+                </tr>
+                
+                <tr>
+                  <td class="name">摩根大通</td>
+                  <td class="num">1,400</td>
+                  <td class="num">829</td>
+                  <td class="num">104.38</td>
+                  <td class="num">571</td>
+                  <td class="num">99.45</td>
                 </tr>
                 
                 <tr>
                   <td class="name">美商高盛亞</td>
-                  <td class="num">1,007</td>
-                  <td class="num">761</td>
-                  <td class="num">95.74</td>
-                  <td class="num">246</td>
-                  <td class="num">95.03</td>
+                  <td class="num">1,574</td>
+                  <td class="num">561</td>
+                  <td class="num">99.8</td>
+                  <td class="num">1,012</td>
+                  <td class="num">99.14</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">永豐金</td>
+                  <td class="name">台新</td>
+                  <td class="num">895</td>
                   <td class="num">466</td>
-                  <td class="num">230</td>
-                  <td class="num">96.5</td>
-                  <td class="num">236</td>
-                  <td class="num">94.82</td>
+                  <td class="num">99.21</td>
+                  <td class="num">429</td>
+                  <td class="num">99.85</td>
                 </tr>
                 
                 <tr>
-                  <td class="name">摩根士丹利</td>
-                  <td class="num">473</td>
-                  <td class="num">220</td>
-                  <td class="num">95.57</td>
-                  <td class="num">253</td>
-                  <td class="num">95.51</td>
+                  <td class="name">永豐金中壢</td>
+                  <td class="num">718</td>
+                  <td class="num">361</td>
+                  <td class="num">101.16</td>
+                  <td class="num">357</td>
+                  <td class="num">101.36</td>
                 </tr>
                 
               </tbody>

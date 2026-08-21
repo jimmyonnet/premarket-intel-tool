@@ -40,6 +40,23 @@
           "current": 5,
           "threshold": 12
         }
+      ],
+      "condition_segments": [
+        {
+          "text": "① 08-21不符合",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "③④⑤⑦ 08-21不符合",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "⑥ 量≥9,245張",
+          "color": "var(--amber)",
+          "bold": false
+        }
       ]
     },
     {
@@ -73,6 +90,18 @@
           "title": "30日內12次（第1~7款） 3/12",
           "current": 3,
           "threshold": 12
+        }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "168.5↓(-7.9%)",
+          "color": "var(--fall)",
+          "bold": false
         }
       ]
     },
@@ -108,6 +137,18 @@
           "current": 2,
           "threshold": 12
         }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "192.0↑(+4.6%)",
+          "color": "var(--rise)",
+          "bold": false
+        }
       ]
     },
     {
@@ -141,6 +182,18 @@
           "title": "30日內12次（第1~7款） 2/12",
           "current": 2,
           "threshold": 12
+        }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "23.35↑(-6.6%)",
+          "color": "var(--fall)",
+          "bold": false
         }
       ]
     },
@@ -176,6 +229,18 @@
           "current": 3,
           "threshold": 12
         }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "符合（即使跌停仍符合）",
+          "color": "var(--text)",
+          "bold": true
+        }
       ]
     },
     {
@@ -209,6 +274,33 @@
           "title": "30日內12次（第1~7款） 5/12",
           "current": 5,
           "threshold": 12
+        }
+      ],
+      "condition_segments": [
+        {
+          "text": "②",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "72.0↑(+0.1%)",
+          "color": "var(--rise)",
+          "bold": false
+        },
+        {
+          "text": "①不符合",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "③④⑤⑦ 08-21不符合",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "⑥ 不符合（PB明日不可達，量未達）",
+          "color": "var(--muted)",
+          "bold": false
         }
       ]
     },
@@ -244,6 +336,33 @@
           "current": 5,
           "threshold": 12
         }
+      ],
+      "condition_segments": [
+        {
+          "text": "②",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "101.0↑(+8.0%)",
+          "color": "var(--rise)",
+          "bold": false
+        },
+        {
+          "text": "①不符合",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "③④⑤⑦ 08-21不符合",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "⑥ 不符合（PE/PB明日不可達，量未達）",
+          "color": "var(--muted)",
+          "bold": false
+        }
       ]
     },
     {
@@ -277,6 +396,18 @@
           "title": "30日內12次（第1~7款） 2/12",
           "current": 2,
           "threshold": 12
+        }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "303.5↑(+2.0%)",
+          "color": "var(--rise)",
+          "bold": false
         }
       ]
     }
