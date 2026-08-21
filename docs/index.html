@@ -143,14 +143,13 @@
     .cal-cell-num{font-size:11px;}
   }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
 </head>
 <body>
 <div class="wrap">
 
   <header>
     <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 2026/08/21 21:49</div>
+    <div class="generated">產生時間 2026/08/21 21:50</div>
   </header>
 
   
@@ -168,7 +167,7 @@
       <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:12px; margin-bottom:16px;">
         <div>
           <div style="font-size:12px; color:#6B768E; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px;">
-            臺指期夜盤 · 即時分時江波圖
+            臺指期夜盤 · CMoney 股市爆料同學會分時江波圖
           </div>
           <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;">
             <span style="font-family:var(--font-mono); font-size:28px; font-weight:800; color:#FFFFFF; letter-spacing:-0.02em;">
@@ -182,7 +181,8 @@
           </div>
         </div>
 
-        <div style="display:flex; gap:8px;">
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <a href="https://www.cmoney.tw/forum/futures/TXF1?s=p" target="_blank" rel="noopener" class="cal-link" style="background:#FFB703; border-color:#FFB703; color:#111622; font-weight:700;">📊 CMoney 股市爆料同學會 ↗</a>
           <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link" style="background:#1B2232; border-color:#2A354D; color:#9EA8BE;">📊 玩股網 ↗</a>
           <a href="https://www.tradingview.com/symbols/TAIFEX-TXF1!/" target="_blank" rel="noopener" class="cal-link" style="background:#1B2232; border-color:#2A354D; color:#9EA8BE;">📈 TradingView ↗</a>
         </div>
@@ -196,181 +196,14 @@
         <div><span style="font-size:11px; color:#6B768E;">昨收</span> <b style="font-family:var(--font-mono); font-size:13px; color:#8C97B0; float:right;">45138.0</b></div>
       </div>
 
-      <!-- Ultra-Slick ECharts Intraday Jiangbo Canvas Container -->
-      <div id="tx-jiangbo-chart" style="width:100%; height:300px;"></div>
+      <!-- CMoney Intraday Jiangbo Embedded Frame Container -->
+      <div style="width:100%; height:480px; overflow:hidden; border-radius:12px; border:1px solid #253046; background:#ffffff; position:relative; margin-bottom:12px;">
+        <iframe src="https://www.cmoney.tw/forum/futures/TXF1?s=p" style="width:100%; height:1200px; border:none; position:absolute; top:-150px; left:0;" title="CMoney 台指期夜盤即時江波圖"></iframe>
+      </div>
 
-      <script>
-        (function(){
-          var chartDom = document.getElementById('tx-jiangbo-chart');
-          if (!chartDom) return;
-          var myChart = echarts.init(chartDom, 'dark', {renderer: 'canvas'});
-          
-          var prevClose = 45138.0;
-          var openPrice = 45220.0;
-          var highPrice = 45474.0;
-          var lowPrice = 45126.0;
-          var curPrice = 45203.0;
-          
-          var rawPoints = [{"change": null, "change_pct": null, "collected_at": "2026-08-20T20:52:49.729117+08:00", "high": null, "low": null, "open": null, "prev_close": null, "price": null, "volume": null}, {"change": 65.0, "change_pct": 0.14, "collected_at": "2026-08-21T21:41:25.345599+08:00", "high": 45474.0, "low": 45126.0, "open": 45220.0, "prev_close": 45138.0, "price": 45203.0, "symbol": "\u81fa\u6307\u671f096", "volume": 15611}];
-          var chartTimes = [];
-          var priceData = [];
-          var volumeData = [];
-
-          if (rawPoints && rawPoints.length >= 5) {
-            rawPoints.forEach(function(pt) {
-              if (pt && pt.price !== null && pt.price !== undefined) {
-                var t = pt.collected_at ? pt.collected_at.substring(11, 16) : '';
-                chartTimes.push(t);
-                priceData.push(pt.price);
-                volumeData.push(pt.volume || 100);
-              }
-            });
-          }
-
-          if (priceData.length < 5) {
-            chartTimes = ['15:00', '15:30', '16:00', '16:30', '17:00', '17:30', '18:00', '18:30', '19:00', '19:30', '20:00', '20:30', '21:00', '21:30', '21:45', '最新'];
-            priceData = [
-              openPrice, 45280, 45340, 45370, 45390, 45360, 45330, 45380, 45410, 45430,
-              highPrice, // 20:00 最高 45474
-              45410, 45360,
-              lowPrice,  // 21:30 最低 45126
-              45165,
-              curPrice   // 最新價 45203
-            ];
-            volumeData = [450, 320, 280, 210, 190, 240, 310, 290, 420, 580, 890, 620, 480, 950, 520, 610];
-          }
-
-          // 分時黃色加權均價線
-          var avgData = [];
-          var sumPrice = 0;
-          for (var i = 0; i < priceData.length; i++) {
-            sumPrice += priceData[i];
-            avgData.push(Math.round(sumPrice / (i + 1)));
-          }
-
-          var option = {
-            backgroundColor: 'transparent',
-            tooltip: {
-              trigger: 'axis',
-              axisPointer: { type: 'cross', crossStyle: { color: '#00E5FF' } },
-              backgroundColor: 'rgba(17, 22, 34, 0.95)',
-              borderColor: '#253046',
-              borderWidth: 1,
-              padding: [10, 14],
-              textStyle: { color: '#F0F3F8', fontFamily: 'SF Mono, monospace', fontSize: 12 },
-              formatter: function(params) {
-                var p = params[0];
-                var diff = p.value - prevClose;
-                var pct = ((diff / prevClose) * 100).toFixed(2);
-                var sign = diff >= 0 ? '+' : '';
-                var color = diff >= 0 ? '#FF5252' : '#00E676';
-                return '<div style="font-weight:700; margin-bottom:4px; color:#7C89A3;">' + p.name + '</div>' +
-                       '成交價: <span style="font-weight:700; color:' + color + ';">' + p.value + '</span> (' + sign + pct + '%)<br/>' +
-                       '均價: <span style="font-weight:700; color:#FFB703;">' + (avgData[p.dataIndex] || p.value) + '</span>';
-              }
-            },
-            axisPointer: { link: [{ xAxisIndex: 'all' }] },
-            grid: [
-              { left: 50, right: 55, top: 25, height: '56%' }, // 走勢 + 均價江波圖
-              { left: 50, right: 55, top: '74%', height: '18%' }  // 成交量柱
-            ],
-            xAxis: [
-              {
-                type: 'category',
-                data: chartTimes,
-                boundaryGap: false,
-                axisLine: { lineStyle: { color: '#253046' } },
-                axisLabel: { color: '#7C89A3', fontSize: 11, fontFamily: 'SF Mono, monospace' }
-              },
-              {
-                gridIndex: 1,
-                type: 'category',
-                data: chartTimes,
-                boundaryGap: false,
-                axisLine: { lineStyle: { color: '#253046' } },
-                axisLabel: { show: false }
-              }
-            ],
-            yAxis: [
-              {
-                type: 'value',
-                scale: true,
-                splitNumber: 4,
-                axisLine: { show: false },
-                splitLine: { lineStyle: { color: '#1D2638', type: 'dashed' } },
-                axisLabel: { color: '#7C89A3', fontSize: 11, fontFamily: 'SF Mono, monospace' }
-              },
-              {
-                type: 'value',
-                scale: true,
-                position: 'right',
-                splitLine: { show: false },
-                axisLabel: {
-                  color: '#7C89A3', fontSize: 11, fontFamily: 'SF Mono, monospace',
-                  formatter: function(val) {
-                    var diff = val - prevClose;
-                    var pct = ((diff / prevClose) * 100).toFixed(2);
-                    return (pct >= 0 ? '+' : '') + pct + '%';
-                  }
-                }
-              },
-              {
-                gridIndex: 1,
-                type: 'value',
-                splitNumber: 2,
-                axisLine: { show: false },
-                splitLine: { lineStyle: { color: '#1D2638', type: 'dashed' } },
-                axisLabel: { color: '#7C89A3', fontSize: 10, fontFamily: 'SF Mono, monospace' }
-              }
-            ],
-            series: [
-              {
-                name: '成交價',
-                type: 'line',
-                data: priceData,
-                smooth: true,
-                showSymbol: false,
-                lineStyle: { color: '#00E5FF', width: 2 }, // Neon Cyan Electric Line
-                areaStyle: {
-                  color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                    { offset: 0, color: 'rgba(0, 229, 255, 0.22)' },
-                    { offset: 1, color: 'rgba(0, 229, 255, 0.0)' }
-                  ])
-                },
-                markLine: {
-                  symbol: 'none',
-                  data: [{ yAxis: prevClose, lineStyle: { color: '#7C89A3', type: 'dashed', width: 1 } }],
-                  label: { formatter: '昨收 {c}', position: 'insideEndTop', color: '#7C89A3', fontSize: 11 }
-                }
-              },
-              {
-                name: '均價線',
-                type: 'line',
-                data: avgData,
-                smooth: true,
-                showSymbol: false,
-                lineStyle: { color: '#FFB703', width: 1.5, type: 'dashed' } // Amber Yellow Avg Line
-              },
-              {
-                name: '成交量',
-                type: 'bar',
-                xAxisIndex: 1,
-                yAxisIndex: 2,
-                data: volumeData.map(function(val, idx) {
-                  var isUp = (priceData[idx] >= (priceData[idx-1] || priceData[idx]));
-                  return {
-                    value: val,
-                    itemStyle: { color: isUp ? 'rgba(255, 82, 82, 0.7)' : 'rgba(0, 230, 118, 0.7)' }
-                  };
-                })
-              }
-            ]
-          };
-          
-          myChart.setOption(option);
-          window.addEventListener('resize', function(){ myChart.resize(); });
-        })();
-      </script>
+      <div style="font-size:12px; color:#6B768E; text-align:right;">
+        ※ 走勢圖即時來源於 <a href="https://www.cmoney.tw/forum/futures/TXF1?s=p" target="_blank" rel="noopener" style="color:var(--amber);">CMoney 股市爆料同學會 (TXF1 夜盤)</a>
+      </div>
     </div>
 
     <div class="card">
@@ -380,32 +213,32 @@
         
         <div class="tile">
           <div class="name">道瓊工業指數</div>
-          <div class="value">53,114.86</div>
-          <div class="delta rise">+355.65 (+0.67%)</div>
+          <div class="value">53,095.77</div>
+          <div class="delta rise">+336.56 (+0.64%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">S&amp;P 500指數</div>
-          <div class="value">7,672.81</div>
-          <div class="delta rise">+31.65 (+0.41%)</div>
+          <div class="value">7,667.75</div>
+          <div class="delta rise">+26.59 (+0.35%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">NASDAQ指數</div>
-          <div class="value">26,119.10</div>
-          <div class="delta rise">+51.94 (+0.20%)</div>
+          <div class="value">26,107.08</div>
+          <div class="delta rise">+39.92 (+0.15%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">費城半導體指數</div>
-          <div class="value">11,856.55</div>
-          <div class="delta rise">+56.53 (+0.48%)</div>
+          <div class="value">11,857.38</div>
+          <div class="delta rise">+57.36 (+0.49%)</div>
         </div>
         
         
@@ -2294,11 +2127,12 @@
               
               <span class="cal-cat-badge">總經數據</span>
             </div>
-            <div class="cal-summary">美國-个人消费支出物价指數[PCE]-(年增率(YoY))</div>
-            <div class="cal-desc">前值:  3.67%</div>
+            <div class="cal-summary">美國-實際国内生產總值[GDP]-(SAAR, 季增年化季月增率(MoM))</div>
+            <div class="cal-desc">市場預期: 1.50%
+前值:  1.50%</div>
             
             <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
             </div>
             
           </div>
@@ -2310,12 +2144,11 @@
               
               <span class="cal-cat-badge">總經數據</span>
             </div>
-            <div class="cal-summary">美國-實際国内生產總值[GDP]-(SAAR, 季增年化季月增率(MoM))</div>
-            <div class="cal-desc">市場預期: 1.50%
-前值:  1.50%</div>
+            <div class="cal-summary">美國-个人消费支出物价指數[PCE]-(年增率(YoY))</div>
+            <div class="cal-desc">前值:  3.67%</div>
             
             <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
             </div>
             
           </div>
@@ -2421,22 +2254,6 @@
         <div class="cal-date">08/31</div>
         <div class="cal-day-events">
           
-          <div class="cal-event-card cat-general">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">09:30</span>
-              
-              <span class="cal-cat-badge">事件</span>
-            </div>
-            <div class="cal-summary">中國-官方非製造業採購經理人指數[NMI]</div>
-            <div class="cal-desc">前值:  49.0</div>
-            
-            <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
-            </div>
-            
-          </div>
-          
           <div class="cal-event-card cat-econ">
             <div class="cal-header-row">
               
@@ -2449,6 +2266,22 @@
             
             <div>
               <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/232/cn-pmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
+          </div>
+          
+          <div class="cal-event-card cat-general">
+            <div class="cal-header-row">
+              
+              <span class="cal-time-pill">09:30</span>
+              
+              <span class="cal-cat-badge">事件</span>
+            </div>
+            <div class="cal-summary">中國-官方非製造業採購經理人指數[NMI]</div>
+            <div class="cal-desc">前值:  49.0</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
             </div>
             
           </div>
