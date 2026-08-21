@@ -243,6 +243,11 @@ def main():
         help="optional: Part 3 extra -- chengwaye.com/daily 法人買賣/當沖 detail JSON; "
         "omitted/missing/empty just skips this sub-section",
     )
+    ap.add_argument(
+        "--calendar", default=None,
+        help="optional: Part 4 financial calendar JSON (fetch_calendar.py); "
+        "omitted/missing/empty renders an empty Part 4 state",
+    )
     ap.add_argument("--out", required=True)
     ap.add_argument(
         "--template-dir",
@@ -269,6 +274,13 @@ def main():
     chengwaye_daily = load_json(args.chengwaye_daily) or {}
     institutional = build_institutional_section(pressplay, chengwaye_daily)
 
+    calendar_raw = load_json(args.calendar) or {}
+    calendar_section = {
+        "today": calendar_raw.get("today"),
+        "range_end": calendar_raw.get("range_end"),
+        "events": calendar_raw.get("events") or [],
+    }
+
     now = datetime.now(TAIPEI)
 
     env = Environment(loader=FileSystemLoader(args.template_dir), autoescape=True)
@@ -285,6 +297,7 @@ def main():
         date_check=disposal.get("date_check", {}),
         pressplay=pressplay,
         institutional=institutional,
+        calendar=calendar_section,
     )
 
     out_path = Path(args.out)

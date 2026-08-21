@@ -110,6 +110,18 @@
   .dual-panel{display:flex; gap:16px; align-items:flex-start;}
   .dual-panel-col{flex:1; min-width:0;}
 
+  /* Part 4: financial calendar, grouped by date (one row per date, all
+     that date's events listed underneath -- a user-maintained Google
+     Calendar feed can list several events on the same day). */
+  .cal-day{display:flex; gap:14px; padding:10px 0; border-bottom:1px solid var(--line);}
+  .cal-day:last-child{border-bottom:none;}
+  .cal-date{flex:0 0 72px; font-family:var(--font-mono); font-size:12px; color:var(--muted); padding-top:2px;}
+  .cal-date.today{color:var(--amber); font-weight:700;}
+  .cal-day-events{flex:1; min-width:0; display:flex; flex-direction:column; gap:6px;}
+  .cal-summary{font-size:13px; font-weight:600;}
+  .cal-time{font-family:var(--font-mono); font-weight:400; color:var(--muted); font-size:12px; margin-left:6px;}
+  .cal-desc{font-size:12px; color:var(--muted); margin-top:2px;}
+
   /* mobile: reclaim horizontal space (tighter padding/type), let tiles
      pack 2-up instead of stacking to 1 column. Tables are handled above
      via .table-scroll, not here -- they keep desktop-size columns and
@@ -126,6 +138,7 @@
     td.condition{max-width:160px;}
     .scroll-hint{display:block; font-size:11px; color:var(--muted); text-align:right; margin-top:6px;}
     .dual-panel{flex-direction:column;}
+    .cal-day{flex-direction:column; gap:2px;}
   }
 </style>
 </head>
@@ -451,6 +464,32 @@
     {% if pressplay.source_article.title %}
     <p class="missing">資料來源：{{ pressplay.source_article.title }}{% if pressplay.chengwaye_date %} · chengwaye.com 適用 {{ pressplay.chengwaye_date }}{% endif %}</p>
     {% endif %}
+
+  </section>
+
+  <div class="part-title">第四部分</div>
+  <section class="part">
+
+    <div class="card">
+      <h2>財經行事曆 <span class="sub">{% if calendar.today and calendar.range_end %}{{ calendar.today[5:] }} ~ {{ calendar.range_end[5:] }}{% endif %}{% if calendar.events %} · {{ calendar.events|length }} 筆{% endif %}</span></h2>
+      {% if calendar.events %}
+      {% for date, evs in calendar.events|groupby('date') %}
+      <div class="cal-day">
+        <div class="cal-date{{ ' today' if date == calendar.today else '' }}">{{ date[5:].replace('-', '/') }}{% if date == calendar.today %}<br><span class="badge exit-today-badge">今天</span>{% endif %}</div>
+        <div class="cal-day-events">
+          {% for ev in evs %}
+          <div>
+            <div class="cal-summary">{{ ev.summary }}{% if ev.time %}<span class="cal-time">{{ ev.time }}</span>{% endif %}</div>
+            {% if ev.description %}<div class="cal-desc">{{ ev.description }}</div>{% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <p class="missing">尚無資料（行事曆來源還沒抓過，或近期沒有排定事件）。</p>
+      {% endif %}
+    </div>
 
   </section>
 

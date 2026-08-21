@@ -79,6 +79,15 @@ jobs:
           python scripts/fetch_chengwaye_daily.py > data/latest/chengwaye_daily.json \
             || echo '{}' > data/latest/chengwaye_daily.json
 
+      - name: Fetch Part 4 -- financial calendar
+        # Public Google Calendar ICS feed the user maintains themselves --
+        # allowed to fail without blocking the rest of the build (same
+        # fallback pattern as Part 3 above); build_page.py/the template
+        # both render a clean "no events" Part 4 when the JSON is empty.
+        run: |
+          python scripts/fetch_calendar.py > data/latest/calendar.json \
+            || echo '{}' > data/latest/calendar.json
+
       - name: Build page
         run: |
           python scripts/build_page.py \
@@ -87,6 +96,7 @@ jobs:
             --disposal data/latest/disposal.json \
             --pressplay data/latest/pressplay.json \
             --chengwaye-daily data/latest/chengwaye_daily.json \
+            --calendar data/latest/calendar.json \
             --out docs/index.html
 
       - name: Commit page + raw data snapshot
