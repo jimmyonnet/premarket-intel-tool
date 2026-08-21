@@ -170,48 +170,16 @@
   <section class="part">
 
     <div class="card">
-      <h2>台指期夜盤走勢 <span class="sub">TAIFEX 期交所即時數據</span></h2>
+      <h2>台指期夜盤走勢 <span class="sub">WTXP& · 玩股網即時走勢圖</span></h2>
       
-      <!-- Native High-Precision Chart Card -->
-      <div style="background:#1B2130; border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:14px;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-          <div>
-            <span style="font-size:13px; font-weight:600; color:var(--text);">臺指期夜盤 / 盤後即時報價</span>
-            {% if night.latest and night.latest.price is not none %}
-            <span style="font-family:var(--font-mono); font-size:22px; font-weight:700; margin-left:10px;" class="{{ 'rise' if night.latest.change_pct is not none and night.latest.change_pct >= 0 else 'fall' }}">
-              {{ night.latest.price }} 
-              <span style="font-size:15px;">({{ '%+.2f'|format(night.latest.change_pct) if night.latest.change_pct is not none else '—' }}%)</span>
-            </span>
-            {% endif %}
-          </div>
-          <div style="display:flex; gap:8px;">
-            <a href="https://www.tradingview.com/symbols/TAIFEX-TXF1!/" target="_blank" rel="noopener" class="cal-link">📈 TradingView ↗</a>
-            <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link">📊 玩股網 ↗</a>
-          </div>
-        </div>
+      <!-- Embedded Wantgoo Chart Frame -->
+      <div style="width:100%; height:460px; overflow:hidden; border-radius:10px; border:1px solid var(--line); background:#ffffff; position:relative; margin-bottom:14px;">
+        <iframe src="https://www.wantgoo.com/futures/wtxp&" style="width:100%; height:1100px; border:none; position:absolute; top:-235px; left:0;" title="玩股網台指期夜盤走勢"></iframe>
+      </div>
 
-        {% if night.high and night.low and night.open and night.prev_close %}
-        {% set span_val = (night.high - night.low) if night.high != night.low else 1.0 %}
-        {% set pc_y = (100 - ((night.prev_close - night.low) / span_val * 80 + 10))|round(1) %}
-        {% set op_y = (100 - ((night.open - night.low) / span_val * 80 + 10))|round(1) %}
-        {% set cur_p = night.latest.price if (night.latest and night.latest.price) else night.open %}
-        {% set cur_y = (100 - ((cur_p - night.low) / span_val * 80 + 10))|round(1) %}
-        
-        <div style="position:relative; height:110px; margin:14px 0 6px;">
-          <svg width="100%" height="100%" viewBox="0 0 600 110" preserveAspectRatio="none" style="display:block;">
-            <line x1="0" y1="{{ pc_y }}" x2="600" y2="{{ pc_y }}" stroke="#8B93A6" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
-            <line x1="280" y1="10" x2="280" y2="90" stroke="#262D3D" stroke-width="6" stroke-linecap="round"/>
-            <line x1="280" y1="{{ [op_y, cur_y]|min }}" x2="280" y2="{{ [op_y, cur_y]|max }}" stroke="{{ '#F0453A' if cur_p >= night.prev_close else '#29D398' }}" stroke-width="6" stroke-linecap="round"/>
-            <path d="M 30 {{ op_y }} C 150 {{ op_y }}, 180 {{ cur_y }}, 570 {{ cur_y }}" fill="none" stroke="#E8B339" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="570" cy="{{ cur_y }}" r="5" fill="{{ '#F0453A' if cur_p >= night.prev_close else '#29D398' }}" stroke="var(--ink)" stroke-width="2"/>
-          </svg>
-          <div style="position:absolute; top:0; left:0; font-size:11px; font-family:var(--font-mono); color:var(--rise);">最高 {{ night.high }}</div>
-          <div style="position:absolute; bottom:0; left:0; font-size:11px; font-family:var(--font-mono); color:var(--fall);">最低 {{ night.low }}</div>
-          <div style="position:absolute; top:{{ [pc_y - 16, 0]|max }}px; right:0; font-size:11px; font-family:var(--font-mono); color:var(--muted);">昨收 {{ night.prev_close }}</div>
-        </div>
-        {% else %}
-        <p class="missing" style="margin:10px 0 0;">期交所夜盤即時連線中，數據將於盤後交易時段動態更新。</p>
-        {% endif %}
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+        <div style="font-size:12px; color:var(--muted);">※ 走勢圖即時源自 玩股網 WantGoo (WTXP&)</div>
+        <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link">📊 開啟玩股網原頁面 ↗</a>
       </div>
 
       <div class="spark-stats">
