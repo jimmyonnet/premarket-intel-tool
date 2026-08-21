@@ -32,15 +32,43 @@ FETCH METHOD -- headless browser (Playwright) for the article, requests
 for chengwaye.com:
 The PressPlay side needs a real browser because it needs to authenticate
 and then click through a normal member-area SPA flow. The login form's
-selectors (input[type=email], input[type=password], a button whose
-accessible name is exactly "登入") were read directly off the site's DOM
-while logged in as the account owner, but could NOT be verified against a
-*logged-out* session in the same sitting (navigating there while already
-authenticated just redirects back -- there was no way to log out and back
-in again without spending the account owner's login step a second time).
-If the login step ever fails, check these selectors first before assuming
-something more exotic (bot detection, changed markup) -- see
-login_to_pressplay()'s diagnostics-on-failure for what to look at.
+original selectors (input[type=email], input[type=password], a button
+whose accessible name is exactly "登入") were read directly off the site's
+DOM while logged in as the account owner, but could NOT be verified
+against a *logged-out* session in the same sitting (navigating there while
+already authenticated just redirects back -- there was no way to log out
+and back in again without spending the account owner's login step a
+second time).
+
+**2026-08-20, first live run (GitHub Actions, secrets newly set) --
+confirmed failure, root-caused, hardened**: login_to_pressplay() timed out
+after 30s waiting for input[type="text"] -- neither type=email nor
+type=text matched a fillable field. Investigated (without ever touching
+the account owner's real login form, which stays off-limits per the note
+above): confirmed via an unauthenticated same-origin `fetch()` that
+/member/login IS the correct URL and IS a real distinct page when logged
+out (title "會員登入 - PressPlay Academy", not a redirect) -- so the URL
+was never the problem. The server-rendered HTML for that page has zero
+<input>/<form> elements: this is a fully client-rendered SPA (custom
+webpack build, not Next/Nuxt) where the actual form only exists after the
+JS bundles mount it. The fetched HTML also loads a `recaptcha` script on
+this route, which is a real candidate for why an automated session could
+get stuck even with the right selectors (see PROHIBITED actions this
+project's operator will not attempt: solving or bypassing CAPTCHAs -- if
+that turns out to be the actual blocker, this becomes a hard stop, not a
+selector-tuning problem).
+
+Hardened login_to_pressplay() in response: (1) added a `networkidle` wait
+before searching, since the original `domcontentloaded` returns before an
+SPA finishes mounting; (2) widened the field search from 2 guesses to a
+list of 9 (by type, autocomplete, name substring, and Chinese/English
+placeholder text), taking the first *visible* match; (3) every failure
+mode now raises with a structural DOM snapshot (input count, and each
+input's type/name/id/placeholder/visibility -- never values) via
+_diagnose_page(), so the NEXT failure (if any) is self-diagnosing straight
+from the GitHub Actions log instead of requiring another investigation
+like this one. Not yet re-verified against a real logged-out run as of
+this edit -- that's the next step, not a claim of a confirmed fix.
 
 chengwaye.com/daily needs no login and no browser -- fetch_disposal.py
 already proved a plain requests.get() with a browser-style User-Agent
@@ -112,31 +140,125 @@ TAIPEI = datetime.timezone(datetime.timedelta(hours=8))
 # PressPlay: login + find + read the latest premarket article
 # ---------------------------------------------------------------------------
 
+def _diagnose_page(page) -> dict:
+    """Safe diagnostic snapshot for a failed PressPlay page interaction --
+    structural info only (URL, title, input element attributes, visible
+    body text), never field VALUES, so this is safe to surface in an
+    exception message that ends up in a public GitHub Actions log even
+    though real credentials were involved in the surrounding call. Added
+    2026-08-20 after the first live run timed out waiting for
+    input[type="text"] -- see the 2026-08-20 note in the module docstring.
+    """
+    try:
+        return page.evaluate(
+            """() => ({
+                url: location.href,
+                title: document.title,
+                inputCount: document.querySelectorAll('input').length,
+                inputs: Array.from(document.querySelectorAll('input')).slice(0, 15).map(el => ({
+                    type: el.type, name: el.name, id: el.id,
+                    placeholder: el.placeholder,
+                    visible: !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length),
+                })),
+                bodySnippet: document.body ? document.body.innerText.slice(0, 200) : null,
+            })"""
+        )
+    except Exception as exc:  # noqa: BLE001 -- diagnostics must never raise
+        return {"diagnose_error": str(exc)}
+
+
+# Tried in order; first VISIBLE match wins. Broadened 2026-08-20 after the
+# original input[type=email] -> input[type=text] pair both failed to
+# resolve on a real (logged-out, GitHub-Actions-run) attempt -- see the
+# module docstring's 2026-08-20 note for why the original two-selector
+# guess wasn't verifiable ahead of time, and _diagnose_page() above for
+# what a future failure now reports instead of a bare timeout.
+_EMAIL_INPUT_SELECTORS = [
+    'input[type="email"]',
+    'input[autocomplete="username"]',
+    'input[autocomplete="email"]',
+    'input[name*="email" i]',
+    'input[name*="account" i]',
+    'input[placeholder*="Email" i]',
+    'input[placeholder*="帳號"]',
+    'input[placeholder*="信箱"]',
+    'input[type="text"]',
+]
+_PASSWORD_INPUT_SELECTORS = [
+    'input[type="password"]',
+    'input[autocomplete="current-password"]',
+]
+
+
+def _first_visible_input(page, selectors):
+    for sel in selectors:
+        loc = page.locator(sel)
+        try:
+            count = loc.count()
+        except Exception:  # noqa: BLE001 -- a bad selector shouldn't abort the search
+            count = 0
+        for i in range(count):
+            candidate = loc.nth(i)
+            try:
+                if candidate.is_visible():
+                    return candidate
+            except Exception:  # noqa: BLE001
+                continue
+    return None
+
+
 def login_to_pressplay(page, email: str, password: str) -> None:
     page.goto(LOGIN_URL, wait_until="domcontentloaded", timeout=30000)
+    # This is a client-rendered SPA (confirmed 2026-08-20: the server HTML
+    # has zero <input>/<form> elements: everything mounts after the JS
+    # bundles run) -- give it a chance to settle before searching. Not
+    # fatal if the site never truly goes idle (analytics beacons etc. can
+    # prevent that); the widened selector search below still applies its
+    # own timeout.
+    try:
+        page.wait_for_load_state("networkidle", timeout=15000)
+    except PlaywrightTimeoutError:
+        pass
 
-    email_input = page.locator('input[type="email"]')
-    if email_input.count() == 0:
-        # fallback -- see module docstring, selectors unverified logged-out
-        email_input = page.locator('input[type="text"]')
-    email_input.first.fill(email)
-    page.locator('input[type="password"]').first.fill(password)
+    try:
+        page.wait_for_selector("input", timeout=20000)
+    except PlaywrightTimeoutError:
+        debug = _diagnose_page(page)
+        raise RuntimeError(
+            "PressPlay login page never rendered a single <input> element "
+            f"within 20s -- see KNOWN RISK in the module docstring (CAPTCHA "
+            f"or bot detection are candidates given this page loads a "
+            f"reCAPTCHA script). Page state: {debug}"
+        )
+
+    email_input = _first_visible_input(page, _EMAIL_INPUT_SELECTORS)
+    password_input = _first_visible_input(page, _PASSWORD_INPUT_SELECTORS)
+    if email_input is None or password_input is None:
+        debug = _diagnose_page(page)
+        raise RuntimeError(
+            "PressPlay login form fields not found by any known selector "
+            f"(email_found={email_input is not None}, "
+            f"password_found={password_input is not None}) -- the real "
+            f"input list is in the page state below; update "
+            f"_EMAIL_INPUT_SELECTORS / _PASSWORD_INPUT_SELECTORS to match. "
+            f"Page state: {debug}"
+        )
+    email_input.fill(email)
+    password_input.fill(password)
 
     login_button = page.get_by_role("button", name="登入", exact=True)
     if login_button.count() == 0:
         login_button = page.locator('button[type="submit"]')
+    if login_button.count() == 0:
+        login_button = page.get_by_role(
+            "button", name=re.compile("登入|Login|Sign in", re.IGNORECASE)
+        )
     login_button.first.click()
 
     try:
         page.wait_for_url(lambda url: "/member/login" not in url, timeout=20000)
     except PlaywrightTimeoutError:
-        debug = page.evaluate(
-            """() => ({
-                url: location.href,
-                title: document.title,
-                bodySnippet: document.body ? document.body.innerText.slice(0, 300) : null,
-            })"""
-        )
+        debug = _diagnose_page(page)
         raise RuntimeError(
             "PressPlay login did not redirect away from /member/login within "
             f"20s -- still stuck there, login likely failed (wrong "
