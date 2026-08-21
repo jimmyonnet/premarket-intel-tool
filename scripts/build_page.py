@@ -344,6 +344,7 @@ def main():
 
     html = tmpl.render(
         generated_at=now.strftime("%Y/%m/%d %H:%M"),
+        indices=indices,
         us_indices=indices.get("us_indices", {}),
         asia_open=indices.get("asia_open", {}),
         indices_missing=indices.get("_missing_fields", []),

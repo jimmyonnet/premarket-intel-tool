@@ -222,6 +222,35 @@
         </div>
         {% endif %}
         {% endfor %}
+
+        {% if night and night.latest %}
+        <div class="tile">
+          <div class="name">台指期夜盤 <span style="font-size:10px; font-weight:normal; color:var(--muted);">(05:00)</span></div>
+          <div class="value">{{ "{:,.0f}".format(night.latest.price) }}</div>
+          <div class="delta {{ 'rise' if night.latest.change >= 0 else 'fall' }}">{{ '%+.0f'|format(night.latest.change) }} ({{ '%+.2f'|format(night.latest.change_pct) }}%)</div>
+        </div>
+        {% endif %}
+        {% if indices and indices.adrs and indices.adrs.tsmc %}
+        <div class="tile">
+          <div class="name">{{ indices.adrs.tsmc.name }}</div>
+          <div class="value">{{ '{:,.2f}'.format(indices.adrs.tsmc.value) }}</div>
+          <div class="delta {{ 'rise' if indices.adrs.tsmc.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.tsmc.change) }} ({{ '%+.2f'|format(indices.adrs.tsmc.change_pct) }}%)</div>
+        </div>
+        {% endif %}
+        {% if indices and indices.adrs and indices.adrs.umc %}
+        <div class="tile">
+          <div class="name">{{ indices.adrs.umc.name }}</div>
+          <div class="value">{{ '{:,.2f}'.format(indices.adrs.umc.value) }}</div>
+          <div class="delta {{ 'rise' if indices.adrs.umc.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.umc.change) }} ({{ '%+.2f'|format(indices.adrs.umc.change_pct) }}%)</div>
+        </div>
+        {% endif %}
+        {% if indices and indices.adrs and indices.adrs.ase %}
+        <div class="tile">
+          <div class="name">{{ indices.adrs.ase.name }}</div>
+          <div class="value">{{ '{:,.2f}'.format(indices.adrs.ase.value) }}</div>
+          <div class="delta {{ 'rise' if indices.adrs.ase.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.ase.change) }} ({{ '%+.2f'|format(indices.adrs.ase.change_pct) }}%)</div>
+        </div>
+        {% endif %}
       </div>
     </div>
 
