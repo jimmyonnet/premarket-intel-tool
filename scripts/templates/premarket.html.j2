@@ -160,7 +160,7 @@
   <div class="ok-banner">✓ 處置股資料日期核對通過（下拉選單：{{ date_check.page_dropdown_selected }} → 適用 {{ date_check.page_says_applies_to }}）</div>
   {% endif %}
 
-  <div class="part-title">第一部分</div>
+  <div class="part-title">美股四大指數</div>
   <section class="part">
 
     <!-- Removed Broken TradingView Widget -->
@@ -201,7 +201,7 @@
 
   </section>
 
-  <div class="part-title">第二部分</div>
+  <div class="part-title">處置股</div>
   <section class="part">
 
     <div class="card">
@@ -287,7 +287,7 @@
 
   </section>
 
-  <div class="part-title">第三部分</div>
+  <div class="part-title">籌碼股</div>
   <section class="part">
 
     <div class="card">
@@ -450,7 +450,24 @@
 
   </section>
 
-  <div class="part-title">第四部分</div>
+  <div class="part-title">自結、季報、營收</div>
+  <section class="part">
+    <div class="card">
+      <h2 style="margin-bottom: 20px;">🔥 市場未反映 <span class="sub">自結、季報、營收 ({{ financials.cutoff_str }} 後公告)</span></h2>
+
+      <div class="sub-label" style="font-size:14px; margin-top:8px; margin-bottom:8px; color:var(--text);">📊 即時自結</div>
+      <iframe src="embed/att.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:6px; background:var(--panel);"></iframe>
+
+      <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">🧾 即時季報</div>
+      <iframe src="embed/fin.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:6px; background:var(--panel);"></iframe>
+
+      <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">💰 即時營收</div>
+      <iframe src="embed/rev.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:6px; background:var(--panel);"></iframe>
+
+    </div>
+  </section>
+
+<div class="part-title">財經行事曆</div>
   <section class="part">
 
     <div class="card">
@@ -517,23 +534,7 @@
   </section>
 
 
-    <div class="part-title">第五部分</div>
-  <section class="part">
-    <div class="card">
-      <h2 style="margin-bottom: 20px;">🔥 市場未反映 <span class="sub">自結、季報、營收 ({{ financials.cutoff_str }} 後公告)</span></h2>
-
-      <div class="sub-label" style="font-size:14px; margin-top:8px; margin-bottom:8px; color:var(--text);">📊 即時自結</div>
-      <iframe src="embed/att.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:6px; background:var(--panel);"></iframe>
-
-      <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">🧾 即時季報</div>
-      <iframe src="embed/fin.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:6px; background:var(--panel);"></iframe>
-
-      <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">💰 即時營收</div>
-      <iframe src="embed/rev.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:6px; background:var(--panel);"></iframe>
-
-    </div>
-  </section>
-
+    
 </div>
 </body>
 </html>
