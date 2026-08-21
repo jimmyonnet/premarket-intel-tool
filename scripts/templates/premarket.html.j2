@@ -110,17 +110,39 @@
   .dual-panel{display:flex; gap:16px; align-items:flex-start;}
   .dual-panel-col{flex:1; min-width:0;}
 
-  /* Part 4: financial calendar, grouped by date (one row per date, all
-     that date's events listed underneath -- a user-maintained Google
-     Calendar feed can list several events on the same day). */
-  .cal-day{display:flex; gap:14px; padding:10px 0; border-bottom:1px solid var(--line);}
+  /* Part 4: financial calendar. Two parts: a real Sun-Sat weekly grid
+     (below) so it actually reads as a calendar at a glance, plus an
+     agenda list grouped by date with full event text underneath (a
+     user-maintained Google Calendar feed can list several events on the
+     same day, and grid cells are far too narrow -- ~1/7th of the card --
+     for Chinese-language event titles). Event-having grid cells link
+     down to their row in the agenda list via #cal-YYYY-MM-DD, a plain
+     HTML anchor scroll -- no JS, consistent with the rest of this static
+     page. */
+  .cal-grid{margin-bottom:18px;}
+  .cal-grid-head, .cal-grid-row{display:grid; grid-template-columns:repeat(7, 1fr); gap:4px;}
+  .cal-grid-head{margin-bottom:4px;}
+  .cal-grid-h{text-align:center; font-size:11px; color:var(--muted); padding:2px 0;}
+  .cal-grid-row{margin-bottom:4px;}
+  .cal-cell{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; aspect-ratio:1; padding:4px 2px; border-radius:8px; background:var(--panel-2); border:1px solid var(--line); text-decoration:none;}
+  .cal-cell.out{opacity:.35;}
+  .cal-cell.today{border-color:var(--amber); box-shadow:inset 0 0 0 1px var(--amber);}
+  .cal-cell.has-events{cursor:pointer;}
+  .cal-cell.has-events:hover{border-color:var(--amber);}
+  .cal-cell-num{font-family:var(--font-mono); font-size:12px; color:var(--text);}
+  .cal-cell.today .cal-cell-num{color:var(--amber); font-weight:700;}
+  .cal-cell-dots{display:flex; gap:2px; align-items:center; height:5px;}
+  .cal-cell-dots .dot{width:5px; height:5px; border-radius:50%; background:var(--amber);}
+  .cal-cell-more{font-size:9px; color:var(--muted); font-family:var(--font-mono); margin-left:1px;}
+
+  .cal-day{display:flex; gap:14px; padding:10px 0; border-bottom:1px solid var(--line); scroll-margin-top:12px;}
   .cal-day:last-child{border-bottom:none;}
   .cal-date{flex:0 0 72px; font-family:var(--font-mono); font-size:12px; color:var(--muted); padding-top:2px;}
   .cal-date.today{color:var(--amber); font-weight:700;}
   .cal-day-events{flex:1; min-width:0; display:flex; flex-direction:column; gap:6px;}
   .cal-summary{font-size:13px; font-weight:600;}
   .cal-time{font-family:var(--font-mono); font-weight:400; color:var(--muted); font-size:12px; margin-left:6px;}
-  .cal-desc{font-size:12px; color:var(--muted); margin-top:2px;}
+  .cal-desc{font-size:12px; color:var(--muted); margin-top:2px; white-space:pre-line;}
 
   /* mobile: reclaim horizontal space (tighter padding/type), let tiles
      pack 2-up instead of stacking to 1 column. Tables are handled above
@@ -139,6 +161,9 @@
     .scroll-hint{display:block; font-size:11px; color:var(--muted); text-align:right; margin-top:6px;}
     .dual-panel{flex-direction:column;}
     .cal-day{flex-direction:column; gap:2px;}
+    .cal-grid-head, .cal-grid-row{gap:3px;}
+    .cal-cell{padding:3px 1px;}
+    .cal-cell-num{font-size:11px;}
   }
 </style>
 </head>
@@ -472,9 +497,34 @@
 
     <div class="card">
       <h2>財經行事曆 <span class="sub">{% if calendar.today and calendar.range_end %}{{ calendar.today[5:] }} ~ {{ calendar.range_end[5:] }}{% endif %}{% if calendar.events %} · {{ calendar.events|length }} 筆{% endif %}</span></h2>
+
+      {% if calendar.grid %}
+      <div class="cal-grid">
+        <div class="cal-grid-head">
+          {% for wl in calendar.grid.weekday_labels %}<div class="cal-grid-h">{{ wl }}</div>{% endfor %}
+        </div>
+        {% for week in calendar.grid.weeks %}
+        <div class="cal-grid-row">
+          {% for d in week %}
+          {% if d.count %}
+          <a class="cal-cell has-events{{ ' today' if d.is_today else '' }}" href="#cal-{{ d.date }}">
+            <span class="cal-cell-num">{{ d.month_label or d.day }}</span>
+            <span class="cal-cell-dots">{% for i in range([d.count, 3]|min) %}<span class="dot"></span>{% endfor %}{% if d.count > 3 %}<span class="cal-cell-more">+{{ d.count - 3 }}</span>{% endif %}</span>
+          </a>
+          {% else %}
+          <div class="cal-cell{{ ' today' if d.is_today else '' }}{{ '' if d.in_range else ' out' }}">
+            <span class="cal-cell-num">{{ d.month_label or d.day }}</span>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
       {% if calendar.events %}
       {% for date, evs in calendar.events|groupby('date') %}
-      <div class="cal-day">
+      <div class="cal-day" id="cal-{{ date }}">
         <div class="cal-date{{ ' today' if date == calendar.today else '' }}">{{ date[5:].replace('-', '/') }}{% if date == calendar.today %}<br><span class="badge exit-today-badge">今天</span>{% endif %}</div>
         <div class="cal-day-events">
           {% for ev in evs %}

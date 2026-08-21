@@ -33,7 +33,7 @@ UndefinedError even though `{{ data.missing_key }}` alone does not).
 """
 import argparse
 import json
-from datetime import datetime, timezone, timedelta
+from datetime import date, datetime, timezone, timedelta
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
@@ -209,6 +209,53 @@ def build_institutional_section(pressplay, chengwaye_daily):
     }
 
 
+def build_calendar_grid(today_str, range_end_str, events):
+    """
+    Part 4: a real Sun-Sat weekly grid (padded to full weeks) covering
+    [today, range_end], for an at-a-glance calendar view sitting above the
+    detailed agenda list. Cells only carry a day number + event-count dots
+    -- a 7-column cell is far too narrow for Chinese-language event titles
+    -- and link to that day's spot in the agenda list below via a
+    same-page #cal-YYYY-MM-DD anchor (plain HTML anchor scroll, no JS,
+    consistent with the rest of this static page).
+    """
+    if not today_str or not range_end_str:
+        return None
+    today = date.fromisoformat(today_str)
+    range_end = date.fromisoformat(range_end_str)
+
+    by_date = {}
+    for ev in events:
+        by_date.setdefault(ev["date"], []).append(ev)
+
+    def sunday_of_week(d):
+        return d - timedelta(days=(d.weekday() + 1) % 7)  # weekday(): Mon=0..Sun=6
+
+    grid_start = sunday_of_week(today)
+    grid_end = sunday_of_week(range_end) + timedelta(days=6)
+
+    days = []
+    d = grid_start
+    while d <= grid_end:
+        iso = d.isoformat()
+        in_range = today <= d <= range_end
+        days.append({
+            "date": iso,
+            "day": d.day,
+            # month label on the 1st (so a grid crossing a month boundary
+            # is legible) and on the very first cell (so the grid's own
+            # starting month is never ambiguous).
+            "month_label": f"{d.month}/{d.day}" if (d.day == 1 or d == grid_start) else None,
+            "is_today": d == today,
+            "in_range": in_range,
+            "count": len(by_date.get(iso, [])) if in_range else 0,
+        })
+        d += timedelta(days=1)
+
+    weeks = [days[i:i + 7] for i in range(0, len(days), 7)]
+    return {"weekday_labels": ["日", "一", "二", "三", "四", "五", "六"], "weeks": weeks}
+
+
 def load_json(path):
     """Defensive loader: a fetch step that failed partway (e.g. the disposal
     date-check abort) can leave behind a missing or empty/truncated file.
@@ -280,6 +327,9 @@ def main():
         "range_end": calendar_raw.get("range_end"),
         "events": calendar_raw.get("events") or [],
     }
+    calendar_section["grid"] = build_calendar_grid(
+        calendar_section["today"], calendar_section["range_end"], calendar_section["events"]
+    )
 
     now = datetime.now(TAIPEI)
 
