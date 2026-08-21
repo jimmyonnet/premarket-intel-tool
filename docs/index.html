@@ -48,13 +48,6 @@
   .spark-wrap{margin-bottom:14px;}
   .spark-stats{display:flex; gap:18px; font-family:var(--font-mono); font-size:12px; color:var(--muted); margin-top:8px; flex-wrap:wrap;}
   .spark-stats b{color:var(--text); font-weight:600;}
-  svg.spark{width:100%; height:auto; display:block;}
-  svg.spark .line{fill:none; stroke:var(--amber); stroke-width:2; stroke-linecap:round; stroke-linejoin:round;}
-  svg.spark .refline{stroke:var(--muted); stroke-width:1; stroke-dasharray:3,4; opacity:.6;}
-  svg.spark .dot{fill:var(--ink); stroke-width:2;}
-  svg.spark .dot.rise{stroke:var(--rise);}
-  svg.spark .dot.fall{stroke:var(--fall);}
-  svg.spark .endlabel{font-family:var(--font-mono); font-size:11px; fill:var(--muted);}
 
   /* tables */
   table{width:100%; border-collapse:collapse; font-size:13px;}
@@ -135,7 +128,7 @@
 
   .cal-summary{font-size:14px; font-weight:600; color:var(--text);}
   .cal-desc{font-size:12px; color:var(--muted); margin-top:4px; white-space:pre-line; line-height:1.4;}
-  .cal-link{display:inline-flex; align-items:center; gap:4px; font-size:12px; color:var(--amber); text-decoration:none; background:rgba(232,179,57,0.1); border:1px solid rgba(232,179,57,0.3); padding:3px 8px; border-radius:6px; font-weight:500; transition:all 0.15s ease; margin-top:6px;}
+  .cal-link{display:inline-flex; align-items:center; gap:4px; font-size:12px; color:var(--amber); text-decoration:none; background:rgba(232,179,57,0.1); border:1px solid rgba(232,179,57,0.3); padding:3px 8px; border-radius:6px; font-weight:500; transition:all 0.15s ease;}
   .cal-link:hover{background:rgba(232,179,57,0.2); border-color:var(--amber); text-decoration:none;}
 
   @media (max-width: 480px){
@@ -162,7 +155,7 @@
 
   <header>
     <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 2026/08/21 21:28</div>
+    <div class="generated">產生時間 2026/08/21 21:31</div>
   </header>
 
   
@@ -175,15 +168,41 @@
   <section class="part">
 
     <div class="card">
-      <h2>台指期夜盤走勢 <span class="sub">TAIFEX 期交所即時行情 & 走勢圖</span></h2>
+      <h2>台指期夜盤走勢 <span class="sub">TAIFEX 期交所即時數據</span></h2>
       
-      <div style="height:320px; margin-bottom:10px; border-radius:8px; overflow:hidden; background:#151A24;">
-        <iframe src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_tx1&symbol=CAPITALCOM%3ATAIEX&interval=60&hidesidetoolbar=1&symboledit=0&saveimage=0&toolbarbg=151A24&theme=dark&style=1&timezone=Asia%2FTaipei" style="width: 100%; height: 100%; border: none;"></iframe>
-      </div>
+      <!-- Native High-Precision Chart Card -->
+      <div style="background:#1B2130; border:1px solid var(--line); border-radius:10px; padding:16px; margin-bottom:14px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
+          <div>
+            <span style="font-size:13px; font-weight:600; color:var(--text);">臺指期夜盤 / 盤後即時報價</span>
+            
+          </div>
+          <div style="display:flex; gap:8px;">
+            <a href="https://www.tradingview.com/symbols/TAIFEX-TXF1!/" target="_blank" rel="noopener" class="cal-link">📈 TradingView ↗</a>
+            <a href="https://www.wantgoo.com/futures/wtxp&" target="_blank" rel="noopener" class="cal-link">📊 玩股網 ↗</a>
+          </div>
+        </div>
 
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-        <div style="font-size:12px; color:var(--muted);">※ 線圖採用 TradingView 開放嵌入之台灣指數期貨 (CAPITALCOM:TAIEX)</div>
-        <a href="https://www.tradingview.com/symbols/TAIFEX-TXF1!/" target="_blank" rel="noopener" class="cal-link">📈 前往 TradingView 查看 TAIFEX 原生大台指 ↗</a>
+        
+        
+        
+        
+        
+        
+        
+        <div style="position:relative; height:110px; margin:14px 0 6px;">
+          <svg width="100%" height="100%" viewBox="0 0 600 110" preserveAspectRatio="none" style="display:block;">
+            <line x1="0" y1="105.0" x2="600" y2="105.0" stroke="#8B93A6" stroke-width="1" stroke-dasharray="4,4" opacity="0.6"/>
+            <line x1="280" y1="10" x2="280" y2="90" stroke="#262D3D" stroke-width="6" stroke-linecap="round"/>
+            <line x1="280" y1="81.8" x2="280" y2="81.8" stroke="#F0453A" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 30 81.8 C 150 81.8, 180 81.8, 570 81.8" fill="none" stroke="#E8B339" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="570" cy="81.8" r="5" fill="#F0453A" stroke="var(--ink)" stroke-width="2"/>
+          </svg>
+          <div style="position:absolute; top:0; left:0; font-size:11px; font-family:var(--font-mono); color:var(--rise);">最高 45474.0</div>
+          <div style="position:absolute; bottom:0; left:0; font-size:11px; font-family:var(--font-mono); color:var(--fall);">最低 45191.0</div>
+          <div style="position:absolute; top:89.0px; right:0; font-size:11px; font-family:var(--font-mono); color:var(--muted);">昨收 45138.0</div>
+        </div>
+        
       </div>
 
       <div class="spark-stats">
@@ -202,32 +221,32 @@
         
         <div class="tile">
           <div class="name">道瓊工業指數</div>
-          <div class="value">52,759.21</div>
-          <div class="delta fall">-703.89 (-1.32%)</div>
+          <div class="value">53,032.69</div>
+          <div class="delta rise">+273.48 (+0.52%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">S&amp;P 500指數</div>
-          <div class="value">7,641.16</div>
-          <div class="delta fall">-66.82 (-0.87%)</div>
+          <div class="value">7,672.87</div>
+          <div class="delta rise">+31.71 (+0.41%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">NASDAQ指數</div>
-          <div class="value">26,067.17</div>
-          <div class="delta fall">-263.92 (-1.00%)</div>
+          <div class="value">26,182.63</div>
+          <div class="delta rise">+115.47 (+0.44%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">費城半導體指數</div>
-          <div class="value">11,800.02</div>
-          <div class="delta rise">+61.79 (+0.53%)</div>
+          <div class="value">11,922.93</div>
+          <div class="delta rise">+122.91 (+1.04%)</div>
         </div>
         
         
@@ -2036,6 +2055,22 @@
             
           </div>
           
+          <div class="cal-event-card cat-general">
+            <div class="cal-header-row">
+              
+              <span class="cal-time-pill">16:00</span>
+              
+              <span class="cal-cat-badge">事件</span>
+            </div>
+            <div class="cal-summary">歐元區-服務業採購經理人指數[NMI]</div>
+            <div class="cal-desc">前值:  51.7</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
+          </div>
+          
           <div class="cal-event-card cat-econ">
             <div class="cal-header-row">
               
@@ -2046,22 +2081,6 @@
             <div class="cal-summary">歐元區-製造業採購經理人指數[PMI]</div>
             <div class="cal-desc">市場預期: 51.8
 前值:  51.9</div>
-            
-            <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
-            </div>
-            
-          </div>
-          
-          <div class="cal-event-card cat-general">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">16:00</span>
-              
-              <span class="cal-cat-badge">事件</span>
-            </div>
-            <div class="cal-summary">歐元區-服務業採購經理人指數[NMI]</div>
-            <div class="cal-desc">前值:  51.7</div>
             
             <div>
               <a class="cal-link" href="https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
@@ -2210,22 +2229,6 @@
         <div class="cal-date">08/31</div>
         <div class="cal-day-events">
           
-          <div class="cal-event-card cat-general">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">09:30</span>
-              
-              <span class="cal-cat-badge">事件</span>
-            </div>
-            <div class="cal-summary">中國-官方非製造業採購經理人指數[NMI]</div>
-            <div class="cal-desc">前值:  49.0</div>
-            
-            <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
-            </div>
-            
-          </div>
-          
           <div class="cal-event-card cat-econ">
             <div class="cal-header-row">
               
@@ -2238,6 +2241,22 @@
             
             <div>
               <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/232/cn-pmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
+          </div>
+          
+          <div class="cal-event-card cat-general">
+            <div class="cal-header-row">
+              
+              <span class="cal-time-pill">09:30</span>
+              
+              <span class="cal-cat-badge">事件</span>
+            </div>
+            <div class="cal-summary">中國-官方非製造業採購經理人指數[NMI]</div>
+            <div class="cal-desc">前值:  49.0</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
             </div>
             
           </div>
