@@ -517,87 +517,19 @@
   </section>
 
 
-  <div class="part-title">第五部分</div>
+    <div class="part-title">第五部分</div>
   <section class="part">
-
     <div class="card">
-      <h2>🔥 市場未反映 <span class="sub">{{ financials.cutoff_str }} 後公告之自結、季報、營收</span></h2>
+      <h2 style="margin-bottom: 20px;">🔥 市場未反映 <span class="sub">自結、季報、營收 ({{ financials.cutoff_str }} 後公告)</span></h2>
 
-      <div class="sub-label" style="font-size:14px; margin-top:8px; margin-bottom:8px; color:var(--text);">📊 即時自結 ({{ financials.att|length }} 檔)</div>
-      <div class="table-scroll">
-      <table>
-        <thead><tr><th>代號</th><th>名稱</th><th>期間</th><th class="num">EPS</th><th class="num">上季EPS</th><th class="num">營收(千)</th><th class="num">稅前淨利(千)</th><th class="num">稅後淨利(千)</th><th>AI 短評</th></tr></thead>
-        <tbody>
-          {% for row in financials.att %}
-          <tr>
-            <td class="code">{{ row.code }}</td>
-            <td class="name">{{ row.name }}</td>
-            <td>{{ row.parsed.自結期間 }}</td>
-            <td class="num exit-today">{{ row.parsed.EPS }}</td>
-            <td class="num">{{ row.parsed.上季EPS }}</td>
-            <td class="num">{{ "{:,.0f}".format(row.parsed['營收(千)']|float) if row.parsed.get('營收(千)') else '-' }}</td>
-            <td class="num">{{ "{:,.0f}".format(row.parsed['稅前淨利(千)']|float) if row.parsed.get('稅前淨利(千)') else '-' }}</td>
-            <td class="num">{{ "{:,.0f}".format(row.parsed['淨利(千)']|float) if row.parsed.get('淨利(千)') else '-' }}</td>
-            <td class="condition">{{ row.ai_reason }}</td>
-          </tr>
-          {% else %}
-          <tr class="empty-row"><td colspan="9">目前無未反映之自結公告</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      </div>
+      <div class="sub-label" style="font-size:14px; margin-top:8px; margin-bottom:8px; color:var(--text);">📊 即時自結</div>
+      <iframe src="embed/att.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:6px; background:var(--panel);"></iframe>
 
-      <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">🧾 即時季報 ({{ financials.fin|length }} 檔)</div>
-      <div class="table-scroll">
-      <table>
-        <thead><tr><th>代號</th><th>名稱</th><th>季度</th><th class="num">本季EPS</th><th class="num">上季EPS</th><th class="num">本季毛利率</th><th class="num">上季毛利率</th><th class="num">本季營益率</th><th>AI 短評</th></tr></thead>
-        <tbody>
-          {% for row in financials.fin %}
-          {% set q_key = row.parsed.報告季度 + '_EPS' %}
-          {% set gm_key = row.parsed.報告季度 + '_毛利率' %}
-          {% set op_key = row.parsed.報告季度 + '_營益率' %}
-          <tr>
-            <td class="code">{{ row.code }}</td>
-            <td class="name">{{ row.name }}</td>
-            <td>{{ row.parsed.報告期間 }}</td>
-            <td class="num exit-today">{{ row.parsed[q_key] if row.parsed.get(q_key) != None else '-' }}</td>
-            <td class="num">{{ row.parsed.上季EPS if row.parsed.get('上季EPS') != None else '-' }}</td>
-            <td class="num">{{ row.parsed[gm_key] ~ '%' if row.parsed.get(gm_key) != None else '-' }}</td>
-            <td class="num">{{ row.parsed.上季毛利率 ~ '%' if row.parsed.get('上季毛利率') != None else '-' }}</td>
-            <td class="num">{{ row.parsed[op_key] ~ '%' if row.parsed.get(op_key) != None else '-' }}</td>
-            <td class="condition">{{ row.ai_reason }}</td>
-          </tr>
-          {% else %}
-          <tr class="empty-row"><td colspan="9">目前無未反映之季報公告</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      </div>
+      <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">🧾 即時季報</div>
+      <iframe src="embed/fin.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:6px; background:var(--panel);"></iframe>
 
-      <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">💰 即時營收 ({{ financials.rev|length }} 檔)</div>
-      <div class="table-scroll">
-      <table>
-        <thead><tr><th>代號</th><th>名稱</th><th>月份</th><th class="num">單月營收(千)</th><th class="num">MoM</th><th class="num">YoY</th><th class="num">累計營收(千)</th><th class="num">累計YoY</th><th>新高</th><th>AI 短評</th></tr></thead>
-        <tbody>
-          {% for row in financials.rev %}
-          <tr>
-            <td class="code">{{ row.code }}</td>
-            <td class="name">{{ row.name }}</td>
-            <td>{{ row.period }}</td>
-            <td class="num">{{ "{:,.0f}".format(row.rev|float) if row.rev else '-' }}</td>
-            <td class="num {{ 'rise' if row.mom_pct and row.mom_pct > 0 else ('fall' if row.mom_pct and row.mom_pct < 0 else '') }}">{{ row.mom_pct }}%</td>
-            <td class="num {{ 'rise' if row.yoy_pct and row.yoy_pct > 0 else ('fall' if row.yoy_pct and row.yoy_pct < 0 else '') }}">{{ row.yoy_pct }}%</td>
-            <td class="num">{{ "{:,.0f}".format(row.cum_rev|float) if row.cum_rev else '-' }}</td>
-            <td class="num {{ 'rise' if row.cum_yoy_pct and row.cum_yoy_pct > 0 else ('fall' if row.cum_yoy_pct and row.cum_yoy_pct < 0 else '') }}">{{ row.cum_yoy_pct }}%</td>
-            <td class="badge-col">{% if row.is_24m_high %}<span class="badge exit-today-badge">24M新高</span>{% else %}-{% endif %}</td>
-            <td class="condition">{{ row.ai_reason }}</td>
-          </tr>
-          {% else %}
-          <tr class="empty-row"><td colspan="10">目前無未反映之營收公告</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      </div>
+      <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">💰 即時營收</div>
+      <iframe src="embed/rev.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:6px; background:var(--panel);"></iframe>
 
     </div>
   </section>

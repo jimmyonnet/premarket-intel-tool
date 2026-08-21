@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<style>
+nav, nav a, nav input { line-height: normal; }html{scrollbar-gutter:stable;overflow-y:scroll}
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4394676027529562" crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V2963KDJ4N"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-V2963KDJ4N');</script>
+<title>營收 — Chengwaye</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#0d1117">
+<meta property="og:site_name" content="Chengwaye">
+<meta property="og:type" content="website">
+<meta property="og:title" content="營收 — Chengwaye">
+<meta property="og:description" content="營收，上市上櫃公司月營收即時更新，自動偵測新申報">
+<meta property="og:url" content="https://chengwaye.com/realtime-rev">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:image" content="https://chengwaye.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://chengwaye.com/realtime-rev">
+<meta name="description" content="營收，上市上櫃公司月營收即時更新，自動偵測新申報">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0d1117; color: #e0e0e0; font-family: 'Noto Sans TC', sans-serif; ; min-height: 100vh}
+  /* CSR 避免抖動 */
+  #app { min-height: 70vh; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 16px 12px; }
+  .header { text-align: center; padding: 16px 0 12px; border-bottom: 1px solid #30363d; margin-bottom: 16px; }
+  .header h1 { margin-bottom: 0; }
+  .header .sub { font-size: 13px; color: #888; margin-top: 4px; }
+  .header .update-time { font-size: 12px; color: #666; margin-top: 4px; }
+  .stats-bar { display: flex; justify-content: center; gap: 20px; margin: 10px 0; flex-wrap: wrap; }
+  .stat-item { text-align: center; }
+  .stat-item .val { font-size: 22px; font-weight: 700; color: #58a6ff; }
+  .stat-item .label { font-size: 11px; color: #666; }
+  .filter-bar { display: flex; align-items: center; gap: 12px; padding: 8px 12px; margin: 10px 0; background: #1a1a2e; border-radius: 8px; flex-wrap: wrap; }
+  .filter-label { font-size: 12px; color: #aaa; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+  .filter-label input { cursor: pointer; accent-color: #58a6ff; }
+  .tbl-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; background: #141422; border-radius: 8px; overflow: hidden; }
+  table.revenue-table { table-layout: fixed; }
+  table.revenue-table col.c-code { width: 64px; }
+  table.revenue-table col.c-name { width: 132px; }
+  table.revenue-table col.c-ai { width: 58px; }
+  table.revenue-table col.c-time { width: 118px; }
+  table.revenue-table col.c-rev { width: 82px; }
+  table.revenue-table col.c-pct { width: 82px; }
+  table.revenue-table col.c-cum { width: 96px; }
+  th { background: #1a1a2e; color: #8b949e; font-size: 0.78em; font-weight: 600; padding: 10px 6px; text-align: left; white-space: nowrap; cursor: pointer; user-select: none; letter-spacing: 0.5px; text-transform: uppercase; }
+  th:hover { color: #e6edf3; }
+  th.num-col { text-align: right; }
+  th .sort-arrow { font-size: 10px; margin-left: 2px; color: #484f58; }
+  th .sort-arrow.active { color: #58a6ff; }
+  td { padding: 10px 6px; border-bottom: 1px solid #21262d; font-size: 0.85em; white-space: nowrap; }
+  .date-header { padding: 4px 10px; background: #1a1a2e; color: #8b949e; font-size: 14px; font-weight: 600; margin-top: 12px; border-radius: 8px 8px 0 0; line-height: 1.4; letter-spacing: 0.3px; }
+  .date-header .sd-dot { width: 7px !important; height: 7px !important; }
+  .date-header .sd-count { font-size: 11px !important; }
+  @media (max-width: 600px) {
+    .date-header { font-size: 13px; padding: 4px 8px; }
+    .date-header .sd-count { font-size: 10px !important; }
+  }
+  .date-header .sd-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; vertical-align: middle; }
+  .date-header .sd-count { font-size: 11px; color: #666; font-weight: 500; margin-left: 6px; }
+  .code-col { color: #58a6ff; font-weight: 700; }
+  .name-col { color: #e6edf3; font-weight: 700; white-space: nowrap; overflow: visible; text-overflow: clip; }
+  .num-col { text-align: right; font-variant-numeric: tabular-nums; font-family: 'Consolas', 'Menlo', monospace; }
+  .rev-col { width: 82px; }
+  .new-badge { font-size: 10px; margin-left: 3px; vertical-align: middle; }
+  .empty { text-align: center; padding: 60px 20px; color: #555; font-style: italic; font-size: 16px; }
+  .flash-notification { position: fixed; top: 60px; left: 50%; transform: translateX(-50%); background: #238636; color: #fff; padding: 8px 20px; border-radius: 8px; font-size: 13px; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .flash-notification.show { opacity: 1; }
+  footer { text-align: center; padding: 32px 0 24px; color: #484f58; font-size: 12px; border-top: 1px solid #30363d; margin-top: 32px; }
+  footer a { color: #58a6ff; text-decoration: none; }
+  footer p { margin: 4px 0; }
+  tr.highlight td { }
+  tr.clickable { cursor: pointer; }
+  tr.clickable:hover td { background: #1c2030; }
+  .hist-row td { padding: 0 !important; border: none !important; }
+  .hist-wrap { padding: 8px 12px; background: #0d1117; border-bottom: 2px solid #30363d; overflow: hidden; }
+  .hist-tbl { width: 100%; border-collapse: collapse; font-size: 0.75em; }
+  .hist-tbl th { background: #161622; color: #666; padding: 4px 6px; font-size: 0.9em; }
+  .hist-tbl td { padding: 3px 6px; border-bottom: 1px solid #1a1a2a; color: #aaa; }
+  .hist-tbl .num { text-align: right; font-family: 'Consolas', monospace; }
+  .time-col { color: #666; font-size: 0.8em; }
+  [title] { cursor: help; }
+  .note-col { font-size: 0.75em; color: #aaa; }
+  .ai-score { display:inline-block; min-width:20px; text-align:center; font-weight:700; font-size:0.85em; font-variant-numeric:tabular-nums; }
+  .ai-col { text-align:center; white-space:nowrap; }
+  @media (max-width: 600px) {
+    table.revenue-table { min-width: 850px; }
+    td, th { padding: 6px 4px; font-size: 0.78em; }
+    .stats-bar { gap: 12px; }
+    .stat-item .val { font-size: 18px; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style id="cw-typography">html,body{font-family:'Inter','Noto Sans TC',-apple-system,'Segoe UI','PingFang TC','Microsoft JhengHei',sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-feature-settings:'cv11','ss01','ss03'}h1,h2,h3{font-family:'Inter','Noto Sans TC',-apple-system,sans-serif;font-weight:800;letter-spacing:-0.02em}table,td,th,.num-col,.code-col,.stats-table,.hm-table{font-variant-numeric:tabular-nums}code,pre,.mono{font-family:ui-monospace,'Cascadia Mono','Consolas','Menlo',monospace}</style>
+<link rel="stylesheet" href="/visual-effects.css?v=20260501-lean2">
+<script defer src="/visual-effects.js?v=20260501-lean2"></script><style id="cw-page-max-style">body{--cw-page-max:1168px}</style>
+
+    <style>
+      body { background: transparent !important; padding: 0 !important; }
+      nav, .header, .ai-warn, .ai-warn-bottom, .search-container, #load-archive-btn, footer { display: none !important; }
+      .container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; }
+      #app { margin-top: 0 !important; min-height: 0 !important; }
+      table { border-radius: 6px !important; }
+      th { font-size: 13px !important; background: #1a2132 !important; border-bottom: 1px solid #253046 !important; }
+      td { font-size: 13px !important; border-bottom: 1px solid #253046 !important; }
+      .section-divider { background: transparent !important; font-size: 13px !important; padding: 0 4px 8px !important; border-bottom: none !important; }
+      .clickable-row:hover td { background: #1a2132 !important; }
+      .detail-row td { background: #0B0E14 !important; border-bottom: 1px solid #1a2132 !important; }
+      .detail-content { background: #0B0E14 !important; padding: 12px !important; }
+      .raw-text { background: #131824 !important; border: 1px solid #253046 !important; }
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 3px; }
+    </style>
+    </head>
+<body>
+<nav class="cw-top-nav cw-ad-exclude google-anno-skip">
+  <link id="cw-nav-style-link" rel="stylesheet" href="/assets/cw-nav.css?v=h-7d5aabf6d734">
+  <script id="cw-nav-script" src="/assets/cw-nav.js?v=h-c56f98d204d1" defer></script>
+  <div class="cw-nav-shell">
+  <div class="cw-nav-group cw-nav-group-home">
+    <a href="/" class="cw-nav-tab" data-nav-key="home">首頁</a>
+  </div>
+  <div class="cw-nav-group cw-nav-group-market">
+    <a href="/commentary/" class="cw-nav-tab" data-nav-key="commentary">氣氛</a>
+    <a href="/daily" class="cw-nav-tab" data-nav-key="index">當日</a>
+    <a href="/nextday-performance" class="cw-nav-tab" data-nav-key="nextday">隔日</a>
+    <a href="/stats" class="cw-nav-tab" data-nav-key="stats">統計</a>
+  </div>
+  <div class="cw-nav-group cw-nav-group-filing">
+    <a href="/realtime-att" class="cw-nav-tab" data-nav-key="att">自結</a>
+    <a href="/realtime-fin" class="cw-nav-tab" data-nav-key="fin">季報</a>
+    <a href="/realtime-rev" class="cw-nav-tab is-active" data-nav-key="rev" aria-current="page">營收</a>
+    <a href="/realtime-treasury" class="cw-nav-tab" data-nav-key="treasury">庫藏</a>
+    <a href="/realtime-events" class="cw-nav-tab" data-nav-key="events">事件</a>
+  </div>
+  <div class="cw-nav-group cw-nav-group-risk">
+    <a href="/realtime-borrowed" class="cw-nav-tab" data-nav-key="borrowed">券差</a>
+    <a href="/disposal-forecast" class="cw-nav-tab" data-nav-key="disposal">處置</a>
+    <a href="/active-etf" class="cw-nav-tab" data-nav-key="activeEtf">主動ETF</a>
+  </div>
+  </div>
+  <div class="cw-nav-mobile"><a href="/" class="cw-nav-tab" data-nav-key="home" data-nav-group="home">首頁</a><a href="/commentary/" class="cw-nav-tab" data-nav-key="commentary" data-nav-group="market">氣氛</a><a href="/daily" class="cw-nav-tab" data-nav-key="index" data-nav-group="market">當日</a><a href="/nextday-performance" class="cw-nav-tab" data-nav-key="nextday" data-nav-group="market">隔日</a><a href="/stats" class="cw-nav-tab" data-nav-key="stats" data-nav-group="market">統計</a><a href="/realtime-borrowed" class="cw-nav-tab" data-nav-key="borrowed" data-nav-group="risk">券差</a><a href="/disposal-forecast" class="cw-nav-tab" data-nav-key="disposal" data-nav-group="risk">處置</a><a href="/realtime-att" class="cw-nav-tab" data-nav-key="att" data-nav-group="filing">自結</a><a href="/realtime-fin" class="cw-nav-tab" data-nav-key="fin" data-nav-group="filing">季報</a><a href="/realtime-rev" class="cw-nav-tab is-active" data-nav-key="rev" data-nav-group="filing" aria-current="page">營收</a><a href="/realtime-treasury" class="cw-nav-tab" data-nav-key="treasury" data-nav-group="filing">庫藏</a><a href="/realtime-events" class="cw-nav-tab" data-nav-key="events" data-nav-group="filing">事件</a><a href="/active-etf" class="cw-nav-tab" data-nav-key="activeEtf" data-nav-group="risk">主動ETF</a></div>
+  <span class="cw-nav-search-control" data-search-mode="code"><input id="stock-search-nav" class="cw-nav-search" type="search" inputmode="numeric" autocomplete="off" enterkeyhint="search" placeholder="🔍 股號" data-search-mode="code" data-code-placeholder="🔍 股號" data-name-placeholder="🔍 名稱" aria-label="股票搜尋" oninput="searchStock(this.value)" /><button type="button" class="cw-nav-search-mode" aria-label="切換為名稱搜尋" title="切換為名稱搜尋">名</button></span>
+</nav>
+<div class="container">
+  <div class="header">
+    <h1 style="font-size:22px;text-align:center;margin-bottom:4px;color:#e6edf3;font-weight:800;letter-spacing:-0.01em;">Chengwaye 營收</h1>
+    <div class="sub" id="period-info">載入中...</div>
+    <div class="update-time"><span id="last-update">載入中...</span></div>
+  </div>
+  <div class="filter-bar cw-ad-exclude google-anno-skip">
+    <label class="filter-label"><input type="checkbox" id="f-yoy-on" onchange="applyFilter()"> YoY</label>
+    <button id="yoy-dir" onclick="toggleDir('yoy')" style="padding:2px 8px;border-radius:8px;border:1px solid #30363d;background:#1a1a2e;color:#e0e0e0;font-size:12px;cursor:pointer;min-width:28px;">&gt;</button>
+    <input id="f-yoy-val" type="number" value="30" oninput="applyFilter()" style="width:50px;padding:3px 6px;border-radius:8px;border:1px solid #30363d;background:#0d1117;color:#e0e0e0;font-size:12px;text-align:center;" />
+    <span style="font-size:12px;color:#666;">%</span>
+    <span style="margin:0 6px;color:#333;">|</span>
+    <label class="filter-label"><input type="checkbox" id="f-mom-on" onchange="applyFilter()"> MoM</label>
+    <button id="mom-dir" onclick="toggleDir('mom')" style="padding:2px 8px;border-radius:8px;border:1px solid #30363d;background:#1a1a2e;color:#e0e0e0;font-size:12px;cursor:pointer;min-width:28px;">&gt;</button>
+    <input id="f-mom-val" type="number" value="20" oninput="applyFilter()" style="width:50px;padding:3px 6px;border-radius:8px;border:1px solid #30363d;background:#0d1117;color:#e0e0e0;font-size:12px;text-align:center;" />
+    <span style="font-size:12px;color:#666;">%</span>
+    <span style="margin:0 6px;color:#333;">|</span>
+    <label class="filter-label"><input type="checkbox" id="f-new" onchange="applyFilter()"> 僅新申報</label>
+    <label class="filter-label"><input type="checkbox" id="f-ai" onchange="applyFilter()"> 有AI評分</label>
+  </div>
+  <div id="app" class="cw-ad-exclude google-anno-skip"><div class="empty">載入中...</div></div>
+  <footer class="cw-ad-exclude google-anno-skip">
+    <p style="margin-bottom:8px;"><a href="/">首頁</a> · <a href="/about">關於本站</a> · <a href="/privacy">隱私權政策</a></p>
+<p id="cw-guide-links" style="margin-bottom:8px;">教學：<a href="/guide/limit-up" style="color:#58a6ff;text-decoration:none;">漲停數據判讀</a> · <a href="/guide/disposal" style="color:#58a6ff;text-decoration:none;">處置股指南</a> · <a href="/guide/how-to-use" style="color:#58a6ff;text-decoration:none;">使用教學</a> · <a href="/stock/" style="color:#58a6ff;text-decoration:none;">個股漲停履歷</a></p>
+    <p>資料來源：<a href="https://mops.twse.com.tw/mops/web/t21sc03_ifrs" target="_blank" rel="noopener">公開資訊觀測站</a></p>
+    <p>免責聲明：營收數字及歷史由AI自動提取，可能有誤判或遺漏。</p>
+    <p style="color:#e74c3c;">本站資訊僅供參考，不構成買賣建議或投資決策依據。投資人應自行查證，審慎評估並自負投資風險與盈虧。</p>
+    <p>Chengwaye &copy; 2026</p>
+  </footer>
+</div>
+<div id="flash-notification" class="flash-notification">已更新</div>
+<script src="shared-utils.js"></script>
+<script>
+var JSON_URL = 'https://chengwaye-data.pages.dev/realtime_revenue.json';
+// 封存期別（2026-07-11）：換月後上一期整包封存於 realtime_revenue_YYYYMM.json，不再消失
+var PERIODS_URL = 'https://chengwaye-data.pages.dev/realtime_revenue_periods.json';
+var ARCHIVE_BASE = 'https://chengwaye-data.pages.dev/realtime_revenue_';
+var REALTIME_DATA_FETCH_TIMEOUT_MS = 12000;
+var VIEW_PERIOD = ''; // ''=本期；'YYYY/MM'=檢視封存期
+var DATA = null, FILTERED = [], SORT_KEY = 'first_seen', SORT_DESC = true, SEARCH_CODE = '';
+var yoyDir = '>', momDir = '>';
+var lastHash = '', _firstLoad = true;
+
+async function fetchJsonWithTimeout(url, timeoutMs) {
+  var controller = new AbortController();
+  var timer = setTimeout(function() { controller.abort(); }, timeoutMs);
+  try {
+    var response = await fetch(url, { signal: controller.signal });
+    if (!response || !response.ok) throw new Error('fetch failed');
+    return await response.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function esc(s) { return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+function fmtRev(v) { if (v == null) return '\u2014'; return (v/1000).toLocaleString('zh-TW',{minimumFractionDigits:1,maximumFractionDigits:1}); }
+function fmtPct(v) { if (v == null) return '\u2014'; return Number(v).toFixed(2)+'%'; }
+function pctColor(n) { return n > 0 ? '#f85149' : n < 0 ? '#3fb950' : '#888'; }
+function pctStyle(v) { var n=Number(v); if(isNaN(n)) return 'color:#888;'; return 'color:'+pctColor(n)+';'; }
+function aiScoreColor(s) {
+  if (s == null) return '#444';
+  var n = Math.abs(s);
+  if (n >= 8) return s > 0 ? '#ff4444' : '#00cc66';
+  if (n >= 6) return s > 0 ? '#f0883e' : '#3fb950';
+  if (n >= 4) return s > 0 ? '#d29922' : '#7ee787';
+  if (n >= 1) return '#888';
+  return '#444';
+}
+function fmtAiScore(e) {
+  var s = e.ai_score;
+  if (s == null) return '<span class="ai-score" style="color:#333;">—</span>';
+  var c = aiScoreColor(s);
+  var tip = e.ai_reason ? ' data-tip="' + esc(e.ai_reason) + '"' : '';
+  var cls = e.ai_reason ? ' info-i' : '';
+  return '<span class="ai-score' + cls + '" style="color:' + c + ';"' + tip + '>' + (s > 0 ? '+' : '') + s + '</span>';
+}
+
+function searchStock(v) { SEARCH_CODE = (v||'').trim(); applyFilter(); }
+
+function toggleDir(type) {
+  if (type === 'yoy') {
+    yoyDir = yoyDir === '>' ? '<' : '>';
+    document.getElementById('yoy-dir').textContent = yoyDir;
+  } else {
+    momDir = momDir === '>' ? '<' : '>';
+    document.getElementById('mom-dir').textContent = momDir;
+  }
+  applyFilter();
+}
+
+function applyFilter() {
+  if (!DATA || !DATA.entries) return;
+  var yoyOn = document.getElementById('f-yoy-on').checked;
+  var momOn = document.getElementById('f-mom-on').checked;
+  var yoyVal = parseFloat(document.getElementById('f-yoy-val').value);
+  var momVal = parseFloat(document.getElementById('f-mom-val').value);
+  var fNew = document.getElementById('f-new').checked;
+  var fAi = document.getElementById('f-ai').checked;
+
+  FILTERED = DATA.entries.filter(function(e) {
+    if (SEARCH_CODE && e.code.indexOf(SEARCH_CODE) !== 0) return false;
+    if (fNew && !(e.first_seen && e.first_seen > getCutoffTime())) return false;
+    if (fAi && e.ai_score == null) return false;
+    if (yoyOn && !isNaN(yoyVal) && e.yoy_pct != null) {
+      if (yoyDir === '>' && e.yoy_pct <= yoyVal) return false;
+      if (yoyDir === '<' && e.yoy_pct >= yoyVal) return false;
+    }
+    if (momOn && !isNaN(momVal) && e.mom_pct != null) {
+      if (momDir === '>' && e.mom_pct <= momVal) return false;
+      if (momDir === '<' && e.mom_pct >= momVal) return false;
+    }
+    return true;
+  });
+  sortData(); renderTable();
+}
+
+function sortData() {
+  var k=SORT_KEY, d=SORT_DESC;
+  FILTERED.sort(function(a,b) {
+    var va=a[k],vb=b[k];
+    if(va==null) va=d?-Infinity:Infinity; if(vb==null) vb=d?-Infinity:Infinity;
+    if(typeof va==='string') return d?vb.localeCompare(va):va.localeCompare(vb);
+    return d?vb-va:va-vb;
+  });
+}
+
+function doSort(k) { if(SORT_KEY===k) SORT_DESC=!SORT_DESC; else { SORT_KEY=k; SORT_DESC=true; } sortData(); renderTable(); }
+function sortArrow(k) { return SORT_KEY!==k ? '<span class="sort-arrow">\u25B2</span>' : '<span class="sort-arrow active">'+(SORT_DESC?'\u25BC':'\u25B2')+'</span>'; }
+
+// HOLIDAYS, isTradingDay, getCutoffString 由 shared-utils.js 提供
+function getCutoffTime() { return getCutoffString(); }
+
+function buildHistoryHTML(hist, curRev, curPeriod, prevRev) {
+  // 按時間正序（舊→新，直方圖左到右）
+  var sorted = (hist || []).slice().sort(function(a,b){ return (a.year*100+a.month)-(b.year*100+b.month); });
+  var cy = null, cm = null;
+  if (curPeriod) {
+    var parts = curPeriod.split('/');
+    cy = parseInt(parts[0], 10);
+    cm = parseInt(parts[1], 10);
+  }
+  function hasMonth(year, month) {
+    return sorted.some(function(r){ return r.year === year && r.month === month; });
+  }
+  function addMonth(year, month, rev) {
+    var n = Number(rev);
+    if (!year || !month || !isFinite(n) || hasMonth(year, month)) return;
+    sorted.push({year: year, month: month, rev: n});
+  }
+  if (cy && cm) {
+    var py = cy, pm = cm - 1;
+    if (pm < 1) { pm = 12; py -= 1; }
+    // MOPS 本期列有「上月營收」；FinMind 歷史檔偶爾尚未更新，先補前一月避免圖表斷格。
+    addMonth(py, pm, prevRev);
+    // 把最新公佈的當月營收加到最後
+    addMonth(cy, cm, curRev);
+    sorted.sort(function(a,b){ return (a.year*100+a.month)-(b.year*100+b.month); });
+  }
+  if (!sorted.length) return '<div class="hist-wrap" style="color:#555;font-size:12px;">無歷史資料</div>';
+  var maxRev = 0;
+  sorted.forEach(function(r){ if(r.rev > maxRev) maxRev = r.rev; });
+
+  // 直方圖（可水平滾動，每根 bar 40px 寬，預設捲到最右邊）
+  var barW = 16, chartH = 90;
+  var totalW = sorted.length * barW;
+  var uid = 'chart-' + Date.now() + '-' + Math.random().toString(36).substr(2,4);
+  var h = '<div class="hist-wrap">';
+  h += '<div id="' + uid + '" style="overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;max-width:100%;">';
+  h += '<div style="display:flex;align-items:flex-end;height:' + chartH + 'px;min-width:' + totalW + 'px;gap:2px;padding:0 4px;">';
+  sorted.forEach(function(r) {
+    var pct = maxRev > 0 ? (r.rev / maxRev * 100) : 0;
+    var barH = Math.max(2, pct * (chartH - 20) / 100);
+    var isLatest = cy && cm && r.year === cy && r.month === cm;
+    var c = isLatest ? '#f0883e' : '#30363d';
+    var label = r.month === 1 ? r.year : r.month;
+    h += '<div style="display:flex;flex-direction:column;align-items:center;min-width:' + (barW-2) + 'px;">';
+    h += '<div style="width:' + (barW-6) + 'px;height:' + barH + 'px;background:' + c + ';border-radius:2px 2px 0 0;"></div>';
+    h += '<div style="font-size:9px;color:' + (isLatest ? '#f0883e' : r.month === 1 ? '#ddd' : '#555') + ';margin-top:2px;' + (r.month === 1 || isLatest ? 'font-weight:700;' : '') + '">' + label + '</div>';
+    h += '</div>';
+  });
+  h += '</div>';  // 關閉 flex 容器
+  h += '</div>';  // 關閉滾動容器 (uid)
+  // 自動捲到最右（最新月份）
+  // scrollLeft 由 toggleHistory 處理（innerHTML 裡的 script 不會執行）
+
+  // 表格（最新在上，預設 12 個月，可展開全部）
+  var revSorted = sorted.slice().reverse();
+  var showDefault = 12;
+  var tblId = 'tbl-' + Date.now() + '-' + Math.random().toString(36).substr(2,4);
+
+  function buildRow(r) {
+    var rev = r.rev;
+    var prevM = null, prevY = null;
+    for (var j = 0; j < sorted.length; j++) {
+      var s = sorted[j];
+      if (s.year === r.year && s.month === r.month - 1) prevM = s.rev;
+      if (r.month === 1 && s.year === r.year - 1 && s.month === 12) prevM = s.rev;
+      if (s.year === r.year - 1 && s.month === r.month) prevY = s.rev;
+    }
+    var mom = prevM ? ((rev - prevM) / prevM * 100) : null;
+    var yoy = prevY ? ((rev - prevY) / prevY * 100) : null;
+    var rh = '<tr><td>' + r.year + '/' + String(r.month).padStart(2,'0') + '</td>';
+    rh += '<td class="num">' + fmtRev(rev) + '</td>';
+    rh += '<td class="num" style="' + (mom !== null ? pctStyle(mom, false) : 'color:#555;') + '">' + (mom !== null ? mom.toFixed(1) + '%' : '\u2014') + '</td>';
+    rh += '<td class="num" style="' + (yoy !== null ? pctStyle(yoy, true) : 'color:#555;') + '">' + (yoy !== null ? yoy.toFixed(1) + '%' : '\u2014') + '</td>';
+    rh += '</tr>';
+    return rh;
+  }
+
+  h += '<table class="hist-tbl cw-ad-exclude google-anno-skip"><thead><tr><th>年月</th><th class="num">營收(百萬)</th><th class="num">MoM%</th><th class="num">YoY%</th></tr></thead><tbody>';
+  for (var i = 0; i < Math.min(showDefault, revSorted.length); i++) {
+    h += buildRow(revSorted[i]);
+  }
+  h += '</tbody>';
+  if (revSorted.length > showDefault) {
+    h += '<tbody id="' + tblId + '" style="display:none;">';
+    for (var i = showDefault; i < revSorted.length; i++) {
+      h += buildRow(revSorted[i]);
+    }
+    h += '</tbody>';
+  }
+  h += '</table>';
+  if (revSorted.length > showDefault) {
+    h += '<div style="text-align:center;margin:6px 0;"><button onclick="var el=document.getElementById(\'' + tblId + '\');if(el){el.style.display=el.style.display===\'none\'?\'\':\' none\';this.textContent=el.style.display===\'none\'?\'\u25BC \u986F\u793A\u5168\u90E8 (' + revSorted.length + ' \u7B46)\':\'\u25B2 \u6536\u5408\';}" style="background:none;border:1px solid #30363d;color:#58a6ff;padding:4px 16px;border-radius:8px;font-size:11px;cursor:pointer;">\u25BC \u986F\u793A\u5168\u90E8 (' + revSorted.length + ' \u7B46)</button></div>';
+  }
+
+  h += '</div>';  // 關閉 hist-wrap
+  return h;
+}
+
+var _openHistCode = null;
+
+function toggleHistory(code) {
+  // 收合：移除展開行
+  var existing = document.getElementById('hist-panel-row');
+  if (existing) {
+    existing.remove();
+    var oldRow = _openHistCode ? document.getElementById('row-' + _openHistCode) : null;
+    if (oldRow) oldRow.style.background = '';
+    if (_openHistCode === code) { _openHistCode = null; return; }
+    _openHistCode = null;
+  }
+
+  var entry = null;
+  if (DATA && DATA.entries) {
+    for (var i = 0; i < DATA.entries.length; i++) {
+      if (DATA.entries[i].code === code) { entry = DATA.entries[i]; break; }
+    }
+  }
+  if (!entry) return;
+  var row = document.getElementById('row-' + code);
+  if (!row) return;
+
+  // 在 row 正下方插入一個 colspan 展開行（不拆 table，欄寬不受影響）
+  var colCount = row.querySelectorAll('td').length;
+  var tr = document.createElement('tr');
+  tr.id = 'hist-panel-row';
+  var td = document.createElement('td');
+  td.colSpan = colCount;
+  td.style.cssText = 'padding:0;border:none;background:#0d1117;max-width:0;';
+  td.innerHTML = '<div style="overflow:hidden;"><div style="padding:4px 8px;font-size:12px;font-weight:600;color:#58a6ff;">'
+    + esc(entry.code) + ' ' + esc(entry.name) + ' \u6B77\u53F2\u71DF\u6536</div>'
+    + buildHistoryHTML(entry.history, entry.rev, entry.period, entry.prev_rev) + '</div>';
+  tr.appendChild(td);
+  row.parentNode.insertBefore(tr, row.nextSibling);
+
+  _openHistCode = code;
+  row.style.background = 'rgba(88,166,255,0.15)';
+
+  setTimeout(function(){
+    var scrollBox = tr.querySelector('[id^="chart-"]');
+    if (scrollBox) scrollBox.scrollLeft = scrollBox.scrollWidth;
+    tr.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }, 100);
+}
+
+function buildSection(rows, title) {
+  if (!rows.length) return '';
+  var cols=[{k:'code',l:'代號',c:''},{k:'name',l:'名稱',c:''},{k:'ai_score',l:'AI <span class="info-i" data-tip="AI 營收評分（-9 ~ +9）\n\n由 AI 逐筆獨立判斷，非固定公式。\n同樣的成長率，對不同規模公司會給出不同分數。\n\nAI 評估面向：\n\n① 驚喜度 — 這個數字有多超出預期？\n　· 營收規模越大，同幅度成長越驚人\n　· 低基期灌水的高 YoY 會被識別並扣分\n\n② 延續性 — 成長能撐幾季？\n　· MoM 連續加速 > 單月跳升\n　· 結構性成長 > 週期性 > 一次性認列\n\n③ 資訊品質 — 備註含金量\n　· 具體驅動力（產品/客戶/訂單）加分\n　· 制式公文（「市場需求增加所致」）不加分\n\n+8~9 高度超預期｜+6~7 值得關注\n+4~5 有亮點待觀察｜+1~3 符合預期\n0 無特別資訊｜負分＝衰退警示\n\n📊 AI 參考的資料：\n月營收金額、MoM%、YoY%、累計YoY%、\n公司備註原文、近 6 個月 MoM 趨勢\n\n⚠️ 本評分由 AI 模型自動產生，可能存在誤判。\n僅供參考，不構成任何投資建議或買賣推薦。\n投資人應自行研判並承擔投資風險。\n營收數據來源為公開資訊觀測站，\nAI 評分為模型推論結果，與任何券商或法人觀點無關。" style="color:#6e7681;font-size:10px;cursor:help;">ⓘ</span>',c:'ai-col'},{k:'first_seen',l:'偵測時間 ⓘ',c:'time-col'},{k:'rev',l:'營收(M)',c:'num-col rev-col'},{k:'mom_pct',l:'MoM%',c:'num-col'},{k:'yoy_pct',l:'YoY%',c:'num-col'},{k:'cum_yoy_pct',l:'累計YoY%',c:'num-col'},{k:'note',l:'備註',c:'note-col'}];
+  var dotColor = title.indexOf('未反映') >= 0 ? '#f0883e' : '#30363d';
+  var parts = ['<div class="date-header"><span class="sd-dot" style="background:', dotColor, '"></span>', esc(title), '<span class="sd-count">(', String(rows.length), ')</span></div>'];
+  parts.push('<div class="tbl-wrap cw-ad-exclude google-anno-skip"><table class="revenue-table cw-ad-exclude google-anno-skip"><colgroup><col class="c-code"><col class="c-name"><col class="c-ai"><col class="c-time"><col class="c-rev"><col class="c-pct"><col class="c-pct"><col class="c-cum"><col class="c-note"></colgroup><thead><tr>');
+  cols.forEach(function(c){ parts.push('<th class="'+c.c+'" onclick="doSort(\''+c.k+'\')">'+c.l+sortArrow(c.k)+'</th>'); });
+  parts.push('</tr></thead><tbody>');
+  rows.forEach(function(e){
+    var cls = e.is_new ? 'highlight clickable' : 'clickable';
+    var hasHist = e.history && e.history.length > 0;
+    parts.push('<tr id="row-'+esc(e.code)+'" class="'+cls+'"'+(hasHist?' onclick="toggleHistory(\''+esc(e.code)+'\')"':'')+'>');
+    parts.push('<td class="code-col">'+esc(e.code)+'</td>');
+    parts.push('<td class="name-col">'+esc(e.name)+(hasHist?' <span style="color:#555;font-size:10px;">\u25BC</span>':'')+'</td>');
+    parts.push('<td class="ai-col">'+fmtAiScore(e)+'</td>');
+    var fs = e.first_seen||''; var fsShort = fs ? fs.substring(5,16).replace(' ','\u2002') : '\u2014';
+    parts.push('<td class="time-col" title="系統每15分鐘偵測MOPS營收頁面，此為首次偵測到該公司申報的時間（誤差\u226415分鐘），非精確公告時間">'+fsShort+'</td>');
+    parts.push('<td class="num-col rev-col">'+fmtRev(e.rev)+'</td>');
+    parts.push('<td class="num-col" style="'+pctStyle(e.mom_pct,false)+'">'+fmtPct(e.mom_pct)+'</td>');
+    parts.push('<td class="num-col" style="'+pctStyle(e.yoy_pct,true)+'">'+fmtPct(e.yoy_pct)+'</td>');
+    parts.push('<td class="num-col" style="'+pctStyle(e.cum_yoy_pct,false)+'">'+fmtPct(e.cum_yoy_pct)+'</td>');
+    parts.push('<td class="note-col" style="font-size:0.75em;color:#aaa;white-space:normal;max-width:180px;">'+(e.note?esc(e.note):'')+'</td>');
+    parts.push('</tr>');
+  });
+  parts.push('</tbody></table></div>');
+  return parts.join('');
+}
+
+function renderTable() {
+  var app = document.getElementById('app');
+  if (!FILTERED.length) { app.textContent = '無符合條件的資料'; app.className = 'empty'; return; }
+  app.className = '';
+  _openHistCode = null;
+  var cutoff = getCutoffTime();
+  var unreflected = [], reflected = [];
+  FILTERED.forEach(function(e) {
+    if (e.first_seen && e.first_seen > cutoff) unreflected.push(e);
+    else reflected.push(e);
+  });
+  var result = '';
+  if (unreflected.length) result += buildSection(unreflected, '市場未反映（' + cutoff.substring(5,10) + ' 13:30 後首次偵測）');
+  if (false) result += buildSection(reflected, '已反映');
+  result += '<div style="text-align:center;margin-top:8px;font-size:11px;color:#555;">\u986F\u793A ' + FILTERED.length + ' \u7B46</div>';
+  app.innerHTML = result;
+}
+
+function loadData() {
+  if (VIEW_PERIOD) return; // 檢視封存期時，不讓自動更新把畫面蓋回本期
+  fetchJsonWithTimeout(JSON_URL+'?t='+Date.now(), REALTIME_DATA_FETCH_TIMEOUT_MS).then(function(j){
+    var nh=j.fetched_at||''; var isUp=lastHash&&nh!==lastHash; lastHash=nh; DATA=j;
+    setPeriodText('營收期間：'+(j.period||'')+' | 已申報 '+(j.total_filed||0)+' 家 ');
+    if (j.entries && j.entries.length > 0) {
+      applyFilter();
+      if (_firstLoad) { _firstLoad = false; }
+    } else {
+
+      var app=document.getElementById('app');
+      var now2=new Date(), d2=now2.getDate(), cm2=now2.getMonth()+1;
+      var rv2=cm2-1||12, nrv2=cm2, ns2=cm2+1>12?1:cm2+1;
+      if (d2 >= 1 && d2 <= 12) {
+        app.innerHTML='<div class="empty">\u2709 '+rv2+'月營收申報期間（1-10號）<br><span style="font-size:12px;color:#555;">尚無公司申報，系統每15分鐘自動偵測</span></div>';
+      } else {
+        app.innerHTML='<div class="empty">\u231B '+rv2+'月營收申報已結束<br><span style="font-size:12px;color:#555;">'+nrv2+'月營收將於'+ns2+'/1起陸續公告</span></div>';
+      }
+    }
+    updateRevLastTime(j);
+    resetAutoRefresh();
+    if(isUp) flashNotify();
+  }).catch(function(e){
+    var app=document.getElementById('app');
+    var now=new Date(), d=now.getDate();
+    var curMonth=now.getMonth()+1; // 1-12
+    var revMonth=curMonth-1||(12); // 申報的是上個月的營收
+    var nextRevMonth=curMonth; // 下期申報的是本月營收，下月初公告
+    var nextStart=curMonth+1>12?1:curMonth+1; // 下期公告開始月份
+    if (d >= 1 && d <= 12) {
+      app.innerHTML='<div class="empty">\u2709 '+revMonth+'月營收申報期間（1-10號）<br><span style="font-size:12px;color:#555;">尚無公司申報，系統每15分鐘自動偵測</span></div>';
+    } else {
+      app.innerHTML='<div class="empty">\u231B '+revMonth+'月營收申報已結束<br><span style="font-size:12px;color:#555;">'+nextRevMonth+'月營收將於'+nextStart+'/1起陸續公告</span></div>';
+    }
+  });
+}
+
+var _refreshTimer = null;
+function resetAutoRefresh() {
+  if (_refreshTimer) clearInterval(_refreshTimer);
+  _refreshTimer = setInterval(function(){ loadData(); }, 5 * 60 * 1000);
+}
+
+// 營收頁的「最新公告」從 JSON entries 的 first_seen 取最新時間
+function updateRevLastTime(data) {
+  var el = document.getElementById('last-update');
+  if (!el) return;
+  var entries = data && data.entries ? data.entries : [];
+  if (!entries.length) { el.textContent = '尚無申報 · 偵測中 ✓'; return; }
+  var latest = entries[0].first_seen || '';
+  for (var i = 1; i < entries.length; i++) {
+    if ((entries[i].first_seen || '') > latest) latest = entries[i].first_seen;
+  }
+  el.textContent = '最新申報：' + latest.substring(5) + ' · 偵測中 ✓';
+}
+
+function flashNotify() {
+  var el=document.getElementById('flash-notification'); el.textContent='資料已更新';
+  el.classList.add('show'); setTimeout(function(){el.classList.remove('show');},3000);
+}
+
+// ── 封存期別切換（2026-07-11）──
+// period-info 內同時放文字（#period-text）與期別下拉（#period-select）；
+// 寫字一律走 setPeriodText，不可用 textContent 直寫（會把下拉轟掉）
+function setPeriodText(t) {
+  var info = document.getElementById('period-info');
+  if (!info) return;
+  var span = document.getElementById('period-text');
+  if (!span) {
+    span = document.createElement('span');
+    span.id = 'period-text';
+    info.insertBefore(span, info.firstChild);
+  }
+  Array.prototype.slice.call(info.childNodes).forEach(function(n){ if (n.nodeType === 3) info.removeChild(n); });
+  span.textContent = t;
+}
+function initPeriodSelector() {
+  fetchJsonWithTimeout(PERIODS_URL+'?t='+Date.now(), REALTIME_DATA_FETCH_TIMEOUT_MS).then(function(j){
+    var periods = (j && j.periods) || [];
+    if (!periods.length) return;
+    var info = document.getElementById('period-info');
+    if (!info || document.getElementById('period-select')) return;
+    var sel = document.createElement('select');
+    sel.id = 'period-select';
+    sel.style.cssText = 'margin-left:8px;background:#161b22;color:#58a6ff;border:1px solid #30363d;border-radius:6px;padding:2px 6px;font-size:12px;cursor:pointer;';
+    var optNow = document.createElement('option');
+    optNow.value = ''; optNow.textContent = '本期';
+    sel.appendChild(optNow);
+    periods.forEach(function(p){
+      var o = document.createElement('option');
+      o.value = p; o.textContent = p + '（封存）';
+      sel.appendChild(o);
+    });
+    sel.addEventListener('change', function(){
+      VIEW_PERIOD = sel.value;
+      if (!VIEW_PERIOD) { loadData(); return; }
+      var fname = ARCHIVE_BASE + VIEW_PERIOD.replace('/','') + '.json';
+      fetchJsonWithTimeout(fname+'?t='+Date.now(), REALTIME_DATA_FETCH_TIMEOUT_MS).then(function(j2){
+        DATA = j2;
+        setPeriodText('營收期間：'+(j2.period||VIEW_PERIOD)+'（封存）| 已申報 '+(j2.total_filed||0)+' 家 ');
+        applyFilter();
+        updateRevLastTime(j2);
+      }).catch(function(){
+        setPeriodText('封存資料載入失敗 ');
+      });
+    });
+    info.appendChild(sel);
+  }).catch(function(){});
+}
+
+loadData();
+initPeriodSelector();
+
+// ⓘ tooltip（JS fixed 定位，手機也能看）
+(function() {
+  var tipEl = document.createElement('div');
+  Object.assign(tipEl.style, {
+    position:'fixed', background:'#333', color:'#fff', padding:'8px 12px',
+    borderRadius:'6px', fontSize:'12px', zIndex:'9999',
+    pointerEvents:'none', display:'none', maxWidth:'min(90vw, 400px)', lineHeight:'1.6',
+    whiteSpace:'pre-line'
+  });
+  document.body.appendChild(tipEl);
+  function positionTip(el) {
+    tipEl.textContent = el.getAttribute('data-tip');
+    tipEl.style.display = 'block';
+    var r = el.getBoundingClientRect();
+    var left = r.left + r.width/2 - tipEl.offsetWidth/2;
+    if (left < 4) left = 4;
+    if (left + tipEl.offsetWidth > window.innerWidth - 4) left = window.innerWidth - tipEl.offsetWidth - 4;
+    tipEl.style.left = left + 'px';
+    // 上方空間不夠 → 往下彈
+    var topPos = r.top - tipEl.offsetHeight - 6;
+    if (topPos < 4) topPos = r.bottom + 6;
+    // 下方也超出 → 限制最大高度並固定在頂部
+    if (topPos + tipEl.offsetHeight > window.innerHeight - 4) {
+      topPos = 4;
+      tipEl.style.maxHeight = (window.innerHeight - 8) + 'px';
+      tipEl.style.overflowY = 'auto';
+    } else {
+      tipEl.style.maxHeight = '';
+      tipEl.style.overflowY = '';
+    }
+    tipEl.style.top = topPos + 'px';
+  }
+  document.addEventListener('mouseenter', function(e) {
+    var el = e.target.closest ? e.target.closest('.info-i[data-tip]') : null;
+    if (!el) return;
+    positionTip(el);
+  }, true);
+  document.addEventListener('mouseleave', function(e) {
+    if (e.target.closest && e.target.closest('.info-i[data-tip]')) tipEl.style.display = 'none';
+  }, true);
+  // 手機 touch 支援
+  document.addEventListener('touchstart', function(e) {
+    var el = e.target.closest ? e.target.closest('.info-i[data-tip]') : null;
+    if (!el) { tipEl.style.display = 'none'; return; }
+    positionTip(el);
+  }, true);
+})();
+</script>
+
+</body>
+</html>
