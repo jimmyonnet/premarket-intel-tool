@@ -74,6 +74,65 @@ BADGE_SPECS = [
     (9, "12"),
 ]
 
+# The "處置標準條件" cell's text segments carry the site's own color-coding
+# as inline style="color:#hex" on leaf spans (confirmed present in raw
+# server HTML, same as the badge titles -- see parse_badge_title). Mapped
+# onto this project's own CSS variables rather than the source's raw hex,
+# so the replicated colors stay consistent with the rest of the page's
+# dark-panel palette: gray tones -> muted (not-yet-met conditions), the
+# source's red/green (already Taiwan-convention 漲=red/跌=green, matching
+# this project's --rise/--fall) -> --rise/--fall, its amber "closest to
+# triggering" highlight -> --amber, its bold-white "already met" emphasis
+# -> --text (this page's default is already near-white) rendered bold.
+# Unknown/future hex values fall back to muted rather than breaking.
+_CONDITION_COLOR_RE = re.compile(r"color:\s*(#[0-9a-fA-F]{3,6})")
+_CONDITION_COLOR_MAP = {
+    "555": "var(--muted)", "555555": "var(--muted)",
+    "888": "var(--muted)", "888888": "var(--muted)",
+    "aaa": "var(--muted)", "aaaaaa": "var(--muted)",
+    "8b949e": "var(--muted)", "e0e0e0": "var(--muted)",
+    "f39c12": "var(--amber)",
+    "e74c3c": "var(--rise)", "2ea043": "var(--rise)",
+    "2ecc71": "var(--fall)",
+    "fff": "var(--text)", "ffffff": "var(--text)",
+}
+
+
+def parse_condition_segments(td):
+    """Extract the 處置標準條件 cell's colored text segments, preserving
+    the source site's own color-coding instead of flattening to plain
+    text (see _CONDITION_COLOR_MAP for the color -> meaning mapping).
+    Walks leaf elements carrying an inline color style, in document
+    order, and concatenates their text with no added separators (matches
+    how the source's own spans butt up against each other with spacing
+    already baked into the text nodes). Falls back to a single uncolored
+    segment with the cell's flat text if no styled spans are found
+    (layout changed -- degrade gracefully, same philosophy as the rest
+    of this file), or [] for an empty/missing cell."""
+    if td is None:
+        return []
+    styled = [
+        el for el in td.find_all(True)
+        if el.get("style") and "color" in el.get("style", "") and not el.find(True)
+    ]
+    if not styled:
+        text = td.get_text(strip=True)
+        return [{"text": text, "color": None, "bold": False}] if text else []
+    segments = []
+    for el in styled:
+        text = el.get_text(strip=True)
+        if not text:
+            continue
+        m = _CONDITION_COLOR_RE.search(el.get("style", ""))
+        hex_val = m.group(1).lstrip("#").lower() if m else None
+        color_var = _CONDITION_COLOR_MAP.get(hex_val, "var(--muted)") if hex_val else None
+        segments.append({
+            "text": text,
+            "color": color_var,
+            "bold": hex_val in ("fff", "ffffff"),
+        })
+    return segments
+
 
 def parse_badge_title(td):
     """The "3①/5/6/12" progress-dot cells (連續3日第1款／連續5日／10日內6
@@ -128,7 +187,7 @@ def find_table_after_heading(soup, heading_substring: str):
     return None
 
 
-def rows_as_dicts(table, columns, with_badges=False):
+def rows_as_dicts(table, columns, with_badges=False, with_condition_segments=False):
     """Iterate <tr> in <tbody>, zip cell text with `columns` names.
 
     Confirmed against the live site (2026-08-20): the two "away from
@@ -145,11 +204,17 @@ def rows_as_dicts(table, columns, with_badges=False):
     the same left-to-right order as the source page's columns. Used by
     the two "away from disposal" tables only -- parse_active's table has
     no such cells.
+
+    with_condition_segments=True additionally reads the "condition"
+    column (must be present in `columns`) into a row["condition_segments"]
+    list via parse_condition_segments, preserving the source's own
+    color-coding instead of the flattened plain-text `condition` value.
     """
     out = []
     if table is None:
         return out
     body = table.find("tbody") or table
+    condition_idx = columns.index("condition") if with_condition_segments and "condition" in columns else None
     for tr in body.find_all("tr"):
         tds = tr.find_all("td")
         cells = [td.get_text(strip=True) for td in tds]
@@ -171,6 +236,10 @@ def rows_as_dicts(table, columns, with_badges=False):
                     "current": (b or {}).get("current"),
                     "threshold": (b or {}).get("threshold"),
                 })
+        if condition_idx is not None:
+            row["condition_segments"] = parse_condition_segments(
+                tds[condition_idx] if condition_idx < len(tds) else None
+            )
         out.append(row)
     return out
 
@@ -178,7 +247,7 @@ def rows_as_dicts(table, columns, with_badges=False):
 def parse_one_away(soup):
     table = find_table_after_heading(soup, "差1次就處置")
     columns = ["market", "code", "name", "close", "condition", "earliest_disposal"]
-    return rows_as_dicts(table, columns, with_badges=True)
+    return rows_as_dicts(table, columns, with_badges=True, with_condition_segments=True)
 
 
 def parse_two_away(soup):
