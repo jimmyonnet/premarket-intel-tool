@@ -1,0 +1,154 @@
+{
+  "source": "https://calendar.google.com/calendar/ical/c_c040a8d14375de55799b6fdd8ece2ee2f32aa85fd0e5b39d14b1e07f90df424e%40group.calendar.google.com/public/basic.ics",
+  "today": "2026-08-21",
+  "range_end": "2026-09-04",
+  "events": [
+    {
+      "date": "2026-08-21",
+      "time": "08:30",
+      "all_day": false,
+      "summary": "日本-制造业采购经理人指数[PMI]",
+      "description": "市场预期: 55.1\n前值:  54.5\nMM图表连结: https://sc.macromicro.me/collections/58/jp-manufacturing-service/797/jp-pmi?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-21",
+      "time": "15:30",
+      "all_day": false,
+      "summary": "德国-制造业采购经理人指数[PMI]",
+      "description": "市场预期: 52.1\n前值:  52.2\nMM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/500/eu-de-germany-pmi?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-21",
+      "time": "16:00",
+      "all_day": false,
+      "summary": "欧元区-服务业采购经理人指数[NMI]",
+      "description": "前值:  51.7\nMM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-21",
+      "time": "16:00",
+      "all_day": false,
+      "summary": "欧元区-制造业采购经理人指数[PMI]",
+      "description": "市场预期: 51.8\n前值:  51.9\nMM图表连结: https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-26",
+      "time": "20:30",
+      "all_day": false,
+      "summary": "美国-实际国内生产总值[GDP]-(SAAR, 季增年化季环比)",
+      "description": "市场预期: 1.50%\n前值:  1.50%\nMM图表连结: https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-26",
+      "time": "20:30",
+      "all_day": false,
+      "summary": "美国-个人消费支出物价指数[PCE]-(同比)",
+      "description": "前值:  3.67%\nMM图表连结: https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-26",
+      "time": "22:30",
+      "all_day": false,
+      "summary": "美国-原油库存(周变动)",
+      "description": "前值:  4405.0k\nMM图表连结: https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-inventory?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-27",
+      "time": "09:30",
+      "all_day": false,
+      "summary": "中国-工业企业利润(累计同比)",
+      "description": "前值:  18.70%\nMM图表连结: https://sc.macromicro.me/collections/25/cn-industry-relative/259/cn-industrial-enterprises-total-profits?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-27",
+      "time": "16:00",
+      "all_day": false,
+      "summary": "台湾-景气对策信号分数",
+      "description": "前值:  41.0\nMM图表连结: https://sc.macromicro.me/collections/10/tw-monitoring-indicators-relative/79/tw-monitoring-indicators?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-27",
+      "time": "20:30",
+      "all_day": false,
+      "summary": "美国-初次申请失业救济金人数",
+      "description": "前值:  206000.0\nMM图表连结: https://sc.macromicro.me/collections/4/us-employ-relative/19/initial-jobless-claims?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-28",
+      "time": "17:00",
+      "all_day": false,
+      "summary": "欧元区-经济信心指数",
+      "description": "前值:  96.9\nMM图表连结: https://sc.macromicro.me/collections/36/eu-economic-sentiment-relative/420/eu-ea19-euro-area-economic-sentiment?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-31",
+      "time": "09:30",
+      "all_day": false,
+      "summary": "中国-官方制造业采购经理人指数[PMI]",
+      "description": "前值:  49.2\nMM图表连结: https://sc.macromicro.me/collections/25/cn-industry-relative/232/cn-pmi-caixin?utm_medium=calendar"
+    },
+    {
+      "date": "2026-08-31",
+      "time": "09:30",
+      "all_day": false,
+      "summary": "中国-官方非制造业采购经理人指数[NMI]",
+      "description": "前值:  49.0\nMM图表连结: https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar"
+    },
+    {
+      "date": "2026-09-01",
+      "time": "16:00",
+      "all_day": false,
+      "summary": "台湾-制造业采购经理人指数[PMI]",
+      "description": "前值:  61.5\nMM图表连结: https://sc.macromicro.me/collections/16/tw-industry-relative/126/tw-pmi?utm_medium=calendar"
+    },
+    {
+      "date": "2026-09-01",
+      "time": "22:00",
+      "all_day": false,
+      "summary": "美国-ISM制造业指数[PMI]",
+      "description": "前值:  55.6\nMM图表连结: https://sc.macromicro.me/collections/8/us-industry-relative/54/ism?utm_medium=calendar"
+    },
+    {
+      "date": "2026-09-02",
+      "time": "20:15",
+      "all_day": false,
+      "summary": "美国-ADP非农就业人口 (月变动)",
+      "description": "前值:  44000.0\nMM图表连结: https://sc.macromicro.me/collections/4/us-employ-relative/36/adp?utm_medium=calendar"
+    },
+    {
+      "date": "2026-09-02",
+      "time": "21:45",
+      "all_day": false,
+      "summary": "加拿大-基准利率",
+      "description": "前值:  2.25%\nMM图表连结: https://sc.macromicro.me/collections/400/mm-cad/4331/ca-overnight-interest-rate?utm_medium=calendar"
+    },
+    {
+      "date": "2026-09-02",
+      "time": "22:30",
+      "all_day": false,
+      "summary": "美国-原油库存(周变动)",
+      "description": "前值:  4405.0k\nMM图表连结: https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-inventory?utm_medium=calendar"
+    },
+    {
+      "date": "2026-09-03",
+      "time": "02:00",
+      "all_day": false,
+      "summary": "美国美联储褐皮书",
+      "description": "MM图表连结: https://sc.macromicro.me/collections/2/us-gdp-relative?utm_medium=calendar"
+    },
+    {
+      "date": "2026-09-03",
+      "time": "20:30",
+      "all_day": false,
+      "summary": "美国-初次申请失业救济金人数",
+      "description": "MM图表连结: https://sc.macromicro.me/collections/4/us-employ-relative/19/initial-jobless-claims?utm_medium=calendar"
+    },
+    {
+      "date": "2026-09-03",
+      "time": "22:00",
+      "all_day": false,
+      "summary": "美国-ISM服务业指数[Services PMI]",
+      "description": "前值: 54.1\nMM图表连结: https://sc.macromicro.me/collections/8/us-industry-relative/55/ism-nonmanu?utm_medium=calendar"
+    }
+  ]
+}
