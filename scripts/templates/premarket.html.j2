@@ -8,6 +8,7 @@
   :root{
     --ink:#0B0E14; --panel:#151A24; --panel-2:#1B2130; --line:#262D3D;
     --text:#ECEFF3; --muted:#8B93A6; --rise:#F0453A; --fall:#29D398; --amber:#E8B339;
+    --cat-fed:#F0453A; --cat-econ:#FF9F43; --cat-stock:#54a0ff; --cat-futures:#E8B339; --cat-gen:#8B93A6;
     --font-ui: -apple-system, "Segoe UI", "PingFang TC", "Microsoft JhengHei", sans-serif;
     --font-mono: "SF Mono", "Cascadia Code", Consolas, monospace;
   }
@@ -71,32 +72,17 @@
   .badge.exit-today-badge{border-color:var(--amber); color:var(--amber);}
   .source-note{color:var(--muted); font-size:12px; margin:4px 0 0;}
 
-  /* Part 2 "3①/5/6/12" rule-progress cells: a row of small dot segments
-     (N total, first X filled) plus a small X/Y fraction underneath --
-     mirrors the source site's dot-progress widget, which only shows its
-     numbers on hover (no hover available here, so the fraction is always
-     visible instead). */
   .badge-col{text-align:center; white-space:nowrap;}
   .badge-dots{display:flex; gap:1px; align-items:center; justify-content:center;}
   .badge-dots .dot{width:5px; height:11px; background:var(--panel-2); border:1px solid var(--line); border-radius:1px; flex-shrink:0;}
   .badge-dots .dot.filled{background:var(--amber); border-color:var(--amber);}
   .badge-frac{display:block; font-family:var(--font-mono); font-size:10px; color:var(--muted); margin-top:3px;}
 
-  /* tables on narrow screens don't reflow -- they scroll horizontally
-     within their own card instead of breaking the page layout. min-width
-     keeps columns from being squished unreadably thin before the scroll
-     kicks in. */
   .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
   .table-scroll table{min-width:540px;}
-  /* buyers/sellers Top15 tables have only 6 narrow columns (vs. other
-     tables' wider mix) -- a lower min-width lets both sides of
-     .dual-panel fit without needing their own horizontal scroll at
-     normal page widths. */
   .table-scroll.compact table{min-width:380px;}
   .scroll-hint{display:none;}
 
-  /* Part 3 extra: per-stock 法人買賣/當沖 detail (collapsed by default,
-     native <details>/<summary> -- no JS needed on this static site). */
   .inst-detail{border-top:1px solid var(--line); padding:10px 0 2px;}
   .inst-detail:first-of-type{border-top:none; padding-top:0;}
   .inst-detail summary{cursor:pointer; font-size:13px; font-weight:600; padding:4px 0;}
@@ -105,49 +91,51 @@
   .inst-body > *:last-child{margin-bottom:0;}
   .sub-label{font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:600;}
 
-  /* 買超/賣超 Top15 side by side, matching the source site's layout so
-     the two lists can be compared directly instead of stacked. */
   .dual-panel{display:flex; gap:16px; align-items:flex-start;}
   .dual-panel-col{flex:1; min-width:0;}
 
-  /* Part 4: financial calendar. Two parts: a real Sun-Sat weekly grid
-     (below) so it actually reads as a calendar at a glance, plus an
-     agenda list grouped by date with full event text underneath (a
-     user-maintained Google Calendar feed can list several events on the
-     same day, and grid cells are far too narrow -- ~1/7th of the card --
-     for Chinese-language event titles). Event-having grid cells link
-     down to their row in the agenda list via #cal-YYYY-MM-DD, a plain
-     HTML anchor scroll -- no JS, consistent with the rest of this static
-     page. */
-  .cal-grid{margin-bottom:18px;}
-  .cal-grid-head, .cal-grid-row{display:grid; grid-template-columns:repeat(7, 1fr); gap:4px;}
-  .cal-grid-head{margin-bottom:4px;}
-  .cal-grid-h{text-align:center; font-size:11px; color:var(--muted); padding:2px 0;}
-  .cal-grid-row{margin-bottom:4px;}
-  .cal-cell{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; aspect-ratio:1; padding:4px 2px; border-radius:8px; background:var(--panel-2); border:1px solid var(--line); text-decoration:none;}
-  .cal-cell.out{opacity:.35;}
-  .cal-cell.today{border-color:var(--amber); box-shadow:inset 0 0 0 1px var(--amber);}
+  /* Part 4: financial calendar beautification */
+  .cal-grid{margin-bottom:20px;}
+  .cal-grid-head, .cal-grid-row{display:grid; grid-template-columns:repeat(7, 1fr); gap:6px;}
+  .cal-grid-head{margin-bottom:6px;}
+  .cal-grid-h{text-align:center; font-size:11px; color:var(--muted); font-weight:600; padding:4px 0;}
+  .cal-grid-row{margin-bottom:6px;}
+  .cal-cell{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; aspect-ratio:1; padding:6px 2px; border-radius:8px; background:var(--panel-2); border:1px solid var(--line); text-decoration:none; transition:all 0.15s ease;}
+  .cal-cell.out{opacity:.3;}
+  .cal-cell.today{border-color:var(--amber); box-shadow:0 0 10px rgba(232, 179, 57, 0.35); background:rgba(232,179,57,0.06);}
   .cal-cell.has-events{cursor:pointer;}
-  .cal-cell.has-events:hover{border-color:var(--amber);}
+  .cal-cell.has-events:hover{border-color:var(--amber); transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.3);}
   .cal-cell-num{font-family:var(--font-mono); font-size:12px; color:var(--text);}
   .cal-cell.today .cal-cell-num{color:var(--amber); font-weight:700;}
   .cal-cell-dots{display:flex; gap:2px; align-items:center; height:5px;}
   .cal-cell-dots .dot{width:5px; height:5px; border-radius:50%; background:var(--amber);}
   .cal-cell-more{font-size:9px; color:var(--muted); font-family:var(--font-mono); margin-left:1px;}
 
-  .cal-day{display:flex; gap:14px; padding:10px 0; border-bottom:1px solid var(--line); scroll-margin-top:12px;}
+  .cal-day{display:flex; gap:16px; padding:14px 0; border-bottom:1px solid var(--line); scroll-margin-top:12px;}
   .cal-day:last-child{border-bottom:none;}
-  .cal-date{flex:0 0 72px; font-family:var(--font-mono); font-size:12px; color:var(--muted); padding-top:2px;}
+  .cal-date{flex:0 0 80px; font-family:var(--font-mono); font-size:13px; color:var(--muted); padding-top:4px;}
   .cal-date.today{color:var(--amber); font-weight:700;}
-  .cal-day-events{flex:1; min-width:0; display:flex; flex-direction:column; gap:6px;}
-  .cal-summary{font-size:13px; font-weight:600;}
-  .cal-time{font-family:var(--font-mono); font-weight:400; color:var(--muted); font-size:12px; margin-left:6px;}
-  .cal-desc{font-size:12px; color:var(--muted); margin-top:2px; white-space:pre-line;}
+  .cal-day-events{flex:1; min-width:0; display:flex; flex-direction:column; gap:10px;}
+  
+  .cal-event-card{background:var(--panel-2); border:1px solid var(--line); border-left:4px solid var(--cat-gen); border-radius:8px; padding:10px 14px; transition:border-color 0.2s;}
+  .cal-event-card.cat-fed{border-left-color:var(--cat-fed); background:rgba(240,69,58,0.04);}
+  .cal-event-card.cat-econ{border-left-color:var(--cat-econ); background:rgba(255,159,67,0.04);}
+  .cal-event-card.cat-stock{border-left-color:var(--cat-stock); background:rgba(84,160,255,0.04);}
+  .cal-event-card.cat-futures{border-left-color:var(--cat-futures); background:rgba(232,179,57,0.04);}
+  
+  .cal-header-row{display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;}
+  .cal-time-pill{display:inline-block; font-family:var(--font-mono); font-size:11px; padding:2px 8px; border-radius:12px; background:var(--line); color:var(--text); font-weight:600;}
+  .cal-time-pill.all-day{background:rgba(139,147,166,0.2); color:var(--muted);}
+  .cal-cat-badge{font-size:10px; padding:2px 6px; border-radius:4px; font-weight:600; text-transform:uppercase; letter-spacing:0.02em;}
+  .cat-fed .cal-cat-badge{background:rgba(240,69,58,0.2); color:var(--cat-fed);}
+  .cat-econ .cal-cat-badge{background:rgba(255,159,67,0.2); color:var(--cat-econ);}
+  .cat-stock .cal-cat-badge{background:rgba(84,160,255,0.2); color:var(--cat-stock);}
+  .cat-futures .cal-cat-badge{background:rgba(232,179,57,0.2); color:var(--cat-futures);}
+  .cat-general .cal-cat-badge{background:rgba(139,147,166,0.2); color:var(--cat-gen);}
 
-  /* mobile: reclaim horizontal space (tighter padding/type), let tiles
-     pack 2-up instead of stacking to 1 column. Tables are handled above
-     via .table-scroll, not here -- they keep desktop-size columns and
-     scroll instead of shrinking past readability. */
+  .cal-summary{font-size:14px; font-weight:600; color:var(--text);}
+  .cal-desc{font-size:12px; color:var(--muted); margin-top:4px; white-space:pre-line; line-height:1.4;}
+
   @media (max-width: 480px){
     body{padding:16px 10px 48px;}
     h1{font-size:18px;}
@@ -160,9 +148,9 @@
     td.condition{max-width:160px;}
     .scroll-hint{display:block; font-size:11px; color:var(--muted); text-align:right; margin-top:6px;}
     .dual-panel{flex-direction:column;}
-    .cal-day{flex-direction:column; gap:2px;}
+    .cal-day{flex-direction:column; gap:6px;}
     .cal-grid-head, .cal-grid-row{gap:3px;}
-    .cal-cell{padding:3px 1px;}
+    .cal-cell{padding:4px 1px;}
     .cal-cell-num{font-size:11px;}
   }
 </style>
@@ -187,33 +175,44 @@
   <section class="part">
 
     <div class="card">
-      <h2>台指期夜盤走勢 <span class="sub">WTXP& · 玩股網</span></h2>
-      {% if spark %}
-      <div class="spark-wrap">
-        <svg class="spark" viewBox="0 0 {{ spark.width }} {{ spark.height }}" preserveAspectRatio="xMidYMid meet">
-          {% if spark.prev_close_y is not none %}
-          <line class="refline" x1="0" y1="{{ spark.prev_close_y }}" x2="{{ spark.width }}" y2="{{ spark.prev_close_y }}"/>
-          <text class="endlabel" x="4" y="{{ spark.prev_close_y - 4 }}">昨收 {{ '%.0f'|format(spark.prev_close) }}</text>
-          {% endif %}
-          <polyline class="line" points="{{ spark.polyline }}"/>
-          {% if spark.last_dot %}
-          <circle class="dot {{ 'rise' if spark.is_rise else 'fall' }}" cx="{{ spark.last_dot.x }}" cy="{{ spark.last_dot.y }}" r="4"/>
-          {% endif %}
-          {% for d in spark.dots %}<title>{{ d.label }}</title>{% endfor %}
-        </svg>
+      <h2>台指期夜盤走勢 <span class="sub">TAIFEX · 期交所即時行情</span></h2>
+      
+      <!-- TradingView Widget BEGIN -->
+      <div class="tradingview-widget-container" style="height:280px; margin-bottom:16px; border-radius:8px; overflow:hidden;">
+        <div class="tradingview-widget-container__widget" style="height:calc(100% - 32px); width:100%;"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
+        {
+          "symbols": [
+            [
+              "台指期近一",
+              "TAIFEX:TX1!|1D"
+            ]
+          ],
+          "chartOnly": false,
+          "width": "100%",
+          "height": "100%",
+          "locale": "zh_TW",
+          "colorTheme": "dark",
+          "gridLineColor": "rgba(38, 45, 61, 0.5)",
+          "fontColor": "#8B93A6",
+          "trendLineColor": "#E8B339",
+          "underLineColor": "rgba(232, 179, 57, 0.12)",
+          "isTransparent": true,
+          "autosize": true
+        }
+        </script>
       </div>
+      <!-- TradingView Widget END -->
+
       <div class="spark-stats">
         <span>開盤 <b>{{ night.open if night.open is not none else '—' }}</b></span>
         <span>最高 <b>{{ night.high if night.high is not none else '—' }}</b></span>
         <span>最低 <b>{{ night.low if night.low is not none else '—' }}</b></span>
         <span>昨收 <b>{{ night.prev_close if night.prev_close is not none else '—' }}</b></span>
-        {% if night.latest %}
+        {% if night.latest and night.latest.price is not none %}
         <span>最新 <b class="{{ 'rise' if night.latest.change_pct is not none and night.latest.change_pct >= 0 else 'fall' }}">{{ night.latest.price }} ({{ '%+.2f'|format(night.latest.change_pct) if night.latest.change_pct is not none else '—' }}%)</b></span>
         {% endif %}
       </div>
-      {% else %}
-      <p class="missing">尚無夜盤資料點（collect-night-session 這個工作流程還沒跑過，或今晚是非交易夜）。</p>
-      {% endif %}
     </div>
 
     <div class="card">
@@ -528,8 +527,16 @@
         <div class="cal-date{{ ' today' if date == calendar.today else '' }}">{{ date[5:].replace('-', '/') }}{% if date == calendar.today %}<br><span class="badge exit-today-badge">今天</span>{% endif %}</div>
         <div class="cal-day-events">
           {% for ev in evs %}
-          <div>
-            <div class="cal-summary">{{ ev.summary }}{% if ev.time %}<span class="cal-time">{{ ev.time }}</span>{% endif %}</div>
+          <div class="cal-event-card cat-{{ ev.category or 'general' }}">
+            <div class="cal-header-row">
+              {% if ev.time %}
+              <span class="cal-time-pill">{{ ev.time }}</span>
+              {% else %}
+              <span class="cal-time-pill all-day">全天</span>
+              {% endif %}
+              <span class="cal-cat-badge">{{ ev.category_name or '事件' }}</span>
+            </div>
+            <div class="cal-summary">{{ ev.summary }}</div>
             {% if ev.description %}<div class="cal-desc">{{ ev.description }}</div>{% endif %}
           </div>
           {% endfor %}
