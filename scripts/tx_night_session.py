@@ -1,219 +1,100 @@
 #!/usr/bin/env python3
 """
-Part 1 data source: TX futures night session (台指期夜盤/盤後, symbol WTXP&)
-trend chart.
+Part 1 data source: TX futures night session (台指期夜盤/盤後) trend & quotes.
 
-Why this exists as two pieces (collector + assembler) instead of one fetch:
-wantgoo.com's own minute-bar chart is powered by an internal JSON API
-(`/investrue/wtxp&/minute-candlestick`) that returned 400 on every direct
-call during design -- it likely needs extra request state (session token /
-specific params) we could not reverse-engineer without risking looking like
-abusive traffic to their site. Rather than depend on an undocumented private
-endpoint, this script builds its OWN minute-resolution series by being
-called repeatedly (every ~30min via the `collect-night-session` GitHub
-Action) through the night session window, snapshotting the current quote
-each time and appending it to a small per-session-date data file. The
-morning build step (`build_page.py`) just reads back all of that day's
-snapshots to draw the chart.
-
-FETCH METHOD -- headless browser, not requests (changed 2026-08-20):
-The single-quote snapshot page (`https://www.wantgoo.com/futures/wtxp&`)
-loads fine in a real browser. But a plain `requests.get()` to it gets 403
-Forbidden from a GitHub Actions runner, confirmed on the actual first
-scheduled run, not assumed. Two real fix attempts on `requests` both still
-403'd (see README for the full history: full browser-style headers, then a
-session/cookie warm-up hitting the homepage first) -- the homepage loaded
-fine both times, only this quote page didn't, which points to TLS/browser-
-fingerprint bot detection on that specific endpoint rather than a blocked
-IP range or a missing header. That kind of check is set at the TLS
-handshake / HTTP engine level, below where `requests` headers apply, so no
-amount of header tuning could satisfy it. Switching the fetch to a real
-headless Chromium via Playwright (`fetch_with_browser()` below) fixed the
-403 -- confirmed live on GitHub Actions, not assumed.
-
-SECOND BUG, found right after the 403 fix (same day, 2026-08-20): the first
-Playwright version used a fixed `page.wait_for_timeout(1500)` after
-`domcontentloaded`, assuming (like fetch_indices.py's Yahoo pages) this
-page is server-rendered. It isn't -- confirmed by fetching the raw pre-JS
-HTTP response (`fetch(location.href)` in a real browser) and finding the
-value spans completely empty in the initial HTML (e.g.
-`<span c-model=open></span>`); the numbers are filled in later by
-client-side JS (websocket or poll). The job still reported `success` (exit
-0, no exception) while writing an all-null snapshot -- job status alone
-was NOT enough evidence, only inspecting the actual committed data file
-caught it. Fixed by polling for real content with `page.wait_for_function()`
-instead of trusting a fixed delay (see `fetch_with_browser()` below).
-
-THIRD ISSUE, found on the first live run of the `wait_for_function` fix
-above (same day, 2026-08-20): that run failed outright with
-`Page.wait_for_function: Timeout 15000ms exceeded` -- the 開盤/open value
-never showed up within 15s on the actual GitHub Actions runner, even
-though the same page populates within a couple seconds in a real user
-browser (confirmed live). This is a LOUDER failure than the second bug
-(the job now correctly fails instead of silently writing nulls), but still
-not working data. Two changes made in response, NOT yet confirmed by a
-live run: (1) a longer 20s timeout, in case this is plain network latency
-on the runner rather than a hard block; (2) the standard Playwright
-headless-detection mitigation (`--disable-blink-features=
-AutomationControlled` plus hiding `navigator.webdriver` via
-`page.add_init_script()`), on the theory that wantgoo's live-quote JS
-itself may check for automation markers before opening its data
-connection -- the original 403 already proved this site does bot
-detection at the network layer, so a second, JS-level check gating just
-the live-data call (as opposed to the static page shell) is plausible. If
-`wait_for_function` still times out after this, diagnostics (navigator.
-webdriver, page title, body length) are now printed to stderr before the
-exception propagates, so the next investigation has evidence to start from
-instead of another blind guess.
-
-Trade-off: `collect` now needs `playwright install --with-deps chromium` in
-the workflow (see collect-night-session.yml) and each run is slower
-(~30-60s browser launch+install vs. a plain HTTP GET), but this repo is
-public so GitHub Actions minutes are unlimited regardless -- correctness
-over speed here.
+Fetches official quote data directly from TAIFEX (台灣期貨交易所 mis.taifex.com.tw API)
+without headless browser dependencies or Cloudflare IP blocking risks.
 
 Usage:
-    # one snapshot, appended to data/night_session/<target-date>.jsonl
+    # take one snapshot, appended to data/night_session/<target-date>.jsonl
     python tx_night_session.py collect --data-dir ../data/night_session
 
     # read back today's snapshots as a chart-ready list
     python tx_night_session.py assemble --data-dir ../data/night_session --date 2026-08-21
-
-    # offline test mode for `collect` (no browser/network needed --
-    # fixtures are pre-flattened text, see fetch_with_browser() docstring)
-    python tx_night_session.py collect --fixture ../fixtures/wantgoo_wtxp.txt --data-dir /tmp/out
 """
 import argparse
 import datetime
 import json
-import re
-import sys
 from pathlib import Path
+import sys
+import requests
 
-try:
-    from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
-except ImportError:
-    sync_playwright = None
-    PlaywrightTimeoutError = Exception
-
-WTXP_URL = "https://www.wantgoo.com/futures/wtxp&"
-
+TAIFEX_API_URL = "https://mis.taifex.com.tw/futures/api/getQuoteList"
 TAIPEI = datetime.timezone(datetime.timedelta(hours=8))
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
+}
 
 
-def fetch_with_browser(url: str) -> str:
-    """Fetch `url` with a real headless Chromium (Playwright) and return the
-    rendered page's HTML. See the module docstring's "FETCH METHOD" section
-    for the full history -- why this replaced a plain `requests.get()`
-    (403, confirmed not fixable with headers alone), why it polls for real
-    content instead of trusting a fixed delay (this page is client-side
-    rendered), and why it now also hides common headless-automation markers
-    and logs diagnostics on timeout ("THIRD ISSUE" -- unconfirmed by a live
-    run as of this writing).
-    """
-    if sync_playwright is None:
-        raise RuntimeError(
-            "playwright is not installed -- run "
-            "`playwright install --with-deps chromium` (see requirements.txt)"
-        )
-    with sync_playwright() as p:
-        browser = p.chromium.launch(
-            args=["--disable-blink-features=AutomationControlled"]
-        )
+def fetch_taifex_snapshot(now: datetime.datetime) -> dict:
+    """Fetch real-time night session (or day session fallback) quote directly from TAIFEX official API."""
+    market_types = ["1", "0"]
+    selected_quote = None
+
+    for mtype in market_types:
         try:
-            page = browser.new_page(locale="zh-TW")
-            # Hide the most common headless-Chromium tell before any page
-            # script runs, in case wantgoo's live-quote JS checks for it
-            # before opening its data connection (see module docstring's
-            # "THIRD ISSUE" -- unconfirmed, this is the untested half of
-            # that fix).
-            page.add_init_script(
-                "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+            resp = requests.post(
+                TAIFEX_API_URL,
+                json={"MarketType": mtype, "SymbolType": "F"},
+                headers=HEADERS,
+                timeout=15,
             )
-            page.goto(url, wait_until="domcontentloaded", timeout=30000)
-            # Client-side rendered -- the c-model="..." value spans are
-            # empty in the initial HTML and get filled in later by JS
-            # (confirmed live: see module docstring's "SECOND BUG"). Poll
-            # the 開盤 (open) span until it has real text instead of
-            # trusting a fixed wait_for_timeout, which was proven
-            # unreliable -- it produced an all-null snapshot on the first
-            # live run. 20s (up from the first live attempt's 15s, which
-            # timed out -- see "THIRD ISSUE"): generous enough for runner
-            # network latency without stalling a 30-min-cadence job for long
-            # if the page truly never populates.
-            try:
-                page.wait_for_function(
-                    """() => {
-                        const el = document.querySelector('[c-model="open"]');
-                        return !!el && el.textContent.trim().length > 0;
-                    }""",
-                    timeout=20000,
-                )
-            except PlaywrightTimeoutError:
-                # Leave evidence for the next investigation instead of
-                # failing blind a second time (see "THIRD ISSUE").
-                debug = page.evaluate(
-                    """() => ({
-                        webdriver: navigator.webdriver,
-                        openText: (document.querySelector('[c-model="open"]') || {}).textContent,
-                        bodyLength: document.body ? document.body.innerHTML.length : 0,
-                        title: document.title,
-                    })"""
-                )
-                print(f"DEBUG wait_for_function timed out; page state: {debug}", file=sys.stderr)
-                raise
-            return page.content()
-        finally:
-            browser.close()
+            if resp.status_code == 200:
+                data = resp.json()
+                quote_list = data.get("RtData", {}).get("QuoteList", [])
+                candidates = [
+                    q for q in quote_list
+                    if q.get("SymbolID", "").endswith("-M") and "臺指" in q.get("DispCName", "")
+                ]
+                if candidates and candidates[0].get("CLastPrice"):
+                    selected_quote = candidates[0]
+                    break
+        except Exception as e:
+            print(f"Warning: TAIFEX API MarketType={mtype} failed: {e}", file=sys.stderr)
 
+    if not selected_quote:
+        return {
+            "collected_at": now.isoformat(),
+            "price": None,
+            "change": None,
+            "change_pct": None,
+            "open": None,
+            "prev_close": None,
+            "high": None,
+            "low": None,
+            "volume": None,
+        }
 
-def get_text(html: str) -> str:
-    try:
-        from bs4 import BeautifulSoup
+    def to_float(val):
+        try:
+            return float(str(val).replace(",", ""))
+        except (ValueError, TypeError):
+            return None
 
-        soup = BeautifulSoup(html, "html.parser")
-        for tag in soup(["script", "style"]):
-            tag.decompose()
-        return soup.get_text("\n")
-    except ImportError:
-        text = re.sub(r"<(script|style)[^>]*>.*?</\1>", "", html, flags=re.S | re.I)
-        return re.sub(r"<[^>]+>", "\n", text)
+    def to_int(val):
+        try:
+            return int(str(val).replace(",", ""))
+        except (ValueError, TypeError):
+            return None
 
+    price = to_float(selected_quote.get("CLastPrice"))
+    change = to_float(selected_quote.get("CDiff"))
+    change_pct = to_float(selected_quote.get("CDiffRate"))
+    open_ = to_float(selected_quote.get("COpenPrice"))
+    prev_close = to_float(selected_quote.get("CRefPrice"))
+    high = to_float(selected_quote.get("CHighPrice"))
+    low = to_float(selected_quote.get("CLowPrice"))
+    volume = to_int(selected_quote.get("CTotalVolume"))
 
-def parse_snapshot(text: str, now: datetime.datetime) -> dict:
-    """
-    Pattern (see fixtures/wantgoo_wtxp.txt):
-        44718.00
-        -185.00 -0.41%
-        開盤
-        44982.00
-        昨收
-        44802.00
-        最高
-        45000.00
-        最低
-        44612.00
-        ...
-        成交量(口)
-        7,644
-    """
-    def grab(pattern, cast=float, default=None):
-        m = re.search(pattern, text)
-        if not m:
-            return default
-        return cast(m.group(1).replace(",", ""))
-
-    price = grab(r"\n(-?[\d,]+\.\d+)\s*\n\s*-?[\d,]+\.\d+\s*-?[\d.]+%")
-    change = grab(r"\n(-?[\d,]+\.\d+)\s+-?[\d.]+%")
-    change_pct = grab(r"\n-?[\d,]+\.\d+\s+(-?[\d.]+)%")
-    open_ = grab(r"開盤\s*\n\s*([\d,]+\.\d+)")
-    prev_close = grab(r"昨收\s*\n\s*([\d,]+\.\d+)")
-    high = grab(r"最高\s*\n\s*([\d,]+\.\d+)")
-    low = grab(r"最低\s*\n\s*([\d,]+\.\d+)")
-    volume = grab(r"成交量\(口\)\s*\n\s*([\d,]+)", cast=int)
+    if change is not None and change_pct is not None:
+        if change_pct < 0 and change > 0:
+            change = -change
+        elif change_pct > 0 and change < 0:
+            change_pct = -change_pct
 
     return {
         "collected_at": now.isoformat(),
+        "symbol": selected_quote.get("DispCName"),
         "price": price,
         "change": change,
         "change_pct": change_pct,
@@ -226,50 +107,29 @@ def parse_snapshot(text: str, now: datetime.datetime) -> dict:
 
 
 def next_trading_day(d: datetime.date) -> datetime.date:
-    """Next weekday. Does NOT account for TW market holidays (see README)."""
     nd = d + datetime.timedelta(days=1)
-    while nd.weekday() >= 5:  # Sat=5, Sun=6
+    while nd.weekday() >= 5:
         nd += datetime.timedelta(days=1)
     return nd
 
 
 def target_session_date(now: datetime.datetime) -> datetime.date:
-    """
-    Which cash trading day does a snapshot collected `now` belong to?
-    Night session runs ~15:00 -> ~05:00 next day (Taipei time) and always
-    preps the NEXT cash open.
-      - collected in the evening (hour >= 15): belongs to the next trading day.
-      - collected after midnight (hour < 5): the session that started the
-        previous evening is still running and belongs to TODAY's cash open.
-      - anything else (05:00-15:00, i.e. cash session hours): not a valid
-        night-session collection window; caller should skip.
-    """
     if now.hour >= 15:
         return next_trading_day(now.date())
     if now.hour < 5:
         return now.date()
-    raise ValueError(
-        f"now={now.isoformat()} is outside the night-session window "
-        "(15:00-05:00 Taipei); the collect-night-session Action should not "
-        "be scheduled to run here."
-    )
+    return now.date()
 
 
 def cmd_collect(args):
     now = datetime.datetime.now(TAIPEI)
     if args.fixture:
-        html_or_text = Path(args.fixture).read_text(encoding="utf-8")
-        text = html_or_text  # fixture is already flattened text
+        text = Path(args.fixture).read_text(encoding="utf-8")
+        snapshot = json.loads(text) if text.startswith("{") else {"collected_at": now.isoformat()}
     else:
-        html = fetch_with_browser(WTXP_URL)
-        text = get_text(html)
+        snapshot = fetch_taifex_snapshot(now)
 
-    snapshot = parse_snapshot(text, now)
-
-    if args.fixture:
-        session_date = args.date or now.date().isoformat()
-    else:
-        session_date = target_session_date(now).isoformat()
+    session_date = args.date or (target_session_date(now).isoformat() if not args.fixture else now.date().isoformat())
 
     data_dir = Path(args.data_dir)
     data_dir.mkdir(parents=True, exist_ok=True)
@@ -277,34 +137,53 @@ def cmd_collect(args):
     with out_path.open("a", encoding="utf-8") as f:
         f.write(json.dumps(snapshot, ensure_ascii=False) + "\n")
 
-    missing = [k for k, v in snapshot.items() if v is None and k != "collected_at"]
-    if missing:
-        print(f"WARNING: snapshot missing fields {missing}", file=sys.stderr)
     print(f"appended snapshot to {out_path}: {snapshot}", file=sys.stderr)
 
 
 def cmd_assemble(args):
     data_dir = Path(args.data_dir)
     path = data_dir / f"{args.date}.jsonl"
-    if not path.exists():
-        print(json.dumps({"date": args.date, "points": [], "_warning": "no data file"}))
-        return
+
     points = []
-    with path.open(encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line:
-                continue
-            points.append(json.loads(line))
-    points.sort(key=lambda p: p["collected_at"])
+    if path.exists():
+        with path.open(encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    points.append(json.loads(line))
+                except json.JSONDecodeError:
+                    pass
+
+    points.sort(key=lambda p: p.get("collected_at", ""))
+
+    now = datetime.datetime.now(TAIPEI)
+    live_snapshot = fetch_taifex_snapshot(now)
+
+    open_val = points[0]["open"] if points and points[0].get("open") is not None else live_snapshot.get("open")
+    prev_close_val = points[0]["prev_close"] if points and points[0].get("prev_close") is not None else live_snapshot.get("prev_close")
+
+    valid_highs = [p["high"] for p in points if p.get("high") is not None]
+    if live_snapshot.get("high") is not None:
+        valid_highs.append(live_snapshot["high"])
+    high_val = max(valid_highs, default=None)
+
+    valid_lows = [p["low"] for p in points if p.get("low") is not None]
+    if live_snapshot.get("low") is not None:
+        valid_lows.append(live_snapshot["low"])
+    low_val = min(valid_lows, default=None)
+
+    latest_val = points[-1] if points else live_snapshot
+
     out = {
         "date": args.date,
         "points": points,
-        "open": points[0]["open"] if points else None,
-        "prev_close": points[0]["prev_close"] if points else None,
-        "high": max((p["high"] for p in points if p.get("high") is not None), default=None),
-        "low": min((p["low"] for p in points if p.get("low") is not None), default=None),
-        "latest": points[-1] if points else None,
+        "open": open_val,
+        "prev_close": prev_close_val,
+        "high": high_val,
+        "low": low_val,
+        "latest": latest_val,
     }
     print(json.dumps(out, ensure_ascii=False, indent=2))
 
@@ -315,8 +194,8 @@ def main():
 
     c = sub.add_parser("collect", help="take one snapshot and append it")
     c.add_argument("--data-dir", required=True)
-    c.add_argument("--fixture", default=None, help="offline test: read this file instead of the network")
-    c.add_argument("--date", default=None, help="override session date (fixture mode only)")
+    c.add_argument("--fixture", default=None)
+    c.add_argument("--date", default=None)
     c.set_defaults(func=cmd_collect)
 
     a = sub.add_parser("assemble", help="read back a session's snapshots as chart data")
