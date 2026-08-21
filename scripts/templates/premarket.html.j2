@@ -88,6 +88,11 @@
      kicks in. */
   .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
   .table-scroll table{min-width:540px;}
+  /* buyers/sellers Top15 tables have only 6 narrow columns (vs. other
+     tables' wider mix) -- a lower min-width lets both sides of
+     .dual-panel fit without needing their own horizontal scroll at
+     normal page widths. */
+  .table-scroll.compact table{min-width:380px;}
   .scroll-hint{display:none;}
 
   /* Part 3 extra: per-stock 法人買賣/當沖 detail (collapsed by default,
@@ -99,15 +104,11 @@
   .inst-body > *{margin-bottom:14px;}
   .inst-body > *:last-child{margin-bottom:0;}
   .sub-label{font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:600;}
-  .bubble-chart{width:100%; height:auto; display:block;}
-  .bubble-chart .bubble-axis{stroke:var(--line); stroke-width:1; stroke-dasharray:3,4;}
-  .bubble-chart .bubble-grid{stroke:var(--line); stroke-width:1; stroke-dasharray:2,3; opacity:.55;}
-  .bubble-chart .bubble-tick{font-size:9px; fill:var(--muted); font-family:var(--font-mono); paint-order:stroke; stroke:var(--panel); stroke-width:3px; stroke-linejoin:round;}
-  .bubble-chart .bubble{fill-opacity:.72; stroke-width:1;}
-  .bubble-chart .bubble.buy{fill:var(--rise); stroke:var(--rise);}
-  .bubble-chart .bubble.sell{fill:var(--fall); stroke:var(--fall);}
-  .bubble-chart .bubble-name{font-size:11px; fill:var(--muted); font-family:var(--font-ui); paint-order:stroke; stroke:var(--panel); stroke-width:3px; stroke-linejoin:round;}
-  .bubble-chart .bubble-side-label{font-size:11px; fill:var(--muted); font-family:var(--font-mono); text-transform:uppercase; letter-spacing:.04em;}
+
+  /* 買超/賣超 Top15 side by side, matching the source site's layout so
+     the two lists can be compared directly instead of stacked. */
+  .dual-panel{display:flex; gap:16px; align-items:flex-start;}
+  .dual-panel-col{flex:1; min-width:0;}
 
   /* mobile: reclaim horizontal space (tighter padding/type), let tiles
      pack 2-up instead of stacking to 1 column. Tables are handled above
@@ -124,6 +125,7 @@
     td{padding:7px 8px;}
     td.condition{max-width:160px;}
     .scroll-hint{display:block; font-size:11px; color:var(--muted); text-align:right; margin-top:6px;}
+    .dual-panel{flex-direction:column;}
   }
 </style>
 </head>
@@ -235,7 +237,7 @@
             <td class="code">{{ row.code }}</td>
             <td class="name">{{ row.name }}</td>
             <td class="num">{{ row.close }}</td>
-            <td class="condition">{{ row.condition }}</td>
+            <td class="condition">{% if row.condition_segments %}{% for seg in row.condition_segments %}<span{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>{% endfor %}{% else %}{{ row.condition }}{% endif %}</td>
             <td class="num">{{ row.earliest_disposal }}</td>
             {% for bd in row.badges or [{}, {}, {}, {}] %}
             <td class="badge-col"{% if bd.title %} title="{{ bd.title }}"{% endif %}>
@@ -257,55 +259,14 @@
       {% if disposal.one_flag_from_disposal %}<div class="scroll-hint">← 左右滑動看更多欄位 →</div>{% endif %}
     </div>
 
+    {% set exiting_today = disposal.currently_in_disposal | selectattr('trading_days_left', 'equalto', '出關') | list %}
     <div class="card">
-      <h2>🟡 差2次處置 <span class="sub">{{ disposal.two_flags_from_disposal|length }} 檔</span></h2>
-      <div class="table-scroll">
-      <table>
-        <thead><tr>
-          <th>所</th><th>代號</th><th>名稱</th><th class="num">收盤</th>
-          <th>{{ (date_check.page_says_applies_to.replace('/', '-') + ' ') if date_check.page_says_applies_to else '' }}注意股觸發價（本站估算）</th>
-          <th class="num">最快處置</th>
-          <th class="badge-col" title="連續3日第1款">3①</th>
-          <th class="badge-col" title="連續5日（第1~7款）">5</th>
-          <th class="badge-col" title="10日內6次（第1~7款）">6</th>
-          <th class="badge-col" title="30日內12次（第1~7款）">12</th>
-        </tr></thead>
-        <tbody>
-          {% for row in disposal.two_flags_from_disposal %}
-          <tr>
-            <td>{{ row.market }}</td>
-            <td class="code">{{ row.code }}</td>
-            <td class="name">{{ row.name }}</td>
-            <td class="num">{{ row.close }}</td>
-            <td class="condition">{{ row.condition }}</td>
-            <td class="num">{{ row.earliest_disposal }}</td>
-            {% for bd in row.badges or [{}, {}, {}, {}] %}
-            <td class="badge-col"{% if bd.title %} title="{{ bd.title }}"{% endif %}>
-              {% if bd.threshold %}
-              <div class="badge-dots">{% for i in range(bd.threshold) %}<span class="dot{{ ' filled' if i < bd.current else '' }}"></span>{% endfor %}</div>
-              <span class="badge-frac">{{ bd.current }}/{{ bd.threshold }}</span>
-              {% else %}
-              <span class="badge-frac">—</span>
-              {% endif %}
-            </td>
-            {% endfor %}
-          </tr>
-          {% else %}
-          <tr class="empty-row"><td colspan="10">今天沒有差2次處置的股票</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      </div>
-      {% if disposal.two_flags_from_disposal %}<div class="scroll-hint">← 左右滑動看更多欄位 →</div>{% endif %}
-    </div>
-
-    <div class="card">
-      <h2>⚫ 目前處置中 <span class="sub">{{ disposal.currently_in_disposal|length }} 檔 · 分盤交易</span></h2>
+      <h2>⚫ 今日出關 <span class="sub">{{ exiting_today|length }} 檔</span></h2>
       <div class="table-scroll">
       <table>
         <thead><tr><th>市場</th><th>代號</th><th>名稱</th><th>撮合</th><th class="num">開始</th><th class="num">結束</th><th class="num">出關日</th><th class="num">剩餘交易日</th><th>處置原因</th></tr></thead>
         <tbody>
-          {% for row in disposal.currently_in_disposal %}
+          {% for row in exiting_today %}
           <tr>
             <td>{{ row.market }}</td>
             <td class="code">{{ row.code }}</td>
@@ -313,17 +274,17 @@
             <td>{{ row.matching }}</td>
             <td class="num">{{ row.start_date }}</td>
             <td class="num">{{ row.end_date }}</td>
-            <td class="num{{ ' exit-today' if row.trading_days_left == '出關' else '' }}">{{ row.exit_date }}</td>
-            <td class="num">{% if row.trading_days_left == '出關' %}<span class="badge exit-today-badge">出關</span>{% else %}{{ row.trading_days_left }}{% endif %}</td>
+            <td class="num exit-today">{{ row.exit_date }}</td>
+            <td class="num"><span class="badge exit-today-badge">出關</span></td>
             <td class="condition">{{ row.reason }}</td>
           </tr>
           {% else %}
-          <tr class="empty-row"><td colspan="9">目前沒有股票在處置中</td></tr>
+          <tr class="empty-row"><td colspan="9">今天沒有股票出關</td></tr>
           {% endfor %}
         </tbody>
       </table>
       </div>
-      {% if disposal.currently_in_disposal %}<div class="scroll-hint">← 左右滑動看更多欄位 →</div>{% endif %}
+      {% if exiting_today %}<div class="scroll-hint">← 左右滑動看更多欄位 →</div>{% endif %}
     </div>
 
   </section>
@@ -408,72 +369,52 @@
       <details class="inst-detail">
         <summary>{{ item.market }} {{ item.code }} {{ item.name }}　外資 {{ item.foreign }}／投信 {{ item.trust }}／自營 {{ item.dealer }}</summary>
         <div class="inst-body">
-          {% if item.bubble %}
-          <div>
-            <div class="sub-label">買超／賣超氣泡圖（Y軸＝均價，X軸／面積＝買賣超張數 sqrt 比例）</div>
-            <svg class="bubble-chart" viewBox="0 0 {{ item.bubble.width }} {{ item.bubble.height }}" preserveAspectRatio="xMidYMid meet">
-              {% for pl in item.bubble.price_lines %}
-              <line class="bubble-grid" x1="0" y1="{{ pl.y }}" x2="{{ item.bubble.width }}" y2="{{ pl.y }}"/>
-              <text class="bubble-tick" x="2" y="{{ pl.y - 3 }}">{{ pl.label }}</text>
-              {% endfor %}
-              {% for vl in item.bubble.volume_lines %}
-              <line class="bubble-grid" x1="{{ vl.x }}" y1="{{ item.bubble.plot_top }}" x2="{{ vl.x }}" y2="{{ item.bubble.plot_bottom }}"/>
-              <text class="bubble-tick" x="{{ vl.x }}" y="{{ item.bubble.axis_label_y }}" text-anchor="middle">{{ vl.label }}</text>
-              {% endfor %}
-              <line class="bubble-axis" x1="{{ item.bubble.center_x }}" y1="{{ item.bubble.plot_top }}" x2="{{ item.bubble.center_x }}" y2="{{ item.bubble.plot_bottom }}"/>
-              <text class="bubble-side-label buy" x="4" y="11">買超</text>
-              <text class="bubble-side-label sell" x="{{ item.bubble.width - 4 }}" y="11" text-anchor="end">賣超</text>
-              {% for b in item.bubble.bubbles %}
-              <circle class="bubble {{ b.side }}" cx="{{ b.cx }}" cy="{{ b.cy }}" r="{{ b.r }}"><title>{{ b.title_text }}</title></circle>
-              <text class="bubble-name" x="{{ b.cx }}" y="{{ b.cy - b.r - 6 }}" text-anchor="middle">{{ b.name }}</text>
-              {% endfor %}
-            </svg>
-          </div>
-          {% endif %}
 
-          <div>
-            <div class="sub-label">買超 Top15</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                {% for r in item.buyers %}
-                <tr>
-                  <td class="name">{{ r.name }}</td>
-                  <td class="num rise">{{ r.net }}</td>
-                  <td class="num">{{ r.buyP }}</td>
-                  <td class="num">{{ r.buyV }}</td>
-                  <td class="num">{{ r.sellV }}</td>
-                  <td class="num">{{ r.sellP }}</td>
-                </tr>
-                {% else %}
-                <tr class="empty-row"><td colspan="6">無資料</td></tr>
-                {% endfor %}
-              </tbody>
-            </table>
+          <div class="dual-panel">
+            <div class="dual-panel-col">
+              <div class="sub-label">買超 Top15</div>
+              <div class="table-scroll compact">
+              <table>
+                <thead><tr><th>券商</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+                <tbody>
+                  {% for r in item.buyers %}
+                  <tr>
+                    <td class="name">{{ r.name }}</td>
+                    <td class="num rise">{{ r.net }}</td>
+                    <td class="num">{{ r.buyP }}</td>
+                    <td class="num">{{ r.buyV }}</td>
+                    <td class="num">{{ r.sellV }}</td>
+                    <td class="num">{{ r.sellP }}</td>
+                  </tr>
+                  {% else %}
+                  <tr class="empty-row"><td colspan="6">無資料</td></tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              </div>
             </div>
-          </div>
 
-          <div>
-            <div class="sub-label">賣超 Top15</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                {% for r in item.sellers %}
-                <tr>
-                  <td class="name">{{ r.name }}</td>
-                  <td class="num fall">{{ r.net }}</td>
-                  <td class="num">{{ r.buyP }}</td>
-                  <td class="num">{{ r.buyV }}</td>
-                  <td class="num">{{ r.sellV }}</td>
-                  <td class="num">{{ r.sellP }}</td>
-                </tr>
-                {% else %}
-                <tr class="empty-row"><td colspan="6">無資料</td></tr>
-                {% endfor %}
-              </tbody>
-            </table>
+            <div class="dual-panel-col">
+              <div class="sub-label">賣超 Top15</div>
+              <div class="table-scroll compact">
+              <table>
+                <thead><tr><th>券商</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+                <tbody>
+                  {% for r in item.sellers %}
+                  <tr>
+                    <td class="name">{{ r.name }}</td>
+                    <td class="num fall">{{ r.net }}</td>
+                    <td class="num">{{ r.buyP }}</td>
+                    <td class="num">{{ r.buyV }}</td>
+                    <td class="num">{{ r.sellV }}</td>
+                    <td class="num">{{ r.sellP }}</td>
+                  </tr>
+                  {% else %}
+                  <tr class="empty-row"><td colspan="6">無資料</td></tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              </div>
             </div>
           </div>
 
