@@ -53,10 +53,10 @@
   table{width:100%; border-collapse:collapse; font-size:13px;}
   th{text-align:left; color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:6px 10px; border-bottom:1px solid var(--line);}
   th.num{text-align:right;}
-  td{padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top;}
+  td{padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:middle;}
   tr:last-child td{border-bottom:none;}
   td.code{font-family:var(--font-mono); color:var(--muted);}
-  td.name{font-weight:600;}
+  td.name{font-weight:600; white-space:nowrap;}
   td.num{font-family:var(--font-mono); text-align:right;}
   td.exit-today{color:var(--amber); font-weight:700; font-family:var(--font-mono);}
   td.condition{color:var(--muted); font-size:12px; max-width:340px;}
@@ -72,7 +72,7 @@
   .badge-frac{display:block; font-family:var(--font-mono); font-size:10px; color:var(--muted); margin-top:3px;}
 
   .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
-  .table-scroll table{min-width:540px;}
+  .table-scroll table{min-width:600px;}
   .table-scroll.compact table{min-width:380px;}
   .scroll-hint{display:none;}
 
@@ -156,7 +156,7 @@
 
   <header>
     <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 2026/08/21 21:41</div>
+    <div class="generated">產生時間 2026/08/21 21:45</div>
   </header>
 
   
@@ -327,32 +327,32 @@
         
         <div class="tile">
           <div class="name">道瓊工業指數</div>
-          <div class="value">53,082.69</div>
-          <div class="delta rise">+323.48 (+0.61%)</div>
+          <div class="value">53,123.97</div>
+          <div class="delta rise">+364.76 (+0.69%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">S&amp;P 500指數</div>
-          <div class="value">7,670.90</div>
-          <div class="delta rise">+29.74 (+0.39%)</div>
+          <div class="value">7,671.62</div>
+          <div class="delta rise">+30.46 (+0.40%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">NASDAQ指數</div>
-          <div class="value">26,136.54</div>
-          <div class="delta rise">+69.37 (+0.27%)</div>
+          <div class="value">26,110.09</div>
+          <div class="delta rise">+42.93 (+0.16%)</div>
         </div>
         
         
         
         <div class="tile">
           <div class="name">費城半導體指數</div>
-          <div class="value">11,840.44</div>
-          <div class="delta rise">+40.42 (+0.34%)</div>
+          <div class="value">11,830.49</div>
+          <div class="delta rise">+30.47 (+0.26%)</div>
         </div>
         
         
@@ -395,23 +395,32 @@
       <div class="table-scroll">
       <table>
         <thead><tr>
-          <th>所</th><th>代號</th><th>名稱</th><th class="num">收盤</th>
+          <th style="white-space:nowrap;">所</th>
+          <th style="white-space:nowrap;">代號</th>
+          <th style="white-space:nowrap;">名稱</th>
+          <th class="num" style="white-space:nowrap;">收盤</th>
           <th>08-24 處置標準條件（本站估算）</th>
-          <th class="num">最快處置</th>
-          <th class="badge-col" title="連續3日第1款">3①</th>
-          <th class="badge-col" title="連續5日（第1~7款）">5</th>
-          <th class="badge-col" title="10日內6次（第1~7款）">6</th>
-          <th class="badge-col" title="30日內12次（第1~7款）">12</th>
+          <th class="num" style="white-space:nowrap;">最快處置</th>
+          <th class="badge-col" style="white-space:nowrap;" title="連續3日第1款">3①</th>
+          <th class="badge-col" style="white-space:nowrap;" title="連續5日（第1~7款）">5</th>
+          <th class="badge-col" style="white-space:nowrap;" title="10日內6次（第1~7款）">6</th>
+          <th class="badge-col" style="white-space:nowrap;" title="30日內12次（第1~7款）">12</th>
         </tr></thead>
         <tbody>
           
           <tr>
-            <td>櫃</td>
-            <td class="code">⏸3490</td>
-            <td class="name">單井</td>
-            <td class="num">53.9</td>
+            <td style="white-space:nowrap;">櫃</td>
+            <td class="code" style="white-space:nowrap;">⏸3490</td>
+            <td class="name" style="white-space:nowrap;">單井</td>
+            <td class="num" style="white-space:nowrap;">53.9</td>
             <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--fall)">53.0↑(-1.7%)</span></td>
-            <td class="num">08-25 第2次2分</td>
+            <td class="num" style="white-space:nowrap; text-align:right;">
+              
+              
+                <span style="font-family:var(--font-mono); font-weight:600; color:var(--text);">08-25</span>
+                <span class="badge" style="border-color:rgba(232,179,57,0.4); color:var(--amber); font-weight:600; margin-left:3px; padding:2px 6px;">第2次2分</span>
+              
+            </td>
             
             <td class="badge-col" title="連續3日第1款 2/3">
               
@@ -444,12 +453,18 @@
           </tr>
           
           <tr>
-            <td>櫃</td>
-            <td class="code">3625</td>
-            <td class="name">西勝</td>
-            <td class="num">11.10</td>
+            <td style="white-space:nowrap;">櫃</td>
+            <td class="code" style="white-space:nowrap;">3625</td>
+            <td class="name" style="white-space:nowrap;">西勝</td>
+            <td class="num" style="white-space:nowrap;">11.10</td>
             <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">11.55↓(+4.1%)</span></td>
-            <td class="num">08-25 第1次10分</td>
+            <td class="num" style="white-space:nowrap; text-align:right;">
+              
+              
+                <span style="font-family:var(--font-mono); font-weight:600; color:var(--text);">08-25</span>
+                <span class="badge" style="border-color:rgba(232,179,57,0.4); color:var(--amber); font-weight:600; margin-left:3px; padding:2px 6px;">第1次10分</span>
+              
+            </td>
             
             <td class="badge-col" title="連續3日第1款 2/3">
               
@@ -482,12 +497,18 @@
           </tr>
           
           <tr>
-            <td>櫃</td>
-            <td class="code">4304</td>
-            <td class="name">勝昱</td>
-            <td class="num">25.70</td>
+            <td style="white-space:nowrap;">櫃</td>
+            <td class="code" style="white-space:nowrap;">4304</td>
+            <td class="name" style="white-space:nowrap;">勝昱</td>
+            <td class="num" style="white-space:nowrap;">25.70</td>
             <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span></td>
-            <td class="num">08-25 第1次2分</td>
+            <td class="num" style="white-space:nowrap; text-align:right;">
+              
+              
+                <span style="font-family:var(--font-mono); font-weight:600; color:var(--text);">08-25</span>
+                <span class="badge" style="border-color:rgba(232,179,57,0.4); color:var(--amber); font-weight:600; margin-left:3px; padding:2px 6px;">第1次2分</span>
+              
+            </td>
             
             <td class="badge-col" title="連續3日第1款 2/3">
               
@@ -520,12 +541,18 @@
           </tr>
           
           <tr>
-            <td>櫃</td>
-            <td class="code">4971</td>
-            <td class="name">IET-KY</td>
-            <td class="num">588</td>
+            <td style="white-space:nowrap;">櫃</td>
+            <td class="code" style="white-space:nowrap;">4971</td>
+            <td class="name" style="white-space:nowrap;">IET-KY</td>
+            <td class="num" style="white-space:nowrap;">588</td>
             <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">597↑(+1.5%)</span><span style="color:var(--muted)">②不符合</span><span style="color:var(--muted)">③④⑤⑦</span><span style="color:var(--rise)">621↑(+5.6%)</span><span style="color:var(--amber)">需量≥2,360張</span><span style="color:var(--amber)">+但書</span><span style="color:var(--amber)">⑥ 量≥2,359張</span></td>
-            <td class="num">08-25 第2次2分</td>
+            <td class="num" style="white-space:nowrap; text-align:right;">
+              
+              
+                <span style="font-family:var(--font-mono); font-weight:600; color:var(--text);">08-25</span>
+                <span class="badge" style="border-color:rgba(232,179,57,0.4); color:var(--amber); font-weight:600; margin-left:3px; padding:2px 6px;">第2次2分</span>
+              
+            </td>
             
             <td class="badge-col" title="連續3日第1款 0/3">
               
@@ -558,12 +585,18 @@
           </tr>
           
           <tr>
-            <td>市</td>
-            <td class="code">⏸6225</td>
-            <td class="name">天瀚</td>
-            <td class="num">64.7</td>
+            <td style="white-space:nowrap;">市</td>
+            <td class="code" style="white-space:nowrap;">⏸6225</td>
+            <td class="name" style="white-space:nowrap;">天瀚</td>
+            <td class="num" style="white-space:nowrap;">64.7</td>
             <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span></td>
-            <td class="num">08-25 第2次25分</td>
+            <td class="num" style="white-space:nowrap; text-align:right;">
+              
+              
+                <span style="font-family:var(--font-mono); font-weight:600; color:var(--text);">08-25</span>
+                <span class="badge" style="border-color:rgba(232,179,57,0.4); color:var(--amber); font-weight:600; margin-left:3px; padding:2px 6px;">第2次25分</span>
+              
+            </td>
             
             <td class="badge-col" title="連續3日第1款 2/3">
               
@@ -2335,22 +2368,6 @@
         <div class="cal-date">08/31</div>
         <div class="cal-day-events">
           
-          <div class="cal-event-card cat-econ">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">09:30</span>
-              
-              <span class="cal-cat-badge">總經數據</span>
-            </div>
-            <div class="cal-summary">中國-官方製造業採購經理人指數[PMI]</div>
-            <div class="cal-desc">前值:  49.2</div>
-            
-            <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/232/cn-pmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
-            </div>
-            
-          </div>
-          
           <div class="cal-event-card cat-general">
             <div class="cal-header-row">
               
@@ -2363,6 +2380,22 @@
             
             <div>
               <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
+          </div>
+          
+          <div class="cal-event-card cat-econ">
+            <div class="cal-header-row">
+              
+              <span class="cal-time-pill">09:30</span>
+              
+              <span class="cal-cat-badge">總經數據</span>
+            </div>
+            <div class="cal-summary">中國-官方製造業採購經理人指數[PMI]</div>
+            <div class="cal-desc">前值:  49.2</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/25/cn-industry-relative/232/cn-pmi-caixin?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
             </div>
             
           </div>

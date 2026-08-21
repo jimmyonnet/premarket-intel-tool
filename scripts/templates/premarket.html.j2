@@ -53,10 +53,10 @@
   table{width:100%; border-collapse:collapse; font-size:13px;}
   th{text-align:left; color:var(--muted); font-weight:500; font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:6px 10px; border-bottom:1px solid var(--line);}
   th.num{text-align:right;}
-  td{padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:top;}
+  td{padding:8px 10px; border-bottom:1px solid var(--line); vertical-align:middle;}
   tr:last-child td{border-bottom:none;}
   td.code{font-family:var(--font-mono); color:var(--muted);}
-  td.name{font-weight:600;}
+  td.name{font-weight:600; white-space:nowrap;}
   td.num{font-family:var(--font-mono); text-align:right;}
   td.exit-today{color:var(--amber); font-weight:700; font-family:var(--font-mono);}
   td.condition{color:var(--muted); font-size:12px; max-width:340px;}
@@ -72,7 +72,7 @@
   .badge-frac{display:block; font-family:var(--font-mono); font-size:10px; color:var(--muted); margin-top:3px;}
 
   .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
-  .table-scroll table{min-width:540px;}
+  .table-scroll table{min-width:600px;}
   .table-scroll.compact table{min-width:380px;}
   .scroll-hint{display:none;}
 
@@ -366,23 +366,34 @@
       <div class="table-scroll">
       <table>
         <thead><tr>
-          <th>所</th><th>代號</th><th>名稱</th><th class="num">收盤</th>
+          <th style="white-space:nowrap;">所</th>
+          <th style="white-space:nowrap;">代號</th>
+          <th style="white-space:nowrap;">名稱</th>
+          <th class="num" style="white-space:nowrap;">收盤</th>
           <th>{{ (date_check.page_says_applies_to.replace('/', '-') + ' ') if date_check.page_says_applies_to else '' }}處置標準條件（本站估算）</th>
-          <th class="num">最快處置</th>
-          <th class="badge-col" title="連續3日第1款">3①</th>
-          <th class="badge-col" title="連續5日（第1~7款）">5</th>
-          <th class="badge-col" title="10日內6次（第1~7款）">6</th>
-          <th class="badge-col" title="30日內12次（第1~7款）">12</th>
+          <th class="num" style="white-space:nowrap;">最快處置</th>
+          <th class="badge-col" style="white-space:nowrap;" title="連續3日第1款">3①</th>
+          <th class="badge-col" style="white-space:nowrap;" title="連續5日（第1~7款）">5</th>
+          <th class="badge-col" style="white-space:nowrap;" title="10日內6次（第1~7款）">6</th>
+          <th class="badge-col" style="white-space:nowrap;" title="30日內12次（第1~7款）">12</th>
         </tr></thead>
         <tbody>
           {% for row in disposal.one_flag_from_disposal %}
           <tr>
-            <td>{{ row.market }}</td>
-            <td class="code">{{ row.code }}</td>
-            <td class="name">{{ row.name }}</td>
-            <td class="num">{{ row.close }}</td>
+            <td style="white-space:nowrap;">{{ row.market }}</td>
+            <td class="code" style="white-space:nowrap;">{{ row.code }}</td>
+            <td class="name" style="white-space:nowrap;">{{ row.name }}</td>
+            <td class="num" style="white-space:nowrap;">{{ row.close }}</td>
             <td class="condition">{% if row.condition_segments %}{% for seg in row.condition_segments %}<span{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>{% endfor %}{% else %}{{ row.condition }}{% endif %}</td>
-            <td class="num">{{ row.earliest_disposal }}</td>
+            <td class="num" style="white-space:nowrap; text-align:right;">
+              {% set ed_parts = row.earliest_disposal.split(' ', 1) %}
+              {% if ed_parts|length == 2 %}
+                <span style="font-family:var(--font-mono); font-weight:600; color:var(--text);">{{ ed_parts[0] }}</span>
+                <span class="badge" style="border-color:rgba(232,179,57,0.4); color:var(--amber); font-weight:600; margin-left:3px; padding:2px 6px;">{{ ed_parts[1] }}</span>
+              {% else %}
+                <span style="font-family:var(--font-mono); font-weight:600;">{{ row.earliest_disposal }}</span>
+              {% endif %}
+            </td>
             {% for bd in row.badges or [{}, {}, {}, {}] %}
             <td class="badge-col"{% if bd.title %} title="{{ bd.title }}"{% endif %}>
               {% if bd.threshold %}
