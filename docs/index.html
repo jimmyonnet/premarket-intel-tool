@@ -142,6 +142,11 @@
     .cal-cell{padding:4px 1px;}
     .cal-cell-num{font-size:11px;}
   }
+
+  .header-btn { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:var(--text); text-decoration:none; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); padding:4px 10px; border-radius:8px; font-weight:600; transition:all 0.15s ease; margin-left: auto; }
+  .header-btn:hover { background:rgba(255,255,255,0.15); border-color:rgba(255,255,255,0.3); text-decoration:none; }
+  .card-header-flex { display: flex; align-items: center; margin-bottom: 16px; }
+  .card-header-flex h2 { margin-bottom: 0; }
 </style>
 </head>
 <body>
@@ -149,7 +154,7 @@
 
   <header>
     <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 2026/08/22 00:27</div>
+    <div class="generated">產生時間 2026/08/22 00:29</div>
   </header>
 
   
@@ -164,7 +169,10 @@
     <!-- Removed Broken TradingView Widget -->
 
     <div class="card">
-      <h2>美股四大指數 <span class="sub">前一夜收盤</span></h2>
+      <div class="card-header-flex">
+        <h2>美股四大指數 <span class="sub">前一夜收盤</span></h2>
+        <a href="https://tw.stock.yahoo.com/markets/" target="_blank" rel="noopener" class="header-btn">查看 Yahoo 即時報價 ↗</a>
+      </div>
       <div class="tiles">
         
         
