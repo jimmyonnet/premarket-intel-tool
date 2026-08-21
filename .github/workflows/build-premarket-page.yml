@@ -97,6 +97,9 @@ jobs:
         run: |
           python scripts/fetch_financials.py || echo '{}' > data/latest/financials.json
           python scripts/build_embeds.py
+      - name: Fetch Part 1.5 -- overnight news
+        run: |
+          python scripts/fetch_news.py || echo '[]' > data/latest/news.json
       - name: Build page
         run: |
           python scripts/build_page.py \
@@ -107,6 +110,7 @@ jobs:
             --chengwaye-daily data/latest/chengwaye_daily.json \
             --calendar data/latest/calendar.json \
             --financials data/latest/financials.json \
+            --news data/latest/news.json \
             --out docs/index.html
 
       - name: Commit page + raw data snapshot

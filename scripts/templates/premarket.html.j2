@@ -207,7 +207,24 @@
       {% endif %}
     </div>
 
-  </section>
+  
+    {% if news %}
+    <div class="card">
+      <h2>📰 隔夜重大新聞 <span class="sub">昨日收盤迄今 Top 5</span></h2>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        {% for a in news %}
+        <a href="{{ a.link }}" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:4px; padding:10px 14px; background:var(--panel-2); border:1px solid var(--line); border-radius:8px; text-decoration:none; transition:border-color 0.2s;">
+          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.4;">{{ a.title }}</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; color:var(--muted); font-family:var(--font-mono);">
+            <span>{{ a.source }}</span>
+            <span>{{ a.time }}</span>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+</section>
 
   <div class="part-title">處置股</div>
   <section class="part">
