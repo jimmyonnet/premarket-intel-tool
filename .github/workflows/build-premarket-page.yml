@@ -88,6 +88,9 @@ jobs:
           python scripts/fetch_calendar.py > data/latest/calendar.json \
             || echo '{}' > data/latest/calendar.json
 
+      - name: Fetch Part 5 -- financials
+        run: |
+          python scripts/fetch_financials.py || echo '{}' > data/latest/financials.json
       - name: Build page
         run: |
           python scripts/build_page.py \
@@ -97,6 +100,7 @@ jobs:
             --pressplay data/latest/pressplay.json \
             --chengwaye-daily data/latest/chengwaye_daily.json \
             --calendar data/latest/calendar.json \
+            --financials data/latest/financials.json \
             --out docs/index.html
 
       - name: Commit page + raw data snapshot

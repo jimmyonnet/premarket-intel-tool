@@ -295,6 +295,7 @@ def main():
         help="optional: Part 4 financial calendar JSON (fetch_calendar.py); "
         "omitted/missing/empty renders an empty Part 4 state",
     )
+    ap.add_argument("--financials", required=False, help="Path to financials.json")
     ap.add_argument("--out", required=True)
     ap.add_argument(
         "--template-dir",
@@ -321,7 +322,8 @@ def main():
     chengwaye_daily = load_json(args.chengwaye_daily) or {}
     institutional = build_institutional_section(pressplay, chengwaye_daily)
 
-    calendar_raw = load_json(args.calendar) or {}
+    calendar_raw = load_json(args.calendar)
+    financials_data = load_json(args.financials) if args.financials else {} or {}
     calendar_section = {
         "today": calendar_raw.get("today"),
         "range_end": calendar_raw.get("range_end"),
@@ -348,6 +350,7 @@ def main():
         pressplay=pressplay,
         institutional=institutional,
         calendar=calendar_section,
+        financials=financials_data,
     )
 
     out_path = Path(args.out)
