@@ -1,4 +1,30 @@
 from __future__ import annotations
+import math
+
+def fmt_num(v, decimals=2, fallback="—"):
+    if v is None or v == "" or str(v).lower() in ("nan", "null", "none"):
+        return fallback
+    try:
+        f = float(v)
+        if math.isnan(f):
+            return fallback
+        if decimals == 0:
+            return f"{int(round(f)):,}"
+        return f"{f:,.{decimals}f}"
+    except Exception:
+        return str(v)
+
+def fmt_pct(v, decimals=2, fallback="—"):
+    if v is None or v == "" or str(v).lower() in ("nan", "null", "none"):
+        return fallback
+    try:
+        f = float(v)
+        if math.isnan(f):
+            return fallback
+        return f"{f:+.{decimals}f}%"
+    except Exception:
+        return str(v)
+
 #!/usr/bin/env python3
 """
 Assembles the final morning page (docs/index.html) from the three data
