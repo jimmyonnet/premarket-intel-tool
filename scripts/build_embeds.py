@@ -7,7 +7,7 @@ def build_embeds():
         'fin': 'https://chengwaye.com/realtime-fin',
         'rev': 'https://chengwaye.com/realtime-rev'
     }
-    
+
     hide_css = """
     <style>
       body { background: #FFFFFF !important; color: #0F172A !important; padding: 0 !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; }
@@ -33,28 +33,41 @@ def build_embeds():
       .raw-text { background: #FFFFFF !important; color: #334155 !important; border: 1px solid #CBD5E1 !important; border-radius: 6px !important; }
       .btn-link { border: 1px solid #CBD5E1 !important; color: #475569 !important; background: #FFFFFF !important; }
       .btn-link:hover { background: #F1F5F9 !important; color: #0F172A !important; border-color: #94A3B8 !important; }
+      /* Part 5 fix: the filter bar (篩選/YoY/MoM controls) ships with chengwaye.com's
+         own dark theme (near-black navy bg, light-gray text) which was never covered
+         by the light-theme overrides above -- it was the one part of this embed still
+         showing its native dark styling, sitting like a dark stripe on top of an
+         otherwise all-light table. Force it into the same light panel language as
+         everything else on the page. */
+      .filter-bar { background: #F8FAFC !important; border: 1px solid #E2E8F0 !important; border-bottom: 1px solid #E2E8F0 !important; border-radius: 8px !important; color: #475569 !important; }
+      .filter-bar span { color: #64748B !important; }
+      .filter-bar .filter-label { color: #334155 !important; }
+      .filter-bar button { background: #FFFFFF !important; border: 1px solid #CBD5E1 !important; color: #475569 !important; }
+      .filter-bar button:hover { background: #F1F5F9 !important; color: #0F172A !important; }
+      .filter-bar input[type="text"], .filter-bar input[type="number"] { background: #FFFFFF !important; border: 1px solid #CBD5E1 !important; color: #0F172A !important; }
+      .filter-bar input[type="checkbox"] { accent-color: #2563EB !important; }
       ::-webkit-scrollbar { width: 6px; height: 6px; }
       ::-webkit-scrollbar-track { background: #F1F5F9; }
       ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
     </style>
     """
-    
+
     out_dir = 'docs/embed'
     os.makedirs(out_dir, exist_ok=True)
-    
+
     for name, url in urls.items():
         try:
             r = requests.get(url, timeout=10)
             if r.status_code == 200:
                 html = r.text
                 html = html.replace('</head>', hide_css + '</head>')
-                
+
                 # Disable historical rendering to only show unreflected
                 if name in ['att', 'fin']:
                     html = html.replace("renderSection(historical,", "// renderSection(historical,")
                 else:
                     html = html.replace("if (reflected.length) result += buildSection(reflected", "if (false) result += buildSection(reflected")
-                
+
                 with open(f'{out_dir}/{name}.html', 'w', encoding='utf-8') as f:
                     f.write(html)
                 print(f"Built {name}.html")
