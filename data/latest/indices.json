@@ -1,33 +1,113 @@
 {
-  "adrs": {
-    "tsmc": {
-      "name": "台積電 ADR",
-      "value": 418.95,
-      "change": 2.95,
-      "change_pct": 0.71
-    },
-    "umc": {
-      "name": "聯電 ADR",
-      "value": 18.34,
-      "change": 0.34,
-      "change_pct": 1.89
-    },
-    "ase": {
-      "name": "日月光 ADR",
-      "value": 36.51,
-      "change": 0.0,
-      "change_pct": 0.0
-    }
-  },
   "source": {
     "markets": "https://tw.stock.yahoo.com/markets/",
     "world_indices": "https://tw.stock.yahoo.com/world-indices"
   },
+  "adrs": {
+    "tsmc": {
+      "name": "台積電 ADR",
+      "ticker": "TSM",
+      "value": 418.95,
+      "change": 2.95,
+      "change_pct": 0.71,
+      "is_missing": false
+    },
+    "nvda": {
+      "name": "輝達 (NVDA)",
+      "ticker": "NVDA",
+      "value": 214.72,
+      "change": -2.13,
+      "change_pct": -0.98,
+      "is_missing": false
+    },
+    "aapl": {
+      "name": "蘋果 (AAPL)",
+      "ticker": "AAPL",
+      "value": 309.35,
+      "change": -1.95,
+      "change_pct": -0.63,
+      "is_missing": false
+    },
+    "tsmc_tw": {
+      "name": "台積電 現貨",
+      "ticker": "2330.TW",
+      "value": 2410.0,
+      "change": 35.0,
+      "change_pct": 1.47,
+      "is_missing": false
+    },
+    "umc": {
+      "name": "聯電 ADR",
+      "ticker": "UMC",
+      "value": 18.34,
+      "change": 0.34,
+      "change_pct": 1.89,
+      "is_missing": false
+    },
+    "ase": {
+      "name": "日月光 ADR",
+      "ticker": "ASX",
+      "value": 36.51,
+      "change": 0.0,
+      "change_pct": 0.0,
+      "is_missing": false
+    }
+  },
+  "key_stocks": {
+    "tsmc": {
+      "name": "台積電 ADR",
+      "ticker": "TSM",
+      "value": 418.95,
+      "change": 2.95,
+      "change_pct": 0.71,
+      "is_missing": false
+    },
+    "nvda": {
+      "name": "輝達 (NVDA)",
+      "ticker": "NVDA",
+      "value": 214.72,
+      "change": -2.13,
+      "change_pct": -0.98,
+      "is_missing": false
+    },
+    "aapl": {
+      "name": "蘋果 (AAPL)",
+      "ticker": "AAPL",
+      "value": 309.35,
+      "change": -1.95,
+      "change_pct": -0.63,
+      "is_missing": false
+    },
+    "tsmc_tw": {
+      "name": "台積電 現貨",
+      "ticker": "2330.TW",
+      "value": 2410.0,
+      "change": 35.0,
+      "change_pct": 1.47,
+      "is_missing": false
+    },
+    "umc": {
+      "name": "聯電 ADR",
+      "ticker": "UMC",
+      "value": 18.34,
+      "change": 0.34,
+      "change_pct": 1.89,
+      "is_missing": false
+    },
+    "ase": {
+      "name": "日月光 ADR",
+      "ticker": "ASX",
+      "value": 36.51,
+      "change": 0.0,
+      "change_pct": 0.0,
+      "is_missing": false
+    }
+  },
   "us_indices": {
     "dow": {
       "name": "道瓊工業指數",
-      "value": 53277.01,
-      "change": 517.81,
+      "value": 53277.0,
+      "change": 517.8,
       "change_pct": 0.98
     },
     "sp500": {

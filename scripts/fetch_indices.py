@@ -237,42 +237,53 @@ def fetch(url: str, fixture_path: Path = None) -> str:
 
 
 
-def fetch_adrs():
-    adrs = {
+def fetch_key_stocks():
+    stocks = {
         "tsmc": {"ticker": "TSM", "name": "台積電 ADR"},
+        "nvda": {"ticker": "NVDA", "name": "輝達 (NVDA)"},
+        "aapl": {"ticker": "AAPL", "name": "蘋果 (AAPL)"},
+        "tsmc_tw": {"ticker": "2330.TW", "name": "台積電 現貨"},
         "umc": {"ticker": "UMC", "name": "聯電 ADR"},
         "ase": {"ticker": "ASX", "name": "日月光 ADR"}
     }
     results = {}
+    failed_keys = []
     import urllib.request
     import json
     import sys
     
-    # We must use HEADERS
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
     }
     
-    for key, info in adrs.items():
+    for key, info in stocks.items():
         url = f"https://query2.finance.yahoo.com/v8/finance/chart/{info['ticker']}?interval=1d&range=1d"
         req = urllib.request.Request(url, headers=headers)
         try:
-            with urllib.request.urlopen(req, timeout=10) as response:
+            with urllib.request.urlopen(req, timeout=8) as response:
                 data = json.loads(response.read().decode())
                 meta = data['chart']['result'][0]['meta']
-                reg_price = meta['regularMarketPrice']
-                prev_close = meta['chartPreviousClose']
-                change = reg_price - prev_close
-                change_pct = (change / prev_close) * 100
-                results[key] = {
-                    "name": info["name"],
-                    "value": round(reg_price, 2),
-                    "change": round(change, 2),
-                    "change_pct": round(change_pct, 2)
-                }
+                reg_price = meta.get('regularMarketPrice')
+                prev_close = meta.get('chartPreviousClose')
+                if reg_price is not None and prev_close is not None:
+                    change = reg_price - prev_close
+                    change_pct = (change / prev_close) * 100 if prev_close else 0.0
+                    results[key] = {
+                        "name": info["name"],
+                        "ticker": info["ticker"],
+                        "value": round(reg_price, 2),
+                        "change": round(change, 2),
+                        "change_pct": round(change_pct, 2),
+                        "is_missing": False
+                    }
+                else:
+                    results[key] = {"name": info["name"], "ticker": info["ticker"], "value": None, "is_missing": True}
+                    failed_keys.append(key)
         except Exception as e:
-            print(f"Failed to fetch ADR {info['ticker']}: {e}", file=sys.stderr)
-    return results
+            print(f"Failed to fetch stock {info['ticker']}: {e}", file=sys.stderr)
+            results[key] = {"name": info["name"], "ticker": info["ticker"], "value": None, "is_missing": True}
+            failed_keys.append(key)
+    return results, failed_keys
 
 
 def main():
@@ -313,15 +324,15 @@ def main():
     # carries a per-row timestamp, fall back to markets page.
     nikkei = world_indices.get("nikkei225") or us_indices.get("nikkei225")
 
-    adrs = fetch_adrs()
+    key_stocks, failed_stocks = fetch_key_stocks()
     
     out = {
-        "adrs": fetch_adrs(),
         "source": {
             "markets": MARKETS_URL,
             "world_indices": WORLD_INDICES_URL,
         },
-        "adrs": adrs,
+        "adrs": key_stocks,
+        "key_stocks": key_stocks,
         "us_indices": {
             "dow": us_indices.get("dow"),
             "sp500": us_indices.get("sp500"),
@@ -336,6 +347,7 @@ def main():
 
     missing = [k for k, v in out["us_indices"].items() if v is None]
     missing += [k for k, v in out["asia_open"].items() if v is None]
+    missing += failed_stocks
     out["_missing_fields"] = missing
     if missing:
         print(f"WARNING: could not parse fields: {missing}", file=sys.stderr)
