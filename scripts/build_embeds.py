@@ -26,32 +26,32 @@ def build_embeds():
     hide_css = """
     <style>
       :root, :root[data-theme="dark"], html.dark, body.dark, html[data-theme="dark"], body[data-theme="dark"] {
-        --bg-page: transparent;
-        --bg-card: #111827;
-        --bg-sub: #1A2234;
-        --bg-hover: #242E44;
-        --text-main: #F8FAFC;
-        --text-muted: #94A3B8;
-        --border: rgba(255, 255, 255, 0.08);
-        --border-light: rgba(255, 255, 255, 0.04);
-        --blue: #60A5FA;
-        --btn-bg: #1A2234;
-        --btn-border: rgba(255, 255, 255, 0.1);
-        --btn-hover: #242E44;
+        --bg-page: transparent !important;
+        --bg-card: #111827 !important;
+        --bg-sub: #1A2234 !important;
+        --bg-hover: #242E44 !important;
+        --text-main: #F8FAFC !important;
+        --text-muted: #94A3B8 !important;
+        --border: rgba(255, 255, 255, 0.08) !important;
+        --border-light: rgba(255, 255, 255, 0.04) !important;
+        --blue: #60A5FA !important;
+        --btn-bg: #1A2234 !important;
+        --btn-border: rgba(255, 255, 255, 0.1) !important;
+        --btn-hover: #242E44 !important;
       }
       :root[data-theme="light"], html.light, body.light, html[data-theme="light"], body[data-theme="light"] {
-        --bg-page: transparent;
-        --bg-card: #FFFFFF;
-        --bg-sub: #F8FAFC;
-        --bg-hover: #F1F5F9;
-        --text-main: #0F172A;
-        --text-muted: #64748B;
-        --border: #E2E8F0;
-        --border-light: #F1F5F9;
-        --blue: #2563EB;
-        --btn-bg: #FFFFFF;
-        --btn-border: #E2E8F0;
-        --btn-hover: #F1F5F9;
+        --bg-page: transparent !important;
+        --bg-card: #FFFFFF !important;
+        --bg-sub: #F8FAFC !important;
+        --bg-hover: #F1F5F9 !important;
+        --text-main: #0F172A !important;
+        --text-muted: #64748B !important;
+        --border: #E2E8F0 !important;
+        --border-light: #F1F5F9 !important;
+        --blue: #2563EB !important;
+        --btn-bg: #FFFFFF !important;
+        --btn-border: #E2E8F0 !important;
+        --btn-hover: #F1F5F9 !important;
       }
       html, body { background: transparent !important; color: var(--text-main) !important; padding: 0 !important; margin: 0 !important; font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI", Roboto, "PingFang TC", "Noto Sans TC", sans-serif !important; }
       nav, .header, .ai-warn, .ai-warn-bottom, .search-container, #load-archive-btn, footer { display: none !important; }
@@ -158,8 +158,9 @@ def build_embeds():
             r = requests.get(url, timeout=10)
             if r.status_code == 200:
                 html = r.text
-                # Remove ads, GA, trackers
-                html = re.sub(r'<script[^>]+(?:adsbygoogle|googletagmanager|googlesyndication)[^>]*>.*?</script>', '', html, flags=re.DOTALL|re.IGNORECASE)
+                # Remove ads, GA, trackers, and missing relative scripts/styles
+                html = re.sub(r'<script[^>]+(?:adsbygoogle|googletagmanager|googlesyndication|visual-effects|cw-nav)[^>]*>.*?</script>', '', html, flags=re.DOTALL|re.IGNORECASE)
+                html = re.sub(r'<link[^>]+(?:visual-effects|manifest)[^>]*>', '', html, flags=re.DOTALL|re.IGNORECASE)
                 html = re.sub(r'<ins[^>]+adsbygoogle[^>]*>.*?</ins>', '', html, flags=re.DOTALL|re.IGNORECASE)
                 html = re.sub(r'<iframe[^>]+doubleclick[^>]*>.*?</iframe>', '', html, flags=re.DOTALL|re.IGNORECASE)
 

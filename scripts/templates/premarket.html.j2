@@ -2059,7 +2059,7 @@
               <span class="badge badge-blue">{{ financials.att|length if financials.att else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/att.html" id="embed-att" class="embed-frame" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+              <iframe src="embed/att.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-att" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
             </div>
           </details>
 
@@ -2069,7 +2069,7 @@
               <span class="badge">{{ financials.fin|length if financials.fin else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/fin.html" id="embed-fin" class="embed-frame" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+              <iframe src="embed/fin.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
             </div>
           </details>
 
@@ -2079,7 +2079,7 @@
               <span class="badge">{{ financials.rev|length if financials.rev else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/rev.html" id="embed-rev" class="embed-frame" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+              <iframe src="embed/rev.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
             </div>
           </details>
         </div>
@@ -3358,9 +3358,9 @@
 
   window.pm.syncIframeTheme = function(theme) {
     var cur = theme || document.documentElement.getAttribute('data-theme') || (localStorage.getItem('premarket.theme') === 'dark' ? 'dark' : 'light');
-    if (!cur) cur = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+    if (!cur) cur = 'dark';
     
-    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
+    document.querySelectorAll('iframe.unref-frame, iframe.embed-frame, iframe').forEach(function(iframe) {
       try {
         if (iframe.contentWindow) {
           iframe.contentWindow.postMessage({type: 'theme-change', theme: cur}, '*');

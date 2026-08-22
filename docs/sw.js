@@ -1,4 +1,4 @@
-const CACHE_NAME = 'premarket-v3';
+const CACHE_NAME = 'premarket-v5';
 const SHELL_ASSETS = [
   './',
   './index.html',
@@ -37,10 +37,11 @@ self.addEventListener('fetch', event => {
   if (url.origin !== self.location.origin) return;
   if (url.pathname.includes('/data/night_session/')) return;
 
+  const isHtml = url.pathname.endsWith('.html') || url.pathname.endsWith('/') || !url.pathname.includes('.');
   const isDataRequest = url.pathname.endsWith('.json') || url.pathname.includes('/data/');
 
-  if (isDataRequest) {
-    // Network-first strategy for dynamic data with 5-minute TTL / cache fallback
+  if (isHtml || isDataRequest) {
+    // Network-first for HTML & dynamic data
     event.respondWith(
       fetch(event.request)
         .then(networkResponse => {
@@ -53,7 +54,7 @@ self.addEventListener('fetch', event => {
         .catch(() => caches.match(event.request))
     );
   } else {
-    // Stale-while-revalidate for Shell assets
+    // Stale-while-revalidate for static assets (images, manifest, icons)
     event.respondWith(
       caches.open(CACHE_NAME).then(cache => {
         return cache.match(event.request).then(cachedResponse => {
@@ -64,8 +65,7 @@ self.addEventListener('fetch', event => {
               }
               return networkResponse;
             })
-            .catch(() => cachedResponse || cache.match('./index.html'));
-
+            .catch(() => cachedResponse);
           return cachedResponse || fetchPromise;
         });
       })
