@@ -2,19 +2,14 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="個人用盤前決策工作台：處置股、三大法人、看自選股、美股／亞股走勢、台指期夜盤、PressPlay 族群摘要。">
+<meta name="description" content="個人自用，勿分享">
 <meta name="robots" content="noindex, nofollow">
-<title>盤前情報準備台 · {{ meta.build_time if (meta is defined and meta and meta.build_time) else (build_time or generated_at) }}</title>
-
-
+<meta name="theme-color" content="#F8FAFC">
+<title>盤前 · {{ date_check.page_says_applies_to or (data_date[5:] if data_date else '今日') }} · 警示 {{ (disposal.one_flag_from_disposal|length) + ((disposal.currently_in_disposal | rejectattr('trading_days_left', 'none') | selectattr('trading_days_left', 'in', ['0', '0天', 0, '出關']) | list)|length) }} · 今日 {{ disposal.one_flag_from_disposal|length }} 檔近處置</title>
 
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#F8FAFC">
-<link rel="apple-touch-icon" href="https://www.twse.com.tw/favicon.ico">
+<link rel="apple-touch-icon" href="icon-192.png">
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(function(err) {
@@ -43,11 +38,64 @@
     --cat-stock: #0284C7;
     --cat-futures: #D97706;
     --cat-gen: #64748B;
+
+    --danger-bg: #FFF1F2;
+    --danger-fg: #BE123C;
+    --danger-border: #FECDD3;
+
+    --amber-bg: #FFFBEB;
+    --amber-fg: #92400E;
+    --amber-border: #FDE68A;
+
+    --blue-bg: #EFF6FF;
+    --blue-fg: #1D4ED8;
+    --blue-border: #BFDBFE;
+
+    --green-bg: #ECFDF5;
+    --green-fg: #047857;
+    --green-border: #A7F3D0;
+
+    --row-paused-bg: rgba(217, 119, 6, 0.08);
+
     --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
     --font-mono: "SF Mono", "Consolas", Menlo, monospace;
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
     --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+  }
+
+  :root[data-theme="dark"] {
+    --bg-page: #0B1220;
+    --bg-card: #111827;
+    --bg-sub: #1F2937;
+    --bg-hover: #374151;
+    --border: #1F2937;
+    --border-strong: #374151;
+    --text-main: #F8FAFC;
+    --text-muted: #B4BCC8;
+    --text-light: #64748B;
+    --rise: #FB7185;
+    --fall: #4ADE80;
+    --amber: #FBBF24;
+    --blue: #60A5FA;
+
+    --danger-bg: rgba(225, 29, 72, 0.16);
+    --danger-fg: #FDA4AF;
+    --danger-border: rgba(225, 29, 72, 0.35);
+
+    --amber-bg: rgba(217, 119, 6, 0.16);
+    --amber-fg: #FCD34D;
+    --amber-border: rgba(217, 119, 6, 0.35);
+
+    --blue-bg: rgba(37, 99, 235, 0.16);
+    --blue-fg: #93C5FD;
+    --blue-border: rgba(37, 99, 235, 0.35);
+
+    --green-bg: rgba(16, 185, 129, 0.16);
+    --green-fg: #6EE7B7;
+    --green-border: rgba(16, 185, 129, 0.35);
+
+    --row-paused-bg: rgba(217, 119, 6, 0.18);
   }
 
   * { box-sizing: border-box; }
@@ -60,6 +108,7 @@
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   .font-mono { font-family: var(--font-mono); }
@@ -69,13 +118,25 @@
   .amber { color: var(--amber) !important; }
   .blue { color: var(--blue) !important; }
 
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   .page-wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
 
   /* HEADER */
   .page-header {
     background: var(--bg-card);
     border-bottom: 1px solid var(--border);
-    padding: 18px 0;
+    padding: 16px 0;
   }
   .header-inner {
     max-width: 980px;
@@ -98,15 +159,14 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 14px;
+    gap: 12px;
     font-size: 12px;
   }
   .meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     color: var(--text-muted);
-  }
-  .meta-label {
-    color: var(--text-light);
-    margin-right: 4px;
   }
   .meta-val {
     color: var(--text-main);
@@ -115,198 +175,149 @@
   .status-badge {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 2px 8px;
-    border-radius: 999px;
+    padding: 3px 8px;
+    border-radius: 6px;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
+    letter-spacing: 0.02em;
   }
-  .status-badge.is-ok {
-    background: #F0FDF4;
-    color: #15803D;
-    border: 1px solid #BBF7D0;
-  }
-  .status-badge.is-warning {
-    background: #FFF1F2;
-    color: #BE123C;
-    border: 1px solid #FECDD3;
-  }
+  .status-badge.is-ok { background: var(--green-bg); color: var(--green-fg); border: 1px solid var(--green-border); }
+  .status-badge.is-info { background: var(--blue-bg); color: var(--blue-fg); border: 1px solid var(--blue-border); }
+  .status-badge.is-warning { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
 
   /* NAV (Sticky Anchor Bar) */
   .page-nav {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(248, 250, 252, 0.92);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: var(--bg-card);
     border-bottom: 1px solid var(--border);
-    padding: 8px 0;
+    z-index: 50;
+    box-shadow: var(--shadow-sm);
+    padding: 2px 0;
   }
   .nav-inner {
     max-width: 980px;
     margin: 0 auto;
     padding: 0 16px;
     display: flex;
-    gap: 8px;
+    align-items: center;
+    gap: 4px;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+    scrollbar-width: none;
   }
+  .nav-inner::-webkit-scrollbar { display: none; }
   .nav-link {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    padding: 5px 12px;
-    border-radius: 8px;
-    font-size: 12px;
-    font-weight: 600;
+    gap: 6px;
+    padding: 10px 10px;
     color: var(--text-muted);
     text-decoration: none;
-    white-space: nowrap;
-    background: transparent;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
     transition: all 0.15s ease;
   }
-  .nav-link:hover {
+  .nav-link:hover, .nav-link.is-active {
     color: var(--text-main);
     background: var(--bg-sub);
   }
-  .nav-link.nav-alert {
-    color: var(--rise);
+  .nav-link.is-active {
+    color: var(--blue);
   }
   .nav-badge {
-    background: #FFE4E6;
-    color: #BE123C;
-    padding: 1px 6px;
-    border-radius: 999px;
+    background: var(--rise);
+    color: #FFFFFF;
     font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 10px;
     font-family: var(--font-mono);
   }
+  .nav-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+  }
+  .nav-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 6px 10px;
+    min-height: 38px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-main);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+    box-sizing: border-box;
+  }
+  .nav-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--text-light);
+  }
+  .nav-btn.filter-watch-only.is-active {
+    background: var(--amber-bg);
+    color: var(--amber-fg);
+    border-color: var(--amber-border);
+  }
 
-  /* MAIN CONTENT */
+  /* CONTENT SECTIONS */
   .page-main {
     max-width: 980px;
     margin: 0 auto;
-    padding: 24px 16px 64px;
+    padding: 20px 16px 60px;
   }
   .content-section {
     margin-bottom: 32px;
-    scroll-margin-top: 56px;
+    scroll-margin-top: 76px;
   }
   .section-header {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     padding-bottom: 6px;
-    border-bottom: 2px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
   .section-title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 800;
-    letter-spacing: -0.01em;
-    margin: 0;
     color: var(--text-main);
+    margin: 0;
     display: flex;
     align-items: center;
     gap: 6px;
   }
-  .title-icon { font-size: 15px; }
+  .title-icon { font-size: 16px; }
   .section-desc {
     font-size: 12px;
     color: var(--text-muted);
   }
 
-  /* SUMMARY SECTION */
-  .summary-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
-    margin-bottom: 24px;
-  }
-  .summary-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 14px;
-    box-shadow: var(--shadow-sm);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .summary-card.alert-highlight {
-    border-color: #FECDD3;
-    background: #FFF5F5;
-  }
-  .summary-card.alert-amber {
-    border-color: #FDE68A;
-    background: #FFFDF5;
-  }
-  .summary-card.alert-blue {
-    border-color: #BFDBFE;
-    background: #F8FAFF;
-  }
-  .card-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-  .card-val {
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1.2;
-    color: var(--text-main);
-  }
-  .card-val .unit {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--text-muted);
-    margin-left: 2px;
-  }
-  .card-sub {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 4px;
-  }
-  .inst-chips {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    margin-top: 2px;
-  }
-  .chip {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    font-weight: 600;
-  }
-  .chip-label { color: var(--text-muted); font-weight: 500; }
-
   /* CARDS */
   .card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px;
-    margin-bottom: 16px;
-    box-shadow: var(--shadow);
-  }
-  .card.alert-card-danger {
-    border-left: 4px solid var(--rise);
-  }
-  .card.alert-card-amber {
-    border-left: 4px solid var(--amber);
-  }
-  .card.alert-card-blue {
-    border-left: 4px solid var(--blue);
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 14px;
+    overflow: hidden;
   }
   .card-head {
+    padding: 12px 16px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 14px;
   }
   .card-title-group {
     display: flex;
@@ -316,609 +327,98 @@
   .card-title {
     font-size: 14px;
     font-weight: 700;
-    margin: 0;
     color: var(--text-main);
+    margin: 0;
   }
   .count-badge {
+    background: var(--bg-sub);
+    color: var(--text-muted);
     font-size: 11px;
+    font-weight: 700;
     padding: 2px 7px;
-    border-radius: 999px;
-    font-weight: 600;
-    background: var(--bg-sub);
-    color: var(--text-muted);
+    border-radius: 12px;
     font-family: var(--font-mono);
   }
-  .count-badge.danger { background: #FFE4E6; color: #BE123C; }
-  .count-badge.amber { background: #FEF3C7; color: #B45309; }
-  .count-badge.blue { background: #EFF6FF; color: #1D4ED8; }
+  .count-badge.danger { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
+  .count-badge.amber { background: var(--amber-bg); color: var(--amber-fg); border: 1px solid var(--amber-border); }
   .card-tip {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  /* DATA BLOCKS & TABLES */
-  .data-block { width: 100%; }
-  .table-scroll {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-  }
-  .table-scroll table { min-width: 600px; width: 100%; }
-  .table-scroll.compact table { min-width: 360px; }
-
-  .data-table {
-    border-collapse: collapse;
     font-size: 12px;
+    color: var(--text-muted);
+  }
+  .data-block { padding: 14px 16px; }
+
+  /* 1. SUMMARY GRID */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+  .summary-card {
     background: var(--bg-card);
-  }
-  .data-table th {
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    background: #FAFBFD;
-    color: var(--text-muted);
-    font-weight: 600;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    padding: 8px 10px;
-    border-bottom: 1px solid var(--border);
-    text-align: left;
-    white-space: nowrap;
-  }
-  .data-table th.num { text-align: right; }
-  .data-table td {
-    padding: 8px 10px;
-    border-bottom: 1px solid #F1F5F9;
-    vertical-align: middle;
-    color: var(--text-main);
-    white-space: nowrap;
-  }
-  .data-table tr:last-child td { border-bottom: none; }
-  .data-table tr:hover td { background: #F8FAFC; }
-
-  .data-table td.code { color: var(--blue); font-weight: 600; }
-  .data-table td.name { color: var(--text-main); font-weight: 600; }
-  .data-table td.num { text-align: right; }
-  .data-table td.condition {
-    color: var(--text-muted);
-    font-size: 11px;
-    max-width: 320px;
-    white-space: normal;
-    word-break: break-word;
-  }
-
-  /* BADGES & DOTS */
-  .badge {
-    display: inline-block;
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    background: var(--bg-sub);
-    font-weight: 600;
-    font-family: var(--font-mono);
-  }
-  .badge-amber {
-    border-color: #FCD34D;
-    color: #B45309;
-    background: #FEF3C7;
-  }
-  .badge-col { text-align: center !important; white-space: nowrap; }
-  .badge-dots { display: flex; gap: 2px; align-items: center; justify-content: center; }
-  .badge-dots .dot { width: 4px; height: 9px; background: #E2E8F0; border-radius: 1px; flex-shrink: 0; }
-  .badge-dots .dot.filled { background: var(--amber); }
-  .badge-frac { display: block; font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); margin-top: 2px; }
-
-  /* EMPTY & META STATES */
-  .empty-state {
-    padding: 24px 16px;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 12px;
-    background: #FAFBFD;
-    border-radius: 8px;
-    border: 1px dashed var(--border);
-  }
-  .meta-note {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 8px;
-    padding: 6px 10px;
-    background: var(--bg-sub);
-    border-radius: 6px;
-  }
-
-  /* ACCORDIONS (Details) */
-  .unref-accordion {
     border: 1px solid var(--border);
     border-radius: 8px;
-    margin-bottom: 12px;
-    overflow: hidden;
-    background: var(--bg-card);
-  }
-  .unref-accordion:last-child { margin-bottom: 0; }
-  .accordion-header {
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 700;
-    padding: 10px 14px;
-    background: #FAFBFD;
-    border-bottom: 1px solid transparent;
-    user-select: none;
-    color: var(--text-main);
-  }
-  .unref-accordion[open] .accordion-header {
-    border-bottom-color: var(--border);
-  }
-  .accordion-content { padding: 10px; }
-  .embed-frame {
-    width: 100%;
-    border: none;
-    border-radius: 6px;
-    background: #FFFFFF;
-  }
-
-  /* WATCHLIST / INSTITUTIONAL ACCORDION */
-  .inst-accordion {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 8px;
-    background: var(--bg-card);
-  }
-  .inst-accordion:last-child { margin-bottom: 0; }
-  .inst-summary {
-    cursor: pointer;
-    padding: 10px 14px;
+    padding: 14px;
+    box-shadow: var(--shadow-sm);
     display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    font-weight: 600;
-    user-select: none;
-    background: #FAFBFD;
-    border-radius: 8px;
+    flex-direction: column;
+    justify-content: space-between;
   }
-  .inst-accordion[open] .inst-summary {
-    border-bottom: 1px solid var(--border);
-    border-radius: 8px 8px 0 0;
+  .summary-card.alert-highlight {
+    background: var(--danger-bg);
+    border-color: var(--danger-border);
   }
-  .inst-tag {
-    font-size: 10px;
-    padding: 1px 5px;
-    background: var(--bg-sub);
-    border-radius: 4px;
-    color: var(--text-muted);
-  }
-  .inst-code { color: var(--blue); }
-  .inst-name { color: var(--text-main); }
-  .inst-content { padding: 14px; }
-  .dual-panel { display: flex; gap: 14px; align-items: flex-start; }
-  .dual-panel-col { flex: 1; min-width: 0; }
-  .sub-label {
+  .card-label {
     font-size: 11px;
-    color: var(--text-muted);
     font-weight: 700;
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-bottom: 6px;
   }
-
-  /* MARKET TILES */
-  .tiles-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-  }
-  .tile {
-    background: var(--bg-sub);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 14px;
-    transition: all 0.15s ease;
-  }
-  .tile:hover {
-    background: #FFFFFF;
-    box-shadow: var(--shadow-sm);
-  }
-  .tile .name {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 600;
-    margin-bottom: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .tile .sub-pill {
-    font-size: 9px;
-    background: #E2E8F0;
-    color: var(--text-muted);
-    padding: 1px 4px;
-    border-radius: 4px;
-  }
-  .tile .value {
-    font-size: 17px;
-    font-weight: 700;
+  .card-val {
+    font-size: 20px;
+    font-weight: 800;
     color: var(--text-main);
+    line-height: 1.2;
+    margin-bottom: 4px;
   }
-  .tile .delta {
-    font-size: 11px;
-    margin-top: 2px;
-    font-weight: 600;
-  }
-  .tile .updated {
-    font-size: 9px;
+  .card-val.rise { color: var(--rise); }
+  .card-val.fall { color: var(--fall); }
+  .card-val.amber { color: var(--amber); }
+  .card-sub {
+    font-size: 12px;
     color: var(--text-muted);
+    font-weight: 500;
+  }
+  .inst-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     margin-top: 4px;
   }
-
-  .header-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 11px;
-    color: var(--text-muted);
-    text-decoration: none;
-    background: var(--bg-sub);
-    border: 1px solid var(--border);
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: all 0.15s ease;
-  }
-  .header-btn:hover {
-    background: var(--bg-hover);
-    color: var(--text-main);
-  }
-
-  /* SUPPLEMENTARY (News & Calendar) */
-  .supp-accordion {
-    width: 100%;
-  }
-  .supp-summary {
-    cursor: pointer;
+  .inst-chips .chip {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    user-select: none;
-  }
-  .accordion-toggle-icon {
-    font-size: 10px;
-    color: var(--text-muted);
-    transition: transform 0.2s;
-  }
-  .supp-accordion[open] .accordion-toggle-icon {
-    transform: rotate(180deg);
-  }
-
-  .news-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .news-item {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    padding: 10px 14px;
-    background: var(--bg-sub);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.15s ease;
-  }
-  .news-item:hover {
-    background: #FFFFFF;
-    box-shadow: var(--shadow-sm);
-    border-color: var(--border-strong);
-  }
-  .news-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-main);
-    line-height: 1.4;
-  }
-  .news-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-  .news-source { color: var(--blue); font-weight: 600; }
-
-  /* CALENDAR */
-  .cal-grid { margin-bottom: 16px; }
-  .cal-grid-head, .cal-grid-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-  .cal-grid-head { margin-bottom: 4px; }
-  .cal-grid-h { text-align: center; font-size: 10px; color: var(--text-muted); font-weight: 600; padding: 2px 0; }
-  .cal-grid-row { margin-bottom: 4px; }
-  .cal-cell {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    aspect-ratio: 1;
-    padding: 4px 1px;
-    border-radius: 6px;
-    background: var(--bg-sub);
-    border: 1px solid var(--border);
-    text-decoration: none;
-    transition: all 0.15s ease;
-  }
-  .cal-cell.out { opacity: .35; }
-  .cal-cell.today { border-color: var(--amber); background: #FFFBEB; box-shadow: 0 0 0 1px rgba(217,119,6,0.2); }
-  .cal-cell.has-events { cursor: pointer; }
-  .cal-cell.has-events:hover { border-color: var(--blue); background: #FFFFFF; transform: translateY(-1px); }
-  .cal-cell-num { font-family: var(--font-mono); font-size: 11px; color: var(--text-main); font-weight: 500; }
-  .cal-cell.today .cal-cell-num { color: var(--amber); font-weight: 700; }
-  .cal-cell-dots { display: flex; gap: 2px; align-items: center; height: 4px; }
-  .cal-cell-dots .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--amber); }
-  .cal-cell-more { font-size: 8px; color: var(--text-muted); font-family: var(--font-mono); }
-
-  .cal-agenda-scroll {
-    max-height: 380px;
-    overflow-y: auto;
-    padding-right: 6px;
-  }
-  .cal-day {
-    display: flex;
-    gap: 14px;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    scroll-margin-top: 56px;
-  }
-  .cal-day:last-child { border-bottom: none; }
-  .cal-date {
-    flex: 0 0 65px;
-    font-family: var(--font-mono);
     font-size: 12px;
-    color: var(--text-muted);
-    padding-top: 2px;
   }
-  .cal-date.today { color: var(--amber); font-weight: 700; }
-  .cal-day-events { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
-  .cal-event-card {
-    background: var(--bg-sub);
-    border: 1px solid var(--border);
-    border-left: 3px solid var(--cat-gen);
-    border-radius: 6px;
-    padding: 8px 12px;
-  }
-  .cal-event-card.cat-fed { border-left-color: var(--cat-fed); background: #FFF1F2; }
-  .cal-event-card.cat-econ { border-left-color: var(--cat-econ); background: #FFFBEB; }
-  .cal-event-card.cat-stock { border-left-color: var(--cat-stock); background: #F0F9FF; }
-  .cal-event-card.cat-futures { border-left-color: var(--cat-futures); background: #FFFBEB; }
+  .inst-chips-mobile { display: none; }
 
-  .cal-header-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; flex-wrap: wrap; }
-  .cal-time-pill { font-family: var(--font-mono); font-size: 10px; padding: 1px 6px; border-radius: 10px; background: #E2E8F0; color: #334155; font-weight: 600; }
-  .cal-time-pill.all-day { background: #E2E8F0; color: #64748B; }
-  .cal-cat-badge { font-size: 9px; padding: 1px 5px; border-radius: 3px; font-weight: 600; text-transform: uppercase; }
-  .cat-fed .cal-cat-badge { background: #FFE4E6; color: #BE123C; }
-  .cat-econ .cal-cat-badge { background: #FEF3C7; color: #B45309; }
-  .cat-stock .cal-cat-badge { background: #E0F2FE; color: #0369A1; }
-  .cat-futures .cal-cat-badge { background: #FEF3C7; color: #B45309; }
-  .cat-general .cal-cat-badge { background: #F1F5F9; color: #475569; }
-  .cal-summary { font-size: 13px; font-weight: 600; color: var(--text-main); }
-  .cal-desc { font-size: 11px; color: var(--text-muted); margin-top: 3px; white-space: pre-line; line-height: 1.4; }
-  .cal-link { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--amber); text-decoration: none; background: #FEF3C7; border: 1px solid #FDE68A; padding: 3px 8px; border-radius: 6px; font-weight: 600; margin-top: 4px; }
-
-  /* FOOTER */
-  .page-footer {
-    background: var(--bg-card);
-    border-top: 1px solid var(--border);
-    padding: 32px 0 48px;
-    margin-top: 48px;
-  }
-  .footer-inner {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 0 16px;
-  }
-  .footer-title {
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--text-main);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-bottom: 10px;
-  }
-  .footer-notes {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 16px;
-    font-size: 11px;
-    color: var(--text-muted);
-    line-height: 1.7;
-  }
-  .footer-notes li { margin-bottom: 4px; }
-  .footer-notes strong { color: var(--text-main); }
-  .footer-copy {
-    font-size: 11px;
-    color: var(--text-light);
-    font-family: var(--font-mono);
-    border-top: 1px solid var(--border);
-    padding-top: 12px;
-  }
-
-  @media (max-width: 640px) {
-    .tiles-grid { grid-template-columns: repeat(2, 1fr); }
-    .dual-panel { flex-direction: column; }
-    .summary-grid { grid-template-columns: repeat(2, 1fr); }
-    .cal-day { flex-direction: column; gap: 4px; }
-  }
-
-  /* Responsive Mobile Card Layout for Disposal Table */
-  @media (max-width: 768px) {
-    .disposal-table thead { display: none; }
-    .disposal-table tbody tr {
-      display: block;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 12px;
-      background: #FFFFFF;
-    }
-    .disposal-table td {
-      display: grid;
-      grid-template-columns: 80px 1fr;
-      gap: 6px;
-      padding: 4px 0;
-      border-bottom: none;
-      white-space: normal;
-      text-align: left !important;
-    }
-    .disposal-table td::before {
-      content: attr(data-label);
-      color: var(--text-muted);
-      font-size: 11px;
-      font-weight: 600;
-    }
-    .disposal-table .badge-dots {
-      justify-content: flex-start;
-    }
-    .disposal-table .badge-frac {
-      display: inline-block;
-      margin-left: 6px;
-      margin-top: 0;
-    }
-  }
-
-
-  /* Responsive Tables & Mobile Enhancements */
-  @media (max-width: 768px) {
-    body {
-      font-size: 14px;
-    }
-    .nav-tabs, .page-nav {
-      position: sticky;
-      top: 0;
-      background: #fff;
-      z-index: 20;
-      border-bottom: 1px solid #e5e7eb;
-      padding-top: 4px;
-    }
-    .responsive-table thead, .disposal-table thead { display: none; }
-    .responsive-table tbody tr, .disposal-table tbody tr {
-      display: block;
-      border: 1px solid var(--border, #E2E8F0);
-      border-radius: 8px;
-      padding: 12px;
-      margin-bottom: 12px;
-      background: #FFFFFF;
-    }
-    .responsive-table td, .disposal-table td {
-      display: grid;
-      grid-template-columns: 90px 1fr;
-      gap: 6px;
-      padding: 4px 0;
-      border-bottom: none;
-      white-space: normal;
-      text-align: left !important;
-    }
-    .responsive-table td::before, .disposal-table td::before {
-      content: attr(data-label);
-      color: var(--text-muted, #64748B);
-      font-size: 11px;
-      font-weight: 600;
-    }
-    .responsive-table .badge-dots, .disposal-table .badge-dots {
-      justify-content: flex-start;
-    }
-    .responsive-table .badge-frac, .disposal-table .badge-frac {
-      display: inline-block;
-      margin-left: 6px;
-      margin-top: 0;
-    }
-  }
-
-  .table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    width: 100%;
-  }
-
-  /* Stale Banner */
+  /* STALE BANNER */
   .stale-banner {
     padding: 8px 16px;
     border-radius: 8px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     text-align: center;
     margin-bottom: 16px;
-    background: #fef3c7;
-    color: #92400e;
-    border: 1px solid #fde68a;
+    background: var(--green-bg);
+    color: var(--green-fg);
+    border: 1px solid var(--green-border);
   }
-  .stale-banner[data-hours="0"] { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
-  .stale-banner[data-hours="24"], .stale-banner[data-hours="48"] { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+  .stale-banner.is-warning { background: var(--amber-bg) !important; color: var(--amber-fg) !important; border-color: var(--amber-border) !important; }
+  .stale-banner.is-danger  { background: var(--danger-bg) !important; color: var(--danger-fg) !important; border-color: var(--danger-border) !important; }
 
-  /* Refresh Button in Nav */
-  .refresh-btn {
-    background: #FFFFFF;
-    border: 1px solid var(--border, #E2E8F0);
-    border-radius: 6px;
-    padding: 8px 12px;
-    min-height: 44px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-main, #0F172A);
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.15s ease;
-    margin-left: auto;
-    box-sizing: border-box;
-  }
-  .refresh-btn:hover {
-    background: #F1F5F9;
-    border-color: #CBD5E1;
-  }
-
-  /* Pulse Animation */
-  @keyframes pulse-warn { 0%,100%{opacity:1} 50%{opacity:.4} }
-  .tab-pill[data-count]:not([data-count="0"])::after, .nav-badge, .badge-pulse {
-    animation: pulse-warn 1.6s infinite;
-  }
-
-
-  /* Dark Theme Support */
-  :root[data-theme="dark"] {
-    --bg-page: #0B1220;
-    --bg-card: #111827;
-    --bg-sub: #1F2937;
-    --bg-hover: #374151;
-    --border: #1F2937;
-    --border-strong: #374151;
-    --text-main: #F8FAFC;
-    --text-muted: #94A3B8;
-    --text-light: #64748B;
-  }
-
-  .theme-toggle {
-    background: transparent;
-    border: 1px solid var(--border-strong, #CBD5E1);
-    border-radius: 6px;
-    padding: 6px 10px;
-    min-height: 44px;
-    cursor: pointer;
-    color: var(--text-muted);
-    font-size: 12px;
-    display: inline-flex;
-    align-items: center;
-    box-sizing: border-box;
-    transition: all 0.15s ease;
-  }
-  .theme-toggle:hover {
-    color: var(--text-main);
-    background: var(--bg-hover);
-  }
-
-  /* Countdown Component */
+  /* COUNTDOWN COMPONENT */
   .open-countdown {
     font-family: var(--font-mono);
     font-size: 12px;
@@ -930,34 +430,398 @@
   }
   .open-countdown.closed { color: var(--text-light); }
 
-  /* Watchlist Section */
+  /* WATCHLIST SECTION */
   .watchlist-input-row { display: flex; gap: 8px; align-items: center; padding: 4px 0 10px; flex-wrap: wrap; }
-  .watch-input { flex: 1; min-width: 240px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card); color: var(--text-main); font-family: var(--font-mono); font-size: 13px; }
-  .watch-btn { padding: 8px 14px; min-height: 40px; border-radius: 6px; border: 1px solid var(--border-strong); background: var(--bg-card); color: var(--text-main); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .watch-input { flex: 1; min-width: 240px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card); color: var(--text-main); font-family: var(--font-mono); font-size: 13px; outline: none; }
+  .watch-input:focus { border-color: var(--blue); }
+  .watch-btn { padding: 8px 14px; min-height: 38px; border-radius: 6px; border: 1px solid var(--border-strong); background: var(--bg-card); color: var(--text-main); font-size: 13px; font-weight: 600; cursor: pointer; }
   .watch-btn:hover { background: var(--bg-hover); }
   .watch-btn.ghost { background: transparent; color: var(--text-muted); }
-  .watch-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-  .watch-chip { background: var(--bg-sub); border: 1px solid var(--border); border-radius: 16px; padding: 4px 10px; font-size: 13px; font-family: var(--font-mono); display: inline-flex; align-items: center; gap: 6px; }
-  .watch-chip .wc-name { color: var(--text-main); }
-  .watch-chip .wc-code { color: var(--blue); font-weight: 600; }
-  .watch-chip .wc-quote { color: var(--text-muted); margin-left: 4px; }
-  .watch-chip.alert { border-left: 3px solid var(--rise); background: #FFF1F2; color: #991B1B; }
-  .watch-chip.amber { border-left: 3px solid var(--amber); background: #FFFBEB; color: #92400E; }
+  .watch-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .watch-chip {
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-family: var(--font-mono);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .watch-chip:hover { border-color: var(--blue); }
+  .watch-chip .wc-icon { font-size: 11px; }
+  .watch-chip .wc-code { color: var(--blue); font-weight: 700; }
+  .watch-chip .wc-name { color: var(--text-main); font-weight: 600; }
+  .watch-chip.alert { border-left: 3px solid var(--rise); background: var(--danger-bg); color: var(--danger-fg); }
+  .watch-chip.amber { border-left: 3px solid var(--amber); background: var(--amber-bg); color: var(--amber-fg); }
+  .watch-chip.blue  { border-left: 3px solid var(--blue); background: var(--blue-bg); color: var(--blue-fg); }
   .watch-chip .wc-del { cursor: pointer; color: var(--text-light); margin-left: 2px; }
   .watch-chip .wc-del:hover { color: var(--rise); }
   .watch-hint { color: var(--text-muted); font-size: 12px; padding: 6px 0; }
 
-  /* Part 3 Error / Empty state */
-  .part3-error { background: #FEF2F2; border: 1px solid #FCA5A5; color: #B91C1C; padding: 12px 14px; border-radius: 8px; margin: 12px 0; font-size: 13px; }
-  .part3-empty { background: var(--bg-sub); color: var(--text-muted); padding: 14px; border-radius: 8px; text-align: center; font-size: 13px; }
+  /* FLASH HIGHLIGHT */
+  @keyframes flash-pulse {
+    0%, 100% { outline: 2px solid transparent; }
+    50% { outline: 2px solid var(--amber); background: var(--amber-bg); }
+  }
+  .highlight-flash {
+    animation: flash-pulse 1s ease 2;
+  }
 
-  /* Last build fresh / aging / stale */
-  .last-build.fresh   { color: var(--text-main); }
-  .last-build.aging   { color: var(--amber); }
-  .last-build.stale   { color: var(--rise); font-weight: 700; }
-  .stale-banner.is-warning { background: #FFF7ED !important; color: #9A3412 !important; border: 1px solid var(--amber) !important; }
-  .stale-banner.is-danger  { background: #FEF2F2 !important; color: #B91C1C !important; border: 1px solid var(--rise) !important; }
+  /* DATA TABLES */
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: left;
+  }
+  .data-table th {
+    background: var(--bg-sub);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+  .data-table th:hover {
+    color: var(--text-main);
+    background: var(--bg-hover);
+  }
+  .data-table th .sort-arrow { font-size: 9px; margin-left: 4px; opacity: 0.5; }
+  .data-table th.sorted .sort-arrow { opacity: 1; color: var(--blue); }
+  .data-table td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-main);
+  }
+  .data-table tr:hover td { background: var(--bg-sub); }
+  .data-table tr.row-paused td { background: var(--row-paused-bg); }
+  .pause-icon { display: inline-block; margin-right: 4px; color: var(--amber); font-weight: 700; }
+  .data-table td.num, .data-table th.num { text-align: right; }
+  .empty-state {
+    padding: 24px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
 
+  /* 2-LINE CONDITION LAYOUT */
+  .cond-box {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 12px;
+  }
+  .cond-row-1 {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+  }
+  .cond-num-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--green-bg);
+    color: var(--green-fg);
+    border: 1px solid var(--green-border);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .cond-row-2 {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .cond-pill {
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: var(--bg-sub);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .cond-row-3 {
+    color: var(--text-light);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  /* BADGE DOTS */
+  .badge-col { text-align: center; }
+  .badge-dots { display: inline-flex; gap: 2px; }
+  .badge-dots .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border-strong);
+  }
+  .badge-dots .dot.filled { background: var(--amber); }
+  .badge-frac { font-size: 11px; color: var(--text-muted); margin-left: 4px; }
+  .mini-bar {
+    display: none;
+    position: relative;
+    width: 48px;
+    height: 14px;
+    background: var(--bg-sub);
+    border-radius: 3px;
+    overflow: hidden;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 14px;
+    text-align: center;
+    color: var(--text-main);
+  }
+  .mini-bar::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; bottom: 0;
+    width: var(--pct, 0%);
+    background: var(--amber);
+    opacity: 0.35;
+  }
+
+  /* BADGES */
+  .badge {
+    display: inline-flex;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--bg-sub);
+    color: var(--text-muted);
+  }
+  .badge-amber { background: var(--amber-bg); color: var(--amber-fg); border: 1px solid var(--amber-border); }
+  .badge-green { background: var(--green-bg); color: var(--green-fg); border: 1px solid var(--green-border); }
+  .badge-blue { background: var(--blue-bg); color: var(--blue-fg); border: 1px solid var(--blue-border); }
+
+  /* IFRAME EMBEDS */
+  .unref-accordion {
+    border-bottom: 1px solid var(--border);
+  }
+  .unref-accordion:last-child { border-bottom: none; }
+  .unref-summary {
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-main);
+    cursor: pointer;
+    background: var(--bg-card);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .unref-summary:hover { background: var(--bg-sub); }
+  .unref-content { padding: 12px 16px; background: var(--bg-sub); }
+  .embed-frame {
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    background: #FFFFFF;
+    transition: height 0.2s ease;
+  }
+
+  /* TILES GRID */
+  .tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .tile-card {
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .tile-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .tile-name { font-size: 12px; font-weight: 700; color: var(--text-main); }
+  .tile-delay-pill {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+  }
+  .pill-fresh { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); }
+  .pill-amber { background: var(--amber-bg); color: var(--amber-fg); border: 1px solid var(--amber-border); }
+  .pill-danger { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
+  .tile-val { font-size: 15px; font-weight: 800; }
+  .tile-chg { font-size: 11px; font-weight: 600; }
+
+  /* BACK TO TOP */
+  .back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    z-index: 90;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+  .back-to-top:hover {
+    background: var(--bg-sub);
+    transform: translateY(-2px);
+  }
+
+  /* TOAST */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border-strong);
+    box-shadow: var(--shadow-md);
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.25s ease;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* SHORTCUTS MODAL */
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    z-index: 150;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    max-width: 440px;
+    width: 100%;
+    box-shadow: var(--shadow-md);
+    padding: 20px;
+  }
+  .modal-title { font-size: 16px; font-weight: 800; margin: 0 0 14px; color: var(--text-main); }
+  .shortcut-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px; }
+  .shortcut-item { display: flex; align-items: center; gap: 8px; }
+  .kbd {
+    display: inline-block;
+    padding: 2px 6px;
+    background: var(--bg-sub);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+
+  /* SNAPSHOT / PRINT MODE */
+  body.snapshot-mode .page-nav,
+  body.snapshot-mode .page-header,
+  body.snapshot-mode .stale-banner,
+  body.snapshot-mode .page-footer,
+  body.snapshot-mode #news-calendar,
+  body.snapshot-mode #market-context,
+  body.snapshot-mode .back-to-top {
+    display: none !important;
+  }
+  body.snapshot-mode .page-main { padding: 10px 0; max-width: 100%; }
+
+  @media print {
+    .page-nav, .stale-banner, .page-footer, .back-to-top, .watchlist-input-row, .unref-accordion { display: none !important; }
+    body { background: #FFFFFF; color: #000000; }
+    .card { border: 1px solid #CCCCCC; box-shadow: none; }
+    .rise::before { content: '▲ '; }
+    .fall::before { content: '▼ '; }
+  }
+
+  /* MOBILE RESPONSIVE (max-width: 768px) */
+  @media (max-width: 768px) {
+    .summary-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .tiles-grid { grid-template-columns: repeat(2, 1fr); }
+    .badge-dots { display: none; }
+    .mini-bar { display: inline-block; }
+    
+    .inst-chips { display: none; }
+    .inst-chips-mobile { display: block; font-size: 12px; margin-top: 4px; }
+
+    .data-table thead { display: none; }
+    .data-table, .data-table tbody, .data-table tr, .data-table td { display: block; }
+    .data-table tr {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      background: var(--bg-card);
+    }
+    .data-table td {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 6px;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table td:last-child { border-bottom: none; }
+    .data-table td::before {
+      content: attr(data-label);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .data-table td.num { text-align: left; }
+    .data-table td.badge-col { text-align: left; }
+  }
+
+  /* FOOTER */
+  .page-footer {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    padding: 24px 0;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .footer-inner { max-width: 980px; margin: 0 auto; padding: 0 16px; }
+  .footer-title { font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
+  .footer-notes { padding-left: 18px; margin: 0 0 8px; line-height: 1.6; }
 </style>
 </head>
 <body>
@@ -973,9 +837,9 @@
         {% if date_check and date_check.page_says_applies_to %}
         <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">{{ date_check.page_says_applies_to }}</span></span>
         {% endif %}
-        <span class="meta-status">
-          {% if date_check and date_check.applies_to_matches_today is sameas false %}
-          <span class="status-badge is-warning" title="日期核對提醒：頁面顯示適用 {{ date_check.page_says_applies_to }}，但今天是 {{ date_check.today }}">日期待確認</span>
+        <span class="meta-status" id="date-status-container">
+          {% if date_check_eval %}
+          <span class="status-badge {{ date_check_eval.class_name }}" title="{{ date_check_eval.tooltip }}">{{ date_check_eval.label }}</span>
           {% elif date_check %}
           <span class="status-badge is-ok">資料已就緒</span>
           {% endif %}
@@ -985,22 +849,27 @@
   </header>
 
   <!-- NAV (Sticky Anchor Bar) -->
-  <nav class="page-nav nav-tabs">
+  <nav class="page-nav" id="sticky-nav">
     <div class="nav-inner">
-      <a href="#summary" class="nav-link">今日摘要</a>
+      <a href="#summary" class="nav-link is-active">今日摘要</a>
+      <a href="#self-watchlist" class="nav-link">我在看</a>
       {% set exiting_today = disposal.currently_in_disposal | rejectattr('trading_days_left', 'none') | selectattr('trading_days_left', 'in', ['0', '0天', 0, '出關']) | list %}
       {% set hidden_disposal = disposal.currently_in_disposal | selectattr('trading_days_left', 'none') | list %}
       {% set alert_total = (disposal.one_flag_from_disposal|length) + (exiting_today|length) %}
-      <a href="#self-watchlist" class="nav-link">我在看</a>
-      <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">今日警示 {% if alert_total > 0 %}<span class="nav-badge">{{ alert_total }}</span>{% endif %}{% if stale_hours and stale_hours > 12 %}<span class="nav-badge" style="background:#F59E0B; color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
+      <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">今日警示 {% if alert_total > 0 %}<span class="nav-badge" id="nav-alert-badge">{{ alert_total }}</span>{% endif %}{% if stale_hours and stale_hours > 12 %}<span class="nav-badge" style="background:var(--amber); color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
       <a href="#watchlist" class="nav-link">今日候選股</a>
       <a href="#market-context" class="nav-link">市場背景</a>
       <a href="#news-calendar" class="nav-link">補充資訊</a>
       <a href="#system-info" class="nav-link">系統資訊</a>
-      <button class="theme-toggle" onclick="window.toggleTheme()" id="theme-toggle">🌙 深色</button>
-      <button class="refresh-btn" onclick="location.reload(true)" title="重新載入最新版">
-        🔄 <span class="last-build">建置 {{ (meta.build_time if meta is defined and meta and meta.build_time else (build_time or '08:00')) }}</span>
-      </button>
+      
+      <div class="nav-actions">
+        <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" aria-label="切換只看自選">⭐ 只看自選</button>
+        <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" aria-label="切換截圖模式">📸 截圖</button>
+        <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" aria-label="切換深淺色主題">🌙 深色</button>
+        <button class="nav-btn refresh-btn" onclick="location.reload(true)" type="button" title="重新載入最新版" aria-label="重新整理頁面">
+          🔄 <span class="last-build">建置 {{ (meta.build_time if meta is defined and meta and meta.build_time else (build_time or '08:00')) }}</span>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -1015,16 +884,20 @@
     <section id="summary" class="content-section">
       <div class="summary-grid">
         <!-- 昨收大盤 -->
-        {% if twse and twse.twii %}
         <div class="summary-card">
-          <div class="card-label">昨收大盤</div>
+          <div class="card-label">加權指數 昨收</div>
+          {% if twse and twse.twii %}
           <div class="card-val font-mono {% if twse.twii.change > 0 %}rise{% elif twse.twii.change < 0 %}fall{% endif %}">
-            {{ twse.twii.price }}
+            {{ "{:,.2f}".format(twse.twii.price) }}
           </div>
           <div class="card-sub font-mono {% if twse.twii.change > 0 %}rise{% elif twse.twii.change < 0 %}fall{% endif %}">
             {% if twse.twii.change > 0 %}+{% endif %}{{ twse.twii.change }} ({{ '%+.2f'|format(twse.twii.change_pct) }}%)
           </div>
+          {% else %}
+          <div class="card-val font-mono">—</div>
+          {% endif %}
         </div>
+
         <!-- 三大法人買賣超 (外資 / 投信 / 自營商) -->
         <div class="summary-card">
           <div class="card-label">三大法人買賣超</div>
@@ -1041,33 +914,19 @@
               {% endif %}
             {% endif %}
           </div>
-        </div>
-        {% endif %}
-
-        <!-- 差1次處置 -->
-        <div class="summary-card {% if disposal.one_flag_from_disposal|length > 0 %}alert-highlight{% endif %}">
-          <div class="card-label">差 1 次處置</div>
-          <div class="card-val font-mono {% if disposal.one_flag_from_disposal|length > 0 %}rise{% endif %}">
-            {{ disposal.one_flag_from_disposal|length }} <span class="unit">檔</span>
+          <div class="inst-chips-mobile font-mono">
+            {% if twse and twse.inst %}
+            外資 <span class="{% if twse.inst.foreign > 0 %}rise{% else %}fall{% endif %}">{% if twse.inst.foreign > 0 %}+{% endif %}{{ twse.inst.foreign|round(0)|int }}</span> · 投信 <span class="{% if twse.inst.trust > 0 %}rise{% else %}fall{% endif %}">{% if twse.inst.trust > 0 %}+{% endif %}{{ twse.inst.trust|round(0)|int }}</span> · 自營 <span class="{% if twse.inst.dealer > 0 %}rise{% else %}fall{% endif %}">{% if twse.inst.dealer > 0 %}+{% endif %}{{ twse.inst.dealer|round(0)|int }}</span>
+            {% endif %}
           </div>
-          <div class="card-sub">盤中觸發即進入處置</div>
         </div>
 
-        <!-- 今日出關 -->
-        <div class="summary-card {% if exiting_today|length > 0 %}alert-amber{% endif %}">
-          <div class="card-label">今日出關</div>
-          <div class="card-val font-mono {% if exiting_today|length > 0 %}amber{% endif %}">
-            {{ exiting_today|length }} <span class="unit">檔</span>
-          </div>
-          <div class="card-sub">今日恢復正常撮合</div>
-        </div>
-
-        <!-- 市場未反映 -->
+        <!-- 市場未反映公告 -->
         {% set unref_count = (financials.att|length if financials.att else 0) + (financials.fin|length if financials.fin else 0) + (financials.rev|length if financials.rev else 0) %}
-        <div class="summary-card {% if unref_count > 0 %}alert-blue{% endif %}">
+        <div class="summary-card {% if unref_count > 0 %}alert-highlight{% endif %}">
           <div class="card-label">市場未反映公告</div>
-          <div class="card-val font-mono {% if unref_count > 0 %}blue{% endif %}">
-            {{ unref_count }} <span class="unit">筆</span>
+          <div class="card-val font-mono {% if unref_count > 0 %}rise{% endif %}">
+            {{ unref_count }} <span class="unit" style="font-size:14px; font-weight:normal;">筆</span>
           </div>
           <div class="card-sub">{{ financials.cutoff_str or '昨日 13:30' }} 後公告</div>
         </div>
@@ -1075,9 +934,8 @@
         <!-- 台指期夜盤 -->
         {% if night and night.latest %}
         <div class="summary-card">
-          <div class="card-label">台指期夜盤 (05:00)</div>
+          <div class="card-label">台指期夜盤 (05:00){% if night and night.latest and (night.latest.provider_name or night.provider_name) %} · 來源：{{ night.latest.provider_name or night.provider_name }}{% endif %}</div>
           {% if night.latest.is_fallback %}
-
           <div class="card-sub amber font-bold" style="font-size:10px; margin-bottom:2px;">⚠️ 抓取失敗，使用最近一次 fixtures/{{ night.date }}</div>
           {% endif %}
           <div class="card-val font-mono {% if night.latest.change > 0 %}rise{% elif night.latest.change < 0 %}fall{% endif %}">
@@ -1088,6 +946,7 @@
           </div>
         </div>
         {% endif %}
+        
         <div id="open-countdown" class="open-countdown"></div>
       </div>
     </section>
@@ -1099,9 +958,9 @@
         <span class="section-desc">輸入台股代號（逗號分隔），存於 localStorage</span>
       </div>
       <div class="watchlist-input-row">
-        <input id="watch-input" class="watch-input" placeholder="例如 2330, 2454, 2603" autocomplete="off">
-        <button class="watch-btn" onclick="window.saveWatch()">儲存</button>
-        <button class="watch-btn ghost" onclick="window.clearWatch()">清空</button>
+        <input id="watch-input" class="watch-input" placeholder="例如 2330, 2454, 3163（按 Enter 儲存）" autocomplete="off" aria-label="輸入自選股代號">
+        <button class="watch-btn" onclick="window.saveWatch()" type="button" aria-label="儲存自選股">儲存</button>
+        <button class="watch-btn ghost" onclick="window.clearWatch()" type="button" aria-label="清空自選股">清空</button>
       </div>
       <div id="watch-chips" class="watch-chips"></div>
       <div class="watch-hint" id="watch-hint"></div>
@@ -1110,32 +969,33 @@
     <!-- 2. 今日警示 (Alerts) -->
     <section id="alerts" class="content-section">
       <div class="section-header">
-        <h2 class="section-title"><span class="title-icon">🚨</span> 今日警示</h2>
-        <span class="section-desc">開盤最直接影響操作的特定狀態標的</span>
+        <h2 class="section-title"><span class="title-icon">⚠️</span> 今日警示</h2>
+        <span class="section-desc">處置股預警、今日出關與盤後重大財務自結</span>
       </div>
 
-      <!-- 子區塊 1: 差1次就處置 -->
-      <div class="card alert-card-danger">
+      <!-- 差 1 次即處置 -->
+      <div class="card alert-card">
         <div class="card-head">
           <div class="card-title-group">
             <h3 class="card-title">差 1 次就處置</h3>
             <span class="count-badge danger">{{ disposal.one_flag_from_disposal|length }} 檔</span>
           </div>
-          <span class="card-tip">若今日再達注意標準將預收款券或分盤撮合</span>
+          <span class="card-tip">今日若再觸發標準即進入處置</span>
         </div>
-        
+
         <div class="data-block">
           {% if disposal.one_flag_from_disposal %}
           <div class="table-scroll">
             <table class="data-table disposal-table">
+              <caption class="sr-only">差 1 次就處置股票清單</caption>
               <thead>
                 <tr>
-                  <th>市場</th>
-                  <th>代號</th>
-                  <th>名稱</th>
-                  <th class="num">收盤</th>
-                  <th>處置標準條件（估算）</th>
-                  <th class="num">最快處置</th>
+                  <th onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th>處置標準條件</th>
+                  <th class="num" onclick="window.pm.sortTable(this, 5)">最快處置 <span class="sort-arrow">▲▼</span></th>
                   <th class="badge-col" title="連續3日第1款">3①</th>
                   <th class="badge-col" title="連續5日（第1~7款）">5</th>
                   <th class="badge-col" title="10日內6次（第1~7款）">6</th>
@@ -1144,12 +1004,28 @@
               </thead>
               <tbody>
                 {% for row in disposal.one_flag_from_disposal %}
-                <tr data-code="{{ row.code.replace('⏸','').strip() }}" data-cat="alert" data-label="{{ row.name }}">
+                {% set is_paused = ('⏸' in row.code) %}
+                {% set clean_code = row.code.replace('⏸','').strip() %}
+                <tr data-code="{{ clean_code }}" data-cat="alert" data-label="{{ row.name }}" class="{{ 'row-paused' if is_paused else '' }}">
                   <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono">{{ row.code }}</td>
+                  <td data-label="代號" class="code font-mono">
+                    {% if is_paused %}<span class="pause-icon" title="處置中">⏸</span>{% endif %}{{ clean_code }}
+                  </td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}</td>
                   <td data-label="收盤" class="num font-mono">{{ row.close }}</td>
-                  <td data-label="處置條件" class="condition">{% if row.condition_segments %}{% for seg in row.condition_segments %}<span{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>{% endfor %}{% else %}{{ row.condition }}{% endif %}</td>
+                  <td data-label="處置條件" class="condition">
+                    <div class="cond-box">
+                      {% if row.condition_segments %}
+                      <div class="cond-row-2">
+                        {% for seg in row.condition_segments %}
+                        <span class="cond-pill font-mono"{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>
+                        {% endfor %}
+                      </div>
+                      {% else %}
+                      <span>{{ row.condition }}</span>
+                      {% endif %}
+                    </div>
+                  </td>
                   <td data-label="最快處置" class="num font-mono">
                     {% set ed_parts = row.earliest_disposal.split(' ', 1) %}
                     {% if ed_parts|length == 2 %}
@@ -1163,10 +1039,11 @@
                   {% for bd in row.badges or [{}, {}, {}, {}] %}
                   <td data-label="{{ badge_labels[loop.index0] }}" class="badge-col"{% if bd.title %} title="{{ bd.title }}"{% endif %}>
                     {% if bd.threshold %}
-                    <div style="display:flex; align-items:center;">
-                      <div class="badge-dots">{% for i in range(bd.threshold) %}<span class="dot{{ ' filled' if i < bd.current else '' }}"></span>{% endfor %}</div>
+                    <div class="badge-dots" title="{{ bd.current }}/{{ bd.threshold }}">
+                      {% for i in range(bd.threshold) %}<span class="dot{{ ' filled' if i < bd.current else '' }}"></span>{% endfor %}
                       <span class="badge-frac font-mono">{{ bd.current }}/{{ bd.threshold }}</span>
                     </div>
+                    <div class="mini-bar font-mono" style="--pct:{{ (bd.current / bd.threshold * 100)|round(1) }}%">{{ bd.current }}/{{ bd.threshold }}</div>
                     {% else %}
                     <span class="badge-frac">—</span>
                     {% endif %}
@@ -1183,89 +1060,95 @@
         </div>
       </div>
 
-      <!-- 子區塊 2: 今日出關 -->
+      <!-- 今日出關 -->
       <div class="card alert-card-amber">
         <div class="card-head">
           <div class="card-title-group">
             <h3 class="card-title">今日出關</h3>
             <span class="count-badge amber">{{ exiting_today|length }} 檔</span>
           </div>
-          <span class="card-tip">處置期滿恢復正常撮合機制</span>
+          <span class="card-tip">處置期屆滿，今日恢復正常撮合</span>
         </div>
 
         <div class="data-block">
           {% if exiting_today %}
-          <div class="table-responsive table-scroll">
-            <table class="data-table responsive-table">
+          <div class="table-scroll">
+            <table class="data-table">
+              <caption class="sr-only">今日出關股票清單</caption>
               <thead>
                 <tr>
-                  <th>市場</th>
-                  <th>代號</th>
-                  <th>名稱</th>
-                  <th>原撮合</th>
-                  <th class="num">處置起日</th>
-                  <th class="num">處置迄日</th>
-                  <th class="num">出關日</th>
-                  <th>狀態</th>
+                  <th onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th onclick="window.pm.sortTable(this, 3)">原撮合 <span class="sort-arrow">▲▼</span></th>
+                  <th onclick="window.pm.sortTable(this, 4)">處置起訖 <span class="sort-arrow">▲▼</span></th>
+                  <th onclick="window.pm.sortTable(this, 5)">預計出關 <span class="sort-arrow">▲▼</span></th>
                   <th>處置原因</th>
                 </tr>
               </thead>
               <tbody>
                 {% for row in exiting_today %}
-                <tr data-code="{{ row.code.replace('⏸','').strip() }}" data-cat="amber" data-label="{{ row.name }}">
+                {% set clean_code = row.code.replace('⏸','').strip() %}
+                <tr data-code="{{ clean_code }}" data-cat="amber" data-label="{{ row.name }}">
                   <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono">{{ row.code }}</td>
+                  <td data-label="代號" class="code font-mono">{{ clean_code }}</td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}</td>
-                  <td data-label="原撮合">{{ row.matching }}</td>
-                  <td data-label="處置起日" class="num font-mono">{{ row.start_date }}</td>
-                  <td data-label="處置迄日" class="num font-mono">{{ row.end_date }}</td>
-                  <td data-label="出關日" class="num font-mono amber font-bold">{{ row.exit_date }}</td>
-                  <td data-label="狀態"><span class="badge badge-amber">今日出關</span></td>
-                  <td data-label="處置原因" class="condition">{{ row.reason }}</td>
+                  <td data-label="原撮合"><span class="badge">{{ row.matching }}</span></td>
+                  <td data-label="處置起訖" class="font-mono">{{ row.start_date }} ~ {{ row.end_date }}</td>
+                  <td data-label="預計出關" class="font-mono font-bold amber">{{ row.exit_date }}</td>
+                  <td data-label="處置原因" class="reason">{{ row.reason }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
             </table>
           </div>
           {% else %}
-          <div class="empty-state">今日無處置出關標的</div>
-          {% endif %}
-
-          {% if hidden_disposal|length > 0 %}
-          <!-- 隱藏 {{ hidden_disposal|length }} 筆（資料缺欄位，請回報） -->
+          <div class="empty-state">今日無處置期滿出關的標的</div>
           {% endif %}
         </div>
       </div>
+      {% if hidden_disposal|length > 0 %}
+      <!-- 隱藏 {{ hidden_disposal|length }} 筆（資料缺欄位，請回報） -->
+      {% endif %}
 
-      <!-- 子區塊 3: 市場未反映 -->
-      <div class="card alert-card-blue">
+      <!-- 市場未反映財務公告 (Iframes) -->
+      <div class="card">
         <div class="card-head">
           <div class="card-title-group">
             <h3 class="card-title">市場未反映公告</h3>
-            <span class="count-badge blue">{{ unref_count }} 筆</span>
+            <span class="count-badge">{{ unref_count }} 筆</span>
           </div>
-          <span class="card-tip">自結、季報、營收 ({{ financials.cutoff_str or '昨日 13:30' }} 後首次公告)</span>
+          <span class="card-tip">昨日 13:30 盤後即時重訊</span>
         </div>
 
-        <div class="data-block">
+        <div class="data-block" style="padding:0;">
           <details class="unref-accordion" open>
-            <summary class="accordion-header">即時自結（市場未反映 {{ financials.att|length if financials.att else 0 }} 筆）</summary>
-            <div class="accordion-content">
-              <iframe src="embed/att.html" id="embed-att" class="embed-frame" loading="lazy" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+            <summary class="unref-summary">
+              <span>即時自結（市場未反映 {{ financials.att|length if financials.att else 0 }} 筆）</span>
+              <span class="badge badge-blue">{{ financials.att|length if financials.att else 0 }} 筆</span>
+            </summary>
+            <div class="unref-content">
+              <iframe src="embed/att.html" id="embed-att" class="embed-frame" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
             </div>
           </details>
 
-          <details class="unref-accordion" open>
-            <summary class="accordion-header">即時季報（市場未反映 {{ financials.fin|length if financials.fin else 0 }} 筆）</summary>
-            <div class="accordion-content">
-              <iframe src="embed/fin.html" id="embed-fin" class="embed-frame" loading="lazy" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+          <details class="unref-accordion">
+            <summary class="unref-summary">
+              <span>即時季報（市場未反映 {{ financials.fin|length if financials.fin else 0 }} 筆）</span>
+              <span class="badge">{{ financials.fin|length if financials.fin else 0 }} 筆</span>
+            </summary>
+            <div class="unref-content">
+              <iframe src="embed/fin.html" id="embed-fin" class="embed-frame" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
             </div>
           </details>
 
-          <details class="unref-accordion" open>
-            <summary class="accordion-header">即時營收（市場未反映 {{ financials.rev|length if financials.rev else 0 }} 筆）</summary>
-            <div class="accordion-content">
-              <iframe src="embed/rev.html" id="embed-rev" class="embed-frame" loading="lazy" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+          <details class="unref-accordion">
+            <summary class="unref-summary">
+              <span>即時營收（市場未反映 {{ financials.rev|length if financials.rev else 0 }} 筆）</span>
+              <span class="badge">{{ financials.rev|length if financials.rev else 0 }} 筆</span>
+            </summary>
+            <div class="unref-content">
+              <iframe src="embed/rev.html" id="embed-rev" class="embed-frame" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
             </div>
           </details>
         </div>
@@ -1290,7 +1173,6 @@
 
       <!-- 族群聚焦標的 -->
       <div class="card">
-
         <div class="card-head">
           <div class="card-title-group">
             <h3 class="card-title">族群聚焦標的</h3>
@@ -1303,199 +1185,91 @@
           {% if pressplay.found_group.matched %}
           <div class="table-scroll">
             <table class="data-table">
+              <caption class="sr-only">族群聚焦標的清單</caption>
               <thead>
                 <tr>
-                  <th>市場</th>
-                  <th>代號</th>
-                  <th>名稱</th>
-                  <th class="num">收盤</th>
-                  <th class="num">量(張)</th>
-                  <th class="num">外資(張)</th>
-                  <th class="num">投信(張)</th>
-                  <th class="num">自營(張)</th>
+                  <th onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
+                  <th class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
+                  <th class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
+                  <th class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
                 </tr>
               </thead>
               <tbody>
                 {% for row in pressplay.found_group.matched %}
-                <tr>
-                  <td>{{ row.market }}</td>
-                  <td class="code font-mono">{{ row.code }}</td>
-                  <td class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
-                  <td class="num font-mono">{{ row.close }}</td>
-                  <td class="num font-mono">{{ row.volume }}</td>
-                  <td class="num font-mono {% if row.foreign and '+' in row.foreign %}rise{% elif row.foreign and '-' in row.foreign %}fall{% endif %}">{{ row.foreign }}</td>
-                  <td class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}">{{ row.trust }}</td>
-                  <td class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}">{{ row.dealer }}</td>
+                {% set clean_code = row.code.replace('⏸','').strip() %}
+                <tr data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
+                  <td data-label="市場">{{ row.market }}</td>
+                  <td data-label="代號" class="code font-mono">{{ clean_code }}</td>
+                  <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
+                  <td data-label="收盤" class="num font-mono">{{ row.close }}</td>
+                  <td data-label="量(張)" class="num font-mono">{{ row.volume }}</td>
+                  <td data-label="外資(張)" class="num font-mono {% if row.foreign and '+' in row.foreign %}rise{% elif row.foreign and '-' in row.foreign %}fall{% endif %}">{{ row.foreign }}</td>
+                  <td data-label="投信(張)" class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}">{{ row.trust }}</td>
+                  <td data-label="自營(張)" class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}">{{ row.dealer }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
             </table>
           </div>
           {% else %}
-          <div class="empty-state">今日無具明確族群標的</div>
-          {% endif %}
-
-          {% if pressplay.found_group.unmatched %}
-          <div class="meta-note">未比對到之原文標記：{{ pressplay.found_group.unmatched|join('、') }}</div>
+          <div class="empty-state">今日無明確族群連動標的</div>
           {% endif %}
         </div>
       </div>
 
-      <!-- 無明確族群但有異動標的 -->
+      <!-- 無明確族群標的 -->
       <div class="card">
         <div class="card-head">
           <div class="card-title-group">
             <h3 class="card-title">無明確族群標的</h3>
             <span class="count-badge">{{ pressplay.not_found_group.matched|length }} 檔</span>
           </div>
-          <span class="card-tip">已比對 {{ pressplay.not_found_group.raw_tokens|length }} 檔，共 {{ pressplay.not_found_group.matched|length }} 檔為個股題材或獨立動能</span>
+          <span class="card-tip">獨立題材或個股動能</span>
         </div>
 
         <div class="data-block">
           {% if pressplay.not_found_group.matched %}
           <div class="table-scroll">
             <table class="data-table">
+              <caption class="sr-only">無明確族群標的清單</caption>
               <thead>
                 <tr>
-                  <th>市場</th>
-                  <th>代號</th>
-                  <th>名稱</th>
-                  <th class="num">收盤</th>
-                  <th class="num">量(張)</th>
-                  <th class="num">外資(張)</th>
-                  <th class="num">投信(張)</th>
-                  <th class="num">自營(張)</th>
+                  <th onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
+                  <th class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
+                  <th class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
+                  <th class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
                 </tr>
               </thead>
               <tbody>
                 {% for row in pressplay.not_found_group.matched %}
-                <tr>
-                  <td>{{ row.market }}</td>
-                  <td class="code font-mono">{{ row.code }}</td>
-                  <td class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
-                  <td class="num font-mono">{{ row.close }}</td>
-                  <td class="num font-mono">{{ row.volume }}</td>
-                  <td class="num font-mono {% if row.foreign and '+' in row.foreign %}rise{% elif row.foreign and '-' in row.foreign %}fall{% endif %}">{{ row.foreign }}</td>
-                  <td class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}">{{ row.trust }}</td>
-                  <td class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}">{{ row.dealer }}</td>
+                {% set clean_code = row.code.replace('⏸','').strip() %}
+                <tr data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
+                  <td data-label="市場">{{ row.market }}</td>
+                  <td data-label="代號" class="code font-mono">{{ clean_code }}</td>
+                  <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
+                  <td data-label="收盤" class="num font-mono">{{ row.close }}</td>
+                  <td data-label="量(張)" class="num font-mono">{{ row.volume }}</td>
+                  <td data-label="外資(張)" class="num font-mono {% if row.foreign and '+' in row.foreign %}rise{% elif row.foreign and '-' in row.foreign %}fall{% endif %}">{{ row.foreign }}</td>
+                  <td data-label="投信(張)" class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}">{{ row.trust }}</td>
+                  <td data-label="自營(張)" class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}">{{ row.dealer }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
             </table>
           </div>
           {% else %}
-          <div class="empty-state">今日無獨立動能標的</div>
-          {% endif %}
-
-          {% if pressplay.not_found_group.unmatched %}
-          <div class="meta-note">未比對到之原文標記：{{ pressplay.not_found_group.unmatched|join('、') }}</div>
+          <div class="empty-state">今日無獨立題材標的</div>
           {% endif %}
         </div>
       </div>
-
-      <!-- 個股法人買賣與當沖明細 -->
-      {% if institutional.stocks %}
-      <div class="card">
-        <div class="card-head">
-          <div class="card-title-group">
-            <h3 class="card-title">焦點股券商分點與當沖明細</h3>
-            <span class="count-badge">{{ institutional.matched_count }} 檔</span>
-          </div>
-          <span class="card-tip">涵蓋焦點清單中具分點進出資料之標的</span>
-        </div>
-
-        <div class="data-block">
-          {% for item in institutional.stocks %}
-          <details class="inst-accordion">
-            <summary class="inst-summary">
-              <span class="inst-tag">{{ item.market }}</span>
-              <span class="inst-code font-mono">{{ item.code }}</span>
-              <span class="inst-name font-bold">{{ item.name }}</span>
-              <span class="inst-chips font-mono" style="margin-left:auto; display:flex; flex-direction:row; gap:8px;">
-                <span>外資 {{ item.foreign }}</span>
-                <span>投信 {{ item.trust }}</span>
-                <span>自營 {{ item.dealer }}</span>
-              </span>
-            </summary>
-            
-            <div class="inst-content">
-              <div class="dual-panel">
-                <div class="dual-panel-col">
-                  <div class="sub-label">買超 Top 15 分點</div>
-                  <div class="table-scroll compact">
-                    <table class="data-table">
-                      <thead><tr><th>券商分點</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-                      <tbody>
-                        {% for r in item.buyers %}
-                        <tr>
-                          <td class="name">{{ r.name }}</td>
-                          <td class="num rise font-mono">{{ r.net }}</td>
-                          <td class="num font-mono">{{ r.buyP }}</td>
-                          <td class="num font-mono">{{ r.buyV }}</td>
-                          <td class="num font-mono">{{ r.sellV }}</td>
-                          <td class="num font-mono">{{ r.sellP }}</td>
-                        </tr>
-                        {% else %}
-                        <tr class="empty-row"><td colspan="6">無買超分點資料</td></tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div class="dual-panel-col">
-                  <div class="sub-label">賣超 Top 15 分點</div>
-                  <div class="table-scroll compact">
-                    <table class="data-table">
-                      <thead><tr><th>券商分點</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-                      <tbody>
-                        {% for r in item.sellers %}
-                        <tr>
-                          <td class="name">{{ r.name }}</td>
-                          <td class="num fall font-mono">{{ r.net }}</td>
-                          <td class="num font-mono">{{ r.buyP }}</td>
-                          <td class="num font-mono">{{ r.buyV }}</td>
-                          <td class="num font-mono">{{ r.sellV }}</td>
-                          <td class="num font-mono">{{ r.sellP }}</td>
-                        </tr>
-                        {% else %}
-                        <tr class="empty-row"><td colspan="6">無賣超分點資料</td></tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-
-              <div style="margin-top:14px;">
-                <div class="sub-label">當沖 Top 10 分點</div>
-                <div class="table-scroll">
-                  <table class="data-table">
-                    <thead><tr><th>券商分點</th><th class="num">當沖總量</th><th class="num">買張</th><th class="num">買均</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-                    <tbody>
-                      {% for r in item.daytraders %}
-                      <tr>
-                        <td class="name">{{ r.name }}</td>
-                        <td class="num font-mono font-bold">{{ r.total }}</td>
-                        <td class="num font-mono">{{ r.buyV }}</td>
-                        <td class="num font-mono">{{ r.buyP }}</td>
-                        <td class="num font-mono">{{ r.sellV }}</td>
-                        <td class="num font-mono">{{ r.sellP }}</td>
-                      </tr>
-                      {% else %}
-                      <tr class="empty-row"><td colspan="6">無當沖分點資料</td></tr>
-                      {% endfor %}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </details>
-          {% endfor %}
-        </div>
-      </div>
-      {% endif %}
-
       {% endif %}
     </section>
 
@@ -1512,86 +1286,73 @@
           <div class="card-title-group">
             <h3 class="card-title">美股四大指數與跨海連動標的</h3>
           </div>
-          <a href="https://tw.stock.yahoo.com/markets/" target="_blank" rel="noopener" class="header-btn">Yahoo 股市 ↗</a>
+          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 {{ hours_since_us_close if hours_since_us_close is defined else 18.9 }} 小時</span>
         </div>
 
         <div class="data-block">
           <!-- 美股四大指數 (Row 1) -->
           <div class="tiles-grid">
-            {% for key, tile in us_indices.items() %}
-            {% if tile %}
-            <div class="tile">
-              <div class="name">{{ tile.name }}</div>
-              <div class="sub-pill font-mono" style="font-size:10px; color:var(--text-muted); margin-top:2px;">收盤：美東 16:00 / 現資料落後 {{ hours_since_us_close or 4.0 }} h</div>
-              <div class="value font-mono">{{ '{:,.2f}'.format(tile.value) }}</div>
-              <div class="delta font-mono {{ 'rise' if tile.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(tile.change) }} ({{ '%+.2f'|format(tile.change_pct) }}%)</div>
+            {% for symbol, label in [('^GSPC', '標普 500'), ('^IXIC', '那斯達克'), ('^DJI', '道瓊工業'), ('^SOX', '費城半導體')] %}
+            {% set q = us_indices[symbol] if (us_indices and symbol in us_indices) else indices.get(symbol) %}
+            <div class="tile-card">
+              <div class="tile-head">
+                <span class="tile-name">{{ label }}</span>
+                <span class="tile-delay-pill {{ 'pill-fresh' if (hours_since_us_close if hours_since_us_close is defined else 18.9) < 24 else ('pill-amber' if (hours_since_us_close if hours_since_us_close is defined else 18.9) <= 36 else 'pill-danger') }}">{{ hours_since_us_close if hours_since_us_close is defined else 18.9 }}h ago</span>
+              </div>
+              {% if q and q.price is not none %}
+              <div class="tile-val font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{{ "{:,.2f}".format(q.price) }}</div>
+              <div class="tile-chg font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{% if q.change > 0 %}+{% endif %}{{ q.change }} ({{ '%+.2f'|format(q.change_pct) }}%)</div>
+              {% else %}
+              <div class="tile-val font-mono">—</div>
+              {% endif %}
             </div>
-            {% endif %}
             {% endfor %}
           </div>
 
-          <!-- 跨海連動 / ADR (Row 2) -->
-          <div class="tiles-grid" style="margin-top:10px;">
-            {% if night and night.latest %}
-            <div class="tile">
-              <div class="name"><span>台指期夜盤</span> <span class="sub-pill">05:00 · 來源：{{ night.latest.provider_name or night.provider_name or 'Yahoo' }}</span></div>
-              {% if night.latest.is_fallback %}
-              <div class="amber font-bold font-mono" style="font-size:9px; margin-bottom:2px;">⚠️ 抓取失敗，使用最近一次 fixtures/{{ night.date }}</div>
+          <!-- 跨海連動 ADR / 關鍵標的 (Row 2) -->
+          <div class="tiles-grid">
+            {% for symbol, label in [('TSM', '台積電 ADR'), ('NVDA', '輝達 (NVDA)'), ('AAPL', '蘋果 (AAPL)'), ('2330.TW', '台積電 現貨')] %}
+            {% set q = indices.get(symbol) %}
+            <div class="tile-card">
+              <div class="tile-head">
+                <span class="tile-name">{{ label }}</span>
+              </div>
+              {% if q and q.price is not none %}
+              <div class="tile-val font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{{ "{:,.2f}".format(q.price) }}</div>
+              <div class="tile-chg font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{% if q.change > 0 %}+{% endif %}{{ q.change }} ({{ '%+.2f'|format(q.change_pct) }}%)</div>
+              {% else %}
+              <div class="tile-val font-mono">—</div>
               {% endif %}
-              <div class="value font-mono">{{ "{:,.0f}".format(night.latest.price) if night.latest.price is not none else '—' }}</div>
-              <div class="delta font-mono {{ 'rise' if night.latest.change >= 0 else 'fall' }}">{% if night.latest.change is not none %}{{ '%+.0f'|format(night.latest.change) }} ({{ '%+.2f'|format(night.latest.change_pct) }}%){% endif %}</div>
             </div>
-            {% endif %}
-            {% if indices and indices.adrs and indices.adrs.tsmc %}
-            <div class="tile">
-              <div class="name">{{ indices.adrs.tsmc.name }}</div>
-              <div class="value font-mono">{{ '{:,.2f}'.format(indices.adrs.tsmc.value) }}</div>
-              <div class="delta font-mono {{ 'rise' if indices.adrs.tsmc.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.tsmc.change) }} ({{ '%+.2f'|format(indices.adrs.tsmc.change_pct) }}%)</div>
-            </div>
-            {% endif %}
-            {% if indices and indices.adrs and indices.adrs.umc %}
-            <div class="tile">
-              <div class="name">{{ indices.adrs.umc.name }}</div>
-              <div class="value font-mono">{{ '{:,.2f}'.format(indices.adrs.umc.value) }}</div>
-              <div class="delta font-mono {{ 'rise' if indices.adrs.umc.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.umc.change) }} ({{ '%+.2f'|format(indices.adrs.umc.change_pct) }}%)</div>
-            </div>
-            {% endif %}
-            {% if indices and indices.adrs and indices.adrs.ase %}
-            <div class="tile">
-              <div class="name">{{ indices.adrs.ase.name }}</div>
-              <div class="value font-mono">{{ '{:,.2f}'.format(indices.adrs.ase.value) }}</div>
-              <div class="delta font-mono {{ 'rise' if indices.adrs.ase.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.ase.change) }} ({{ '%+.2f'|format(indices.adrs.ase.change_pct) }}%)</div>
-            </div>
-            {% endif %}
+            {% endfor %}
           </div>
         </div>
       </div>
 
-      <!-- 日股 / 韓股 開盤走勢 -->
+      <!-- 亞股開盤走勢 -->
       <div class="card">
         <div class="card-head">
           <div class="card-title-group">
-            <h3 class="card-title">亞股開盤走勢</h3>
+            <h3 class="card-title">亞股開盤即時概況</h3>
           </div>
-          <span class="card-tip">08:00 開盤行情</span>
+          <span class="card-tip">日韓早盤開盤表現</span>
         </div>
 
         <div class="data-block">
-          <div class="tiles-grid">
-            {% for key, tile in asia_open.items() %}
-            {% if tile %}
-            <div class="tile">
-              <div class="name">{{ tile.name }}</div>
-              <div class="value font-mono">{{ '{:,.2f}'.format(tile.value) }}</div>
-              <div class="delta font-mono {{ 'rise' if tile.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(tile.change) }} ({{ '%+.2f'|format(tile.change_pct) }}%)</div>
-              {% if tile.updated_cst %}<div class="updated font-mono">{{ tile.updated_cst }}</div>{% endif %}
+          <div class="tiles-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom:0;">
+            {% for symbol, label in [('^N225', '日經 225'), ('^KS11', '韓國 KOSPI')] %}
+            {% set q = asia_open[symbol] if (asia_open and symbol in asia_open) else indices.get(symbol) %}
+            <div class="tile-card">
+              <div class="tile-head"><span class="tile-name">{{ label }}</span></div>
+              {% if q and q.price is not none %}
+              <div class="tile-val font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{{ "{:,.2f}".format(q.price) }}</div>
+              <div class="tile-chg font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{% if q.change > 0 %}+{% endif %}{{ q.change }} ({{ '%+.2f'|format(q.change_pct) }}%)</div>
+              {% else %}
+              <div class="tile-val font-mono">—</div>
+              {% endif %}
             </div>
-            {% endif %}
             {% endfor %}
           </div>
-          {% if indices_missing %}
-          <div class="meta-note">缺少欄位：{{ indices_missing|join('、') }}</div>
-          {% endif %}
         </div>
       </div>
     </section>
@@ -1599,116 +1360,93 @@
     <!-- 5. 補充資訊 (News & Calendar) -->
     <section id="news-calendar" class="content-section">
       <div class="section-header">
-        <h2 class="section-title"><span class="title-icon">📑</span> 補充資訊</h2>
-        <span class="section-desc">隔夜市場焦點新聞與近期總經行事曆</span>
+        <h2 class="section-title"><span class="title-icon">📰</span> 補充資訊</h2>
+        <span class="section-desc">隔夜重大新聞與財經行事曆</span>
       </div>
 
-      <!-- 隔夜重大新聞 (可折疊) -->
+      <!-- 隔夜重大新聞 -->
       {% if news %}
       <div class="card">
-        <details class="supp-accordion" open>
-          <summary class="supp-summary">
-            <div class="card-title-group">
-              <h3 class="card-title">隔夜重大新聞 Top 5</h3>
-              <span class="count-badge">{{ news|length }} 則</span>
-            </div>
-            <span class="accordion-toggle-icon">▼</span>
-          </summary>
-          
-          <div class="supp-content" style="margin-top:14px;">
-            <div class="news-list">
-              {% for a in news %}
-              <a href="{{ a.link }}" target="_blank" rel="noopener" class="news-item">
-                <div class="news-title">{{ a.title }}</div>
-                <div class="news-meta font-mono">
-                  <span class="news-source">{{ a.source }}</span>
-                  <span class="news-time">{{ a.time }}</span>
-                </div>
-              </a>
-              {% endfor %}
-            </div>
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">隔夜重大新聞 Top 5</h3>
+            <span class="count-badge">{{ news|length }} 則</span>
           </div>
-        </details>
+        </div>
+        <div class="data-block">
+          <div class="news-list" style="display:flex; flex-direction:column; gap:8px;">
+            {% for a in news %}
+            <a href="{{ a.link }}" target="_blank" rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
+              <div class="news-title" style="font-weight:600; font-size:13px; margin-bottom:4px;">{{ a.title }}</div>
+              <div class="news-meta font-mono" style="font-size:11px; color:var(--text-muted); display:flex; gap:12px;">
+                <span>{{ a.source }}</span>
+                <span>{{ a.time }}</span>
+              </div>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
       </div>
       {% endif %}
 
-      <!-- 財經行事曆 (可折疊) -->
+      <!-- 財經行事曆 -->
       <div class="card">
-        <details class="supp-accordion" open>
-          <summary class="supp-summary">
-            <div class="card-title-group">
-              <h3 class="card-title">財經行事曆</h3>
-              <span class="count-badge">{{ calendar.events|length }} 筆事件</span>
-            </div>
-            <span class="accordion-toggle-icon">▼</span>
-          </summary>
-
-          <div class="supp-content" style="margin-top:14px;">
-            {% if calendar.grid %}
-            <div class="cal-grid">
-              <div class="cal-grid-head">
-                {% for wl in calendar.grid.weekday_labels %}<div class="cal-grid-h">{{ wl }}</div>{% endfor %}
-              </div>
-              {% for week in calendar.grid.weeks %}
-              <div class="cal-grid-row">
-                {% for d in week %}
-                {% if d.count %}
-                <a class="cal-cell has-events{{ ' today' if d.is_today else '' }}" href="#cal-{{ d.date }}">
-                  <span class="cal-cell-num">{{ d.month_label or d.day }}</span>
-                  <span class="cal-cell-dots">{% for i in range([d.count, 3]|min) %}<span class="dot"></span>{% endfor %}{% if d.count > 3 %}<span class="cal-cell-more">+{{ d.count - 3 }}</span>{% endif %}</span>
-                </a>
-                {% else %}
-                <div class="cal-cell{{ ' today' if d.is_today else '' }}{{ '' if d.in_range else ' out' }}">
-                  <span class="cal-cell-num">{{ d.month_label or d.day }}</span>
-                </div>
-                {% endif %}
-                {% endfor %}
-              </div>
-              {% endfor %}
-            </div>
-            {% endif %}
-
-            {% if calendar.events %}
-            <div class="cal-agenda-scroll">
-              {% for date, evs in calendar.events|groupby('date') %}
-              <div class="cal-day" id="cal-{{ date }}">
-                <div class="cal-date{{ ' today' if date == calendar.today else '' }}">
-                  {{ date[5:].replace('-', '/') }}
-                  {% if date == calendar.today %}<br><span class="badge badge-amber">今天</span>{% endif %}
-                </div>
-                <div class="cal-day-events">
-                  {% for ev in evs %}
-                  <div class="cal-event-card cat-{{ ev.category or 'general' }}">
-                    <div class="cal-header-row">
-                      {% if ev.time %}
-                      <span class="cal-time-pill">{{ ev.time }}</span>
-                      {% else %}
-                      <span class="cal-time-pill all-day">全天</span>
-                      {% endif %}
-                      <span class="cal-cat-badge">{{ ev.category_name or '事件' }}</span>
-                    </div>
-                    <div class="cal-summary">{{ ev.summary }}</div>
-                    {% if ev.description %}<div class="cal-desc">{{ ev.description }}</div>{% endif %}
-                    {% if ev.mm_link %}
-                    <div>
-                      <a class="cal-link" href="{{ ev.mm_link }}" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
-                    </div>
-                    {% endif %}
-                  </div>
-                  {% endfor %}
-                </div>
-              </div>
-              {% endfor %}
-            </div>
-            {% else %}
-            <div class="empty-state">近期無排定事件</div>
-            {% endif %}
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">財經行事曆</h3>
+            <span class="count-badge">{{ calendar.events|length }} 筆事件</span>
           </div>
-        </details>
+        </div>
+
+        <div class="data-block">
+          {% if calendar.events %}
+          <div class="cal-list" style="display:flex; flex-direction:column; gap:10px;">
+            {% for ev in calendar.events %}
+            <div class="cal-event-card" style="background:var(--bg-sub); border:1px solid var(--border); border-radius:6px; padding:10px 12px;">
+              <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:12px;">
+                <span class="badge badge-amber font-mono">{{ ev.date }} {{ ev.time or '全天' }}</span>
+                <span class="badge">{{ ev.category_name or '事件' }}</span>
+              </div>
+              <div style="font-weight:700; font-size:13px; color:var(--text-main);">{{ ev.summary }}</div>
+              {% if ev.description %}<div style="font-size:12px; color:var(--text-muted); margin-top:2px;">{{ ev.description }}</div>{% endif %}
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="empty-state">近期無排定事件</div>
+          {% endif %}
+        </div>
       </div>
     </section>
 
   </main>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button id="back-to-top" class="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" type="button" aria-label="回到頂部">▲</button>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast" role="alert" aria-live="polite"></div>
+
+  <!-- KEYBOARD SHORTCUTS MODAL -->
+  <div id="shortcuts-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.toggleShortcutsModal()" role="dialog" aria-modal="true" aria-label="鍵盤快捷鍵清單">
+    <div class="modal-card">
+      <h3 class="modal-title">⌨️ 鍵盤快捷鍵</h3>
+      <div class="shortcut-list">
+        <div class="shortcut-item"><span class="kbd">1</span> <span>今日摘要</span></div>
+        <div class="shortcut-item"><span class="kbd">2</span> <span>今日警示</span></div>
+        <div class="shortcut-item"><span class="kbd">3</span> <span>今日候選股</span></div>
+        <div class="shortcut-item"><span class="kbd">4</span> <span>市場背景</span></div>
+        <div class="shortcut-item"><span class="kbd">5</span> <span>補充資訊</span></div>
+        <div class="shortcut-item"><span class="kbd">6</span> <span>系統資訊</span></div>
+        <div class="shortcut-item"><span class="kbd">/</span> <span>聚焦自選輸入</span></div>
+        <div class="shortcut-item"><span class="kbd">d</span> <span>切換深/淺色</span></div>
+        <div class="shortcut-item"><span class="kbd">w</span> <span>切換只看自選</span></div>
+        <div class="shortcut-item"><span class="kbd">t</span> <span>回到頂部</span></div>
+        <div class="shortcut-item"><span class="kbd">?</span> <span>開啟快捷鍵表</span></div>
+        <div class="shortcut-item"><span class="kbd">Esc</span> <span>關閉彈窗</span></div>
+      </div>
+    </div>
+  </div>
 
   <!-- 6. 系統資訊 (System Info Footer) -->
   <footer id="system-info" class="page-footer">
@@ -1718,102 +1456,86 @@
         <li><strong>資料來源：</strong>處置股與財務公告來自 chengwaye.com；籌碼股來自 PressPlay 每日盤前專欄；指數報價來自 Yahoo Finance；新聞聚合來自 Google News；財經行事曆來自 MacroMicro。</li>
         <li><strong>排程機制：</strong>每日 07:35（台北）自動重建；盤前可在 GitHub Actions → Build premarket page → Run workflow 手動觸發，2 分鐘內完成</li>
         <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
-        <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日 28 檔重點清單；未在清單內之標的自動略過。</li>
+        <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日重點清單；未在清單內之標的自動略過。</li>
       </ul>
-      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布）</div>
-      <div class="footer-copy" style="margin-top:4px;">盤前情報準備台 · 自用盤前決策工作台</div>
+      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">{{ build_time or '08:00' }}</span></div>
+      <div class="footer-copy" style="margin-top:4px; text-align:center;">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
   </footer>
 
-
 <script>
-  // §4 Iframe Auto-Height Receiver
-  window.addEventListener('message', function(e){
+  window.pm = window.pm || {};
+  window.WATCH_KEY = 'premarket.watchlist';
+
+  // 2026 Taiwan Holiday List
+  const TW_HOLIDAYS_2026 = [
+    '2026-01-01', '2026-02-16', '2026-02-17', '2026-02-18', '2026-02-19', '2026-02-20',
+    '2026-02-27', '2026-04-03', '2026-04-06', '2026-05-01', '2026-06-19', '2026-09-25',
+    '2026-10-09', '2026-10-10'
+  ];
+
+  // Toast Notification Helper
+  window.pm.showToast = function(msg) {
+    var toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 1500);
+  };
+
+  // Iframe Auto-Height Receiver
+  window.addEventListener('message', function(e) {
     if (!e.data || e.data.type !== 'embed-height') return;
     var f = document.getElementById('embed-' + e.data.id);
     if (f) f.style.height = Math.max(480, e.data.height) + 'px';
   });
 
-  // §5 Last-Build / Stale Banner Live Timer
-  (function(){
-    var el = document.querySelector('.last-build');
-    if (!el) return;
-    var m = (el.textContent || '').match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
-    if (!m) return;
-    var bt = new Date(m[1].replace(' ','T') + '+08:00').getTime();
+  // Theme Toggle
+  window.toggleTheme = function() {
+    var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark';
+    document.documentElement.setAttribute('data-theme', cur);
+    localStorage.setItem('premarket.theme', cur);
+    var metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) metaTheme.content = cur === 'dark' ? '#0B1220' : '#F8FAFC';
+    var b = document.getElementById('theme-toggle');
+    if (b) b.textContent = cur === 'dark' ? '☀️ 淺色' : '🌙 深色';
+    if (window.pm.syncHash) window.pm.syncHash();
+  };
 
-    function paint(){
-      var hrs = (Date.now() - bt) / 36e5;
-      var cls = hrs < 6 ? 'fresh' : (hrs < 12 ? 'aging' : 'stale');
-      el.classList.remove('fresh','aging','stale');
-      el.classList.add(cls);
-      var tip = hrs < 6 ? '鮮度中' : (hrs < 12 ? '稍舊' : '已落後 ' + hrs.toFixed(1) + 'h');
-      el.title = '建置時間 ' + m[1] + '（台北）｜' + tip;
-      var banner = document.querySelector('.stale-banner');
-      if (banner) {
-        banner.textContent = '資料時間 ' + m[1] + '，距今 ' + hrs.toFixed(1) + ' 小時';
-        banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
-        banner.classList.toggle('is-warning', hrs >= 6 && hrs < 12);
-        banner.classList.toggle('is-danger', hrs >= 12);
-      }
-    }
-    paint(); setInterval(paint, 60000);
-  })();
-
-  // §6 Open Countdown Timer
-  (function(){
-    var el = document.getElementById('open-countdown');
-    if (!el) return;
-    function upd(){
-      var now = new Date();
-      var open = new Date(now);
-      open.setHours(9, 0, 0, 0);
-      var dow = now.getDay();
-      var weekend = (dow === 0) || (dow === 6);
-      var close = new Date(now); close.setHours(13, 30, 0, 0);
-      if (weekend || (now >= close && now.getHours() >= 13)) {
-        while (open <= now) open.setDate(open.getDate()+1);
-        if (weekend) {
-          do { open.setDate(open.getDate()+1); } while (open.getDay() === 0 || open.getDay() === 6);
-        }
-        el.textContent = '今日已收盤｜下次 09:00 開盤倒數 ' + fmt(open);
-        el.classList.add('closed');
-        return;
-      }
-      var diff = open - now;
-      if (diff > 0) {
-        el.textContent = '離 09:00 開盤還有 ' + fmt(open);
-        el.classList.remove('closed');
-      } else {
-        el.textContent = '盤中｜收盤倒數 ' + fmt(close);
-      }
-    }
-    function fmt(d){
-      var ms = d - new Date();
-      if (ms <= 0) return '00:00:00';
-      var h = String(Math.floor(ms/36e5)).padStart(2,'0');
-      var m = String(Math.floor(ms/6e4)%60).padStart(2,'0');
-      var s = String(Math.floor(ms/1e3)%60).padStart(2,'0');
-      return h + ':' + m + ':' + s;
-    }
-    upd(); setInterval(upd, 1000);
-  })();
-
-  // §7 Watchlist (localStorage)
-  window.WATCH_KEY = 'premarket.watchlist';
-  window.saveWatch = function(){
-    var raw = (document.getElementById('watch-input').value || '').replace(/[^\d,]/g,'');
+  // Watchlist Save & Render
+  window.saveWatch = function() {
+    var input = document.getElementById('watch-input');
+    var raw = (input.value || '').replace(/[^\d,]/g, '');
     var codes = [];
-    raw.split(',').forEach(function(c){ c = c.trim(); if (c && codes.indexOf(c) < 0) codes.push(c); });
+    raw.split(',').forEach(function(c) {
+      c = c.trim();
+      if (c && codes.indexOf(c) < 0) codes.push(c);
+    });
     localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
     renderWatch();
+    if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
+    window.pm.showToast('已儲存自選股清單 (' + codes.length + ' 檔)');
   };
-  window.clearWatch = function(){
+
+  window.clearWatch = function() {
     localStorage.removeItem(window.WATCH_KEY);
     document.getElementById('watch-input').value = '';
     renderWatch();
+    if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
+    window.pm.showToast('已清空自選股');
   };
-  function renderWatch(){
+
+  window.delWatch = function(c) {
+    var raw = localStorage.getItem(window.WATCH_KEY);
+    var codes = raw ? JSON.parse(raw) : [];
+    codes = codes.filter(function(x) { return x !== c; });
+    localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
+    document.getElementById('watch-input').value = codes.join(', ');
+    renderWatch();
+    if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
+  };
+
+  function renderWatch() {
     var box = document.getElementById('watch-chips');
     var hint = document.getElementById('watch-hint');
     if (!box || !hint) return;
@@ -1824,58 +1546,301 @@
       hint.textContent = '目前無自選股。';
       return;
     }
-    hint.textContent = codes.length + ' 檔';
-    var disposalMap = {};
-    document.querySelectorAll('[data-code]').forEach(function(n){
-      disposalMap[n.getAttribute('data-code')] = {type: n.getAttribute('data-cat'), label: n.getAttribute('data-label')};
+    hint.textContent = codes.length + ' 檔自選標的（點擊可定位至表格）';
+    
+    var stockMap = {};
+    document.querySelectorAll('[data-code]').forEach(function(n) {
+      var code = n.getAttribute('data-code');
+      if (code && !stockMap[code]) {
+        stockMap[code] = {
+          type: n.getAttribute('data-cat') || 'normal',
+          label: n.getAttribute('data-label') || ''
+        };
+      }
     });
-    codes.forEach(function(c){
+
+    codes.forEach(function(c) {
       var chip = document.createElement('span');
       chip.className = 'watch-chip';
-      var hit = disposalMap[c];
-      if (hit && hit.type === 'alert') chip.classList.add('alert');
-      else if (hit && hit.type === 'amber') chip.classList.add('amber');
-      chip.innerHTML = '<span class="wc-code">' + c + '</span>'
-        + (hit ? '<span class="wc-name">' + (hit.label||'') + '</span>' : '')
-        + '<span class="wc-del" onclick="window.delWatch(\'' + c + '\')">✕</span>';
+      var hit = stockMap[c];
+      var icon = '⚪';
+      if (hit && hit.type === 'alert') { chip.classList.add('alert'); icon = '🚨'; }
+      else if (hit && hit.type === 'amber') { chip.classList.add('amber'); icon = '🟡'; }
+      else if (hit && hit.type === 'blue') { chip.classList.add('blue'); icon = '🔵'; }
+
+      chip.innerHTML = '<span class="wc-icon">' + icon + '</span>'
+        + '<span class="wc-code">' + c + '</span>'
+        + (hit && hit.label ? '<span class="wc-name">' + hit.label + '</span>' : '')
+        + '<span class="wc-del" onclick="event.stopPropagation(); window.delWatch(\'' + c + '\')" title="刪除">✕</span>';
+      
+      chip.onclick = function() {
+        var targetRow = document.querySelector('tr[data-code="' + c + '"]');
+        if (targetRow) {
+          targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetRow.classList.remove('highlight-flash');
+          void targetRow.offsetWidth;
+          targetRow.classList.add('highlight-flash');
+        } else {
+          window.pm.showToast(c + ' 未出現在今日警示或候選清單中');
+        }
+      };
       box.appendChild(chip);
     });
   }
-  window.delWatch = function(c){
-    var raw = localStorage.getItem(window.WATCH_KEY);
-    var codes = raw ? JSON.parse(raw) : [];
-    codes = codes.filter(function(x){ return x !== c; });
-    localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
-    document.getElementById('watch-input').value = codes.join(', ');
-    renderWatch();
+
+  // Global Watch-Only Filter
+  window.pm.watchOnly = localStorage.getItem('premarket.filterWatchOnly') === '1';
+  window.pm.toggleWatchOnly = function() {
+    window.pm.watchOnly = !window.pm.watchOnly;
+    localStorage.setItem('premarket.filterWatchOnly', window.pm.watchOnly ? '1' : '0');
+    window.pm.applyWatchOnly();
+    if (window.pm.syncHash) window.pm.syncHash();
   };
-  document.addEventListener('DOMContentLoaded', function(){
+
+  window.pm.applyWatchOnly = function() {
+    var btn = document.getElementById('filter-watch-toggle');
+    if (btn) btn.classList.toggle('is-active', window.pm.watchOnly);
+    
     var raw = localStorage.getItem(window.WATCH_KEY);
     var codes = raw ? JSON.parse(raw) : [];
-    if (codes.length && document.getElementById('watch-input')) {
-      document.getElementById('watch-input').value = codes.join(', ');
+
+    document.querySelectorAll('tr[data-code]').forEach(function(row) {
+      var code = row.getAttribute('data-code');
+      if (!window.pm.watchOnly) {
+        row.style.display = '';
+      } else {
+        row.style.display = (codes.indexOf(code) >= 0) ? '' : 'none';
+      }
+    });
+
+    // Update alert count badge dynamically
+    var alertBadge = document.getElementById('nav-alert-badge');
+    if (alertBadge) {
+      var visibleAlerts = document.querySelectorAll('#alerts tr[data-code]:not([style*="display: none"])').length;
+      alertBadge.textContent = visibleAlerts;
     }
-    renderWatch();
+  };
+
+  // Snapshot Mode Toggle
+  window.pm.toggleSnapshot = function() {
+    document.body.classList.toggle('snapshot-mode');
+    var isSnap = document.body.classList.contains('snapshot-mode');
+    window.pm.showToast(isSnap ? '已開啟截圖模式（按 Esc 或點擊退出）' : '已關閉截圖模式');
+  };
+
+  // Shortcuts Modal Toggle
+  window.pm.toggleShortcutsModal = function() {
+    var m = document.getElementById('shortcuts-modal');
+    if (m) m.classList.toggle('open');
+  };
+
+  // Table Column Click Sorter
+  window.pm.sortTable = function(th, colIdx) {
+    var table = th.closest('table');
+    var tbody = table.querySelector('tbody');
+    var rows = Array.from(tbody.querySelectorAll('tr'));
+    var isAsc = !th.classList.contains('asc');
+    
+    table.querySelectorAll('th').forEach(function(h) {
+      h.classList.remove('sorted', 'asc', 'desc');
+    });
+    th.classList.add('sorted', isAsc ? 'asc' : 'desc');
+
+    rows.sort(function(a, b) {
+      var aCell = a.children[colIdx] ? a.children[colIdx].textContent.trim() : '';
+      var bCell = b.children[colIdx] ? b.children[colIdx].textContent.trim() : '';
+      var aNum = parseFloat(aCell.replace(/[^0-9.-]/g, ''));
+      var bNum = parseFloat(bCell.replace(/[^0-9.-]/g, ''));
+
+      if (!isNaN(aNum) && !isNaN(bNum)) {
+        return isAsc ? aNum - bNum : bNum - aNum;
+      }
+      return isAsc ? aCell.localeCompare(bCell, 'zh-Hant') : bCell.localeCompare(aCell, 'zh-Hant');
+    });
+
+    rows.forEach(function(r) { tbody.appendChild(r); });
+  };
+
+  // URL Hash Sync
+  window.pm.syncHash = function() {
+    var curTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    var watch = window.pm.watchOnly ? '1' : '0';
+    var hash = window.location.hash.split('?')[0] || '#summary';
+    history.replaceState(null, '', hash + '?theme=' + curTheme + '&watch=' + watch);
+  };
+
+  // Keyboard Shortcuts
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+      if (e.key === 'Enter' && e.target.id === 'watch-input') {
+        window.saveWatch();
+      }
+      if (e.key === 'Escape') {
+        e.target.blur();
+      }
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      if (document.body.classList.contains('snapshot-mode')) {
+        document.body.classList.remove('snapshot-mode');
+      }
+      var m = document.getElementById('shortcuts-modal');
+      if (m && m.classList.contains('open')) m.classList.remove('open');
+    } else if (e.key === '1') {
+      document.getElementById('summary')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '2') {
+      document.getElementById('alerts')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '3') {
+      document.getElementById('watchlist')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '4') {
+      document.getElementById('market-context')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '5') {
+      document.getElementById('news-calendar')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '6') {
+      document.getElementById('system-info')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '/') {
+      e.preventDefault();
+      var inp = document.getElementById('watch-input');
+      if (inp) { inp.focus(); inp.select(); }
+    } else if (e.key === 'd' || e.key === 'D') {
+      window.toggleTheme();
+    } else if (e.key === 'w' || e.key === 'W') {
+      window.pm.toggleWatchOnly();
+    } else if (e.key === 't' || e.key === 'T') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+      window.pm.toggleShortcutsModal();
+    }
   });
 
-  // §10 Dark Theme Toggle
-  window.toggleTheme = function(){
-    var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark';
-    document.documentElement.setAttribute('data-theme', cur);
-    localStorage.setItem('premarket.theme', cur);
-    var b = document.getElementById('theme-toggle');
-    if (b) b.textContent = cur === 'dark' ? '☀️ 淺色' : '🌙 深色';
-  };
-  (function(){
-    var t = localStorage.getItem('premarket.theme');
-    if (t === 'dark') {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      document.addEventListener('DOMContentLoaded', function(){
-        var b = document.getElementById('theme-toggle');
-        if (b) b.textContent = '☀️ 淺色';
+  // Scroll Spy & Back to Top
+  var btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', function() {
+    if (btt) btt.style.display = window.scrollY > 600 ? 'flex' : 'none';
+  }, { passive: true });
+
+  var sections = document.querySelectorAll('.content-section, #system-info');
+  var navLinks = document.querySelectorAll('.nav-link');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          navLinks.forEach(function(link) {
+            link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
+          });
+        }
       });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(function(sec) { observer.observe(sec); });
+  }
+
+  // Live Timer Throttled by Visibility
+  var liveTimer = null;
+  var countdownTimer = null;
+
+  function updateLiveTimers() {
+    var el = document.querySelector('.last-build');
+    if (el) {
+      var m = (el.textContent || '').match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
+      if (m) {
+        var bt = new Date(m[1].replace(' ', 'T') + '+08:00').getTime();
+        var hrs = (Date.now() - bt) / 36e5;
+        var cls = hrs < 6 ? 'fresh' : (hrs < 12 ? 'aging' : 'stale');
+        el.classList.remove('fresh', 'aging', 'stale');
+        el.classList.add(cls);
+        var banner = document.querySelector('.stale-banner');
+        if (banner) {
+          banner.textContent = '資料時間 ' + m[1] + '，距今 ' + hrs.toFixed(1) + ' 小時';
+          banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
+          banner.classList.toggle('is-warning', hrs >= 6 && hrs < 12);
+          banner.classList.toggle('is-danger', hrs >= 12);
+        }
+      }
     }
-  })();
+
+    var cel = document.getElementById('open-countdown');
+    if (cel) {
+      var now = new Date();
+      var open = new Date(now);
+      open.setHours(9, 0, 0, 0);
+      var dow = now.getDay();
+      var weekend = (dow === 0) || (dow === 6);
+      var close = new Date(now);
+      close.setHours(13, 30, 0, 0);
+
+      if (weekend || (now >= close && now.getHours() >= 13)) {
+        while (open <= now) open.setDate(open.getDate() + 1);
+        if (weekend) {
+          do { open.setDate(open.getDate() + 1); } while (open.getDay() === 0 || open.getDay() === 6);
+        }
+        cel.textContent = '今日已收盤｜下次 09:00 開盤倒數 ' + fmtCountdown(open);
+        cel.classList.add('closed');
+      } else {
+        var diff = open - now;
+        if (diff > 0) {
+          cel.textContent = '離 09:00 開盤還有 ' + fmtCountdown(open);
+          cel.classList.remove('closed');
+        } else {
+          cel.textContent = '盤中｜收盤倒數 ' + fmtCountdown(close);
+        }
+      }
+    }
+  }
+
+  function fmtCountdown(d) {
+    var ms = d - new Date();
+    if (ms <= 0) return '00:00:00';
+    var h = String(Math.floor(ms / 36e5)).padStart(2, '0');
+    var m = String(Math.floor(ms / 6e4) % 60).padStart(2, '0');
+    var s = String(Math.floor(ms / 1e3) % 60).padStart(2, '0');
+    return h + ':' + m + ':' + s;
+  }
+
+  function startTimers() {
+    updateLiveTimers();
+    if (!liveTimer) liveTimer = setInterval(updateLiveTimers, 60000);
+    if (!countdownTimer) countdownTimer = setInterval(updateLiveTimers, 1000);
+  }
+
+  function stopTimers() {
+    if (liveTimer) { clearInterval(liveTimer); liveTimer = null; }
+    if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+  }
+
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) stopTimers();
+    else startTimers();
+  });
+
+  // Initialization
+  document.addEventListener('DOMContentLoaded', function() {
+    // Restore Theme
+    var savedTheme = localStorage.getItem('premarket.theme');
+    var urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
+    if (urlParams.get('theme')) savedTheme = urlParams.get('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      var b = document.getElementById('theme-toggle');
+      if (b) b.textContent = '☀️ 淺色';
+      var metaTheme = document.querySelector('meta[name="theme-color"]');
+      if (metaTheme) metaTheme.content = '#0B1220';
+    }
+
+    // Restore Watchlist Input & Render
+    var rawWatch = localStorage.getItem(window.WATCH_KEY);
+    var codes = rawWatch ? JSON.parse(rawWatch) : [];
+    var inp = document.getElementById('watch-input');
+    if (inp && codes.length) inp.value = codes.join(', ');
+    renderWatch();
+
+    // Restore Watch-Only
+    if (urlParams.get('watch') === '1') window.pm.watchOnly = true;
+    if (window.pm.watchOnly) window.pm.applyWatchOnly();
+
+    startTimers();
+  });
 </script>
 
 </body>
