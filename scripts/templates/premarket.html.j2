@@ -10,641 +10,1445 @@
 <link rel="apple-touch-icon" href="https://www.twse.com.tw/favicon.ico">
 <script>
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').then(function(registration) {
-      console.log('ServiceWorker registration successful with scope: ', registration.scope);
-    }, function(err) {
-      console.log('ServiceWorker registration failed: ', err);
+    navigator.serviceWorker.register('sw.js').catch(function(err) {
+      console.log('SW register failed: ', err);
     });
   }
 </script>
 
 <style>
-  :root{
-    --ink: #F8FAFC; 
-    --panel: #FFFFFF; 
-    --panel-2: #F1F5F9; 
-    --panel-3: #E2E8F0;
-    --line: #E2E8F0;
-    --text: #0F172A; 
-    --muted: #64748B; 
-    --rise: #E11D48; 
-    --fall: #16A34A; 
+  :root {
+    --bg-page: #F8FAFC;
+    --bg-card: #FFFFFF;
+    --bg-sub: #F1F5F9;
+    --bg-hover: #E2E8F0;
+    --border: #E2E8F0;
+    --border-strong: #CBD5E1;
+    --text-main: #0F172A;
+    --text-muted: #64748B;
+    --text-light: #94A3B8;
+    --rise: #E11D48;
+    --fall: #16A34A;
     --amber: #D97706;
     --blue: #2563EB;
-    --cat-fed: #E11D48; 
-    --cat-econ: #D97706; 
-    --cat-stock: #0284C7; 
-    --cat-futures: #D97706; 
+    --cat-fed: #E11D48;
+    --cat-econ: #D97706;
+    --cat-stock: #0284C7;
+    --cat-futures: #D97706;
     --cat-gen: #64748B;
     --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
     --font-mono: "SF Mono", "Consolas", Menlo, monospace;
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.04);
-    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.07);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
   }
-  *{box-sizing:border-box;}
-  body{
-    margin:0; background:var(--ink); color:var(--text);
-    font-family:var(--font-ui); line-height:1.5; padding:32px 16px 80px;
-    -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg-page);
+    color: var(--text-main);
+    font-family: var(--font-ui);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
-  .wrap{max-width:940px; margin:0 auto;}
-  header{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--line);}
-  h1{font-size:24px; font-weight:800; margin:0; letter-spacing:-0.02em; color:var(--text);}
-  .generated{color:var(--muted); font-size:12px; font-family:var(--font-mono); font-weight:500;}
-  .part-title{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; font-weight:700; margin:36px 0 14px;}
-  .part-title:first-of-type{margin-top:0;}
-  section.part{margin-bottom:12px;}
 
-  .warning-banner{background:#FFF1F2; border:1px solid #FECDD3; color:#BE123C; padding:12px 16px; border-radius:10px; font-size:13px; margin-bottom:16px; font-weight:500;}
-  .ok-banner{background:#F0FDF4; border:1px solid #BBF7D0; color:#15803D; padding:10px 16px; border-radius:10px; font-size:12px; margin-bottom:16px; font-family:var(--font-mono); font-weight:500;}
+  .font-mono { font-family: var(--font-mono); }
+  .font-bold { font-weight: 600; }
+  .rise { color: var(--rise) !important; }
+  .fall { color: var(--fall) !important; }
+  .amber { color: var(--amber) !important; }
+  .blue { color: var(--blue) !important; }
 
-  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:22px; margin-bottom:20px; box-shadow:var(--shadow);}
-  .card h2{font-size:16px; margin:0 0 16px; color:var(--text); font-weight:700; display:flex; align-items:center;}
-  .card h2 .sub{color:var(--muted); font-weight:400; font-size:12px; margin-left:8px;}
+  .page-wrap { max-width: 980px; margin: 0 auto; padding: 0 16px; }
 
-  /* stat tiles */
-  .tiles{display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px;}
-  .tile{background:var(--panel-2); border:1px solid var(--line); border-radius:10px; padding:14px 16px; transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;}
-  .tile:hover{background:#FFFFFF; box-shadow:var(--shadow-md); transform:translateY(-1px);}
-  .tile .name{font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:600;}
-  .tile .value{font-family:var(--font-mono); font-size:20px; font-weight:700; color:var(--text);}
-  .tile .delta{font-family:var(--font-mono); font-size:12px; margin-top:4px; font-weight:600;}
-  .tile .updated{font-size:10px; color:var(--muted); margin-top:6px; font-family:var(--font-mono);}
-  .rise{color:var(--rise) !important;}
-  .fall{color:var(--fall) !important;}
-  .flat{color:var(--muted) !important;}
-  .missing{color:var(--muted); font-style:italic; font-size:12px;}
+  /* HEADER */
+  .page-header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0;
+  }
+  .header-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .page-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+  }
+  .meta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    font-size: 12px;
+  }
+  .meta-item {
+    color: var(--text-muted);
+  }
+  .meta-label {
+    color: var(--text-light);
+    margin-right: 4px;
+  }
+  .meta-val {
+    color: var(--text-main);
+    font-weight: 600;
+  }
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .status-badge.is-ok {
+    background: #F0FDF4;
+    color: #15803D;
+    border: 1px solid #BBF7D0;
+  }
+  .status-badge.is-warning {
+    background: #FFF1F2;
+    color: #BE123C;
+    border: 1px solid #FECDD3;
+  }
 
-  /* tables */
-  table{width:100%; border-collapse:collapse; font-size:13px;}
-  th{text-align:left; color:var(--muted); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:10px 10px; border-bottom:1px solid var(--line); background:#FAFBFD;}
-  th.num{text-align:right;}
-  td{padding:10px 10px; border-bottom:1px solid #F1F5F9; vertical-align:middle; color:var(--text);}
-  tr:last-child td{border-bottom:none;}
-  td.code{font-family:var(--font-mono); color:var(--blue); font-weight:600;}
-  td.name{font-weight:600; white-space:nowrap; color:var(--text);}
-  td.num{font-family:var(--font-mono); text-align:right; font-weight:500;}
-  td.exit-today{color:var(--amber); font-weight:700; font-family:var(--font-mono);}
-  td.condition{color:var(--muted); font-size:12px; max-width:340px;}
-  .empty-row td{color:var(--muted); font-style:italic; text-align:center; padding:20px;}
-  .badge{display:inline-block; font-size:11px; padding:2px 8px; border-radius:6px; border:1px solid var(--line); color:var(--muted); font-family:var(--font-mono); font-weight:600; background:var(--panel-2);}
-  .badge.exit-today-badge{border-color:#FCD34D; color:#B45309; background:#FEF3C7;}
-  .source-note{color:var(--muted); font-size:12px; margin:8px 0 0;}
+  /* NAV (Sticky Anchor Bar) */
+  .page-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(248, 250, 252, 0.92);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+  }
+  .nav-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    white-space: nowrap;
+    background: transparent;
+    transition: all 0.15s ease;
+  }
+  .nav-link:hover {
+    color: var(--text-main);
+    background: var(--bg-sub);
+  }
+  .nav-link.nav-alert {
+    color: var(--rise);
+  }
+  .nav-badge {
+    background: #FFE4E6;
+    color: #BE123C;
+    padding: 1px 6px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+  }
 
-  .badge-col{text-align:center; white-space:nowrap;}
-  .badge-dots{display:flex; gap:2px; align-items:center; justify-content:center;}
-  .badge-dots .dot{width:5px; height:11px; background:#E2E8F0; border:1px solid #CBD5E1; border-radius:1px; flex-shrink:0;}
-  .badge-dots .dot.filled{background:var(--amber); border-color:var(--amber);}
-  .badge-frac{display:block; font-family:var(--font-mono); font-size:10px; color:var(--muted); margin-top:3px;}
+  /* MAIN CONTENT */
+  .page-main {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 24px 16px 64px;
+  }
+  .content-section {
+    margin-bottom: 32px;
+    scroll-margin-top: 56px;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 14px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-title {
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .title-icon { font-size: 15px; }
+  .section-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
 
-  .table-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
-  .table-scroll table{min-width:600px;}
-  .table-scroll.compact table{min-width:380px;}
+  /* SUMMARY SECTION */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .summary-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .summary-card.alert-highlight {
+    border-color: #FECDD3;
+    background: #FFF5F5;
+  }
+  .summary-card.alert-amber {
+    border-color: #FDE68A;
+    background: #FFFDF5;
+  }
+  .summary-card.alert-blue {
+    border-color: #BFDBFE;
+    background: #F8FAFF;
+  }
+  .card-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .card-val {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text-main);
+  }
+  .card-val .unit {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-left: 2px;
+  }
+  .card-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .inst-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 2px;
+  }
+  .chip {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .chip-label { color: var(--text-muted); font-weight: 500; }
 
-  .inst-detail{border-top:1px solid var(--line); padding:12px 0 4px;}
-  .inst-detail:first-of-type{border-top:none; padding-top:0;}
-  .inst-detail summary{cursor:pointer; font-size:13px; font-weight:600; padding:6px 0; color:var(--text); transition:color 0.15s;}
-  .inst-detail summary:hover{color:var(--blue);}
-  .inst-body{margin-top:12px;}
-  .inst-body > *{margin-bottom:16px;}
-  .inst-body > *:last-child{margin-bottom:0;}
-  .sub-label{font-size:12px; color:var(--muted); margin-bottom:8px; font-weight:600; text-transform:uppercase; letter-spacing:0.04em;}
+  /* CARDS */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+  }
+  .card.alert-card-danger {
+    border-left: 4px solid var(--rise);
+  }
+  .card.alert-card-amber {
+    border-left: 4px solid var(--amber);
+  }
+  .card.alert-card-blue {
+    border-left: 4px solid var(--blue);
+  }
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .card-title-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-main);
+  }
+  .count-badge {
+    font-size: 11px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    font-weight: 600;
+    background: var(--bg-sub);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+  .count-badge.danger { background: #FFE4E6; color: #BE123C; }
+  .count-badge.amber { background: #FEF3C7; color: #B45309; }
+  .count-badge.blue { background: #EFF6FF; color: #1D4ED8; }
+  .card-tip {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
 
-  .dual-panel{display:flex; gap:16px; align-items:flex-start;}
-  .dual-panel-col{flex:1; min-width:0;}
+  /* DATA BLOCKS & TABLES */
+  .data-block { width: 100%; }
+  .table-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .table-scroll table { min-width: 600px; width: 100%; }
+  .table-scroll.compact table { min-width: 360px; }
 
-  /* Part 4: financial calendar beautification */
-  .cal-grid{margin-bottom:20px;}
-  .cal-grid-head, .cal-grid-row{display:grid; grid-template-columns:repeat(7, 1fr); gap:6px;}
-  .cal-grid-head{margin-bottom:6px;}
-  .cal-grid-h{text-align:center; font-size:11px; color:var(--muted); font-weight:600; padding:4px 0;}
-  .cal-grid-row{margin-bottom:6px;}
-  .cal-cell{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; aspect-ratio:1; padding:6px 2px; border-radius:8px; background:var(--panel-2); border:1px solid var(--line); text-decoration:none; transition:all 0.15s ease;}
-  .cal-cell.out{opacity:.35;}
-  .cal-cell.today{border-color:var(--amber); box-shadow:0 0 0 2px rgba(217,119,6,0.2); background:#FFFBEB;}
-  .cal-cell.has-events{cursor:pointer;}
-  .cal-cell.has-events:hover{border-color:var(--blue); background:#FFFFFF; transform:translateY(-2px); box-shadow:var(--shadow-md);}
-  .cal-cell-num{font-family:var(--font-mono); font-size:12px; color:var(--text); font-weight:500;}
-  .cal-cell.today .cal-cell-num{color:var(--amber); font-weight:700;}
-  .cal-cell-dots{display:flex; gap:2px; align-items:center; height:5px;}
-  .cal-cell-dots .dot{width:5px; height:5px; border-radius:50%; background:var(--amber);}
-  .cal-cell-more{font-size:9px; color:var(--muted); font-family:var(--font-mono); margin-left:1px;}
+  .data-table {
+    border-collapse: collapse;
+    font-size: 12px;
+    background: var(--bg-card);
+  }
+  .data-table th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #FAFBFD;
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    white-space: nowrap;
+  }
+  .data-table th.num { text-align: right; }
+  .data-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #F1F5F9;
+    vertical-align: middle;
+    color: var(--text-main);
+    white-space: nowrap;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table tr:hover td { background: #F8FAFC; }
 
-  .cal-day{display:flex; gap:16px; padding:14px 0; border-bottom:1px solid var(--line); scroll-margin-top:12px;}
-  .cal-day:last-child{border-bottom:none;}
-  .cal-date{flex:0 0 80px; font-family:var(--font-mono); font-size:13px; color:var(--muted); padding-top:4px;}
-  .cal-date.today{color:var(--amber); font-weight:700;}
-  .cal-day-events{flex:1; min-width:0; display:flex; flex-direction:column; gap:10px;}
-  
-  .cal-event-card{background:var(--panel-2); border:1px solid var(--line); border-left:4px solid var(--cat-gen); border-radius:8px; padding:10px 14px; transition:border-color 0.2s;}
-  .cal-event-card.cat-fed{border-left-color:var(--cat-fed); background:#FFF1F2;}
-  .cal-event-card.cat-econ{border-left-color:var(--cat-econ); background:#FFFBEB;}
-  .cal-event-card.cat-stock{border-left-color:var(--cat-stock); background:#F0F9FF;}
-  .cal-event-card.cat-futures{border-left-color:var(--cat-futures); background:#FFFBEB;}
-  
-  .cal-header-row{display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;}
-  .cal-time-pill{display:inline-block; font-family:var(--font-mono); font-size:11px; padding:2px 8px; border-radius:12px; background:#E2E8F0; color:#334155; font-weight:600;}
-  .cal-time-pill.all-day{background:#E2E8F0; color:#64748B;}
-  .cal-cat-badge{font-size:10px; padding:2px 6px; border-radius:4px; font-weight:600; text-transform:uppercase; letter-spacing:0.02em;}
-  .cat-fed .cal-cat-badge{background:#FFE4E6; color:#BE123C;}
-  .cat-econ .cal-cat-badge{background:#FEF3C7; color:#B45309;}
-  .cat-stock .cal-cat-badge{background:#E0F2FE; color:#0369A1;}
-  .cat-futures .cal-cat-badge{background:#FEF3C7; color:#B45309;}
-  .cat-general .cal-cat-badge{background:#F1F5F9; color:#475569;}
+  .data-table td.code { color: var(--blue); font-weight: 600; }
+  .data-table td.name { color: var(--text-main); font-weight: 600; }
+  .data-table td.num { text-align: right; }
+  .data-table td.condition {
+    color: var(--text-muted);
+    font-size: 11px;
+    max-width: 320px;
+    white-space: normal;
+    word-break: break-word;
+  }
 
-  .cal-summary{font-size:14px; font-weight:600; color:var(--text);}
-  .cal-desc{font-size:12px; color:var(--muted); margin-top:4px; white-space:pre-line; line-height:1.4;}
-  .cal-link{display:inline-flex; align-items:center; gap:4px; font-size:12px; color:var(--amber); text-decoration:none; background:#FEF3C7; border:1px solid #FDE68A; padding:4px 10px; border-radius:8px; font-weight:600; transition:all 0.15s ease;}
-  .cal-link:hover{background:#FDE68A; text-decoration:none;}
+  /* BADGES & DOTS */
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    background: var(--bg-sub);
+    font-weight: 600;
+    font-family: var(--font-mono);
+  }
+  .badge-amber {
+    border-color: #FCD34D;
+    color: #B45309;
+    background: #FEF3C7;
+  }
+  .badge-col { text-align: center !important; white-space: nowrap; }
+  .badge-dots { display: flex; gap: 2px; align-items: center; justify-content: center; }
+  .badge-dots .dot { width: 4px; height: 9px; background: #E2E8F0; border-radius: 1px; flex-shrink: 0; }
+  .badge-dots .dot.filled { background: var(--amber); }
+  .badge-frac { display: block; font-family: var(--font-mono); font-size: 9px; color: var(--text-muted); margin-top: 2px; }
 
-  .header-btn { display:inline-flex; align-items:center; gap:4px; font-size:12px; color:var(--muted); text-decoration:none; background:var(--panel-2); border:1px solid var(--line); padding:5px 12px; border-radius:8px; font-weight:600; transition:all 0.15s ease; margin-left: auto; }
-  .header-btn:hover { background:var(--panel-3); color:var(--text); text-decoration:none; border-color:#CBD5E1; }
-  .card-header-flex { display: flex; align-items: center; margin-bottom: 16px; }
-  .card-header-flex h2 { margin-bottom: 0; }
+  /* EMPTY & META STATES */
+  .empty-state {
+    padding: 24px 16px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    background: #FAFBFD;
+    border-radius: 8px;
+    border: 1px dashed var(--border);
+  }
+  .meta-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: var(--bg-sub);
+    border-radius: 6px;
+  }
 
-  @media (max-width: 480px){
-    body{padding:20px 12px 56px;}
-    h1{font-size:20px;}
-    .card{padding:16px;}
-    .tiles{grid-template-columns:repeat(auto-fit, minmax(110px,1fr));}
-    table{font-size:12px;}
-    th{padding:8px 8px;}
-    td{padding:8px 8px;}
-    td.condition{max-width:160px;}
-    .dual-panel{flex-direction:column;}
-    .cal-day{flex-direction:column; gap:6px;}
-    .cal-grid-head, .cal-grid-row{gap:3px;}
-    .cal-cell{padding:4px 1px;}
-    .cal-cell-num{font-size:11px;}
+  /* ACCORDIONS (Details) */
+  .unref-accordion {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    background: var(--bg-card);
+  }
+  .unref-accordion:last-child { margin-bottom: 0; }
+  .accordion-header {
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 10px 14px;
+    background: #FAFBFD;
+    border-bottom: 1px solid transparent;
+    user-select: none;
+    color: var(--text-main);
+  }
+  .unref-accordion[open] .accordion-header {
+    border-bottom-color: var(--border);
+  }
+  .accordion-content { padding: 10px; }
+  .embed-frame {
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    background: #FFFFFF;
+  }
+
+  /* WATCHLIST / INSTITUTIONAL ACCORDION */
+  .inst-accordion {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    background: var(--bg-card);
+  }
+  .inst-accordion:last-child { margin-bottom: 0; }
+  .inst-summary {
+    cursor: pointer;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    user-select: none;
+    background: #FAFBFD;
+    border-radius: 8px;
+  }
+  .inst-accordion[open] .inst-summary {
+    border-bottom: 1px solid var(--border);
+    border-radius: 8px 8px 0 0;
+  }
+  .inst-tag {
+    font-size: 10px;
+    padding: 1px 5px;
+    background: var(--bg-sub);
+    border-radius: 4px;
+    color: var(--text-muted);
+  }
+  .inst-code { color: var(--blue); }
+  .inst-name { color: var(--text-main); }
+  .inst-content { padding: 14px; }
+  .dual-panel { display: flex; gap: 14px; align-items: flex-start; }
+  .dual-panel-col { flex: 1; min-width: 0; }
+  .sub-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 6px;
+  }
+
+  /* MARKET TILES */
+  .tiles-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  .tile {
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    transition: all 0.15s ease;
+  }
+  .tile:hover {
+    background: #FFFFFF;
+    box-shadow: var(--shadow-sm);
+  }
+  .tile .name {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .tile .sub-pill {
+    font-size: 9px;
+    background: #E2E8F0;
+    color: var(--text-muted);
+    padding: 1px 4px;
+    border-radius: 4px;
+  }
+  .tile .value {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+  .tile .delta {
+    font-size: 11px;
+    margin-top: 2px;
+    font-weight: 600;
+  }
+  .tile .updated {
+    font-size: 9px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  .header-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-decoration: none;
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: all 0.15s ease;
+  }
+  .header-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-main);
+  }
+
+  /* SUPPLEMENTARY (News & Calendar) */
+  .supp-accordion {
+    width: 100%;
+  }
+  .supp-summary {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+  .accordion-toggle-icon {
+    font-size: 10px;
+    color: var(--text-muted);
+    transition: transform 0.2s;
+  }
+  .supp-accordion[open] .accordion-toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  .news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .news-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 14px;
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .news-item:hover {
+    background: #FFFFFF;
+    box-shadow: var(--shadow-sm);
+    border-color: var(--border-strong);
+  }
+  .news-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-main);
+    line-height: 1.4;
+  }
+  .news-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .news-source { color: var(--blue); font-weight: 600; }
+
+  /* CALENDAR */
+  .cal-grid { margin-bottom: 16px; }
+  .cal-grid-head, .cal-grid-row { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .cal-grid-head { margin-bottom: 4px; }
+  .cal-grid-h { text-align: center; font-size: 10px; color: var(--text-muted); font-weight: 600; padding: 2px 0; }
+  .cal-grid-row { margin-bottom: 4px; }
+  .cal-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    aspect-ratio: 1;
+    padding: 4px 1px;
+    border-radius: 6px;
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .cal-cell.out { opacity: .35; }
+  .cal-cell.today { border-color: var(--amber); background: #FFFBEB; box-shadow: 0 0 0 1px rgba(217,119,6,0.2); }
+  .cal-cell.has-events { cursor: pointer; }
+  .cal-cell.has-events:hover { border-color: var(--blue); background: #FFFFFF; transform: translateY(-1px); }
+  .cal-cell-num { font-family: var(--font-mono); font-size: 11px; color: var(--text-main); font-weight: 500; }
+  .cal-cell.today .cal-cell-num { color: var(--amber); font-weight: 700; }
+  .cal-cell-dots { display: flex; gap: 2px; align-items: center; height: 4px; }
+  .cal-cell-dots .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--amber); }
+  .cal-cell-more { font-size: 8px; color: var(--text-muted); font-family: var(--font-mono); }
+
+  .cal-agenda-scroll {
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 6px;
+  }
+  .cal-day {
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    scroll-margin-top: 56px;
+  }
+  .cal-day:last-child { border-bottom: none; }
+  .cal-date {
+    flex: 0 0 65px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    padding-top: 2px;
+  }
+  .cal-date.today { color: var(--amber); font-weight: 700; }
+  .cal-day-events { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+  .cal-event-card {
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--cat-gen);
+    border-radius: 6px;
+    padding: 8px 12px;
+  }
+  .cal-event-card.cat-fed { border-left-color: var(--cat-fed); background: #FFF1F2; }
+  .cal-event-card.cat-econ { border-left-color: var(--cat-econ); background: #FFFBEB; }
+  .cal-event-card.cat-stock { border-left-color: var(--cat-stock); background: #F0F9FF; }
+  .cal-event-card.cat-futures { border-left-color: var(--cat-futures); background: #FFFBEB; }
+
+  .cal-header-row { display: flex; align-items: center; gap: 6px; margin-bottom: 2px; flex-wrap: wrap; }
+  .cal-time-pill { font-family: var(--font-mono); font-size: 10px; padding: 1px 6px; border-radius: 10px; background: #E2E8F0; color: #334155; font-weight: 600; }
+  .cal-time-pill.all-day { background: #E2E8F0; color: #64748B; }
+  .cal-cat-badge { font-size: 9px; padding: 1px 5px; border-radius: 3px; font-weight: 600; text-transform: uppercase; }
+  .cat-fed .cal-cat-badge { background: #FFE4E6; color: #BE123C; }
+  .cat-econ .cal-cat-badge { background: #FEF3C7; color: #B45309; }
+  .cat-stock .cal-cat-badge { background: #E0F2FE; color: #0369A1; }
+  .cat-futures .cal-cat-badge { background: #FEF3C7; color: #B45309; }
+  .cat-general .cal-cat-badge { background: #F1F5F9; color: #475569; }
+  .cal-summary { font-size: 13px; font-weight: 600; color: var(--text-main); }
+  .cal-desc { font-size: 11px; color: var(--text-muted); margin-top: 3px; white-space: pre-line; line-height: 1.4; }
+  .cal-link { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; color: var(--amber); text-decoration: none; background: #FEF3C7; border: 1px solid #FDE68A; padding: 3px 8px; border-radius: 6px; font-weight: 600; margin-top: 4px; }
+
+  /* FOOTER */
+  .page-footer {
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    padding: 32px 0 48px;
+    margin-top: 48px;
+  }
+  .footer-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  .footer-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-main);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 10px;
+  }
+  .footer-notes {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .footer-notes li { margin-bottom: 4px; }
+  .footer-notes strong { color: var(--text-main); }
+  .footer-copy {
+    font-size: 11px;
+    color: var(--text-light);
+    font-family: var(--font-mono);
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .tiles-grid { grid-template-columns: repeat(2, 1fr); }
+    .dual-panel { flex-direction: column; }
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .cal-day { flex-direction: column; gap: 4px; }
   }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <header>
-    <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 {{ generated_at }}</div>
+  <!-- HEADER -->
+  <header class="page-header">
+    <div class="header-inner">
+      <div class="header-main">
+        <h1 class="page-title">盤前情報準備台</h1>
+      </div>
+      <div class="meta-row">
+        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">{{ generated_at }}</span></span>
+        {% if date_check and date_check.page_says_applies_to %}
+        <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">{{ date_check.page_says_applies_to }}</span></span>
+        {% endif %}
+        <span class="meta-status">
+          {% if date_check and date_check.applies_to_matches_today is sameas false %}
+          <span class="status-badge is-warning" title="日期核對提醒：頁面顯示適用 {{ date_check.page_says_applies_to }}，但今天是 {{ date_check.today }}">日期待確認</span>
+          {% elif date_check %}
+          <span class="status-badge is-ok">資料已就緒</span>
+          {% endif %}
+        </span>
+      </div>
+    </div>
   </header>
 
-  {% if date_check and date_check.applies_to_matches_today is sameas false %}
-  <div class="warning-banner">
-    ⚠ 處置股資料日期核對失敗 — 頁面顯示適用 {{ date_check.page_says_applies_to }}，但今天是 {{ date_check.today }}。第二部分資料可能不是最新的，請自行到 chengwaye.com 確認。
-  </div>
-  {% elif date_check %}
-  <div class="ok-banner">✓ 處置股資料日期核對通過（下拉選單：{{ date_check.page_dropdown_selected }} → 適用 {{ date_check.page_says_applies_to }}）</div>
-  {% endif %}
-
-  
-  {% if twse and twse.twii %}
-  <div style="background:var(--panel); padding:14px 18px; border-radius:12px; border:1px solid var(--line); margin-bottom:20px; display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between; box-shadow:var(--shadow);">
-    <div style="display:flex; align-items:center; gap:12px;">
-      <span style="font-size:14px; color:var(--muted); font-weight:600;">昨收大盤</span>
-      <span style="font-size:16px; font-weight:700; color:{% if twse.twii.change > 0 %}var(--red){% elif twse.twii.change < 0 %}var(--green){% else %}var(--text){% endif %};">
-        {{ twse.twii.price }} ({% if twse.twii.change > 0 %}+{% endif %}{{ twse.twii.change }})
-      </span>
+  <!-- NAV (Sticky Anchor Bar) -->
+  <nav class="page-nav">
+    <div class="nav-inner">
+      <a href="#summary" class="nav-link">今日摘要</a>
+      {% set exiting_today = disposal.currently_in_disposal | selectattr('trading_days_left', 'equalto', '出關') | list %}
+      {% set alert_total = (disposal.one_flag_from_disposal|length) + (exiting_today|length) %}
+      <a href="#alerts" class="nav-link nav-alert">今日警示 {% if alert_total > 0 %}<span class="nav-badge">{{ alert_total }}</span>{% endif %}</a>
+      <a href="#watchlist" class="nav-link">今日候選股</a>
+      <a href="#market-context" class="nav-link">市場背景</a>
+      <a href="#news-calendar" class="nav-link">補充資訊</a>
+      <a href="#system-info" class="nav-link">系統資訊</a>
     </div>
-    <div style="display:flex; gap:16px; font-size:13px; font-weight:600;">
-      {% if twse.inst.foreign %}
-      <div style="display:flex; gap:6px;">
-        <span style="color:var(--muted);">外資</span>
-        <span style="color:{% if twse.inst.foreign > 0 %}var(--red){% else %}var(--green){% endif %};">{% if twse.inst.foreign > 0 %}+{% endif %}{{ twse.inst.foreign }}億</span>
-      </div>
-      <div style="display:flex; gap:6px;">
-        <span style="color:var(--muted);">投信</span>
-        <span style="color:{% if twse.inst.trust > 0 %}var(--red){% else %}var(--green){% endif %};">{% if twse.inst.trust > 0 %}+{% endif %}{{ twse.inst.trust }}億</span>
-      </div>
-      {% endif %}
-    </div>
-  </div>
-  {% endif %}
-  <div class="part-title">美股四大指數</div>
-  <section class="part">
+  </nav>
 
-    <!-- Removed Broken TradingView Widget -->
+  <main class="page-main">
 
-    <div class="card">
-      <div class="card-header-flex">
-        <h2>美股四大指數 <span class="sub">前一夜收盤</span></h2>
-        <a href="https://tw.stock.yahoo.com/markets/" target="_blank" rel="noopener" class="header-btn">查看 Yahoo 即時報價 ↗</a>
-      </div>
-      <div class="tiles">
-        {% for key, tile in us_indices.items() %}
-        {% if tile %}
-        <div class="tile">
-          <div class="name">{{ tile.name }}</div>
-          <div class="value">{{ '{:,.2f}'.format(tile.value) }}</div>
-          <div class="delta {{ 'rise' if tile.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(tile.change) }} ({{ '%+.2f'|format(tile.change_pct) }}%)</div>
+    <!-- 1. 摘要 (Summary) -->
+    <section id="summary" class="content-section">
+      <div class="summary-grid">
+        <!-- 昨收大盤 -->
+        {% if twse and twse.twii %}
+        <div class="summary-card">
+          <div class="card-label">昨收大盤</div>
+          <div class="card-val font-mono {% if twse.twii.change > 0 %}rise{% elif twse.twii.change < 0 %}fall{% endif %}">
+            {{ twse.twii.price }}
+          </div>
+          <div class="card-sub font-mono {% if twse.twii.change > 0 %}rise{% elif twse.twii.change < 0 %}fall{% endif %}">
+            {% if twse.twii.change > 0 %}+{% endif %}{{ twse.twii.change }} ({{ '%+.2f'|format(twse.twii.change_pct) }}%)
+          </div>
+        </div>
+        <!-- 外資 / 投信 -->
+        <div class="summary-card">
+          <div class="card-label">三大法人買賣超</div>
+          <div class="inst-chips font-mono">
+            {% if twse.inst.foreign %}
+            <div class="chip"><span class="chip-label">外資</span> <span class="{% if twse.inst.foreign > 0 %}rise{% else %}fall{% endif %}">{% if twse.inst.foreign > 0 %}+{% endif %}{{ twse.inst.foreign }}億</span></div>
+            {% endif %}
+            {% if twse.inst.trust %}
+            <div class="chip"><span class="chip-label">投信</span> <span class="{% if twse.inst.trust > 0 %}rise{% else %}fall{% endif %}">{% if twse.inst.trust > 0 %}+{% endif %}{{ twse.inst.trust }}億</span></div>
+            {% endif %}
+          </div>
         </div>
         {% endif %}
-        {% endfor %}
-      </div>
-      <div class="tiles" style="margin-top: 12px;">
+
+        <!-- 差1次處置 -->
+        <div class="summary-card {% if disposal.one_flag_from_disposal|length > 0 %}alert-highlight{% endif %}">
+          <div class="card-label">差 1 次處置</div>
+          <div class="card-val font-mono {% if disposal.one_flag_from_disposal|length > 0 %}rise{% endif %}">
+            {{ disposal.one_flag_from_disposal|length }} <span class="unit">檔</span>
+          </div>
+          <div class="card-sub">盤中觸發即進入處置</div>
+        </div>
+
+        <!-- 今日出關 -->
+        <div class="summary-card {% if exiting_today|length > 0 %}alert-amber{% endif %}">
+          <div class="card-label">今日出關</div>
+          <div class="card-val font-mono {% if exiting_today|length > 0 %}amber{% endif %}">
+            {{ exiting_today|length }} <span class="unit">檔</span>
+          </div>
+          <div class="card-sub">今日恢復正常撮合</div>
+        </div>
+
+        <!-- 市場未反映 -->
+        {% set unref_count = (financials.att|length if financials.att else 0) + (financials.fin|length if financials.fin else 0) + (financials.rev|length if financials.rev else 0) %}
+        <div class="summary-card {% if unref_count > 0 %}alert-blue{% endif %}">
+          <div class="card-label">市場未反映公告</div>
+          <div class="card-val font-mono {% if unref_count > 0 %}blue{% endif %}">
+            {{ unref_count }} <span class="unit">筆</span>
+          </div>
+          <div class="card-sub">{{ financials.cutoff_str or '昨日 13:30' }} 後公告</div>
+        </div>
+
+        <!-- 台指期夜盤 -->
         {% if night and night.latest %}
-        <div class="tile">
-          <div class="name">台指期夜盤 <span style="font-size:10px; font-weight:normal; color:var(--muted);">(05:00)</span></div>
-          <div class="value">{{ "{:,.0f}".format(night.latest.price) }}</div>
-          <div class="delta {{ 'rise' if night.latest.change >= 0 else 'fall' }}">{{ '%+.0f'|format(night.latest.change) }} ({{ '%+.2f'|format(night.latest.change_pct) }}%)</div>
-        </div>
-        {% endif %}
-        {% if indices and indices.adrs and indices.adrs.tsmc %}
-        <div class="tile">
-          <div class="name">{{ indices.adrs.tsmc.name }}</div>
-          <div class="value">{{ '{:,.2f}'.format(indices.adrs.tsmc.value) }}</div>
-          <div class="delta {{ 'rise' if indices.adrs.tsmc.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.tsmc.change) }} ({{ '%+.2f'|format(indices.adrs.tsmc.change_pct) }}%)</div>
-        </div>
-        {% endif %}
-        {% if indices and indices.adrs and indices.adrs.umc %}
-        <div class="tile">
-          <div class="name">{{ indices.adrs.umc.name }}</div>
-          <div class="value">{{ '{:,.2f}'.format(indices.adrs.umc.value) }}</div>
-          <div class="delta {{ 'rise' if indices.adrs.umc.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.umc.change) }} ({{ '%+.2f'|format(indices.adrs.umc.change_pct) }}%)</div>
-        </div>
-        {% endif %}
-        {% if indices and indices.adrs and indices.adrs.ase %}
-        <div class="tile">
-          <div class="name">{{ indices.adrs.ase.name }}</div>
-          <div class="value">{{ '{:,.2f}'.format(indices.adrs.ase.value) }}</div>
-          <div class="delta {{ 'rise' if indices.adrs.ase.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.ase.change) }} ({{ '%+.2f'|format(indices.adrs.ase.change_pct) }}%)</div>
-        </div>
-        {% endif %}
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>日股／韓股 08:00 開盤走勢</h2>
-      <div class="tiles">
-        {% for key, tile in asia_open.items() %}
-        {% if tile %}
-        <div class="tile">
-          <div class="name">{{ tile.name }}</div>
-          <div class="value">{{ '{:,.2f}'.format(tile.value) }}</div>
-          <div class="delta {{ 'rise' if tile.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(tile.change) }} ({{ '%+.2f'|format(tile.change_pct) }}%)</div>
-          {% if tile.updated_cst %}<div class="updated">{{ tile.updated_cst }}</div>{% endif %}
-        </div>
-        {% endif %}
-        {% endfor %}
-      </div>
-      {% if indices_missing %}
-      <p class="missing">缺少欄位：{{ indices_missing|join('、') }}（來源頁面格式可能變了，需要人工檢查）</p>
-      {% endif %}
-    </div>
-
-  
-    {% if news %}
-    <div class="card">
-      <h2>📰 隔夜重大新聞 <span class="sub">昨日收盤迄今 Top 5</span></h2>
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        {% for a in news %}
-        <a href="{{ a.link }}" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:6px; padding:12px 16px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; text-decoration:none; transition:all 0.15s ease;" onmouseover="this.style.background='#FFFFFF'; this.style.boxShadow='var(--shadow-md)'; this.style.borderColor='#CBD5E1';" onmouseout="this.style.background='var(--panel-2)'; this.style.boxShadow='none'; this.style.borderColor='var(--line)';">
-          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.5;">{{ a.title }}</div>
-          <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted); font-family:var(--font-mono);">
-            <span style="font-weight:600; color:var(--blue);">{{ a.source }}</span>
-            <span>{{ a.time }}</span>
+        <div class="summary-card">
+          <div class="card-label">台指期夜盤 (05:00)</div>
+          <div class="card-val font-mono {% if night.latest.change > 0 %}rise{% elif night.latest.change < 0 %}fall{% endif %}">
+            {{ "{:,.0f}".format(night.latest.price) }}
           </div>
-        </a>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
-</section>
-
-  <div class="part-title">處置股</div>
-  <section class="part">
-
-    <div class="card">
-      <h2>🔴 差1次就處置 <span class="sub">{{ disposal.one_flag_from_disposal|length }} 檔</span></h2>
-      <div class="table-scroll">
-      <table>
-        <thead><tr>
-          <th style="white-space:nowrap;">所</th>
-          <th style="white-space:nowrap;">代號</th>
-          <th style="white-space:nowrap;">名稱</th>
-          <th class="num" style="white-space:nowrap;">收盤</th>
-          <th>{{ (date_check.page_says_applies_to.replace('/', '-') + ' ') if date_check.page_says_applies_to else '' }}處置標準條件（本站估算）</th>
-          <th class="num" style="white-space:nowrap;">最快處置</th>
-          <th class="badge-col" style="white-space:nowrap;" title="連續3日第1款">3①</th>
-          <th class="badge-col" style="white-space:nowrap;" title="連續5日（第1~7款）">5</th>
-          <th class="badge-col" style="white-space:nowrap;" title="10日內6次（第1~7款）">6</th>
-          <th class="badge-col" style="white-space:nowrap;" title="30日內12次（第1~7款）">12</th>
-        </tr></thead>
-        <tbody>
-          {% for row in disposal.one_flag_from_disposal %}
-          <tr>
-            <td style="white-space:nowrap;">{{ row.market }}</td>
-            <td class="code" style="white-space:nowrap;">{{ row.code }}</td>
-            <td class="name" style="white-space:nowrap;">{{ row.name }}</td>
-            <td class="num" style="white-space:nowrap;">{{ row.close }}</td>
-            <td class="condition">{% if row.condition_segments %}{% for seg in row.condition_segments %}<span{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>{% endfor %}{% else %}{{ row.condition }}{% endif %}</td>
-            <td class="num" style="white-space:nowrap; text-align:right;">
-              {% set ed_parts = row.earliest_disposal.split(' ', 1) %}
-              {% if ed_parts|length == 2 %}
-                <span style="font-family:var(--font-mono); font-weight:600; color:var(--text);">{{ ed_parts[0] }}</span>
-                <span class="badge" style="border-color:rgba(255,183,3,0.4); color:var(--amber); font-weight:600; margin-left:3px; padding:2px 6px;">{{ ed_parts[1] }}</span>
-              {% else %}
-                <span style="font-family:var(--font-mono); font-weight:600;">{{ row.earliest_disposal }}</span>
-              {% endif %}
-            </td>
-            {% for bd in row.badges or [{}, {}, {}, {}] %}
-            <td class="badge-col"{% if bd.title %} title="{{ bd.title }}"{% endif %}>
-              {% if bd.threshold %}
-              <div class="badge-dots">{% for i in range(bd.threshold) %}<span class="dot{{ ' filled' if i < bd.current else '' }}"></span>{% endfor %}</div>
-              <span class="badge-frac">{{ bd.current }}/{{ bd.threshold }}</span>
-              {% else %}
-              <span class="badge-frac">—</span>
-              {% endif %}
-            </td>
-            {% endfor %}
-          </tr>
-          {% else %}
-          <tr class="empty-row"><td colspan="10">今天沒有差1次就處置的股票</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      </div>
-      {% if disposal.one_flag_from_disposal %}{% endif %}
-    </div>
-
-    {% set exiting_today = disposal.currently_in_disposal | selectattr('trading_days_left', 'equalto', '出關') | list %}
-    <div class="card">
-      <h2>⚫ 今日出關 <span class="sub">{{ exiting_today|length }} 檔</span></h2>
-      <div class="table-scroll">
-      <table>
-        <thead><tr><th>市場</th><th>代號</th><th>名稱</th><th>撮合</th><th class="num">開始</th><th class="num">結束</th><th class="num">出關日</th><th class="num">剩餘交易日</th><th>處置原因</th></tr></thead>
-        <tbody>
-          {% for row in exiting_today %}
-          <tr>
-            <td>{{ row.market }}</td>
-            <td class="code">{{ row.code }}</td>
-            <td class="name">{{ row.name }}</td>
-            <td>{{ row.matching }}</td>
-            <td class="num">{{ row.start_date }}</td>
-            <td class="num">{{ row.end_date }}</td>
-            <td class="num exit-today">{{ row.exit_date }}</td>
-            <td class="num"><span class="badge exit-today-badge">出關</span></td>
-            <td class="condition">{{ row.reason }}</td>
-          </tr>
-          {% else %}
-          <tr class="empty-row"><td colspan="9">今天沒有股票出關</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      </div>
-      {% if exiting_today %}{% endif %}
-    </div>
-
-  </section>
-
-  <div class="part-title">籌碼股</div>
-  <section class="part">
-
-    <div class="card">
-      <h2>目前沒找到族群 <span class="sub">{{ pressplay.not_found_group.matched|length }}/{{ pressplay.not_found_group.raw_tokens|length }} 檔已比對</span></h2>
-      {% if pressplay.source_article.title %}
-      <div class="table-scroll">
-      <table>
-        <thead><tr><th>所</th><th>代號</th><th>名稱</th><th class="num">收盤</th><th class="num">量(張)</th><th class="num">外資</th><th class="num">投信</th><th class="num">自營</th></tr></thead>
-        <tbody>
-          {% for row in pressplay.not_found_group.matched %}
-          <tr>
-            <td>{{ row.market }}</td>
-            <td class="code">{{ row.code }}</td>
-            <td class="name">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">疑似打錯字</span>{% endif %}</td>
-            <td class="num">{{ row.close }}</td>
-            <td class="num">{{ row.volume }}</td>
-            <td class="num">{{ row.foreign }}</td>
-            <td class="num">{{ row.trust }}</td>
-            <td class="num">{{ row.dealer }}</td>
-            
-          </tr>
-          {% else %}
-          <tr class="empty-row"><td colspan="8">今天此區塊沒有標的</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      </div>
-      {% if pressplay.not_found_group.matched %}{% endif %}
-      {% if pressplay.not_found_group.unmatched %}
-      <p class="missing">未比對到：{{ pressplay.not_found_group.unmatched|join('、') }}（原文可能打錯字或非台股代號，請自行到 chengwaye.com 確認）</p>
-      {% endif %}
-      {% else %}
-      <p class="missing">尚無資料（PressPlay 收集流程還沒跑過，或今天沒有盤前文章）。</p>
-      {% endif %}
-    </div>
-
-    <div class="card">
-      <h2>目前發現有族群 <span class="sub">{{ pressplay.found_group.matched|length }}/{{ pressplay.found_group.raw_tokens|length }} 檔已比對</span></h2>
-      {% if pressplay.source_article.title %}
-      <div class="table-scroll">
-      <table>
-        <thead><tr><th>所</th><th>代號</th><th>名稱</th><th class="num">收盤</th><th class="num">量(張)</th><th class="num">外資</th><th class="num">投信</th><th class="num">自營</th></tr></thead>
-        <tbody>
-          {% for row in pressplay.found_group.matched %}
-          <tr>
-            <td>{{ row.market }}</td>
-            <td class="code">{{ row.code }}</td>
-            <td class="name">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">疑似打錯字</span>{% endif %}</td>
-            <td class="num">{{ row.close }}</td>
-            <td class="num">{{ row.volume }}</td>
-            <td class="num">{{ row.foreign }}</td>
-            <td class="num">{{ row.trust }}</td>
-            <td class="num">{{ row.dealer }}</td>
-            
-          </tr>
-          {% else %}
-          <tr class="empty-row"><td colspan="8">今天此區塊沒有標的</td></tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      </div>
-      {% if pressplay.found_group.matched %}{% endif %}
-      {% if pressplay.found_group.unmatched %}
-      <p class="missing">未比對到：{{ pressplay.found_group.unmatched|join('、') }}（原文可能打錯字或非台股代號，請自行到 chengwaye.com 確認）</p>
-      {% endif %}
-      {% else %}
-      <p class="missing">尚無資料（PressPlay 收集流程還沒跑過，或今天沒有盤前文章）。</p>
-      {% endif %}
-    </div>
-
-    {% if institutional.stocks %}
-    <div class="card">
-      <h2>個股法人買賣＋當沖明細 <span class="sub">{{ institutional.matched_count }}/{{ institutional.candidate_count }} 檔有資料{% if institutional.page_date %} · chengwaye.com 資料日期 {{ institutional.page_date }}{% endif %}</span></h2>
-      {% for item in institutional.stocks %}
-      <details class="inst-detail">
-        <summary>{{ item.market }} {{ item.code }} {{ item.name }}　外資 {{ item.foreign }}／投信 {{ item.trust }}／自營 {{ item.dealer }}</summary>
-        <div class="inst-body">
-
-          <div class="dual-panel">
-            <div class="dual-panel-col">
-              <div class="sub-label">買超 Top15</div>
-              <div class="table-scroll compact">
-              <table>
-                <thead><tr><th>券商</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-                <tbody>
-                  {% for r in item.buyers %}
-                  <tr>
-                    <td class="name">{{ r.name }}</td>
-                    <td class="num rise">{{ r.net }}</td>
-                    <td class="num">{{ r.buyP }}</td>
-                    <td class="num">{{ r.buyV }}</td>
-                    <td class="num">{{ r.sellV }}</td>
-                    <td class="num">{{ r.sellP }}</td>
-                  </tr>
-                  {% else %}
-                  <tr class="empty-row"><td colspan="6">無資料</td></tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-              </div>
-            </div>
-
-            <div class="dual-panel-col">
-              <div class="sub-label">賣超 Top15</div>
-              <div class="table-scroll compact">
-              <table>
-                <thead><tr><th>券商</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-                <tbody>
-                  {% for r in item.sellers %}
-                  <tr>
-                    <td class="name">{{ r.name }}</td>
-                    <td class="num fall">{{ r.net }}</td>
-                    <td class="num">{{ r.buyP }}</td>
-                    <td class="num">{{ r.buyV }}</td>
-                    <td class="num">{{ r.sellV }}</td>
-                    <td class="num">{{ r.sellP }}</td>
-                  </tr>
-                  {% else %}
-                  <tr class="empty-row"><td colspan="6">無資料</td></tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-              </div>
-            </div>
+          <div class="card-sub font-mono {% if night.latest.change > 0 %}rise{% elif night.latest.change < 0 %}fall{% endif %}">
+            {% if night.latest.change > 0 %}+{% endif %}{{ night.latest.change }} ({{ '%+.2f'|format(night.latest.change_pct) }}%)
           </div>
+        </div>
+        {% endif %}
+      </div>
+    </section>
 
-          <div>
-            <div class="sub-label">當沖 Top10</div>
-            <div class="table-scroll">
-            <table>
-              <thead><tr><th>券商</th><th class="num">交易總數</th><th class="num">買張</th><th class="num">買均</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
-              <tbody>
-                {% for r in item.daytraders %}
+    <!-- 2. 今日警示 (Alerts) -->
+    <section id="alerts" class="content-section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="title-icon">🚨</span> 今日警示</h2>
+        <span class="section-desc">開盤最直接影響操作的特定狀態標的</span>
+      </div>
+
+      <!-- 子區塊 1: 差1次就處置 -->
+      <div class="card alert-card-danger">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">差 1 次就處置</h3>
+            <span class="count-badge danger">{{ disposal.one_flag_from_disposal|length }} 檔</span>
+          </div>
+          <span class="card-tip">若今日再達注意標準將預收款券或分盤撮合</span>
+        </div>
+        
+        <div class="data-block">
+          {% if disposal.one_flag_from_disposal %}
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
                 <tr>
-                  <td class="name">{{ r.name }}</td>
-                  <td class="num">{{ r.total }}</td>
-                  <td class="num">{{ r.buyV }}</td>
-                  <td class="num">{{ r.buyP }}</td>
-                  <td class="num">{{ r.sellV }}</td>
-                  <td class="num">{{ r.sellP }}</td>
+                  <th>市場</th>
+                  <th>代號</th>
+                  <th>名稱</th>
+                  <th class="num">收盤</th>
+                  <th>處置標準條件（估算）</th>
+                  <th class="num">最快處置</th>
+                  <th class="badge-col" title="連續3日第1款">3①</th>
+                  <th class="badge-col" title="連續5日（第1~7款）">5</th>
+                  <th class="badge-col" title="10日內6次（第1~7款）">6</th>
+                  <th class="badge-col" title="30日內12次（第1~7款）">12</th>
                 </tr>
-                {% else %}
-                <tr class="empty-row"><td colspan="6">無資料</td></tr>
+              </thead>
+              <tbody>
+                {% for row in disposal.one_flag_from_disposal %}
+                <tr>
+                  <td>{{ row.market }}</td>
+                  <td class="code font-mono">{{ row.code }}</td>
+                  <td class="name font-bold">{{ row.name }}</td>
+                  <td class="num font-mono">{{ row.close }}</td>
+                  <td class="condition">{% if row.condition_segments %}{% for seg in row.condition_segments %}<span{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>{% endfor %}{% else %}{{ row.condition }}{% endif %}</td>
+                  <td class="num font-mono">
+                    {% set ed_parts = row.earliest_disposal.split(' ', 1) %}
+                    {% if ed_parts|length == 2 %}
+                      <span>{{ ed_parts[0] }}</span>
+                      <span class="badge badge-amber">{{ ed_parts[1] }}</span>
+                    {% else %}
+                      <span>{{ row.earliest_disposal }}</span>
+                    {% endif %}
+                  </td>
+                  {% for bd in row.badges or [{}, {}, {}, {}] %}
+                  <td class="badge-col"{% if bd.title %} title="{{ bd.title }}"{% endif %}>
+                    {% if bd.threshold %}
+                    <div class="badge-dots">{% for i in range(bd.threshold) %}<span class="dot{{ ' filled' if i < bd.current else '' }}"></span>{% endfor %}</div>
+                    <span class="badge-frac font-mono">{{ bd.current }}/{{ bd.threshold }}</span>
+                    {% else %}
+                    <span class="badge-frac">—</span>
+                    {% endif %}
+                  </td>
+                  {% endfor %}
+                </tr>
                 {% endfor %}
               </tbody>
             </table>
-            </div>
-            <p class="source-note">原網頁另有「總損益」欄位；此欄位無法從可取得的資料可靠推算，避免顯示錯誤數字，故先省略。</p>
           </div>
-        </div>
-      </details>
-      {% endfor %}
-      <p class="source-note">資料來源：chengwaye.com/daily（僅涵蓋當日28檔清單，未在清單中的標的不會顯示此區塊）。</p>
-    </div>
-    {% endif %}
-
-    {% if pressplay.source_article.title %}
-    <p class="missing">資料來源：{{ pressplay.source_article.title }}{% if pressplay.chengwaye_date %} · chengwaye.com 適用 {{ pressplay.chengwaye_date }}{% endif %}</p>
-    {% endif %}
-
-  </section>
-
-  <div class="part-title">自結、季報、營收</div>
-  <section class="part">
-    <div class="card">
-      <h2 style="margin-bottom: 20px;">🔥 市場未反映 <span class="sub">自結、季報、營收 ({{ financials.cutoff_str }} 後公告)</span></h2>
-
-      <div class="sub-label" style="font-size:14px; margin-top:8px; margin-bottom:8px; color:var(--text);">📊 即時自結</div>
-      <iframe src="embed/att.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:10px; background:#FFFFFF; box-shadow:var(--shadow-sm);"></iframe>
-
-      <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">🧾 即時季報</div>
-      <iframe src="embed/fin.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:10px; background:#FFFFFF; box-shadow:var(--shadow-sm);"></iframe>
-
-      <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">💰 即時營收</div>
-      <iframe src="embed/rev.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:10px; background:#FFFFFF; box-shadow:var(--shadow-sm);"></iframe>
-
-    </div>
-  </section>
-
-<div class="part-title">財經行事曆</div>
-  <section class="part">
-
-    <div class="card">
-      <h2>財經行事曆 <span class="sub">{% if calendar.today and calendar.range_end %}{{ calendar.today[5:] }} ~ {{ calendar.range_end[5:] }}{% endif %}{% if calendar.events %} · {{ calendar.events|length }} 筆{% endif %}</span></h2>
-
-      {% if calendar.grid %}
-      <div class="cal-grid">
-        <div class="cal-grid-head">
-          {% for wl in calendar.grid.weekday_labels %}<div class="cal-grid-h">{{ wl }}</div>{% endfor %}
-        </div>
-        {% for week in calendar.grid.weeks %}
-        <div class="cal-grid-row">
-          {% for d in week %}
-          {% if d.count %}
-          <a class="cal-cell has-events{{ ' today' if d.is_today else '' }}" href="#cal-{{ d.date }}">
-            <span class="cal-cell-num">{{ d.month_label or d.day }}</span>
-            <span class="cal-cell-dots">{% for i in range([d.count, 3]|min) %}<span class="dot"></span>{% endfor %}{% if d.count > 3 %}<span class="cal-cell-more">+{{ d.count - 3 }}</span>{% endif %}</span>
-          </a>
           {% else %}
-          <div class="cal-cell{{ ' today' if d.is_today else '' }}{{ '' if d.in_range else ' out' }}">
-            <span class="cal-cell-num">{{ d.month_label or d.day }}</span>
-          </div>
+          <div class="empty-state">今日無差 1 次即處置的標的</div>
           {% endif %}
+        </div>
+      </div>
+
+      <!-- 子區塊 2: 今日出關 -->
+      <div class="card alert-card-amber">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">今日出關</h3>
+            <span class="count-badge amber">{{ exiting_today|length }} 檔</span>
+          </div>
+          <span class="card-tip">處置期滿恢復正常撮合機制</span>
+        </div>
+
+        <div class="data-block">
+          {% if exiting_today %}
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>市場</th>
+                  <th>代號</th>
+                  <th>名稱</th>
+                  <th>原撮合</th>
+                  <th class="num">處置起日</th>
+                  <th class="num">處置迄日</th>
+                  <th class="num">出關日</th>
+                  <th>狀態</th>
+                  <th>處置原因</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in exiting_today %}
+                <tr>
+                  <td>{{ row.market }}</td>
+                  <td class="code font-mono">{{ row.code }}</td>
+                  <td class="name font-bold">{{ row.name }}</td>
+                  <td>{{ row.matching }}</td>
+                  <td class="num font-mono">{{ row.start_date }}</td>
+                  <td class="num font-mono">{{ row.end_date }}</td>
+                  <td class="num font-mono amber font-bold">{{ row.exit_date }}</td>
+                  <td><span class="badge badge-amber">今日出關</span></td>
+                  <td class="condition">{{ row.reason }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="empty-state">今日無處置出關標的</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- 子區塊 3: 市場未反映 -->
+      <div class="card alert-card-blue">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">市場未反映公告</h3>
+            <span class="count-badge blue">{{ unref_count }} 筆</span>
+          </div>
+          <span class="card-tip">自結、季報、營收 ({{ financials.cutoff_str or '昨日 13:30' }} 後首次公告)</span>
+        </div>
+
+        <div class="data-block">
+          <details class="unref-accordion" open>
+            <summary class="accordion-header">即時自結（市場未反映 {{ financials.att|length if financials.att else 0 }} 筆）</summary>
+            <div class="accordion-content">
+              <iframe src="embed/att.html" class="embed-frame" style="height:320px;"></iframe>
+            </div>
+          </details>
+
+          <details class="unref-accordion" open>
+            <summary class="accordion-header">即時季報（市場未反映 {{ financials.fin|length if financials.fin else 0 }} 筆）</summary>
+            <div class="accordion-content">
+              <iframe src="embed/fin.html" class="embed-frame" style="height:320px;"></iframe>
+            </div>
+          </details>
+
+          <details class="unref-accordion" open>
+            <summary class="accordion-header">即時營收（市場未反映 {{ financials.rev|length if financials.rev else 0 }} 筆）</summary>
+            <div class="accordion-content">
+              <iframe src="embed/rev.html" class="embed-frame" style="height:320px;"></iframe>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. 今日候選股 (Watchlist) -->
+    <section id="watchlist" class="content-section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="title-icon">🎯</span> 今日候選股</h2>
+        <span class="section-desc">盤前族群整理、法人動向與主力當沖籌碼明細</span>
+      </div>
+
+      <!-- 族群聚焦標的 -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">族群聚焦標的</h3>
+            <span class="count-badge">{{ pressplay.found_group.matched|length }} 檔</span>
+          </div>
+          <span class="card-tip">已比對 {{ pressplay.found_group.raw_tokens|length }} 檔，共 {{ pressplay.found_group.matched|length }} 檔具明確族群連動</span>
+        </div>
+
+        <div class="data-block">
+          {% if pressplay.found_group.matched %}
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>市場</th>
+                  <th>代號</th>
+                  <th>名稱</th>
+                  <th class="num">收盤</th>
+                  <th class="num">量(張)</th>
+                  <th class="num">外資(張)</th>
+                  <th class="num">投信(張)</th>
+                  <th class="num">自營(張)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in pressplay.found_group.matched %}
+                <tr>
+                  <td>{{ row.market }}</td>
+                  <td class="code font-mono">{{ row.code }}</td>
+                  <td class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
+                  <td class="num font-mono">{{ row.close }}</td>
+                  <td class="num font-mono">{{ row.volume }}</td>
+                  <td class="num font-mono {% if row.foreign and '+' in row.foreign %}rise{% elif row.foreign and '-' in row.foreign %}fall{% endif %}">{{ row.foreign }}</td>
+                  <td class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}">{{ row.trust }}</td>
+                  <td class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}">{{ row.dealer }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="empty-state">今日無具明確族群標的</div>
+          {% endif %}
+
+          {% if pressplay.found_group.unmatched %}
+          <div class="meta-note">未比對到之原文標記：{{ pressplay.found_group.unmatched|join('、') }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- 無明確族群但有異動標的 -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">無明確族群標的</h3>
+            <span class="count-badge">{{ pressplay.not_found_group.matched|length }} 檔</span>
+          </div>
+          <span class="card-tip">已比對 {{ pressplay.not_found_group.raw_tokens|length }} 檔，共 {{ pressplay.not_found_group.matched|length }} 檔為個股題材或獨立動能</span>
+        </div>
+
+        <div class="data-block">
+          {% if pressplay.not_found_group.matched %}
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>市場</th>
+                  <th>代號</th>
+                  <th>名稱</th>
+                  <th class="num">收盤</th>
+                  <th class="num">量(張)</th>
+                  <th class="num">外資(張)</th>
+                  <th class="num">投信(張)</th>
+                  <th class="num">自營(張)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in pressplay.not_found_group.matched %}
+                <tr>
+                  <td>{{ row.market }}</td>
+                  <td class="code font-mono">{{ row.code }}</td>
+                  <td class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
+                  <td class="num font-mono">{{ row.close }}</td>
+                  <td class="num font-mono">{{ row.volume }}</td>
+                  <td class="num font-mono {% if row.foreign and '+' in row.foreign %}rise{% elif row.foreign and '-' in row.foreign %}fall{% endif %}">{{ row.foreign }}</td>
+                  <td class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}">{{ row.trust }}</td>
+                  <td class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}">{{ row.dealer }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="empty-state">今日無獨立動能標的</div>
+          {% endif %}
+
+          {% if pressplay.not_found_group.unmatched %}
+          <div class="meta-note">未比對到之原文標記：{{ pressplay.not_found_group.unmatched|join('、') }}</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- 個股法人買賣與當沖明細 -->
+      {% if institutional.stocks %}
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">焦點股券商分點與當沖明細</h3>
+            <span class="count-badge">{{ institutional.matched_count }} 檔</span>
+          </div>
+          <span class="card-tip">涵蓋焦點清單中具分點進出資料之標的</span>
+        </div>
+
+        <div class="data-block">
+          {% for item in institutional.stocks %}
+          <details class="inst-accordion">
+            <summary class="inst-summary">
+              <span class="inst-tag">{{ item.market }}</span>
+              <span class="inst-code font-mono">{{ item.code }}</span>
+              <span class="inst-name font-bold">{{ item.name }}</span>
+              <span class="inst-chips font-mono" style="margin-left:auto; display:flex; flex-direction:row; gap:8px;">
+                <span>外資 {{ item.foreign }}</span>
+                <span>投信 {{ item.trust }}</span>
+                <span>自營 {{ item.dealer }}</span>
+              </span>
+            </summary>
+            
+            <div class="inst-content">
+              <div class="dual-panel">
+                <div class="dual-panel-col">
+                  <div class="sub-label">買超 Top 15 分點</div>
+                  <div class="table-scroll compact">
+                    <table class="data-table">
+                      <thead><tr><th>券商分點</th><th class="num">買超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+                      <tbody>
+                        {% for r in item.buyers %}
+                        <tr>
+                          <td class="name">{{ r.name }}</td>
+                          <td class="num rise font-mono">{{ r.net }}</td>
+                          <td class="num font-mono">{{ r.buyP }}</td>
+                          <td class="num font-mono">{{ r.buyV }}</td>
+                          <td class="num font-mono">{{ r.sellV }}</td>
+                          <td class="num font-mono">{{ r.sellP }}</td>
+                        </tr>
+                        {% else %}
+                        <tr class="empty-row"><td colspan="6">無買超分點資料</td></tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div class="dual-panel-col">
+                  <div class="sub-label">賣超 Top 15 分點</div>
+                  <div class="table-scroll compact">
+                    <table class="data-table">
+                      <thead><tr><th>券商分點</th><th class="num">賣超</th><th class="num">買均</th><th class="num">買張</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+                      <tbody>
+                        {% for r in item.sellers %}
+                        <tr>
+                          <td class="name">{{ r.name }}</td>
+                          <td class="num fall font-mono">{{ r.net }}</td>
+                          <td class="num font-mono">{{ r.buyP }}</td>
+                          <td class="num font-mono">{{ r.buyV }}</td>
+                          <td class="num font-mono">{{ r.sellV }}</td>
+                          <td class="num font-mono">{{ r.sellP }}</td>
+                        </tr>
+                        {% else %}
+                        <tr class="empty-row"><td colspan="6">無賣超分點資料</td></tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top:14px;">
+                <div class="sub-label">當沖 Top 10 分點</div>
+                <div class="table-scroll">
+                  <table class="data-table">
+                    <thead><tr><th>券商分點</th><th class="num">當沖總量</th><th class="num">買張</th><th class="num">買均</th><th class="num">賣張</th><th class="num">賣均</th></tr></thead>
+                    <tbody>
+                      {% for r in item.daytraders %}
+                      <tr>
+                        <td class="name">{{ r.name }}</td>
+                        <td class="num font-mono font-bold">{{ r.total }}</td>
+                        <td class="num font-mono">{{ r.buyV }}</td>
+                        <td class="num font-mono">{{ r.buyP }}</td>
+                        <td class="num font-mono">{{ r.sellV }}</td>
+                        <td class="num font-mono">{{ r.sellP }}</td>
+                      </tr>
+                      {% else %}
+                      <tr class="empty-row"><td colspan="6">無當沖分點資料</td></tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </details>
           {% endfor %}
         </div>
-        {% endfor %}
       </div>
       {% endif %}
+    </section>
 
-      {% if calendar.events %}
-      <div style="max-height: 400px; overflow-y: auto; padding-right: 8px; margin-top: 16px;">
-      {% for date, evs in calendar.events|groupby('date') %}
-      <div class="cal-day" id="cal-{{ date }}">
-        <div class="cal-date{{ ' today' if date == calendar.today else '' }}">{{ date[5:].replace('-', '/') }}{% if date == calendar.today %}<br><span class="badge exit-today-badge">今天</span>{% endif %}</div>
-        <div class="cal-day-events">
-          {% for ev in evs %}
-          <div class="cal-event-card cat-{{ ev.category or 'general' }}">
-            <div class="cal-header-row">
-              {% if ev.time %}
-              <span class="cal-time-pill">{{ ev.time }}</span>
-              {% else %}
-              <span class="cal-time-pill all-day">全天</span>
-              {% endif %}
-              <span class="cal-cat-badge">{{ ev.category_name or '事件' }}</span>
+    <!-- 4. 市場背景 (Market Context) -->
+    <section id="market-context" class="content-section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="title-icon">🌐</span> 市場背景</h2>
+        <span class="section-desc">美股收盤、跨海連動 ADR 與亞股早盤概況</span>
+      </div>
+
+      <!-- 美股四大指數 & 跨海連動 -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">美股四大指數與跨海連動標的</h3>
+          </div>
+          <a href="https://tw.stock.yahoo.com/markets/" target="_blank" rel="noopener" class="header-btn">Yahoo 股市 ↗</a>
+        </div>
+
+        <div class="data-block">
+          <!-- 美股四大指數 (Row 1) -->
+          <div class="tiles-grid">
+            {% for key, tile in us_indices.items() %}
+            {% if tile %}
+            <div class="tile">
+              <div class="name">{{ tile.name }}</div>
+              <div class="value font-mono">{{ '{:,.2f}'.format(tile.value) }}</div>
+              <div class="delta font-mono {{ 'rise' if tile.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(tile.change) }} ({{ '%+.2f'|format(tile.change_pct) }}%)</div>
             </div>
-            <div class="cal-summary">{{ ev.summary }}</div>
-            {% if ev.description %}<div class="cal-desc">{{ ev.description }}</div>{% endif %}
-            {% if ev.mm_link %}
-            <div>
-              <a class="cal-link" href="{{ ev.mm_link }}" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            {% endif %}
+            {% endfor %}
+          </div>
+
+          <!-- 跨海連動 / ADR (Row 2) -->
+          <div class="tiles-grid" style="margin-top:10px;">
+            {% if night and night.latest %}
+            <div class="tile">
+              <div class="name"><span>台指期夜盤</span> <span class="sub-pill">05:00</span></div>
+              <div class="value font-mono">{{ "{:,.0f}".format(night.latest.price) }}</div>
+              <div class="delta font-mono {{ 'rise' if night.latest.change >= 0 else 'fall' }}">{{ '%+.0f'|format(night.latest.change) }} ({{ '%+.2f'|format(night.latest.change_pct) }}%)</div>
+            </div>
+            {% endif %}
+            {% if indices and indices.adrs and indices.adrs.tsmc %}
+            <div class="tile">
+              <div class="name">{{ indices.adrs.tsmc.name }}</div>
+              <div class="value font-mono">{{ '{:,.2f}'.format(indices.adrs.tsmc.value) }}</div>
+              <div class="delta font-mono {{ 'rise' if indices.adrs.tsmc.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.tsmc.change) }} ({{ '%+.2f'|format(indices.adrs.tsmc.change_pct) }}%)</div>
+            </div>
+            {% endif %}
+            {% if indices and indices.adrs and indices.adrs.umc %}
+            <div class="tile">
+              <div class="name">{{ indices.adrs.umc.name }}</div>
+              <div class="value font-mono">{{ '{:,.2f}'.format(indices.adrs.umc.value) }}</div>
+              <div class="delta font-mono {{ 'rise' if indices.adrs.umc.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.umc.change) }} ({{ '%+.2f'|format(indices.adrs.umc.change_pct) }}%)</div>
+            </div>
+            {% endif %}
+            {% if indices and indices.adrs and indices.adrs.ase %}
+            <div class="tile">
+              <div class="name">{{ indices.adrs.ase.name }}</div>
+              <div class="value font-mono">{{ '{:,.2f}'.format(indices.adrs.ase.value) }}</div>
+              <div class="delta font-mono {{ 'rise' if indices.adrs.ase.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(indices.adrs.ase.change) }} ({{ '%+.2f'|format(indices.adrs.ase.change_pct) }}%)</div>
             </div>
             {% endif %}
           </div>
-          {% endfor %}
         </div>
       </div>
-      {% endfor %}
+
+      <!-- 日股 / 韓股 開盤走勢 -->
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">亞股開盤走勢</h3>
+          </div>
+          <span class="card-tip">08:00 開盤行情</span>
+        </div>
+
+        <div class="data-block">
+          <div class="tiles-grid">
+            {% for key, tile in asia_open.items() %}
+            {% if tile %}
+            <div class="tile">
+              <div class="name">{{ tile.name }}</div>
+              <div class="value font-mono">{{ '{:,.2f}'.format(tile.value) }}</div>
+              <div class="delta font-mono {{ 'rise' if tile.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(tile.change) }} ({{ '%+.2f'|format(tile.change_pct) }}%)</div>
+              {% if tile.updated_cst %}<div class="updated font-mono">{{ tile.updated_cst }}</div>{% endif %}
+            </div>
+            {% endif %}
+            {% endfor %}
+          </div>
+          {% if indices_missing %}
+          <div class="meta-note">缺少欄位：{{ indices_missing|join('、') }}</div>
+          {% endif %}
+        </div>
       </div>
-      {% else %}
-      <p class="missing">尚無資料（行事曆來源還沒抓過，或近期沒有排定事件）。</p>
+    </section>
+
+    <!-- 5. 補充資訊 (News & Calendar) -->
+    <section id="news-calendar" class="content-section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="title-icon">📑</span> 補充資訊</h2>
+        <span class="section-desc">隔夜市場焦點新聞與近期總經行事曆</span>
+      </div>
+
+      <!-- 隔夜重大新聞 (可折疊) -->
+      {% if news %}
+      <div class="card">
+        <details class="supp-accordion" open>
+          <summary class="supp-summary">
+            <div class="card-title-group">
+              <h3 class="card-title">隔夜重大新聞 Top 5</h3>
+              <span class="count-badge">{{ news|length }} 則</span>
+            </div>
+            <span class="accordion-toggle-icon">▼</span>
+          </summary>
+          
+          <div class="supp-content" style="margin-top:14px;">
+            <div class="news-list">
+              {% for a in news %}
+              <a href="{{ a.link }}" target="_blank" rel="noopener" class="news-item">
+                <div class="news-title">{{ a.title }}</div>
+                <div class="news-meta font-mono">
+                  <span class="news-source">{{ a.source }}</span>
+                  <span class="news-time">{{ a.time }}</span>
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+        </details>
+      </div>
       {% endif %}
+
+      <!-- 財經行事曆 (可折疊) -->
+      <div class="card">
+        <details class="supp-accordion" open>
+          <summary class="supp-summary">
+            <div class="card-title-group">
+              <h3 class="card-title">財經行事曆</h3>
+              <span class="count-badge">{{ calendar.events|length }} 筆事件</span>
+            </div>
+            <span class="accordion-toggle-icon">▼</span>
+          </summary>
+
+          <div class="supp-content" style="margin-top:14px;">
+            {% if calendar.grid %}
+            <div class="cal-grid">
+              <div class="cal-grid-head">
+                {% for wl in calendar.grid.weekday_labels %}<div class="cal-grid-h">{{ wl }}</div>{% endfor %}
+              </div>
+              {% for week in calendar.grid.weeks %}
+              <div class="cal-grid-row">
+                {% for d in week %}
+                {% if d.count %}
+                <a class="cal-cell has-events{{ ' today' if d.is_today else '' }}" href="#cal-{{ d.date }}">
+                  <span class="cal-cell-num">{{ d.month_label or d.day }}</span>
+                  <span class="cal-cell-dots">{% for i in range([d.count, 3]|min) %}<span class="dot"></span>{% endfor %}{% if d.count > 3 %}<span class="cal-cell-more">+{{ d.count - 3 }}</span>{% endif %}</span>
+                </a>
+                {% else %}
+                <div class="cal-cell{{ ' today' if d.is_today else '' }}{{ '' if d.in_range else ' out' }}">
+                  <span class="cal-cell-num">{{ d.month_label or d.day }}</span>
+                </div>
+                {% endif %}
+                {% endfor %}
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if calendar.events %}
+            <div class="cal-agenda-scroll">
+              {% for date, evs in calendar.events|groupby('date') %}
+              <div class="cal-day" id="cal-{{ date }}">
+                <div class="cal-date{{ ' today' if date == calendar.today else '' }}">
+                  {{ date[5:].replace('-', '/') }}
+                  {% if date == calendar.today %}<br><span class="badge badge-amber">今天</span>{% endif %}
+                </div>
+                <div class="cal-day-events">
+                  {% for ev in evs %}
+                  <div class="cal-event-card cat-{{ ev.category or 'general' }}">
+                    <div class="cal-header-row">
+                      {% if ev.time %}
+                      <span class="cal-time-pill">{{ ev.time }}</span>
+                      {% else %}
+                      <span class="cal-time-pill all-day">全天</span>
+                      {% endif %}
+                      <span class="cal-cat-badge">{{ ev.category_name or '事件' }}</span>
+                    </div>
+                    <div class="cal-summary">{{ ev.summary }}</div>
+                    {% if ev.description %}<div class="cal-desc">{{ ev.description }}</div>{% endif %}
+                    {% if ev.mm_link %}
+                    <div>
+                      <a class="cal-link" href="{{ ev.mm_link }}" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+                    </div>
+                    {% endif %}
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            {% else %}
+            <div class="empty-state">近期無排定事件</div>
+            {% endif %}
+          </div>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 6. 系統資訊 (System Info Footer) -->
+  <footer id="system-info" class="page-footer">
+    <div class="footer-inner">
+      <div class="footer-title">系統與資料說明</div>
+      <ul class="footer-notes">
+        <li><strong>資料來源：</strong>處置股與財務公告來自 chengwaye.com；籌碼股來自 PressPlay 每日盤前專欄；指數報價來自 Yahoo Finance；新聞聚合來自 Google News；財經行事曆來自 MacroMicro。</li>
+        <li><strong>排程機制：</strong>交易日每日 07:35（美股收盤與早報結算）、08:05（日韓開盤走勢）、08:20（台指期開盤前最後確認）自動更新。</li>
+        <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
+        <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日 28 檔重點清單；未在清單內之標的自動略過。</li>
+      </ul>
+      <div class="footer-copy">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
+  </footer>
 
-  </section>
-
-
-    
-</div>
 </body>
 </html>
