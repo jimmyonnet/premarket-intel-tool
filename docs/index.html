@@ -6,7 +6,7 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>盤前情報準備台 · 2026-08-22 22:40</title>
+<title>盤前情報準備台 · 2026-08-22 22:41</title>
 
 
 
@@ -791,6 +791,14 @@
     body {
       font-size: 14px;
     }
+    .nav-tabs, .page-nav {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 20;
+      border-bottom: 1px solid #e5e7eb;
+      padding-top: 4px;
+    }
     .responsive-table thead, .disposal-table thead { display: none; }
     .responsive-table tbody tr, .disposal-table tbody tr {
       display: block;
@@ -851,16 +859,18 @@
     background: #FFFFFF;
     border: 1px solid var(--border, #E2E8F0);
     border-radius: 6px;
-    padding: 4px 10px;
-    font-size: 12px;
+    padding: 8px 12px;
+    min-height: 44px;
+    font-size: 13px;
     font-weight: 600;
     color: var(--text-main, #0F172A);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     transition: all 0.15s ease;
     margin-left: auto;
+    box-sizing: border-box;
   }
   .refresh-btn:hover {
     background: #F1F5F9;
@@ -884,7 +894,7 @@
         <h1 class="page-title">盤前情報準備台</h1>
       </div>
       <div class="meta-row">
-        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/22 22:40</span></span>
+        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/22 22:41</span></span>
         
         <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">08/24</span></span>
         
@@ -898,7 +908,7 @@
   </header>
 
   <!-- NAV (Sticky Anchor Bar) -->
-  <nav class="page-nav">
+  <nav class="page-nav nav-tabs">
     <div class="nav-inner">
       <a href="#summary" class="nav-link">今日摘要</a>
       
@@ -910,7 +920,7 @@
       <a href="#news-calendar" class="nav-link">補充資訊</a>
       <a href="#system-info" class="nav-link">系統資訊</a>
       <button class="refresh-btn" onclick="location.reload(true)" title="重新載入最新版">
-        🔄 <span class="last-build">建置 2026-08-22 22:39</span>
+        🔄 <span class="last-build">建置 2026-08-22 22:40</span>
       </button>
     </div>
   </nav>

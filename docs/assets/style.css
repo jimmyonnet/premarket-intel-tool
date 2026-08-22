@@ -3,6 +3,14 @@
   body {
     font-size: 14px;
   }
+  .nav-tabs, .page-nav {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 20;
+    border-bottom: 1px solid #e5e7eb;
+    padding-top: 4px;
+  }
   .responsive-table thead, .disposal-table thead { display: none; }
   .responsive-table tbody tr, .disposal-table tbody tr {
     display: block;
@@ -63,8 +71,9 @@
   background: #FFFFFF;
   border: 1px solid var(--border, #E2E8F0);
   border-radius: 6px;
-  padding: 4px 10px;
-  font-size: 12px;
+  padding: 8px 12px;
+  min-height: 44px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--text-main, #0F172A);
   cursor: pointer;
