@@ -1,48 +1,8 @@
 {
   "source": "https://calendar.google.com/calendar/ical/c_c040a8d14375de55799b6fdd8ece2ee2f32aa85fd0e5b39d14b1e07f90df424e%40group.calendar.google.com/public/basic.ics",
-  "today": "2026-08-21",
-  "range_end": "2026-09-04",
+  "today": "2026-08-22",
+  "range_end": "2026-09-05",
   "events": [
-    {
-      "date": "2026-08-21",
-      "time": "08:30",
-      "all_day": false,
-      "summary": "日本-製造業採購經理人指數[PMI]",
-      "description": "市場預期: 55.1\n前值:  54.5",
-      "mm_link": "https://sc.macromicro.me/collections/58/jp-manufacturing-service/797/jp-pmi?utm_medium=calendar",
-      "category": "econ",
-      "category_name": "總經數據"
-    },
-    {
-      "date": "2026-08-21",
-      "time": "15:30",
-      "all_day": false,
-      "summary": "德國-製造業採購經理人指數[PMI]",
-      "description": "市場預期: 52.1\n前值:  52.2",
-      "mm_link": "https://sc.macromicro.me/collections/42/eu-industry-relative/500/eu-de-germany-pmi?utm_medium=calendar",
-      "category": "econ",
-      "category_name": "總經數據"
-    },
-    {
-      "date": "2026-08-21",
-      "time": "16:00",
-      "all_day": false,
-      "summary": "歐元區-服務業採購經理人指數[NMI]",
-      "description": "前值:  51.7",
-      "mm_link": "https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar",
-      "category": "general",
-      "category_name": "事件"
-    },
-    {
-      "date": "2026-08-21",
-      "time": "16:00",
-      "all_day": false,
-      "summary": "歐元區-製造業採購經理人指數[PMI]",
-      "description": "市場預期: 51.8\n前值:  51.9",
-      "mm_link": "https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar",
-      "category": "econ",
-      "category_name": "總經數據"
-    },
     {
       "date": "2026-08-26",
       "time": "20:30",
@@ -208,10 +168,30 @@
       "time": "22:00",
       "all_day": false,
       "summary": "美國-ISM服務業指數[Services PMI]",
-      "description": "前值: 54.1",
+      "description": "前值:  54.1",
       "mm_link": "https://sc.macromicro.me/collections/8/us-industry-relative/55/ism-nonmanu?utm_medium=calendar",
       "category": "econ",
       "category_name": "總經數據"
+    },
+    {
+      "date": "2026-09-04",
+      "time": "20:30",
+      "all_day": false,
+      "summary": "美國-失業率",
+      "description": "前值: 4.10%",
+      "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+      "category": "econ",
+      "category_name": "總經數據"
+    },
+    {
+      "date": "2026-09-04",
+      "time": "20:30",
+      "all_day": false,
+      "summary": "美國-非农就业人數(月变动)",
+      "description": "前值: -23.0k",
+      "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+      "category": "general",
+      "category_name": "事件"
     }
   ]
 }
