@@ -1,11 +1,18 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="個人自用，勿分享">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#F8FAFC">
+<meta name="theme-color" content="#0B1220">
+<script>
+  (function() {
+    var savedTheme = localStorage.getItem('premarket.theme');
+    var isDark = (savedTheme === 'dark' || (!savedTheme && window.matchMedia && !window.matchMedia('(prefers-color-scheme: light)').matches) || !savedTheme);
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  })();
+</script>
 <title>盤前 · 08/24 · 近處置 5 · 出關 3</title>
 
 <link rel="manifest" href="manifest.json">
@@ -199,7 +206,7 @@
     border-bottom: 1px solid var(--border);
     z-index: 50;
     box-shadow: var(--shadow-sm);
-    padding: 2px 0;
+    padding: 6px 0;
   }
   .nav-inner {
     max-width: 980px;
@@ -207,7 +214,7 @@
     padding: 0 16px;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     overflow-x: auto;
     white-space: nowrap;
     scrollbar-width: none;
@@ -217,13 +224,15 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 10px 10px;
+    padding: 6px 10px;
+    height: 32px;
     color: var(--text-muted);
     text-decoration: none;
     font-size: 13px;
     font-weight: 600;
     border-radius: 6px;
     transition: all 0.15s ease;
+    box-sizing: border-box;
   }
   .nav-link:hover, .nav-link.is-active {
     color: var(--text-main);
@@ -252,17 +261,19 @@
     background: var(--bg-card);
     border: 1px solid var(--border-strong);
     border-radius: 6px;
-    padding: 6px 10px;
-    min-height: 38px;
+    padding: 0 10px;
+    height: 32px;
     font-size: 12px;
     font-weight: 600;
     color: var(--text-main);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
     transition: all 0.15s ease;
     box-sizing: border-box;
+    flex-shrink: 0;
   }
   .nav-btn:hover {
     background: var(--bg-hover);
@@ -1720,7 +1731,7 @@
         <h1 class="page-title">盤前情報準備台</h1>
       </div>
       <div class="meta-row">
-        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/23 01:52</span></span>
+        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/23 01:56</span></span>
         
         <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">08/24</span></span>
         
@@ -1759,7 +1770,7 @@
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" aria-label="切換截圖模式">📸 截圖</button>
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" aria-label="切換深淺色主題">🌙 深色</button>
         <button class="nav-btn refresh-btn" onclick="location.reload(true)" type="button" title="重新載入最新版" aria-label="重新整理頁面">
-          🔄 <span class="last-build">建置 2026-08-23 01:52</span><span class="short-build">重整</span>
+          🔄 <span class="last-build">建置 2026-08-23 01:56</span><span class="short-build">重整</span>
         </button>
       </div>
     </div>
@@ -4392,7 +4403,7 @@
         <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
         <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日重點清單；未在清單內之標的自動略過。</li>
       </ul>
-      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-23 01:51</span></div>
+      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-23 01:52</span></div>
       <div class="footer-copy" style="margin-top:4px; text-align:center;">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
   </footer>

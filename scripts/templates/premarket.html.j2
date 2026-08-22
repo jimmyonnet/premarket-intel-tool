@@ -1,11 +1,18 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="zh-Hant" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="個人自用，勿分享">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#F8FAFC">
+<meta name="theme-color" content="#0B1220">
+<script>
+  (function() {
+    var savedTheme = localStorage.getItem('premarket.theme');
+    var isDark = (savedTheme === 'dark' || (!savedTheme && window.matchMedia && !window.matchMedia('(prefers-color-scheme: light)').matches) || !savedTheme);
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  })();
+</script>
 <title>盤前 · {{ date_check.page_says_applies_to if date_check and date_check.page_says_applies_to else ((meta.data_date if meta is defined and meta and meta.data_date else '08/24')) }} · 近處置 {{ (disposal.one_flag_from_disposal|length if disposal and disposal.one_flag_from_disposal else 5) }} · 出關 {{ (exiting_today|length if exiting_today is defined and exiting_today else 3) }}</title>
 
 <link rel="manifest" href="manifest.json">
@@ -199,7 +206,7 @@
     border-bottom: 1px solid var(--border);
     z-index: 50;
     box-shadow: var(--shadow-sm);
-    padding: 2px 0;
+    padding: 6px 0;
   }
   .nav-inner {
     max-width: 980px;
@@ -207,7 +214,7 @@
     padding: 0 16px;
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     overflow-x: auto;
     white-space: nowrap;
     scrollbar-width: none;
@@ -217,13 +224,15 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 10px 10px;
+    padding: 6px 10px;
+    height: 32px;
     color: var(--text-muted);
     text-decoration: none;
     font-size: 13px;
     font-weight: 600;
     border-radius: 6px;
     transition: all 0.15s ease;
+    box-sizing: border-box;
   }
   .nav-link:hover, .nav-link.is-active {
     color: var(--text-main);
@@ -252,17 +261,19 @@
     background: var(--bg-card);
     border: 1px solid var(--border-strong);
     border-radius: 6px;
-    padding: 6px 10px;
-    min-height: 38px;
+    padding: 0 10px;
+    height: 32px;
     font-size: 12px;
     font-weight: 600;
     color: var(--text-main);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
     transition: all 0.15s ease;
     box-sizing: border-box;
+    flex-shrink: 0;
   }
   .nav-btn:hover {
     background: var(--bg-hover);

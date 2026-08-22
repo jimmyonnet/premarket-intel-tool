@@ -9,23 +9,23 @@ def build_embeds():
         'rev': 'https://chengwaye.com/realtime-rev'
     }
 
+    head_theme_init = """
+    <script>
+      (function() {
+        var t = 'dark';
+        try {
+          t = window.parent.document.documentElement.getAttribute('data-theme') || localStorage.getItem('premarket.theme');
+        } catch(e){}
+        if (t !== 'light') t = 'dark';
+        document.documentElement.setAttribute('data-theme', t);
+        document.documentElement.className = t;
+      })();
+    </script>
+    """
+
     hide_css = """
     <style>
-      :root, :root[data-theme="light"], html.light, body.light {
-        --bg-page: transparent;
-        --bg-card: #FFFFFF;
-        --bg-sub: #F8FAFC;
-        --bg-hover: #F1F5F9;
-        --text-main: #0F172A;
-        --text-muted: #64748B;
-        --border: #E2E8F0;
-        --border-light: #F1F5F9;
-        --blue: #2563EB;
-        --btn-bg: #FFFFFF;
-        --btn-border: #E2E8F0;
-        --btn-hover: #F1F5F9;
-      }
-      :root[data-theme="dark"], html[data-theme="dark"], html.dark, body.dark, body[data-theme="dark"] {
+      :root, :root[data-theme="dark"], html.dark, body.dark, html[data-theme="dark"], body[data-theme="dark"] {
         --bg-page: transparent;
         --bg-card: #111827;
         --bg-sub: #1A2234;
@@ -39,7 +39,21 @@ def build_embeds():
         --btn-border: rgba(255, 255, 255, 0.1);
         --btn-hover: #242E44;
       }
-      body { background: transparent !important; color: var(--text-main) !important; padding: 0 !important; font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI", Roboto, "PingFang TC", "Noto Sans TC", sans-serif !important; }
+      :root[data-theme="light"], html.light, body.light, html[data-theme="light"], body[data-theme="light"] {
+        --bg-page: transparent;
+        --bg-card: #FFFFFF;
+        --bg-sub: #F8FAFC;
+        --bg-hover: #F1F5F9;
+        --text-main: #0F172A;
+        --text-muted: #64748B;
+        --border: #E2E8F0;
+        --border-light: #F1F5F9;
+        --blue: #2563EB;
+        --btn-bg: #FFFFFF;
+        --btn-border: #E2E8F0;
+        --btn-hover: #F1F5F9;
+      }
+      html, body { background: transparent !important; color: var(--text-main) !important; padding: 0 !important; margin: 0 !important; font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI", Roboto, "PingFang TC", "Noto Sans TC", sans-serif !important; }
       nav, .header, .ai-warn, .ai-warn-bottom, .search-container, #load-archive-btn, footer { display: none !important; }
       .container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; background: transparent !important; }
       #app { margin-top: 0 !important; min-height: 0 !important; background: transparent !important; }
@@ -63,7 +77,7 @@ def build_embeds():
       .btn-link { border: 1px solid var(--btn-border) !important; color: var(--text-muted) !important; background: var(--btn-bg) !important; border-radius: 6px !important; padding: 4px 10px !important; font-size: 11px !important; font-weight: 600 !important; text-decoration: none !important; transition: all 0.15s ease !important; }
       .btn-link:hover { background: var(--btn-hover) !important; color: var(--text-main) !important; }
       .filter-bar { background: var(--bg-sub) !important; border: 1px solid var(--border) !important; border-radius: 8px !important; color: var(--text-muted) !important; padding: 10px 14px !important; font-size: 12px !important; margin-bottom: 12px !important; }
-      .filter-bar span { color: var(--text-muted) !important; }
+      .filter-bar span, .filter-bar label { color: var(--text-muted) !important; }
       .filter-bar .filter-label { color: var(--text-main) !important; font-size: 12px !important; margin-right: 14px !important; }
       .filter-bar button { background: var(--btn-bg) !important; border: 1px solid var(--btn-border) !important; color: var(--text-main) !important; border-radius: 6px !important; padding: 4px 10px !important; font-size: 11px !important; }
       .filter-bar button:hover { background: var(--btn-hover) !important; color: var(--text-main) !important; }
@@ -93,18 +107,13 @@ def build_embeds():
               } catch(e){}
             }
           }
-          var isDark = (theme === 'dark');
-          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-          if (isDark) {
-            document.documentElement.classList.add('dark');
-            document.documentElement.classList.remove('light');
-            document.body.classList.add('dark');
-            document.body.classList.remove('light');
-          } else {
-            document.documentElement.classList.add('light');
-            document.documentElement.classList.remove('dark');
-            document.body.classList.add('light');
-            document.body.classList.remove('dark');
+          var isDark = (theme !== 'light');
+          var mode = isDark ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', mode);
+          document.documentElement.className = mode;
+          if (document.body) {
+            document.body.className = mode;
+            document.body.setAttribute('data-theme', mode);
           }
         }
         window.addEventListener('message', function(e) {
@@ -134,8 +143,9 @@ def build_embeds():
             send();
           }
         }, 3500);
-        setTimeout(function() { applyTheme(); send(); }, 100);
-        setTimeout(function() { applyTheme(); send(); }, 500);
+        setTimeout(function() { applyTheme(); send(); }, 50);
+        setTimeout(function() { applyTheme(); send(); }, 200);
+        setTimeout(function() { applyTheme(); send(); }, 600);
       })();
     </script>
     """
@@ -153,6 +163,8 @@ def build_embeds():
                 html = re.sub(r'<ins[^>]+adsbygoogle[^>]*>.*?</ins>', '', html, flags=re.DOTALL|re.IGNORECASE)
                 html = re.sub(r'<iframe[^>]+doubleclick[^>]*>.*?</iframe>', '', html, flags=re.DOTALL|re.IGNORECASE)
 
+                # Inject head script and CSS
+                html = html.replace('<head>', '<head>' + head_theme_init)
                 html = html.replace('</head>', hide_css + '</head>')
 
                 # Disable historical rendering to only show unreflected
