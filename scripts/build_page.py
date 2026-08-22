@@ -62,6 +62,107 @@ def get_current_trading_day(d: date) -> date:
     return cur
 
 
+
+def normalize_indices(raw_indices):
+    norm = {}
+    if not raw_indices:
+        return norm
+    norm.update(raw_indices)
+    
+    us = dict(raw_indices.get("us_indices", {}))
+    adrs = dict(raw_indices.get("adrs", {}))
+    asia = dict(raw_indices.get("asia_open", {}))
+    
+    # Normalize US
+    mapping = {
+        "sp500": ["^GSPC", "S&P 500", "sp500", "S&P 500指數"],
+        "nasdaq": ["^IXIC", "那斯達克", "nasdaq", "NASDAQ指數"],
+        "dow": ["^DJI", "道瓊工業", "dow", "道瓊工業指數"],
+        "sox": ["^SOX", "費城半導體", "sox", "費城半導體指數"],
+    }
+    for key, aliases in mapping.items():
+        if key in us:
+            item = dict(us[key])
+            item["price"] = item.get("value")
+            for alias in aliases:
+                norm[alias] = item
+                us[alias] = item
+                
+    # Normalize ADRs
+    adr_mapping = {
+        "tsmc": ["TSM", "台積電 ADR", "tsmc"],
+        "umc": ["UMC", "聯電 ADR", "umc"],
+        "ase": ["ASX", "日月光 ADR", "ase"],
+    }
+    for key, aliases in adr_mapping.items():
+        if key in adrs:
+            item = dict(adrs[key])
+            item["price"] = item.get("value")
+            for alias in aliases:
+                norm[alias] = item
+                adrs[alias] = item
+                
+    # Normalize Asia
+    asia_mapping = {
+        "nikkei225": ["^N225", "日經 225", "日經225指數", "nikkei225"],
+        "kospi": ["^KS11", "韓國 KOSPI", "韓國綜合指數", "kospi"],
+    }
+    for key, aliases in asia_mapping.items():
+        if key in asia:
+            item = dict(asia[key])
+            item["price"] = item.get("value")
+            for alias in aliases:
+                norm[alias] = item
+                asia[alias] = item
+                
+    norm["us_indices"] = us
+    norm["adrs"] = adrs
+    norm["asia_open"] = asia
+    return norm
+
+
+def prepare_calendar_timeline(events, today_str):
+    today_dt = date.fromisoformat(today_str) if today_str else datetime.now(TAIPEI).date()
+    tomorrow_dt = today_dt + timedelta(days=1)
+    
+    days_to_sunday = 6 - today_dt.weekday()
+    this_week_end_dt = today_dt + timedelta(days=days_to_sunday)
+    
+    WEEKDAY_NAMES = ["週一", "週二", "週三", "週四", "週五", "週六", "週日"]
+    
+    by_date = {}
+    for ev in events:
+        ev_d_str = ev.get("date")
+        if not ev_d_str:
+            continue
+        try:
+            ev_d = date.fromisoformat(ev_d_str)
+        except ValueError:
+            continue
+            
+        ev["weekday_label"] = WEEKDAY_NAMES[ev_d.weekday()]
+        
+        if ev_d not in by_date:
+            if ev_d == today_dt:
+                rel_label = "今日"
+            elif ev_d == tomorrow_dt:
+                rel_label = "明日"
+            elif ev_d <= this_week_end_dt:
+                rel_label = "本週"
+            else:
+                rel_label = "下週"
+            by_date[ev_d] = {
+                "date_str": ev_d_str,
+                "display_date": f"{rel_label} · {ev_d.strftime('%m/%d')} {WEEKDAY_NAMES[ev_d.weekday()]}",
+                "is_today": (ev_d == today_dt),
+                "open": (ev_d == today_dt),
+                "events": []
+            }
+        by_date[ev_d]["events"].append(ev)
+        
+    date_groups = [by_date[d] for d in sorted(by_date.keys())]
+    return date_groups
+
 def evaluate_date_check(today: date, page_applies_to: str | None):
     if not page_applies_to:
         return {
@@ -387,7 +488,7 @@ def main():
     )
     args = ap.parse_args()
 
-    indices = load_json(args.indices) or {}
+    indices = normalize_indices(load_json(args.indices) or {}) or {}
     night = load_json(args.night_session) or {}
     disposal = load_json(args.disposal) or {}
     pressplay_raw = load_json(args.pressplay) or {}
@@ -420,10 +521,13 @@ def main():
     financials_data = load_json(args.financials) if args.financials else {}
     news_data = load_json(args.news) if args.news else []
     twse_data = load_json(args.twse_summary) if args.twse_summary else {} or {}
+    cal_events = calendar_raw.get("events") or []
+    cal_today = calendar_raw.get("today") or now.strftime("%Y-%m-%d")
     calendar_section = {
-        "today": calendar_raw.get("today"),
+        "today": cal_today,
         "range_end": calendar_raw.get("range_end"),
-        "events": calendar_raw.get("events") or [],
+        "events": cal_events,
+        "date_groups": prepare_calendar_timeline(cal_events, cal_today),
     }
     calendar_section["grid"] = build_calendar_grid(
         calendar_section["today"], calendar_section["range_end"], calendar_section["events"]
