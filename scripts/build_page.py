@@ -1,3 +1,4 @@
+from __future__ import annotations
 #!/usr/bin/env python3
 """
 Assembles the final morning page (docs/index.html) from the three data
@@ -39,6 +40,87 @@ from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 
 TAIPEI = timezone(timedelta(hours=8))
+
+TW_HOLIDAYS_2026 = {
+    "2026-01-01", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20",
+    "2026-02-27", "2026-04-03", "2026-04-06", "2026-05-01", "2026-06-19", "2026-09-25",
+    "2026-10-09", "2026-10-10"
+}
+
+
+def get_next_trading_day(d: date) -> date:
+    nxt = d + timedelta(days=1)
+    while nxt.weekday() >= 5 or nxt.isoformat() in TW_HOLIDAYS_2026:
+        nxt += timedelta(days=1)
+    return nxt
+
+
+def get_current_trading_day(d: date) -> date:
+    cur = d
+    while cur.weekday() >= 5 or cur.isoformat() in TW_HOLIDAYS_2026:
+        cur -= timedelta(days=1)
+    return cur
+
+
+def evaluate_date_check(today: date, page_applies_to: str | None):
+    if not page_applies_to:
+        return {
+            "status": "ready",
+            "label": "資料已就緒",
+            "class_name": "is-ok",
+            "tooltip": "資料已載入"
+        }
+    
+    # Parse MM/DD or YYYY-MM-DD
+    target_date = None
+    if "/" in page_applies_to:
+        parts = page_applies_to.split("/")
+        if len(parts) == 2:
+            try:
+                target_date = date(today.year, int(parts[0]), int(parts[1]))
+            except ValueError:
+                pass
+    elif "-" in page_applies_to:
+        try:
+            target_date = date.fromisoformat(page_applies_to)
+        except ValueError:
+            pass
+
+    if target_date is None:
+        return {
+            "status": "ready",
+            "label": "資料已就緒",
+            "class_name": "is-ok",
+            "tooltip": f"資料適用: {page_applies_to}"
+        }
+
+    next_td = get_next_trading_day(today)
+    curr_td = get_current_trading_day(today)
+
+    if target_date == next_td:
+        return {
+            "status": "aligned_next",
+            "label": "已對齊次日",
+            "class_name": "is-ok",
+            "tooltip": f"資料日期已對齊次一交易日（{next_td.strftime('%m/%d')}）"
+        }
+    elif target_date == today or target_date == curr_td:
+        return {
+            "status": "same_day",
+            "label": "當日盤後",
+            "class_name": "is-info",
+            "tooltip": f"資料日期為當日交易日（{target_date.strftime('%m/%d')}）"
+        }
+    else:
+        diff_days = (target_date - today).days
+        diff_str = f"相差 {diff_days:+d} 天" if diff_days != 0 else "日期待確認"
+        return {
+            "status": "warning",
+            "label": "日期待確認",
+            "class_name": "is-warning",
+            "tooltip": f"頁面顯示適用 {page_applies_to}，但今天為 {today.strftime('%m/%d')}（次交易日為 {next_td.strftime('%m/%d')}，{diff_str}）"
+        }
+
 
 
 def build_sparkline(points, width=680, height=180, pad=28):
@@ -413,6 +495,7 @@ def main():
         spark=spark,
         disposal=disposal,
         date_check=disposal.get("date_check", {}),
+        date_check_eval=evaluate_date_check(now.date(), (disposal.get("date_check", {}) or {}).get("page_says_applies_to")),
         pressplay=pressplay,
         institutional=institutional,
         calendar=calendar_section,
