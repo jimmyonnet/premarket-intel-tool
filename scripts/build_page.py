@@ -88,13 +88,16 @@ def normalize_indices(raw_indices):
                 norm[alias] = item
                 us[alias] = item
                 
-    # Normalize ADRs
-    adr_mapping = {
+    # Normalize ADRs & Key Stocks
+    stock_mapping = {
         "tsmc": ["TSM", "台積電 ADR", "tsmc"],
+        "nvda": ["NVDA", "輝達 (NVDA)", "nvda"],
+        "aapl": ["AAPL", "蘋果 (AAPL)", "aapl"],
+        "tsmc_tw": ["2330.TW", "台積電 現貨", "tsmc_tw", "2330"],
         "umc": ["UMC", "聯電 ADR", "umc"],
         "ase": ["ASX", "日月光 ADR", "ase"],
     }
-    for key, aliases in adr_mapping.items():
+    for key, aliases in stock_mapping.items():
         if key in adrs:
             item = dict(adrs[key])
             item["price"] = item.get("value")
