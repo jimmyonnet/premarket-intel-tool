@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>盤前情報準備台</title>
+<title>盤前情報準備台 · {{ meta.build_time if meta is defined and meta.build_time else (build_time or generated_at) }}</title>
+
 
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#F8FAFC">
@@ -915,8 +916,8 @@
   <main class="page-main">
 
     <!-- Stale Banner -->
-    <div class="stale-banner" data-hours="{{ (stale_hours or 0)|int }}">
-      資料時間 {{ data_date or '今日' }}，距今 {{ stale_hours or 0 }} 小時
+    <div class="stale-banner" data-hours="{{ ((meta.stale_hours if meta is defined and meta.stale_hours is defined else stale_hours) or 0)|int }}">
+      資料時間 {{ (meta.data_date if meta is defined and meta.data_date else None) or data_date or '今日' }}，距今 {{ (meta.stale_hours if meta is defined and meta.stale_hours is defined else stale_hours) or 0 }} 小時
     </div>
 
     <!-- 1. 摘要 (Summary) -->

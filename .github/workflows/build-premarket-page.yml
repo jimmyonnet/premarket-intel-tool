@@ -18,7 +18,13 @@ on:
     - cron: "5 0 * * 1-5"
     # 台灣時間 08:20 (UTC 00:20 當天) - 捕捉日韓股開盤20分鐘後的穩定走勢 (供台指期08:45開盤參考)
     - cron: "20 0 * * 1-5"
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      data_date:
+        description: 'Override data date (e.g. 08/24)'
+        required: false
+        default: ''
+
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -115,6 +121,27 @@ jobs:
       - name: Fetch Part 1.5 -- overnight news
         run: |
           python scripts/fetch_news.py || echo '[]' > data/latest/news.json
+      - name: Build data_meta.json
+        run: |
+          python - <<'PY'
+          from datetime import datetime, timezone, timedelta
+          from pathlib import Path
+          import json
+          import os
+
+          tz = timezone(timedelta(hours=8))
+          now = datetime.now(tz)
+          # data_date 取自環境變數 DATA_DATE（build workflow inputs）
+          input_date = "${{ inputs.data_date }}"
+          data_date = input_date or os.getenv("DATA_DATE") or now.strftime('%m/%d')
+          stale_hours = 0  # 預設 0，由 build-premarket-page.yml 在前端直接 time-diff
+          Path('docs/data_meta.json').write_text(json.dumps({
+            'build_time': now.strftime('%Y-%m-%d %H:%M'),
+            'data_date': data_date,
+            'stale_hours': stale_hours,
+          }, ensure_ascii=False, indent=2))
+          PY
+
       - name: Build page
         run: |
           python scripts/build_page.py \
@@ -133,7 +160,8 @@ jobs:
         run: |
           git config user.name "premarket-intel-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add docs/index.html docs/embed/ data/latest/
+          git add docs/index.html docs/data_meta.json docs/assets/ docs/embed/ data/latest/
           git diff --cached --quiet && echo "no change" && exit 0
           git commit -m "build premarket page for ${{ steps.date.outputs.today }}"
           git push
+

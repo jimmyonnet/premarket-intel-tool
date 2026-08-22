@@ -362,11 +362,23 @@ def main():
     stale_hours = max(0, stale_hours)
     build_time = now.strftime("%H:%M")
 
-    # Write data_meta.json
     meta_path = Path(args.out).parent / "data_meta.json"
     meta_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    if meta_path.exists():
+        try:
+            loaded_meta = json.loads(meta_path.read_text(encoding="utf-8"))
+            if loaded_meta.get("data_date"):
+                data_date = loaded_meta["data_date"]
+            if loaded_meta.get("build_time"):
+                build_time = loaded_meta["build_time"]
+            if "stale_hours" in loaded_meta:
+                stale_hours = loaded_meta["stale_hours"]
+        except Exception:
+            pass
+
     meta_data = {
-        "build_time": now.isoformat(),
+        "build_time": now.strftime("%Y-%m-%d %H:%M"),
         "data_date": data_date,
         "stale_hours": stale_hours,
         "hours_since_us_close": hours_since_us_close,
@@ -382,6 +394,7 @@ def main():
         data_date=data_date,
         stale_hours=stale_hours,
         hours_since_us_close=hours_since_us_close,
+        meta=meta_data,
         indices=indices,
         us_indices=indices.get("us_indices", {}),
         asia_open=indices.get("asia_open", {}),
