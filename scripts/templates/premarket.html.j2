@@ -822,6 +822,405 @@
   .footer-inner { max-width: 980px; margin: 0 auto; padding: 0 16px; }
   .footer-title { font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
   .footer-notes { padding-left: 18px; margin: 0 0 8px; line-height: 1.6; }
+
+  /* CALENDAR DASHBOARD & TIMELINE */
+  .cal-dashboard-card {
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    overflow: hidden;
+  }
+  .cal-dashboard-head {
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+  }
+  .cal-head-tools {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .cal-tool-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-main);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+  }
+  .cal-tool-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--text-muted);
+  }
+  .cal-tool-btn.ghost {
+    border-color: transparent;
+    color: var(--text-muted);
+  }
+  .cal-tool-btn.ghost:hover {
+    color: var(--text-main);
+    background: var(--bg-sub);
+  }
+
+  /* Sticky Filter Toolbar */
+  .cal-filter-toolbar {
+    background: var(--bg-sub);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .cal-filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .cal-filter-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .cal-filter-lbl {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-right: 2px;
+  }
+  .cal-chip {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 3px 8px;
+    border-radius: 14px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+  }
+  .cal-chip:hover {
+    background: var(--bg-hover);
+    color: var(--text-main);
+  }
+  .cal-chip.active {
+    background: var(--blue-bg);
+    color: var(--blue-fg);
+    border-color: var(--blue-border);
+    font-weight: 700;
+  }
+  .cal-search-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 220px;
+    flex: 1;
+    max-width: 320px;
+  }
+  .cal-search-input {
+    width: 100%;
+    padding: 6px 28px 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-card);
+    color: var(--text-main);
+    font-size: 12px;
+    outline: none;
+  }
+  .cal-search-input:focus {
+    border-color: var(--blue);
+  }
+  .cal-search-clear {
+    position: absolute;
+    right: 6px;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+    font-size: 12px;
+    padding: 2px 4px;
+  }
+  .cal-search-clear:hover { color: var(--text-main); }
+
+  /* Timeline Groups */
+  .cal-timeline-container {
+    padding: 16px;
+  }
+  .cal-date-section {
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-card);
+    overflow: hidden;
+  }
+  .cal-date-section.is-today-section {
+    border-color: var(--blue-border);
+    box-shadow: 0 0 0 1px var(--blue-border);
+  }
+  .cal-date-header {
+    padding: 10px 14px;
+    background: var(--bg-sub);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+  }
+  .cal-date-section.is-today-section .cal-date-header {
+    background: var(--blue-bg);
+    color: var(--blue-fg);
+  }
+  .cal-date-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-main);
+  }
+  .cal-date-section.is-today-section .cal-date-title {
+    color: var(--blue-fg);
+  }
+  .cal-date-count {
+    margin-left: auto;
+    font-size: 11px;
+    font-family: var(--font-mono);
+  }
+  .cal-accordion-arrow {
+    font-size: 10px;
+    color: var(--text-muted);
+    transition: transform 0.2s ease;
+  }
+  .cal-date-body {
+    display: none;
+    padding: 12px 14px;
+  }
+  .cal-date-body.is-open {
+    display: block;
+  }
+  .cal-date-section.open-sec .cal-accordion-arrow {
+    transform: rotate(180deg);
+  }
+
+  /* Timeline Track & Cards */
+  .cal-timeline-track {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .cal-event-card {
+    display: flex;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .cal-event-card:hover {
+    border-color: var(--border-strong);
+    background: var(--bg-sub);
+  }
+  .cal-event-card.is-high-impact {
+    border-left: 3px solid var(--rise);
+  }
+  .cal-event-card.is-past {
+    opacity: 0.65;
+  }
+  .cal-event-card.is-live {
+    animation: pulse-live 2s infinite;
+    border-color: var(--green-border);
+  }
+  @keyframes pulse-live {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+    50% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  }
+
+  .cal-node-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 12px;
+    width: 14px;
+  }
+  .cal-node-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border-strong);
+    margin-top: 4px;
+  }
+  .cal-node-dot.high-node {
+    width: 10px;
+    height: 10px;
+    background: var(--rise);
+  }
+  .cal-node-line {
+    flex: 1;
+    width: 2px;
+    background: var(--border);
+    margin-top: 4px;
+  }
+  .cal-card-main {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cal-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .cal-time-group {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .cal-time-origin {
+    color: var(--text-muted);
+  }
+  .cal-time-tpe {
+    color: var(--text-main);
+  }
+  .cal-countdown-badge {
+    background: var(--green-bg);
+    color: var(--green-fg);
+    border: 1px solid var(--green-border);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+    display: none;
+  }
+  .cal-countdown-badge.show { display: inline-block; }
+
+  .cal-badges-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .imp-badge {
+    font-size: 10px;
+    font-weight: 800;
+    padding: 1px 6px;
+    border-radius: 4px;
+    letter-spacing: 0.05em;
+  }
+  .imp-badge.imp-3 { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
+  .imp-badge.imp-2 { background: var(--amber-bg); color: var(--amber-fg); border: 1px solid var(--amber-border); }
+  .imp-badge.imp-1 { background: var(--bg-sub); color: var(--text-muted); border: 1px solid var(--border); }
+
+  .cal-country-badge {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+  }
+  .cal-category-badge {
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .cal-card-title {
+    font-size: 13px;
+    color: var(--text-main);
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  /* 3-Column Metrics */
+  .cal-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    background: var(--bg-sub);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+  }
+  .metric-cell {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .metric-lbl {
+    color: var(--text-muted);
+  }
+  .metric-val {
+    color: var(--text-main);
+    font-weight: 600;
+  }
+  .actual-cell.beat .metric-val { color: var(--fall); font-weight: 700; }
+  .actual-cell.miss .metric-val { color: var(--rise); font-weight: 700; }
+  .cmp-icon { font-size: 9px; font-weight: bold; }
+
+  .cal-card-detail {
+    display: none;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px dashed var(--border);
+    font-size: 12px;
+  }
+  .cal-card-detail.open { display: block; }
+  .cal-note-text {
+    color: var(--text-muted);
+    white-space: pre-wrap;
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .cal-action-links {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .cal-link-btn {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--blue);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .cal-link-btn:hover {
+    background: var(--bg-sub);
+  }
+
+  /* Status Indicators in Header */
+  .health-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-right: 4px;
+  }
+  .health-dot.ok { background: var(--fall); box-shadow: 0 0 4px var(--fall); }
+  .health-dot.warn { background: var(--amber); }
+  .health-dot.error { background: var(--rise); animation: pulse-warn 1.5s infinite; }
+
 </style>
 </head>
 <body>
@@ -844,6 +1243,9 @@
           <span class="status-badge is-ok">資料已就緒</span>
           {% endif %}
         </span>
+        <span class="meta-item" title="資料源健康度 (美股/夜盤/處置/日曆)">
+          <span class="health-dot ok"></span><span style="font-size:11px; color:var(--text-muted);">源狀態正常</span>
+        </span>
       </div>
     </div>
   </header>
@@ -863,6 +1265,7 @@
       <a href="#system-info" class="nav-link">系統資訊</a>
       
       <div class="nav-actions">
+        <button class="nav-btn btn-export" onclick="window.pm.exportDailyMarkdown()" type="button" aria-label="匯出今日重點 Markdown">📋 匯出重點</button>
         <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" aria-label="切換只看自選">⭐ 只看自選</button>
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" aria-label="切換截圖模式">📸 截圖</button>
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" aria-label="切換深淺色主題">🌙 深色</button>
@@ -1389,31 +1792,168 @@
       </div>
       {% endif %}
 
-      <!-- 財經行事曆 -->
-      <div class="card">
-        <div class="card-head">
+      <!-- 財經行事曆 (時間軸儀表板) -->
+      <div class="card cal-dashboard-card" id="cal-dashboard">
+        <div class="card-head cal-dashboard-head">
           <div class="card-title-group">
-            <h3 class="card-title">財經行事曆</h3>
-            <span class="count-badge">{{ calendar.events|length }} 筆事件</span>
+            <h3 class="card-title">📅 財經行事曆</h3>
+            <span class="count-badge" id="cal-count-badge">顯示 {{ calendar.events|length }} / {{ calendar.events|length }} 筆</span>
+          </div>
+          <div class="cal-head-tools">
+            <button class="cal-tool-btn" onclick="window.pm.copyTodayHighImpact()" type="button" title="一鍵複製今日重要 ★★★ 事件 Markdown">📋 複製今日 ★★★</button>
+            <button class="cal-tool-btn ghost" onclick="window.pm.toggleTimezoneMode()" id="cal-tz-btn" type="button" title="切換雙時區或純台北時間">🌐 雙時區 (ET/TPE)</button>
+            <button class="cal-tool-btn ghost" onclick="window.pm.resetCalFilters()" type="button" title="重置行事曆篩選">↺ 重置</button>
           </div>
         </div>
 
-        <div class="data-block">
-          {% if calendar.events %}
-          <div class="cal-list" style="display:flex; flex-direction:column; gap:10px;">
-            {% for ev in calendar.events %}
-            <div class="cal-event-card" style="background:var(--bg-sub); border:1px solid var(--border); border-radius:6px; padding:10px 12px;">
-              <div style="display:flex; justify-content:space-between; margin-bottom:4px; font-size:12px;">
-                <span class="badge badge-amber font-mono">{{ ev.date }} {{ ev.time or '全天' }}</span>
-                <span class="badge">{{ ev.category_name or '事件' }}</span>
+        <!-- Sticky Filter Toolbar -->
+        <div class="cal-filter-toolbar">
+          <!-- Quick Filters -->
+          <div class="cal-filter-row">
+            <div class="cal-filter-group">
+              <span class="cal-filter-lbl">快捷:</span>
+              <button class="cal-chip active" data-filter="quick" data-val="all" onclick="window.pm.setCalQuickFilter('all')" type="button">全部</button>
+              <button class="cal-chip" data-filter="quick" data-val="star3" onclick="window.pm.setCalQuickFilter('star3')" type="button">只看 ★★★</button>
+              <button class="cal-chip" data-filter="quick" data-val="today" onclick="window.pm.setCalQuickFilter('today')" type="button">只看今日</button>
+              <button class="cal-chip" data-filter="quick" data-val="this_week" onclick="window.pm.setCalQuickFilter('this_week')" type="button">只看本週</button>
+            </div>
+            <!-- Search box -->
+            <div class="cal-search-wrap">
+              <input type="text" id="cal-search-input" class="cal-search-input" placeholder="🔍 搜尋事件（如 CPI、GDP、非農...）" oninput="window.pm.onCalSearch(this.value)" autocomplete="off" aria-label="搜尋財經事件">
+              <button class="cal-search-clear" onclick="window.pm.clearCalSearch()" type="button" aria-label="清除搜尋">✕</button>
+            </div>
+          </div>
+
+          <!-- Filter chips: Country & Category -->
+          <div class="cal-filter-row secondary">
+            <!-- Country chips -->
+            <div class="cal-filter-group">
+              <span class="cal-filter-lbl">國家:</span>
+              <button class="cal-chip" data-filter="country" data-val="US" onclick="window.pm.toggleCalCountry('US')" type="button">🇺🇸 US</button>
+              <button class="cal-chip" data-filter="country" data-val="TW" onclick="window.pm.toggleCalCountry('TW')" type="button">🇹🇼 TW</button>
+              <button class="cal-chip" data-filter="country" data-val="JP" onclick="window.pm.toggleCalCountry('JP')" type="button">🇯🇵 JP</button>
+              <button class="cal-chip" data-filter="country" data-val="EU" onclick="window.pm.toggleCalCountry('EU')" type="button">🇪🇺 EU</button>
+              <button class="cal-chip" data-filter="country" data-val="CN" onclick="window.pm.toggleCalCountry('CN')" type="button">🇨🇳 CN</button>
+              <button class="cal-chip" data-filter="country" data-val="GB" onclick="window.pm.toggleCalCountry('GB')" type="button">🇬🇧 GB</button>
+            </div>
+
+            <!-- Category chips -->
+            <div class="cal-filter-group">
+              <span class="cal-filter-lbl">類別:</span>
+              <button class="cal-chip" data-filter="cat" data-val="macro" onclick="window.pm.toggleCalCategory('macro')" type="button">總經</button>
+              <button class="cal-chip" data-filter="cat" data-val="central_bank" onclick="window.pm.toggleCalCategory('central_bank')" type="button">央行</button>
+              <button class="cal-chip" data-filter="cat" data-val="earnings" onclick="window.pm.toggleCalCategory('earnings')" type="button">財報</button>
+              <button class="cal-chip" data-filter="cat" data-val="speech" onclick="window.pm.toggleCalCategory('speech')" type="button">演講</button>
+              <button class="cal-chip" data-filter="cat" data-val="holiday" onclick="window.pm.toggleCalCategory('holiday')" type="button">假期</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Timeline Main Container -->
+        <div class="data-block cal-timeline-container" id="cal-timeline-box">
+          {% if calendar.date_groups %}
+            {% for group in calendar.date_groups %}
+            <div class="cal-date-section {{ 'is-today-section' if group.is_today else '' }}" data-date="{{ group.date_str }}">
+              <div class="cal-date-header" onclick="window.pm.toggleDateGroup(this)">
+                <span class="cal-date-title font-bold">{{ group.display_date }}</span>
+                <span class="cal-date-count badge">{{ group.events|length }} 件</span>
+                <span class="cal-accordion-arrow">▼</span>
               </div>
-              <div style="font-weight:700; font-size:13px; color:var(--text-main);">{{ ev.summary }}</div>
-              {% if ev.description %}<div style="font-size:12px; color:var(--text-muted); margin-top:2px;">{{ ev.description }}</div>{% endif %}
+              
+              <div class="cal-date-body {{ 'is-open' if group.open else '' }}">
+                <div class="cal-timeline-track">
+                  {% for ev in group.events %}
+                  <div class="cal-event-card imp-level-{{ ev.importance }} {{ 'is-high-impact' if ev.importance == 3 else '' }}" 
+                       id="{{ ev.id }}"
+                       data-id="{{ ev.id }}"
+                       data-date="{{ ev.date }}"
+                       data-datetime-utc="{{ ev.datetime_utc }}"
+                       data-country="{{ ev.country }}"
+                       data-category="{{ ev.category }}"
+                       data-importance="{{ ev.importance }}"
+                       data-title="{{ ev.title }}"
+                       onclick="window.pm.toggleEventDetail('{{ ev.id }}')">
+                    
+                    <!-- Left Timeline Node -->
+                    <div class="cal-node-col">
+                      <div class="cal-node-dot {{ 'high-node' if ev.importance == 3 else '' }}"></div>
+                      <div class="cal-node-line"></div>
+                    </div>
+
+                    <!-- Right Card Content -->
+                    <div class="cal-card-main">
+                      <!-- Row 1: Time, Importance, Country, Category, Status -->
+                      <div class="cal-card-top">
+                        <div class="cal-time-group font-mono">
+                          <span class="cal-time-origin">{{ ev.time_origin_str }}</span>
+                          <span class="cal-time-tpe font-bold">{{ ev.time_tpe_str }}</span>
+                          <span class="cal-countdown-badge" data-utc="{{ ev.datetime_utc }}"></span>
+                        </div>
+                        <div class="cal-badges-group">
+                          {% if ev.importance == 3 %}
+                          <span class="imp-badge imp-3" title="高重要性 (★★★)">★★★</span>
+                          {% elif ev.importance == 2 %}
+                          <span class="imp-badge imp-2" title="中重要性 (★★)">★★</span>
+                          {% else %}
+                          <span class="imp-badge imp-1" title="一般重要性 (★)">★</span>
+                          {% endif %}
+                          <span class="cal-country-badge font-mono">{{ ev.flag }} {{ ev.country }}</span>
+                          <span class="cal-category-badge">{{ ev.category_name }}</span>
+                        </div>
+                      </div>
+
+                      <!-- Row 2: Title -->
+                      <div class="cal-card-title font-bold">{{ ev.title }}</div>
+
+                      <!-- Row 3: 3-Column Metrics (Forecast / Previous / Actual) -->
+                      <div class="cal-metrics-grid font-mono">
+                        <div class="metric-cell">
+                          <span class="metric-lbl">預期:</span>
+                          <span class="metric-val">{{ ev.forecast or '—' }}</span>
+                        </div>
+                        <div class="metric-cell">
+                          <span class="metric-lbl">前值:</span>
+                          <span class="metric-val">{{ ev.previous or '—' }}</span>
+                        </div>
+                        <div class="metric-cell actual-cell {{ ev.comparison }}">
+                          <span class="metric-lbl">實際:</span>
+                          <span class="metric-val">
+                            {% if ev.actual %}
+                              {% if ev.comparison == 'beat' %}
+                              <span class="cmp-icon rise">▲</span> {{ ev.actual }}
+                              {% elif ev.comparison == 'miss' %}
+                              <span class="cmp-icon fall">▼</span> {{ ev.actual }}
+                              {% else %}
+                              {{ ev.actual }}
+                              {% endif %}
+                            {% else %}
+                              —
+                            {% endif %}
+                          </span>
+                        </div>
+                      </div>
+
+                      <!-- Expandable Details -->
+                      <div class="cal-card-detail" id="detail-{{ ev.id }}">
+                        {% if ev.note %}<div class="cal-note-text">{{ ev.note }}</div>{% endif %}
+                        <div class="cal-action-links">
+                          {% if ev.source_url %}
+                          <a href="{{ ev.source_url }}" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          {% endif %}
+                          <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('{{ ev.id }}')">📋 複製事件</button>
+                          <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('{{ ev.id }}')">📅 加到 Google 行事曆</button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
             </div>
             {% endfor %}
-          </div>
           {% else %}
-          <div class="empty-state">近期無排定事件</div>
+            <div class="empty-state">近期無排定之財經行事曆事件</div>
           {% endif %}
         </div>
       </div>
@@ -1465,6 +2005,287 @@
 
 <script>
   window.pm = window.pm || {};
+
+  // PMIT Calendar Dashboard State
+  window.pm.calState = {
+    quick: localStorage.getItem('pmit_cal_quick') || 'all',
+    countries: JSON.parse(localStorage.getItem('pmit_cal_countries') || '[]'),
+    categories: JSON.parse(localStorage.getItem('pmit_cal_categories') || '[]'),
+    search: localStorage.getItem('pmit_cal_search') || '',
+    tzMode: localStorage.getItem('pmit_cal_tz_mode') || 'dual' // 'dual' or 'tpe_only'
+  };
+
+  window.pm.toggleDateGroup = function(headerEl) {
+    var sec = headerEl.closest('.cal-date-section');
+    var body = sec.querySelector('.cal-date-body');
+    if (body) {
+      body.classList.toggle('is-open');
+      sec.classList.toggle('open-sec', body.classList.contains('is-open'));
+    }
+  };
+
+  window.pm.toggleEventDetail = function(id) {
+    var detail = document.getElementById('detail-' + id);
+    if (detail) detail.classList.toggle('open');
+  };
+
+  window.pm.setCalQuickFilter = function(val) {
+    window.pm.calState.quick = val;
+    localStorage.setItem('pmit_cal_quick', val);
+    window.pm.applyCalendarFilters();
+  };
+
+  window.pm.toggleCalCountry = function(c) {
+    var idx = window.pm.calState.countries.indexOf(c);
+    if (idx >= 0) window.pm.calState.countries.splice(idx, 1);
+    else window.pm.calState.countries.push(c);
+    localStorage.setItem('pmit_cal_countries', JSON.stringify(window.pm.calState.countries));
+    window.pm.applyCalendarFilters();
+  };
+
+  window.pm.toggleCalCategory = function(cat) {
+    var idx = window.pm.calState.categories.indexOf(cat);
+    if (idx >= 0) window.pm.calState.categories.splice(idx, 1);
+    else window.pm.calState.categories.push(cat);
+    localStorage.setItem('pmit_cal_categories', JSON.stringify(window.pm.calState.categories));
+    window.pm.applyCalendarFilters();
+  };
+
+  window.pm.onCalSearch = function(val) {
+    window.pm.calState.search = (val || '').trim().toLowerCase();
+    localStorage.setItem('pmit_cal_search', window.pm.calState.search);
+    window.pm.applyCalendarFilters();
+  };
+
+  window.pm.clearCalSearch = function() {
+    var inp = document.getElementById('cal-search-input');
+    if (inp) inp.value = '';
+    window.pm.onCalSearch('');
+  };
+
+  window.pm.resetCalFilters = function() {
+    window.pm.calState.quick = 'all';
+    window.pm.calState.countries = [];
+    window.pm.calState.categories = [];
+    window.pm.calState.search = '';
+    localStorage.removeItem('pmit_cal_quick');
+    localStorage.removeItem('pmit_cal_countries');
+    localStorage.removeItem('pmit_cal_categories');
+    localStorage.removeItem('pmit_cal_search');
+    var inp = document.getElementById('cal-search-input');
+    if (inp) inp.value = '';
+    window.pm.applyCalendarFilters();
+    window.pm.showToast('已重置行事曆篩選條件');
+  };
+
+  window.pm.toggleTimezoneMode = function() {
+    window.pm.calState.tzMode = (window.pm.calState.tzMode === 'dual') ? 'tpe_only' : 'dual';
+    localStorage.setItem('pmit_cal_tz_mode', window.pm.calState.tzMode);
+    window.pm.applyTimezoneMode();
+  };
+
+  window.pm.applyTimezoneMode = function() {
+    var btn = document.getElementById('cal-tz-btn');
+    var isDual = window.pm.calState.tzMode === 'dual';
+    if (btn) btn.textContent = isDual ? '🌐 雙時區 (ET/TPE)' : '🇹🇼 純台北時間';
+    document.querySelectorAll('.cal-time-origin').forEach(function(el) {
+      el.style.display = isDual ? '' : 'none';
+    });
+  };
+
+  window.pm.applyCalendarFilters = function() {
+    // 1. Update filter chip active classes
+    document.querySelectorAll('.cal-chip[data-filter="quick"]').forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-val') === window.pm.calState.quick);
+    });
+    document.querySelectorAll('.cal-chip[data-filter="country"]').forEach(function(btn) {
+      btn.classList.toggle('active', window.pm.calState.countries.indexOf(btn.getAttribute('data-val')) >= 0);
+    });
+    document.querySelectorAll('.cal-chip[data-filter="cat"]').forEach(function(btn) {
+      btn.classList.toggle('active', window.pm.calState.categories.indexOf(btn.getAttribute('data-val')) >= 0);
+    });
+
+    var todayStr = new Date().toISOString().split('T')[0];
+    var totalVisible = 0;
+    var totalCards = document.querySelectorAll('.cal-event-card').length;
+
+    // Filter each event card
+    document.querySelectorAll('.cal-date-section').forEach(function(sec) {
+      var secDate = sec.getAttribute('data-date');
+      var isToday = sec.classList.contains('is-today-section');
+      var visibleInSec = 0;
+
+      sec.querySelectorAll('.cal-event-card').forEach(function(card) {
+        var imp = parseInt(card.getAttribute('data-importance') || '1');
+        var country = card.getAttribute('data-country');
+        var cat = card.getAttribute('data-category');
+        var title = (card.getAttribute('data-title') || '').toLowerCase();
+        var match = true;
+
+        // Quick filter
+        if (window.pm.calState.quick === 'star3' && imp < 3) match = false;
+        if (window.pm.calState.quick === 'today' && !isToday) match = false;
+        
+        // Country filter
+        if (match && window.pm.calState.countries.length > 0) {
+          if (window.pm.calState.countries.indexOf(country) < 0) match = false;
+        }
+
+        // Category filter
+        if (match && window.pm.calState.categories.length > 0) {
+          if (window.pm.calState.categories.indexOf(cat) < 0) match = false;
+        }
+
+        // Search filter
+        if (match && window.pm.calState.search) {
+          if (title.indexOf(window.pm.calState.search) < 0) match = false;
+        }
+
+        card.style.display = match ? '' : 'none';
+        if (match) {
+          visibleInSec++;
+          totalVisible++;
+        }
+      });
+
+      sec.style.display = (visibleInSec > 0) ? '' : 'none';
+      var countEl = sec.querySelector('.cal-date-count');
+      if (countEl) countEl.textContent = visibleInSec + ' 件';
+    });
+
+    var badge = document.getElementById('cal-count-badge');
+    if (badge) badge.textContent = '顯示 ' + totalVisible + ' / ' + totalCards + ' 筆';
+  };
+
+  // Copy Today's ★★★ High Impact Events
+  window.pm.copyTodayHighImpact = function() {
+    var lines = ['### 📅 今日重要總經與財經事件 (★★★)'];
+    var hits = 0;
+    document.querySelectorAll('.cal-date-section.is-today-section .cal-event-card[data-importance="3"]').forEach(function(c) {
+      hits++;
+      var time = c.querySelector('.cal-time-tpe')?.textContent || '';
+      var title = c.getAttribute('data-title') || '';
+      var flag = c.querySelector('.cal-country-badge')?.textContent || '';
+      var fc = c.querySelector('.metric-cell:nth-child(1) .metric-val')?.textContent || '—';
+      var prev = c.querySelector('.metric-cell:nth-child(2) .metric-val')?.textContent || '—';
+      lines.push('- **' + time + '** ' + flag + ' ' + title + '（預期: ' + fc + ' / 前值: ' + prev + '）');
+    });
+    if (hits === 0) {
+      lines.push('今日無排定之 ★★★ 重大事件');
+    }
+    var text = lines.join('\n');
+    navigator.clipboard.writeText(text).then(function() {
+      window.pm.showToast('已複製今日 ★★★ 財經事件 Markdown 至剪貼簿');
+    });
+  };
+
+  // Export Daily Premarket Summary Markdown
+  window.pm.exportDailyMarkdown = function() {
+    var lines = [];
+    lines.push('# 📈 盤前情報決策總覽 · ' + new Date().toLocaleDateString('zh-TW'));
+    
+    // Twii
+    var twiiVal = document.querySelector('#summary .summary-card:nth-child(1) .card-val')?.textContent.trim() || '';
+    var twiiChg = document.querySelector('#summary .summary-card:nth-child(1) .card-sub')?.textContent.trim() || '';
+    lines.push('## 1. 大盤與籌碼概況');
+    lines.push('- **加權指數昨收**：' + twiiVal + ' (' + twiiChg + ')');
+    
+    // Institutional
+    var instText = document.querySelector('#summary .inst-chips-mobile')?.textContent.trim() || '';
+    lines.push('- **三大法人籌碼**：' + instText);
+
+    // Alerts
+    var alertCount = document.querySelectorAll('#alerts tr[data-code]').length;
+    lines.push('## 2. 今日重點警示 (共 ' + alertCount + ' 檔)');
+    document.querySelectorAll('#alerts tr[data-code]').forEach(function(r) {
+      var code = r.getAttribute('data-code');
+      var name = r.getAttribute('data-label');
+      var cat = r.getAttribute('data-cat') === 'alert' ? '差1次處置' : '今日出關';
+      lines.push('- [' + cat + '] `' + code + '` ' + name);
+    });
+
+    // High impact calendar
+    lines.push('## 3. 今日重大財經事件 (★★★)');
+    document.querySelectorAll('.cal-date-section.is-today-section .cal-event-card[data-importance="3"]').forEach(function(c) {
+      var time = c.querySelector('.cal-time-tpe')?.textContent || '';
+      var title = c.getAttribute('data-title') || '';
+      lines.push('- ' + time + ' ' + title);
+    });
+
+    var text = lines.join('\n');
+    navigator.clipboard.writeText(text).then(function() {
+      window.pm.showToast('已匯出今日盤前重點 Markdown');
+    });
+  };
+
+  // Single Event Copy & Google Calendar Link
+  window.pm.copyEventText = function(id) {
+    var card = document.getElementById(id);
+    if (!card) return;
+    var title = card.getAttribute('data-title');
+    var time = card.querySelector('.cal-time-tpe')?.textContent || '';
+    var text = time + ' ' + title;
+    navigator.clipboard.writeText(text).then(function() {
+      window.pm.showToast('已複製事件：' + title);
+    });
+  };
+
+  window.pm.addToGoogleCalendar = function(id) {
+    var card = document.getElementById(id);
+    if (!card) return;
+    var title = encodeURIComponent(card.getAttribute('data-title') || '財經事件');
+    var utc = card.getAttribute('data-datetime-utc');
+    var dtStr = '';
+    if (utc && utc.length >= 16) {
+      var cleanUtc = utc.replace(/[-:]/g, '').split('.')[0];
+      if (!cleanUtc.endsWith('Z')) cleanUtc += 'Z';
+      dtStr = cleanUtc + '/' + cleanUtc;
+    }
+    var url = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + title + (dtStr ? '&dates=' + dtStr : '');
+    window.open(url, '_blank');
+  };
+
+  // Update Event Countdowns & Status
+  function updateEventCountdowns() {
+    var nowMs = Date.now();
+    document.querySelectorAll('.cal-event-card').forEach(function(card) {
+      var utcStr = card.getAttribute('data-datetime-utc');
+      if (!utcStr) return;
+      var evTime = new Date(utcStr).getTime();
+      if (isNaN(evTime)) return;
+      
+      var diffMs = evTime - nowMs;
+      var cdBadge = card.querySelector('.cal-countdown-badge');
+      
+      if (diffMs > 0 && diffMs <= 2 * 3600 * 1000) {
+        // Less than 2 hours before event
+        var mins = Math.floor(diffMs / 60000);
+        var secs = Math.floor((diffMs % 60000) / 1000);
+        if (cdBadge) {
+          cdBadge.textContent = '倒數 ' + String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+          cdBadge.classList.add('show');
+        }
+      } else {
+        if (cdBadge) cdBadge.classList.remove('show');
+      }
+
+      // Live pulse: within ±15 minutes
+      var isLive = Math.abs(diffMs) <= 15 * 60 * 1000;
+      card.classList.toggle('is-live', isLive);
+
+      // Past event (> 30 mins after event)
+      var isPast = diffMs < -30 * 60 * 1000;
+      card.classList.toggle('is-past', isPast);
+    });
+  }
+
+  // Hook countdown to live timer
+  var origUpdateLiveTimers = updateLiveTimers;
+  updateLiveTimers = function() {
+    origUpdateLiveTimers();
+    updateEventCountdowns();
+  };
+
   window.WATCH_KEY = 'premarket.watchlist';
 
   // 2026 Taiwan Holiday List
@@ -1703,12 +2524,16 @@
       e.preventDefault();
       var inp = document.getElementById('watch-input');
       if (inp) { inp.focus(); inp.select(); }
+    } else if (e.key === 'r' || e.key === 'R') {
+      location.reload(true);
     } else if (e.key === 'd' || e.key === 'D') {
       window.toggleTheme();
     } else if (e.key === 'w' || e.key === 'W') {
       window.pm.toggleWatchOnly();
     } else if (e.key === 't' || e.key === 'T') {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (e.key === '7') {
+      document.getElementById('system-info')?.scrollIntoView({ behavior: 'smooth' });
     } else if (e.key === '?' || (e.shiftKey && e.key === '/')) {
       window.pm.toggleShortcutsModal();
     }
@@ -1811,7 +2636,16 @@
 
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) stopTimers();
-    else startTimers();
+    else 
+    // Initialize Calendar Timeline Filters
+    if (window.pm.calState.search) {
+      var sinp = document.getElementById('cal-search-input');
+      if (sinp) sinp.value = window.pm.calState.search;
+    }
+    window.pm.applyCalendarFilters();
+    window.pm.applyTimezoneMode();
+
+    startTimers();
   });
 
   // Initialization
@@ -1838,6 +2672,15 @@
     // Restore Watch-Only
     if (urlParams.get('watch') === '1') window.pm.watchOnly = true;
     if (window.pm.watchOnly) window.pm.applyWatchOnly();
+
+    
+    // Initialize Calendar Timeline Filters
+    if (window.pm.calState.search) {
+      var sinp = document.getElementById('cal-search-input');
+      if (sinp) sinp.value = window.pm.calState.search;
+    }
+    window.pm.applyCalendarFilters();
+    window.pm.applyTimezoneMode();
 
     startTimers();
   });
