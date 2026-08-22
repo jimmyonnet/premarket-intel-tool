@@ -780,6 +780,94 @@
     }
   }
 
+
+  /* Responsive Tables & Mobile Enhancements */
+  @media (max-width: 768px) {
+    body {
+      font-size: 14px;
+    }
+    .responsive-table thead, .disposal-table thead { display: none; }
+    .responsive-table tbody tr, .disposal-table tbody tr {
+      display: block;
+      border: 1px solid var(--border, #E2E8F0);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: #FFFFFF;
+    }
+    .responsive-table td, .disposal-table td {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 6px;
+      padding: 4px 0;
+      border-bottom: none;
+      white-space: normal;
+      text-align: left !important;
+    }
+    .responsive-table td::before, .disposal-table td::before {
+      content: attr(data-label);
+      color: var(--text-muted, #64748B);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .responsive-table .badge-dots, .disposal-table .badge-dots {
+      justify-content: flex-start;
+    }
+    .responsive-table .badge-frac, .disposal-table .badge-frac {
+      display: inline-block;
+      margin-left: 6px;
+      margin-top: 0;
+    }
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  /* Stale Banner */
+  .stale-banner {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 16px;
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+  }
+  .stale-banner[data-hours="0"] { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+  .stale-banner[data-hours="24"], .stale-banner[data-hours="48"] { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+  /* Refresh Button in Nav */
+  .refresh-btn {
+    background: #FFFFFF;
+    border: 1px solid var(--border, #E2E8F0);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-main, #0F172A);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+    margin-left: auto;
+  }
+  .refresh-btn:hover {
+    background: #F1F5F9;
+    border-color: #CBD5E1;
+  }
+
+  /* Pulse Animation */
+  @keyframes pulse-warn { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .tab-pill[data-count]:not([data-count="0"])::after, .nav-badge, .badge-pulse {
+    animation: pulse-warn 1.6s infinite;
+  }
+
 </style>
 </head>
 <body>
@@ -813,15 +901,23 @@
       {% set exiting_today = disposal.currently_in_disposal | rejectattr('trading_days_left', 'none') | selectattr('trading_days_left', 'in', ['0', '0天', 0, '出關']) | list %}
       {% set hidden_disposal = disposal.currently_in_disposal | selectattr('trading_days_left', 'none') | list %}
       {% set alert_total = (disposal.one_flag_from_disposal|length) + (exiting_today|length) %}
-      <a href="#alerts" class="nav-link nav-alert">今日警示 {% if alert_total > 0 %}<span class="nav-badge">{{ alert_total }}</span>{% endif %}</a>
+      <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">今日警示 {% if alert_total > 0 %}<span class="nav-badge">{{ alert_total }}</span>{% endif %}{% if stale_hours and stale_hours > 12 %}<span class="nav-badge" style="background:#F59E0B; color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
       <a href="#watchlist" class="nav-link">今日候選股</a>
       <a href="#market-context" class="nav-link">市場背景</a>
       <a href="#news-calendar" class="nav-link">補充資訊</a>
       <a href="#system-info" class="nav-link">系統資訊</a>
+      <button class="refresh-btn" onclick="location.reload(true)" title="重新載入最新版">
+        🔄 <span class="last-build">建置 {{ build_time or '08:00' }}</span>
+      </button>
     </div>
   </nav>
 
   <main class="page-main">
+
+    <!-- Stale Banner -->
+    <div class="stale-banner" data-hours="{{ (stale_hours or 0)|int }}">
+      資料時間 {{ data_date or '今日' }}，距今 {{ stale_hours or 0 }} 小時
+    </div>
 
     <!-- 1. 摘要 (Summary) -->
     <section id="summary" class="content-section">
@@ -985,8 +1081,8 @@
 
         <div class="data-block">
           {% if exiting_today %}
-          <div class="table-scroll">
-            <table class="data-table">
+          <div class="table-responsive table-scroll">
+            <table class="data-table responsive-table">
               <thead>
                 <tr>
                   <th>市場</th>
@@ -1003,15 +1099,15 @@
               <tbody>
                 {% for row in exiting_today %}
                 <tr>
-                  <td>{{ row.market }}</td>
-                  <td class="code font-mono">{{ row.code }}</td>
-                  <td class="name font-bold">{{ row.name }}</td>
-                  <td>{{ row.matching }}</td>
-                  <td class="num font-mono">{{ row.start_date }}</td>
-                  <td class="num font-mono">{{ row.end_date }}</td>
-                  <td class="num font-mono amber font-bold">{{ row.exit_date }}</td>
-                  <td><span class="badge badge-amber">今日出關</span></td>
-                  <td class="condition">{{ row.reason }}</td>
+                  <td data-label="市場">{{ row.market }}</td>
+                  <td data-label="代號" class="code font-mono">{{ row.code }}</td>
+                  <td data-label="名稱" class="name font-bold">{{ row.name }}</td>
+                  <td data-label="原撮合">{{ row.matching }}</td>
+                  <td data-label="處置起日" class="num font-mono">{{ row.start_date }}</td>
+                  <td data-label="處置迄日" class="num font-mono">{{ row.end_date }}</td>
+                  <td data-label="出關日" class="num font-mono amber font-bold">{{ row.exit_date }}</td>
+                  <td data-label="狀態"><span class="badge badge-amber">今日出關</span></td>
+                  <td data-label="處置原因" class="condition">{{ row.reason }}</td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -1300,6 +1396,7 @@
             {% if tile %}
             <div class="tile">
               <div class="name">{{ tile.name }}</div>
+              <div class="sub-pill font-mono" style="font-size:10px; color:var(--text-muted); margin-top:2px;">收盤：美東 16:00 / 現資料落後 {{ hours_since_us_close or 4.0 }} h</div>
               <div class="value font-mono">{{ '{:,.2f}'.format(tile.value) }}</div>
               <div class="delta font-mono {{ 'rise' if tile.change_pct >= 0 else 'fall' }}">{{ '%+.2f'|format(tile.change) }} ({{ '%+.2f'|format(tile.change_pct) }}%)</div>
             </div>
@@ -1497,7 +1594,8 @@
         <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
         <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日 28 檔重點清單；未在清單內之標的自動略過。</li>
       </ul>
-      <div class="footer-copy">盤前情報準備台 · 自用盤前決策工作台</div>
+      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布）</div>
+      <div class="footer-copy" style="margin-top:4px;">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
   </footer>
 

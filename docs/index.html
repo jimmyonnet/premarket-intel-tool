@@ -780,6 +780,94 @@
     }
   }
 
+
+  /* Responsive Tables & Mobile Enhancements */
+  @media (max-width: 768px) {
+    body {
+      font-size: 14px;
+    }
+    .responsive-table thead, .disposal-table thead { display: none; }
+    .responsive-table tbody tr, .disposal-table tbody tr {
+      display: block;
+      border: 1px solid var(--border, #E2E8F0);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: #FFFFFF;
+    }
+    .responsive-table td, .disposal-table td {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 6px;
+      padding: 4px 0;
+      border-bottom: none;
+      white-space: normal;
+      text-align: left !important;
+    }
+    .responsive-table td::before, .disposal-table td::before {
+      content: attr(data-label);
+      color: var(--text-muted, #64748B);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .responsive-table .badge-dots, .disposal-table .badge-dots {
+      justify-content: flex-start;
+    }
+    .responsive-table .badge-frac, .disposal-table .badge-frac {
+      display: inline-block;
+      margin-left: 6px;
+      margin-top: 0;
+    }
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  /* Stale Banner */
+  .stale-banner {
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 16px;
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+  }
+  .stale-banner[data-hours="0"] { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+  .stale-banner[data-hours="24"], .stale-banner[data-hours="48"] { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+  /* Refresh Button in Nav */
+  .refresh-btn {
+    background: #FFFFFF;
+    border: 1px solid var(--border, #E2E8F0);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-main, #0F172A);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+    margin-left: auto;
+  }
+  .refresh-btn:hover {
+    background: #F1F5F9;
+    border-color: #CBD5E1;
+  }
+
+  /* Pulse Animation */
+  @keyframes pulse-warn { 0%,100%{opacity:1} 50%{opacity:.4} }
+  .tab-pill[data-count]:not([data-count="0"])::after, .nav-badge, .badge-pulse {
+    animation: pulse-warn 1.6s infinite;
+  }
+
 </style>
 </head>
 <body>
@@ -791,7 +879,7 @@
         <h1 class="page-title">盤前情報準備台</h1>
       </div>
       <div class="meta-row">
-        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/22 22:29</span></span>
+        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/22 22:33</span></span>
         
         <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">08/24</span></span>
         
@@ -811,15 +899,23 @@
       
       
       
-      <a href="#alerts" class="nav-link nav-alert">今日警示 <span class="nav-badge">8</span></a>
+      <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="8">今日警示 <span class="nav-badge">8</span></a>
       <a href="#watchlist" class="nav-link">今日候選股</a>
       <a href="#market-context" class="nav-link">市場背景</a>
       <a href="#news-calendar" class="nav-link">補充資訊</a>
       <a href="#system-info" class="nav-link">系統資訊</a>
+      <button class="refresh-btn" onclick="location.reload(true)" title="重新載入最新版">
+        🔄 <span class="last-build">建置 22:33</span>
+      </button>
     </div>
   </nav>
 
   <main class="page-main">
+
+    <!-- Stale Banner -->
+    <div class="stale-banner" data-hours="0">
+      資料時間 2026-08-22，距今 0.1 小時
+    </div>
 
     <!-- 1. 摘要 (Summary) -->
     <section id="summary" class="content-section">
@@ -1214,8 +1310,8 @@
 
         <div class="data-block">
           
-          <div class="table-scroll">
-            <table class="data-table">
+          <div class="table-responsive table-scroll">
+            <table class="data-table responsive-table">
               <thead>
                 <tr>
                   <th>市場</th>
@@ -1232,39 +1328,39 @@
               <tbody>
                 
                 <tr>
-                  <td>櫃</td>
-                  <td class="code font-mono">3163</td>
-                  <td class="name font-bold">波若威</td>
-                  <td>2分</td>
-                  <td class="num font-mono">08-13</td>
-                  <td class="num font-mono">08-21</td>
-                  <td class="num font-mono amber font-bold">08-24</td>
-                  <td><span class="badge badge-amber">今日出關</span></td>
-                  <td class="condition">連續5日｜第1次處置</td>
+                  <td data-label="市場">櫃</td>
+                  <td data-label="代號" class="code font-mono">3163</td>
+                  <td data-label="名稱" class="name font-bold">波若威</td>
+                  <td data-label="原撮合">2分</td>
+                  <td data-label="處置起日" class="num font-mono">08-13</td>
+                  <td data-label="處置迄日" class="num font-mono">08-21</td>
+                  <td data-label="出關日" class="num font-mono amber font-bold">08-24</td>
+                  <td data-label="狀態"><span class="badge badge-amber">今日出關</span></td>
+                  <td data-label="處置原因" class="condition">連續5日｜第1次處置</td>
                 </tr>
                 
                 <tr>
-                  <td>櫃</td>
-                  <td class="code font-mono">4931</td>
-                  <td class="name font-bold">新盛力</td>
-                  <td>2分</td>
-                  <td class="num font-mono">08-13</td>
-                  <td class="num font-mono">08-21</td>
-                  <td class="num font-mono amber font-bold">08-24</td>
-                  <td><span class="badge badge-amber">今日出關</span></td>
-                  <td class="condition">連續3日第一款｜第1次處置</td>
+                  <td data-label="市場">櫃</td>
+                  <td data-label="代號" class="code font-mono">4931</td>
+                  <td data-label="名稱" class="name font-bold">新盛力</td>
+                  <td data-label="原撮合">2分</td>
+                  <td data-label="處置起日" class="num font-mono">08-13</td>
+                  <td data-label="處置迄日" class="num font-mono">08-21</td>
+                  <td data-label="出關日" class="num font-mono amber font-bold">08-24</td>
+                  <td data-label="狀態"><span class="badge badge-amber">今日出關</span></td>
+                  <td data-label="處置原因" class="condition">連續3日第一款｜第1次處置</td>
                 </tr>
                 
                 <tr>
-                  <td>櫃</td>
-                  <td class="code font-mono">6716</td>
-                  <td class="name font-bold">應廣</td>
-                  <td>2分</td>
-                  <td class="num font-mono">08-17</td>
-                  <td class="num font-mono">08-21</td>
-                  <td class="num font-mono amber font-bold">08-24</td>
-                  <td><span class="badge badge-amber">今日出關</span></td>
-                  <td class="condition">連續3日第一款｜第1次處置</td>
+                  <td data-label="市場">櫃</td>
+                  <td data-label="代號" class="code font-mono">6716</td>
+                  <td data-label="名稱" class="name font-bold">應廣</td>
+                  <td data-label="原撮合">2分</td>
+                  <td data-label="處置起日" class="num font-mono">08-17</td>
+                  <td data-label="處置迄日" class="num font-mono">08-21</td>
+                  <td data-label="出關日" class="num font-mono amber font-bold">08-24</td>
+                  <td data-label="狀態"><span class="badge badge-amber">今日出關</span></td>
+                  <td data-label="處置原因" class="condition">連續3日第一款｜第1次處置</td>
                 </tr>
                 
               </tbody>
@@ -1342,9 +1438,9 @@
         <div class="card-head">
           <div class="card-title-group">
             <h3 class="card-title">無明確族群標的</h3>
-            <span class="count-badge">3 檔</span>
+            <span class="count-badge">4 檔</span>
           </div>
-          <span class="card-tip">已比對 4 檔，共 3 檔為個股題材或獨立動能</span>
+          <span class="card-tip">已比對 4 檔，共 4 檔為個股題材或獨立動能</span>
         </div>
 
         <div class="data-block">
@@ -1369,33 +1465,44 @@
                   <td>市</td>
                   <td class="code font-mono">2426</td>
                   <td class="name font-bold">鼎元</td>
-                  <td class="num font-mono">82.2</td>
-                  <td class="num font-mono">28,510</td>
-                  <td class="num font-mono rise">+6,273</td>
+                  <td class="num font-mono">74.8</td>
+                  <td class="num font-mono">29,242</td>
+                  <td class="num font-mono rise">+3,750</td>
                   <td class="num font-mono ">0</td>
-                  <td class="num font-mono fall">-5</td>
+                  <td class="num font-mono fall">-35</td>
+                </tr>
+                
+                <tr>
+                  <td>市</td>
+                  <td class="code font-mono">2851</td>
+                  <td class="name font-bold">中再保</td>
+                  <td class="num font-mono">44.2</td>
+                  <td class="num font-mono">4,828</td>
+                  <td class="num font-mono fall">-568</td>
+                  <td class="num font-mono ">0</td>
+                  <td class="num font-mono rise">+43</td>
                 </tr>
                 
                 <tr>
                   <td>櫃</td>
                   <td class="code font-mono">5314</td>
                   <td class="name font-bold">世紀*</td>
-                  <td class="num font-mono">26</td>
-                  <td class="num font-mono">1,841</td>
-                  <td class="num font-mono fall">-27</td>
+                  <td class="num font-mono">23.65</td>
+                  <td class="num font-mono">4,007</td>
+                  <td class="num font-mono fall">-34</td>
                   <td class="num font-mono ">0</td>
-                  <td class="num font-mono fall">-30</td>
+                  <td class="num font-mono rise">+584</td>
                 </tr>
                 
                 <tr>
                   <td>櫃</td>
                   <td class="code font-mono">3441</td>
                   <td class="name font-bold">聯一光</td>
-                  <td class="num font-mono">107</td>
-                  <td class="num font-mono">48,653</td>
-                  <td class="num font-mono rise">+390</td>
+                  <td class="num font-mono">97.3</td>
+                  <td class="num font-mono">17,226</td>
+                  <td class="num font-mono rise">+1,584</td>
                   <td class="num font-mono ">0</td>
-                  <td class="num font-mono fall">-7</td>
+                  <td class="num font-mono rise">+8</td>
                 </tr>
                 
               </tbody>
@@ -1403,8 +1510,6 @@
           </div>
           
 
-          
-          <div class="meta-note">未比對到之原文標記：2851</div>
           
         </div>
       </div>
@@ -1428,9 +1533,9 @@
               <span class="inst-code font-mono">2426</span>
               <span class="inst-name font-bold">鼎元</span>
               <span class="inst-chips font-mono" style="margin-left:auto; display:flex; flex-direction:row; gap:8px;">
-                <span>外資 +6,273</span>
+                <span>外資 +3,750</span>
                 <span>投信 0</span>
-                <span>自營 -5</span>
+                <span>自營 -35</span>
               </span>
             </summary>
             
@@ -1841,9 +1946,9 @@
               <span class="inst-code font-mono">5314</span>
               <span class="inst-name font-bold">世紀*</span>
               <span class="inst-chips font-mono" style="margin-left:auto; display:flex; flex-direction:row; gap:8px;">
-                <span>外資 -27</span>
+                <span>外資 -34</span>
                 <span>投信 0</span>
-                <span>自營 -30</span>
+                <span>自營 +584</span>
               </span>
             </summary>
             
@@ -2254,9 +2359,9 @@
               <span class="inst-code font-mono">3441</span>
               <span class="inst-name font-bold">聯一光</span>
               <span class="inst-chips font-mono" style="margin-left:auto; display:flex; flex-direction:row; gap:8px;">
-                <span>外資 +390</span>
+                <span>外資 +1,584</span>
                 <span>投信 0</span>
-                <span>自營 -7</span>
+                <span>自營 +8</span>
               </span>
             </summary>
             
@@ -2689,6 +2794,7 @@
             
             <div class="tile">
               <div class="name">道瓊工業指數</div>
+              <div class="sub-pill font-mono" style="font-size:10px; color:var(--text-muted); margin-top:2px;">收盤：美東 16:00 / 現資料落後 18.6 h</div>
               <div class="value font-mono">53,277.01</div>
               <div class="delta font-mono rise">+517.81 (+0.98%)</div>
             </div>
@@ -2697,6 +2803,7 @@
             
             <div class="tile">
               <div class="name">S&amp;P 500指數</div>
+              <div class="sub-pill font-mono" style="font-size:10px; color:var(--text-muted); margin-top:2px;">收盤：美東 16:00 / 現資料落後 18.6 h</div>
               <div class="value font-mono">7,674.37</div>
               <div class="delta font-mono rise">+33.21 (+0.43%)</div>
             </div>
@@ -2705,6 +2812,7 @@
             
             <div class="tile">
               <div class="name">NASDAQ指數</div>
+              <div class="sub-pill font-mono" style="font-size:10px; color:var(--text-muted); margin-top:2px;">收盤：美東 16:00 / 現資料落後 18.6 h</div>
               <div class="value font-mono">26,180.46</div>
               <div class="delta font-mono rise">+113.29 (+0.43%)</div>
             </div>
@@ -2713,6 +2821,7 @@
             
             <div class="tile">
               <div class="name">費城半導體指數</div>
+              <div class="sub-pill font-mono" style="font-size:10px; color:var(--text-muted); margin-top:2px;">收盤：美東 16:00 / 現資料落後 18.6 h</div>
               <div class="value font-mono">11,740.37</div>
               <div class="delta font-mono fall">-59.65 (-0.51%)</div>
             </div>
@@ -3433,7 +3542,8 @@
         <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
         <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日 28 檔重點清單；未在清單內之標的自動略過。</li>
       </ul>
-      <div class="footer-copy">盤前情報準備台 · 自用盤前決策工作台</div>
+      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布）</div>
+      <div class="footer-copy" style="margin-top:4px;">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
   </footer>
 

@@ -487,13 +487,28 @@ def main():
 
     now = datetime.datetime.now(TAIPEI)
 
+    email = os.getenv("PRESSPLAY_EMAIL")
+    password = os.getenv("PRESSPLAY_PASSWORD")
+
+    # Local fallback candidates
+    today_str = now.strftime("%Y-%m-%d")
+    local_md = Path(f"data/pressplay/{today_str}.md")
+    fixture_txt = Path("fixtures/pressplay_article.txt")
+
     if args.fixture_article is not None:
-        raw = args.fixture_article.read_text(encoding="utf-8")
-        # fixture files carry a small header block (Title/URL/Source
-        # element) before "---"; parse title/url out of it -- both for
-        # test fidelity (the built page's "資料來源" footer needs a real
-        # title to not show its empty state) and so this also accepts a
-        # raw already-flattened dump with no header at all.
+        fixture_file = args.fixture_article
+    elif not email or not password:
+        if local_md.exists():
+            fixture_file = local_md
+        elif fixture_txt.exists():
+            fixture_file = fixture_txt
+        else:
+            fixture_file = None
+    else:
+        fixture_file = None
+
+    if fixture_file is not None and fixture_file.exists():
+        raw = fixture_file.read_text(encoding="utf-8")
         title, url = None, None
         if "\n---\n" in raw:
             header, article_text = raw.split("\n---\n", 1)
@@ -504,9 +519,15 @@ def main():
                     url = line[len("URL:"):].strip()
         else:
             article_text = raw
-        source_article = {"title": title, "url": url, "fixture": str(args.fixture_article)}
+        source_article = {"title": title or "PressPlay 盤前整理文章", "url": url, "fixture": str(fixture_file)}
+    elif email and password:
+        try:
+            source_article, article_text = fetch_article_via_browser()
+        except Exception as e:
+            print(f"PressPlay browser fetch failed: {e}, falling back to empty", file=sys.stderr)
+            source_article, article_text = {"title": "PressPlay 整理文章 (載入失敗)", "url": None}, ""
     else:
-        source_article, article_text = fetch_article_via_browser()
+        source_article, article_text = {"title": "PressPlay 整理文章 (無登入憑證)", "url": None}, "" 
 
     source_article["collected_at"] = now.isoformat()
 

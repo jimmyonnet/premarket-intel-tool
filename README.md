@@ -43,6 +43,16 @@ PressPlay 讀文章內容，所以多了兩個帳密 Secrets（見下方部署�
 6. 跑過一次 build-premarket-page 之後，頁面網址會是
    `https://<你的帳號>.github.io/<repo名稱>/`。
 
+
+## 如何觸發手動 Rebuild（即時更新頁面）
+
+若盤前想即時手動更新數據，不用等 GitHub Actions 排程時間：
+1. 進入你的 GitHub Repo 頁面 ➔ 點選頂部 **Actions** 頁籤。
+2. 左側點選 **Build premarket page** 工作流程。
+3. 右側點擊 **Run workflow** ➔ 選擇 `Branch: main` ➔ 點擊綠色 **Run workflow** 按鈕。
+4. 預計 2 分鐘內執行完畢並自動推送到 `main` 分支，GitHub Pages 頁面將自動更新。
+5. 在盤前工作台頁面點擊頂部 **「🔄 建置 HH:MM」** 按鈕即可取得最新版面！
+
 ## 兩個 workflow 在做什麼
 
 - **collect-night-session.yml**：平日 15:00–05:00（台北時間）每 30 分鐘跑一次，

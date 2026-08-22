@@ -1,10 +1,11 @@
 {
   "source_article": {
-    "title": "821盤前",
+    "title": "821盤前 - PressPlay",
     "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/2690C48223945FFC4856C571C702A869",
-    "collected_at": "2026-08-22T13:32:57.020199+08:00"
+    "fixture": "fixtures/pressplay_article.txt",
+    "collected_at": "2026-08-22T22:32:05.730150+08:00"
   },
-  "chengwaye_date": null,
+  "chengwaye_date": "2026/08/20",
   "not_found_group": {
     "raw_tokens": [
       "2426",
@@ -17,27 +18,41 @@
         "market": "市",
         "code": "2426",
         "name": "鼎元",
-        "close": "82.2",
-        "volume": "28,510",
-        "foreign": "+6,273",
+        "close": "74.8",
+        "volume": "29,242",
+        "foreign": "+3,750",
         "trust": "0",
-        "dealer": "-5",
-        "ai_reason": "LED與光電元件題材持續輪動，面板光電族群買盤集中。",
-        "group": "📺 面板光電",
+        "dealer": "-35",
+        "ai_reason": "LED與光電元件題材輪動，面板光電族群買盤集中。",
+        "group": "面板光電",
         "match_type": "code",
         "raw_token": "2426"
+      },
+      {
+        "market": "市",
+        "code": "2851",
+        "name": "中再保",
+        "close": "44.2",
+        "volume": "4,828",
+        "foreign": "-568",
+        "trust": "0",
+        "dealer": "+43",
+        "ai_reason": "再保險與保險業務題材受到金融族群輪動帶動，資金聚焦金融證券股。",
+        "group": "金融證券",
+        "match_type": "code",
+        "raw_token": "2851"
       },
       {
         "market": "櫃",
         "code": "5314",
         "name": "世紀*",
-        "close": "26",
-        "volume": "1,841",
-        "foreign": "-27",
+        "close": "23.65",
+        "volume": "4,007",
+        "foreign": "-34",
         "trust": "0",
-        "dealer": "-30",
+        "dealer": "+584",
         "ai_reason": "光碟與光儲存產品題材延續輪動，光碟片族群獲買盤關注。",
-        "group": "💿 光碟片",
+        "group": "光碟片",
         "match_type": "code",
         "raw_token": "5314"
       },
@@ -45,20 +60,18 @@
         "market": "櫃",
         "code": "3441",
         "name": "聯一光",
-        "close": "107",
-        "volume": "48,653",
-        "foreign": "+390",
+        "close": "97.3",
+        "volume": "17,226",
+        "foreign": "+1,584",
         "trust": "0",
-        "dealer": "-7",
+        "dealer": "+8",
         "ai_reason": "光學元件與鏡頭應用題材帶動族群輪動，光學鏡頭股買盤集中。",
-        "group": "📷 光學鏡頭",
+        "group": "光學鏡頭",
         "match_type": "code",
         "raw_token": "3441"
       }
     ],
-    "unmatched": [
-      "2851"
-    ]
+    "unmatched": []
   },
   "found_group": {
     "raw_tokens": [],

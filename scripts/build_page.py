@@ -339,11 +339,49 @@ def main():
 
     now = datetime.now(TAIPEI)
 
+    # Calculate data_date, stale_hours and hours_since_us_close
+    data_date = disposal.get("date_check", {}).get("today") or night.get("date") or now.strftime("%Y-%m-%d")
+    
+    # Calculate hours since last US close (US 16:00 EDT == 04:00 Taipei next day)
+    us_close_today = now.replace(hour=4, minute=0, second=0, microsecond=0)
+    if now < us_close_today:
+        us_close_today -= timedelta(days=1)
+    hours_since_us_close = round((now - us_close_today).total_seconds() / 3600, 1)
+
+    # Calculate data stale hours
+    data_dt_str = (night.get("latest") or {}).get("collected_at")
+    if data_dt_str:
+        try:
+            data_dt = datetime.fromisoformat(data_dt_str)
+            stale_hours = round((now - data_dt).total_seconds() / 3600, 1)
+        except Exception:
+            stale_hours = 0
+    else:
+        stale_hours = 0
+
+    stale_hours = max(0, stale_hours)
+    build_time = now.strftime("%H:%M")
+
+    # Write data_meta.json
+    meta_path = Path(args.out).parent / "data_meta.json"
+    meta_path.parent.mkdir(parents=True, exist_ok=True)
+    meta_data = {
+        "build_time": now.isoformat(),
+        "data_date": data_date,
+        "stale_hours": stale_hours,
+        "hours_since_us_close": hours_since_us_close,
+    }
+    meta_path.write_text(json.dumps(meta_data, ensure_ascii=False, indent=2), encoding="utf-8")
+
     env = Environment(loader=FileSystemLoader(args.template_dir), autoescape=True)
     tmpl = env.get_template("premarket.html.j2")
 
     html = tmpl.render(
         generated_at=now.strftime("%Y/%m/%d %H:%M"),
+        build_time=build_time,
+        data_date=data_date,
+        stale_hours=stale_hours,
+        hours_since_us_close=hours_since_us_close,
         indices=indices,
         us_indices=indices.get("us_indices", {}),
         asia_open=indices.get("asia_open", {}),
