@@ -6,7 +6,7 @@
 <meta name="description" content="個人自用，勿分享">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#F8FAFC">
-<title>盤前 · 08/24 · 警示 8 · 今日 5 檔近處置</title>
+<title>盤前 · 08/24 · 近處置 5 · 出關 3</title>
 
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -1304,6 +1304,40 @@
     .page-nav::-webkit-scrollbar { display: none; }
   }
 
+
+  /* WATCHLIST LINKED HIGHLIGHTS */
+  .watchlist-star-marker {
+    color: var(--amber);
+    font-weight: 700;
+    font-size: 13px;
+    margin-right: 4px;
+    display: inline-block;
+  }
+  .watchlist-alert-banner {
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-border);
+    color: var(--amber-fg);
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    display: none;
+    align-items: center;
+    gap: 6px;
+  }
+  .source-warning-banner {
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    color: var(--danger-fg);
+    border-radius: 8px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    display: none;
+  }
+
 </style>
 </head>
 <body>
@@ -1315,7 +1349,7 @@
         <h1 class="page-title">盤前情報準備台</h1>
       </div>
       <div class="meta-row">
-        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/22 23:32</span></span>
+        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/22 23:34</span></span>
         
         <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">08/24</span></span>
         
@@ -1353,7 +1387,7 @@
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" aria-label="切換截圖模式">📸 截圖</button>
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" aria-label="切換深淺色主題">🌙 深色</button>
         <button class="nav-btn refresh-btn" onclick="location.reload(true)" type="button" title="重新載入最新版" aria-label="重新整理頁面">
-          🔄 <span class="last-build">建置 2026-08-22 23:32</span><span class="short-build">重整</span>
+          🔄 <span class="last-build">建置 2026-08-22 23:34</span><span class="short-build">重整</span>
         </button>
       </div>
     </div>
@@ -1426,6 +1460,9 @@
           <div class="card-sub font-mono fall">
             -64.0 (-0.14%)
           </div>
+          <div class="benchmark-note font-mono" style="font-size:11px; color:var(--text-muted); margin-top:2px;">
+            基準：vs 期貨日盤收盤 (45,138)
+          </div>
         </div>
         
         
@@ -1493,7 +1530,7 @@
                   <td data-label="代號" class="code font-mono">
                     <span class="pause-icon" title="處置中">⏸</span>3490
                   </td>
-                  <td data-label="名稱" class="name font-bold">單井</td>
+                  <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="3490" style="display:none;">★</span>單井</td>
                   <td data-label="收盤" class="num font-mono">53.9</td>
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
@@ -1568,7 +1605,7 @@
                   <td data-label="代號" class="code font-mono">
                     3625
                   </td>
-                  <td data-label="名稱" class="name font-bold">西勝</td>
+                  <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="3625" style="display:none;">★</span>西勝</td>
                   <td data-label="收盤" class="num font-mono">11.10</td>
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
@@ -1643,7 +1680,7 @@
                   <td data-label="代號" class="code font-mono">
                     4304
                   </td>
-                  <td data-label="名稱" class="name font-bold">勝昱</td>
+                  <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="4304" style="display:none;">★</span>勝昱</td>
                   <td data-label="收盤" class="num font-mono">25.70</td>
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
@@ -1718,7 +1755,7 @@
                   <td data-label="代號" class="code font-mono">
                     4971
                   </td>
-                  <td data-label="名稱" class="name font-bold">IET-KY</td>
+                  <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="4971" style="display:none;">★</span>IET-KY</td>
                   <td data-label="收盤" class="num font-mono">588</td>
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
@@ -1811,7 +1848,7 @@
                   <td data-label="代號" class="code font-mono">
                     <span class="pause-icon" title="處置中">⏸</span>6225
                   </td>
-                  <td data-label="名稱" class="name font-bold">天瀚</td>
+                  <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="6225" style="display:none;">★</span>天瀚</td>
                   <td data-label="收盤" class="num font-mono">64.7</td>
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
@@ -1918,7 +1955,7 @@
                 <tr data-code="3163" data-cat="amber" data-label="波若威">
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono">3163</td>
-                  <td data-label="名稱" class="name font-bold">波若威</td>
+                  <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="3163" style="display:none;">★</span>波若威</td>
                   <td data-label="原撮合"><span class="badge">2分</span></td>
                   <td data-label="處置起訖" class="font-mono">08-13 ~ 08-21</td>
                   <td data-label="預計出關" class="font-mono font-bold amber">08-24</td>
@@ -1929,7 +1966,7 @@
                 <tr data-code="4931" data-cat="amber" data-label="新盛力">
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono">4931</td>
-                  <td data-label="名稱" class="name font-bold">新盛力</td>
+                  <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="4931" style="display:none;">★</span>新盛力</td>
                   <td data-label="原撮合"><span class="badge">2分</span></td>
                   <td data-label="處置起訖" class="font-mono">08-13 ~ 08-21</td>
                   <td data-label="預計出關" class="font-mono font-bold amber">08-24</td>
@@ -1940,7 +1977,7 @@
                 <tr data-code="6716" data-cat="amber" data-label="應廣">
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono">6716</td>
-                  <td data-label="名稱" class="name font-bold">應廣</td>
+                  <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="6716" style="display:none;">★</span>應廣</td>
                   <td data-label="原撮合"><span class="badge">2分</span></td>
                   <td data-label="處置起訖" class="font-mono">08-17 ~ 08-21</td>
                   <td data-label="預計出關" class="font-mono font-bold amber">08-24</td>
@@ -2124,7 +2161,7 @@
           <div class="card-title-group">
             <h3 class="card-title">美股四大指數與跨海連動標的</h3>
           </div>
-          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 19.5 小時</span>
+          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 19.6 小時</span>
         </div>
 
         <div class="data-block">
@@ -2135,7 +2172,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">標普 500</span>
-                <span class="tile-delay-pill pill-fresh">19.5h ago</span>
+                <span class="tile-delay-pill pill-fresh">19.6h ago</span>
               </div>
               
               <div class="tile-val font-mono rise">7,674.37</div>
@@ -2147,7 +2184,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">那斯達克</span>
-                <span class="tile-delay-pill pill-fresh">19.5h ago</span>
+                <span class="tile-delay-pill pill-fresh">19.6h ago</span>
               </div>
               
               <div class="tile-val font-mono rise">26,180.46</div>
@@ -2159,7 +2196,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">道瓊工業</span>
-                <span class="tile-delay-pill pill-fresh">19.5h ago</span>
+                <span class="tile-delay-pill pill-fresh">19.6h ago</span>
               </div>
               
               <div class="tile-val font-mono rise">53,277.00</div>
@@ -2171,7 +2208,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">費城半導體</span>
-                <span class="tile-delay-pill pill-fresh">19.5h ago</span>
+                <span class="tile-delay-pill pill-fresh">19.6h ago</span>
               </div>
               
               <div class="tile-val font-mono fall">11,740.37</div>
@@ -2454,7 +2491,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -2528,7 +2565,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -2601,7 +2638,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -2688,7 +2725,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -2761,7 +2798,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -2834,7 +2871,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -2921,7 +2958,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3008,7 +3045,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3081,7 +3118,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3168,7 +3205,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3241,7 +3278,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3328,7 +3365,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3401,7 +3438,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3474,7 +3511,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3561,7 +3598,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3634,7 +3671,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3707,7 +3744,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3794,7 +3831,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3867,7 +3904,7 @@
                           <span class="metric-lbl">實際:</span>
                           <span class="metric-val">
                             
-                              —
+                              <span style="color:var(--text-muted); font-size:10px;">未公布</span>
                             
                           </span>
                         </div>
@@ -3952,7 +3989,7 @@
         <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
         <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日重點清單；未在清單內之標的自動略過。</li>
       </ul>
-      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-22 23:25</span></div>
+      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-22 23:34</span></div>
       <div class="footer-copy" style="margin-top:4px; text-align:center;">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
   </footer>
@@ -4301,6 +4338,59 @@
     });
     localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
     renderWatch();
+
+  // Update Watchlist Star Markers & Alert Banner
+  function updateWatchlistStars() {
+    var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
+    var codes = [];
+    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
+    
+    var guide = document.getElementById('watchlist-empty-guide');
+    if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
+
+    var alertCount = 0;
+    document.querySelectorAll('.watchlist-star-marker').forEach(function(star) {
+      var code = star.getAttribute('data-code');
+      var isWatched = codes.indexOf(code) >= 0;
+      star.style.display = isWatched ? 'inline-block' : 'none';
+      if (isWatched && star.closest('#alerts')) {
+        alertCount++;
+      }
+    });
+
+    var alertBanner = document.getElementById('watchlist-alert-banner');
+    var alertCountEl = document.getElementById('watchlist-alert-count');
+    if (alertBanner && alertCountEl) {
+      alertCountEl.textContent = String(alertCount);
+      alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
+    }
+  }
+
+  // Hook star update to renderWatch
+  var origRenderWatch = window.renderWatch;
+  window.renderWatch = function() {
+    if (origRenderWatch) origRenderWatch();
+    updateWatchlistStars();
+  };
+
+  // Iframe 5-second timeout safety
+  setTimeout(function() {
+    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
+      var curH = parseInt(iframe.style.height || '0');
+      if (curH <= 80) {
+        var card = iframe.closest('.card') || iframe.parentElement;
+        var existing = card.querySelector('.embed-fallback-notice');
+        if (!existing) {
+          var n = document.createElement('div');
+          n.className = 'embed-fallback-notice';
+          n.style.cssText = 'padding:14px; font-size:12px; color:var(--text-muted); text-align:center; background:var(--bg-sub); border-radius:6px; margin:8px 0;';
+          n.textContent = '⚠️ 資料載入超時（已沿用 build-time 快照）';
+          iframe.parentElement.appendChild(n);
+        }
+      }
+    });
+  }, 5000);
+
     if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
     window.pm.showToast('已儲存自選股清單 (' + codes.length + ' 檔)');
   };
@@ -4309,6 +4399,59 @@
     localStorage.removeItem(window.WATCH_KEY);
     document.getElementById('watch-input').value = '';
     renderWatch();
+
+  // Update Watchlist Star Markers & Alert Banner
+  function updateWatchlistStars() {
+    var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
+    var codes = [];
+    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
+    
+    var guide = document.getElementById('watchlist-empty-guide');
+    if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
+
+    var alertCount = 0;
+    document.querySelectorAll('.watchlist-star-marker').forEach(function(star) {
+      var code = star.getAttribute('data-code');
+      var isWatched = codes.indexOf(code) >= 0;
+      star.style.display = isWatched ? 'inline-block' : 'none';
+      if (isWatched && star.closest('#alerts')) {
+        alertCount++;
+      }
+    });
+
+    var alertBanner = document.getElementById('watchlist-alert-banner');
+    var alertCountEl = document.getElementById('watchlist-alert-count');
+    if (alertBanner && alertCountEl) {
+      alertCountEl.textContent = String(alertCount);
+      alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
+    }
+  }
+
+  // Hook star update to renderWatch
+  var origRenderWatch = window.renderWatch;
+  window.renderWatch = function() {
+    if (origRenderWatch) origRenderWatch();
+    updateWatchlistStars();
+  };
+
+  // Iframe 5-second timeout safety
+  setTimeout(function() {
+    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
+      var curH = parseInt(iframe.style.height || '0');
+      if (curH <= 80) {
+        var card = iframe.closest('.card') || iframe.parentElement;
+        var existing = card.querySelector('.embed-fallback-notice');
+        if (!existing) {
+          var n = document.createElement('div');
+          n.className = 'embed-fallback-notice';
+          n.style.cssText = 'padding:14px; font-size:12px; color:var(--text-muted); text-align:center; background:var(--bg-sub); border-radius:6px; margin:8px 0;';
+          n.textContent = '⚠️ 資料載入超時（已沿用 build-time 快照）';
+          iframe.parentElement.appendChild(n);
+        }
+      }
+    });
+  }, 5000);
+
     if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
     window.pm.showToast('已清空自選股');
   };
@@ -4320,6 +4463,59 @@
     localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
     document.getElementById('watch-input').value = codes.join(', ');
     renderWatch();
+
+  // Update Watchlist Star Markers & Alert Banner
+  function updateWatchlistStars() {
+    var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
+    var codes = [];
+    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
+    
+    var guide = document.getElementById('watchlist-empty-guide');
+    if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
+
+    var alertCount = 0;
+    document.querySelectorAll('.watchlist-star-marker').forEach(function(star) {
+      var code = star.getAttribute('data-code');
+      var isWatched = codes.indexOf(code) >= 0;
+      star.style.display = isWatched ? 'inline-block' : 'none';
+      if (isWatched && star.closest('#alerts')) {
+        alertCount++;
+      }
+    });
+
+    var alertBanner = document.getElementById('watchlist-alert-banner');
+    var alertCountEl = document.getElementById('watchlist-alert-count');
+    if (alertBanner && alertCountEl) {
+      alertCountEl.textContent = String(alertCount);
+      alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
+    }
+  }
+
+  // Hook star update to renderWatch
+  var origRenderWatch = window.renderWatch;
+  window.renderWatch = function() {
+    if (origRenderWatch) origRenderWatch();
+    updateWatchlistStars();
+  };
+
+  // Iframe 5-second timeout safety
+  setTimeout(function() {
+    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
+      var curH = parseInt(iframe.style.height || '0');
+      if (curH <= 80) {
+        var card = iframe.closest('.card') || iframe.parentElement;
+        var existing = card.querySelector('.embed-fallback-notice');
+        if (!existing) {
+          var n = document.createElement('div');
+          n.className = 'embed-fallback-notice';
+          n.style.cssText = 'padding:14px; font-size:12px; color:var(--text-muted); text-align:center; background:var(--bg-sub); border-radius:6px; margin:8px 0;';
+          n.textContent = '⚠️ 資料載入超時（已沿用 build-time 快照）';
+          iframe.parentElement.appendChild(n);
+        }
+      }
+    });
+  }, 5000);
+
     if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
   };
 
@@ -4675,6 +4871,59 @@
     var inp = document.getElementById('watch-input');
     if (inp && codes.length) inp.value = codes.join(', ');
     renderWatch();
+
+  // Update Watchlist Star Markers & Alert Banner
+  function updateWatchlistStars() {
+    var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
+    var codes = [];
+    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
+    
+    var guide = document.getElementById('watchlist-empty-guide');
+    if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
+
+    var alertCount = 0;
+    document.querySelectorAll('.watchlist-star-marker').forEach(function(star) {
+      var code = star.getAttribute('data-code');
+      var isWatched = codes.indexOf(code) >= 0;
+      star.style.display = isWatched ? 'inline-block' : 'none';
+      if (isWatched && star.closest('#alerts')) {
+        alertCount++;
+      }
+    });
+
+    var alertBanner = document.getElementById('watchlist-alert-banner');
+    var alertCountEl = document.getElementById('watchlist-alert-count');
+    if (alertBanner && alertCountEl) {
+      alertCountEl.textContent = String(alertCount);
+      alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
+    }
+  }
+
+  // Hook star update to renderWatch
+  var origRenderWatch = window.renderWatch;
+  window.renderWatch = function() {
+    if (origRenderWatch) origRenderWatch();
+    updateWatchlistStars();
+  };
+
+  // Iframe 5-second timeout safety
+  setTimeout(function() {
+    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
+      var curH = parseInt(iframe.style.height || '0');
+      if (curH <= 80) {
+        var card = iframe.closest('.card') || iframe.parentElement;
+        var existing = card.querySelector('.embed-fallback-notice');
+        if (!existing) {
+          var n = document.createElement('div');
+          n.className = 'embed-fallback-notice';
+          n.style.cssText = 'padding:14px; font-size:12px; color:var(--text-muted); text-align:center; background:var(--bg-sub); border-radius:6px; margin:8px 0;';
+          n.textContent = '⚠️ 資料載入超時（已沿用 build-time 快照）';
+          iframe.parentElement.appendChild(n);
+        }
+      }
+    });
+  }, 5000);
+
 
     // Restore Watch-Only
     if (urlParams.get('watch') === '1') window.pm.watchOnly = true;
