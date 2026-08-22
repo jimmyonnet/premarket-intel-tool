@@ -743,6 +743,43 @@
     .summary-grid { grid-template-columns: repeat(2, 1fr); }
     .cal-day { flex-direction: column; gap: 4px; }
   }
+
+  /* Responsive Mobile Card Layout for Disposal Table */
+  @media (max-width: 768px) {
+    .disposal-table thead { display: none; }
+    .disposal-table tbody tr {
+      display: block;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: #FFFFFF;
+    }
+    .disposal-table td {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 6px;
+      padding: 4px 0;
+      border-bottom: none;
+      white-space: normal;
+      text-align: left !important;
+    }
+    .disposal-table td::before {
+      content: attr(data-label);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .disposal-table .badge-dots {
+      justify-content: flex-start;
+    }
+    .disposal-table .badge-frac {
+      display: inline-block;
+      margin-left: 6px;
+      margin-top: 0;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -880,7 +917,7 @@
         <div class="data-block">
           {% if disposal.one_flag_from_disposal %}
           <div class="table-scroll">
-            <table class="data-table">
+            <table class="data-table disposal-table">
               <thead>
                 <tr>
                   <th>市場</th>
@@ -898,12 +935,12 @@
               <tbody>
                 {% for row in disposal.one_flag_from_disposal %}
                 <tr>
-                  <td>{{ row.market }}</td>
-                  <td class="code font-mono">{{ row.code }}</td>
-                  <td class="name font-bold">{{ row.name }}</td>
-                  <td class="num font-mono">{{ row.close }}</td>
-                  <td class="condition">{% if row.condition_segments %}{% for seg in row.condition_segments %}<span{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>{% endfor %}{% else %}{{ row.condition }}{% endif %}</td>
-                  <td class="num font-mono">
+                  <td data-label="市場">{{ row.market }}</td>
+                  <td data-label="代號" class="code font-mono">{{ row.code }}</td>
+                  <td data-label="名稱" class="name font-bold">{{ row.name }}</td>
+                  <td data-label="收盤" class="num font-mono">{{ row.close }}</td>
+                  <td data-label="處置條件" class="condition">{% if row.condition_segments %}{% for seg in row.condition_segments %}<span{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>{% endfor %}{% else %}{{ row.condition }}{% endif %}</td>
+                  <td data-label="最快處置" class="num font-mono">
                     {% set ed_parts = row.earliest_disposal.split(' ', 1) %}
                     {% if ed_parts|length == 2 %}
                       <span>{{ ed_parts[0] }}</span>
@@ -912,11 +949,14 @@
                       <span>{{ row.earliest_disposal }}</span>
                     {% endif %}
                   </td>
+                  {% set badge_labels = ['3① 連3第1款', '5 連5第1~7款', '6 10日內6次', '12 30日內12次'] %}
                   {% for bd in row.badges or [{}, {}, {}, {}] %}
-                  <td class="badge-col"{% if bd.title %} title="{{ bd.title }}"{% endif %}>
+                  <td data-label="{{ badge_labels[loop.index0] }}" class="badge-col"{% if bd.title %} title="{{ bd.title }}"{% endif %}>
                     {% if bd.threshold %}
-                    <div class="badge-dots">{% for i in range(bd.threshold) %}<span class="dot{{ ' filled' if i < bd.current else '' }}"></span>{% endfor %}</div>
-                    <span class="badge-frac font-mono">{{ bd.current }}/{{ bd.threshold }}</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots">{% for i in range(bd.threshold) %}<span class="dot{{ ' filled' if i < bd.current else '' }}"></span>{% endfor %}</div>
+                      <span class="badge-frac font-mono">{{ bd.current }}/{{ bd.threshold }}</span>
+                    </div>
                     {% else %}
                     <span class="badge-frac">—</span>
                     {% endif %}

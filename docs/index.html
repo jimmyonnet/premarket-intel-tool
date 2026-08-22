@@ -743,6 +743,43 @@
     .summary-grid { grid-template-columns: repeat(2, 1fr); }
     .cal-day { flex-direction: column; gap: 4px; }
   }
+
+  /* Responsive Mobile Card Layout for Disposal Table */
+  @media (max-width: 768px) {
+    .disposal-table thead { display: none; }
+    .disposal-table tbody tr {
+      display: block;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      background: #FFFFFF;
+    }
+    .disposal-table td {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 6px;
+      padding: 4px 0;
+      border-bottom: none;
+      white-space: normal;
+      text-align: left !important;
+    }
+    .disposal-table td::before {
+      content: attr(data-label);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .disposal-table .badge-dots {
+      justify-content: flex-start;
+    }
+    .disposal-table .badge-frac {
+      display: inline-block;
+      margin-left: 6px;
+      margin-top: 0;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -754,7 +791,7 @@
         <h1 class="page-title">盤前情報準備台</h1>
       </div>
       <div class="meta-row">
-        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/22 22:27</span></span>
+        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/22 22:29</span></span>
         
         <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">08/24</span></span>
         
@@ -876,7 +913,7 @@
         <div class="data-block">
           
           <div class="table-scroll">
-            <table class="data-table">
+            <table class="data-table disposal-table">
               <thead>
                 <tr>
                   <th>市場</th>
@@ -894,12 +931,12 @@
               <tbody>
                 
                 <tr>
-                  <td>櫃</td>
-                  <td class="code font-mono">⏸3490</td>
-                  <td class="name font-bold">單井</td>
-                  <td class="num font-mono">53.9</td>
-                  <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--fall)">53.0↑(-1.7%)</span></td>
-                  <td class="num font-mono">
+                  <td data-label="市場">櫃</td>
+                  <td data-label="代號" class="code font-mono">⏸3490</td>
+                  <td data-label="名稱" class="name font-bold">單井</td>
+                  <td data-label="收盤" class="num font-mono">53.9</td>
+                  <td data-label="處置條件" class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--fall)">53.0↑(-1.7%)</span></td>
+                  <td data-label="最快處置" class="num font-mono">
                     
                     
                       <span>08-25</span>
@@ -907,43 +944,52 @@
                     
                   </td>
                   
-                  <td class="badge-col" title="連續3日第1款 2/3">
+                  
+                  <td data-label="3① 連3第1款" class="badge-col" title="連續3日第1款 2/3">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/3</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/3</span>
+                    </div>
                     
                   </td>
                   
-                  <td class="badge-col" title="連續5日（第1~7款） 2/5">
+                  <td data-label="5 連5第1~7款" class="badge-col" title="連續5日（第1~7款） 2/5">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/5</span>
-                    
-                  </td>
-                  
-                  <td class="badge-col" title="10日內6次（第1~7款） 2/6">
-                    
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/6</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/5</span>
+                    </div>
                     
                   </td>
                   
-                  <td class="badge-col" title="30日內12次（第1~7款） 2/12">
+                  <td data-label="6 10日內6次" class="badge-col" title="10日內6次（第1~7款） 2/6">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/12</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/6</span>
+                    </div>
+                    
+                  </td>
+                  
+                  <td data-label="12 30日內12次" class="badge-col" title="30日內12次（第1~7款） 2/12">
+                    
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/12</span>
+                    </div>
                     
                   </td>
                   
                 </tr>
                 
                 <tr>
-                  <td>櫃</td>
-                  <td class="code font-mono">3625</td>
-                  <td class="name font-bold">西勝</td>
-                  <td class="num font-mono">11.10</td>
-                  <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">11.55↓(+4.1%)</span></td>
-                  <td class="num font-mono">
+                  <td data-label="市場">櫃</td>
+                  <td data-label="代號" class="code font-mono">3625</td>
+                  <td data-label="名稱" class="name font-bold">西勝</td>
+                  <td data-label="收盤" class="num font-mono">11.10</td>
+                  <td data-label="處置條件" class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">11.55↓(+4.1%)</span></td>
+                  <td data-label="最快處置" class="num font-mono">
                     
                     
                       <span>08-25</span>
@@ -951,43 +997,52 @@
                     
                   </td>
                   
-                  <td class="badge-col" title="連續3日第1款 2/3">
+                  
+                  <td data-label="3① 連3第1款" class="badge-col" title="連續3日第1款 2/3">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/3</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/3</span>
+                    </div>
                     
                   </td>
                   
-                  <td class="badge-col" title="連續5日（第1~7款） 2/5">
+                  <td data-label="5 連5第1~7款" class="badge-col" title="連續5日（第1~7款） 2/5">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/5</span>
-                    
-                  </td>
-                  
-                  <td class="badge-col" title="10日內6次（第1~7款） 2/6">
-                    
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/6</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/5</span>
+                    </div>
                     
                   </td>
                   
-                  <td class="badge-col" title="30日內12次（第1~7款） 2/12">
+                  <td data-label="6 10日內6次" class="badge-col" title="10日內6次（第1~7款） 2/6">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/12</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/6</span>
+                    </div>
+                    
+                  </td>
+                  
+                  <td data-label="12 30日內12次" class="badge-col" title="30日內12次（第1~7款） 2/12">
+                    
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/12</span>
+                    </div>
                     
                   </td>
                   
                 </tr>
                 
                 <tr>
-                  <td>櫃</td>
-                  <td class="code font-mono">4304</td>
-                  <td class="name font-bold">勝昱</td>
-                  <td class="num font-mono">25.70</td>
-                  <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span></td>
-                  <td class="num font-mono">
+                  <td data-label="市場">櫃</td>
+                  <td data-label="代號" class="code font-mono">4304</td>
+                  <td data-label="名稱" class="name font-bold">勝昱</td>
+                  <td data-label="收盤" class="num font-mono">25.70</td>
+                  <td data-label="處置條件" class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span></td>
+                  <td data-label="最快處置" class="num font-mono">
                     
                     
                       <span>08-25</span>
@@ -995,43 +1050,52 @@
                     
                   </td>
                   
-                  <td class="badge-col" title="連續3日第1款 2/3">
+                  
+                  <td data-label="3① 連3第1款" class="badge-col" title="連續3日第1款 2/3">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/3</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/3</span>
+                    </div>
                     
                   </td>
                   
-                  <td class="badge-col" title="連續5日（第1~7款） 2/5">
+                  <td data-label="5 連5第1~7款" class="badge-col" title="連續5日（第1~7款） 2/5">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/5</span>
-                    
-                  </td>
-                  
-                  <td class="badge-col" title="10日內6次（第1~7款） 2/6">
-                    
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/6</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/5</span>
+                    </div>
                     
                   </td>
                   
-                  <td class="badge-col" title="30日內12次（第1~7款） 2/12">
+                  <td data-label="6 10日內6次" class="badge-col" title="10日內6次（第1~7款） 2/6">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/12</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/6</span>
+                    </div>
+                    
+                  </td>
+                  
+                  <td data-label="12 30日內12次" class="badge-col" title="30日內12次（第1~7款） 2/12">
+                    
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/12</span>
+                    </div>
                     
                   </td>
                   
                 </tr>
                 
                 <tr>
-                  <td>櫃</td>
-                  <td class="code font-mono">4971</td>
-                  <td class="name font-bold">IET-KY</td>
-                  <td class="num font-mono">588</td>
-                  <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">597↑(+1.5%)</span><span style="color:var(--muted)">②不符合</span><span style="color:var(--muted)">③④⑤⑦</span><span style="color:var(--rise)">621↑(+5.6%)</span><span style="color:var(--amber)">需量≥2,360張</span><span style="color:var(--amber)">+但書</span><span style="color:var(--amber)">⑥ 量≥2,359張</span></td>
-                  <td class="num font-mono">
+                  <td data-label="市場">櫃</td>
+                  <td data-label="代號" class="code font-mono">4971</td>
+                  <td data-label="名稱" class="name font-bold">IET-KY</td>
+                  <td data-label="收盤" class="num font-mono">588</td>
+                  <td data-label="處置條件" class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--rise)">597↑(+1.5%)</span><span style="color:var(--muted)">②不符合</span><span style="color:var(--muted)">③④⑤⑦</span><span style="color:var(--rise)">621↑(+5.6%)</span><span style="color:var(--amber)">需量≥2,360張</span><span style="color:var(--amber)">+但書</span><span style="color:var(--amber)">⑥ 量≥2,359張</span></td>
+                  <td data-label="最快處置" class="num font-mono">
                     
                     
                       <span>08-25</span>
@@ -1039,43 +1103,52 @@
                     
                   </td>
                   
-                  <td class="badge-col" title="連續3日第1款 0/3">
+                  
+                  <td data-label="3① 連3第1款" class="badge-col" title="連續3日第1款 0/3">
                     
-                    <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">0/3</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">0/3</span>
+                    </div>
                     
                   </td>
                   
-                  <td class="badge-col" title="連續5日（第1~7款） 4/5">
+                  <td data-label="5 連5第1~7款" class="badge-col" title="連續5日（第1~7款） 4/5">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">4/5</span>
-                    
-                  </td>
-                  
-                  <td class="badge-col" title="10日內6次（第1~7款） 4/6">
-                    
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">4/6</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">4/5</span>
+                    </div>
                     
                   </td>
                   
-                  <td class="badge-col" title="30日內12次（第1~7款） 4/12">
+                  <td data-label="6 10日內6次" class="badge-col" title="10日內6次（第1~7款） 4/6">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">4/12</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">4/6</span>
+                    </div>
+                    
+                  </td>
+                  
+                  <td data-label="12 30日內12次" class="badge-col" title="30日內12次（第1~7款） 4/12">
+                    
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">4/12</span>
+                    </div>
                     
                   </td>
                   
                 </tr>
                 
                 <tr>
-                  <td>市</td>
-                  <td class="code font-mono">⏸6225</td>
-                  <td class="name font-bold">天瀚</td>
-                  <td class="num font-mono">64.7</td>
-                  <td class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span></td>
-                  <td class="num font-mono">
+                  <td data-label="市場">市</td>
+                  <td data-label="代號" class="code font-mono">⏸6225</td>
+                  <td data-label="名稱" class="name font-bold">天瀚</td>
+                  <td data-label="收盤" class="num font-mono">64.7</td>
+                  <td data-label="處置條件" class="condition"><span style="color:var(--muted)">①</span><span style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span></td>
+                  <td data-label="最快處置" class="num font-mono">
                     
                     
                       <span>08-25</span>
@@ -1083,31 +1156,40 @@
                     
                   </td>
                   
-                  <td class="badge-col" title="連續3日第1款 2/3">
+                  
+                  <td data-label="3① 連3第1款" class="badge-col" title="連續3日第1款 2/3">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/3</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/3</span>
+                    </div>
                     
                   </td>
                   
-                  <td class="badge-col" title="連續5日（第1~7款） 2/5">
+                  <td data-label="5 連5第1~7款" class="badge-col" title="連續5日（第1~7款） 2/5">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/5</span>
-                    
-                  </td>
-                  
-                  <td class="badge-col" title="10日內6次（第1~7款） 2/6">
-                    
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/6</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/5</span>
+                    </div>
                     
                   </td>
                   
-                  <td class="badge-col" title="30日內12次（第1~7款） 2/12">
+                  <td data-label="6 10日內6次" class="badge-col" title="10日內6次（第1~7款） 2/6">
                     
-                    <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-                    <span class="badge-frac font-mono">2/12</span>
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/6</span>
+                    </div>
+                    
+                  </td>
+                  
+                  <td data-label="12 30日內12次" class="badge-col" title="30日內12次（第1~7款） 2/12">
+                    
+                    <div style="display:flex; align-items:center;">
+                      <div class="badge-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                      <span class="badge-frac font-mono">2/12</span>
+                    </div>
                     
                   </td>
                   
