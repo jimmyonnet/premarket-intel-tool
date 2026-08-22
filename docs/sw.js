@@ -1,5 +1,5 @@
-const CACHE = 'premarket-v1';
-const PRECACHE = [
+const CACHE_NAME = 'premarket-v2';
+const PRECACHE_URLS = [
   './',
   './index.html',
   './manifest.json',
@@ -7,38 +7,53 @@ const PRECACHE = [
   './embed/fin.html',
   './embed/rev.html',
   './icon-192.png',
-  './icon-512.png'
+  './icon-512.png',
+  './data_meta.json'
 ];
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(PRECACHE))
+
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(PRECACHE_URLS))
       .then(() => self.skipWaiting())
   );
 });
-self.addEventListener('activate', e => {
-  e.waitUntil(
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
     caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+      Promise.all(
+        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
+      )
     ).then(() => self.clients.claim())
   );
 });
-self.addEventListener('fetch', e => {
-  if (e.request.method !== 'GET') return;
-  const url = new URL(e.request.url);
-  // 只快取同源；夜盤 jsonl 與 chengwaye 站內 / Google AdSense / GA 全部略過
+
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+
+  // Skip external resources, cross-origin ads, analytics
   if (url.origin !== self.location.origin) return;
   if (url.pathname.includes('/data/night_session/')) return;
-  e.respondWith(
-    caches.open(CACHE).then(c =>
-      c.match(e.request).then(r =>
-        r ? r : fetch(e.request).then(resp => {
-          // 只快取靜態資源（HTML/CSS/字體/圖片）
-          if (resp.ok && /text\/html|application\/javascript|text\/css|image\//.test(resp.headers.get('content-type') || '')) {
-            c.put(e.request, resp.clone());
-          }
-          return resp;
-        }).catch(() => r || caches.match('./index.html'))
-      )
-    )
+
+  event.respondWith(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.match(event.request).then(cachedResponse => {
+        const fetchPromise = fetch(event.request)
+          .then(networkResponse => {
+            if (networkResponse && networkResponse.status === 200) {
+              cache.put(event.request, networkResponse.clone());
+            }
+            return networkResponse;
+          })
+          .catch(() => {
+            // Offline fallback
+            return cachedResponse || cache.match('./index.html') || cache.match('./');
+          });
+
+        return cachedResponse || fetchPromise;
+      });
+    })
   );
 });
