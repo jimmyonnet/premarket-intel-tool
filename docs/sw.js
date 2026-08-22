@@ -1,5 +1,5 @@
-const CACHE_NAME = 'premarket-v2';
-const PRECACHE_URLS = [
+const CACHE_NAME = 'premarket-v3';
+const SHELL_ASSETS = [
   './',
   './index.html',
   './manifest.json',
@@ -14,7 +14,7 @@ const PRECACHE_URLS = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(PRECACHE_URLS))
+      .then(cache => cache.addAll(SHELL_ASSETS))
       .then(() => self.skipWaiting())
   );
 });
@@ -33,27 +33,42 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
 
-  // Skip external resources, cross-origin ads, analytics
+  // Skip cross-origin ads, tracking, or external APIs
   if (url.origin !== self.location.origin) return;
   if (url.pathname.includes('/data/night_session/')) return;
 
-  event.respondWith(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.match(event.request).then(cachedResponse => {
-        const fetchPromise = fetch(event.request)
-          .then(networkResponse => {
-            if (networkResponse && networkResponse.status === 200) {
-              cache.put(event.request, networkResponse.clone());
-            }
-            return networkResponse;
-          })
-          .catch(() => {
-            // Offline fallback
-            return cachedResponse || cache.match('./index.html') || cache.match('./');
-          });
+  const isDataRequest = url.pathname.endsWith('.json') || url.pathname.includes('/data/');
 
-        return cachedResponse || fetchPromise;
-      });
-    })
-  );
+  if (isDataRequest) {
+    // Network-first strategy for dynamic data with 5-minute TTL / cache fallback
+    event.respondWith(
+      fetch(event.request)
+        .then(networkResponse => {
+          if (networkResponse && networkResponse.status === 200) {
+            const clone = networkResponse.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          }
+          return networkResponse;
+        })
+        .catch(() => caches.match(event.request))
+    );
+  } else {
+    // Stale-while-revalidate for Shell assets
+    event.respondWith(
+      caches.open(CACHE_NAME).then(cache => {
+        return cache.match(event.request).then(cachedResponse => {
+          const fetchPromise = fetch(event.request)
+            .then(networkResponse => {
+              if (networkResponse && networkResponse.status === 200) {
+                cache.put(event.request, networkResponse.clone());
+              }
+              return networkResponse;
+            })
+            .catch(() => cachedResponse || cache.match('./index.html'));
+
+          return cachedResponse || fetchPromise;
+        });
+      })
+    );
+  }
 });
