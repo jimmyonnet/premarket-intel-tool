@@ -1,3 +1,4 @@
+from __future__ import annotations
 #!/usr/bin/env python3
 """
 Part 4 data source: a user-maintained financial/economic events calendar,
@@ -105,6 +106,127 @@ def classify_event(summary: str, description: str) -> dict:
     return {"category": "general", "category_name": "事件"}
 
 
+
+def parse_economic_details(summary: str, description: str, ev_date: datetime.date, time_str: str | None, all_day: bool):
+    text = f"{summary} {description or ''}".upper()
+
+    # 1. Country & Flag & Timezone
+    if any(k in summary for k in ["美國", "美聯儲", "美", "US"]) or "FED" in text or "FOMC" in text:
+        country, flag, tz_name, tz_lbl = "US", "🇺🇸", "America/New_York", "ET"
+    elif any(k in summary for k in ["台灣", "台股", "台指", "台積電", "TW"]):
+        country, flag, tz_name, tz_lbl = "TW", "🇹🇼", "Asia/Taipei", "TPE"
+    elif any(k in summary for k in ["日本", "日銀", "JP"]):
+        country, flag, tz_name, tz_lbl = "JP", "🇯🇵", "Asia/Tokyo", "JST"
+    elif any(k in summary for k in ["歐元區", "歐洲", "德國", "法國", "ECB", "EU"]):
+        country, flag, tz_name, tz_lbl = "EU", "🇪🇺", "Europe/Berlin", "CET"
+    elif any(k in summary for k in ["中國", "陸", "人行", "CN"]):
+        country, flag, tz_name, tz_lbl = "CN", "🇨🇳", "Asia/Shanghai", "CST"
+    elif any(k in summary for k in ["英國", "BOE", "GB"]):
+        country, flag, tz_name, tz_lbl = "GB", "🇬🇧", "Europe/London", "GMT"
+    else:
+        country, flag, tz_name, tz_lbl = "GLOBAL", "🌐", "UTC", "UTC"
+
+    # 2. Category
+    if any(k in text for k in ["FED", "聯準會", "FOMC", "利率決議", "降息", "升息", "央行", "ECB", "BOJ", "人行"]):
+        category, category_name = "central_bank", "央行"
+    elif any(k in text for k in ["演講", "談話", "聽證會", "POWELL", "SPEECH", "TESTIMONY"]):
+        category, category_name = "speech", "演講"
+    elif any(k in text for k in ["休市", "假期", "連假", "HOLIDAY"]):
+        category, category_name = "holiday", "假期"
+    elif any(k in text for k in ["法說", "財報", "除權息", "股東會", "庫藏股", "營收", "新股上市", "掛牌", "EARNING"]):
+        category, category_name = "earnings", "財報"
+    elif any(k in text for k in ["CPI", "PCE", "PPI", "非農", "GDP", "PMI", "失業率", "零售", "工廠訂單", "耐用品", "景氣對策", "進出口", "貿易", "利潤"]):
+        category, category_name = "macro", "總經"
+    else:
+        category, category_name = "other", "其他"
+
+    # 3. Importance (1 | 2 | 3)
+    if any(k in text for k in ["GDP", "CPI", "PCE", "非農", "FOMC", "利率決議", "失業率", "鮑爾", "POWELL", "台積電"]):
+        importance = 3
+    elif any(k in text for k in ["PMI", "零售", "耐用品", "PPI", "原油庫存", "景氣對策", "工廠訂單", "初次申請失業"]):
+        importance = 2
+    else:
+        importance = 1
+
+    # 4. Values: Forecast, Previous, Actual
+    forecast = None
+    previous = None
+    actual = None
+
+    if description:
+        m_fc = re.search(r"(?:市場預期|預期值?|預估|Consensus|Forecast)\s*[:：]\s*([^\n\r,;]+)", description, re.IGNORECASE)
+        if m_fc:
+            forecast = m_fc.group(1).strip()
+
+        m_prev = re.search(r"(?:前值|前期值?|前前期|Previous)\s*[:：]\s*([^\n\r,;]+)", description, re.IGNORECASE)
+        if m_prev:
+            previous = m_prev.group(1).strip()
+
+        m_act = re.search(r"(?:實際|公布值?|公佈值?|Actual)\s*[:：]\s*([^\n\r,;]+)", description, re.IGNORECASE)
+        if m_act:
+            actual = m_act.group(1).strip()
+
+    # 5. Datetime UTC and Origin Timezone Calculation
+    if all_day or not time_str:
+        datetime_utc = f"{ev_date.isoformat()}T00:00:00Z"
+        time_tpe_str = "全天"
+        time_origin_str = "全天"
+    else:
+        hh, mm = map(int, time_str.split(":"))
+        dt_taipei = datetime.datetime(ev_date.year, ev_date.month, ev_date.day, hh, mm, tzinfo=TAIPEI)
+        dt_utc = dt_taipei.astimezone(datetime.timezone.utc)
+        datetime_utc = dt_utc.strftime("%Y-%m-%dT%H:%M:%SZ")
+        time_tpe_str = f"{time_str} TPE"
+
+        if country == "US":
+            dt_origin = dt_utc.astimezone(datetime.timezone(datetime.timedelta(hours=-4)))
+            origin_hhmm = dt_origin.strftime("%H:%M")
+            day_diff = (dt_origin.date() - ev_date).days
+            diff_lbl = f"{day_diff:+d}" if day_diff != 0 else ""
+            time_origin_str = f"{origin_hhmm}{diff_lbl} ET"
+        elif country == "JP":
+            dt_origin = dt_utc.astimezone(datetime.timezone(datetime.timedelta(hours=9)))
+            time_origin_str = f"{dt_origin.strftime('%H:%M')} JST"
+        elif country == "EU":
+            dt_origin = dt_utc.astimezone(datetime.timezone(datetime.timedelta(hours=2)))
+            time_origin_str = f"{dt_origin.strftime('%H:%M')} CET"
+        elif country == "GB":
+            dt_origin = dt_utc.astimezone(datetime.timezone(datetime.timedelta(hours=1)))
+            time_origin_str = f"{dt_origin.strftime('%H:%M')} GMT"
+        else:
+            time_origin_str = time_tpe_str
+
+    comparison = "pending"
+    if actual and forecast:
+        try:
+            act_num = float(re.sub(r"[^0-9.-]", "", actual))
+            fc_num = float(re.sub(r"[^0-9.-]", "", forecast))
+            if abs(act_num - fc_num) < 0.001:
+                comparison = "inline"
+            elif act_num > fc_num:
+                comparison = "beat"
+            else:
+                comparison = "miss"
+        except Exception:
+            comparison = "inline"
+
+    return {
+        "country": country,
+        "flag": flag,
+        "timezone_origin": tz_name,
+        "timezone_label": tz_lbl,
+        "time_origin_str": time_origin_str,
+        "time_tpe_str": time_tpe_str,
+        "datetime_utc": datetime_utc,
+        "category": category,
+        "category_name": category_name,
+        "importance": importance,
+        "forecast": forecast,
+        "previous": previous,
+        "actual": actual,
+        "comparison": comparison,
+    }
+
 def extract_events(ics_bytes: bytes, start_date, end_date):
     cal = icalendar.Calendar.from_ical(ics_bytes)
     occurrences = recurring_ical_events.of(cal).between(start_date, end_date)
@@ -140,16 +262,34 @@ def extract_events(ics_bytes: bytes, start_date, end_date):
             description = re.sub(r"(MM\s*圖表連結|MM\s*图表连结)?:\s*https?://[^\s]+", "", description).strip()
 
         cat_info = classify_event(summary, description)
+        details = parse_economic_details(summary, description, ev_date, time_str, all_day)
+        ev_id = f"ev-{ev_date.isoformat()}-{len(events)+1}"
 
         events.append({
+            "id": ev_id,
             "date": ev_date.isoformat(),
             "time": time_str,
             "all_day": all_day,
+            "title": summary,
             "summary": summary,
             "description": description[:200] or None,
+            "note": description[:200] or None,
             "mm_link": mm_link,
-            "category": cat_info["category"],
-            "category_name": cat_info["category_name"],
+            "source_url": mm_link,
+            "category": details["category"],
+            "category_name": details["category_name"],
+            "country": details["country"],
+            "flag": details["flag"],
+            "timezone_origin": details["timezone_origin"],
+            "timezone_label": details["timezone_label"],
+            "time_origin_str": details["time_origin_str"],
+            "time_tpe_str": details["time_tpe_str"],
+            "datetime_utc": details["datetime_utc"],
+            "importance": details["importance"],
+            "forecast": details["forecast"],
+            "previous": details["previous"],
+            "actual": details["actual"],
+            "comparison": details["comparison"],
         })
 
     events.sort(key=lambda e: (e["date"], e["time"] or ""))
