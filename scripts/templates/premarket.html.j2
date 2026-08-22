@@ -773,7 +773,8 @@
   <nav class="page-nav">
     <div class="nav-inner">
       <a href="#summary" class="nav-link">今日摘要</a>
-      {% set exiting_today = disposal.currently_in_disposal | selectattr('trading_days_left', 'equalto', '出關') | list %}
+      {% set exiting_today = disposal.currently_in_disposal | rejectattr('trading_days_left', 'none') | selectattr('trading_days_left', 'in', ['0', '0天', 0, '出關']) | list %}
+      {% set hidden_disposal = disposal.currently_in_disposal | selectattr('trading_days_left', 'none') | list %}
       {% set alert_total = (disposal.one_flag_from_disposal|length) + (exiting_today|length) %}
       <a href="#alerts" class="nav-link nav-alert">今日警示 {% if alert_total > 0 %}<span class="nav-badge">{{ alert_total }}</span>{% endif %}</a>
       <a href="#watchlist" class="nav-link">今日候選股</a>
@@ -975,6 +976,10 @@
           </div>
           {% else %}
           <div class="empty-state">今日無處置出關標的</div>
+          {% endif %}
+
+          {% if hidden_disposal|length > 0 %}
+          <!-- 隱藏 {{ hidden_disposal|length }} 筆（資料缺欄位，請回報） -->
           {% endif %}
         </div>
       </div>

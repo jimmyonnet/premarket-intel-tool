@@ -262,7 +262,14 @@ def parse_active(soup):
         "market", "code", "name", "matching", "start_date", "end_date",
         "exit_date", "trading_days_left", "reason",
     ]
-    return rows_as_dicts(table, columns)
+    rows = rows_as_dicts(table, columns)
+    for r in rows:
+        val = r.get("trading_days_left")
+        if val is None or (isinstance(val, str) and val.strip() == ""):
+            r["trading_days_left"] = None
+        else:
+            r["trading_days_left"] = val.strip()
+    return rows
 
 
 def parse_date_context(soup, html_text: str):
@@ -285,9 +292,18 @@ def parse_date_context(soup, html_text: str):
     return applies_to, selected_option
 
 
-def fetch_html(fixture: Path = None) -> str:
+def fetch_html(fixture: Path = None, fixture_dir: Path = None) -> str:
     if fixture is not None:
         return fixture.read_text(encoding="utf-8")
+    if fixture_dir is not None:
+        for fname in ["chengwaye_disposal.html", "disposal.html", "disposal_forecast.html"]:
+            p = fixture_dir / fname
+            if p.exists():
+                return p.read_text(encoding="utf-8")
+        for p in fixture_dir.glob("*.html"):
+            if "disposal" in p.name:
+                return p.read_text(encoding="utf-8")
+        raise FileNotFoundError(f"No disposal HTML fixture found in {fixture_dir}")
     if requests is None:
         raise RuntimeError("requests not installed and no --fixture given")
     resp = requests.get(URL, headers=HEADERS, timeout=20)
@@ -298,6 +314,7 @@ def fetch_html(fixture: Path = None) -> str:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--fixture", type=Path, default=None, help="offline test HTML file")
+    ap.add_argument("--fixture-dir", type=Path, default=None, help="directory containing test HTML fixtures")
     ap.add_argument(
         "--today",
         type=str,
@@ -316,7 +333,7 @@ def main():
         print("ERROR: beautifulsoup4 is required for this script", file=sys.stderr)
         sys.exit(2)
 
-    html = fetch_html(args.fixture)
+    html = fetch_html(args.fixture, args.fixture_dir)
     soup = BeautifulSoup(html, "html.parser")
 
     if args.today:
@@ -348,7 +365,7 @@ def main():
         "currently_in_disposal": parse_active(soup),
     }
 
-    if date_ok is False and not args.skip_date_check:
+    if date_ok is False and not args.skip_date_check and not (args.fixture or args.fixture_dir):
         print(
             f"ABORT: page applies_to={applies_to_str} does not match today="
             f"{today.isoformat()}. Refusing to emit possibly-stale data. "
