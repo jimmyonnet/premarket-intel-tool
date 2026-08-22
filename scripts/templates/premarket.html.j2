@@ -198,7 +198,7 @@
   .status-badge.is-info { background: var(--blue-bg); color: var(--blue-fg); border: 1px solid var(--blue-border); }
   .status-badge.is-warning { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
 
-  /* NAV (Sticky Anchor Bar) */
+  /* NAV (Sticky Anchor & Tool Bar - ZERO HORIZONTAL SCROLL) */
   .page-nav {
     position: sticky;
     top: 0;
@@ -214,21 +214,25 @@
     padding: 0 16px;
     display: flex;
     align-items: center;
-    gap: 6px;
-    overflow-x: auto;
-    white-space: nowrap;
-    scrollbar-width: none;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 12px;
   }
-  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-sections {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
   .nav-link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 6px 10px;
-    height: 32px;
+    gap: 4px;
+    padding: 4px 8px;
+    height: 28px;
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 13px;
+    font-size: 12.5px;
     font-weight: 600;
     border-radius: 6px;
     transition: all 0.15s ease;
@@ -240,29 +244,31 @@
   }
   .nav-link.is-active {
     color: var(--blue);
+    font-weight: 700;
   }
   .nav-badge {
     background: var(--rise);
     color: #FFFFFF;
     font-size: 10px;
     font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 10px;
+    padding: 0 5px;
+    height: 16px;
+    line-height: 16px;
+    border-radius: 8px;
     font-family: var(--font-mono);
   }
   .nav-actions {
-    display: inline-flex;
+    display: flex;
     align-items: center;
+    flex-wrap: wrap;
     gap: 6px;
-    margin-left: auto;
-    flex-shrink: 0;
   }
   .nav-btn {
     background: var(--bg-card);
     border: 1px solid var(--border-strong);
     border-radius: 6px;
-    padding: 0 10px;
-    height: 32px;
+    padding: 0 9px;
+    height: 28px;
     font-size: 12px;
     font-weight: 600;
     color: var(--text-main);
@@ -273,7 +279,8 @@
     gap: 4px;
     transition: all 0.15s ease;
     box-sizing: border-box;
-    flex-shrink: 0;
+    outline: none;
+    white-space: nowrap;
   }
   .nav-btn:hover {
     background: var(--bg-hover);
@@ -283,6 +290,44 @@
     background: var(--amber-bg);
     color: var(--amber-fg);
     border-color: var(--amber-border);
+  }
+  .nav-btn.btn-briefing.is-active {
+    background: var(--blue-bg);
+    color: var(--blue-fg);
+    border-color: var(--blue-border);
+  }
+
+  @media (max-width: 768px) {
+    .nav-inner {
+      padding: 4px 10px;
+      gap: 6px;
+    }
+    .nav-sections {
+      width: 100%;
+      justify-content: space-between;
+      gap: 2px;
+    }
+    .nav-link {
+      padding: 2px 5px;
+      font-size: 11.5px;
+      height: 26px;
+    }
+    .nav-actions {
+      width: 100%;
+      justify-content: space-between;
+      gap: 4px;
+      border-top: 1px solid var(--border-light);
+      padding-top: 4px;
+    }
+    .nav-btn {
+      flex: 1;
+      padding: 0 4px;
+      font-size: 11px;
+      height: 28px;
+    }
+    .nav-btn .btn-text-extra {
+      display: none;
+    }
   }
 
   /* CONTENT SECTIONS */
@@ -1753,26 +1798,28 @@
     </div>
   </header>
 
-  <!-- NAV (Sticky Anchor Bar) -->
+  <!-- NAV (Sticky Anchor & Tool Bar - ZERO HORIZONTAL SCROLL) -->
   <nav class="page-nav" id="sticky-nav">
     <div class="nav-inner">
-      <a href="#summary" class="nav-link is-active">今日摘要</a>
-      <a href="#self-watchlist" class="nav-link">我在看</a>
-      {% set exiting_today = disposal.currently_in_disposal | rejectattr('trading_days_left', 'none') | selectattr('trading_days_left', 'in', ['0', '0天', 0, '出關']) | list %}
-      {% set hidden_disposal = disposal.currently_in_disposal | selectattr('trading_days_left', 'none') | list %}
-      {% set alert_total = (disposal.one_flag_from_disposal|length) + (exiting_today|length) %}
-      <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">今日警示 {% if alert_total > 0 %}<span class="nav-badge" id="nav-alert-badge">{{ alert_total }}</span>{% endif %}{% if stale_hours and stale_hours > 12 %}<span class="nav-badge" style="background:var(--amber); color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
-      <a href="#watchlist" class="nav-link">今日候選股</a>
-      <a href="#market-context" class="nav-link">市場背景</a>
-      <a href="#news-calendar" class="nav-link">補充資訊</a>
-      <a href="#system-info" class="nav-link">系統資訊</a>
+      <div class="nav-sections">
+        <a href="#summary" class="nav-link is-active">今日摘要</a>
+        <a href="#self-watchlist" class="nav-link">我在看</a>
+        {% set exiting_today = disposal.currently_in_disposal | rejectattr('trading_days_left', 'none') | selectattr('trading_days_left', 'in', ['0', '0天', 0, '出關']) | list %}
+        {% set hidden_disposal = disposal.currently_in_disposal | selectattr('trading_days_left', 'none') | list %}
+        {% set alert_total = (disposal.one_flag_from_disposal|length) + (exiting_today|length) %}
+        <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">今日警示 {% if alert_total > 0 %}<span class="nav-badge" id="nav-alert-badge">{{ alert_total }}</span>{% endif %}{% if stale_hours and stale_hours > 12 %}<span class="nav-badge" style="background:var(--amber); color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
+        <a href="#watchlist" class="nav-link">今日候選股</a>
+        <a href="#market-context" class="nav-link">市場背景</a>
+        <a href="#news-calendar" class="nav-link">補充資訊</a>
+        <a href="#system-info" class="nav-link">系統</a>
+      </div>
       
       <div class="nav-actions">
-        <button class="nav-btn btn-briefing" id="briefing-toggle" onclick="window.pm.toggleBriefingMode()" type="button" aria-label="切換盤前速讀模式">⚡ 速讀模式</button>
-        <button class="nav-btn btn-export" onclick="window.pm.exportDailyMarkdown()" type="button" aria-label="匯出今日重點 Markdown">📋 匯出重點</button>
-        <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" aria-label="切換只看自選">⭐ 只看自選</button>
-        <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" aria-label="切換截圖模式">📸 截圖</button>
-        <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" aria-label="切換深淺色主題">🌙 深色</button>
+        <button class="nav-btn btn-briefing" id="briefing-toggle" onclick="window.pm.toggleBriefingMode()" type="button" title="切換盤前 3 分鐘速讀模式 (快捷鍵 B)">⚡ 速讀<span class="btn-text-extra">模式</span></button>
+        <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" title="切換只看自選 (快捷鍵 W)">⭐ 自選<span class="btn-text-extra">股</span></button>
+        <button class="nav-btn btn-export" onclick="window.pm.exportDailyMarkdown()" type="button" title="匯出今日重點 Markdown (快捷鍵 E)">📋 匯出<span class="btn-text-extra">重點</span></button>
+        <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" title="切換截圖模式 (按 Esc 退出)">📸 截圖</button>
+        <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" title="切換深淺色主題 (快捷鍵 D)">🌙 深色</button>
         <button class="nav-btn refresh-btn" onclick="location.reload(true)" type="button" title="重新載入最新版" aria-label="重新整理頁面">
           🔄 <span class="last-build">建置 {{ (meta.build_time if meta is defined and meta and meta.build_time else (build_time or '08:00')) }}</span><span class="short-build">重整</span>
         </button>
