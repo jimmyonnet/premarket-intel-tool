@@ -12,6 +12,16 @@ def build_embeds():
     hide_css = """
     <style>
       :root {
+        --bg-page: transparent;
+        --bg-card: #1E293B;
+        --bg-sub: #0F172A;
+        --text-main: #F8FAFC;
+        --text-muted: #94A3B8;
+        --border: #334155;
+        --border-light: #1E293B;
+        --blue: #60A5FA;
+      }
+      :root[data-theme="light"], html[data-theme="light"], body.light, html.light {
         --bg-page: #FFFFFF;
         --bg-card: #FFFFFF;
         --bg-sub: #F8FAFC;
@@ -21,8 +31,8 @@ def build_embeds():
         --border-light: #F1F5F9;
         --blue: #2563EB;
       }
-      :root[data-theme="dark"], body.dark, html[data-theme="dark"] {
-        --bg-page: #111827;
+      :root[data-theme="dark"], html[data-theme="dark"], body.dark, html.dark {
+        --bg-page: transparent;
         --bg-card: #1E293B;
         --bg-sub: #0F172A;
         --text-main: #F8FAFC;
@@ -51,7 +61,7 @@ def build_embeds():
       .detail-context-title .ctx-code { color: var(--blue) !important; }
       .detail-context-title .ctx-name { color: var(--text-main) !important; }
       .detail-context-title .ctx-meta { color: var(--text-muted) !important; }
-      .raw-text { background: var(--bg-card) !important; color: var(--text-main) !important; border: 1px solid var(--border) !important; border-radius: 6px !important; }
+      .raw-text { background: var(--bg-sub) !important; color: var(--text-main) !important; border: 1px solid var(--border) !important; border-radius: 6px !important; }
       .btn-link { border: 1px solid var(--border) !important; color: var(--text-muted) !important; background: var(--bg-card) !important; }
       .btn-link:hover { background: var(--bg-sub) !important; color: var(--text-main) !important; border-color: var(--text-muted) !important; }
       .filter-bar { background: var(--bg-sub) !important; border: 1px solid var(--border) !important; border-radius: 8px !important; color: var(--text-muted) !important; }
@@ -71,16 +81,29 @@ def build_embeds():
         function applyTheme(theme) {
           if (!theme) {
             try {
-              theme = window.parent.document.documentElement.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-            } catch(e) {
-              theme = 'light';
+              var p = new URLSearchParams(location.search);
+              theme = p.get('theme') || localStorage.getItem('premarket.theme');
+            } catch(e){}
+            if (!theme) {
+              try {
+                theme = window.parent.document.documentElement.getAttribute('data-theme');
+              } catch(e){}
+            }
+            if (!theme) {
+              theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
             }
           }
           document.documentElement.setAttribute('data-theme', theme);
-          if (theme === 'dark') {
-            document.body.classList.add('dark');
-          } else {
+          if (theme === 'light') {
+            document.documentElement.classList.add('light');
+            document.body.classList.add('light');
+            document.documentElement.classList.remove('dark');
             document.body.classList.remove('dark');
+          } else {
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+            document.documentElement.classList.remove('light');
+            document.body.classList.remove('light');
           }
         }
         window.addEventListener('message', function(e) {
@@ -103,7 +126,6 @@ def build_embeds():
           applyTheme();
           send();
         });
-        // 3.5s timeout safety to avoid hanging on '載入中...'
         setTimeout(function() {
           var app = document.getElementById('app');
           if (app && app.innerHTML.indexOf('載入中') >= 0) {
@@ -111,7 +133,8 @@ def build_embeds():
             send();
           }
         }, 3500);
-        setTimeout(function() { applyTheme(); send(); }, 300);
+        setTimeout(function() { applyTheme(); send(); }, 100);
+        setTimeout(function() { applyTheme(); send(); }, 500);
       })();
     </script>
     """

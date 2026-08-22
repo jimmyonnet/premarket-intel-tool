@@ -2476,10 +2476,30 @@
   });
 
   window.pm.syncIframeTheme = function(theme) {
-    var cur = theme || document.documentElement.getAttribute('data-theme') || 'light';
+    var cur = theme || document.documentElement.getAttribute('data-theme') || (localStorage.getItem('premarket.theme') === 'dark' ? 'dark' : 'light');
+    if (!cur) cur = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+    
     document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
       try {
-        iframe.contentWindow.postMessage({type: 'theme-change', theme: cur}, '*');
+        if (iframe.contentWindow) {
+          iframe.contentWindow.postMessage({type: 'theme-change', theme: cur}, '*');
+        }
+      } catch(e){}
+      try {
+        if (iframe.contentDocument && iframe.contentDocument.documentElement) {
+          iframe.contentDocument.documentElement.setAttribute('data-theme', cur);
+          if (cur === 'dark') {
+            iframe.contentDocument.documentElement.classList.add('dark');
+            iframe.contentDocument.body.classList.add('dark');
+            iframe.contentDocument.documentElement.classList.remove('light');
+            iframe.contentDocument.body.classList.remove('light');
+          } else {
+            iframe.contentDocument.documentElement.classList.add('light');
+            iframe.contentDocument.body.classList.add('light');
+            iframe.contentDocument.documentElement.classList.remove('dark');
+            iframe.contentDocument.body.classList.remove('dark');
+          }
+        }
       } catch(e){}
     });
   };
@@ -2497,6 +2517,33 @@
     if (window.pm.syncHash) window.pm.syncHash();
   };
 
+  // Update Watchlist Star Markers & Alert Banner
+  function updateWatchlistStars() {
+    var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
+    var codes = [];
+    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
+    
+    var guide = document.getElementById('watchlist-empty-guide');
+    if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
+
+    var alertCount = 0;
+    document.querySelectorAll('.watchlist-star-marker').forEach(function(star) {
+      var code = star.getAttribute('data-code');
+      var isWatched = codes.indexOf(code) >= 0;
+      star.style.display = isWatched ? 'inline-block' : 'none';
+      if (isWatched && star.closest('#alerts')) {
+        alertCount++;
+      }
+    });
+
+    var alertBanner = document.getElementById('watchlist-alert-banner');
+    var alertCountEl = document.getElementById('watchlist-alert-count');
+    if (alertBanner && alertCountEl) {
+      alertCountEl.textContent = String(alertCount);
+      alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
+    }
+  }
+
   // Watchlist Save & Render
   window.saveWatch = function() {
     var input = document.getElementById('watch-input');
@@ -2508,59 +2555,6 @@
     });
     localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
     renderWatch();
-
-  // Update Watchlist Star Markers & Alert Banner
-  function updateWatchlistStars() {
-    var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
-    var codes = [];
-    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
-    
-    var guide = document.getElementById('watchlist-empty-guide');
-    if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
-
-    var alertCount = 0;
-    document.querySelectorAll('.watchlist-star-marker').forEach(function(star) {
-      var code = star.getAttribute('data-code');
-      var isWatched = codes.indexOf(code) >= 0;
-      star.style.display = isWatched ? 'inline-block' : 'none';
-      if (isWatched && star.closest('#alerts')) {
-        alertCount++;
-      }
-    });
-
-    var alertBanner = document.getElementById('watchlist-alert-banner');
-    var alertCountEl = document.getElementById('watchlist-alert-count');
-    if (alertBanner && alertCountEl) {
-      alertCountEl.textContent = String(alertCount);
-      alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
-    }
-  }
-
-  // Hook star update to renderWatch
-  var origRenderWatch = window.renderWatch;
-  window.renderWatch = function() {
-    if (origRenderWatch) origRenderWatch();
-    updateWatchlistStars();
-  };
-
-  // Iframe 5-second timeout safety
-  setTimeout(function() {
-    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
-      var curH = parseInt(iframe.style.height || '0');
-      if (curH <= 80) {
-        var card = iframe.closest('.card') || iframe.parentElement;
-        var existing = card.querySelector('.embed-fallback-notice');
-        if (!existing) {
-          var n = document.createElement('div');
-          n.className = 'embed-fallback-notice';
-          n.style.cssText = 'padding:14px; font-size:12px; color:var(--text-muted); text-align:center; background:var(--bg-sub); border-radius:6px; margin:8px 0;';
-          n.textContent = '⚠️ 資料載入超時（已沿用 build-time 快照）';
-          iframe.parentElement.appendChild(n);
-        }
-      }
-    });
-  }, 5000);
-
     if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
     window.pm.showToast('已儲存自選股清單 (' + codes.length + ' 檔)');
   };
@@ -2569,59 +2563,6 @@
     localStorage.removeItem(window.WATCH_KEY);
     document.getElementById('watch-input').value = '';
     renderWatch();
-
-  // Update Watchlist Star Markers & Alert Banner
-  function updateWatchlistStars() {
-    var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
-    var codes = [];
-    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
-    
-    var guide = document.getElementById('watchlist-empty-guide');
-    if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
-
-    var alertCount = 0;
-    document.querySelectorAll('.watchlist-star-marker').forEach(function(star) {
-      var code = star.getAttribute('data-code');
-      var isWatched = codes.indexOf(code) >= 0;
-      star.style.display = isWatched ? 'inline-block' : 'none';
-      if (isWatched && star.closest('#alerts')) {
-        alertCount++;
-      }
-    });
-
-    var alertBanner = document.getElementById('watchlist-alert-banner');
-    var alertCountEl = document.getElementById('watchlist-alert-count');
-    if (alertBanner && alertCountEl) {
-      alertCountEl.textContent = String(alertCount);
-      alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
-    }
-  }
-
-  // Hook star update to renderWatch
-  var origRenderWatch = window.renderWatch;
-  window.renderWatch = function() {
-    if (origRenderWatch) origRenderWatch();
-    updateWatchlistStars();
-  };
-
-  // Iframe 5-second timeout safety
-  setTimeout(function() {
-    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
-      var curH = parseInt(iframe.style.height || '0');
-      if (curH <= 80) {
-        var card = iframe.closest('.card') || iframe.parentElement;
-        var existing = card.querySelector('.embed-fallback-notice');
-        if (!existing) {
-          var n = document.createElement('div');
-          n.className = 'embed-fallback-notice';
-          n.style.cssText = 'padding:14px; font-size:12px; color:var(--text-muted); text-align:center; background:var(--bg-sub); border-radius:6px; margin:8px 0;';
-          n.textContent = '⚠️ 資料載入超時（已沿用 build-time 快照）';
-          iframe.parentElement.appendChild(n);
-        }
-      }
-    });
-  }, 5000);
-
     if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
     window.pm.showToast('已清空自選股');
   };
@@ -2633,59 +2574,6 @@
     localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
     document.getElementById('watch-input').value = codes.join(', ');
     renderWatch();
-
-  // Update Watchlist Star Markers & Alert Banner
-  function updateWatchlistStars() {
-    var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
-    var codes = [];
-    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
-    
-    var guide = document.getElementById('watchlist-empty-guide');
-    if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
-
-    var alertCount = 0;
-    document.querySelectorAll('.watchlist-star-marker').forEach(function(star) {
-      var code = star.getAttribute('data-code');
-      var isWatched = codes.indexOf(code) >= 0;
-      star.style.display = isWatched ? 'inline-block' : 'none';
-      if (isWatched && star.closest('#alerts')) {
-        alertCount++;
-      }
-    });
-
-    var alertBanner = document.getElementById('watchlist-alert-banner');
-    var alertCountEl = document.getElementById('watchlist-alert-count');
-    if (alertBanner && alertCountEl) {
-      alertCountEl.textContent = String(alertCount);
-      alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
-    }
-  }
-
-  // Hook star update to renderWatch
-  var origRenderWatch = window.renderWatch;
-  window.renderWatch = function() {
-    if (origRenderWatch) origRenderWatch();
-    updateWatchlistStars();
-  };
-
-  // Iframe 5-second timeout safety
-  setTimeout(function() {
-    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
-      var curH = parseInt(iframe.style.height || '0');
-      if (curH <= 80) {
-        var card = iframe.closest('.card') || iframe.parentElement;
-        var existing = card.querySelector('.embed-fallback-notice');
-        if (!existing) {
-          var n = document.createElement('div');
-          n.className = 'embed-fallback-notice';
-          n.style.cssText = 'padding:14px; font-size:12px; color:var(--text-muted); text-align:center; background:var(--bg-sub); border-radius:6px; margin:8px 0;';
-          n.textContent = '⚠️ 資料載入超時（已沿用 build-time 快照）';
-          iframe.parentElement.appendChild(n);
-        }
-      }
-    });
-  }, 5000);
-
     if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
   };
 
@@ -2698,6 +2586,7 @@
     var codes = raw ? JSON.parse(raw) : [];
     if (!codes.length) {
       hint.textContent = '目前無自選股。';
+      updateWatchlistStars();
       return;
     }
     hint.textContent = codes.length + ' 檔自選標的（點擊可定位至表格）';
@@ -2740,6 +2629,8 @@
       };
       box.appendChild(chip);
     });
+
+    updateWatchlistStars();
   }
 
   // Global Watch-Only Filter
@@ -2783,7 +2674,6 @@
   };
 
   // Shortcuts Modal Toggle
-  
   window.pm.toggleMissingModal = function() {
     var m = document.getElementById('missing-modal');
     if (m) m.classList.toggle('is-open');
@@ -2908,26 +2798,6 @@
   var liveTimer = null;
   var countdownTimer = null;
 
-  function updateLiveTimers() {
-    var el = document.querySelector('.last-build');
-    if (el) {
-      var m = (el.textContent || '').match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
-      if (m) {
-        var bt = new Date(m[1].replace(' ', 'T') + '+08:00').getTime();
-        var hrs = (Date.now() - bt) / 36e5;
-        var cls = hrs < 6 ? 'fresh' : (hrs < 12 ? 'aging' : 'stale');
-        el.classList.remove('fresh', 'aging', 'stale');
-        el.classList.add(cls);
-        var banner = document.querySelector('.stale-banner');
-        if (banner) {
-          banner.textContent = '資料時間 ' + m[1] + '，距今 ' + hrs.toFixed(1) + ' 小時';
-          banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
-          banner.classList.toggle('is-warning', hrs >= 6 && hrs < 12);
-          banner.classList.toggle('is-danger', hrs >= 12);
-        }
-      }
-    }
-
   // 2026 Taiwan Stock Market Holidays
   const TW_HOLIDAYS_2026 = [
     "2026-01-01", "2026-02-13", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19",
@@ -2973,6 +2843,26 @@
     }
   }
 
+  function updateLiveTimers() {
+    var el = document.querySelector('.last-build');
+    if (el) {
+      var m = (el.textContent || '').match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
+      if (m) {
+        var bt = new Date(m[1].replace(' ', 'T') + '+08:00').getTime();
+        var hrs = (Date.now() - bt) / 36e5;
+        var cls = hrs < 6 ? 'fresh' : (hrs < 12 ? 'aging' : 'stale');
+        el.classList.remove('fresh', 'aging', 'stale');
+        el.classList.add(cls);
+        var banner = document.querySelector('.stale-banner');
+        if (banner) {
+          banner.textContent = '資料時間 ' + m[1] + '，距今 ' + hrs.toFixed(1) + ' 小時';
+          banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
+          banner.classList.toggle('is-warning', hrs >= 6 && hrs < 12);
+          banner.classList.toggle('is-danger', hrs >= 12);
+        }
+      }
+    }
+
     var cel = document.getElementById('open-countdown');
     if (cel) {
       var now = new Date();
@@ -3009,16 +2899,7 @@
 
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) stopTimers();
-    else 
-    // Initialize Calendar Timeline Filters
-    if (window.pm.calState.search) {
-      var sinp = document.getElementById('cal-search-input');
-      if (sinp) sinp.value = window.pm.calState.search;
-    }
-    window.pm.applyCalendarFilters();
-    window.pm.applyTimezoneMode();
-
-    startTimers();
+    else startTimers();
   });
 
   // Initialization
@@ -3027,7 +2908,7 @@
     var savedTheme = localStorage.getItem('premarket.theme');
     var urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
     if (urlParams.get('theme')) savedTheme = urlParams.get('theme');
-    if (savedTheme === 'dark') {
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia && !window.matchMedia('(prefers-color-scheme: light)').matches)) {
       document.documentElement.setAttribute('data-theme', 'dark');
       var b = document.getElementById('theme-toggle');
       if (b) b.textContent = '☀️ 淺色';
@@ -3042,76 +2923,40 @@
     if (inp && codes.length) inp.value = codes.join(', ');
     renderWatch();
 
-  // Update Watchlist Star Markers & Alert Banner
-  function updateWatchlistStars() {
-    var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
-    var codes = [];
-    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
-    
-    var guide = document.getElementById('watchlist-empty-guide');
-    if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
-
-    var alertCount = 0;
-    document.querySelectorAll('.watchlist-star-marker').forEach(function(star) {
-      var code = star.getAttribute('data-code');
-      var isWatched = codes.indexOf(code) >= 0;
-      star.style.display = isWatched ? 'inline-block' : 'none';
-      if (isWatched && star.closest('#alerts')) {
-        alertCount++;
-      }
-    });
-
-    var alertBanner = document.getElementById('watchlist-alert-banner');
-    var alertCountEl = document.getElementById('watchlist-alert-count');
-    if (alertBanner && alertCountEl) {
-      alertCountEl.textContent = String(alertCount);
-      alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
-    }
-  }
-
-  // Hook star update to renderWatch
-  var origRenderWatch = window.renderWatch;
-  window.renderWatch = function() {
-    if (origRenderWatch) origRenderWatch();
-    updateWatchlistStars();
-  };
-
-  // Iframe 5-second timeout safety
-  setTimeout(function() {
-    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
-      var curH = parseInt(iframe.style.height || '0');
-      if (curH <= 80) {
-        var card = iframe.closest('.card') || iframe.parentElement;
-        var existing = card.querySelector('.embed-fallback-notice');
-        if (!existing) {
-          var n = document.createElement('div');
-          n.className = 'embed-fallback-notice';
-          n.style.cssText = 'padding:14px; font-size:12px; color:var(--text-muted); text-align:center; background:var(--bg-sub); border-radius:6px; margin:8px 0;';
-          n.textContent = '⚠️ 資料載入超時（已沿用 build-time 快照）';
-          iframe.parentElement.appendChild(n);
-        }
-      }
-    });
-  }, 5000);
-
-
     // Restore Watch-Only
     if (urlParams.get('watch') === '1') window.pm.watchOnly = true;
     if (window.pm.watchOnly) window.pm.applyWatchOnly();
 
-    
+    // Iframe 5-second timeout safety
+    setTimeout(function() {
+      document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
+        var curH = parseInt(iframe.style.height || '0');
+        if (curH <= 80) {
+          var card = iframe.closest('.card') || iframe.parentElement;
+          var existing = card.querySelector('.embed-fallback-notice');
+          if (!existing) {
+            var n = document.createElement('div');
+            n.className = 'embed-fallback-notice';
+            n.style.cssText = 'padding:14px; font-size:12px; color:var(--text-muted); text-align:center; background:var(--bg-sub); border-radius:6px; margin:8px 0;';
+            n.textContent = '⚠️ 資料載入超時（已沿用 build-time 快照）';
+            iframe.parentElement.appendChild(n);
+          }
+        }
+      });
+    }, 5000);
+
     // Initialize Calendar Timeline Filters
-    if (window.pm.calState.search) {
+    if (window.pm.calState && window.pm.calState.search) {
       var sinp = document.getElementById('cal-search-input');
       if (sinp) sinp.value = window.pm.calState.search;
     }
-    window.pm.applyCalendarFilters();
-    window.pm.applyTimezoneMode();
+    if (window.pm.applyCalendarFilters) window.pm.applyCalendarFilters();
+    if (window.pm.applyTimezoneMode) window.pm.applyTimezoneMode();
 
+    window.pm.syncIframeTheme();
     startTimers();
   });
 </script>
-
 
   <!-- ===== DATA SNAPSHOT START (auto-generated) ===== -->
   <script id="premarket-data-snapshot" type="application/json">
