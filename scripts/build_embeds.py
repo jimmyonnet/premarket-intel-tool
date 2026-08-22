@@ -53,7 +53,7 @@ def build_embeds():
         --btn-border: #E2E8F0 !important;
         --btn-hover: #F1F5F9 !important;
       }
-      html, body { background: transparent !important; color: var(--text-main) !important; padding: 0 !important; margin: 0 !important; min-height: 0 !important; height: auto !important; font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI", Roboto, "PingFang TC", "Noto Sans TC", sans-serif !important; }
+      html, body { background: transparent !important; color: var(--text-main) !important; padding: 0 !important; margin: 0 !important; min-height: 0 !important; height: auto !important; overflow-y: hidden !important; font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI", Roboto, "PingFang TC", "Noto Sans TC", sans-serif !important; }
       nav, .header, .ai-warn, .ai-warn-bottom, .search-container, #load-archive-btn, footer { display: none !important; margin: 0 !important; padding: 0 !important; height: 0 !important; }
       .container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; min-height: 0 !important; height: auto !important; background: transparent !important; }
       #app { margin-top: 0 !important; min-height: 0 !important; height: auto !important; background: transparent !important; }
@@ -83,7 +83,7 @@ def build_embeds():
       .filter-bar button:hover { background: var(--btn-hover) !important; color: var(--text-main) !important; }
       .filter-bar input[type="text"], .filter-bar input[type="number"] { background: var(--btn-bg) !important; border: 1px solid var(--btn-border) !important; color: var(--text-main) !important; border-radius: 6px !important; padding: 4px 8px !important; }
       .filter-bar input[type="checkbox"] { accent-color: var(--blue) !important; margin-right: 6px !important; }
-      .empty { padding: 18px 16px !important; color: var(--text-muted) !important; font-size: 12px !important; text-align: center !important; }
+      .empty { padding: 24px 16px !important; color: var(--text-muted) !important; font-size: 12px !important; text-align: center !important; }
       ::-webkit-scrollbar { width: 6px; height: 6px; }
       ::-webkit-scrollbar-track { background: var(--bg-sub); }
       ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -120,20 +120,36 @@ def build_embeds():
           if (e.data && e.data.type === 'theme-change') {
             applyTheme(e.data.theme);
           }
+          if (e.data && e.data.type === 'request-height') {
+            send();
+          }
         });
         function send(){
           try {
-            var container = document.querySelector('.container') || document.getElementById('app') || document.body;
-            var h = container.offsetHeight || container.scrollHeight || document.body.offsetHeight;
-            if (h > 50) {
-              parent.postMessage({type:'embed-height', id: location.pathname.split('/').pop().replace('.html',''), height: Math.ceil(h)}, '*');
+            var app = document.getElementById('app');
+            var tbl = app ? app.querySelector('table') : null;
+            var filter = app ? app.querySelector('.filter-bar') : null;
+            var totalH = 0;
+            if (tbl) {
+              totalH = (filter ? filter.offsetHeight + 10 : 0) + tbl.offsetHeight + 24;
+            } else if (app) {
+              totalH = app.scrollHeight + 16;
+            } else {
+              totalH = document.body.scrollHeight + 16;
             }
+            var finalH = Math.max(120, Math.ceil(totalH));
+            parent.postMessage({type:'embed-height', id: location.pathname.split('/').pop().replace('.html',''), height: finalH}, '*');
           } catch(e){}
         }
-        new ResizeObserver(send).observe(document.body);
+
+        // MutationObserver to catch when tables render, filters change, or details expand
+        var mo = new MutationObserver(function() {
+          send();
+        });
         document.addEventListener('DOMContentLoaded', function() {
           applyTheme();
           send();
+          if (document.body) mo.observe(document.body, { childList: true, subtree: true, attributes: true });
         });
         window.addEventListener('load', function() {
           applyTheme();
@@ -146,10 +162,10 @@ def build_embeds():
             send();
           }
         }, 3500);
-        setTimeout(function() { applyTheme(); send(); }, 50);
-        setTimeout(function() { applyTheme(); send(); }, 150);
-        setTimeout(function() { applyTheme(); send(); }, 400);
-        setTimeout(function() { applyTheme(); send(); }, 1000);
+        setTimeout(function() { applyTheme(); send(); }, 100);
+        setTimeout(function() { applyTheme(); send(); }, 300);
+        setTimeout(function() { applyTheme(); send(); }, 800);
+        setTimeout(function() { applyTheme(); send(); }, 1500);
       })();
     </script>
     """

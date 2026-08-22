@@ -687,13 +687,23 @@
     align-items: center;
   }
   .unref-summary:hover { background: var(--bg-sub); }
-  .unref-content { padding: 12px 16px; background: var(--bg-card); }
+  .unref-content {
+    padding: 10px 14px 14px;
+    background: var(--bg-card);
+    resize: vertical;
+    overflow: auto;
+    min-height: 140px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
   .embed-frame, .unref-frame {
     width: 100%;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     background: transparent;
-    transition: height 0.2s ease;
+    display: block;
+    overflow: hidden;
+    transition: height 0.15s ease-out;
   }
 
   /* TILES GRID */
@@ -2148,7 +2158,7 @@
               <span class="badge badge-blue">{{ financials.att|length if financials.att else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/att.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-att" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:210px; min-height:120px;"></iframe>
+              <iframe src="embed/att.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-att" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:280px;" scrolling="no"></iframe>
             </div>
           </details>
 
@@ -2158,7 +2168,7 @@
               <span class="badge">{{ financials.fin|length if financials.fin else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/fin.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:210px; min-height:120px;"></iframe>
+              <iframe src="embed/fin.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:640px;" scrolling="no"></iframe>
             </div>
           </details>
 
@@ -2168,7 +2178,7 @@
               <span class="badge">{{ financials.rev|length if financials.rev else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/rev.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:210px; min-height:120px;"></iframe>
+              <iframe src="embed/rev.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:160px;" scrolling="no"></iframe>
             </div>
           </details>
         </div>
@@ -3626,7 +3636,7 @@
   window.addEventListener('message', function(e) {
     if (!e.data || e.data.type !== 'embed-height') return;
     var f = document.getElementById('embed-' + e.data.id);
-    if (f && e.data.height) f.style.height = (e.data.height + 4) + 'px';
+    if (f && e.data.height) f.style.height = (e.data.height + 12) + 'px';
   });
 
   document.addEventListener('keydown', function(e) {
@@ -3759,7 +3769,16 @@
       if (sinp) sinp.value = window.pm.calState.search;
     }
     if (window.pm.applyCalendarFilters) window.pm.applyCalendarFilters();
-    if (window.pm.applyTimezoneMode) window.pm.applyTimezoneMode();
+    document.querySelectorAll('.unref-accordion').forEach(function(det) {
+      det.addEventListener('toggle', function() {
+        if (det.open) {
+          var iframe = det.querySelector('iframe');
+          if (iframe && iframe.contentWindow) {
+            iframe.contentWindow.postMessage({type: 'request-height'}, '*');
+          }
+        }
+      });
+    });
 
     window.pm.syncIframeTheme();
     startTimers();
