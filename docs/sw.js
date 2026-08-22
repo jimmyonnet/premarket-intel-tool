@@ -1,4 +1,4 @@
-const CACHE_NAME = 'premarket-v5';
+const CACHE_NAME = 'premarket-v6';
 const SHELL_ASSETS = [
   './',
   './index.html',
@@ -25,7 +25,13 @@ self.addEventListener('activate', event => {
       Promise.all(
         keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
       )
-    ).then(() => self.clients.claim())
+    ).then(() => {
+      self.clients.claim();
+      // Notify all open clients that a new version is active
+      self.clients.matchAll().then(clients => {
+        clients.forEach(client => client.postMessage({ type: 'sw-updated', version: CACHE_NAME }));
+      });
+    })
   );
 });
 
@@ -37,11 +43,11 @@ self.addEventListener('fetch', event => {
   if (url.origin !== self.location.origin) return;
   if (url.pathname.includes('/data/night_session/')) return;
 
-  const isHtml = url.pathname.endsWith('.html') || url.pathname.endsWith('/') || !url.pathname.includes('.');
+  const isNavigation = event.request.mode === 'navigate' || event.request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname.endsWith('/');
   const isDataRequest = url.pathname.endsWith('.json') || url.pathname.includes('/data/');
 
-  if (isHtml || isDataRequest) {
-    // Network-first for HTML & dynamic data
+  if (isNavigation || isDataRequest) {
+    // Network-First with Fallback for navigation and dynamic json data
     event.respondWith(
       fetch(event.request)
         .then(networkResponse => {
@@ -51,10 +57,10 @@ self.addEventListener('fetch', event => {
           }
           return networkResponse;
         })
-        .catch(() => caches.match(event.request))
+        .catch(() => caches.match(event.request).then(cached => cached || (isNavigation ? caches.match('./index.html') : null)))
     );
   } else {
-    // Stale-while-revalidate for static assets (images, manifest, icons)
+    // Stale-While-Revalidate for static assets (images, icons, manifest)
     event.respondWith(
       caches.open(CACHE_NAME).then(cache => {
         return cache.match(event.request).then(cachedResponse => {

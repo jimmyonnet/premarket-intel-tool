@@ -1618,10 +1618,31 @@
     border: 1px solid rgba(217, 119, 6, 0.25);
     line-height: 1.3;
   }
+  .ed-badge.badge-5m {
+    background: rgba(217, 119, 6, 0.12);
+    color: var(--amber);
+    border: 1px solid rgba(217, 119, 6, 0.35);
+  }
+  .ed-badge.badge-20m {
+    background: var(--danger-bg);
+    color: var(--danger-fg);
+    border: 1px solid var(--danger-border);
+    font-weight: 700;
+  }
   :root[data-theme="dark"] .ed-badge {
     background: rgba(251, 191, 36, 0.12);
     color: #FCD34D;
     border: 1px solid rgba(251, 191, 36, 0.25);
+  }
+  :root[data-theme="dark"] .ed-badge.badge-5m {
+    background: rgba(251, 191, 36, 0.15);
+    color: #FCD34D;
+    border: 1px solid rgba(251, 191, 36, 0.35);
+  }
+  :root[data-theme="dark"] .ed-badge.badge-20m {
+    background: rgba(244, 63, 94, 0.18);
+    color: #FDA4AF;
+    border: 1px solid rgba(244, 63, 94, 0.35);
   }
 
 
@@ -1828,7 +1849,7 @@
         <h1 class="page-title">盤前情報準備台</h1>
       </div>
       <div class="meta-row">
-        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/23 02:10</span></span>
+        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/23 02:13</span></span>
         
         <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">08/24</span></span>
         
@@ -1869,7 +1890,7 @@
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" title="切換截圖模式 (按 Esc 退出)">📸 截圖</button>
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" title="切換深淺色主題 (快捷鍵 D)">🌙 深色</button>
         <button class="nav-btn refresh-btn" onclick="location.reload(true)" type="button" title="重新載入最新版" aria-label="重新整理頁面">
-          🔄 <span class="last-build">建置 2026-08-23 02:10</span><span class="short-build">重整</span>
+          🔄 <span class="last-build">建置 2026-08-23 02:13</span><span class="short-build">重整</span>
         </button>
       </div>
     </div>
@@ -2037,7 +2058,9 @@
                         <span class="ed-date">08-25</span>
                         
                         
-                        <span class="ed-badge">第2次 · 2分</span>
+                        
+                        
+                        <span class="ed-badge badge-5m" title="人工管制撮合（約5分撮合一盤）">第2次 · 2分</span>
                       
                     </div>
                   </td>
@@ -2114,7 +2137,9 @@
                         <span class="ed-date">08-25</span>
                         
                         
-                        <span class="ed-badge">第1次 · 10分</span>
+                        
+                        
+                        <span class="ed-badge " title="">第1次 · 10分</span>
                       
                     </div>
                   </td>
@@ -2191,7 +2216,9 @@
                         <span class="ed-date">08-25</span>
                         
                         
-                        <span class="ed-badge">第1次 · 2分</span>
+                        
+                        
+                        <span class="ed-badge badge-5m" title="人工管制撮合（約5分撮合一盤）">第1次 · 2分</span>
                       
                     </div>
                   </td>
@@ -2286,7 +2313,9 @@
                         <span class="ed-date">08-25</span>
                         
                         
-                        <span class="ed-badge">第2次 · 2分</span>
+                        
+                        
+                        <span class="ed-badge badge-5m" title="人工管制撮合（約5分撮合一盤）">第2次 · 2分</span>
                       
                     </div>
                   </td>
@@ -2363,7 +2392,9 @@
                         <span class="ed-date">08-25</span>
                         
                         
-                        <span class="ed-badge">第2次 · 25分</span>
+                        
+                        
+                        <span class="ed-badge badge-20m" title="人工管制撮合（約20分撮合一盤，預收款券）">第2次 · 25分</span>
                       
                     </div>
                   </td>
@@ -2451,9 +2482,13 @@
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('3163', '波若威')" title="點擊開啟個股快捷選單">3163</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="3163" style="display:none;">★</span>波若威</td>
-                  <td data-label="原撮合"><span class="badge">2分</span></td>
+                  <td data-label="原撮合">
+                    
+                    
+                    <span class="badge badge-amber">2分</span>
+                  </td>
                   <td data-label="處置起訖" class="font-mono" data-sort="08-13">08-13 ~ 08-21</td>
-                  <td data-label="預計出關" class="font-mono font-bold amber" data-sort="08-24">08-24</td>
+                  <td data-label="預計出關" class="font-mono font-bold amber" data-sort="08-24"><span class="badge badge-green" style="margin-right:4px;">🎉 今日出關</span>08-24</td>
                   <td data-label="處置原因" class="reason">連續5日｜第1次處置</td>
                 </tr>
                 
@@ -2462,9 +2497,13 @@
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('4931', '新盛力')" title="點擊開啟個股快捷選單">4931</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="4931" style="display:none;">★</span>新盛力</td>
-                  <td data-label="原撮合"><span class="badge">2分</span></td>
+                  <td data-label="原撮合">
+                    
+                    
+                    <span class="badge badge-amber">2分</span>
+                  </td>
                   <td data-label="處置起訖" class="font-mono" data-sort="08-13">08-13 ~ 08-21</td>
-                  <td data-label="預計出關" class="font-mono font-bold amber" data-sort="08-24">08-24</td>
+                  <td data-label="預計出關" class="font-mono font-bold amber" data-sort="08-24"><span class="badge badge-green" style="margin-right:4px;">🎉 今日出關</span>08-24</td>
                   <td data-label="處置原因" class="reason">連續3日第一款｜第1次處置</td>
                 </tr>
                 
@@ -2473,9 +2512,13 @@
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('6716', '應廣')" title="點擊開啟個股快捷選單">6716</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="6716" style="display:none;">★</span>應廣</td>
-                  <td data-label="原撮合"><span class="badge">2分</span></td>
+                  <td data-label="原撮合">
+                    
+                    
+                    <span class="badge badge-amber">2分</span>
+                  </td>
                   <td data-label="處置起訖" class="font-mono" data-sort="08-17">08-17 ~ 08-21</td>
-                  <td data-label="預計出關" class="font-mono font-bold amber" data-sort="08-24">08-24</td>
+                  <td data-label="預計出關" class="font-mono font-bold amber" data-sort="08-24"><span class="badge badge-green" style="margin-right:4px;">🎉 今日出關</span>08-24</td>
                   <td data-label="處置原因" class="reason">連續3日第一款｜第1次處置</td>
                 </tr>
                 
@@ -2504,7 +2547,7 @@
               <span class="badge badge-blue">4 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/att.html?v=2026/08/23_0210" id="embed-att" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:280px;" scrolling="no"></iframe>
+              <iframe src="embed/att.html?v=2026/08/23_0213" id="embed-att" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:280px;" scrolling="no"></iframe>
             </div>
           </details>
 
@@ -2514,7 +2557,7 @@
               <span class="badge">14 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/fin.html?v=2026/08/23_0210" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:640px;" scrolling="no"></iframe>
+              <iframe src="embed/fin.html?v=2026/08/23_0213" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:640px;" scrolling="no"></iframe>
             </div>
           </details>
 
@@ -2524,7 +2567,7 @@
               <span class="badge">0 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/rev.html?v=2026/08/23_0210" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:160px;" scrolling="no"></iframe>
+              <iframe src="embed/rev.html?v=2026/08/23_0213" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:160px;" scrolling="no"></iframe>
             </div>
           </details>
         </div>
@@ -4507,7 +4550,7 @@
             <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
             <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日重點清單；未在清單內之標的自動略過。</li>
           </ul>
-          <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:8px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-23 02:06</span></div>
+          <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:8px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-23 02:13</span></div>
         </div>
       </details>
       <div class="footer-copy" style="margin-top:10px; text-align:center; font-size:11px; color:var(--text-muted);">盤前情報準備台 · 自用盤前決策工作台</div>
@@ -4843,17 +4886,11 @@
   window.pm.exportDailyMarkdown = function() {
     var lines = [];
     var buildTime = document.querySelector('.meta-item:nth-child(1) .meta-val')?.textContent.trim() || '';
-    var dataDate = document.querySelector('.meta-item:nth-child(2) .meta-val')?.textContent.trim() || '';
-    lines.push('# 📈 盤前情報決策總覽 · ' + (dataDate || new Date().toLocaleDateString('zh-TW')));
-    lines.push('> 產生時間：' + buildTime + ' ｜ 資料日期：' + dataDate + '\n');
-    
-    // Twii
+    var dataDate = document.querySelector('.meta-item:nth-child(2) .meta-val')?.textContent.trim() || new Date().toISOString().split('T')[0];
     var twiiVal = document.querySelector('[data-metric="twii-close"]')?.textContent.trim() || '—';
     var twiiChg = document.querySelector('[data-metric="twii-change"]')?.textContent.trim() || '';
-    lines.push('## 1. 大盤與籌碼概況');
-    lines.push('- **加權指數昨收**：' + twiiVal + (twiiChg ? ' (' + twiiChg + ')' : ''));
+    var unrefVal = document.querySelector('[data-metric="unreflected-count"]')?.textContent.trim() || '0';
     
-    // Institutional
     var instEl = document.querySelector('[data-metric="institutional-chips"]');
     var instParts = [];
     if (instEl) {
@@ -4861,14 +4898,33 @@
         instParts.push(ch.textContent.trim().replace(/\s+/g, ' '));
       });
     }
-    lines.push('- **三大法人籌碼**：' + (instParts.length ? instParts.join(' ｜ ') : '—'));
+    var alertRows = document.querySelectorAll('#alerts tr[data-code]');
 
-    // Unreflected
-    var unrefVal = document.querySelector('[data-metric="unreflected-count"]')?.textContent.trim() || '0';
+    // YAML Frontmatter for Obsidian / Logseq / Notion
+    lines.push('---');
+    lines.push('date: ' + dataDate);
+    lines.push('type: premarket-journal');
+    lines.push('tags:');
+    lines.push('  - 盤前準備');
+    lines.push('  - 交易決策');
+    lines.push('twii_close: "' + twiiVal + '"');
+    lines.push('twii_change: "' + twiiChg + '"');
+    lines.push('institutional_chips: "' + (instParts.join(' | ') || '—') + '"');
+    lines.push('disposal_alerts_count: ' + alertRows.length);
+    lines.push('unreflected_announcements: "' + unrefVal + '"');
+    lines.push('build_time: "' + buildTime + '"');
+    lines.push('---\n');
+
+    lines.push('# 📈 盤前情報決策總覽 · ' + dataDate);
+    lines.push('> 產生時間：' + buildTime + ' ｜ 資料日期：' + dataDate + '\n');
+    
+    // 1. Market & Chips
+    lines.push('## 1. 大盤與籌碼概況');
+    lines.push('- **加權指數昨收**：' + twiiVal + (twiiChg ? ' (' + twiiChg + ')' : ''));
+    lines.push('- **三大法人籌碼**：' + (instParts.length ? instParts.join(' ｜ ') : '—'));
     lines.push('- **市場未反映公告**：' + unrefVal);
 
-    // Alerts
-    var alertRows = document.querySelectorAll('#alerts tr[data-code]');
+    // 2. Alerts
     lines.push('\n## 2. 今日重點警示 (共 ' + alertRows.length + ' 檔)');
     alertRows.forEach(function(r) {
       var code = r.getAttribute('data-code');
@@ -4877,7 +4933,7 @@
       lines.push('- [' + cat + '] `' + code + '` ' + name);
     });
 
-    // High impact calendar
+    // 3. High impact calendar
     lines.push('\n## 3. 今日重大財經事件 (★★★)');
     var events = document.querySelectorAll('.cal-date-section.is-today-section .cal-event-card[data-importance="3"]');
     if (events.length) {
@@ -4892,7 +4948,7 @@
 
     var text = lines.join('\n');
     navigator.clipboard.writeText(text).then(function() {
-      window.pm.showToast('已匯出今日盤前重點 Markdown');
+      window.pm.showToast('已匯出 Obsidian 格式盤前日誌 Markdown！');
     });
   };
 
@@ -4976,6 +5032,7 @@
   };
 
   window.clearWatch = function() {
+    if (!confirm('確定要清空所有自選股清單嗎？')) return;
     localStorage.removeItem(window.WATCH_KEY);
     document.getElementById('watch-input').value = '';
     renderWatch();
@@ -5078,6 +5135,13 @@
   };
 
   window.pm.watchlistExpanded = false;
+  window.pm.watchFilterGroup = 'all'; // 'all', 'alert', 'candidate', 'other'
+
+  window.pm.setWatchFilterGroup = function(grp) {
+    window.pm.watchFilterGroup = grp;
+    renderWatch();
+  };
+
   window.pm.toggleWatchlistExpand = function() {
     window.pm.watchlistExpanded = !window.pm.watchlistExpanded;
     renderWatch();
@@ -5150,18 +5214,57 @@
       }
     });
 
+    var curGrp = window.pm.watchFilterGroup || 'all';
+
     var statBar = document.createElement('div');
     statBar.className = 'watch-stat-bar';
     
     var statLeft = document.createElement('div');
     statLeft.className = 'watch-stat-left';
-    statLeft.innerHTML = '<strong>⭐ 自選清單 (' + codes.length + ' 檔)</strong>'
-      + '<span class="watch-stat-pill ' + (hitAlerts.length ? 'danger' : 'gray') + '">🚨 今日警示 ' + hitAlerts.length + ' 檔</span>'
-      + '<span class="watch-stat-pill ' + (hitCandidates.length ? 'blue' : 'gray') + '">🔵 今日候選 ' + hitCandidates.length + ' 檔</span>'
-      + '<span class="watch-stat-pill gray">⚪ 其餘標的 ' + otherStocks.length + ' 檔</span>';
+    statLeft.style.display = 'flex';
+    statLeft.style.alignItems = 'center';
+    statLeft.style.gap = '6px';
+    statLeft.style.flexWrap = 'wrap';
+
+    var allBtn = document.createElement('button');
+    allBtn.type = 'button';
+    allBtn.className = 'watch-stat-pill ' + (curGrp === 'all' ? 'is-active' : 'gray');
+    allBtn.style.cursor = 'pointer';
+    allBtn.style.border = 'none';
+    allBtn.textContent = '⭐ 全部 (' + codes.length + ')';
+    allBtn.onclick = function() { window.pm.setWatchFilterGroup('all'); };
+    statLeft.appendChild(allBtn);
+
+    var alertBtn = document.createElement('button');
+    alertBtn.type = 'button';
+    alertBtn.className = 'watch-stat-pill ' + (curGrp === 'alert' ? 'is-active ' : '') + (hitAlerts.length ? 'danger' : 'gray');
+    alertBtn.style.cursor = 'pointer';
+    alertBtn.style.border = 'none';
+    alertBtn.textContent = '🚨 警示/處置 (' + hitAlerts.length + ')';
+    alertBtn.onclick = function() { window.pm.setWatchFilterGroup('alert'); };
+    statLeft.appendChild(alertBtn);
+
+    var candBtn = document.createElement('button');
+    candBtn.type = 'button';
+    candBtn.className = 'watch-stat-pill ' + (curGrp === 'candidate' ? 'is-active ' : '') + (hitCandidates.length ? 'blue' : 'gray');
+    candBtn.style.cursor = 'pointer';
+    candBtn.style.border = 'none';
+    candBtn.textContent = '🔵 候選觀察 (' + hitCandidates.length + ')';
+    candBtn.onclick = function() { window.pm.setWatchFilterGroup('candidate'); };
+    statLeft.appendChild(candBtn);
+
+    var otherBtn = document.createElement('button');
+    otherBtn.type = 'button';
+    otherBtn.className = 'watch-stat-pill ' + (curGrp === 'other' ? 'is-active ' : '') + 'gray';
+    otherBtn.style.cursor = 'pointer';
+    otherBtn.style.border = 'none';
+    otherBtn.textContent = '⚪ 其餘標的 (' + otherStocks.length + ')';
+    otherBtn.onclick = function() { window.pm.setWatchFilterGroup('other'); };
+    statLeft.appendChild(otherBtn);
+
     statBar.appendChild(statLeft);
 
-    if (codes.length > 12) {
+    if (codes.length > 12 && curGrp === 'all') {
       var toggleBtn = document.createElement('button');
       toggleBtn.type = 'button';
       toggleBtn.className = 'watch-toggle-btn';
@@ -5200,23 +5303,31 @@
       return chip;
     }
 
-    if (hitAlerts.length || hitCandidates.length) {
+    if ((curGrp === 'all' || curGrp === 'alert' || curGrp === 'candidate') && (hitAlerts.length || hitCandidates.length)) {
       var hitGroup = document.createElement('div');
       hitGroup.className = 'watch-group';
-      hitGroup.innerHTML = '<div class="watch-group-title">🎯 今日命中標的（點擊可定位至下方表格）</div>';
+      hitGroup.innerHTML = '<div class="watch-group-title">🎯 盤前清單命中標的（點擊可定位至下方表格）</div>';
       var hitChips = document.createElement('div');
       hitChips.className = 'watch-chips-container';
-      hitAlerts.concat(hitCandidates).forEach(function(item) {
+
+      var targets = [];
+      if (curGrp === 'all') targets = hitAlerts.concat(hitCandidates);
+      else if (curGrp === 'alert') targets = hitAlerts;
+      else if (curGrp === 'candidate') targets = hitCandidates;
+
+      targets.forEach(function(item) {
         hitChips.appendChild(createChip(item));
       });
-      hitGroup.appendChild(hitChips);
-      box.appendChild(hitGroup);
+      if (targets.length > 0) {
+        hitGroup.appendChild(hitChips);
+        box.appendChild(hitGroup);
+      }
     }
 
-    if (otherStocks.length) {
+    if ((curGrp === 'all' || curGrp === 'other') && otherStocks.length) {
       var otherGroup = document.createElement('div');
       otherGroup.className = 'watch-group';
-      var isCollapsible = (codes.length > 12);
+      var isCollapsible = (codes.length > 12 && curGrp === 'all');
       if (!isCollapsible || window.pm.watchlistExpanded) {
         otherGroup.innerHTML = '<div class="watch-group-title">⚪ 未觸發之自選標的 (' + otherStocks.length + ' 檔)</div>';
         var otherChips = document.createElement('div');
@@ -5615,6 +5726,30 @@
         }
       });
     });
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        if (!localStorage.getItem('premarket.theme')) {
+          var newTheme = e.matches ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', newTheme);
+          var b = document.getElementById('theme-toggle');
+          if (b) b.textContent = newTheme === 'dark' ? '☀️ 淺色' : '🌙 深色';
+          window.pm.syncIframeTheme(newTheme);
+        }
+      });
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'sw-updated') {
+          var toast = document.getElementById('toast');
+          if (toast) {
+            toast.innerHTML = '🔄 偵測到最新盤前資料 <button onclick="location.reload(true)" style="background:var(--blue); color:#fff; border:none; border-radius:4px; padding:2px 8px; margin-left:6px; cursor:pointer; font-weight:700;">點此更新</button>';
+            toast.classList.add('show');
+            setTimeout(function() { toast.classList.remove('show'); }, 8000);
+          }
+        }
+      });
+    }
 
     window.pm.syncIframeTheme();
     startTimers();

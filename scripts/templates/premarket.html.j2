@@ -1618,10 +1618,31 @@
     border: 1px solid rgba(217, 119, 6, 0.25);
     line-height: 1.3;
   }
+  .ed-badge.badge-5m {
+    background: rgba(217, 119, 6, 0.12);
+    color: var(--amber);
+    border: 1px solid rgba(217, 119, 6, 0.35);
+  }
+  .ed-badge.badge-20m {
+    background: var(--danger-bg);
+    color: var(--danger-fg);
+    border: 1px solid var(--danger-border);
+    font-weight: 700;
+  }
   :root[data-theme="dark"] .ed-badge {
     background: rgba(251, 191, 36, 0.12);
     color: #FCD34D;
     border: 1px solid rgba(251, 191, 36, 0.25);
+  }
+  :root[data-theme="dark"] .ed-badge.badge-5m {
+    background: rgba(251, 191, 36, 0.15);
+    color: #FCD34D;
+    border: 1px solid rgba(251, 191, 36, 0.35);
+  }
+  :root[data-theme="dark"] .ed-badge.badge-20m {
+    background: rgba(244, 63, 94, 0.18);
+    color: #FDA4AF;
+    border: 1px solid rgba(244, 63, 94, 0.35);
   }
 
 
@@ -2059,7 +2080,9 @@
                         <span class="ed-date">{{ ed_parts[0] }}</span>
                         {% set b_text = ed_parts[1] %}
                         {% set b_text = b_text.replace('第1次', '第1次 · ').replace('第2次', '第2次 · ').replace('··', '·').replace('·  ·', '·') %}
-                        <span class="ed-badge">{{ b_text }}</span>
+                        {% set is_20m = ('20分' in b_text or '25分' in b_text or '全額' in b_text) %}
+                        {% set is_5m = ('5分' in b_text or '2分' in b_text) %}
+                        <span class="ed-badge {{ 'badge-20m' if is_20m else ('badge-5m' if is_5m else '') }}" title="{{ '人工管制撮合（約20分撮合一盤，預收款券）' if is_20m else ('人工管制撮合（約5分撮合一盤）' if is_5m else '') }}">{{ b_text }}</span>
                       {% else %}
                         <span class="ed-date">{{ row.earliest_disposal }}</span>
                       {% endif %}
@@ -2123,9 +2146,13 @@
                   <td data-label="市場">{{ row.market }}</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('{{ clean_code }}', '{{ row.name }}')" title="點擊開啟個股快捷選單">{{ clean_code }}</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="{{ clean_code }}" style="display:none;">★</span>{{ row.name }}</td>
-                  <td data-label="原撮合"><span class="badge">{{ row.matching }}</span></td>
+                  <td data-label="原撮合">
+                    {% set is_row_20m = ('20分' in row.matching or '25分' in row.matching or '全額' in row.matching) %}
+                    {% set is_row_5m = ('5分' in row.matching or '2分' in row.matching) %}
+                    <span class="badge {{ 'badge-danger' if is_row_20m else ('badge-amber' if is_row_5m else '') }}">{{ row.matching }}</span>
+                  </td>
                   <td data-label="處置起訖" class="font-mono" data-sort="{{ row.start_date }}">{{ row.start_date }} ~ {{ row.end_date }}</td>
-                  <td data-label="預計出關" class="font-mono font-bold amber" data-sort="{{ row.exit_date }}">{{ row.exit_date }}</td>
+                  <td data-label="預計出關" class="font-mono font-bold amber" data-sort="{{ row.exit_date }}"><span class="badge badge-green" style="margin-right:4px;">🎉 今日出關</span>{{ row.exit_date }}</td>
                   <td data-label="處置原因" class="reason">{{ row.reason }}</td>
                 </tr>
                 {% endfor %}
@@ -3007,17 +3034,11 @@
   window.pm.exportDailyMarkdown = function() {
     var lines = [];
     var buildTime = document.querySelector('.meta-item:nth-child(1) .meta-val')?.textContent.trim() || '';
-    var dataDate = document.querySelector('.meta-item:nth-child(2) .meta-val')?.textContent.trim() || '';
-    lines.push('# 📈 盤前情報決策總覽 · ' + (dataDate || new Date().toLocaleDateString('zh-TW')));
-    lines.push('> 產生時間：' + buildTime + ' ｜ 資料日期：' + dataDate + '\n');
-    
-    // Twii
+    var dataDate = document.querySelector('.meta-item:nth-child(2) .meta-val')?.textContent.trim() || new Date().toISOString().split('T')[0];
     var twiiVal = document.querySelector('[data-metric="twii-close"]')?.textContent.trim() || '—';
     var twiiChg = document.querySelector('[data-metric="twii-change"]')?.textContent.trim() || '';
-    lines.push('## 1. 大盤與籌碼概況');
-    lines.push('- **加權指數昨收**：' + twiiVal + (twiiChg ? ' (' + twiiChg + ')' : ''));
+    var unrefVal = document.querySelector('[data-metric="unreflected-count"]')?.textContent.trim() || '0';
     
-    // Institutional
     var instEl = document.querySelector('[data-metric="institutional-chips"]');
     var instParts = [];
     if (instEl) {
@@ -3025,14 +3046,33 @@
         instParts.push(ch.textContent.trim().replace(/\s+/g, ' '));
       });
     }
-    lines.push('- **三大法人籌碼**：' + (instParts.length ? instParts.join(' ｜ ') : '—'));
+    var alertRows = document.querySelectorAll('#alerts tr[data-code]');
 
-    // Unreflected
-    var unrefVal = document.querySelector('[data-metric="unreflected-count"]')?.textContent.trim() || '0';
+    // YAML Frontmatter for Obsidian / Logseq / Notion
+    lines.push('---');
+    lines.push('date: ' + dataDate);
+    lines.push('type: premarket-journal');
+    lines.push('tags:');
+    lines.push('  - 盤前準備');
+    lines.push('  - 交易決策');
+    lines.push('twii_close: "' + twiiVal + '"');
+    lines.push('twii_change: "' + twiiChg + '"');
+    lines.push('institutional_chips: "' + (instParts.join(' | ') || '—') + '"');
+    lines.push('disposal_alerts_count: ' + alertRows.length);
+    lines.push('unreflected_announcements: "' + unrefVal + '"');
+    lines.push('build_time: "' + buildTime + '"');
+    lines.push('---\n');
+
+    lines.push('# 📈 盤前情報決策總覽 · ' + dataDate);
+    lines.push('> 產生時間：' + buildTime + ' ｜ 資料日期：' + dataDate + '\n');
+    
+    // 1. Market & Chips
+    lines.push('## 1. 大盤與籌碼概況');
+    lines.push('- **加權指數昨收**：' + twiiVal + (twiiChg ? ' (' + twiiChg + ')' : ''));
+    lines.push('- **三大法人籌碼**：' + (instParts.length ? instParts.join(' ｜ ') : '—'));
     lines.push('- **市場未反映公告**：' + unrefVal);
 
-    // Alerts
-    var alertRows = document.querySelectorAll('#alerts tr[data-code]');
+    // 2. Alerts
     lines.push('\n## 2. 今日重點警示 (共 ' + alertRows.length + ' 檔)');
     alertRows.forEach(function(r) {
       var code = r.getAttribute('data-code');
@@ -3041,7 +3081,7 @@
       lines.push('- [' + cat + '] `' + code + '` ' + name);
     });
 
-    // High impact calendar
+    // 3. High impact calendar
     lines.push('\n## 3. 今日重大財經事件 (★★★)');
     var events = document.querySelectorAll('.cal-date-section.is-today-section .cal-event-card[data-importance="3"]');
     if (events.length) {
@@ -3056,7 +3096,7 @@
 
     var text = lines.join('\n');
     navigator.clipboard.writeText(text).then(function() {
-      window.pm.showToast('已匯出今日盤前重點 Markdown');
+      window.pm.showToast('已匯出 Obsidian 格式盤前日誌 Markdown！');
     });
   };
 
@@ -3140,6 +3180,7 @@
   };
 
   window.clearWatch = function() {
+    if (!confirm('確定要清空所有自選股清單嗎？')) return;
     localStorage.removeItem(window.WATCH_KEY);
     document.getElementById('watch-input').value = '';
     renderWatch();
@@ -3242,6 +3283,13 @@
   };
 
   window.pm.watchlistExpanded = false;
+  window.pm.watchFilterGroup = 'all'; // 'all', 'alert', 'candidate', 'other'
+
+  window.pm.setWatchFilterGroup = function(grp) {
+    window.pm.watchFilterGroup = grp;
+    renderWatch();
+  };
+
   window.pm.toggleWatchlistExpand = function() {
     window.pm.watchlistExpanded = !window.pm.watchlistExpanded;
     renderWatch();
@@ -3314,18 +3362,57 @@
       }
     });
 
+    var curGrp = window.pm.watchFilterGroup || 'all';
+
     var statBar = document.createElement('div');
     statBar.className = 'watch-stat-bar';
     
     var statLeft = document.createElement('div');
     statLeft.className = 'watch-stat-left';
-    statLeft.innerHTML = '<strong>⭐ 自選清單 (' + codes.length + ' 檔)</strong>'
-      + '<span class="watch-stat-pill ' + (hitAlerts.length ? 'danger' : 'gray') + '">🚨 今日警示 ' + hitAlerts.length + ' 檔</span>'
-      + '<span class="watch-stat-pill ' + (hitCandidates.length ? 'blue' : 'gray') + '">🔵 今日候選 ' + hitCandidates.length + ' 檔</span>'
-      + '<span class="watch-stat-pill gray">⚪ 其餘標的 ' + otherStocks.length + ' 檔</span>';
+    statLeft.style.display = 'flex';
+    statLeft.style.alignItems = 'center';
+    statLeft.style.gap = '6px';
+    statLeft.style.flexWrap = 'wrap';
+
+    var allBtn = document.createElement('button');
+    allBtn.type = 'button';
+    allBtn.className = 'watch-stat-pill ' + (curGrp === 'all' ? 'is-active' : 'gray');
+    allBtn.style.cursor = 'pointer';
+    allBtn.style.border = 'none';
+    allBtn.textContent = '⭐ 全部 (' + codes.length + ')';
+    allBtn.onclick = function() { window.pm.setWatchFilterGroup('all'); };
+    statLeft.appendChild(allBtn);
+
+    var alertBtn = document.createElement('button');
+    alertBtn.type = 'button';
+    alertBtn.className = 'watch-stat-pill ' + (curGrp === 'alert' ? 'is-active ' : '') + (hitAlerts.length ? 'danger' : 'gray');
+    alertBtn.style.cursor = 'pointer';
+    alertBtn.style.border = 'none';
+    alertBtn.textContent = '🚨 警示/處置 (' + hitAlerts.length + ')';
+    alertBtn.onclick = function() { window.pm.setWatchFilterGroup('alert'); };
+    statLeft.appendChild(alertBtn);
+
+    var candBtn = document.createElement('button');
+    candBtn.type = 'button';
+    candBtn.className = 'watch-stat-pill ' + (curGrp === 'candidate' ? 'is-active ' : '') + (hitCandidates.length ? 'blue' : 'gray');
+    candBtn.style.cursor = 'pointer';
+    candBtn.style.border = 'none';
+    candBtn.textContent = '🔵 候選觀察 (' + hitCandidates.length + ')';
+    candBtn.onclick = function() { window.pm.setWatchFilterGroup('candidate'); };
+    statLeft.appendChild(candBtn);
+
+    var otherBtn = document.createElement('button');
+    otherBtn.type = 'button';
+    otherBtn.className = 'watch-stat-pill ' + (curGrp === 'other' ? 'is-active ' : '') + 'gray';
+    otherBtn.style.cursor = 'pointer';
+    otherBtn.style.border = 'none';
+    otherBtn.textContent = '⚪ 其餘標的 (' + otherStocks.length + ')';
+    otherBtn.onclick = function() { window.pm.setWatchFilterGroup('other'); };
+    statLeft.appendChild(otherBtn);
+
     statBar.appendChild(statLeft);
 
-    if (codes.length > 12) {
+    if (codes.length > 12 && curGrp === 'all') {
       var toggleBtn = document.createElement('button');
       toggleBtn.type = 'button';
       toggleBtn.className = 'watch-toggle-btn';
@@ -3364,23 +3451,31 @@
       return chip;
     }
 
-    if (hitAlerts.length || hitCandidates.length) {
+    if ((curGrp === 'all' || curGrp === 'alert' || curGrp === 'candidate') && (hitAlerts.length || hitCandidates.length)) {
       var hitGroup = document.createElement('div');
       hitGroup.className = 'watch-group';
-      hitGroup.innerHTML = '<div class="watch-group-title">🎯 今日命中標的（點擊可定位至下方表格）</div>';
+      hitGroup.innerHTML = '<div class="watch-group-title">🎯 盤前清單命中標的（點擊可定位至下方表格）</div>';
       var hitChips = document.createElement('div');
       hitChips.className = 'watch-chips-container';
-      hitAlerts.concat(hitCandidates).forEach(function(item) {
+
+      var targets = [];
+      if (curGrp === 'all') targets = hitAlerts.concat(hitCandidates);
+      else if (curGrp === 'alert') targets = hitAlerts;
+      else if (curGrp === 'candidate') targets = hitCandidates;
+
+      targets.forEach(function(item) {
         hitChips.appendChild(createChip(item));
       });
-      hitGroup.appendChild(hitChips);
-      box.appendChild(hitGroup);
+      if (targets.length > 0) {
+        hitGroup.appendChild(hitChips);
+        box.appendChild(hitGroup);
+      }
     }
 
-    if (otherStocks.length) {
+    if ((curGrp === 'all' || curGrp === 'other') && otherStocks.length) {
       var otherGroup = document.createElement('div');
       otherGroup.className = 'watch-group';
-      var isCollapsible = (codes.length > 12);
+      var isCollapsible = (codes.length > 12 && curGrp === 'all');
       if (!isCollapsible || window.pm.watchlistExpanded) {
         otherGroup.innerHTML = '<div class="watch-group-title">⚪ 未觸發之自選標的 (' + otherStocks.length + ' 檔)</div>';
         var otherChips = document.createElement('div');
@@ -3779,6 +3874,30 @@
         }
       });
     });
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        if (!localStorage.getItem('premarket.theme')) {
+          var newTheme = e.matches ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', newTheme);
+          var b = document.getElementById('theme-toggle');
+          if (b) b.textContent = newTheme === 'dark' ? '☀️ 淺色' : '🌙 深色';
+          window.pm.syncIframeTheme(newTheme);
+        }
+      });
+    }
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'sw-updated') {
+          var toast = document.getElementById('toast');
+          if (toast) {
+            toast.innerHTML = '🔄 偵測到最新盤前資料 <button onclick="location.reload(true)" style="background:var(--blue); color:#fff; border:none; border-radius:4px; padding:2px 8px; margin-left:6px; cursor:pointer; font-weight:700;">點此更新</button>';
+            toast.classList.add('show');
+            setTimeout(function() { toast.classList.remove('show'); }, 8000);
+          }
+        }
+      });
+    }
 
     window.pm.syncIframeTheme();
     startTimers();
