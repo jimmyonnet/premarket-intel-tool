@@ -2106,7 +2106,7 @@
               <span class="badge badge-blue">{{ financials.att|length if financials.att else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/att.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-att" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+              <iframe src="embed/att.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-att" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:210px; min-height:120px;"></iframe>
             </div>
           </details>
 
@@ -2116,7 +2116,7 @@
               <span class="badge">{{ financials.fin|length if financials.fin else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/fin.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+              <iframe src="embed/fin.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:210px; min-height:120px;"></iframe>
             </div>
           </details>
 
@@ -2126,7 +2126,7 @@
               <span class="badge">{{ financials.rev|length if financials.rev else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/rev.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+              <iframe src="embed/rev.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:210px; min-height:120px;"></iframe>
             </div>
           </details>
         </div>
@@ -3577,7 +3577,7 @@
   window.addEventListener('message', function(e) {
     if (!e.data || e.data.type !== 'embed-height') return;
     var f = document.getElementById('embed-' + e.data.id);
-    if (f) f.style.height = Math.max(480, e.data.height) + 'px';
+    if (f && e.data.height) f.style.height = (e.data.height + 4) + 'px';
   });
 
   document.addEventListener('keydown', function(e) {

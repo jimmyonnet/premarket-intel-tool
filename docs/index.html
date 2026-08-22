@@ -1776,7 +1776,7 @@
         <h1 class="page-title">盤前情報準備台</h1>
       </div>
       <div class="meta-row">
-        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/23 02:03</span></span>
+        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/23 02:05</span></span>
         
         <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">08/24</span></span>
         
@@ -1817,7 +1817,7 @@
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" title="切換截圖模式 (按 Esc 退出)">📸 截圖</button>
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" title="切換深淺色主題 (快捷鍵 D)">🌙 深色</button>
         <button class="nav-btn refresh-btn" onclick="location.reload(true)" type="button" title="重新載入最新版" aria-label="重新整理頁面">
-          🔄 <span class="last-build">建置 2026-08-23 02:03</span><span class="short-build">重整</span>
+          🔄 <span class="last-build">建置 2026-08-23 02:05</span><span class="short-build">重整</span>
         </button>
       </div>
     </div>
@@ -2452,7 +2452,7 @@
               <span class="badge badge-blue">4 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/att.html?v=2026/08/23_0203" id="embed-att" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+              <iframe src="embed/att.html?v=2026/08/23_0205" id="embed-att" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:210px; min-height:120px;"></iframe>
             </div>
           </details>
 
@@ -2462,7 +2462,7 @@
               <span class="badge">14 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/fin.html?v=2026/08/23_0203" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+              <iframe src="embed/fin.html?v=2026/08/23_0205" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:210px; min-height:120px;"></iframe>
             </div>
           </details>
 
@@ -2472,7 +2472,7 @@
               <span class="badge">0 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/rev.html?v=2026/08/23_0203" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:480px;"></iframe>
+              <iframe src="embed/rev.html?v=2026/08/23_0205" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:210px; min-height:120px;"></iframe>
             </div>
           </details>
         </div>
@@ -4450,7 +4450,7 @@
         <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
         <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日重點清單；未在清單內之標的自動略過。</li>
       </ul>
-      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-23 01:59</span></div>
+      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-23 02:03</span></div>
       <div class="footer-copy" style="margin-top:4px; text-align:center;">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
   </footer>
@@ -5413,7 +5413,7 @@
   window.addEventListener('message', function(e) {
     if (!e.data || e.data.type !== 'embed-height') return;
     var f = document.getElementById('embed-' + e.data.id);
-    if (f) f.style.height = Math.max(480, e.data.height) + 'px';
+    if (f && e.data.height) f.style.height = (e.data.height + 4) + 'px';
   });
 
   document.addEventListener('keydown', function(e) {

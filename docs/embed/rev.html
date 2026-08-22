@@ -148,13 +148,13 @@ nav, nav a, nav input { line-height: normal; }html{scrollbar-gutter:stable;overf
         --btn-border: #E2E8F0 !important;
         --btn-hover: #F1F5F9 !important;
       }
-      html, body { background: transparent !important; color: var(--text-main) !important; padding: 0 !important; margin: 0 !important; font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI", Roboto, "PingFang TC", "Noto Sans TC", sans-serif !important; }
-      nav, .header, .ai-warn, .ai-warn-bottom, .search-container, #load-archive-btn, footer { display: none !important; }
-      .container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; background: transparent !important; }
-      #app { margin-top: 0 !important; min-height: 0 !important; background: transparent !important; }
-      table { background: var(--bg-card) !important; border-radius: 8px !important; border: 1px solid var(--border) !important; overflow: hidden !important; width: 100% !important; border-collapse: separate !important; border-spacing: 0 !important; }
-      th { font-size: 11px !important; background: var(--bg-sub) !important; color: var(--text-muted) !important; border-bottom: 1px solid var(--border) !important; font-weight: 600 !important; text-transform: uppercase !important; letter-spacing: 0.04em !important; padding: 10px 12px !important; }
-      td { font-size: 13px !important; color: var(--text-main) !important; border-bottom: 1px solid var(--border-light) !important; background: var(--bg-card) !important; padding: 10px 12px !important; }
+      html, body { background: transparent !important; color: var(--text-main) !important; padding: 0 !important; margin: 0 !important; min-height: 0 !important; height: auto !important; font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI", Roboto, "PingFang TC", "Noto Sans TC", sans-serif !important; }
+      nav, .header, .ai-warn, .ai-warn-bottom, .search-container, #load-archive-btn, footer { display: none !important; margin: 0 !important; padding: 0 !important; height: 0 !important; }
+      .container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; min-height: 0 !important; height: auto !important; background: transparent !important; }
+      #app { margin-top: 0 !important; min-height: 0 !important; height: auto !important; background: transparent !important; }
+      table { background: var(--bg-card) !important; border-radius: 8px !important; border: 1px solid var(--border) !important; overflow: hidden !important; width: 100% !important; border-collapse: separate !important; border-spacing: 0 !important; margin-bottom: 0 !important; }
+      th { font-size: 11px !important; background: var(--bg-sub) !important; color: var(--text-muted) !important; border-bottom: 1px solid var(--border) !important; font-weight: 600 !important; text-transform: uppercase !important; letter-spacing: 0.04em !important; padding: 8px 10px !important; }
+      td { font-size: 13px !important; color: var(--text-main) !important; border-bottom: 1px solid var(--border-light) !important; background: var(--bg-card) !important; padding: 8px 10px !important; }
       .time-col { color: var(--text-muted) !important; font-size: 12px !important; }
       .code-col { color: var(--blue) !important; font-weight: 600 !important; }
       .name-col { color: var(--text-main) !important; font-weight: 600 !important; }
@@ -171,14 +171,14 @@ nav, nav a, nav input { line-height: normal; }html{scrollbar-gutter:stable;overf
       .raw-text { background: var(--bg-card) !important; color: var(--text-main) !important; border: 1px solid var(--border) !important; border-radius: 6px !important; padding: 12px !important; font-size: 12px !important; }
       .btn-link { border: 1px solid var(--btn-border) !important; color: var(--text-muted) !important; background: var(--btn-bg) !important; border-radius: 6px !important; padding: 4px 10px !important; font-size: 11px !important; font-weight: 600 !important; text-decoration: none !important; transition: all 0.15s ease !important; }
       .btn-link:hover { background: var(--btn-hover) !important; color: var(--text-main) !important; }
-      .filter-bar { background: var(--bg-sub) !important; border: 1px solid var(--border) !important; border-radius: 8px !important; color: var(--text-muted) !important; padding: 10px 14px !important; font-size: 12px !important; margin-bottom: 12px !important; }
+      .filter-bar { background: var(--bg-sub) !important; border: 1px solid var(--border) !important; border-radius: 8px !important; color: var(--text-muted) !important; padding: 8px 12px !important; font-size: 12px !important; margin: 0 0 10px 0 !important; }
       .filter-bar span, .filter-bar label { color: var(--text-muted) !important; }
       .filter-bar .filter-label { color: var(--text-main) !important; font-size: 12px !important; margin-right: 14px !important; }
       .filter-bar button { background: var(--btn-bg) !important; border: 1px solid var(--btn-border) !important; color: var(--text-main) !important; border-radius: 6px !important; padding: 4px 10px !important; font-size: 11px !important; }
       .filter-bar button:hover { background: var(--btn-hover) !important; color: var(--text-main) !important; }
       .filter-bar input[type="text"], .filter-bar input[type="number"] { background: var(--btn-bg) !important; border: 1px solid var(--btn-border) !important; color: var(--text-main) !important; border-radius: 6px !important; padding: 4px 8px !important; }
       .filter-bar input[type="checkbox"] { accent-color: var(--blue) !important; margin-right: 6px !important; }
-      .empty { padding: 24px 16px !important; color: var(--text-muted) !important; font-size: 12px !important; text-align: center !important; }
+      .empty { padding: 18px 16px !important; color: var(--text-muted) !important; font-size: 12px !important; text-align: center !important; }
       ::-webkit-scrollbar { width: 6px; height: 6px; }
       ::-webkit-scrollbar-track { background: var(--bg-sub); }
       ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -218,8 +218,11 @@ nav, nav a, nav input { line-height: normal; }html{scrollbar-gutter:stable;overf
         });
         function send(){
           try {
-            var h = document.body.scrollHeight;
-            parent.postMessage({type:'embed-height', id: location.pathname.split('/').pop().replace('.html',''), height:h}, '*');
+            var container = document.querySelector('.container') || document.getElementById('app') || document.body;
+            var h = container.offsetHeight || container.scrollHeight || document.body.offsetHeight;
+            if (h > 50) {
+              parent.postMessage({type:'embed-height', id: location.pathname.split('/').pop().replace('.html',''), height: Math.ceil(h)}, '*');
+            }
           } catch(e){}
         }
         new ResizeObserver(send).observe(document.body);
@@ -239,8 +242,9 @@ nav, nav a, nav input { line-height: normal; }html{scrollbar-gutter:stable;overf
           }
         }, 3500);
         setTimeout(function() { applyTheme(); send(); }, 50);
-        setTimeout(function() { applyTheme(); send(); }, 200);
-        setTimeout(function() { applyTheme(); send(); }, 600);
+        setTimeout(function() { applyTheme(); send(); }, 150);
+        setTimeout(function() { applyTheme(); send(); }, 400);
+        setTimeout(function() { applyTheme(); send(); }, 1000);
       })();
     </script>
     </head>
