@@ -1535,9 +1535,7 @@
                 {% set clean_code = row.code.replace('⏸','').strip() %}
                 <tr data-code="{{ clean_code }}" data-cat="alert" data-label="{{ row.name }}" class="{{ 'row-paused' if is_paused else '' }}">
                   <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono">
-                    {% if is_paused %}<span class="pause-icon" title="處置中">⏸</span>{% endif %}{{ clean_code }}
-                  </td>
+                  <td data-label="代號" class="code font-mono">{{ clean_code }}</td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="{{ clean_code }}" style="display:none;">★</span>{{ row.name }}</td>
                   <td data-label="收盤" class="num font-mono">{{ row.close }}</td>
                   <td data-label="處置條件" class="condition">
