@@ -6,9 +6,13 @@
 <meta name="description" content="個人自用，勿分享">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#F8FAFC">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="PMIT 盤前">
 <script>
   (function() {
-    var savedTheme = localStorage.getItem('premarket.theme');
+    var savedTheme = localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme');
     var theme = (savedTheme === 'dark') ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', theme);
   })();
@@ -20,7 +24,7 @@
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(function(err) {
-      console.log('SW register failed: ', err);
+      if (localStorage.getItem('pmit_debug') === '1') console.warn('SW register info:', err);
     });
   }
 </script>
@@ -1509,14 +1513,6 @@
   @media (max-width: 768px) {
     .last-build { display: none; }
     .short-build { display: inline; }
-    .page-nav {
-      overflow-x: auto;
-      white-space: nowrap;
-      flex-wrap: nowrap;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-    }
-    .page-nav::-webkit-scrollbar { display: none; }
   }
 
 
@@ -2124,6 +2120,17 @@
 
         <div class="data-block">
           {% if disposal.one_flag_from_disposal %}
+          <!-- Quick Filter Toolbar for Disposal Table -->
+          <div class="table-filter-toolbar" style="padding: 8px 12px; background: var(--bg-sub); border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+            <input type="text" id="disposal-search" class="filter-input-sm" placeholder="🔍 搜尋代號 / 名稱..." oninput="window.pm.filterDisposalTable(this.value)" style="padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-main); font-size: 12px; font-family: var(--font-mono); outline: none; min-width: 140px;">
+            <div class="filter-btn-group" style="display: flex; gap: 4px; align-items: center; flex-wrap: wrap;">
+              <button type="button" class="filter-chip-sm is-active" data-filter="market" data-val="all" onclick="window.pm.setDisposalMarketFilter('all', this)">全部</button>
+              <button type="button" class="filter-chip-sm" data-filter="market" data-val="上市" onclick="window.pm.setDisposalMarketFilter('上市', this)">上市</button>
+              <button type="button" class="filter-chip-sm" data-filter="market" data-val="上櫃" onclick="window.pm.setDisposalMarketFilter('上櫃', this)">上櫃</button>
+              <button type="button" class="filter-chip-sm" data-filter="market" data-val="5m" onclick="window.pm.setDisposalMarketFilter('5m', this)">5分盤</button>
+              <button type="button" class="filter-chip-sm" data-filter="market" data-val="20m" onclick="window.pm.setDisposalMarketFilter('20m', this)">20分盤</button>
+            </div>
+          </div>
           <div class="table-scroll">
             <table class="data-table disposal-table">
               <caption class="sr-only">差 1 次就處置股票清單</caption>
@@ -2346,6 +2353,10 @@
 
         <div class="data-block">
           {% if pressplay.found_group.matched %}
+          <!-- Quick Filter Toolbar for Candidate Table -->
+          <div class="table-filter-toolbar" style="padding: 8px 12px; background: var(--bg-sub); border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center;">
+            <input type="text" id="candidate-search" class="filter-input-sm" placeholder="🔍 搜尋候選標的代號 / 名稱 / 族群..." oninput="window.pm.filterCandidateTable(this.value)" style="padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-main); font-size: 12px; font-family: var(--font-mono); outline: none; min-width: 180px; flex: 1; max-width: 320px;">
+          </div>
           <div class="table-scroll">
             <table class="data-table">
               <caption class="sr-only">族群聚焦標的清單</caption>
@@ -2814,6 +2825,24 @@
 <script>
   window.pm = window.pm || {};
 
+  // LocalStorage Transparent Migration to pmit_ prefix
+  (function() {
+    try {
+      if (!localStorage.getItem('pmit_theme')) {
+        var oldTheme = localStorage.getItem('premarket.theme');
+        if (oldTheme) { localStorage.setItem('pmit_theme', oldTheme); localStorage.removeItem('premarket.theme'); }
+      }
+      if (!localStorage.getItem('pmit_watchlist')) {
+        var oldWatch = localStorage.getItem('premarket.watchlist');
+        if (oldWatch) { localStorage.setItem('pmit_watchlist', oldWatch); localStorage.removeItem('premarket.watchlist'); }
+      }
+      if (!localStorage.getItem('pmit_watch_only')) {
+        var oldWatchOnly = localStorage.getItem('premarket.filterWatchOnly');
+        if (oldWatchOnly) { localStorage.setItem('pmit_watch_only', oldWatchOnly); localStorage.removeItem('premarket.filterWatchOnly'); }
+      }
+    } catch(e){}
+  })();
+
   // ==========================================
   // 1. PMIT Calendar Dashboard State & Logic
   // ==========================================
@@ -3021,6 +3050,11 @@
         var secs = Math.floor((diffMs % 60000) / 1000);
         if (cdBadge) {
           cdBadge.textContent = '倒數 ' + String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+          cdBadge.classList.add('show');
+        }
+      } else if (diffMs <= 0 && diffMs >= -30 * 60 * 1000) {
+        if (cdBadge) {
+          cdBadge.textContent = '● 已公布';
           cdBadge.classList.add('show');
         }
       } else {
@@ -3264,7 +3298,7 @@
   // ==========================================
   // 7. Watchlist Core & Smart Grouping
   // ==========================================
-  window.WATCH_KEY = 'premarket.watchlist';
+  window.WATCH_KEY = 'pmit_watchlist';
 
   function extractStockCodes(rawText) {
     if (!rawText) return [];
@@ -3607,10 +3641,10 @@
   // ==========================================
   // 8. Global Filters & UI Modes
   // ==========================================
-  window.pm.watchOnly = localStorage.getItem('premarket.filterWatchOnly') === '1';
+  window.pm.watchOnly = (localStorage.getItem('pmit_watch_only') || localStorage.getItem('premarket.filterWatchOnly')) === '1';
   window.pm.toggleWatchOnly = function() {
     window.pm.watchOnly = !window.pm.watchOnly;
-    localStorage.setItem('premarket.filterWatchOnly', window.pm.watchOnly ? '1' : '0');
+    localStorage.setItem('pmit_watch_only', window.pm.watchOnly ? '1' : '0');
     window.pm.applyWatchOnly();
     if (window.pm.syncHash) window.pm.syncHash();
   };
@@ -3631,11 +3665,87 @@
       }
     });
 
+    if (window.pm.applyDisposalFilter) window.pm.applyDisposalFilter();
+    if (window.pm.applyCandidateFilter) window.pm.applyCandidateFilter();
+
     var alertBadge = document.getElementById('nav-alert-badge');
     if (alertBadge) {
       var visibleAlerts = document.querySelectorAll('#alerts tr[data-code]:not([style*="display: none"])').length;
       alertBadge.textContent = visibleAlerts;
     }
+  };
+
+  // Disposal Table Search & Market Filters
+  var disposalSearchTimer = null;
+  window.pm.disposalMarketFilter = 'all';
+  window.pm.disposalKeyword = '';
+
+  window.pm.setDisposalMarketFilter = function(val, btn) {
+    window.pm.disposalMarketFilter = val;
+    btn.parentElement.querySelectorAll('.filter-chip-sm').forEach(function(b) { b.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+    window.pm.applyDisposalFilter();
+  };
+
+  window.pm.filterDisposalTable = function(val) {
+    if (disposalSearchTimer) clearTimeout(disposalSearchTimer);
+    disposalSearchTimer = setTimeout(function() {
+      window.pm.disposalKeyword = (val || '').trim().toLowerCase();
+      window.pm.applyDisposalFilter();
+    }, 150);
+  };
+
+  window.pm.applyDisposalFilter = function() {
+    var kw = window.pm.disposalKeyword;
+    var mkt = window.pm.disposalMarketFilter;
+    var rawWatch = localStorage.getItem(window.WATCH_KEY) || '[]';
+    var watchCodes = [];
+    try { watchCodes = JSON.parse(rawWatch); } catch(e){}
+
+    document.querySelectorAll('.disposal-table tbody tr').forEach(function(r) {
+      var code = (r.getAttribute('data-code') || '').toLowerCase();
+      var label = (r.getAttribute('data-label') || '').toLowerCase();
+      var marketCell = r.querySelector('[data-label="市場"]');
+      var mktText = marketCell ? marketCell.textContent.trim() : '';
+      var edCell = r.querySelector('[data-label="最快處置"]');
+      var edText = edCell ? edCell.textContent.trim() : '';
+
+      var matchesKw = !kw || code.indexOf(kw) >= 0 || label.indexOf(kw) >= 0;
+      var matchesMkt = (mkt === 'all') ||
+                       (mkt === '上市' && mktText.indexOf('上市') >= 0) ||
+                       (mkt === '上櫃' && mktText.indexOf('上櫃') >= 0) ||
+                       (mkt === '5m' && (edText.indexOf('5分') >= 0 || edText.indexOf('2分') >= 0)) ||
+                       (mkt === '20m' && (edText.indexOf('20分') >= 0 || edText.indexOf('25分') >= 0 || edText.indexOf('全額') >= 0));
+      var matchesWatch = !window.pm.watchOnly || watchCodes.indexOf(code) >= 0;
+
+      r.style.display = (matchesKw && matchesMkt && matchesWatch) ? '' : 'none';
+    });
+  };
+
+  // Candidate Table Search Filter
+  var candidateSearchTimer = null;
+  window.pm.candidateKeyword = '';
+  window.pm.filterCandidateTable = function(val) {
+    if (candidateSearchTimer) clearTimeout(candidateSearchTimer);
+    candidateSearchTimer = setTimeout(function() {
+      window.pm.candidateKeyword = (val || '').trim().toLowerCase();
+      window.pm.applyCandidateFilter();
+    }, 150);
+  };
+
+  window.pm.applyCandidateFilter = function() {
+    var kw = window.pm.candidateKeyword;
+    var rawWatch = localStorage.getItem(window.WATCH_KEY) || '[]';
+    var watchCodes = [];
+    try { watchCodes = JSON.parse(rawWatch); } catch(e){}
+
+    document.querySelectorAll('#watchlist table tbody tr').forEach(function(r) {
+      var text = (r.textContent || '').toLowerCase();
+      var code = (r.getAttribute('data-code') || '').toLowerCase();
+      var matchesKw = !kw || text.indexOf(kw) >= 0;
+      var matchesWatch = !window.pm.watchOnly || watchCodes.indexOf(code) >= 0;
+      r.style.display = (matchesKw && matchesWatch) ? '' : 'none';
+    });
   };
 
   window.pm.toggleSnapshot = function() {
@@ -3662,7 +3772,7 @@
     var isCurrentlyDark = document.documentElement.getAttribute('data-theme') === 'dark';
     var nextTheme = isCurrentlyDark ? 'light' : 'dark';
     document.documentElement.setAttribute('data-theme', nextTheme);
-    localStorage.setItem('premarket.theme', nextTheme);
+    localStorage.setItem('pmit_theme', nextTheme);
     var metaTheme = document.querySelector('meta[name="theme-color"]');
     if (metaTheme) metaTheme.content = nextTheme === 'dark' ? '#0B1220' : '#F8FAFC';
     var b = document.getElementById('theme-toggle');
@@ -3672,7 +3782,7 @@
   };
 
   window.pm.syncIframeTheme = function(theme) {
-    var cur = theme || document.documentElement.getAttribute('data-theme') || localStorage.getItem('premarket.theme') || 'light';
+    var cur = theme || document.documentElement.getAttribute('data-theme') || localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme') || 'light';
     if (cur !== 'dark') cur = 'light';
     
     document.querySelectorAll('iframe.unref-frame, iframe.embed-frame, iframe').forEach(function(iframe) {
@@ -3782,24 +3892,39 @@
   }
 
   function updateSlowTimers() {
-    var el = document.querySelector('.last-build');
-    if (el) {
-      var m = (el.textContent || '').match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
-      if (m) {
-        var bt = new Date(m[1].replace(' ', 'T') + '+08:00').getTime();
-        var hrs = (Date.now() - bt) / 36e5;
-        var cls = hrs < 6 ? 'fresh' : (hrs < 12 ? 'aging' : 'stale');
-        el.classList.remove('fresh', 'aging', 'stale');
-        el.classList.add(cls);
-        var banner = document.querySelector('.stale-banner');
-        if (banner) {
-          banner.textContent = '資料時間 ' + m[1] + '，距今 ' + hrs.toFixed(1) + ' 小時';
-          banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
-          banner.classList.toggle('is-warning', hrs >= 6 && hrs < 12);
-          banner.classList.toggle('is-danger', hrs >= 12);
+    var genStr = '{{ generated_at }}';
+    if (!genStr) return;
+    var genTime = new Date(genStr.replace(/\//g, '-').replace(' ', 'T') + ':00+08:00').getTime();
+    if (isNaN(genTime)) genTime = new Date(genStr).getTime();
+    if (isNaN(genTime)) return;
+    
+    var hrs = Math.max(0, (Date.now() - genTime) / 36e5);
+    var banner = document.querySelector('.stale-banner');
+    if (banner) {
+      banner.textContent = '資料建置於 ' + genStr + '，距今 ' + hrs.toFixed(1) + ' 小時' + (hrs >= 12 ? ' (⚠️ 資料已逾 12 小時，建議於 Actions 手動觸發更新)' : '');
+      banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
+      banner.classList.toggle('is-warning', hrs >= 6 && hrs < 12);
+      banner.classList.toggle('is-danger', hrs >= 12);
+      banner.style.display = hrs >= 4 ? 'block' : 'none';
+    }
+
+    var todayStr = new Date().toLocaleDateString('zh-TW', { month: '2-digit', day: '2-digit' }).replace('/', '-');
+    document.querySelectorAll('tr[data-cat="amber"]').forEach(function(r) {
+      var exitDateCell = r.querySelector('[data-label="預計出關"]');
+      if (exitDateCell) {
+        var exitDate = exitDateCell.getAttribute('data-sort') || exitDateCell.textContent;
+        var tag = exitDateCell.querySelector('.badge');
+        if (tag) {
+          if (exitDate.indexOf(todayStr) >= 0 || exitDate.indexOf('今日') >= 0) {
+            tag.textContent = '🎉 今日出關';
+            tag.className = 'badge badge-green';
+          } else {
+            tag.textContent = '出關日 ' + exitDate;
+            tag.className = 'badge badge-amber';
+          }
         }
       }
-    }
+    });
   }
 
   function updateFastTimers() {
@@ -3936,7 +4061,7 @@
   });
 
   document.addEventListener('DOMContentLoaded', function() {
-    var savedTheme = localStorage.getItem('premarket.theme');
+    var savedTheme = localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme');
     var urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
     if (urlParams.get('theme')) savedTheme = urlParams.get('theme');
     var activeTheme = (savedTheme === 'dark') ? 'dark' : 'light';

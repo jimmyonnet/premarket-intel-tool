@@ -160,6 +160,9 @@ def prepare_calendar_timeline(events, today_str):
     WEEKDAY_NAMES = ["週一", "週二", "週三", "週四", "週五", "週六", "週日"]
     
     by_date = {}
+    seen_ids = set()
+    counter = 1
+
     for ev in events:
         ev_d_str = ev.get("date")
         if not ev_d_str:
@@ -170,6 +173,15 @@ def prepare_calendar_timeline(events, today_str):
             continue
             
         ev["weekday_label"] = WEEKDAY_NAMES[ev_d.weekday()]
+        
+        # Guarantee unique ID
+        eid = ev.get("id") or f"ev-{ev_d_str}-{counter}"
+        while eid in seen_ids:
+            counter += 1
+            eid = f"ev-{ev_d_str}-{counter}"
+        seen_ids.add(eid)
+        ev["id"] = eid
+        counter += 1
         
         if ev_d not in by_date:
             if ev_d == today_dt:
