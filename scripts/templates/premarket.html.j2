@@ -845,12 +845,15 @@
         <!-- 台指期夜盤 -->
         {% if night and night.latest %}
         <div class="summary-card">
-          <div class="card-label">台指期夜盤 (05:00)</div>
+          <div class="card-label">台指期夜盤 (05:00) · 來源：{{ night.latest.provider_name or night.provider_name or 'Yahoo' }}</div>
+          {% if night.latest.is_fallback %}
+          <div class="card-sub amber font-bold" style="font-size:10px; margin-bottom:2px;">⚠️ 抓取失敗，使用最近一次 fixtures/{{ night.date }}</div>
+          {% endif %}
           <div class="card-val font-mono {% if night.latest.change > 0 %}rise{% elif night.latest.change < 0 %}fall{% endif %}">
-            {{ "{:,.0f}".format(night.latest.price) }}
+            {{ "{:,.0f}".format(night.latest.price) if night.latest.price is not none else '—' }}
           </div>
           <div class="card-sub font-mono {% if night.latest.change > 0 %}rise{% elif night.latest.change < 0 %}fall{% endif %}">
-            {% if night.latest.change > 0 %}+{% endif %}{{ night.latest.change }} ({{ '%+.2f'|format(night.latest.change_pct) }}%)
+            {% if night.latest.change is not none %}{% if night.latest.change > 0 %}+{% endif %}{{ night.latest.change }} ({{ '%+.2f'|format(night.latest.change_pct) }}%){% endif %}
           </div>
         </div>
         {% endif %}
@@ -1268,9 +1271,12 @@
           <div class="tiles-grid" style="margin-top:10px;">
             {% if night and night.latest %}
             <div class="tile">
-              <div class="name"><span>台指期夜盤</span> <span class="sub-pill">05:00</span></div>
-              <div class="value font-mono">{{ "{:,.0f}".format(night.latest.price) }}</div>
-              <div class="delta font-mono {{ 'rise' if night.latest.change >= 0 else 'fall' }}">{{ '%+.0f'|format(night.latest.change) }} ({{ '%+.2f'|format(night.latest.change_pct) }}%)</div>
+              <div class="name"><span>台指期夜盤</span> <span class="sub-pill">05:00 · 來源：{{ night.latest.provider_name or night.provider_name or 'Yahoo' }}</span></div>
+              {% if night.latest.is_fallback %}
+              <div class="amber font-bold font-mono" style="font-size:9px; margin-bottom:2px;">⚠️ 抓取失敗，使用最近一次 fixtures/{{ night.date }}</div>
+              {% endif %}
+              <div class="value font-mono">{{ "{:,.0f}".format(night.latest.price) if night.latest.price is not none else '—' }}</div>
+              <div class="delta font-mono {{ 'rise' if night.latest.change >= 0 else 'fall' }}">{% if night.latest.change is not none %}{{ '%+.0f'|format(night.latest.change) }} ({{ '%+.2f'|format(night.latest.change_pct) }}%){% endif %}</div>
             </div>
             {% endif %}
             {% if indices and indices.adrs and indices.adrs.tsmc %}
