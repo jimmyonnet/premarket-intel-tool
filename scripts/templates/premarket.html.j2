@@ -1221,6 +1221,88 @@
   .health-dot.warn { background: var(--amber); }
   .health-dot.error { background: var(--rise); animation: pulse-warn 1.5s infinite; }
 
+
+  /* TABLE SCROLL CONTAINER */
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 8px;
+  }
+  .table-scroll table {
+    margin-bottom: 0;
+  }
+
+  /* COND COLLAPSIBLE */
+  .cond-collapsible {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cond-collapsible .cond-hidden {
+    display: none;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .cond-collapsible.is-expanded .cond-hidden {
+    display: flex;
+  }
+  .cond-toggle-btn {
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11px;
+    color: var(--blue);
+    cursor: pointer;
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+  .cond-collapsible.is-expanded .cond-toggle-btn {
+    color: var(--text-muted);
+  }
+
+  /* VAL MISSING BADGE */
+  .val-missing {
+    color: var(--amber);
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  /* HEALTH INDICATOR IN HEADER */
+  .health-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .health-btn {
+    background: none;
+    border: none;
+    color: var(--amber);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  /* MOBILE NAV & BADGE */
+  .short-build { display: none; }
+  .badge-nowrap { white-space: nowrap !important; }
+
+  @media (max-width: 768px) {
+    .last-build { display: none; }
+    .short-build { display: inline; }
+    .page-nav {
+      overflow-x: auto;
+      white-space: nowrap;
+      flex-wrap: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .page-nav::-webkit-scrollbar { display: none; }
+  }
+
 </style>
 </head>
 <body>
@@ -1243,8 +1325,12 @@
           <span class="status-badge is-ok">資料已就緒</span>
           {% endif %}
         </span>
-        <span class="meta-item" title="資料源健康度 (美股/夜盤/處置/日曆)">
+        <span class="meta-item health-item" id="source-health-indicator" title="資料源健康度">
+          {% if indices_missing and indices_missing|length > 0 %}
+          <span class="health-dot warn"></span><button type="button" class="health-btn" onclick="window.pm.showMissingModal()">⚠ 發現 {{ indices_missing|length }} 項缺漏</button>
+          {% else %}
           <span class="health-dot ok"></span><span style="font-size:11px; color:var(--text-muted);">源狀態正常</span>
+          {% endif %}
         </span>
       </div>
     </div>
@@ -1270,7 +1356,7 @@
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" aria-label="切換截圖模式">📸 截圖</button>
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" aria-label="切換深淺色主題">🌙 深色</button>
         <button class="nav-btn refresh-btn" onclick="location.reload(true)" type="button" title="重新載入最新版" aria-label="重新整理頁面">
-          🔄 <span class="last-build">建置 {{ (meta.build_time if meta is defined and meta and meta.build_time else (build_time or '08:00')) }}</span>
+          🔄 <span class="last-build">建置 {{ (meta.build_time if meta is defined and meta and meta.build_time else (build_time or '08:00')) }}</span><span class="short-build">重整</span>
         </button>
       </div>
     </div>
@@ -1393,16 +1479,16 @@
               <caption class="sr-only">差 1 次就處置股票清單</caption>
               <thead>
                 <tr>
-                  <th onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
-                  <th>處置標準條件</th>
-                  <th class="num" onclick="window.pm.sortTable(this, 5)">最快處置 <span class="sort-arrow">▲▼</span></th>
-                  <th class="badge-col" title="連續3日第1款">3①</th>
-                  <th class="badge-col" title="連續5日（第1~7款）">5</th>
-                  <th class="badge-col" title="10日內6次（第1~7款）">6</th>
-                  <th class="badge-col" title="30日內12次（第1~7款）">12</th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col">處置標準條件</th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">最快處置 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="badge-col" title="連續3日第1款">3①</th>
+                  <th scope="col" class="badge-col" title="連續5日（第1~7款）">5</th>
+                  <th scope="col" class="badge-col" title="10日內6次（第1~7款）">6</th>
+                  <th scope="col" class="badge-col" title="30日內12次（第1~7款）">12</th>
                 </tr>
               </thead>
               <tbody>
@@ -1419,11 +1505,27 @@
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
                       {% if row.condition_segments %}
-                      <div class="cond-row-2">
-                        {% for seg in row.condition_segments %}
-                        <span class="cond-pill font-mono"{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>
-                        {% endfor %}
-                      </div>
+                        {% if row.condition_segments|length > 2 %}
+                        <div class="cond-collapsible">
+                          <div class="cond-pills" style="display:flex; flex-wrap:wrap; gap:4px;">
+                            {% for seg in row.condition_segments[:2] %}
+                            <span class="cond-pill font-mono"{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>
+                            {% endfor %}
+                          </div>
+                          <div class="cond-hidden">
+                            {% for seg in row.condition_segments[2:] %}
+                            <span class="cond-pill font-mono"{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>
+                            {% endfor %}
+                          </div>
+                          <button type="button" class="cond-toggle-btn font-mono" onclick="this.closest('.cond-collapsible').classList.toggle('is-expanded')" aria-label="展開其他條件">符合（+{{ row.condition_segments|length - 2 }} 條件）▾</button>
+                        </div>
+                        {% else %}
+                        <div class="cond-row-2" style="display:flex; flex-wrap:wrap; gap:4px;">
+                          {% for seg in row.condition_segments %}
+                          <span class="cond-pill font-mono"{% if seg.color %} style="color:{{ seg.color }}{{ ';font-weight:700' if seg.bold else '' }}"{% endif %}>{{ seg.text }}</span>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
                       {% else %}
                       <span>{{ row.condition }}</span>
                       {% endif %}
@@ -1433,7 +1535,7 @@
                     {% set ed_parts = row.earliest_disposal.split(' ', 1) %}
                     {% if ed_parts|length == 2 %}
                       <span>{{ ed_parts[0] }}</span>
-                      <span class="badge badge-amber">{{ ed_parts[1] }}</span>
+                      <span class="badge badge-amber badge-nowrap font-mono">{{ ed_parts[1].replace('第1次10分', '第1次·10分').replace('第2次2分', '第2次·2分').replace('第1次5分', '第1次·5分') }}</span>
                     {% else %}
                       <span>{{ row.earliest_disposal }}</span>
                     {% endif %}
@@ -1442,7 +1544,7 @@
                   {% for bd in row.badges or [{}, {}, {}, {}] %}
                   <td data-label="{{ badge_labels[loop.index0] }}" class="badge-col"{% if bd.title %} title="{{ bd.title }}"{% endif %}>
                     {% if bd.threshold %}
-                    <div class="badge-dots" title="{{ bd.current }}/{{ bd.threshold }}">
+                    <div class="badge-dots" title="近 {{ bd.threshold }} 日累積觸發 {{ bd.current }} 次" aria-label="近 {{ bd.threshold }} 日累積觸發 {{ bd.current }} 次">
                       {% for i in range(bd.threshold) %}<span class="dot{{ ' filled' if i < bd.current else '' }}"></span>{% endfor %}
                       <span class="badge-frac font-mono">{{ bd.current }}/{{ bd.threshold }}</span>
                     </div>
@@ -1480,13 +1582,13 @@
               <caption class="sr-only">今日出關股票清單</caption>
               <thead>
                 <tr>
-                  <th onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 3)">原撮合 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 4)">處置起訖 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 5)">預計出關 <span class="sort-arrow">▲▼</span></th>
-                  <th>處置原因</th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 3)">原撮合 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 4)">處置起訖 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 5)">預計出關 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col">處置原因</th>
                 </tr>
               </thead>
               <tbody>
@@ -1591,14 +1693,14 @@
               <caption class="sr-only">族群聚焦標的清單</caption>
               <thead>
                 <tr>
-                  <th onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -1641,14 +1743,14 @@
               <caption class="sr-only">無明確族群標的清單</caption>
               <thead>
                 <tr>
-                  <th onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -1779,7 +1881,7 @@
         <div class="data-block">
           <div class="news-list" style="display:flex; flex-direction:column; gap:8px;">
             {% for a in news %}
-            <a href="{{ a.link }}" target="_blank" rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
+            <a href="{{ a.link }}" target="_blank" rel="noopener noreferrer"  rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
               <div class="news-title" style="font-weight:600; font-size:13px; margin-bottom:4px;">{{ a.title }}</div>
               <div class="news-meta font-mono" style="font-size:11px; color:var(--text-muted); display:flex; gap:12px;">
                 <span>{{ a.source }}</span>
@@ -1938,7 +2040,7 @@
                         {% if ev.note %}<div class="cal-note-text">{{ ev.note }}</div>{% endif %}
                         <div class="cal-action-links">
                           {% if ev.source_url %}
-                          <a href="{{ ev.source_url }}" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="{{ ev.source_url }}" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           {% endif %}
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('{{ ev.id }}')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('{{ ev.id }}')">📅 加到 Google 行事曆</button>
@@ -1984,6 +2086,29 @@
         <div class="shortcut-item"><span class="kbd">t</span> <span>回到頂部</span></div>
         <div class="shortcut-item"><span class="kbd">?</span> <span>開啟快捷鍵表</span></div>
         <div class="shortcut-item"><span class="kbd">Esc</span> <span>關閉彈窗</span></div>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- MISSING FIELDS MODAL -->
+  <div id="missing-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.toggleMissingModal()" role="dialog" aria-modal="true" aria-label="資料源狀態清單">
+    <div class="modal-card">
+      <h3 class="modal-title">ℹ️ 資料源狀態與缺漏檢查</h3>
+      <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">
+        {% if indices_missing and indices_missing|length > 0 %}
+        以下資料源在本次建置時未能成功取得即時報價，系統已自動啟用 Fallback 機制或標記缺漏：
+        <ul style="margin:8px 0 0 16px; color:var(--amber);">
+          {% for item in indices_missing %}
+          <li><strong>{{ item }}</strong>：即時報價缺漏</li>
+          {% endfor %}
+        </ul>
+        {% else %}
+        目前所有資料來源（美股四大指數、台指期夜盤、處置股、三大法人、財經行事曆）均正常抓取無缺漏。
+        {% endif %}
+      </div>
+      <div style="display:flex; justify-content:flex-end;">
+        <button type="button" class="btn" style="background:var(--blue); color:#fff; border:none; padding:6px 14px; border-radius:6px; font-weight:600; cursor:pointer;" onclick="window.pm.toggleMissingModal()">我知道了</button>
       </div>
     </div>
   </div>
@@ -2182,7 +2307,10 @@
   // Export Daily Premarket Summary Markdown
   window.pm.exportDailyMarkdown = function() {
     var lines = [];
+    var buildTime = document.querySelector('.meta-item:nth-child(1) .meta-val')?.textContent.trim() || '';
+    var dataDate = document.querySelector('.meta-item:nth-child(2) .meta-val')?.textContent.trim() || '';
     lines.push('# 📈 盤前情報決策總覽 · ' + new Date().toLocaleDateString('zh-TW'));
+    lines.push('> 產生時間：' + buildTime + ' ｜ 資料日期：' + dataDate + '（已對齊次日）\n');
     
     // Twii
     var twiiVal = document.querySelector('#summary .summary-card:nth-child(1) .card-val')?.textContent.trim() || '';
@@ -2450,6 +2578,16 @@
   };
 
   // Shortcuts Modal Toggle
+  
+  window.pm.toggleMissingModal = function() {
+    var m = document.getElementById('missing-modal');
+    if (m) m.classList.toggle('is-open');
+  };
+  window.pm.showMissingModal = function() {
+    var m = document.getElementById('missing-modal');
+    if (m) m.classList.add('is-open');
+  };
+
   window.pm.toggleShortcutsModal = function() {
     var m = document.getElementById('shortcuts-modal');
     if (m) m.classList.toggle('open');
@@ -2585,42 +2723,72 @@
       }
     }
 
-    var cel = document.getElementById('open-countdown');
-    if (cel) {
-      var now = new Date();
-      var open = new Date(now);
-      open.setHours(9, 0, 0, 0);
-      var dow = now.getDay();
-      var weekend = (dow === 0) || (dow === 6);
-      var close = new Date(now);
-      close.setHours(13, 30, 0, 0);
+  // 2026 Taiwan Stock Market Holidays
+  const TW_HOLIDAYS_2026 = [
+    "2026-01-01", "2026-02-13", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19",
+    "2026-02-20", "2026-02-27", "2026-04-03", "2026-04-06", "2026-05-01", "2026-06-19",
+    "2026-09-25", "2026-10-09", "2026-10-26"
+  ];
 
-      if (weekend || (now >= close && now.getHours() >= 13)) {
-        while (open <= now) open.setDate(open.getDate() + 1);
-        if (weekend) {
-          do { open.setDate(open.getDate() + 1); } while (open.getDay() === 0 || open.getDay() === 6);
-        }
-        cel.textContent = '今日已收盤｜下次 09:00 開盤倒數 ' + fmtCountdown(open);
-        cel.classList.add('closed');
-      } else {
-        var diff = open - now;
-        if (diff > 0) {
-          cel.textContent = '離 09:00 開盤還有 ' + fmtCountdown(open);
-          cel.classList.remove('closed');
-        } else {
-          cel.textContent = '盤中｜收盤倒數 ' + fmtCountdown(close);
-        }
-      }
+  function isTWHoliday(d) {
+    var dow = d.getDay();
+    if (dow === 0 || dow === 6) return true;
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return TW_HOLIDAYS_2026.indexOf(y + '-' + m + '-' + day) >= 0;
+  }
+
+  function getNextTradingDayOpen(now) {
+    var target = new Date(now.getTime());
+    target.setHours(9, 0, 0, 0);
+    if (!isTWHoliday(now) && now < target) {
+      return target;
+    }
+    do {
+      target.setDate(target.getDate() + 1);
+    } while (isTWHoliday(target));
+    return target;
+  }
+
+  function formatCountdownHuman(diffMs) {
+    if (diffMs <= 0) return '00:00';
+    var totalSec = Math.floor(diffMs / 1000);
+    var days = Math.floor(totalSec / 86400);
+    var hours = Math.floor((totalSec % 86400) / 3600);
+    var mins = Math.floor((totalSec % 3600) / 60);
+    var secs = totalSec % 60;
+
+    if (days > 0) {
+      return days + ' 天 ' + hours + ' 時 ' + mins + ' 分';
+    } else if (hours > 0) {
+      return hours + ' 時 ' + mins + ' 分';
+    } else {
+      return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
     }
   }
 
-  function fmtCountdown(d) {
-    var ms = d - new Date();
-    if (ms <= 0) return '00:00:00';
-    var h = String(Math.floor(ms / 36e5)).padStart(2, '0');
-    var m = String(Math.floor(ms / 6e4) % 60).padStart(2, '0');
-    var s = String(Math.floor(ms / 1e3) % 60).padStart(2, '0');
-    return h + ':' + m + ':' + s;
+    var cel = document.getElementById('open-countdown');
+    if (cel) {
+      var now = new Date();
+      var isHoliday = isTWHoliday(now);
+      var openToday = new Date(now);
+      openToday.setHours(9, 0, 0, 0);
+      var closeToday = new Date(now);
+      closeToday.setHours(13, 30, 0, 0);
+
+      if (!isHoliday && now >= openToday && now < closeToday) {
+        var diffClose = closeToday - now;
+        cel.textContent = '● 盤中撮合中｜收盤倒數 ' + formatCountdownHuman(diffClose);
+        cel.classList.remove('closed');
+      } else {
+        var nextOpen = getNextTradingDayOpen(now);
+        var diffOpen = nextOpen - now;
+        var prefix = isHoliday ? '休市中' : '今日已收盤';
+        cel.textContent = prefix + '｜下次 09:00 開盤倒數 ' + formatCountdownHuman(diffOpen);
+        cel.classList.add('closed');
+      }
+    }
   }
 
   function startTimers() {
@@ -2686,5 +2854,11 @@
   });
 </script>
 
+
+  <!-- ===== DATA SNAPSHOT START (auto-generated) ===== -->
+  <script id="premarket-data-snapshot" type="application/json">
+    {{ data_snapshot_json if data_snapshot_json is defined else '{}' }}
+  </script>
+  <!-- ===== DATA SNAPSHOT END ===== -->
 </body>
 </html>

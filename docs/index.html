@@ -1221,6 +1221,88 @@
   .health-dot.warn { background: var(--amber); }
   .health-dot.error { background: var(--rise); animation: pulse-warn 1.5s infinite; }
 
+
+  /* TABLE SCROLL CONTAINER */
+  .table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 8px;
+  }
+  .table-scroll table {
+    margin-bottom: 0;
+  }
+
+  /* COND COLLAPSIBLE */
+  .cond-collapsible {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cond-collapsible .cond-hidden {
+    display: none;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .cond-collapsible.is-expanded .cond-hidden {
+    display: flex;
+  }
+  .cond-toggle-btn {
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 11px;
+    color: var(--blue);
+    cursor: pointer;
+    align-self: flex-start;
+    margin-top: 2px;
+  }
+  .cond-collapsible.is-expanded .cond-toggle-btn {
+    color: var(--text-muted);
+  }
+
+  /* VAL MISSING BADGE */
+  .val-missing {
+    color: var(--amber);
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  /* HEALTH INDICATOR IN HEADER */
+  .health-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .health-btn {
+    background: none;
+    border: none;
+    color: var(--amber);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  /* MOBILE NAV & BADGE */
+  .short-build { display: none; }
+  .badge-nowrap { white-space: nowrap !important; }
+
+  @media (max-width: 768px) {
+    .last-build { display: none; }
+    .short-build { display: inline; }
+    .page-nav {
+      overflow-x: auto;
+      white-space: nowrap;
+      flex-wrap: nowrap;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .page-nav::-webkit-scrollbar { display: none; }
+  }
+
 </style>
 </head>
 <body>
@@ -1232,7 +1314,7 @@
         <h1 class="page-title">盤前情報準備台</h1>
       </div>
       <div class="meta-row">
-        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/22 23:15</span></span>
+        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/22 23:25</span></span>
         
         <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">08/24</span></span>
         
@@ -1241,8 +1323,10 @@
           <span class="status-badge is-ok" title="資料日期已對齊次一交易日（08/24）">已對齊次日</span>
           
         </span>
-        <span class="meta-item" title="資料源健康度 (美股/夜盤/處置/日曆)">
+        <span class="meta-item health-item" id="source-health-indicator" title="資料源健康度">
+          
           <span class="health-dot ok"></span><span style="font-size:11px; color:var(--text-muted);">源狀態正常</span>
+          
         </span>
       </div>
     </div>
@@ -1268,7 +1352,7 @@
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" aria-label="切換截圖模式">📸 截圖</button>
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" aria-label="切換深淺色主題">🌙 深色</button>
         <button class="nav-btn refresh-btn" onclick="location.reload(true)" type="button" title="重新載入最新版" aria-label="重新整理頁面">
-          🔄 <span class="last-build">建置 2026-08-22 23:15</span>
+          🔄 <span class="last-build">建置 2026-08-22 23:25</span><span class="short-build">重整</span>
         </button>
       </div>
     </div>
@@ -1387,16 +1471,16 @@
               <caption class="sr-only">差 1 次就處置股票清單</caption>
               <thead>
                 <tr>
-                  <th onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
-                  <th>處置標準條件</th>
-                  <th class="num" onclick="window.pm.sortTable(this, 5)">最快處置 <span class="sort-arrow">▲▼</span></th>
-                  <th class="badge-col" title="連續3日第1款">3①</th>
-                  <th class="badge-col" title="連續5日（第1~7款）">5</th>
-                  <th class="badge-col" title="10日內6次（第1~7款）">6</th>
-                  <th class="badge-col" title="30日內12次（第1~7款）">12</th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col">處置標準條件</th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">最快處置 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="badge-col" title="連續3日第1款">3①</th>
+                  <th scope="col" class="badge-col" title="連續5日（第1~7款）">5</th>
+                  <th scope="col" class="badge-col" title="10日內6次（第1~7款）">6</th>
+                  <th scope="col" class="badge-col" title="30日內12次（第1~7款）">12</th>
                 </tr>
               </thead>
               <tbody>
@@ -1413,13 +1497,15 @@
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
                       
-                      <div class="cond-row-2">
                         
-                        <span class="cond-pill font-mono" style="color:var(--muted)">①</span>
+                        <div class="cond-row-2" style="display:flex; flex-wrap:wrap; gap:4px;">
+                          
+                          <span class="cond-pill font-mono" style="color:var(--muted)">①</span>
+                          
+                          <span class="cond-pill font-mono" style="color:var(--fall)">53.0↑(-1.7%)</span>
+                          
+                        </div>
                         
-                        <span class="cond-pill font-mono" style="color:var(--fall)">53.0↑(-1.7%)</span>
-                        
-                      </div>
                       
                     </div>
                   </td>
@@ -1427,14 +1513,14 @@
                     
                     
                       <span>08-25</span>
-                      <span class="badge badge-amber">第2次2分</span>
+                      <span class="badge badge-amber badge-nowrap font-mono">第2次·2分</span>
                     
                   </td>
                   
                   
                   <td data-label="3① 連3第1款" class="badge-col" title="連續3日第1款 2/3">
                     
-                    <div class="badge-dots" title="2/3">
+                    <div class="badge-dots" title="近 3 日累積觸發 2 次" aria-label="近 3 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/3</span>
                     </div>
@@ -1444,7 +1530,7 @@
                   
                   <td data-label="5 連5第1~7款" class="badge-col" title="連續5日（第1~7款） 2/5">
                     
-                    <div class="badge-dots" title="2/5">
+                    <div class="badge-dots" title="近 5 日累積觸發 2 次" aria-label="近 5 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/5</span>
                     </div>
@@ -1454,7 +1540,7 @@
                   
                   <td data-label="6 10日內6次" class="badge-col" title="10日內6次（第1~7款） 2/6">
                     
-                    <div class="badge-dots" title="2/6">
+                    <div class="badge-dots" title="近 6 日累積觸發 2 次" aria-label="近 6 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/6</span>
                     </div>
@@ -1464,7 +1550,7 @@
                   
                   <td data-label="12 30日內12次" class="badge-col" title="30日內12次（第1~7款） 2/12">
                     
-                    <div class="badge-dots" title="2/12">
+                    <div class="badge-dots" title="近 12 日累積觸發 2 次" aria-label="近 12 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/12</span>
                     </div>
@@ -1486,13 +1572,15 @@
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
                       
-                      <div class="cond-row-2">
                         
-                        <span class="cond-pill font-mono" style="color:var(--muted)">①</span>
+                        <div class="cond-row-2" style="display:flex; flex-wrap:wrap; gap:4px;">
+                          
+                          <span class="cond-pill font-mono" style="color:var(--muted)">①</span>
+                          
+                          <span class="cond-pill font-mono" style="color:var(--rise)">11.55↓(+4.1%)</span>
+                          
+                        </div>
                         
-                        <span class="cond-pill font-mono" style="color:var(--rise)">11.55↓(+4.1%)</span>
-                        
-                      </div>
                       
                     </div>
                   </td>
@@ -1500,14 +1588,14 @@
                     
                     
                       <span>08-25</span>
-                      <span class="badge badge-amber">第1次10分</span>
+                      <span class="badge badge-amber badge-nowrap font-mono">第1次·10分</span>
                     
                   </td>
                   
                   
                   <td data-label="3① 連3第1款" class="badge-col" title="連續3日第1款 2/3">
                     
-                    <div class="badge-dots" title="2/3">
+                    <div class="badge-dots" title="近 3 日累積觸發 2 次" aria-label="近 3 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/3</span>
                     </div>
@@ -1517,7 +1605,7 @@
                   
                   <td data-label="5 連5第1~7款" class="badge-col" title="連續5日（第1~7款） 2/5">
                     
-                    <div class="badge-dots" title="2/5">
+                    <div class="badge-dots" title="近 5 日累積觸發 2 次" aria-label="近 5 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/5</span>
                     </div>
@@ -1527,7 +1615,7 @@
                   
                   <td data-label="6 10日內6次" class="badge-col" title="10日內6次（第1~7款） 2/6">
                     
-                    <div class="badge-dots" title="2/6">
+                    <div class="badge-dots" title="近 6 日累積觸發 2 次" aria-label="近 6 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/6</span>
                     </div>
@@ -1537,7 +1625,7 @@
                   
                   <td data-label="12 30日內12次" class="badge-col" title="30日內12次（第1~7款） 2/12">
                     
-                    <div class="badge-dots" title="2/12">
+                    <div class="badge-dots" title="近 12 日累積觸發 2 次" aria-label="近 12 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/12</span>
                     </div>
@@ -1559,13 +1647,15 @@
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
                       
-                      <div class="cond-row-2">
                         
-                        <span class="cond-pill font-mono" style="color:var(--muted)">①</span>
+                        <div class="cond-row-2" style="display:flex; flex-wrap:wrap; gap:4px;">
+                          
+                          <span class="cond-pill font-mono" style="color:var(--muted)">①</span>
+                          
+                          <span class="cond-pill font-mono" style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span>
+                          
+                        </div>
                         
-                        <span class="cond-pill font-mono" style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span>
-                        
-                      </div>
                       
                     </div>
                   </td>
@@ -1573,14 +1663,14 @@
                     
                     
                       <span>08-25</span>
-                      <span class="badge badge-amber">第1次2分</span>
+                      <span class="badge badge-amber badge-nowrap font-mono">第1次2分</span>
                     
                   </td>
                   
                   
                   <td data-label="3① 連3第1款" class="badge-col" title="連續3日第1款 2/3">
                     
-                    <div class="badge-dots" title="2/3">
+                    <div class="badge-dots" title="近 3 日累積觸發 2 次" aria-label="近 3 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/3</span>
                     </div>
@@ -1590,7 +1680,7 @@
                   
                   <td data-label="5 連5第1~7款" class="badge-col" title="連續5日（第1~7款） 2/5">
                     
-                    <div class="badge-dots" title="2/5">
+                    <div class="badge-dots" title="近 5 日累積觸發 2 次" aria-label="近 5 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/5</span>
                     </div>
@@ -1600,7 +1690,7 @@
                   
                   <td data-label="6 10日內6次" class="badge-col" title="10日內6次（第1~7款） 2/6">
                     
-                    <div class="badge-dots" title="2/6">
+                    <div class="badge-dots" title="近 6 日累積觸發 2 次" aria-label="近 6 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/6</span>
                     </div>
@@ -1610,7 +1700,7 @@
                   
                   <td data-label="12 30日內12次" class="badge-col" title="30日內12次（第1~7款） 2/12">
                     
-                    <div class="badge-dots" title="2/12">
+                    <div class="badge-dots" title="近 12 日累積觸發 2 次" aria-label="近 12 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/12</span>
                     </div>
@@ -1632,25 +1722,33 @@
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
                       
-                      <div class="cond-row-2">
                         
-                        <span class="cond-pill font-mono" style="color:var(--muted)">①</span>
+                        <div class="cond-collapsible">
+                          <div class="cond-pills" style="display:flex; flex-wrap:wrap; gap:4px;">
+                            
+                            <span class="cond-pill font-mono" style="color:var(--muted)">①</span>
+                            
+                            <span class="cond-pill font-mono" style="color:var(--rise)">597↑(+1.5%)</span>
+                            
+                          </div>
+                          <div class="cond-hidden">
+                            
+                            <span class="cond-pill font-mono" style="color:var(--muted)">②不符合</span>
+                            
+                            <span class="cond-pill font-mono" style="color:var(--muted)">③④⑤⑦</span>
+                            
+                            <span class="cond-pill font-mono" style="color:var(--rise)">621↑(+5.6%)</span>
+                            
+                            <span class="cond-pill font-mono" style="color:var(--amber)">需量≥2,360張</span>
+                            
+                            <span class="cond-pill font-mono" style="color:var(--amber)">+但書</span>
+                            
+                            <span class="cond-pill font-mono" style="color:var(--amber)">⑥ 量≥2,359張</span>
+                            
+                          </div>
+                          <button type="button" class="cond-toggle-btn font-mono" onclick="this.closest('.cond-collapsible').classList.toggle('is-expanded')" aria-label="展開其他條件">符合（+6 條件）▾</button>
+                        </div>
                         
-                        <span class="cond-pill font-mono" style="color:var(--rise)">597↑(+1.5%)</span>
-                        
-                        <span class="cond-pill font-mono" style="color:var(--muted)">②不符合</span>
-                        
-                        <span class="cond-pill font-mono" style="color:var(--muted)">③④⑤⑦</span>
-                        
-                        <span class="cond-pill font-mono" style="color:var(--rise)">621↑(+5.6%)</span>
-                        
-                        <span class="cond-pill font-mono" style="color:var(--amber)">需量≥2,360張</span>
-                        
-                        <span class="cond-pill font-mono" style="color:var(--amber)">+但書</span>
-                        
-                        <span class="cond-pill font-mono" style="color:var(--amber)">⑥ 量≥2,359張</span>
-                        
-                      </div>
                       
                     </div>
                   </td>
@@ -1658,14 +1756,14 @@
                     
                     
                       <span>08-25</span>
-                      <span class="badge badge-amber">第2次2分</span>
+                      <span class="badge badge-amber badge-nowrap font-mono">第2次·2分</span>
                     
                   </td>
                   
                   
                   <td data-label="3① 連3第1款" class="badge-col" title="連續3日第1款 0/3">
                     
-                    <div class="badge-dots" title="0/3">
+                    <div class="badge-dots" title="近 3 日累積觸發 0 次" aria-label="近 3 日累積觸發 0 次">
                       <span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">0/3</span>
                     </div>
@@ -1675,7 +1773,7 @@
                   
                   <td data-label="5 連5第1~7款" class="badge-col" title="連續5日（第1~7款） 4/5">
                     
-                    <div class="badge-dots" title="4/5">
+                    <div class="badge-dots" title="近 5 日累積觸發 4 次" aria-label="近 5 日累積觸發 4 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">4/5</span>
                     </div>
@@ -1685,7 +1783,7 @@
                   
                   <td data-label="6 10日內6次" class="badge-col" title="10日內6次（第1~7款） 4/6">
                     
-                    <div class="badge-dots" title="4/6">
+                    <div class="badge-dots" title="近 6 日累積觸發 4 次" aria-label="近 6 日累積觸發 4 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">4/6</span>
                     </div>
@@ -1695,7 +1793,7 @@
                   
                   <td data-label="12 30日內12次" class="badge-col" title="30日內12次（第1~7款） 4/12">
                     
-                    <div class="badge-dots" title="4/12">
+                    <div class="badge-dots" title="近 12 日累積觸發 4 次" aria-label="近 12 日累積觸發 4 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">4/12</span>
                     </div>
@@ -1717,13 +1815,15 @@
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
                       
-                      <div class="cond-row-2">
                         
-                        <span class="cond-pill font-mono" style="color:var(--muted)">①</span>
+                        <div class="cond-row-2" style="display:flex; flex-wrap:wrap; gap:4px;">
+                          
+                          <span class="cond-pill font-mono" style="color:var(--muted)">①</span>
+                          
+                          <span class="cond-pill font-mono" style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span>
+                          
+                        </div>
                         
-                        <span class="cond-pill font-mono" style="color:var(--text);font-weight:700">符合（即使跌停仍符合）</span>
-                        
-                      </div>
                       
                     </div>
                   </td>
@@ -1731,14 +1831,14 @@
                     
                     
                       <span>08-25</span>
-                      <span class="badge badge-amber">第2次25分</span>
+                      <span class="badge badge-amber badge-nowrap font-mono">第2次25分</span>
                     
                   </td>
                   
                   
                   <td data-label="3① 連3第1款" class="badge-col" title="連續3日第1款 2/3">
                     
-                    <div class="badge-dots" title="2/3">
+                    <div class="badge-dots" title="近 3 日累積觸發 2 次" aria-label="近 3 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/3</span>
                     </div>
@@ -1748,7 +1848,7 @@
                   
                   <td data-label="5 連5第1~7款" class="badge-col" title="連續5日（第1~7款） 2/5">
                     
-                    <div class="badge-dots" title="2/5">
+                    <div class="badge-dots" title="近 5 日累積觸發 2 次" aria-label="近 5 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/5</span>
                     </div>
@@ -1758,7 +1858,7 @@
                   
                   <td data-label="6 10日內6次" class="badge-col" title="10日內6次（第1~7款） 2/6">
                     
-                    <div class="badge-dots" title="2/6">
+                    <div class="badge-dots" title="近 6 日累積觸發 2 次" aria-label="近 6 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/6</span>
                     </div>
@@ -1768,7 +1868,7 @@
                   
                   <td data-label="12 30日內12次" class="badge-col" title="30日內12次（第1~7款） 2/12">
                     
-                    <div class="badge-dots" title="2/12">
+                    <div class="badge-dots" title="近 12 日累積觸發 2 次" aria-label="近 12 日累積觸發 2 次">
                       <span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
                       <span class="badge-frac font-mono">2/12</span>
                     </div>
@@ -1802,13 +1902,13 @@
               <caption class="sr-only">今日出關股票清單</caption>
               <thead>
                 <tr>
-                  <th onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 3)">原撮合 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 4)">處置起訖 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 5)">預計出關 <span class="sort-arrow">▲▼</span></th>
-                  <th>處置原因</th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 3)">原撮合 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 4)">處置起訖 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 5)">預計出關 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col">處置原因</th>
                 </tr>
               </thead>
               <tbody>
@@ -1941,14 +2041,14 @@
               <caption class="sr-only">無明確族群標的清單</caption>
               <thead>
                 <tr>
-                  <th onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
-                  <th class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -2023,7 +2123,7 @@
           <div class="card-title-group">
             <h3 class="card-title">美股四大指數與跨海連動標的</h3>
           </div>
-          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 19.3 小時</span>
+          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 19.4 小時</span>
         </div>
 
         <div class="data-block">
@@ -2034,7 +2134,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">標普 500</span>
-                <span class="tile-delay-pill pill-fresh">19.3h ago</span>
+                <span class="tile-delay-pill pill-fresh">19.4h ago</span>
               </div>
               
               <div class="tile-val font-mono rise">7,674.37</div>
@@ -2046,7 +2146,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">那斯達克</span>
-                <span class="tile-delay-pill pill-fresh">19.3h ago</span>
+                <span class="tile-delay-pill pill-fresh">19.4h ago</span>
               </div>
               
               <div class="tile-val font-mono rise">26,180.46</div>
@@ -2058,11 +2158,11 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">道瓊工業</span>
-                <span class="tile-delay-pill pill-fresh">19.3h ago</span>
+                <span class="tile-delay-pill pill-fresh">19.4h ago</span>
               </div>
               
-              <div class="tile-val font-mono rise">53,277.01</div>
-              <div class="tile-chg font-mono rise">+517.81 (+0.98%)</div>
+              <div class="tile-val font-mono rise">53,277.00</div>
+              <div class="tile-chg font-mono rise">+517.8 (+0.98%)</div>
               
             </div>
             
@@ -2070,7 +2170,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">費城半導體</span>
-                <span class="tile-delay-pill pill-fresh">19.3h ago</span>
+                <span class="tile-delay-pill pill-fresh">19.4h ago</span>
               </div>
               
               <div class="tile-val font-mono fall">11,740.37</div>
@@ -2100,7 +2200,8 @@
                 <span class="tile-name">輝達 (NVDA)</span>
               </div>
               
-              <div class="tile-val font-mono">—</div>
+              <div class="tile-val font-mono fall">214.72</div>
+              <div class="tile-chg font-mono fall">-2.13 (-0.98%)</div>
               
             </div>
             
@@ -2110,7 +2211,8 @@
                 <span class="tile-name">蘋果 (AAPL)</span>
               </div>
               
-              <div class="tile-val font-mono">—</div>
+              <div class="tile-val font-mono fall">309.35</div>
+              <div class="tile-chg font-mono fall">-1.95 (-0.63%)</div>
               
             </div>
             
@@ -2120,7 +2222,8 @@
                 <span class="tile-name">台積電 現貨</span>
               </div>
               
-              <div class="tile-val font-mono">—</div>
+              <div class="tile-val font-mono rise">2,410.00</div>
+              <div class="tile-chg font-mono rise">+35.0 (+1.47%)</div>
               
             </div>
             
@@ -2182,7 +2285,7 @@
         <div class="data-block">
           <div class="news-list" style="display:flex; flex-direction:column; gap:8px;">
             
-            <a href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE5nMFUzdDFHY0NQdlhycm5OSE5HZTROVmdXcWVmNU9BOEJ6V3AyRVRxMlo1N194T0ZKTW1aNHpQR1JLQUtlNnU3YUUxVHhNeTA?oc=5" target="_blank" rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
+            <a href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE5nMFUzdDFHY0NQdlhycm5OSE5HZTROVmdXcWVmNU9BOEJ6V3AyRVRxMlo1N194T0ZKTW1aNHpQR1JLQUtlNnU3YUUxVHhNeTA?oc=5" target="_blank" rel="noopener noreferrer"  rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
               <div class="news-title" style="font-weight:600; font-size:13px; margin-bottom:4px;">美股期指反彈、比特幣概念股狂飆市場緊盯聯準會降息訊號與輝達財報</div>
               <div class="news-meta font-mono" style="font-size:11px; color:var(--text-muted); display:flex; gap:12px;">
                 <span>news.cnyes.com</span>
@@ -2190,7 +2293,7 @@
               </div>
             </a>
             
-            <a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9PSGxpZ2VENzh4Y2ZWYXFFRmxZMFBxQlFBR2thdWlCNEpYY21Bcm10eGJBa21Nb0YwdlpOVjl1R0ZmQVktZk4zcXVYRXNuX1VJMzNDV01GRTQtYm5E?oc=5" target="_blank" rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
+            <a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9PSGxpZ2VENzh4Y2ZWYXFFRmxZMFBxQlFBR2thdWlCNEpYY21Bcm10eGJBa21Nb0YwdlpOVjl1R0ZmQVktZk4zcXVYRXNuX1VJMzNDV01GRTQtYm5E?oc=5" target="_blank" rel="noopener noreferrer"  rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
               <div class="news-title" style="font-weight:600; font-size:13px; margin-bottom:4px;">NVIDIA 財報能否帶動美股大漲？分析師：光演出「三殺」還不夠 | 外媒解析 | 國際</div>
               <div class="news-meta font-mono" style="font-size:11px; color:var(--text-muted); display:flex; gap:12px;">
                 <span>經濟日報</span>
@@ -2198,7 +2301,7 @@
               </div>
             </a>
             
-            <a href="https://news.google.com/rss/articles/CBMiS0FVX3lxTE5ELU1rVGVxS0poNHkxQVFTMEpfRHJPcUVoR20xWkJVTFRZSHBKOE5kNHotOXhSMkxETk5qbm83a3BrYVFpTWVvTnpMNA?oc=5" target="_blank" rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
+            <a href="https://news.google.com/rss/articles/CBMiS0FVX3lxTE5ELU1rVGVxS0poNHkxQVFTMEpfRHJPcUVoR20xWkJVTFRZSHBKOE5kNHotOXhSMkxETk5qbm83a3BrYVFpTWVvTnpMNA?oc=5" target="_blank" rel="noopener noreferrer"  rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
               <div class="news-title" style="font-weight:600; font-size:13px; margin-bottom:4px;">台股量縮外資防禦、本土調節？ 下週進入關鍵期，台積電撐盤後資金輪動看「三大族群」！</div>
               <div class="news-meta font-mono" style="font-size:11px; color:var(--text-muted); display:flex; gap:12px;">
                 <span>鉅亨網</span>
@@ -2206,7 +2309,7 @@
               </div>
             </a>
             
-            <a href="https://news.google.com/rss/articles/CBMi0wJBVV95cUxPaU54QkYwVTNib3lvNXZvN3ZWc2ptbjB1bEtFOG5VbExrYlNFSEp2Zjk5a3NubTlORzNMaGlVMm1kVnNJTkNLemd5enBFdzhmeDV6bFRPVUM5Yk90djlGN29JeHZEeGZpX213Y2QtcllLR0s1elp3ODNtSjlnU3ZlZ1dZS193Ny0td1VFVUlzamo1Q2ZfdE9aOVRtLWp2V3Y3RU5vVTVXd3lSbVdjb0NRR2Z6VjJpRzcta0xDTnZtbEJCQUJ3VDlhZ0wyMnZSWl9OYmRZN2FTaGFYeUppY1RXYlJEMzItSXFxcDVKOUtPZVNaZGhMLUlGSWZKUHVmTE5fcWpEUVlnb2gyMGpTZG5Bak1CNnNFbnRLLWs5UFREUC1zUG41MjNROWxjMXhEQXlIMG1OSk9sX3BiaWJfcTRfWkF5RVlOd0ZBVk5Zbi0wbHFZWFU?oc=5" target="_blank" rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
+            <a href="https://news.google.com/rss/articles/CBMi0wJBVV95cUxPaU54QkYwVTNib3lvNXZvN3ZWc2ptbjB1bEtFOG5VbExrYlNFSEp2Zjk5a3NubTlORzNMaGlVMm1kVnNJTkNLemd5enBFdzhmeDV6bFRPVUM5Yk90djlGN29JeHZEeGZpX213Y2QtcllLR0s1elp3ODNtSjlnU3ZlZ1dZS193Ny0td1VFVUlzamo1Q2ZfdE9aOVRtLWp2V3Y3RU5vVTVXd3lSbVdjb0NRR2Z6VjJpRzcta0xDTnZtbEJCQUJ3VDlhZ0wyMnZSWl9OYmRZN2FTaGFYeUppY1RXYlJEMzItSXFxcDVKOUtPZVNaZGhMLUlGSWZKUHVmTE5fcWpEUVlnb2gyMGpTZG5Bak1CNnNFbnRLLWs5UFREUC1zUG41MjNROWxjMXhEQXlIMG1OSk9sX3BiaWJfcTRfWkF5RVlOd0ZBVk5Zbi0wbHFZWFU?oc=5" target="_blank" rel="noopener noreferrer"  rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
               <div class="news-title" style="font-weight:600; font-size:13px; margin-bottom:4px;">台積漲35元台股漲290點 台股區間震盪靜待NVIDIA財報揭曉</div>
               <div class="news-meta font-mono" style="font-size:11px; color:var(--text-muted); display:flex; gap:12px;">
                 <span>Yahoo新聞</span>
@@ -2214,7 +2317,7 @@
               </div>
             </a>
             
-            <a href="https://news.google.com/rss/articles/CBMi-wJBVV95cUxOWmpQUkdrelpOTTJxcmpMbmFQckpvcE4wM19fQzU1RW5HMGpzVE1fWko2emJfbXRScTBlUC1LN0E4alhhY1ZDcWUwUmQ4X25aQVh1ZzdCRE9FWm0wX1VwR0RMSzhEaUtkYkZSQXFZZFlsNXVTR0V0ZmtVRG9Telp1ZU9hT2Jfd3JUdUlsWW1XTzA1SmdxZ0t4SGl6Yk9SSnctak5SSTAxeDdmVURoVXdZNmNKdjFlUUhEbGM3dHhpWjN2d0xMUE1Td2JlSTNobnVsRmNwcVJqa29zR0RwcTdKSjV1eHJMQkJEMEw2VVNwVlpZYl82enVqdkQyaTdkbDdzZk1EYTZocWNtdlpWMUQtc0ZxWTc4SW1qdmtxUjJSLTBHaklXVzEyYzZ3Yno1U2V4R3JYMDZuclpDNXFPdDdIYnNKTzVJdW9tTlM1ak9fSDItelowQlc2bGUxWXBuSFN0VU9kMjVJWDlJRzYtZkh1LWh2b1JfSTVZbVpN?oc=5" target="_blank" rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
+            <a href="https://news.google.com/rss/articles/CBMi-wJBVV95cUxOWmpQUkdrelpOTTJxcmpMbmFQckpvcE4wM19fQzU1RW5HMGpzVE1fWko2emJfbXRScTBlUC1LN0E4alhhY1ZDcWUwUmQ4X25aQVh1ZzdCRE9FWm0wX1VwR0RMSzhEaUtkYkZSQXFZZFlsNXVTR0V0ZmtVRG9Telp1ZU9hT2Jfd3JUdUlsWW1XTzA1SmdxZ0t4SGl6Yk9SSnctak5SSTAxeDdmVURoVXdZNmNKdjFlUUhEbGM3dHhpWjN2d0xMUE1Td2JlSTNobnVsRmNwcVJqa29zR0RwcTdKSjV1eHJMQkJEMEw2VVNwVlpZYl82enVqdkQyaTdkbDdzZk1EYTZocWNtdlpWMUQtc0ZxWTc4SW1qdmtxUjJSLTBHaklXVzEyYzZ3Yno1U2V4R3JYMDZuclpDNXFPdDdIYnNKTzVJdW9tTlM1ak9fSDItelowQlc2bGUxWXBuSFN0VU9kMjVJWDlJRzYtZkh1LWh2b1JfSTVZbVpN?oc=5" target="_blank" rel="noopener noreferrer"  rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
               <div class="news-title" style="font-weight:600; font-size:13px; margin-bottom:4px;">台股中秋前「衝上5萬點」反而不妙？杜金龍揭2大隱憂：最怕大盤一路狂飆</div>
               <div class="news-meta font-mono" style="font-size:11px; color:var(--text-muted); display:flex; gap:12px;">
                 <span>Yahoo新聞</span>
@@ -2362,7 +2465,7 @@
 前值:  1.50%</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-08-26-9')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-08-26-9')">📅 加到 Google 行事曆</button>
@@ -2435,7 +2538,7 @@
                         <div class="cal-note-text">前值:  3.67%</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-08-26-17')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-08-26-17')">📅 加到 Google 行事曆</button>
@@ -2508,7 +2611,7 @@
                         <div class="cal-note-text">前值:  4405.0k</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-inventory?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-inventory?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-08-26-4')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-08-26-4')">📅 加到 Google 行事曆</button>
@@ -2595,7 +2698,7 @@
                         <div class="cal-note-text">前值:  18.70%</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/25/cn-industry-relative/259/cn-industrial-enterprises-total-profits?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/25/cn-industry-relative/259/cn-industrial-enterprises-total-profits?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-08-27-3')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-08-27-3')">📅 加到 Google 行事曆</button>
@@ -2668,7 +2771,7 @@
                         <div class="cal-note-text">前值:  41.0</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/10/tw-monitoring-indicators-relative/79/tw-monitoring-indicators?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/10/tw-monitoring-indicators-relative/79/tw-monitoring-indicators?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-08-27-6')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-08-27-6')">📅 加到 Google 行事曆</button>
@@ -2741,7 +2844,7 @@
                         <div class="cal-note-text">前值:  206000.0</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/4/us-employ-relative/19/initial-jobless-claims?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/4/us-employ-relative/19/initial-jobless-claims?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-08-27-12')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-08-27-12')">📅 加到 Google 行事曆</button>
@@ -2828,7 +2931,7 @@
                         <div class="cal-note-text">前值:  96.9</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/36/eu-economic-sentiment-relative/420/eu-ea19-euro-area-economic-sentiment?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/36/eu-economic-sentiment-relative/420/eu-ea19-euro-area-economic-sentiment?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-08-28-15')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-08-28-15')">📅 加到 Google 行事曆</button>
@@ -2915,7 +3018,7 @@
                         <div class="cal-note-text">前值:  49.2</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/25/cn-industry-relative/232/cn-pmi-caixin?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/25/cn-industry-relative/232/cn-pmi-caixin?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-08-31-14')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-08-31-14')">📅 加到 Google 行事曆</button>
@@ -2988,7 +3091,7 @@
                         <div class="cal-note-text">前值:  49.0</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-08-31-16')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-08-31-16')">📅 加到 Google 行事曆</button>
@@ -3075,7 +3178,7 @@
                         <div class="cal-note-text">前值:  61.5</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/16/tw-industry-relative/126/tw-pmi?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/16/tw-industry-relative/126/tw-pmi?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-09-01-10')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-09-01-10')">📅 加到 Google 行事曆</button>
@@ -3148,7 +3251,7 @@
                         <div class="cal-note-text">前值:  55.6</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/8/us-industry-relative/54/ism?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/8/us-industry-relative/54/ism?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-09-01-11')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-09-01-11')">📅 加到 Google 行事曆</button>
@@ -3235,7 +3338,7 @@
                         <div class="cal-note-text">前值:  44000.0</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/4/us-employ-relative/36/adp?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/4/us-employ-relative/36/adp?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-09-02-13')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-09-02-13')">📅 加到 Google 行事曆</button>
@@ -3308,7 +3411,7 @@
                         <div class="cal-note-text">前值:  2.25%</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/400/mm-cad/4331/ca-overnight-interest-rate?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/400/mm-cad/4331/ca-overnight-interest-rate?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-09-02-8')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-09-02-8')">📅 加到 Google 行事曆</button>
@@ -3381,7 +3484,7 @@
                         <div class="cal-note-text">前值:  4405.0k</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-inventory?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/19/mm-oil-price/178/us-oil-inventory?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-09-02-7')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-09-02-7')">📅 加到 Google 行事曆</button>
@@ -3468,7 +3571,7 @@
                         
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/2/us-gdp-relative?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/2/us-gdp-relative?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-09-03-2')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-09-03-2')">📅 加到 Google 行事曆</button>
@@ -3541,7 +3644,7 @@
                         
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/4/us-employ-relative/19/initial-jobless-claims?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/4/us-employ-relative/19/initial-jobless-claims?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-09-03-1')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-09-03-1')">📅 加到 Google 行事曆</button>
@@ -3614,7 +3717,7 @@
                         <div class="cal-note-text">前值:  54.1</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/8/us-industry-relative/55/ism-nonmanu?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/8/us-industry-relative/55/ism-nonmanu?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-09-03-5')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-09-03-5')">📅 加到 Google 行事曆</button>
@@ -3701,7 +3804,7 @@
                         <div class="cal-note-text">前值: 4.10%</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-09-04-18')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-09-04-18')">📅 加到 Google 行事曆</button>
@@ -3774,7 +3877,7 @@
                         <div class="cal-note-text">前值: -23.0k</div>
                         <div class="cal-action-links">
                           
-                          <a href="https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar" target="_blank" rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('ev-2026-09-04-19')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('ev-2026-09-04-19')">📅 加到 Google 行事曆</button>
@@ -3822,6 +3925,22 @@
     </div>
   </div>
 
+  
+  <!-- MISSING FIELDS MODAL -->
+  <div id="missing-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.toggleMissingModal()" role="dialog" aria-modal="true" aria-label="資料源狀態清單">
+    <div class="modal-card">
+      <h3 class="modal-title">ℹ️ 資料源狀態與缺漏檢查</h3>
+      <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">
+        
+        目前所有資料來源（美股四大指數、台指期夜盤、處置股、三大法人、財經行事曆）均正常抓取無缺漏。
+        
+      </div>
+      <div style="display:flex; justify-content:flex-end;">
+        <button type="button" class="btn" style="background:var(--blue); color:#fff; border:none; padding:6px 14px; border-radius:6px; font-weight:600; cursor:pointer;" onclick="window.pm.toggleMissingModal()">我知道了</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 6. 系統資訊 (System Info Footer) -->
   <footer id="system-info" class="page-footer">
     <div class="footer-inner">
@@ -3832,7 +3951,7 @@
         <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
         <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日重點清單；未在清單內之標的自動略過。</li>
       </ul>
-      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-22 23:05</span></div>
+      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-22 23:24</span></div>
       <div class="footer-copy" style="margin-top:4px; text-align:center;">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
   </footer>
@@ -4016,7 +4135,10 @@
   // Export Daily Premarket Summary Markdown
   window.pm.exportDailyMarkdown = function() {
     var lines = [];
+    var buildTime = document.querySelector('.meta-item:nth-child(1) .meta-val')?.textContent.trim() || '';
+    var dataDate = document.querySelector('.meta-item:nth-child(2) .meta-val')?.textContent.trim() || '';
     lines.push('# 📈 盤前情報決策總覽 · ' + new Date().toLocaleDateString('zh-TW'));
+    lines.push('> 產生時間：' + buildTime + ' ｜ 資料日期：' + dataDate + '（已對齊次日）\n');
     
     // Twii
     var twiiVal = document.querySelector('#summary .summary-card:nth-child(1) .card-val')?.textContent.trim() || '';
@@ -4284,6 +4406,16 @@
   };
 
   // Shortcuts Modal Toggle
+  
+  window.pm.toggleMissingModal = function() {
+    var m = document.getElementById('missing-modal');
+    if (m) m.classList.toggle('is-open');
+  };
+  window.pm.showMissingModal = function() {
+    var m = document.getElementById('missing-modal');
+    if (m) m.classList.add('is-open');
+  };
+
   window.pm.toggleShortcutsModal = function() {
     var m = document.getElementById('shortcuts-modal');
     if (m) m.classList.toggle('open');
@@ -4419,42 +4551,72 @@
       }
     }
 
-    var cel = document.getElementById('open-countdown');
-    if (cel) {
-      var now = new Date();
-      var open = new Date(now);
-      open.setHours(9, 0, 0, 0);
-      var dow = now.getDay();
-      var weekend = (dow === 0) || (dow === 6);
-      var close = new Date(now);
-      close.setHours(13, 30, 0, 0);
+  // 2026 Taiwan Stock Market Holidays
+  const TW_HOLIDAYS_2026 = [
+    "2026-01-01", "2026-02-13", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19",
+    "2026-02-20", "2026-02-27", "2026-04-03", "2026-04-06", "2026-05-01", "2026-06-19",
+    "2026-09-25", "2026-10-09", "2026-10-26"
+  ];
 
-      if (weekend || (now >= close && now.getHours() >= 13)) {
-        while (open <= now) open.setDate(open.getDate() + 1);
-        if (weekend) {
-          do { open.setDate(open.getDate() + 1); } while (open.getDay() === 0 || open.getDay() === 6);
-        }
-        cel.textContent = '今日已收盤｜下次 09:00 開盤倒數 ' + fmtCountdown(open);
-        cel.classList.add('closed');
-      } else {
-        var diff = open - now;
-        if (diff > 0) {
-          cel.textContent = '離 09:00 開盤還有 ' + fmtCountdown(open);
-          cel.classList.remove('closed');
-        } else {
-          cel.textContent = '盤中｜收盤倒數 ' + fmtCountdown(close);
-        }
-      }
+  function isTWHoliday(d) {
+    var dow = d.getDay();
+    if (dow === 0 || dow === 6) return true;
+    var y = d.getFullYear();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return TW_HOLIDAYS_2026.indexOf(y + '-' + m + '-' + day) >= 0;
+  }
+
+  function getNextTradingDayOpen(now) {
+    var target = new Date(now.getTime());
+    target.setHours(9, 0, 0, 0);
+    if (!isTWHoliday(now) && now < target) {
+      return target;
+    }
+    do {
+      target.setDate(target.getDate() + 1);
+    } while (isTWHoliday(target));
+    return target;
+  }
+
+  function formatCountdownHuman(diffMs) {
+    if (diffMs <= 0) return '00:00';
+    var totalSec = Math.floor(diffMs / 1000);
+    var days = Math.floor(totalSec / 86400);
+    var hours = Math.floor((totalSec % 86400) / 3600);
+    var mins = Math.floor((totalSec % 3600) / 60);
+    var secs = totalSec % 60;
+
+    if (days > 0) {
+      return days + ' 天 ' + hours + ' 時 ' + mins + ' 分';
+    } else if (hours > 0) {
+      return hours + ' 時 ' + mins + ' 分';
+    } else {
+      return String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
     }
   }
 
-  function fmtCountdown(d) {
-    var ms = d - new Date();
-    if (ms <= 0) return '00:00:00';
-    var h = String(Math.floor(ms / 36e5)).padStart(2, '0');
-    var m = String(Math.floor(ms / 6e4) % 60).padStart(2, '0');
-    var s = String(Math.floor(ms / 1e3) % 60).padStart(2, '0');
-    return h + ':' + m + ':' + s;
+    var cel = document.getElementById('open-countdown');
+    if (cel) {
+      var now = new Date();
+      var isHoliday = isTWHoliday(now);
+      var openToday = new Date(now);
+      openToday.setHours(9, 0, 0, 0);
+      var closeToday = new Date(now);
+      closeToday.setHours(13, 30, 0, 0);
+
+      if (!isHoliday && now >= openToday && now < closeToday) {
+        var diffClose = closeToday - now;
+        cel.textContent = '● 盤中撮合中｜收盤倒數 ' + formatCountdownHuman(diffClose);
+        cel.classList.remove('closed');
+      } else {
+        var nextOpen = getNextTradingDayOpen(now);
+        var diffOpen = nextOpen - now;
+        var prefix = isHoliday ? '休市中' : '今日已收盤';
+        cel.textContent = prefix + '｜下次 09:00 開盤倒數 ' + formatCountdownHuman(diffOpen);
+        cel.classList.add('closed');
+      }
+    }
   }
 
   function startTimers() {
@@ -4520,5 +4682,11 @@
   });
 </script>
 
+
+  <!-- ===== DATA SNAPSHOT START (auto-generated) ===== -->
+  <script id="premarket-data-snapshot" type="application/json">
+    {}
+  </script>
+  <!-- ===== DATA SNAPSHOT END ===== -->
 </body>
 </html>
