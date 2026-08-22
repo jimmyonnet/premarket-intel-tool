@@ -1,16 +1,16 @@
 <!doctype html>
-<html lang="zh-Hant" data-theme="dark">
+<html lang="zh-Hant" data-theme="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="個人自用，勿分享">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0B1220">
+<meta name="theme-color" content="#F8FAFC">
 <script>
   (function() {
     var savedTheme = localStorage.getItem('premarket.theme');
-    var isDark = (savedTheme === 'dark' || (!savedTheme && window.matchMedia && !window.matchMedia('(prefers-color-scheme: light)').matches) || !savedTheme);
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    var theme = (savedTheme === 'dark') ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
   })();
 </script>
 <title>盤前 · {{ date_check.page_says_applies_to if date_check and date_check.page_says_applies_to else ((meta.data_date if meta is defined and meta and meta.data_date else '08/24')) }} · 近處置 {{ (disposal.one_flag_from_disposal|length if disposal and disposal.one_flag_from_disposal else 5) }} · 出關 {{ (exiting_today|length if exiting_today is defined and exiting_today else 3) }}</title>
@@ -3659,20 +3659,21 @@
   };
 
   window.toggleTheme = function() {
-    var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark';
-    document.documentElement.setAttribute('data-theme', cur);
-    localStorage.setItem('premarket.theme', cur);
+    var isCurrentlyDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    var nextTheme = isCurrentlyDark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    localStorage.setItem('premarket.theme', nextTheme);
     var metaTheme = document.querySelector('meta[name="theme-color"]');
-    if (metaTheme) metaTheme.content = cur === 'dark' ? '#0B1220' : '#F8FAFC';
+    if (metaTheme) metaTheme.content = nextTheme === 'dark' ? '#0B1220' : '#F8FAFC';
     var b = document.getElementById('theme-toggle');
-    if (b) b.textContent = cur === 'dark' ? '☀️ 淺色' : '🌙 深色';
-    window.pm.syncIframeTheme(cur);
+    if (b) b.textContent = nextTheme === 'dark' ? '☀️ 淺色' : '🌙 深色';
+    window.pm.syncIframeTheme(nextTheme);
     if (window.pm.syncHash) window.pm.syncHash();
   };
 
   window.pm.syncIframeTheme = function(theme) {
-    var cur = theme || document.documentElement.getAttribute('data-theme') || (localStorage.getItem('premarket.theme') === 'dark' ? 'dark' : 'light');
-    if (!cur) cur = 'dark';
+    var cur = theme || document.documentElement.getAttribute('data-theme') || localStorage.getItem('premarket.theme') || 'light';
+    if (cur !== 'dark') cur = 'light';
     
     document.querySelectorAll('iframe.unref-frame, iframe.embed-frame, iframe').forEach(function(iframe) {
       try {
@@ -3938,13 +3939,12 @@
     var savedTheme = localStorage.getItem('premarket.theme');
     var urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
     if (urlParams.get('theme')) savedTheme = urlParams.get('theme');
-    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia && !window.matchMedia('(prefers-color-scheme: light)').matches)) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      var b = document.getElementById('theme-toggle');
-      if (b) b.textContent = '☀️ 淺色';
-      var metaTheme = document.querySelector('meta[name="theme-color"]');
-      if (metaTheme) metaTheme.content = '#0B1220';
-    }
+    var activeTheme = (savedTheme === 'dark') ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', activeTheme);
+    var b = document.getElementById('theme-toggle');
+    if (b) b.textContent = activeTheme === 'dark' ? '☀️ 淺色' : '🌙 深色';
+    var metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) metaTheme.content = activeTheme === 'dark' ? '#0B1220' : '#F8FAFC';
 
     var rawWatch = localStorage.getItem(window.WATCH_KEY);
     var codes = rawWatch ? JSON.parse(rawWatch) : [];
