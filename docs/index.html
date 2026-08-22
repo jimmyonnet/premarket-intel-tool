@@ -20,21 +20,21 @@
 
 <style>
   :root{
-    --ink: #F8FAFC; 
-    --panel: #FFFFFF; 
-    --panel-2: #F1F5F9; 
+    --ink: #F8FAFC;
+    --panel: #FFFFFF;
+    --panel-2: #F1F5F9;
     --panel-3: #E2E8F0;
     --line: #E2E8F0;
-    --text: #0F172A; 
-    --muted: #64748B; 
-    --rise: #E11D48; 
-    --fall: #16A34A; 
+    --text: #0F172A;
+    --muted: #64748B;
+    --rise: #E11D48;
+    --fall: #16A34A;
     --amber: #D97706;
     --blue: #2563EB;
-    --cat-fed: #E11D48; 
-    --cat-econ: #D97706; 
-    --cat-stock: #0284C7; 
-    --cat-futures: #D97706; 
+    --cat-fed: #E11D48;
+    --cat-econ: #D97706;
+    --cat-stock: #0284C7;
+    --cat-futures: #D97706;
     --cat-gen: #64748B;
     --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, "PingFang TC", "Microsoft JhengHei", sans-serif;
     --font-mono: "SF Mono", "Consolas", Menlo, monospace;
@@ -53,9 +53,13 @@
   header{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:8px; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--line);}
   h1{font-size:24px; font-weight:800; margin:0; letter-spacing:-0.02em; color:var(--text);}
   .generated{color:var(--muted); font-size:12px; font-family:var(--font-mono); font-weight:500;}
-  .part-title{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; font-weight:700; margin:36px 0 14px;}
+  .part-title{font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em; font-weight:700; margin:36px 0 14px; scroll-margin-top:16px;}
   .part-title:first-of-type{margin-top:0;}
   section.part{margin-bottom:12px;}
+
+  .page-nav{display:flex; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch; margin-bottom:20px; padding-bottom:2px;}
+  .page-nav a{flex:0 0 auto; font-size:12px; font-weight:600; color:var(--muted); text-decoration:none; background:var(--panel-2); border:1px solid var(--line); padding:6px 14px; border-radius:20px; white-space:nowrap; transition:all 0.15s ease;}
+  .page-nav a:hover{background:var(--panel-3); color:var(--text); border-color:#CBD5E1; text-decoration:none;}
 
   .warning-banner{background:#FFF1F2; border:1px solid #FECDD3; color:#BE123C; padding:12px 16px; border-radius:10px; font-size:13px; margin-bottom:16px; font-weight:500;}
   .ok-banner{background:#F0FDF4; border:1px solid #BBF7D0; color:#15803D; padding:10px 16px; border-radius:10px; font-size:12px; margin-bottom:16px; font-family:var(--font-mono); font-weight:500;}
@@ -103,6 +107,9 @@
   .table-scroll table{min-width:600px;}
   .table-scroll.compact table{min-width:380px;}
 
+  .embed-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch;}
+  .embed-scroll iframe{min-width:860px;}
+
   .inst-detail{border-top:1px solid var(--line); padding:12px 0 4px;}
   .inst-detail:first-of-type{border-top:none; padding-top:0;}
   .inst-detail summary{cursor:pointer; font-size:13px; font-weight:600; padding:6px 0; color:var(--text); transition:color 0.15s;}
@@ -137,13 +144,13 @@
   .cal-date{flex:0 0 80px; font-family:var(--font-mono); font-size:13px; color:var(--muted); padding-top:4px;}
   .cal-date.today{color:var(--amber); font-weight:700;}
   .cal-day-events{flex:1; min-width:0; display:flex; flex-direction:column; gap:10px;}
-  
+
   .cal-event-card{background:var(--panel-2); border:1px solid var(--line); border-left:4px solid var(--cat-gen); border-radius:8px; padding:10px 14px; transition:border-color 0.2s;}
   .cal-event-card.cat-fed{border-left-color:var(--cat-fed); background:#FFF1F2;}
   .cal-event-card.cat-econ{border-left-color:var(--cat-econ); background:#FFFBEB;}
   .cal-event-card.cat-stock{border-left-color:var(--cat-stock); background:#F0F9FF;}
   .cal-event-card.cat-futures{border-left-color:var(--cat-futures); background:#FFFBEB;}
-  
+
   .cal-header-row{display:flex; align-items:center; gap:8px; margin-bottom:4px; flex-wrap:wrap;}
   .cal-time-pill{display:inline-block; font-family:var(--font-mono); font-size:11px; padding:2px 8px; border-radius:12px; background:#E2E8F0; color:#334155; font-weight:600;}
   .cal-time-pill.all-day{background:#E2E8F0; color:#64748B;}
@@ -186,22 +193,30 @@
 
   <header>
     <h1>盤前情報準備台</h1>
-    <div class="generated">產生時間 2026/08/22 11:52</div>
+    <div class="generated">產生時間 2026/08/22 13:33</div>
   </header>
+
+  <nav class="page-nav">
+    <a href="#sec-indices">美股四大指數</a>
+    <a href="#sec-disposal">處置股</a>
+    <a href="#sec-pressplay">籌碼股</a>
+    <a href="#sec-financials">自結、季報、營收</a>
+    <a href="#sec-calendar">財經行事曆</a>
+  </nav>
 
   
   <div class="warning-banner">
-    ⚠ 處置股資料日期核對失敗 — 頁面顯示適用 08/24，但今天是 2026-08-21。第二部分資料可能不是最新的，請自行到 chengwaye.com 確認。
+    ⚠ 處置股資料日期核對失敗 — 頁面顯示適用 08/24，但今天是 2026-08-22。第二部分資料可能不是最新的，請自行到 chengwaye.com 確認。
   </div>
   
 
-  
+
   
   <div style="background:var(--panel); padding:14px 18px; border-radius:12px; border:1px solid var(--line); margin-bottom:20px; display:flex; flex-wrap:wrap; gap:16px; align-items:center; justify-content:space-between; box-shadow:var(--shadow);">
     <div style="display:flex; align-items:center; gap:12px;">
       <span style="font-size:14px; color:var(--muted); font-weight:600;">昨收大盤</span>
       <span style="font-size:16px; font-weight:700; color:var(--red);">
-        45224.29 (+504.89)
+        45224.29 (+290.59)
       </span>
     </div>
     <div style="display:flex; gap:16px; font-size:13px; font-weight:600;">
@@ -218,7 +233,7 @@
     </div>
   </div>
   
-  <div class="part-title">美股四大指數</div>
+  <div class="part-title" id="sec-indices">美股四大指數</div>
   <section class="part">
 
     <!-- Removed Broken TradingView Widget -->
@@ -234,7 +249,7 @@
         <div class="tile">
           <div class="name">道瓊工業指數</div>
           <div class="value">53,277.01</div>
-          <div class="delta rise">+517.80 (+0.98%)</div>
+          <div class="delta rise">+517.81 (+0.98%)</div>
         </div>
         
         
@@ -267,8 +282,8 @@
         
         <div class="tile">
           <div class="name">台指期夜盤 <span style="font-size:10px; font-weight:normal; color:var(--muted);">(05:00)</span></div>
-          <div class="value">45,203</div>
-          <div class="delta rise">+65 (+0.14%)</div>
+          <div class="value">45,074</div>
+          <div class="delta fall">-64 (-0.14%)</div>
         </div>
         
         
@@ -321,49 +336,49 @@
       
     </div>
 
-  
+
     
     <div class="card">
       <h2>📰 隔夜重大新聞 <span class="sub">昨日收盤迄今 Top 5</span></h2>
       <div style="display:flex; flex-direction:column; gap:12px;">
         
-        <a href="https://news.google.com/rss/articles/CBMiT0FVX3lxTE5nMFUzdDFHY0NQdlhycm5OSE5HZTROVmdXcWVmNU9BOEJ6V3AyRVRxMlo1N194T0ZKTW1aNHpQR1JLQUtlNnU3YUUxVHhNeTA?oc=5" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:6px; padding:12px 16px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; text-decoration:none; transition:all 0.15s ease;" onmouseover="this.style.background='#FFFFFF'; this.style.boxShadow='var(--shadow-md)'; this.style.borderColor='#CBD5E1';" onmouseout="this.style.background='var(--panel-2)'; this.style.boxShadow='none'; this.style.borderColor='var(--line)';">
-          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.5;">美股期指反彈、比特幣概念股狂飆市場緊盯聯準會降息訊號與輝達財報</div>
+        <a href="https://news.google.com/rss/articles/CBMiakFVX3lxTE11bkVvbGpqT2hBbDlpM1BxR3FqYUxaTFVyV1VXTUlVaTd4ZFhHMWFTaWNOZTc0NEZCYzVKUHN1a2JlVW5LeTc0LUd4bkpVRDJIY3JFZnM1Yi10SzQzOXI2c0ZHVE1ILTFfSFE?oc=5" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:6px; padding:12px 16px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; text-decoration:none; transition:all 0.15s ease;" onmouseover="this.style.background='#FFFFFF'; this.style.boxShadow='var(--shadow-md)'; this.style.borderColor='#CBD5E1';" onmouseout="this.style.background='var(--panel-2)'; this.style.boxShadow='none'; this.style.borderColor='var(--line)';">
+          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.5;">道瓊大漲逾500點但油金債息狂飆美股周線全跌- 國際</div>
           <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted); font-family:var(--font-mono);">
-            <span style="font-weight:600; color:var(--blue);">news.cnyes.com</span>
-            <span>08/21 20:30</span>
+            <span style="font-weight:600; color:var(--blue);">旺得富理財網</span>
+            <span>08/22 09:09</span>
           </div>
         </a>
         
-        <a href="https://news.google.com/rss/articles/CBMiXEFVX3lxTE9PSGxpZ2VENzh4Y2ZWYXFFRmxZMFBxQlFBR2thdWlCNEpYY21Bcm10eGJBa21Nb0YwdlpOVjl1R0ZmQVktZk4zcXVYRXNuX1VJMzNDV01GRTQtYm5E?oc=5" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:6px; padding:12px 16px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; text-decoration:none; transition:all 0.15s ease;" onmouseover="this.style.background='#FFFFFF'; this.style.boxShadow='var(--shadow-md)'; this.style.borderColor='#CBD5E1';" onmouseout="this.style.background='var(--panel-2)'; this.style.boxShadow='none'; this.style.borderColor='var(--line)';">
-          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.5;">NVIDIA 財報能否帶動美股大漲？分析師：光演出「三殺」還不夠 | 外媒解析 | 國際</div>
+        <a href="https://news.google.com/rss/articles/CBMiWEFVX3lxTFAtLTRGdFZha20zSVZ5aWM3ZFJEUjhyaGZCU3pkbXRvZ3RtSi1vSUFMVjFveUdLeWlVTlc5czE1YlZIQUN4bUVtbTVxY1ZzckhQNzlaRHNWZVA?oc=5" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:6px; padding:12px 16px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; text-decoration:none; transition:all 0.15s ease;" onmouseover="this.style.background='#FFFFFF'; this.style.boxShadow='var(--shadow-md)'; this.style.borderColor='#CBD5E1';" onmouseout="this.style.background='var(--panel-2)'; this.style.boxShadow='none'; this.style.borderColor='var(--line)';">
+          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.5;">2330 台積電 - 〈熱門股〉立碁矽光子1.6T模組拚Q4出貨外資買盤力挺周漲17% - 股市爆料同學會</div>
           <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted); font-family:var(--font-mono);">
-            <span style="font-weight:600; color:var(--blue);">經濟日報</span>
-            <span>08/21 22:32</span>
+            <span style="font-weight:600; color:var(--blue);">CMoney</span>
+            <span>08/22 13:12</span>
           </div>
         </a>
         
-        <a href="https://news.google.com/rss/articles/CBMiS0FVX3lxTE5ELU1rVGVxS0poNHkxQVFTMEpfRHJPcUVoR20xWkJVTFRZSHBKOE5kNHotOXhSMkxETk5qbm83a3BrYVFpTWVvTnpMNA?oc=5" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:6px; padding:12px 16px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; text-decoration:none; transition:all 0.15s ease;" onmouseover="this.style.background='#FFFFFF'; this.style.boxShadow='var(--shadow-md)'; this.style.borderColor='#CBD5E1';" onmouseout="this.style.background='var(--panel-2)'; this.style.boxShadow='none'; this.style.borderColor='var(--line)';">
-          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.5;">台股量縮外資防禦、本土調節？ 下週進入關鍵期，台積電撐盤後資金輪動看「三大族群」！</div>
+        <a href="https://news.google.com/rss/articles/CBMiWEFVX3lxTFBzSGo3aHVxSUo2TGNqR20ybGY5Ulc2REUzWkZDbkVQV0g1cGdxZkNNb1ctQU1JSmZYN1I5RjlqUm4xSks0aU9pdGhyY3o0R3k1SDNzRnNYRVU?oc=5" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:6px; padding:12px 16px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; text-decoration:none; transition:all 0.15s ease;" onmouseover="this.style.background='#FFFFFF'; this.style.boxShadow='var(--shadow-md)'; this.style.borderColor='#CBD5E1';" onmouseout="this.style.background='var(--panel-2)'; this.style.boxShadow='none'; this.style.borderColor='var(--line)';">
+          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.5;">【即時新聞】輝達(NVDA)投資電力基建！美股大盤強勢走高但晶片股錯綜，法人點名看好這10檔</div>
           <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted); font-family:var(--font-mono);">
-            <span style="font-weight:600; color:var(--blue);">鉅亨網</span>
-            <span>08/21 16:25</span>
+            <span style="font-weight:600; color:var(--blue);">CMoney</span>
+            <span>08/22 11:19</span>
           </div>
         </a>
         
-        <a href="https://news.google.com/rss/articles/CBMi0wJBVV95cUxPaU54QkYwVTNib3lvNXZvN3ZWc2ptbjB1bEtFOG5VbExrYlNFSEp2Zjk5a3NubTlORzNMaGlVMm1kVnNJTkNLemd5enBFdzhmeDV6bFRPVUM5Yk90djlGN29JeHZEeGZpX213Y2QtcllLR0s1elp3ODNtSjlnU3ZlZ1dZS193Ny0td1VFVUlzamo1Q2ZfdE9aOVRtLWp2V3Y3RU5vVTVXd3lSbVdjb0NRR2Z6VjJpRzcta0xDTnZtbEJCQUJ3VDlhZ0wyMnZSWl9OYmRZN2FTaGFYeUppY1RXYlJEMzItSXFxcDVKOUtPZVNaZGhMLUlGSWZKUHVmTE5fcWpEUVlnb2gyMGpTZG5Bak1CNnNFbnRLLWs5UFREUC1zUG41MjNROWxjMXhEQXlIMG1OSk9sX3BiaWJfcTRfWkF5RVlOd0ZBVk5Zbi0wbHFZWFU?oc=5" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:6px; padding:12px 16px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; text-decoration:none; transition:all 0.15s ease;" onmouseover="this.style.background='#FFFFFF'; this.style.boxShadow='var(--shadow-md)'; this.style.borderColor='#CBD5E1';" onmouseout="this.style.background='var(--panel-2)'; this.style.boxShadow='none'; this.style.borderColor='var(--line)';">
-          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.5;">台積漲35元台股漲290點 台股區間震盪靜待NVIDIA財報揭曉</div>
+        <a href="https://news.google.com/rss/articles/CBMikAFBVV95cUxQemVNMy1pTktsWGJzZFNiSUtDNmlfbm0tblNXRlJWbVllRWstZWJRRGdEVmRGYjM1V2x6QUpQbmlSNGNtQ2c3LUtQV0t2dEowY1dWemY4ZHBmTWpvd2V0emZTbHJhc3JfbU1GYnRrTDllaUhBQlZNdzdhSW5yWEhGWGJ0NFptSEk4MnhoUFZJZHc?oc=5" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:6px; padding:12px 16px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; text-decoration:none; transition:all 0.15s ease;" onmouseover="this.style.background='#FFFFFF'; this.style.boxShadow='var(--shadow-md)'; this.style.borderColor='#CBD5E1';" onmouseout="this.style.background='var(--panel-2)'; this.style.boxShadow='none'; this.style.borderColor='var(--line)';">
+          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.5;">【即時新聞】輝達(NVDA)投資電力基建！美股大盤強勢走高但晶片股錯綜，法人點名看好這10檔</div>
           <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted); font-family:var(--font-mono);">
-            <span style="font-weight:600; color:var(--blue);">Yahoo新聞</span>
-            <span>08/21 20:23</span>
+            <span style="font-weight:600; color:var(--blue);">CMoney投資網誌</span>
+            <span>08/22 11:19</span>
           </div>
         </a>
         
-        <a href="https://news.google.com/rss/articles/CBMi-wJBVV95cUxOWmpQUkdrelpOTTJxcmpMbmFQckpvcE4wM19fQzU1RW5HMGpzVE1fWko2emJfbXRScTBlUC1LN0E4alhhY1ZDcWUwUmQ4X25aQVh1ZzdCRE9FWm0wX1VwR0RMSzhEaUtkYkZSQXFZZFlsNXVTR0V0ZmtVRG9Telp1ZU9hT2Jfd3JUdUlsWW1XTzA1SmdxZ0t4SGl6Yk9SSnctak5SSTAxeDdmVURoVXdZNmNKdjFlUUhEbGM3dHhpWjN2d0xMUE1Td2JlSTNobnVsRmNwcVJqa29zR0RwcTdKSjV1eHJMQkJEMEw2VVNwVlpZYl82enVqdkQyaTdkbDdzZk1EYTZocWNtdlpWMUQtc0ZxWTc4SW1qdmtxUjJSLTBHaklXVzEyYzZ3Yno1U2V4R3JYMDZuclpDNXFPdDdIYnNKTzVJdW9tTlM1ak9fSDItelowQlc2bGUxWXBuSFN0VU9kMjVJWDlJRzYtZkh1LWh2b1JfSTVZbVpN?oc=5" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:6px; padding:12px 16px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; text-decoration:none; transition:all 0.15s ease;" onmouseover="this.style.background='#FFFFFF'; this.style.boxShadow='var(--shadow-md)'; this.style.borderColor='#CBD5E1';" onmouseout="this.style.background='var(--panel-2)'; this.style.boxShadow='none'; this.style.borderColor='var(--line)';">
-          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.5;">台股中秋前「衝上5萬點」反而不妙？杜金龍揭2大隱憂：最怕大盤一路狂飆</div>
+        <a href="https://news.google.com/rss/articles/CBMiggFBVV95cUxPeTE4dkpnVmdZOHlwNi0tQXpfRXhhOHlfaExJUzdwQXRDRkpLcm9nQjRJRnpTQXk2eUhtdDlwMkc1Vk9OTTQ1bjZEaEZtNzlQZVA5MnZtYl9Mb1ZzY3FiNURjcGk2ejlsTFdZMVFCMXc5UHh0c0F6eHk2Uy1JVFNSUWh3?oc=5" target="_blank" rel="noopener" style="display:flex; flex-direction:column; gap:6px; padding:12px 16px; background:var(--panel-2); border:1px solid var(--line); border-radius:10px; text-decoration:none; transition:all 0.15s ease;" onmouseover="this.style.background='#FFFFFF'; this.style.boxShadow='var(--shadow-md)'; this.style.borderColor='#CBD5E1';" onmouseout="this.style.background='var(--panel-2)'; this.style.boxShadow='none'; this.style.borderColor='var(--line)';">
+          <div style="font-size:14px; font-weight:600; color:var(--text); line-height:1.5;">美股報喜！台股周一卻可能不妙？台積電ADR震盪收紅</div>
           <div style="display:flex; justify-content:space-between; align-items:center; font-size:12px; color:var(--muted); font-family:var(--font-mono);">
-            <span style="font-weight:600; color:var(--blue);">Yahoo新聞</span>
-            <span>08/21 19:41</span>
+            <span style="font-weight:600; color:var(--blue);">壹蘋新聞網</span>
+            <span>08/22 07:01</span>
           </div>
         </a>
         
@@ -372,7 +387,7 @@
     
 </section>
 
-  <div class="part-title">處置股</div>
+  <div class="part-title" id="sec-disposal">處置股</div>
   <section class="part">
 
     <div class="card">
@@ -671,7 +686,7 @@
 
   </section>
 
-  <div class="part-title">籌碼股</div>
+  <div class="part-title" id="sec-pressplay">籌碼股</div>
   <section class="part">
 
     <div class="card">
@@ -691,7 +706,7 @@
             <td class="num">+6,273</td>
             <td class="num">0</td>
             <td class="num">-5</td>
-            
+
           </tr>
           
           <tr>
@@ -703,7 +718,7 @@
             <td class="num">-27</td>
             <td class="num">0</td>
             <td class="num">-30</td>
-            
+
           </tr>
           
           <tr>
@@ -715,7 +730,7 @@
             <td class="num">+390</td>
             <td class="num">0</td>
             <td class="num">-7</td>
-            
+
           </tr>
           
         </tbody>
@@ -1975,28 +1990,28 @@
 
   </section>
 
-  <div class="part-title">自結、季報、營收</div>
+  <div class="part-title" id="sec-financials">自結、季報、營收</div>
   <section class="part">
     <div class="card">
       <h2 style="margin-bottom: 20px;">🔥 市場未反映 <span class="sub">自結、季報、營收 (08/21 13:30 後公告)</span></h2>
 
       <div class="sub-label" style="font-size:14px; margin-top:8px; margin-bottom:8px; color:var(--text);">📊 即時自結</div>
-      <iframe src="embed/att.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:10px; background:#FFFFFF; box-shadow:var(--shadow-sm);"></iframe>
+      <div class="embed-scroll"><iframe src="embed/att.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:10px; background:#FFFFFF; box-shadow:var(--shadow-sm);"></iframe></div>
 
       <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">🧾 即時季報</div>
-      <iframe src="embed/fin.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:10px; background:#FFFFFF; box-shadow:var(--shadow-sm);"></iframe>
+      <div class="embed-scroll"><iframe src="embed/fin.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:10px; background:#FFFFFF; box-shadow:var(--shadow-sm);"></iframe></div>
 
       <div class="sub-label" style="font-size:14px; margin-top:24px; margin-bottom:8px; color:var(--text);">💰 即時營收</div>
-      <iframe src="embed/rev.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:10px; background:#FFFFFF; box-shadow:var(--shadow-sm);"></iframe>
+      <div class="embed-scroll"><iframe src="embed/rev.html" style="width:100%; height:320px; border:1px solid var(--line); border-radius:10px; background:#FFFFFF; box-shadow:var(--shadow-sm);"></iframe></div>
 
     </div>
   </section>
 
-<div class="part-title">財經行事曆</div>
+<div class="part-title" id="sec-calendar">財經行事曆</div>
   <section class="part">
 
     <div class="card">
-      <h2>財經行事曆 <span class="sub">08-21 ~ 09-04 · 21 筆</span></h2>
+      <h2>財經行事曆 <span class="sub">08-22 ~ 09-05 · 19 筆</span></h2>
 
       
       <div class="cal-grid">
@@ -2037,14 +2052,13 @@
           
           
           
-          <a class="cal-cell has-events today" href="#cal-2026-08-21">
+          <div class="cal-cell out">
             <span class="cal-cell-num">21</span>
-            <span class="cal-cell-dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="cal-cell-more">+1</span></span>
-          </a>
+          </div>
           
           
           
-          <div class="cal-cell">
+          <div class="cal-cell today">
             <span class="cal-cell-num">22</span>
           </div>
           
@@ -2137,13 +2151,14 @@
           
           
           
-          <div class="cal-cell">
+          <a class="cal-cell has-events" href="#cal-2026-09-04">
             <span class="cal-cell-num">4</span>
-          </div>
+            <span class="cal-cell-dots"><span class="dot"></span><span class="dot"></span></span>
+          </a>
           
           
           
-          <div class="cal-cell out">
+          <div class="cal-cell">
             <span class="cal-cell-num">5</span>
           </div>
           
@@ -2154,85 +2169,27 @@
       
 
       
-      <div style="max-height: 400px; overflow-y: auto; padding-right: 8px; margin-top: 16px;">
-      
-      <div class="cal-day" id="cal-2026-08-21">
-        <div class="cal-date today">08/21<br><span class="badge exit-today-badge">今天</span></div>
-        <div class="cal-day-events">
-          
-          <div class="cal-event-card cat-econ">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">08:30</span>
-              
-              <span class="cal-cat-badge">總經數據</span>
-            </div>
-            <div class="cal-summary">日本-製造業採購經理人指數[PMI]</div>
-            <div class="cal-desc">市場預期: 55.1
-前值:  54.5</div>
-            
-            <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/58/jp-manufacturing-service/797/jp-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
-            </div>
-            
-          </div>
-          
-          <div class="cal-event-card cat-econ">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">15:30</span>
-              
-              <span class="cal-cat-badge">總經數據</span>
-            </div>
-            <div class="cal-summary">德國-製造業採購經理人指數[PMI]</div>
-            <div class="cal-desc">市場預期: 52.1
-前值:  52.2</div>
-            
-            <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/42/eu-industry-relative/500/eu-de-germany-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
-            </div>
-            
-          </div>
-          
-          <div class="cal-event-card cat-general">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">16:00</span>
-              
-              <span class="cal-cat-badge">事件</span>
-            </div>
-            <div class="cal-summary">歐元區-服務業採購經理人指數[NMI]</div>
-            <div class="cal-desc">前值:  51.7</div>
-            
-            <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
-            </div>
-            
-          </div>
-          
-          <div class="cal-event-card cat-econ">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">16:00</span>
-              
-              <span class="cal-cat-badge">總經數據</span>
-            </div>
-            <div class="cal-summary">歐元區-製造業採購經理人指數[PMI]</div>
-            <div class="cal-desc">市場預期: 51.8
-前值:  51.9</div>
-            
-            <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/42/eu-industry-relative/499/eu-ea19-euro-area-pmi?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
-            </div>
-            
-          </div>
-          
-        </div>
-      </div>
+      <div style="margin-top: 16px;">
       
       <div class="cal-day" id="cal-2026-08-26">
         <div class="cal-date">08/26</div>
         <div class="cal-day-events">
+          
+          <div class="cal-event-card cat-econ">
+            <div class="cal-header-row">
+              
+              <span class="cal-time-pill">20:30</span>
+              
+              <span class="cal-cat-badge">總經數據</span>
+            </div>
+            <div class="cal-summary">美國-个人消费支出物价指數[PCE]-(年增率(YoY))</div>
+            <div class="cal-desc">前值:  3.67%</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
+          </div>
           
           <div class="cal-event-card cat-econ">
             <div class="cal-header-row">
@@ -2247,22 +2204,6 @@
             
             <div>
               <a class="cal-link" href="https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
-            </div>
-            
-          </div>
-          
-          <div class="cal-event-card cat-econ">
-            <div class="cal-header-row">
-              
-              <span class="cal-time-pill">20:30</span>
-              
-              <span class="cal-cat-badge">總經數據</span>
-            </div>
-            <div class="cal-summary">美國-个人消费支出物价指數[PCE]-(年增率(YoY))</div>
-            <div class="cal-desc">前值:  3.67%</div>
-            
-            <div>
-              <a class="cal-link" href="https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
             </div>
             
           </div>
@@ -2541,10 +2482,49 @@
               <span class="cal-cat-badge">總經數據</span>
             </div>
             <div class="cal-summary">美國-ISM服務業指數[Services PMI]</div>
-            <div class="cal-desc">前值: 54.1</div>
+            <div class="cal-desc">前值:  54.1</div>
             
             <div>
               <a class="cal-link" href="https://sc.macromicro.me/collections/8/us-industry-relative/55/ism-nonmanu?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
+          </div>
+          
+        </div>
+      </div>
+      
+      <div class="cal-day" id="cal-2026-09-04">
+        <div class="cal-date">09/04</div>
+        <div class="cal-day-events">
+          
+          <div class="cal-event-card cat-econ">
+            <div class="cal-header-row">
+              
+              <span class="cal-time-pill">20:30</span>
+              
+              <span class="cal-cat-badge">總經數據</span>
+            </div>
+            <div class="cal-summary">美國-失業率</div>
+            <div class="cal-desc">前值: 4.10%</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
+            </div>
+            
+          </div>
+          
+          <div class="cal-event-card cat-general">
+            <div class="cal-header-row">
+              
+              <span class="cal-time-pill">20:30</span>
+              
+              <span class="cal-cat-badge">事件</span>
+            </div>
+            <div class="cal-summary">美國-非农就业人數(月变动)</div>
+            <div class="cal-desc">前值: -23.0k</div>
+            
+            <div>
+              <a class="cal-link" href="https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar" target="_blank" rel="noopener">📊 MM 圖表連結 ↗</a>
             </div>
             
           </div>
@@ -2559,7 +2539,7 @@
   </section>
 
 
-    
+
 </div>
 </body>
 </html>
