@@ -32,7 +32,9 @@ pass against the real HTML.
 Usage:
     python fetch_disposal.py [--fixture PATH] [--today YYYY-MM-DD]
 """
+from __future__ import annotations
 import argparse
+from dataclasses import dataclass, asdict, field
 import datetime
 import json
 import re
@@ -187,6 +189,43 @@ def find_table_after_heading(soup, heading_substring: str):
     return None
 
 
+
+@dataclass
+class DisposalEntry:
+    market: str | None = None
+    code: str | None = None
+    name: str | None = None
+    matching: str | None = None
+    start_date: str | None = None
+    end_date: str | None = None
+    exit_date: str | None = None
+    trading_days_left: int | None = None
+    reason: str | None = None
+
+
+@dataclass
+class OneAwayEntry:
+    market: str | None = None
+    code: str | None = None
+    name: str | None = None
+    close: str | None = None
+    condition: str | None = None
+    earliest_disposal: str | None = None
+    badges: list[dict] = field(default_factory=list)
+    condition_segments: list[dict] = field(default_factory=list)
+
+
+def parse_trading_days_left(val: str | None) -> int | None:
+    if val is None:
+        return None
+    val = val.strip()
+    if not val or val == "出關":
+        return None
+    m = re.search(r"\d+", val)
+    if m:
+        return int(m.group(0))
+    return None
+
 def rows_as_dicts(table, columns, with_badges=False, with_condition_segments=False):
     """Iterate <tr> in <tbody>, zip cell text with `columns` names.
 
@@ -262,14 +301,23 @@ def parse_active(soup):
         "market", "code", "name", "matching", "start_date", "end_date",
         "exit_date", "trading_days_left", "reason",
     ]
-    rows = rows_as_dicts(table, columns)
-    for r in rows:
-        val = r.get("trading_days_left")
-        if val is None or (isinstance(val, str) and val.strip() == ""):
-            r["trading_days_left"] = None
-        else:
-            r["trading_days_left"] = val.strip()
-    return rows
+    raw_rows = rows_as_dicts(table, columns)
+    entries = []
+    for r in raw_rows:
+        td_val = parse_trading_days_left(r.get("trading_days_left"))
+        entry = DisposalEntry(
+            market=r.get("market") or None,
+            code=r.get("code") or None,
+            name=r.get("name") or None,
+            matching=r.get("matching") or None,
+            start_date=r.get("start_date") or None,
+            end_date=r.get("end_date") or None,
+            exit_date=r.get("exit_date") or None,
+            trading_days_left=td_val,
+            reason=r.get("reason") or None,
+        )
+        entries.append(asdict(entry))
+    return entries
 
 
 def parse_date_context(soup, html_text: str):
