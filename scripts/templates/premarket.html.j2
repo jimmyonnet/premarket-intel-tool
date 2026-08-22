@@ -1510,6 +1510,140 @@
     border: 1px solid rgba(251, 191, 36, 0.25);
   }
 
+
+  /* WATCHLIST REDESIGN */
+  .watch-stat-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-top: 10px;
+    font-size: 12.5px;
+  }
+  .watch-stat-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    color: var(--text-main);
+  }
+  .watch-stat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11.5px;
+    font-weight: 700;
+  }
+  .watch-stat-pill.danger { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
+  .watch-stat-pill.blue { background: var(--blue-bg); color: var(--blue-fg); border: 1px solid var(--blue-border); }
+  .watch-stat-pill.gray { background: var(--bg-sub); color: var(--text-muted); border: 1px solid var(--border); }
+  
+  .watch-toggle-btn {
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .watch-toggle-btn:hover {
+    background: var(--bg-hover);
+    color: var(--text-main);
+  }
+
+  .watch-group {
+    margin-top: 10px;
+  }
+  .watch-group-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .watch-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .watch-chips-scrollable {
+    max-height: 120px;
+    overflow-y: auto;
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    box-sizing: border-box;
+  }
+  .watch-chip {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+    color: var(--text-main);
+  }
+  .watch-chip:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-strong);
+  }
+  .watch-chip.alert {
+    background: var(--danger-bg);
+    color: var(--danger-fg);
+    border-color: var(--danger-border);
+    font-weight: 700;
+  }
+  .watch-chip.amber {
+    background: var(--amber-bg);
+    color: var(--amber-fg);
+    border-color: var(--amber-border);
+    font-weight: 700;
+  }
+  .watch-chip.blue {
+    background: var(--blue-bg);
+    color: var(--blue-fg);
+    border-color: var(--blue-border);
+    font-weight: 700;
+  }
+  .wc-code { font-weight: 700; }
+  .wc-name { font-weight: 600; }
+  .wc-del {
+    color: var(--text-light);
+    font-size: 11px;
+    font-weight: 700;
+    margin-left: 2px;
+    cursor: pointer;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wc-del:hover {
+    color: var(--rise);
+    background: rgba(225, 29, 72, 0.1);
+  }
+
 </style>
 </head>
 <body>
@@ -2845,11 +2979,20 @@
     if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
   };
 
+
+  // Track Watchlist Collapsed State for Large Lists
+  window.pm.watchlistExpanded = false;
+  window.pm.toggleWatchlistExpand = function() {
+    window.pm.watchlistExpanded = !window.pm.watchlistExpanded;
+    renderWatch();
+  };
+
   function renderWatch() {
     var box = document.getElementById('watch-chips');
     var hint = document.getElementById('watch-hint');
     if (!box || !hint) return;
     box.innerHTML = '';
+    
     var raw = localStorage.getItem(window.WATCH_KEY);
     var codes = raw ? JSON.parse(raw) : [];
     if (!codes.length) {
@@ -2857,7 +3000,7 @@
       updateWatchlistStars();
       return;
     }
-    hint.textContent = codes.length + ' 檔自選標的（點擊可定位至表格）';
+    hint.textContent = '';
     
     var stockMap = {};
     document.querySelectorAll('[data-code]').forEach(function(n) {
@@ -2870,16 +3013,55 @@
       }
     });
 
+    var hitAlerts = [];
+    var hitCandidates = [];
+    var otherStocks = [];
+
     codes.forEach(function(c) {
+      var hit = stockMap[c];
+      if (hit && (hit.type === 'alert' || hit.type === 'amber')) {
+        hitAlerts.push({ code: c, hit: hit });
+      } else if (hit && (hit.type === 'blue' || hit.type === 'normal')) {
+        hitCandidates.push({ code: c, hit: hit });
+      } else {
+        otherStocks.push({ code: c, hit: hit });
+      }
+    });
+
+    // 1. Stat / Summary Toolbar
+    var statBar = document.createElement('div');
+    statBar.className = 'watch-stat-bar';
+    
+    var totalHitCount = hitAlerts.length + hitCandidates.length;
+    var statLeft = document.createElement('div');
+    statLeft.className = 'watch-stat-left';
+    statLeft.innerHTML = '<strong>⭐ 自選清單 (' + codes.length + ' 檔)</strong>'
+      + '<span class="watch-stat-pill ' + (hitAlerts.length ? 'danger' : 'gray') + '">🚨 今日警示 ' + hitAlerts.length + ' 檔</span>'
+      + '<span class="watch-stat-pill ' + (hitCandidates.length ? 'blue' : 'gray') + '">🔵 今日候選 ' + hitCandidates.length + ' 檔</span>'
+      + '<span class="watch-stat-pill gray">⚪ 其餘標的 ' + otherStocks.length + ' 檔</span>';
+    statBar.appendChild(statLeft);
+
+    if (codes.length > 12) {
+      var toggleBtn = document.createElement('button');
+      toggleBtn.type = 'button';
+      toggleBtn.className = 'watch-toggle-btn';
+      toggleBtn.textContent = window.pm.watchlistExpanded ? '▴ 收合清單' : '▾ 展開全部 (' + codes.length + ' 檔)';
+      toggleBtn.onclick = window.pm.toggleWatchlistExpand;
+      statBar.appendChild(toggleBtn);
+    }
+    box.appendChild(statBar);
+
+    function createChip(item) {
+      var c = item.code;
+      var hit = item.hit;
       var chip = document.createElement('span');
       chip.className = 'watch-chip';
-      var hit = stockMap[c];
       var icon = '⚪';
       if (hit && hit.type === 'alert') { chip.classList.add('alert'); icon = '🚨'; }
       else if (hit && hit.type === 'amber') { chip.classList.add('amber'); icon = '🟡'; }
       else if (hit && hit.type === 'blue') { chip.classList.add('blue'); icon = '🔵'; }
 
-      chip.innerHTML = '<span class="wc-icon">' + icon + '</span>'
+      chip.innerHTML = '<span>' + icon + '</span>'
         + '<span class="wc-code">' + c + '</span>'
         + (hit && hit.label ? '<span class="wc-name">' + hit.label + '</span>' : '')
         + '<span class="wc-del" onclick="event.stopPropagation(); window.delWatch(\'' + c + '\')" title="刪除">✕</span>';
@@ -2895,11 +3077,44 @@
           window.pm.showToast(c + ' 未出現在今日警示或候選清單中');
         }
       };
-      box.appendChild(chip);
-    });
+      return chip;
+    }
+
+    // 2. Group: 今日命中標的 (Always Shown Prominently)
+    if (hitAlerts.length || hitCandidates.length) {
+      var hitGroup = document.createElement('div');
+      hitGroup.className = 'watch-group';
+      hitGroup.innerHTML = '<div class="watch-group-title">🎯 今日命中標的（點擊可定位至下方表格）</div>';
+      var hitChips = document.createElement('div');
+      hitChips.className = 'watch-chips-container';
+      hitAlerts.concat(hitCandidates).forEach(function(item) {
+        hitChips.appendChild(createChip(item));
+      });
+      hitGroup.appendChild(hitChips);
+      box.appendChild(hitGroup);
+    }
+
+    // 3. Group: 其餘標的 (Collapsible if > 12 stocks)
+    if (otherStocks.length) {
+      var otherGroup = document.createElement('div');
+      otherGroup.className = 'watch-group';
+      
+      var isCollapsible = (codes.length > 12);
+      if (!isCollapsible || window.pm.watchlistExpanded) {
+        otherGroup.innerHTML = '<div class="watch-group-title">⚪ 未觸發之自選標的 (' + otherStocks.length + ' 檔)</div>';
+        var otherChips = document.createElement('div');
+        otherChips.className = isCollapsible ? 'watch-chips-container watch-chips-scrollable' : 'watch-chips-container';
+        otherStocks.forEach(function(item) {
+          otherChips.appendChild(createChip(item));
+        });
+        otherGroup.appendChild(otherChips);
+        box.appendChild(otherGroup);
+      }
+    }
 
     updateWatchlistStars();
   }
+
 
   // Global Watch-Only Filter
   window.pm.watchOnly = localStorage.getItem('premarket.filterWatchOnly') === '1';
