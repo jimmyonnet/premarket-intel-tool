@@ -890,13 +890,55 @@
   .page-footer {
     background: var(--bg-card);
     border-top: 1px solid var(--border);
-    padding: 24px 0;
+    padding: 16px 0;
     font-size: 12px;
     color: var(--text-muted);
   }
   .footer-inner { max-width: 980px; margin: 0 auto; padding: 0 16px; }
-  .footer-title { font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
-  .footer-notes { padding-left: 18px; margin: 0 0 8px; line-height: 1.6; }
+  .footer-details {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-sub);
+    overflow: hidden;
+  }
+  .footer-summary {
+    padding: 9px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    color: var(--text-main);
+    user-select: none;
+    transition: background 0.15s ease;
+    list-style: none;
+  }
+  .footer-summary::-webkit-details-marker { display: none; }
+  .footer-summary:hover {
+    background: var(--bg-hover);
+  }
+  .footer-summary-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+  }
+  .footer-summary-badge {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: normal;
+  }
+  .footer-details[open] .footer-summary-badge {
+    color: var(--blue);
+  }
+  .footer-details[open] .footer-summary {
+    border-bottom: 1px solid var(--border);
+  }
+  .footer-content {
+    padding: 12px 16px;
+  }
+  .footer-notes { padding-left: 18px; margin: 0 0 8px; line-height: 1.6; font-size: 12px; }
+  .footer-notes li { margin-bottom: 4px; }
 
   /* CALENDAR DASHBOARD & TIMELINE */
   .cal-dashboard-card {
@@ -2607,15 +2649,22 @@
   <!-- 6. 系統資訊 (System Info Footer) -->
   <footer id="system-info" class="page-footer">
     <div class="footer-inner">
-      <div class="footer-title">系統與資料說明</div>
-      <ul class="footer-notes">
-        <li><strong>資料來源：</strong>處置股與財務公告來自 chengwaye.com；籌碼股來自 PressPlay 每日盤前專欄；指數報價來自 Yahoo Finance；新聞聚合來自 Google News；財經行事曆來自 MacroMicro。</li>
-        <li><strong>排程機制：</strong>每日 07:35（台北）自動重建；盤前可在 GitHub Actions → Build premarket page → Run workflow 手動觸發，2 分鐘內完成</li>
-        <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
-        <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日重點清單；未在清單內之標的自動略過。</li>
-      </ul>
-      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">{{ build_time or '08:00' }}</span></div>
-      <div class="footer-copy" style="margin-top:4px; text-align:center;">盤前情報準備台 · 自用盤前決策工作台</div>
+      <details class="footer-details">
+        <summary class="footer-summary">
+          <span class="footer-summary-title">ℹ️ 系統與資料說明</span>
+          <span class="footer-summary-badge">點擊展開說明 ▾</span>
+        </summary>
+        <div class="footer-content">
+          <ul class="footer-notes">
+            <li><strong>資料來源：</strong>處置股與財務公告來自 chengwaye.com；籌碼股來自 PressPlay 每日盤前專欄；指數報價來自 Yahoo Finance；新聞聚合來自 Google News；財經行事曆來自 MacroMicro。</li>
+            <li><strong>排程機制：</strong>每日 07:35（台北）自動重建；盤前可在 GitHub Actions → Build premarket page → Run workflow 手動觸發，2 分鐘內完成</li>
+            <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
+            <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日重點清單；未在清單內之標的自動略過。</li>
+          </ul>
+          <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:8px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">{{ build_time or '08:00' }}</span></div>
+        </div>
+      </details>
+      <div class="footer-copy" style="margin-top:10px; text-align:center; font-size:11px; color:var(--text-muted);">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
   </footer>
 
