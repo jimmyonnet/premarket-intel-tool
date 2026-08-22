@@ -240,6 +240,7 @@
     align-items: center;
     gap: 6px;
     margin-left: auto;
+    flex-shrink: 0;
   }
   .nav-btn {
     background: var(--bg-card);
@@ -2439,6 +2440,15 @@
     if (f) f.style.height = Math.max(480, e.data.height) + 'px';
   });
 
+  window.pm.syncIframeTheme = function(theme) {
+    var cur = theme || document.documentElement.getAttribute('data-theme') || 'light';
+    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
+      try {
+        iframe.contentWindow.postMessage({type: 'theme-change', theme: cur}, '*');
+      } catch(e){}
+    });
+  };
+
   // Theme Toggle
   window.toggleTheme = function() {
     var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark';
@@ -2448,6 +2458,7 @@
     if (metaTheme) metaTheme.content = cur === 'dark' ? '#0B1220' : '#F8FAFC';
     var b = document.getElementById('theme-toggle');
     if (b) b.textContent = cur === 'dark' ? '☀️ 淺色' : '🌙 深色';
+    window.pm.syncIframeTheme(cur);
     if (window.pm.syncHash) window.pm.syncHash();
   };
 
