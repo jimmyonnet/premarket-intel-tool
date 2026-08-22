@@ -1475,6 +1475,41 @@
     opacity: 0.9;
   }
 
+
+  /* DISPOSAL EARLIEST DATE CELL */
+  .ed-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 3px;
+  }
+  .ed-date {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    line-height: 1.2;
+  }
+  .ed-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    padding: 1.5px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    background: rgba(217, 119, 6, 0.1);
+    color: var(--amber);
+    border: 1px solid rgba(217, 119, 6, 0.25);
+    line-height: 1.3;
+  }
+  :root[data-theme="dark"] .ed-badge {
+    background: rgba(251, 191, 36, 0.12);
+    color: #FCD34D;
+    border: 1px solid rgba(251, 191, 36, 0.25);
+  }
+
 </style>
 </head>
 <body>
@@ -1707,14 +1742,18 @@
                       {% endif %}
                     </div>
                   </td>
-                  <td data-label="最快處置" class="num font-mono">
-                    {% set ed_parts = row.earliest_disposal.split(' ', 1) %}
-                    {% if ed_parts|length == 2 %}
-                      <span>{{ ed_parts[0] }}</span>
-                      <span class="badge badge-amber badge-nowrap font-mono">{{ ed_parts[1].replace('第1次10分', '第1次·10分').replace('第2次2分', '第2次·2分').replace('第1次5分', '第1次·5分') }}</span>
-                    {% else %}
-                      <span>{{ row.earliest_disposal }}</span>
-                    {% endif %}
+                  <td data-label="最快處置" class="num">
+                    <div class="ed-cell">
+                      {% set ed_parts = row.earliest_disposal.split(' ', 1) %}
+                      {% if ed_parts|length == 2 %}
+                        <span class="ed-date">{{ ed_parts[0] }}</span>
+                        {% set b_text = ed_parts[1] %}
+                        {% set b_text = b_text.replace('第1次', '第1次 · ').replace('第2次', '第2次 · ').replace('··', '·').replace('·  ·', '·') %}
+                        <span class="ed-badge">{{ b_text }}</span>
+                      {% else %}
+                        <span class="ed-date">{{ row.earliest_disposal }}</span>
+                      {% endif %}
+                    </div>
                   </td>
                   {% set badge_labels = ['3① 連3第1款', '5 連5第1~7款', '6 10日內6次', '12 30日內12次'] %}
                   {% for bd in row.badges or [{}, {}, {}, {}] %}
