@@ -789,6 +789,12 @@
 
   /* MOBILE RESPONSIVE (max-width: 768px) */
   @media (max-width: 768px) {
+    .data-table td .ed-cell {
+      align-items: flex-start !important;
+    }
+    .data-table td .ed-badge {
+      font-size: 10px !important;
+    }
     .summary-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
     .tiles-grid { grid-template-columns: repeat(2, 1fr); }
     .badge-dots { display: none; }
@@ -1517,7 +1523,7 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 8px;
@@ -1714,7 +1720,7 @@
         <h1 class="page-title">盤前情報準備台</h1>
       </div>
       <div class="meta-row">
-        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/23 01:43</span></span>
+        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/23 01:52</span></span>
         
         <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">08/24</span></span>
         
@@ -1753,7 +1759,7 @@
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" aria-label="切換截圖模式">📸 截圖</button>
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" aria-label="切換深淺色主題">🌙 深色</button>
         <button class="nav-btn refresh-btn" onclick="location.reload(true)" type="button" title="重新載入最新版" aria-label="重新整理頁面">
-          🔄 <span class="last-build">建置 2026-08-23 01:43</span><span class="short-build">重整</span>
+          🔄 <span class="last-build">建置 2026-08-23 01:52</span><span class="short-build">重整</span>
         </button>
       </div>
     </div>
@@ -1898,7 +1904,7 @@
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('3490', '單井')" title="點擊開啟個股快捷選單">3490</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="3490" style="display:none;">★</span>單井</td>
-                  <td data-label="收盤" class="num font-mono">53.9</td>
+                  <td data-label="收盤" class="num font-mono" data-sort="53.9">53.9</td>
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
                       
@@ -1914,7 +1920,7 @@
                       
                     </div>
                   </td>
-                  <td data-label="最快處置" class="num">
+                  <td data-label="最快處置" class="num" data-sort="08-25 第2次2分">
                     <div class="ed-cell">
                       
                       
@@ -1975,7 +1981,7 @@
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('3625', '西勝')" title="點擊開啟個股快捷選單">3625</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="3625" style="display:none;">★</span>西勝</td>
-                  <td data-label="收盤" class="num font-mono">11.10</td>
+                  <td data-label="收盤" class="num font-mono" data-sort="11.10">11.10</td>
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
                       
@@ -1991,7 +1997,7 @@
                       
                     </div>
                   </td>
-                  <td data-label="最快處置" class="num">
+                  <td data-label="最快處置" class="num" data-sort="08-25 第1次10分">
                     <div class="ed-cell">
                       
                       
@@ -2052,7 +2058,7 @@
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('4304', '勝昱')" title="點擊開啟個股快捷選單">4304</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="4304" style="display:none;">★</span>勝昱</td>
-                  <td data-label="收盤" class="num font-mono">25.70</td>
+                  <td data-label="收盤" class="num font-mono" data-sort="25.70">25.70</td>
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
                       
@@ -2068,7 +2074,7 @@
                       
                     </div>
                   </td>
-                  <td data-label="最快處置" class="num">
+                  <td data-label="最快處置" class="num" data-sort="08-25 第1次2分">
                     <div class="ed-cell">
                       
                       
@@ -2129,7 +2135,7 @@
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('4971', 'IET-KY')" title="點擊開啟個股快捷選單">4971</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="4971" style="display:none;">★</span>IET-KY</td>
-                  <td data-label="收盤" class="num font-mono">588</td>
+                  <td data-label="收盤" class="num font-mono" data-sort="588">588</td>
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
                       
@@ -2163,7 +2169,7 @@
                       
                     </div>
                   </td>
-                  <td data-label="最快處置" class="num">
+                  <td data-label="最快處置" class="num" data-sort="08-25 第2次2分">
                     <div class="ed-cell">
                       
                       
@@ -2224,7 +2230,7 @@
                   <td data-label="市場">市</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('6225', '天瀚')" title="點擊開啟個股快捷選單">6225</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="6225" style="display:none;">★</span>天瀚</td>
-                  <td data-label="收盤" class="num font-mono">64.7</td>
+                  <td data-label="收盤" class="num font-mono" data-sort="64.7">64.7</td>
                   <td data-label="處置條件" class="condition">
                     <div class="cond-box">
                       
@@ -2240,7 +2246,7 @@
                       
                     </div>
                   </td>
-                  <td data-label="最快處置" class="num">
+                  <td data-label="最快處置" class="num" data-sort="08-25 第2次25分">
                     <div class="ed-cell">
                       
                       
@@ -2336,8 +2342,8 @@
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('3163', '波若威')" title="點擊開啟個股快捷選單">3163</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="3163" style="display:none;">★</span>波若威</td>
                   <td data-label="原撮合"><span class="badge">2分</span></td>
-                  <td data-label="處置起訖" class="font-mono">08-13 ~ 08-21</td>
-                  <td data-label="預計出關" class="font-mono font-bold amber">08-24</td>
+                  <td data-label="處置起訖" class="font-mono" data-sort="08-13">08-13 ~ 08-21</td>
+                  <td data-label="預計出關" class="font-mono font-bold amber" data-sort="08-24">08-24</td>
                   <td data-label="處置原因" class="reason">連續5日｜第1次處置</td>
                 </tr>
                 
@@ -2347,8 +2353,8 @@
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('4931', '新盛力')" title="點擊開啟個股快捷選單">4931</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="4931" style="display:none;">★</span>新盛力</td>
                   <td data-label="原撮合"><span class="badge">2分</span></td>
-                  <td data-label="處置起訖" class="font-mono">08-13 ~ 08-21</td>
-                  <td data-label="預計出關" class="font-mono font-bold amber">08-24</td>
+                  <td data-label="處置起訖" class="font-mono" data-sort="08-13">08-13 ~ 08-21</td>
+                  <td data-label="預計出關" class="font-mono font-bold amber" data-sort="08-24">08-24</td>
                   <td data-label="處置原因" class="reason">連續3日第一款｜第1次處置</td>
                 </tr>
                 
@@ -2358,8 +2364,8 @@
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('6716', '應廣')" title="點擊開啟個股快捷選單">6716</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="6716" style="display:none;">★</span>應廣</td>
                   <td data-label="原撮合"><span class="badge">2分</span></td>
-                  <td data-label="處置起訖" class="font-mono">08-17 ~ 08-21</td>
-                  <td data-label="預計出關" class="font-mono font-bold amber">08-24</td>
+                  <td data-label="處置起訖" class="font-mono" data-sort="08-17">08-17 ~ 08-21</td>
+                  <td data-label="預計出關" class="font-mono font-bold amber" data-sort="08-24">08-24</td>
                   <td data-label="處置原因" class="reason">連續3日第一款｜第1次處置</td>
                 </tr>
                 
@@ -2475,11 +2481,11 @@
                   <td data-label="市場">市</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('2426', '鼎元')" title="點擊開啟個股快捷選單">2426</span></td>
                   <td data-label="名稱" class="name font-bold">鼎元</td>
-                  <td data-label="收盤" class="num font-mono">74.8</td>
-                  <td data-label="量(張)" class="num font-mono">29,242</td>
-                  <td data-label="外資(張)" class="num font-mono rise">+3,750</td>
-                  <td data-label="投信(張)" class="num font-mono ">0</td>
-                  <td data-label="自營(張)" class="num font-mono fall">-35</td>
+                  <td data-label="收盤" class="num font-mono" data-sort="74.8">74.8</td>
+                  <td data-label="量(張)" class="num font-mono" data-sort="29,242">29,242</td>
+                  <td data-label="外資(張)" class="num font-mono rise" data-sort="+3,750">+3,750</td>
+                  <td data-label="投信(張)" class="num font-mono " data-sort="0">0</td>
+                  <td data-label="自營(張)" class="num font-mono fall" data-sort="-35">-35</td>
                 </tr>
                 
                 
@@ -2487,11 +2493,11 @@
                   <td data-label="市場">市</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('2851', '中再保')" title="點擊開啟個股快捷選單">2851</span></td>
                   <td data-label="名稱" class="name font-bold">中再保</td>
-                  <td data-label="收盤" class="num font-mono">44.2</td>
-                  <td data-label="量(張)" class="num font-mono">4,828</td>
-                  <td data-label="外資(張)" class="num font-mono fall">-568</td>
-                  <td data-label="投信(張)" class="num font-mono ">0</td>
-                  <td data-label="自營(張)" class="num font-mono rise">+43</td>
+                  <td data-label="收盤" class="num font-mono" data-sort="44.2">44.2</td>
+                  <td data-label="量(張)" class="num font-mono" data-sort="4,828">4,828</td>
+                  <td data-label="外資(張)" class="num font-mono fall" data-sort="-568">-568</td>
+                  <td data-label="投信(張)" class="num font-mono " data-sort="0">0</td>
+                  <td data-label="自營(張)" class="num font-mono rise" data-sort="+43">+43</td>
                 </tr>
                 
                 
@@ -2499,11 +2505,11 @@
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('5314', '世紀*')" title="點擊開啟個股快捷選單">5314</span></td>
                   <td data-label="名稱" class="name font-bold">世紀*</td>
-                  <td data-label="收盤" class="num font-mono">23.65</td>
-                  <td data-label="量(張)" class="num font-mono">4,007</td>
-                  <td data-label="外資(張)" class="num font-mono fall">-34</td>
-                  <td data-label="投信(張)" class="num font-mono ">0</td>
-                  <td data-label="自營(張)" class="num font-mono rise">+584</td>
+                  <td data-label="收盤" class="num font-mono" data-sort="23.65">23.65</td>
+                  <td data-label="量(張)" class="num font-mono" data-sort="4,007">4,007</td>
+                  <td data-label="外資(張)" class="num font-mono fall" data-sort="-34">-34</td>
+                  <td data-label="投信(張)" class="num font-mono " data-sort="0">0</td>
+                  <td data-label="自營(張)" class="num font-mono rise" data-sort="+584">+584</td>
                 </tr>
                 
                 
@@ -2511,11 +2517,11 @@
                   <td data-label="市場">櫃</td>
                   <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('3441', '聯一光')" title="點擊開啟個股快捷選單">3441</span></td>
                   <td data-label="名稱" class="name font-bold">聯一光</td>
-                  <td data-label="收盤" class="num font-mono">97.3</td>
-                  <td data-label="量(張)" class="num font-mono">17,226</td>
-                  <td data-label="外資(張)" class="num font-mono rise">+1,584</td>
-                  <td data-label="投信(張)" class="num font-mono ">0</td>
-                  <td data-label="自營(張)" class="num font-mono rise">+8</td>
+                  <td data-label="收盤" class="num font-mono" data-sort="97.3">97.3</td>
+                  <td data-label="量(張)" class="num font-mono" data-sort="17,226">17,226</td>
+                  <td data-label="外資(張)" class="num font-mono rise" data-sort="+1,584">+1,584</td>
+                  <td data-label="投信(張)" class="num font-mono " data-sort="0">0</td>
+                  <td data-label="自營(張)" class="num font-mono rise" data-sort="+8">+8</td>
                 </tr>
                 
               </tbody>
@@ -2540,7 +2546,7 @@
           <div class="card-title-group">
             <h3 class="card-title">美股四大指數與跨海連動標的</h3>
           </div>
-          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 21.7 小時</span>
+          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 21.9 小時</span>
         </div>
 
         <div class="data-block">
@@ -2551,7 +2557,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">標普 500</span>
-                <span class="tile-delay-pill pill-fresh">21.7h ago</span>
+                <span class="tile-delay-pill pill-fresh">21.9h ago</span>
               </div>
               
               <div class="tile-val font-mono rise">7,674.37</div>
@@ -2563,7 +2569,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">那斯達克</span>
-                <span class="tile-delay-pill pill-fresh">21.7h ago</span>
+                <span class="tile-delay-pill pill-fresh">21.9h ago</span>
               </div>
               
               <div class="tile-val font-mono rise">26,180.46</div>
@@ -2575,7 +2581,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">道瓊工業</span>
-                <span class="tile-delay-pill pill-fresh">21.7h ago</span>
+                <span class="tile-delay-pill pill-fresh">21.9h ago</span>
               </div>
               
               <div class="tile-val font-mono rise">53,277.00</div>
@@ -2587,7 +2593,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">費城半導體</span>
-                <span class="tile-delay-pill pill-fresh">21.7h ago</span>
+                <span class="tile-delay-pill pill-fresh">21.9h ago</span>
               </div>
               
               <div class="tile-val font-mono fall">11,740.37</div>
@@ -4386,7 +4392,7 @@
         <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
         <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日重點清單；未在清單內之標的自動略過。</li>
       </ul>
-      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-23 01:01</span></div>
+      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-23 01:51</span></div>
       <div class="footer-copy" style="margin-top:4px; text-align:center;">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
   </footer>
@@ -4394,7 +4400,9 @@
 <script>
   window.pm = window.pm || {};
 
-  // PMIT Calendar Dashboard State
+  // ==========================================
+  // 1. PMIT Calendar Dashboard State & Logic
+  // ==========================================
   window.pm.calState = {
     quick: localStorage.getItem('pmit_cal_quick') || 'all',
     countries: JSON.parse(localStorage.getItem('pmit_cal_countries') || '[]'),
@@ -4482,7 +4490,6 @@
   };
 
   window.pm.applyCalendarFilters = function() {
-    // 1. Update filter chip active classes
     document.querySelectorAll('.cal-chip[data-filter="quick"]').forEach(function(btn) {
       btn.classList.toggle('active', btn.getAttribute('data-val') === window.pm.calState.quick);
     });
@@ -4495,11 +4502,8 @@
 
     var todayStr = new Date().toISOString().split('T')[0];
     var totalVisible = 0;
-    var totalCards = document.querySelectorAll('.cal-event-card').length;
 
-    // Filter each event card
     document.querySelectorAll('.cal-date-section').forEach(function(sec) {
-      var secDate = sec.getAttribute('data-date');
       var isToday = sec.classList.contains('is-today-section');
       var visibleInSec = 0;
 
@@ -4510,21 +4514,17 @@
         var title = (card.getAttribute('data-title') || '').toLowerCase();
         var match = true;
 
-        // Quick filter
         if (window.pm.calState.quick === 'star3' && imp < 3) match = false;
         if (window.pm.calState.quick === 'today' && !isToday) match = false;
         
-        // Country filter
         if (match && window.pm.calState.countries.length > 0) {
           if (window.pm.calState.countries.indexOf(country) < 0) match = false;
         }
 
-        // Category filter
         if (match && window.pm.calState.categories.length > 0) {
           if (window.pm.calState.categories.indexOf(cat) < 0) match = false;
         }
 
-        // Search filter
         if (match && window.pm.calState.search) {
           if (title.indexOf(window.pm.calState.search) < 0) match = false;
         }
@@ -4541,34 +4541,89 @@
       if (countEl) countEl.textContent = visibleInSec + ' 件';
     });
 
-    var badge = document.getElementById('cal-count-badge');
-    if (badge) badge.textContent = '顯示 ' + totalVisible + ' / ' + totalCards + ' 筆';
+    var emptyEl = document.getElementById('cal-empty-state');
+    if (emptyEl) emptyEl.style.display = (totalVisible === 0) ? 'block' : 'none';
   };
 
-  // Copy Today's ★★★ High Impact Events
   window.pm.copyTodayHighImpact = function() {
-    var lines = ['### 📅 今日重要總經與財經事件 (★★★)'];
-    var hits = 0;
-    document.querySelectorAll('.cal-date-section.is-today-section .cal-event-card[data-importance="3"]').forEach(function(c) {
-      hits++;
-      var time = c.querySelector('.cal-time-tpe')?.textContent || '';
-      var title = c.getAttribute('data-title') || '';
-      var flag = c.querySelector('.cal-country-badge')?.textContent || '';
-      var fc = c.querySelector('.metric-cell:nth-child(1) .metric-val')?.textContent || '—';
-      var prev = c.querySelector('.metric-cell:nth-child(2) .metric-val')?.textContent || '—';
-      lines.push('- **' + time + '** ' + flag + ' ' + title + '（預期: ' + fc + ' / 前值: ' + prev + '）');
-    });
-    if (hits === 0) {
-      lines.push('今日無排定之 ★★★ 重大事件');
+    var lines = ['📅 今日 ★★★ 重大財經事件清單：'];
+    var cards = document.querySelectorAll('.cal-date-section.is-today-section .cal-event-card[data-importance="3"]');
+    if (!cards.length) {
+      window.pm.showToast('今日無 ★★★ 重大財經事件');
+      return;
     }
+    cards.forEach(function(c) {
+      var time = c.querySelector('.cal-time-tpe')?.textContent.trim() || '';
+      var title = c.getAttribute('data-title') || '';
+      var prev = c.querySelector('.cal-val-prev')?.textContent.trim() || '-';
+      var fore = c.querySelector('.cal-val-fore')?.textContent.trim() || '-';
+      lines.push('• ' + time + ' ' + title + '（前值: ' + prev + ' ｜ 預測: ' + fore + '）');
+    });
     var text = lines.join('\n');
     navigator.clipboard.writeText(text).then(function() {
-      window.pm.showToast('已複製今日 ★★★ 財經事件 Markdown 至剪貼簿');
+      window.pm.showToast('已複製今日 ★★★ 重大事件清單');
     });
   };
 
+  window.pm.copyEventText = function(id) {
+    var card = document.getElementById(id);
+    if (!card) return;
+    var title = card.getAttribute('data-title');
+    var time = card.querySelector('.cal-time-tpe')?.textContent || '';
+    var text = time + ' ' + title;
+    navigator.clipboard.writeText(text).then(function() {
+      window.pm.showToast('已複製事件：' + title);
+    });
+  };
 
-  // Stock Action Popover Modal
+  window.pm.addToGoogleCalendar = function(id) {
+    var card = document.getElementById(id);
+    if (!card) return;
+    var title = encodeURIComponent(card.getAttribute('data-title') || '財經事件');
+    var utc = card.getAttribute('data-datetime-utc');
+    var dtStr = '';
+    if (utc && utc.length >= 16) {
+      var cleanUtc = utc.replace(/[-:]/g, '').split('.')[0];
+      if (!cleanUtc.endsWith('Z')) cleanUtc += 'Z';
+      dtStr = cleanUtc + '/' + cleanUtc;
+    }
+    var url = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + title + (dtStr ? '&dates=' + dtStr : '');
+    window.open(url, '_blank');
+  };
+
+  function updateEventCountdowns() {
+    var nowMs = Date.now();
+    document.querySelectorAll('.cal-event-card').forEach(function(card) {
+      var utcStr = card.getAttribute('data-datetime-utc');
+      if (!utcStr) return;
+      var evTime = new Date(utcStr).getTime();
+      if (isNaN(evTime)) return;
+      
+      var diffMs = evTime - nowMs;
+      var cdBadge = card.querySelector('.cal-countdown-badge');
+      
+      if (diffMs > 0 && diffMs <= 2 * 3600 * 1000) {
+        var mins = Math.floor(diffMs / 60000);
+        var secs = Math.floor((diffMs % 60000) / 1000);
+        if (cdBadge) {
+          cdBadge.textContent = '倒數 ' + String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
+          cdBadge.classList.add('show');
+        }
+      } else {
+        if (cdBadge) cdBadge.classList.remove('show');
+      }
+
+      var isLive = Math.abs(diffMs) <= 15 * 60 * 1000;
+      card.classList.toggle('is-live', isLive);
+
+      var isPast = diffMs < -30 * 60 * 1000;
+      card.classList.toggle('is-past', isPast);
+    });
+  }
+
+  // ==========================================
+  // 2. Stock Quick Action Modal
+  // ==========================================
   window.pm.currentStock = { code: '', name: '' };
   window.pm.openStockModal = function(code, name) {
     window.pm.currentStock = { code: code, name: name || '' };
@@ -4596,7 +4651,9 @@
     });
   };
 
-  // Watchlist JSON Backup & Restore
+  // ==========================================
+  // 3. Watchlist JSON Backup & Restore
+  // ==========================================
   window.pm.exportWatchlistJson = function() {
     var raw = localStorage.getItem(window.WATCH_KEY);
     var codes = raw ? JSON.parse(raw) : [];
@@ -4652,7 +4709,9 @@
     e.target.value = '';
   };
 
-  // Executive Briefing Mode (盤前 3 分鐘速讀模式)
+  // ==========================================
+  // 4. Executive Briefing Mode (速讀模式)
+  // ==========================================
   window.pm.toggleBriefingMode = function() {
     document.body.classList.toggle('briefing-mode');
     var isBrief = document.body.classList.contains('briefing-mode');
@@ -4661,7 +4720,9 @@
     window.pm.showToast(isBrief ? '⚡ 已進入盤前 3 分鐘速讀模式' : '已恢復標準檢視模式');
   };
 
-  // Export Daily Premarket Summary Markdown with data-metric
+  // ==========================================
+  // 5. Daily Markdown Export
+  // ==========================================
   window.pm.exportDailyMarkdown = function() {
     var lines = [];
     var buildTime = document.querySelector('.meta-item:nth-child(1) .meta-val')?.textContent.trim() || '';
@@ -4718,7 +4779,9 @@
     });
   };
 
-  // Robust Table Column Sorter supporting data-sort-value, dates, percentages, numbers
+  // ==========================================
+  // 6. Robust Table Column Sorter
+  // ==========================================
   window.pm.sortTable = function(th, colIdx) {
     var table = th.closest('table');
     if (!table) return;
@@ -4738,17 +4801,19 @@
     function getVal(row) {
       var cell = row.children[colIdx];
       if (!cell) return '';
+      if (cell.hasAttribute('data-sort')) {
+        var sv1 = parseFloat(cell.getAttribute('data-sort'));
+        return isNaN(sv1) ? cell.getAttribute('data-sort') : sv1;
+      }
       if (cell.hasAttribute('data-sort-value')) {
-        var sv = parseFloat(cell.getAttribute('data-sort-value'));
-        return isNaN(sv) ? cell.getAttribute('data-sort-value') : sv;
+        var sv2 = parseFloat(cell.getAttribute('data-sort-value'));
+        return isNaN(sv2) ? cell.getAttribute('data-sort-value') : sv2;
       }
       var text = cell.textContent.trim();
-      // Date match (e.g. 08-25, 08/25, 2026-08-25)
       var dateMatch = text.match(/\b(?:\d{4}[-/])?(\d{2})[-/](\d{2})\b/);
       if (dateMatch) {
         return parseInt(dateMatch[1] + dateMatch[2], 10);
       }
-      // Pure number or percentage match
       var numMatch = text.replace(/,/g, '').match(/[-+]?\d*\.?\d+/);
       if (numMatch) {
         var num = parseFloat(numMatch[0]);
@@ -4769,266 +4834,11 @@
     rows.forEach(function(r) { tbody.appendChild(r); });
   };
 
-  // Separated Fast & Slow Timers
-  function updateSlowTimers() {
-    var el = document.querySelector('.last-build');
-    if (el) {
-      var m = (el.textContent || '').match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
-      if (m) {
-        var bt = new Date(m[1].replace(' ', 'T') + '+08:00').getTime();
-        var hrs = (Date.now() - bt) / 36e5;
-        var cls = hrs < 6 ? 'fresh' : (hrs < 12 ? 'aging' : 'stale');
-        el.classList.remove('fresh', 'aging', 'stale');
-        el.classList.add(cls);
-        var banner = document.querySelector('.stale-banner');
-        if (banner) {
-          banner.textContent = '資料時間 ' + m[1] + '，距今 ' + hrs.toFixed(1) + ' 小時';
-          banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
-          banner.classList.toggle('is-warning', hrs >= 6 && hrs < 12);
-          banner.classList.toggle('is-danger', hrs >= 12);
-        }
-      }
-    }
-  }
-
-  function updateFastTimers() {
-    var cel = document.getElementById('open-countdown');
-    if (cel) {
-      var now = new Date();
-      var isHoliday = isTWHoliday(now);
-      var openToday = new Date(now);
-      openToday.setHours(9, 0, 0, 0);
-      var closeToday = new Date(now);
-      closeToday.setHours(13, 30, 0, 0);
-
-      if (!isHoliday && now >= openToday && now < closeToday) {
-        var diffClose = closeToday - now;
-        cel.textContent = '● 盤中撮合中｜收盤倒數 ' + formatCountdownHuman(diffClose);
-        cel.classList.remove('closed');
-      } else {
-        var nextOpen = getNextTradingDayOpen(now);
-        var diffOpen = nextOpen - now;
-        var prefix = isHoliday ? '休市中' : '今日已收盤';
-        cel.textContent = prefix + '｜下次 09:00 開盤倒數 ' + formatCountdownHuman(diffOpen);
-        cel.classList.add('closed');
-      }
-    }
-    updateEventCountdowns();
-  }
-
-  function startTimers() {
-    updateSlowTimers();
-    updateFastTimers();
-    if (!liveTimer) liveTimer = setInterval(updateSlowTimers, 60000);
-    if (!countdownTimer) countdownTimer = setInterval(updateFastTimers, 1000);
-  }
-
-  function stopTimers() {
-    if (liveTimer) { clearInterval(liveTimer); liveTimer = null; }
-    if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
-  }
-
-  // Old export Daily stub removed
-  window.pm._oldExport = function() {
-    var lines = [];
-    var buildTime = document.querySelector('.meta-item:nth-child(1) .meta-val')?.textContent.trim() || '';
-    var dataDate = document.querySelector('.meta-item:nth-child(2) .meta-val')?.textContent.trim() || '';
-    lines.push('# 📈 盤前情報決策總覽 · ' + new Date().toLocaleDateString('zh-TW'));
-    lines.push('> 產生時間：' + buildTime + ' ｜ 資料日期：' + dataDate + '（已對齊次日）\n');
-    
-    // Twii
-    var twiiVal = document.querySelector('#summary .summary-card:nth-child(1) .card-val')?.textContent.trim() || '';
-    var twiiChg = document.querySelector('#summary .summary-card:nth-child(1) .card-sub')?.textContent.trim() || '';
-    lines.push('## 1. 大盤與籌碼概況');
-    lines.push('- **加權指數昨收**：' + twiiVal + ' (' + twiiChg + ')');
-    
-    // Institutional
-    var instText = document.querySelector('#summary .inst-chips-mobile')?.textContent.trim() || '';
-    lines.push('- **三大法人籌碼**：' + instText);
-
-    // Alerts
-    var alertCount = document.querySelectorAll('#alerts tr[data-code]').length;
-    lines.push('## 2. 今日重點警示 (共 ' + alertCount + ' 檔)');
-    document.querySelectorAll('#alerts tr[data-code]').forEach(function(r) {
-      var code = r.getAttribute('data-code');
-      var name = r.getAttribute('data-label');
-      var cat = r.getAttribute('data-cat') === 'alert' ? '差1次處置' : '今日出關';
-      lines.push('- [' + cat + '] `' + code + '` ' + name);
-    });
-
-    // High impact calendar
-    lines.push('## 3. 今日重大財經事件 (★★★)');
-    document.querySelectorAll('.cal-date-section.is-today-section .cal-event-card[data-importance="3"]').forEach(function(c) {
-      var time = c.querySelector('.cal-time-tpe')?.textContent || '';
-      var title = c.getAttribute('data-title') || '';
-      lines.push('- ' + time + ' ' + title);
-    });
-
-    var text = lines.join('\n');
-    navigator.clipboard.writeText(text).then(function() {
-      window.pm.showToast('已匯出今日盤前重點 Markdown');
-    });
-  };
-
-  // Single Event Copy & Google Calendar Link
-  window.pm.copyEventText = function(id) {
-    var card = document.getElementById(id);
-    if (!card) return;
-    var title = card.getAttribute('data-title');
-    var time = card.querySelector('.cal-time-tpe')?.textContent || '';
-    var text = time + ' ' + title;
-    navigator.clipboard.writeText(text).then(function() {
-      window.pm.showToast('已複製事件：' + title);
-    });
-  };
-
-  window.pm.addToGoogleCalendar = function(id) {
-    var card = document.getElementById(id);
-    if (!card) return;
-    var title = encodeURIComponent(card.getAttribute('data-title') || '財經事件');
-    var utc = card.getAttribute('data-datetime-utc');
-    var dtStr = '';
-    if (utc && utc.length >= 16) {
-      var cleanUtc = utc.replace(/[-:]/g, '').split('.')[0];
-      if (!cleanUtc.endsWith('Z')) cleanUtc += 'Z';
-      dtStr = cleanUtc + '/' + cleanUtc;
-    }
-    var url = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + title + (dtStr ? '&dates=' + dtStr : '');
-    window.open(url, '_blank');
-  };
-
-  // Update Event Countdowns & Status
-  function updateEventCountdowns() {
-    var nowMs = Date.now();
-    document.querySelectorAll('.cal-event-card').forEach(function(card) {
-      var utcStr = card.getAttribute('data-datetime-utc');
-      if (!utcStr) return;
-      var evTime = new Date(utcStr).getTime();
-      if (isNaN(evTime)) return;
-      
-      var diffMs = evTime - nowMs;
-      var cdBadge = card.querySelector('.cal-countdown-badge');
-      
-      if (diffMs > 0 && diffMs <= 2 * 3600 * 1000) {
-        // Less than 2 hours before event
-        var mins = Math.floor(diffMs / 60000);
-        var secs = Math.floor((diffMs % 60000) / 1000);
-        if (cdBadge) {
-          cdBadge.textContent = '倒數 ' + String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
-          cdBadge.classList.add('show');
-        }
-      } else {
-        if (cdBadge) cdBadge.classList.remove('show');
-      }
-
-      // Live pulse: within ±15 minutes
-      var isLive = Math.abs(diffMs) <= 15 * 60 * 1000;
-      card.classList.toggle('is-live', isLive);
-
-      // Past event (> 30 mins after event)
-      var isPast = diffMs < -30 * 60 * 1000;
-      card.classList.toggle('is-past', isPast);
-    });
-  }
-
-  // Hook countdown to live timer
-  var origUpdateLiveTimers = updateLiveTimers;
-  updateLiveTimers = function() {
-    origUpdateLiveTimers();
-    updateEventCountdowns();
-  };
-
+  // ==========================================
+  // 7. Watchlist Core & Smart Grouping
+  // ==========================================
   window.WATCH_KEY = 'premarket.watchlist';
 
-
-
-  // Toast Notification Helper
-  window.pm.showToast = function(msg) {
-    var toast = document.getElementById('toast');
-    if (!toast) return;
-    toast.textContent = msg;
-    toast.classList.add('show');
-    setTimeout(function() { toast.classList.remove('show'); }, 1500);
-  };
-
-  // Iframe Auto-Height Receiver
-  window.addEventListener('message', function(e) {
-    if (!e.data || e.data.type !== 'embed-height') return;
-    var f = document.getElementById('embed-' + e.data.id);
-    if (f) f.style.height = Math.max(480, e.data.height) + 'px';
-  });
-
-  window.pm.syncIframeTheme = function(theme) {
-    var cur = theme || document.documentElement.getAttribute('data-theme') || (localStorage.getItem('premarket.theme') === 'dark' ? 'dark' : 'light');
-    if (!cur) cur = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
-    
-    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
-      try {
-        if (iframe.contentWindow) {
-          iframe.contentWindow.postMessage({type: 'theme-change', theme: cur}, '*');
-        }
-      } catch(e){}
-      try {
-        if (iframe.contentDocument && iframe.contentDocument.documentElement) {
-          iframe.contentDocument.documentElement.setAttribute('data-theme', cur);
-          if (cur === 'dark') {
-            iframe.contentDocument.documentElement.classList.add('dark');
-            iframe.contentDocument.body.classList.add('dark');
-            iframe.contentDocument.documentElement.classList.remove('light');
-            iframe.contentDocument.body.classList.remove('light');
-          } else {
-            iframe.contentDocument.documentElement.classList.add('light');
-            iframe.contentDocument.body.classList.add('light');
-            iframe.contentDocument.documentElement.classList.remove('dark');
-            iframe.contentDocument.body.classList.remove('dark');
-          }
-        }
-      } catch(e){}
-    });
-  };
-
-  // Theme Toggle
-  window.toggleTheme = function() {
-    var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark';
-    document.documentElement.setAttribute('data-theme', cur);
-    localStorage.setItem('premarket.theme', cur);
-    var metaTheme = document.querySelector('meta[name="theme-color"]');
-    if (metaTheme) metaTheme.content = cur === 'dark' ? '#0B1220' : '#F8FAFC';
-    var b = document.getElementById('theme-toggle');
-    if (b) b.textContent = cur === 'dark' ? '☀️ 淺色' : '🌙 深色';
-    window.pm.syncIframeTheme(cur);
-    if (window.pm.syncHash) window.pm.syncHash();
-  };
-
-  // Update Watchlist Star Markers & Alert Banner
-  function updateWatchlistStars() {
-    var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
-    var codes = [];
-    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
-    
-    var guide = document.getElementById('watchlist-empty-guide');
-    if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
-
-    var alertCount = 0;
-    document.querySelectorAll('.watchlist-star-marker').forEach(function(star) {
-      var code = star.getAttribute('data-code');
-      var isWatched = codes.indexOf(code) >= 0;
-      star.style.display = isWatched ? 'inline-block' : 'none';
-      if (isWatched && star.closest('#alerts')) {
-        alertCount++;
-      }
-    });
-
-    var alertBanner = document.getElementById('watchlist-alert-banner');
-    var alertCountEl = document.getElementById('watchlist-alert-count');
-    if (alertBanner && alertCountEl) {
-      alertCountEl.textContent = String(alertCount);
-      alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
-    }
-  }
-
-
-  // Helper: Extract 4~5 digit stock codes from arbitrary text (Excel, CSV, tab-separated)
   function extractStockCodes(rawText) {
     if (!rawText) return [];
     var matches = String(rawText).match(/\b\d{4,5}\b/g) || [];
@@ -5039,7 +4849,6 @@
     return unique;
   }
 
-  // Enhanced saveWatch supporting Excel pastes directly in main input
   window.saveWatch = function() {
     var input = document.getElementById('watch-input');
     var codes = extractStockCodes(input.value || '');
@@ -5049,7 +4858,24 @@
     window.pm.showToast('已儲存自選股清單 (' + codes.length + ' 檔)');
   };
 
-  // Batch Modal Handlers
+  window.clearWatch = function() {
+    localStorage.removeItem(window.WATCH_KEY);
+    document.getElementById('watch-input').value = '';
+    renderWatch();
+    if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
+    window.pm.showToast('已清空自選股');
+  };
+
+  window.delWatch = function(c) {
+    var raw = localStorage.getItem(window.WATCH_KEY);
+    var codes = raw ? JSON.parse(raw) : [];
+    codes = codes.filter(function(x) { return x !== c; });
+    localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
+    document.getElementById('watch-input').value = codes.join(', ');
+    renderWatch();
+    if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
+  };
+
   window.pm.openBatchModal = function() {
     var m = document.getElementById('batch-modal');
     if (m) {
@@ -5117,7 +4943,6 @@
     window.pm.showToast((override ? '已覆蓋自選股：' : '已追加自選股，共：') + finalCodes.length + ' 檔');
   };
 
-  // Excel / CSV File Upload Handler
   window.pm.handleWatchFileUpload = function(e) {
     var file = e.target.files && e.target.files[0];
     if (!file) return;
@@ -5135,32 +4960,37 @@
     e.target.value = '';
   };
 
-
-  window.clearWatch = function() {
-    localStorage.removeItem(window.WATCH_KEY);
-    document.getElementById('watch-input').value = '';
-    renderWatch();
-    if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
-    window.pm.showToast('已清空自選股');
-  };
-
-  window.delWatch = function(c) {
-    var raw = localStorage.getItem(window.WATCH_KEY);
-    var codes = raw ? JSON.parse(raw) : [];
-    codes = codes.filter(function(x) { return x !== c; });
-    localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
-    document.getElementById('watch-input').value = codes.join(', ');
-    renderWatch();
-    if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
-  };
-
-
-  // Track Watchlist Collapsed State for Large Lists
   window.pm.watchlistExpanded = false;
   window.pm.toggleWatchlistExpand = function() {
     window.pm.watchlistExpanded = !window.pm.watchlistExpanded;
     renderWatch();
   };
+
+  function updateWatchlistStars() {
+    var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
+    var codes = [];
+    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
+    
+    var guide = document.getElementById('watchlist-empty-guide');
+    if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
+
+    var alertCount = 0;
+    document.querySelectorAll('.watchlist-star-marker').forEach(function(star) {
+      var code = star.getAttribute('data-code');
+      var isWatched = codes.indexOf(code) >= 0;
+      star.style.display = isWatched ? 'inline-block' : 'none';
+      if (isWatched && star.closest('#alerts')) {
+        alertCount++;
+      }
+    });
+
+    var alertBanner = document.getElementById('watchlist-alert-banner');
+    var alertCountEl = document.getElementById('watchlist-alert-count');
+    if (alertBanner && alertCountEl) {
+      alertCountEl.textContent = String(alertCount);
+      alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
+    }
+  }
 
   function renderWatch() {
     var box = document.getElementById('watch-chips');
@@ -5203,11 +5033,9 @@
       }
     });
 
-    // 1. Stat / Summary Toolbar
     var statBar = document.createElement('div');
     statBar.className = 'watch-stat-bar';
     
-    var totalHitCount = hitAlerts.length + hitCandidates.length;
     var statLeft = document.createElement('div');
     statLeft.className = 'watch-stat-left';
     statLeft.innerHTML = '<strong>⭐ 自選清單 (' + codes.length + ' 檔)</strong>'
@@ -5255,7 +5083,6 @@
       return chip;
     }
 
-    // 2. Group: 今日命中標的 (Always Shown Prominently)
     if (hitAlerts.length || hitCandidates.length) {
       var hitGroup = document.createElement('div');
       hitGroup.className = 'watch-group';
@@ -5269,11 +5096,9 @@
       box.appendChild(hitGroup);
     }
 
-    // 3. Group: 其餘標的 (Collapsible if > 12 stocks)
     if (otherStocks.length) {
       var otherGroup = document.createElement('div');
       otherGroup.className = 'watch-group';
-      
       var isCollapsible = (codes.length > 12);
       if (!isCollapsible || window.pm.watchlistExpanded) {
         otherGroup.innerHTML = '<div class="watch-group-title">⚪ 未觸發之自選標的 (' + otherStocks.length + ' 檔)</div>';
@@ -5290,8 +5115,9 @@
     updateWatchlistStars();
   }
 
-
-  // Global Watch-Only Filter
+  // ==========================================
+  // 8. Global Filters & UI Modes
+  // ==========================================
   window.pm.watchOnly = localStorage.getItem('premarket.filterWatchOnly') === '1';
   window.pm.toggleWatchOnly = function() {
     window.pm.watchOnly = !window.pm.watchOnly;
@@ -5316,7 +5142,6 @@
       }
     });
 
-    // Update alert count badge dynamically
     var alertBadge = document.getElementById('nav-alert-badge');
     if (alertBadge) {
       var visibleAlerts = document.querySelectorAll('#alerts tr[data-code]:not([style*="display: none"])').length;
@@ -5324,14 +5149,12 @@
     }
   };
 
-  // Snapshot Mode Toggle
   window.pm.toggleSnapshot = function() {
     document.body.classList.toggle('snapshot-mode');
     var isSnap = document.body.classList.contains('snapshot-mode');
     window.pm.showToast(isSnap ? '已開啟截圖模式（按 Esc 或點擊退出）' : '已關閉截圖模式');
   };
 
-  // Shortcuts Modal Toggle
   window.pm.toggleMissingModal = function() {
     var m = document.getElementById('missing-modal');
     if (m) m.classList.toggle('is-open');
@@ -5346,34 +5169,51 @@
     if (m) m.classList.toggle('is-open');
   };
 
-  // Table Column Click Sorter
-  window.pm.sortTable = function(th, colIdx) {
-    var table = th.closest('table');
-    var tbody = table.querySelector('tbody');
-    var rows = Array.from(tbody.querySelectorAll('tr'));
-    var isAsc = !th.classList.contains('asc');
-    
-    table.querySelectorAll('th').forEach(function(h) {
-      h.classList.remove('sorted', 'asc', 'desc');
-    });
-    th.classList.add('sorted', isAsc ? 'asc' : 'desc');
-
-    rows.sort(function(a, b) {
-      var aCell = a.children[colIdx] ? a.children[colIdx].textContent.trim() : '';
-      var bCell = b.children[colIdx] ? b.children[colIdx].textContent.trim() : '';
-      var aNum = parseFloat(aCell.replace(/[^0-9.-]/g, ''));
-      var bNum = parseFloat(bCell.replace(/[^0-9.-]/g, ''));
-
-      if (!isNaN(aNum) && !isNaN(bNum)) {
-        return isAsc ? aNum - bNum : bNum - aNum;
-      }
-      return isAsc ? aCell.localeCompare(bCell, 'zh-Hant') : bCell.localeCompare(aCell, 'zh-Hant');
-    });
-
-    rows.forEach(function(r) { tbody.appendChild(r); });
+  window.toggleTheme = function() {
+    var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark';
+    document.documentElement.setAttribute('data-theme', cur);
+    localStorage.setItem('premarket.theme', cur);
+    var metaTheme = document.querySelector('meta[name="theme-color"]');
+    if (metaTheme) metaTheme.content = cur === 'dark' ? '#0B1220' : '#F8FAFC';
+    var b = document.getElementById('theme-toggle');
+    if (b) b.textContent = cur === 'dark' ? '☀️ 淺色' : '🌙 深色';
+    window.pm.syncIframeTheme(cur);
+    if (window.pm.syncHash) window.pm.syncHash();
   };
 
-  // URL Hash Sync
+  window.pm.syncIframeTheme = function(theme) {
+    var cur = theme || document.documentElement.getAttribute('data-theme') || (localStorage.getItem('premarket.theme') === 'dark' ? 'dark' : 'light');
+    if (!cur) cur = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+    
+    document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
+      try {
+        if (iframe.contentWindow) {
+          iframe.contentWindow.postMessage({type: 'theme-change', theme: cur}, '*');
+        }
+      } catch(e){}
+      try {
+        if (iframe.contentDocument && iframe.contentDocument.documentElement) {
+          iframe.contentDocument.documentElement.setAttribute('data-theme', cur);
+          if (cur === 'dark') {
+            iframe.contentDocument.documentElement.classList.add('dark');
+            iframe.contentDocument.documentElement.classList.remove('light');
+            if (iframe.contentDocument.body) {
+              iframe.contentDocument.body.classList.add('dark');
+              iframe.contentDocument.body.classList.remove('light');
+            }
+          } else {
+            iframe.contentDocument.documentElement.classList.add('light');
+            iframe.contentDocument.documentElement.classList.remove('dark');
+            if (iframe.contentDocument.body) {
+              iframe.contentDocument.body.classList.add('light');
+              iframe.contentDocument.body.classList.remove('dark');
+            }
+          }
+        }
+      } catch(e){}
+    });
+  };
+
   window.pm.syncHash = function() {
     var curTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
     var watch = window.pm.watchOnly ? '1' : '0';
@@ -5381,82 +5221,32 @@
     history.replaceState(null, '', hash + '?theme=' + curTheme + '&watch=' + watch);
   };
 
-  // Keyboard Shortcuts
-  document.addEventListener('keydown', function(e) {
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-      if (e.key === 'Enter' && e.target.id === 'watch-input') {
-        window.saveWatch();
-      }
-      if (e.key === 'Escape') {
-        e.target.blur();
-      }
-      return;
-    }
+  window.pm.showToast = function(msg) {
+    var toast = document.getElementById('toast');
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(function() { toast.classList.remove('show'); }, 1500);
+  };
 
-    if (e.key === 'Escape') {
-      if (document.body.classList.contains('snapshot-mode')) {
-        document.body.classList.remove('snapshot-mode');
-      }
-      var m = document.getElementById('shortcuts-modal');
-      if (m && m.classList.contains('open')) m.classList.remove('open');
-    } else if (e.key === '1') {
-      document.getElementById('summary')?.scrollIntoView({ behavior: 'smooth' });
-    } else if (e.key === '2') {
-      document.getElementById('alerts')?.scrollIntoView({ behavior: 'smooth' });
-    } else if (e.key === '3') {
-      document.getElementById('watchlist')?.scrollIntoView({ behavior: 'smooth' });
-    } else if (e.key === '4') {
-      document.getElementById('market-context')?.scrollIntoView({ behavior: 'smooth' });
-    } else if (e.key === '5') {
-      document.getElementById('news-calendar')?.scrollIntoView({ behavior: 'smooth' });
-    } else if (e.key === '6') {
-      document.getElementById('system-info')?.scrollIntoView({ behavior: 'smooth' });
-    } else if (e.key === '/') {
-      e.preventDefault();
-      var inp = document.getElementById('watch-input');
-      if (inp) { inp.focus(); inp.select(); }
-    } else if (e.key === 'r' || e.key === 'R') {
-      location.reload(true);
-    } else if (e.key === 'd' || e.key === 'D') {
-      window.toggleTheme();
-    } else if (e.key === 'w' || e.key === 'W') {
-      window.pm.toggleWatchOnly();
-    } else if (e.key === 't' || e.key === 'T') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (e.key === '7') {
-      document.getElementById('system-info')?.scrollIntoView({ behavior: 'smooth' });
-    } else if (e.key === '?' || (e.shiftKey && e.key === '/')) {
-      window.pm.toggleShortcutsModal();
-    }
-  });
+  window.pm.toggleCondCollapsible = function(btn) {
+    var box = btn.closest('.cond-collapsible');
+    if (!box) return;
+    var hidden = box.querySelector('.cond-hidden');
+    if (!hidden) return;
+    var isExp = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !isExp);
+    hidden.classList.toggle('is-open', !isExp);
+    var count = btn.textContent.match(/\d+/);
+    btn.textContent = !isExp ? '收合 ▲' : '+' + (count ? count[0] : '') + ' 條件 ▾';
+  };
 
-  // Scroll Spy & Back to Top
-  var btt = document.getElementById('back-to-top');
-  window.addEventListener('scroll', function() {
-    if (btt) btt.style.display = window.scrollY > 600 ? 'flex' : 'none';
-  }, { passive: true });
-
-  var sections = document.querySelectorAll('.content-section, #system-info');
-  var navLinks = document.querySelectorAll('.nav-link');
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          var id = entry.target.getAttribute('id');
-          navLinks.forEach(function(link) {
-            link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
-          });
-        }
-      });
-    }, { rootMargin: '-20% 0px -70% 0px' });
-    sections.forEach(function(sec) { observer.observe(sec); });
-  }
-
-  // Live Timer Throttled by Visibility
+  // ==========================================
+  // 9. Timers & Live Calculations
+  // ==========================================
   var liveTimer = null;
   var countdownTimer = null;
 
-  // 2026 Taiwan Stock Market Holidays
   const TW_HOLIDAYS_2026 = [
     "2026-01-01", "2026-02-13", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19",
     "2026-02-20", "2026-02-27", "2026-04-03", "2026-04-06", "2026-05-01", "2026-06-19",
@@ -5501,7 +5291,7 @@
     }
   }
 
-  function updateLiveTimers() {
+  function updateSlowTimers() {
     var el = document.querySelector('.last-build');
     if (el) {
       var m = (el.textContent || '').match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
@@ -5520,7 +5310,9 @@
         }
       }
     }
+  }
 
+  function updateFastTimers() {
     var cel = document.getElementById('open-countdown');
     if (cel) {
       var now = new Date();
@@ -5542,12 +5334,14 @@
         cel.classList.add('closed');
       }
     }
+    updateEventCountdowns();
   }
 
   function startTimers() {
-    updateLiveTimers();
-    if (!liveTimer) liveTimer = setInterval(updateLiveTimers, 60000);
-    if (!countdownTimer) countdownTimer = setInterval(updateLiveTimers, 1000);
+    updateSlowTimers();
+    updateFastTimers();
+    if (!liveTimer) liveTimer = setInterval(updateSlowTimers, 60000);
+    if (!countdownTimer) countdownTimer = setInterval(updateFastTimers, 1000);
   }
 
   function stopTimers() {
@@ -5555,14 +5349,103 @@
     if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
   }
 
+  // ==========================================
+  // 10. Global Event Listeners & Init
+  // ==========================================
+  window.addEventListener('message', function(e) {
+    if (!e.data || e.data.type !== 'embed-height') return;
+    var f = document.getElementById('embed-' + e.data.id);
+    if (f) f.style.height = Math.max(480, e.data.height) + 'px';
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+      if (e.key === 'Enter' && e.target.id === 'watch-input') {
+        window.saveWatch();
+      }
+      if (e.key === 'Escape') {
+        e.target.blur();
+        if (window.pm.closeStockModal) window.pm.closeStockModal();
+        document.querySelectorAll('.modal-overlay.is-open').forEach(function(m) {
+          m.classList.remove('is-open');
+        });
+      }
+      return;
+    }
+
+    if (e.key === 'Escape') {
+      if (document.body.classList.contains('snapshot-mode')) {
+        document.body.classList.remove('snapshot-mode');
+      }
+      if (window.pm.closeStockModal) window.pm.closeStockModal();
+      document.querySelectorAll('.modal-overlay.is-open').forEach(function(m) {
+        m.classList.remove('is-open');
+      });
+      return;
+    }
+
+    if (e.key === '1') {
+      document.getElementById('summary')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '2') {
+      document.getElementById('alerts')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '3') {
+      document.getElementById('watchlist')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '4') {
+      document.getElementById('market-context')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '5') {
+      document.getElementById('news-calendar')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '6') {
+      document.getElementById('system-info')?.scrollIntoView({ behavior: 'smooth' });
+    } else if (e.key === '/') {
+      e.preventDefault();
+      var inp = document.getElementById('watch-input');
+      if (inp) { inp.focus(); inp.select(); }
+    } else if (e.key === 'r' || e.key === 'R') {
+      location.reload(true);
+    } else if (e.key === 'd' || e.key === 'D') {
+      window.toggleTheme();
+    } else if (e.key === 'w' || e.key === 'W') {
+      window.pm.toggleWatchOnly();
+    } else if (e.key === 'b' || e.key === 'B') {
+      window.pm.toggleBriefingMode();
+    } else if (e.key === 'e' || e.key === 'E') {
+      window.pm.exportDailyMarkdown();
+    } else if (e.key === 'c' || e.key === 'C') {
+      window.pm.copyTodayHighImpact();
+    } else if (e.key === 't' || e.key === 'T') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (e.key === '?' || (e.shiftKey && e.key === '/')) {
+      window.pm.toggleShortcutsModal();
+    }
+  });
+
+  var btt = document.getElementById('back-to-top');
+  window.addEventListener('scroll', function() {
+    if (btt) btt.style.display = window.scrollY > 600 ? 'flex' : 'none';
+  }, { passive: true });
+
+  var sections = document.querySelectorAll('.content-section, #system-info');
+  var navLinks = document.querySelectorAll('.nav-link');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var id = entry.target.getAttribute('id');
+          navLinks.forEach(function(link) {
+            link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
+          });
+        }
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(function(sec) { observer.observe(sec); });
+  }
+
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) stopTimers();
     else startTimers();
   });
 
-  // Initialization
   document.addEventListener('DOMContentLoaded', function() {
-    // Restore Theme
     var savedTheme = localStorage.getItem('premarket.theme');
     var urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
     if (urlParams.get('theme')) savedTheme = urlParams.get('theme');
@@ -5574,18 +5457,15 @@
       if (metaTheme) metaTheme.content = '#0B1220';
     }
 
-    // Restore Watchlist Input & Render
     var rawWatch = localStorage.getItem(window.WATCH_KEY);
     var codes = rawWatch ? JSON.parse(rawWatch) : [];
     var inp = document.getElementById('watch-input');
     if (inp && codes.length) inp.value = codes.join(', ');
     renderWatch();
 
-    // Restore Watch-Only
     if (urlParams.get('watch') === '1') window.pm.watchOnly = true;
     if (window.pm.watchOnly) window.pm.applyWatchOnly();
 
-    // Iframe 5-second timeout safety
     setTimeout(function() {
       document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
         var curH = parseInt(iframe.style.height || '0');
@@ -5603,7 +5483,6 @@
       });
     }, 5000);
 
-    // Initialize Calendar Timeline Filters
     if (window.pm.calState && window.pm.calState.search) {
       var sinp = document.getElementById('cal-search-input');
       if (sinp) sinp.value = window.pm.calState.search;
