@@ -6,6 +6,8 @@
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="個人用盤前決策工作台：處置股、三大法人、看自選股、美股／亞股走勢、台指期夜盤、PressPlay 族群摘要。">
+<meta name="robots" content="noindex, nofollow">
 <title>盤前情報準備台 · {{ meta.build_time if (meta is defined and meta and meta.build_time) else (build_time or generated_at) }}</title>
 
 
@@ -883,6 +885,79 @@
     animation: pulse-warn 1.6s infinite;
   }
 
+
+  /* Dark Theme Support */
+  :root[data-theme="dark"] {
+    --bg-page: #0B1220;
+    --bg-card: #111827;
+    --bg-sub: #1F2937;
+    --bg-hover: #374151;
+    --border: #1F2937;
+    --border-strong: #374151;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
+    --text-light: #64748B;
+  }
+
+  .theme-toggle {
+    background: transparent;
+    border: 1px solid var(--border-strong, #CBD5E1);
+    border-radius: 6px;
+    padding: 6px 10px;
+    min-height: 44px;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    transition: all 0.15s ease;
+  }
+  .theme-toggle:hover {
+    color: var(--text-main);
+    background: var(--bg-hover);
+  }
+
+  /* Countdown Component */
+  .open-countdown {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 8px 0 4px;
+    letter-spacing: 0.02em;
+    grid-column: 1 / -1;
+  }
+  .open-countdown.closed { color: var(--text-light); }
+
+  /* Watchlist Section */
+  .watchlist-input-row { display: flex; gap: 8px; align-items: center; padding: 4px 0 10px; flex-wrap: wrap; }
+  .watch-input { flex: 1; min-width: 240px; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-card); color: var(--text-main); font-family: var(--font-mono); font-size: 13px; }
+  .watch-btn { padding: 8px 14px; min-height: 40px; border-radius: 6px; border: 1px solid var(--border-strong); background: var(--bg-card); color: var(--text-main); font-size: 13px; font-weight: 600; cursor: pointer; }
+  .watch-btn:hover { background: var(--bg-hover); }
+  .watch-btn.ghost { background: transparent; color: var(--text-muted); }
+  .watch-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .watch-chip { background: var(--bg-sub); border: 1px solid var(--border); border-radius: 16px; padding: 4px 10px; font-size: 13px; font-family: var(--font-mono); display: inline-flex; align-items: center; gap: 6px; }
+  .watch-chip .wc-name { color: var(--text-main); }
+  .watch-chip .wc-code { color: var(--blue); font-weight: 600; }
+  .watch-chip .wc-quote { color: var(--text-muted); margin-left: 4px; }
+  .watch-chip.alert { border-left: 3px solid var(--rise); background: #FFF1F2; color: #991B1B; }
+  .watch-chip.amber { border-left: 3px solid var(--amber); background: #FFFBEB; color: #92400E; }
+  .watch-chip .wc-del { cursor: pointer; color: var(--text-light); margin-left: 2px; }
+  .watch-chip .wc-del:hover { color: var(--rise); }
+  .watch-hint { color: var(--text-muted); font-size: 12px; padding: 6px 0; }
+
+  /* Part 3 Error / Empty state */
+  .part3-error { background: #FEF2F2; border: 1px solid #FCA5A5; color: #B91C1C; padding: 12px 14px; border-radius: 8px; margin: 12px 0; font-size: 13px; }
+  .part3-empty { background: var(--bg-sub); color: var(--text-muted); padding: 14px; border-radius: 8px; text-align: center; font-size: 13px; }
+
+  /* Last build fresh / aging / stale */
+  .last-build.fresh   { color: var(--text-main); }
+  .last-build.aging   { color: var(--amber); }
+  .last-build.stale   { color: var(--rise); font-weight: 700; }
+  .stale-banner.is-warning { background: #FFF7ED !important; color: #9A3412 !important; border: 1px solid var(--amber) !important; }
+  .stale-banner.is-danger  { background: #FEF2F2 !important; color: #B91C1C !important; border: 1px solid var(--rise) !important; }
+
 </style>
 </head>
 <body>
@@ -916,13 +991,15 @@
       {% set exiting_today = disposal.currently_in_disposal | rejectattr('trading_days_left', 'none') | selectattr('trading_days_left', 'in', ['0', '0天', 0, '出關']) | list %}
       {% set hidden_disposal = disposal.currently_in_disposal | selectattr('trading_days_left', 'none') | list %}
       {% set alert_total = (disposal.one_flag_from_disposal|length) + (exiting_today|length) %}
+      <a href="#self-watchlist" class="nav-link">我在看</a>
       <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">今日警示 {% if alert_total > 0 %}<span class="nav-badge">{{ alert_total }}</span>{% endif %}{% if stale_hours and stale_hours > 12 %}<span class="nav-badge" style="background:#F59E0B; color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
       <a href="#watchlist" class="nav-link">今日候選股</a>
       <a href="#market-context" class="nav-link">市場背景</a>
       <a href="#news-calendar" class="nav-link">補充資訊</a>
       <a href="#system-info" class="nav-link">系統資訊</a>
+      <button class="theme-toggle" onclick="window.toggleTheme()" id="theme-toggle">🌙 深色</button>
       <button class="refresh-btn" onclick="location.reload(true)" title="重新載入最新版">
-        🔄 <span class="last-build">建置 {{ build_time or '08:00' }}</span>
+        🔄 <span class="last-build">建置 {{ (meta.build_time if meta is defined and meta and meta.build_time else (build_time or '08:00')) }}</span>
       </button>
     </div>
   </nav>
@@ -948,15 +1025,20 @@
             {% if twse.twii.change > 0 %}+{% endif %}{{ twse.twii.change }} ({{ '%+.2f'|format(twse.twii.change_pct) }}%)
           </div>
         </div>
-        <!-- 外資 / 投信 -->
+        <!-- 三大法人買賣超 (外資 / 投信 / 自營商) -->
         <div class="summary-card">
           <div class="card-label">三大法人買賣超</div>
           <div class="inst-chips font-mono">
-            {% if twse.inst.foreign %}
-            <div class="chip"><span class="chip-label">外資</span> <span class="{% if twse.inst.foreign > 0 %}rise{% else %}fall{% endif %}">{% if twse.inst.foreign > 0 %}+{% endif %}{{ twse.inst.foreign }}億</span></div>
-            {% endif %}
-            {% if twse.inst.trust %}
-            <div class="chip"><span class="chip-label">投信</span> <span class="{% if twse.inst.trust > 0 %}rise{% else %}fall{% endif %}">{% if twse.inst.trust > 0 %}+{% endif %}{{ twse.inst.trust }}億</span></div>
+            {% if twse and twse.inst %}
+              {% if twse.inst.foreign is not none %}
+              <div class="chip"><span class="chip-label">外資</span> <span class="{% if twse.inst.foreign > 0 %}rise{% elif twse.inst.foreign < 0 %}fall{% endif %}">{% if twse.inst.foreign > 0 %}+{% endif %}{{ twse.inst.foreign }}億</span></div>
+              {% endif %}
+              {% if twse.inst.trust is not none %}
+              <div class="chip"><span class="chip-label">投信</span> <span class="{% if twse.inst.trust > 0 %}rise{% elif twse.inst.trust < 0 %}fall{% endif %}">{% if twse.inst.trust > 0 %}+{% endif %}{{ twse.inst.trust }}億</span></div>
+              {% endif %}
+              {% if twse.inst.dealer is not none %}
+              <div class="chip"><span class="chip-label">自營商</span> <span class="{% if twse.inst.dealer > 0 %}rise{% elif twse.inst.dealer < 0 %}fall{% endif %}">{% if twse.inst.dealer > 0 %}+{% endif %}{{ twse.inst.dealer }}億</span></div>
+              {% endif %}
             {% endif %}
           </div>
         </div>
@@ -993,7 +1075,8 @@
         <!-- 台指期夜盤 -->
         {% if night and night.latest %}
         <div class="summary-card">
-          <div class="card-label">台指期夜盤 (05:00) · 來源：{{ night.latest.provider_name or night.provider_name or 'Yahoo' }}</div>
+          <div class="card-label">台指期夜盤 (05:00)</div>
+          <div class="card-sub" style="font-size:11px; margin-bottom:4px; color:var(--text-muted);">Wantgoo 即時單次抓取（非當日累積夜盤資料；連續夜盤收集功能已停用，詳見 README 已知限制第一點）</div>
           {% if night.latest.is_fallback %}
           <div class="card-sub amber font-bold" style="font-size:10px; margin-bottom:2px;">⚠️ 抓取失敗，使用最近一次 fixtures/{{ night.date }}</div>
           {% endif %}
@@ -1005,7 +1088,23 @@
           </div>
         </div>
         {% endif %}
+        <div id="open-countdown" class="open-countdown"></div>
       </div>
+    </section>
+
+    <!-- Self Watchlist -->
+    <section id="self-watchlist" class="content-section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="title-icon">⭐</span> 我在看</h2>
+        <span class="section-desc">輸入台股代號（逗號分隔），存於 localStorage</span>
+      </div>
+      <div class="watchlist-input-row">
+        <input id="watch-input" class="watch-input" placeholder="例如 2330, 2454, 2603" autocomplete="off">
+        <button class="watch-btn" onclick="window.saveWatch()">儲存</button>
+        <button class="watch-btn ghost" onclick="window.clearWatch()">清空</button>
+      </div>
+      <div id="watch-chips" class="watch-chips"></div>
+      <div class="watch-hint" id="watch-hint"></div>
     </section>
 
     <!-- 2. 今日警示 (Alerts) -->
@@ -1045,7 +1144,7 @@
               </thead>
               <tbody>
                 {% for row in disposal.one_flag_from_disposal %}
-                <tr>
+                <tr data-code="{{ row.code.replace('⏸','').strip() }}" data-cat="alert" data-label="{{ row.name }}">
                   <td data-label="市場">{{ row.market }}</td>
                   <td data-label="代號" class="code font-mono">{{ row.code }}</td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}</td>
@@ -1113,7 +1212,7 @@
               </thead>
               <tbody>
                 {% for row in exiting_today %}
-                <tr>
+                <tr data-code="{{ row.code.replace('⏸','').strip() }}" data-cat="amber" data-label="{{ row.name }}">
                   <td data-label="市場">{{ row.market }}</td>
                   <td data-label="代號" class="code font-mono">{{ row.code }}</td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}</td>
@@ -1152,21 +1251,21 @@
           <details class="unref-accordion" open>
             <summary class="accordion-header">即時自結（市場未反映 {{ financials.att|length if financials.att else 0 }} 筆）</summary>
             <div class="accordion-content">
-              <iframe src="embed/att.html" class="embed-frame" style="height:320px;"></iframe>
+              <iframe src="embed/att.html" id="embed-att" class="embed-frame" loading="lazy" referrerpolicy="no-referrer" style="height:480px;"></iframe>
             </div>
           </details>
 
           <details class="unref-accordion" open>
             <summary class="accordion-header">即時季報（市場未反映 {{ financials.fin|length if financials.fin else 0 }} 筆）</summary>
             <div class="accordion-content">
-              <iframe src="embed/fin.html" class="embed-frame" style="height:320px;"></iframe>
+              <iframe src="embed/fin.html" id="embed-fin" class="embed-frame" loading="lazy" referrerpolicy="no-referrer" style="height:480px;"></iframe>
             </div>
           </details>
 
           <details class="unref-accordion" open>
             <summary class="accordion-header">即時營收（市場未反映 {{ financials.rev|length if financials.rev else 0 }} 筆）</summary>
             <div class="accordion-content">
-              <iframe src="embed/rev.html" class="embed-frame" style="height:320px;"></iframe>
+              <iframe src="embed/rev.html" id="embed-rev" class="embed-frame" loading="lazy" referrerpolicy="no-referrer" style="height:480px;"></iframe>
             </div>
           </details>
         </div>
@@ -1180,8 +1279,18 @@
         <span class="section-desc">盤前族群整理、法人動向與主力當沖籌碼明細</span>
       </div>
 
+      {% if pressplay._status == 'fetch_failed' %}
+      <div class="part3-error">
+        <strong>Part 3（PressPlay 摘要）收集失敗。</strong>
+        請到 GitHub <code>Actions → build-premarket-page</code> 查看 Logs；其他章節照常運作，不受影響。
+      </div>
+      {% elif (pressplay.not_found_group.matched|length == 0 and pressplay.found_group.matched|length == 0) and (pressplay.not_found_group.unmatched|length == 0 and pressplay.found_group.unmatched|length == 0) %}
+      <div class="part3-empty">尚無資料（PressPlay 收集流程跑過，但今天沒有盤前文章）。</div>
+      {% else %}
+
       <!-- 族群聚焦標的 -->
       <div class="card">
+
         <div class="card-head">
           <div class="card-title-group">
             <h3 class="card-title">族群聚焦標的</h3>
@@ -1385,6 +1494,8 @@
           {% endfor %}
         </div>
       </div>
+      {% endif %}
+
       {% endif %}
     </section>
 
@@ -1605,7 +1716,7 @@
       <div class="footer-title">系統與資料說明</div>
       <ul class="footer-notes">
         <li><strong>資料來源：</strong>處置股與財務公告來自 chengwaye.com；籌碼股來自 PressPlay 每日盤前專欄；指數報價來自 Yahoo Finance；新聞聚合來自 Google News；財經行事曆來自 MacroMicro。</li>
-        <li><strong>排程機制：</strong>交易日每日 07:35（美股收盤與早報結算）、08:05（日韓開盤走勢）、08:20（台指期開盤前最後確認）自動更新。</li>
+        <li><strong>排程機制：</strong>每日 07:35（台北）自動重建；盤前可在 GitHub Actions → Build premarket page → Run workflow 手動觸發，2 分鐘內完成</li>
         <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
         <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日 28 檔重點清單；未在清單內之標的自動略過。</li>
       </ul>
@@ -1613,6 +1724,159 @@
       <div class="footer-copy" style="margin-top:4px;">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
   </footer>
+
+
+<script>
+  // §4 Iframe Auto-Height Receiver
+  window.addEventListener('message', function(e){
+    if (!e.data || e.data.type !== 'embed-height') return;
+    var f = document.getElementById('embed-' + e.data.id);
+    if (f) f.style.height = Math.max(480, e.data.height) + 'px';
+  });
+
+  // §5 Last-Build / Stale Banner Live Timer
+  (function(){
+    var el = document.querySelector('.last-build');
+    if (!el) return;
+    var m = (el.textContent || '').match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
+    if (!m) return;
+    var bt = new Date(m[1].replace(' ','T') + '+08:00').getTime();
+
+    function paint(){
+      var hrs = (Date.now() - bt) / 36e5;
+      var cls = hrs < 6 ? 'fresh' : (hrs < 12 ? 'aging' : 'stale');
+      el.classList.remove('fresh','aging','stale');
+      el.classList.add(cls);
+      var tip = hrs < 6 ? '鮮度中' : (hrs < 12 ? '稍舊' : '已落後 ' + hrs.toFixed(1) + 'h');
+      el.title = '建置時間 ' + m[1] + '（台北）｜' + tip;
+      var banner = document.querySelector('.stale-banner');
+      if (banner) {
+        banner.textContent = '資料時間 ' + m[1] + '，距今 ' + hrs.toFixed(1) + ' 小時';
+        banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
+        banner.classList.toggle('is-warning', hrs >= 6 && hrs < 12);
+        banner.classList.toggle('is-danger', hrs >= 12);
+      }
+    }
+    paint(); setInterval(paint, 60000);
+  })();
+
+  // §6 Open Countdown Timer
+  (function(){
+    var el = document.getElementById('open-countdown');
+    if (!el) return;
+    function upd(){
+      var now = new Date();
+      var open = new Date(now);
+      open.setHours(9, 0, 0, 0);
+      var dow = now.getDay();
+      var weekend = (dow === 0) || (dow === 6);
+      var close = new Date(now); close.setHours(13, 30, 0, 0);
+      if (weekend || (now >= close && now.getHours() >= 13)) {
+        while (open <= now) open.setDate(open.getDate()+1);
+        if (weekend) {
+          do { open.setDate(open.getDate()+1); } while (open.getDay() === 0 || open.getDay() === 6);
+        }
+        el.textContent = '今日已收盤｜下次 09:00 開盤倒數 ' + fmt(open);
+        el.classList.add('closed');
+        return;
+      }
+      var diff = open - now;
+      if (diff > 0) {
+        el.textContent = '離 09:00 開盤還有 ' + fmt(open);
+        el.classList.remove('closed');
+      } else {
+        el.textContent = '盤中｜收盤倒數 ' + fmt(close);
+      }
+    }
+    function fmt(d){
+      var ms = d - new Date();
+      if (ms <= 0) return '00:00:00';
+      var h = String(Math.floor(ms/36e5)).padStart(2,'0');
+      var m = String(Math.floor(ms/6e4)%60).padStart(2,'0');
+      var s = String(Math.floor(ms/1e3)%60).padStart(2,'0');
+      return h + ':' + m + ':' + s;
+    }
+    upd(); setInterval(upd, 1000);
+  })();
+
+  // §7 Watchlist (localStorage)
+  window.WATCH_KEY = 'premarket.watchlist';
+  window.saveWatch = function(){
+    var raw = (document.getElementById('watch-input').value || '').replace(/[^\d,]/g,'');
+    var codes = [];
+    raw.split(',').forEach(function(c){ c = c.trim(); if (c && codes.indexOf(c) < 0) codes.push(c); });
+    localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
+    renderWatch();
+  };
+  window.clearWatch = function(){
+    localStorage.removeItem(window.WATCH_KEY);
+    document.getElementById('watch-input').value = '';
+    renderWatch();
+  };
+  function renderWatch(){
+    var box = document.getElementById('watch-chips');
+    var hint = document.getElementById('watch-hint');
+    if (!box || !hint) return;
+    box.innerHTML = '';
+    var raw = localStorage.getItem(window.WATCH_KEY);
+    var codes = raw ? JSON.parse(raw) : [];
+    if (!codes.length) {
+      hint.textContent = '目前無自選股。';
+      return;
+    }
+    hint.textContent = codes.length + ' 檔';
+    var disposalMap = {};
+    document.querySelectorAll('[data-code]').forEach(function(n){
+      disposalMap[n.getAttribute('data-code')] = {type: n.getAttribute('data-cat'), label: n.getAttribute('data-label')};
+    });
+    codes.forEach(function(c){
+      var chip = document.createElement('span');
+      chip.className = 'watch-chip';
+      var hit = disposalMap[c];
+      if (hit && hit.type === 'alert') chip.classList.add('alert');
+      else if (hit && hit.type === 'amber') chip.classList.add('amber');
+      chip.innerHTML = '<span class="wc-code">' + c + '</span>'
+        + (hit ? '<span class="wc-name">' + (hit.label||'') + '</span>' : '')
+        + '<span class="wc-del" onclick="window.delWatch(\'' + c + '\')">✕</span>';
+      box.appendChild(chip);
+    });
+  }
+  window.delWatch = function(c){
+    var raw = localStorage.getItem(window.WATCH_KEY);
+    var codes = raw ? JSON.parse(raw) : [];
+    codes = codes.filter(function(x){ return x !== c; });
+    localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
+    document.getElementById('watch-input').value = codes.join(', ');
+    renderWatch();
+  };
+  document.addEventListener('DOMContentLoaded', function(){
+    var raw = localStorage.getItem(window.WATCH_KEY);
+    var codes = raw ? JSON.parse(raw) : [];
+    if (codes.length && document.getElementById('watch-input')) {
+      document.getElementById('watch-input').value = codes.join(', ');
+    }
+    renderWatch();
+  });
+
+  // §10 Dark Theme Toggle
+  window.toggleTheme = function(){
+    var cur = document.documentElement.getAttribute('data-theme') === 'dark' ? '' : 'dark';
+    document.documentElement.setAttribute('data-theme', cur);
+    localStorage.setItem('premarket.theme', cur);
+    var b = document.getElementById('theme-toggle');
+    if (b) b.textContent = cur === 'dark' ? '☀️ 淺色' : '🌙 深色';
+  };
+  (function(){
+    var t = localStorage.getItem('premarket.theme');
+    if (t === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.addEventListener('DOMContentLoaded', function(){
+        var b = document.getElementById('theme-toggle');
+        if (b) b.textContent = '☀️ 淺色';
+      });
+    }
+  })();
+</script>
 
 </body>
 </html>

@@ -1,4 +1,5 @@
 import os
+import re
 import requests
 
 def build_embeds():
@@ -33,12 +34,6 @@ def build_embeds():
       .raw-text { background: #FFFFFF !important; color: #334155 !important; border: 1px solid #CBD5E1 !important; border-radius: 6px !important; }
       .btn-link { border: 1px solid #CBD5E1 !important; color: #475569 !important; background: #FFFFFF !important; }
       .btn-link:hover { background: #F1F5F9 !important; color: #0F172A !important; border-color: #94A3B8 !important; }
-      /* Part 5 fix: the filter bar (篩選/YoY/MoM controls) ships with chengwaye.com's
-         own dark theme (near-black navy bg, light-gray text) which was never covered
-         by the light-theme overrides above -- it was the one part of this embed still
-         showing its native dark styling, sitting like a dark stripe on top of an
-         otherwise all-light table. Force it into the same light panel language as
-         everything else on the page. */
       .filter-bar { background: #F8FAFC !important; border: 1px solid #E2E8F0 !important; border-bottom: 1px solid #E2E8F0 !important; border-radius: 8px !important; color: #475569 !important; }
       .filter-bar span { color: #64748B !important; }
       .filter-bar .filter-label { color: #334155 !important; }
@@ -50,6 +45,20 @@ def build_embeds():
       ::-webkit-scrollbar-track { background: #F1F5F9; }
       ::-webkit-scrollbar-thumb { background: #CBD5E1; border-radius: 3px; }
     </style>
+    <script>
+      (function(){
+        function send(){
+          try {
+            var h = document.body.scrollHeight;
+            parent.postMessage({type:'embed-height', id: location.pathname.split('/').pop().replace('.html',''), height:h}, '*');
+          } catch(e){}
+        }
+        new ResizeObserver(send).observe(document.body);
+        document.addEventListener('DOMContentLoaded', send);
+        window.addEventListener('load', send);
+        setTimeout(send, 300);
+      })();
+    </script>
     """
 
     out_dir = 'docs/embed'
@@ -60,6 +69,11 @@ def build_embeds():
             r = requests.get(url, timeout=10)
             if r.status_code == 200:
                 html = r.text
+                # Remove ads, GA, trackers
+                html = re.sub(r'<script[^>]+(?:adsbygoogle|googletagmanager|googlesyndication)[^>]*>.*?</script>', '', html, flags=re.DOTALL|re.IGNORECASE)
+                html = re.sub(r'<ins[^>]+adsbygoogle[^>]*>.*?</ins>', '', html, flags=re.DOTALL|re.IGNORECASE)
+                html = re.sub(r'<iframe[^>]+doubleclick[^>]*>.*?</iframe>', '', html, flags=re.DOTALL|re.IGNORECASE)
+
                 html = html.replace('</head>', hide_css + '</head>')
 
                 # Disable historical rendering to only show unreflected

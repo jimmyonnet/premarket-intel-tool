@@ -312,12 +312,22 @@ def main():
     # Fully pre-default every nested key the template touches -- see the
     # module docstring's note on --pressplay for why this can't be left to
     # the template's own `or {}` fallbacks.
-    pressplay = {
-        "source_article": pressplay_raw.get("source_article") or {},
-        "chengwaye_date": pressplay_raw.get("chengwaye_date"),
-        "not_found_group": pressplay_raw.get("not_found_group") or _empty_pressplay_section(),
-        "found_group": pressplay_raw.get("found_group") or _empty_pressplay_section(),
-    }
+    if not pressplay_raw:
+        pressplay = {
+            "source_article": {},
+            "chengwaye_date": None,
+            "not_found_group": _empty_pressplay_section(),
+            "found_group": _empty_pressplay_section(),
+            "_status": "fetch_failed"
+        }
+    else:
+        pressplay = {
+            "source_article": pressplay_raw.get("source_article") or {},
+            "chengwaye_date": pressplay_raw.get("chengwaye_date"),
+            "not_found_group": pressplay_raw.get("not_found_group") or _empty_pressplay_section(),
+            "found_group": pressplay_raw.get("found_group") or _empty_pressplay_section(),
+            "_status": pressplay_raw.get("_status", "ok"),
+        }
 
     spark = build_sparkline(night.get("points") or [])
 

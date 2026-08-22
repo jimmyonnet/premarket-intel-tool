@@ -1,19 +1,21 @@
 {
-  "name": "盤前戰情室",
-  "short_name": "戰情室",
-  "description": "每日盤前情報準備台",
+  "name": "盤前情報準備台",
+  "short_name": "盤前準備",
+  "description": "個人用盤前決策工作台：處置股、法人籌碼、美股／亞股、台指期夜盤、PressPlay 摘要。",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#131824",
-  "theme_color": "#131824",
+  "background_color": "#F8FAFC",
+  "theme_color": "#F8FAFC",
+  "lang": "zh-Hant",
   "icons": [
     {
-      "src": "https://www.twse.com.tw/favicon.ico",
+      "src": "./icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "https://www.twse.com.tw/favicon.ico",
+      "src": "./icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
