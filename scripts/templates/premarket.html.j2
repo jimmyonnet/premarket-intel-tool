@@ -1076,8 +1076,8 @@
         {% if night and night.latest %}
         <div class="summary-card">
           <div class="card-label">台指期夜盤 (05:00)</div>
-          <div class="card-sub" style="font-size:11px; margin-bottom:4px; color:var(--text-muted);">Wantgoo 即時單次抓取（非當日累積夜盤資料；連續夜盤收集功能已停用，詳見 README 已知限制第一點）</div>
           {% if night.latest.is_fallback %}
+
           <div class="card-sub amber font-bold" style="font-size:10px; margin-bottom:2px;">⚠️ 抓取失敗，使用最近一次 fixtures/{{ night.date }}</div>
           {% endif %}
           <div class="card-val font-mono {% if night.latest.change > 0 %}rise{% elif night.latest.change < 0 %}fall{% endif %}">
