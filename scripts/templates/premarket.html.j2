@@ -1350,6 +1350,131 @@
     display: none;
   }
 
+
+  /* BATCH IMPORT MODAL */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+  }
+  .modal-overlay.is-open { display: flex; }
+  .modal-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-md);
+    width: 100%;
+    max-width: 580px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .modal-head {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .modal-title { font-size: 15px; font-weight: 700; color: var(--text-main); }
+  .modal-close {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+  .modal-close:hover { color: var(--text-main); background: var(--bg-sub); }
+  .modal-body {
+    padding: 18px 20px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .batch-textarea {
+    width: 100%;
+    height: 140px;
+    box-sizing: border-box;
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    color: var(--text-main);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    resize: vertical;
+    outline: none;
+  }
+  .batch-textarea:focus { border-color: var(--blue); background: var(--bg-card); }
+  .batch-preview-box {
+    margin-top: 14px;
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 14px;
+  }
+  .batch-preview-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .btn-clear-preview {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 11px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  .batch-preview-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-height: 100px;
+    overflow-y: auto;
+  }
+  .batch-preview-chip {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--text-main);
+  }
+  .modal-foot {
+    padding: 14px 20px;
+    border-top: 1px solid var(--border);
+    background: var(--bg-sub);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+  .watch-btn.primary {
+    background: var(--blue);
+    color: #FFFFFF;
+    border-color: var(--blue);
+  }
+  .watch-btn.primary:hover {
+    opacity: 0.9;
+  }
+
 </style>
 </head>
 <body>
@@ -1497,8 +1622,11 @@
         <span class="section-desc">輸入台股代號（逗號分隔），存於 localStorage</span>
       </div>
       <div class="watchlist-input-row">
-        <input id="watch-input" class="watch-input" placeholder="例如 2330, 2454, 3163（按 Enter 儲存）" autocomplete="off" aria-label="輸入自選股代號">
-        <button class="watch-btn" onclick="window.saveWatch()" type="button" aria-label="儲存自選股">儲存</button>
+        <input id="watch-input" class="watch-input" placeholder="輸入代號或直接貼上 Excel 欄位（例如 2330, 2454, 3163）" autocomplete="off" aria-label="輸入自選股代號">
+        <button class="watch-btn primary" onclick="window.saveWatch()" type="button" aria-label="儲存自選股">儲存</button>
+        <button class="watch-btn" onclick="window.pm.openBatchModal()" type="button" aria-label="Excel 批次匯入">📋 批次 / Excel 匯入</button>
+        <input type="file" id="watch-file-input" accept=".csv,.txt,.xlsx,.xls" style="display:none;" onchange="window.pm.handleWatchFileUpload(event)">
+        <button class="watch-btn" onclick="document.getElementById('watch-file-input').click()" type="button" aria-label="上傳 Excel 檔案">📁 上傳檔案</button>
         <button class="watch-btn ghost" onclick="window.clearWatch()" type="button" aria-label="清空自選股">清空</button>
       </div>
       <div id="watch-chips" class="watch-chips"></div>
@@ -2551,20 +2679,114 @@
     }
   }
 
-  // Watchlist Save & Render
+
+  // Helper: Extract 4~5 digit stock codes from arbitrary text (Excel, CSV, tab-separated)
+  function extractStockCodes(rawText) {
+    if (!rawText) return [];
+    var matches = String(rawText).match(/\b\d{4,5}\b/g) || [];
+    var unique = [];
+    matches.forEach(function(c) {
+      if (unique.indexOf(c) < 0) unique.push(c);
+    });
+    return unique;
+  }
+
+  // Enhanced saveWatch supporting Excel pastes directly in main input
   window.saveWatch = function() {
     var input = document.getElementById('watch-input');
-    var raw = (input.value || '').replace(/[^\d,]/g, '');
-    var codes = [];
-    raw.split(',').forEach(function(c) {
-      c = c.trim();
-      if (c && codes.indexOf(c) < 0) codes.push(c);
-    });
+    var codes = extractStockCodes(input.value || '');
     localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
     renderWatch();
     if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
     window.pm.showToast('已儲存自選股清單 (' + codes.length + ' 檔)');
   };
+
+  // Batch Modal Handlers
+  window.pm.openBatchModal = function() {
+    var m = document.getElementById('batch-modal');
+    if (m) {
+      m.classList.add('is-open');
+      var area = document.getElementById('batch-input-area');
+      if (area) {
+        area.focus();
+        window.pm.previewBatchCodes();
+      }
+    }
+  };
+
+  window.pm.closeBatchModal = function() {
+    var m = document.getElementById('batch-modal');
+    if (m) m.classList.remove('is-open');
+  };
+
+  window.pm.previewBatchCodes = function() {
+    var area = document.getElementById('batch-input-area');
+    var countEl = document.getElementById('batch-preview-count');
+    var chipsEl = document.getElementById('batch-preview-chips');
+    if (!area || !countEl || !chipsEl) return;
+    var codes = extractStockCodes(area.value || '');
+    countEl.textContent = String(codes.length);
+    chipsEl.innerHTML = '';
+    codes.slice(0, 50).forEach(function(c) {
+      var sp = document.createElement('span');
+      sp.className = 'batch-preview-chip';
+      sp.textContent = c;
+      chipsEl.appendChild(sp);
+    });
+    if (codes.length > 50) {
+      var more = document.createElement('span');
+      more.className = 'batch-preview-chip';
+      more.style.color = 'var(--text-muted)';
+      more.textContent = '...還有 ' + (codes.length - 50) + ' 檔';
+      chipsEl.appendChild(more);
+    }
+  };
+
+  window.pm.applyBatchCodes = function(override) {
+    var area = document.getElementById('batch-input-area');
+    var newCodes = extractStockCodes(area.value || '');
+    if (!newCodes.length) {
+      window.pm.showToast('未識別到有效的股票代號');
+      return;
+    }
+    var finalCodes = [];
+    if (override) {
+      finalCodes = newCodes;
+    } else {
+      var raw = localStorage.getItem(window.WATCH_KEY);
+      var curCodes = raw ? JSON.parse(raw) : [];
+      finalCodes = curCodes.slice();
+      newCodes.forEach(function(c) {
+        if (finalCodes.indexOf(c) < 0) finalCodes.push(c);
+      });
+    }
+    localStorage.setItem(window.WATCH_KEY, JSON.stringify(finalCodes));
+    var inp = document.getElementById('watch-input');
+    if (inp) inp.value = finalCodes.join(', ');
+    renderWatch();
+    if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
+    window.pm.closeBatchModal();
+    window.pm.showToast((override ? '已覆蓋自選股：' : '已追加自選股，共：') + finalCodes.length + ' 檔');
+  };
+
+  // Excel / CSV File Upload Handler
+  window.pm.handleWatchFileUpload = function(e) {
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(evt) {
+      var text = evt.target.result;
+      var area = document.getElementById('batch-input-area');
+      if (area) {
+        area.value = text;
+        window.pm.openBatchModal();
+        window.pm.previewBatchCodes();
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  };
+
 
   window.clearWatch = function() {
     localStorage.removeItem(window.WATCH_KEY);
@@ -2964,6 +3186,36 @@
     startTimers();
   });
 </script>
+
+  
+  <!-- BATCH IMPORT MODAL -->
+  <div id="batch-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.closeBatchModal()">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-title">📋 批次匯入自選股（支援 Excel / CSV 複製貼上）</div>
+        <button class="modal-close" type="button" onclick="window.pm.closeBatchModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size:12.5px; color:var(--text-muted); margin-bottom:10px; line-height:1.6;">
+          💡 <strong>使用方式：</strong>直接在 Excel 中選取股票代號欄位按 <code>Ctrl+C</code>，然後在下方文字框中 <code>Ctrl+V</code> 貼上（支援代號與名稱混合、換行或逗號隔開），系統會自動過濾並提取出有效代號。
+        </div>
+        <textarea id="batch-input-area" class="batch-textarea" placeholder="在此貼上 Excel 欄位內容，例如：&#10;2330&#10;2454 聯發科&#10;3163 波若威&#10;6716&#10;...&#10;" oninput="window.pm.previewBatchCodes()"></textarea>
+        
+        <div class="batch-preview-box">
+          <div class="batch-preview-head">
+            <span>✨ 已識別標的：<strong id="batch-preview-count" class="font-mono">0</strong> 檔</span>
+            <button type="button" class="btn-clear-preview" onclick="document.getElementById('batch-input-area').value=''; window.pm.previewBatchCodes();">清空內容</button>
+          </div>
+          <div id="batch-preview-chips" class="batch-preview-chips"></div>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="watch-btn" onclick="window.pm.closeBatchModal()">取消</button>
+        <button type="button" class="watch-btn" onclick="window.pm.applyBatchCodes(false)">➕ 追加至現有</button>
+        <button type="button" class="watch-btn primary" onclick="window.pm.applyBatchCodes(true)">🔄 覆蓋現有清單</button>
+      </div>
+    </div>
+  </div>
 
   <!-- ===== DATA SNAPSHOT START (auto-generated) ===== -->
   <script id="premarket-data-snapshot" type="application/json">
