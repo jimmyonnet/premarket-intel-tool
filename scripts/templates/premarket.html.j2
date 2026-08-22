@@ -1644,6 +1644,65 @@
     background: rgba(225, 29, 72, 0.1);
   }
 
+
+  /* EXECUTIVE BRIEFING MODE (盤前 3 分鐘速讀模式) */
+  body.briefing-mode .nav-btn.btn-briefing {
+    background: var(--blue) !important;
+    color: #FFFFFF !important;
+    border-color: var(--blue) !important;
+  }
+  body.briefing-mode #market-context,
+  body.briefing-mode #system-info,
+  body.briefing-mode .card.news-card,
+  body.briefing-mode .cal-date-section:not(.is-today-section),
+  body.briefing-mode .cal-event-card:not([data-importance="3"]),
+  body.briefing-mode .unref-card,
+  body.briefing-mode .watch-chips-scrollable,
+  body.briefing-mode .watch-group:has(.watch-chips-scrollable) {
+    display: none !important;
+  }
+
+  /* STOCK ACTION MODAL */
+  .stock-modal-card {
+    max-width: 380px !important;
+  }
+  .stock-action-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .stock-act-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .stock-act-btn:hover {
+    background: var(--bg-hover);
+    border-color: var(--border-strong);
+    color: var(--blue);
+  }
+  .clickable-stock-code {
+    cursor: pointer;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 2px;
+  }
+  .clickable-stock-code:hover {
+    color: var(--blue) !important;
+  }
+
 </style>
 </head>
 <body>
@@ -1692,6 +1751,7 @@
       <a href="#system-info" class="nav-link">系統資訊</a>
       
       <div class="nav-actions">
+        <button class="nav-btn btn-briefing" id="briefing-toggle" onclick="window.pm.toggleBriefingMode()" type="button" aria-label="切換盤前速讀模式">⚡ 速讀模式</button>
         <button class="nav-btn btn-export" onclick="window.pm.exportDailyMarkdown()" type="button" aria-label="匯出今日重點 Markdown">📋 匯出重點</button>
         <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" aria-label="切換只看自選">⭐ 只看自選</button>
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" aria-label="切換截圖模式">📸 截圖</button>
@@ -1717,21 +1777,21 @@
         <div class="summary-card">
           <div class="card-label">加權指數 昨收</div>
           {% if twse and twse.twii %}
-          <div class="card-val font-mono {% if twse.twii.change > 0 %}rise{% elif twse.twii.change < 0 %}fall{% endif %}">
+          <div class="card-val font-mono {% if twse.twii.change > 0 %}rise{% elif twse.twii.change < 0 %}fall{% endif %}" data-metric="twii-close">
             {{ "{:,.2f}".format(twse.twii.price) }}
           </div>
-          <div class="card-sub font-mono {% if twse.twii.change > 0 %}rise{% elif twse.twii.change < 0 %}fall{% endif %}">
+          <div class="card-sub font-mono {% if twse.twii.change > 0 %}rise{% elif twse.twii.change < 0 %}fall{% endif %}" data-metric="twii-change">
             {% if twse.twii.change > 0 %}+{% endif %}{{ twse.twii.change }} ({{ '%+.2f'|format(twse.twii.change_pct) }}%)
           </div>
           {% else %}
-          <div class="card-val font-mono">—</div>
+          <div class="card-val font-mono" data-metric="twii-close">—</div>
           {% endif %}
         </div>
 
         <!-- 三大法人買賣超 (外資 / 投信 / 自營商) -->
         <div class="summary-card">
           <div class="card-label">三大法人買賣超</div>
-          <div class="inst-chips font-mono">
+          <div class="inst-chips font-mono" data-metric="institutional-chips">
             {% if twse and twse.inst %}
               {% if twse.inst.foreign is not none %}
               <div class="chip"><span class="chip-label">外資</span> <span class="{% if twse.inst.foreign > 0 %}rise{% elif twse.inst.foreign < 0 %}fall{% endif %}">{% if twse.inst.foreign > 0 %}+{% endif %}{{ twse.inst.foreign }}億</span></div>
@@ -1755,7 +1815,7 @@
         {% set unref_count = (financials.att|length if financials.att else 0) + (financials.fin|length if financials.fin else 0) + (financials.rev|length if financials.rev else 0) %}
         <div class="summary-card {% if unref_count > 0 %}alert-highlight{% endif %}">
           <div class="card-label">市場未反映公告</div>
-          <div class="card-val font-mono {% if unref_count > 0 %}rise{% endif %}">
+          <div class="card-val font-mono {% if unref_count > 0 %}rise{% endif %}" data-metric="unreflected-count">
             {{ unref_count }} <span class="unit" style="font-size:14px; font-weight:normal;">筆</span>
           </div>
           <div class="card-sub">{{ financials.cutoff_str or '昨日 13:30' }} 後公告</div>
@@ -1844,7 +1904,7 @@
                 {% set clean_code = row.code.replace('⏸','').strip() %}
                 <tr data-code="{{ clean_code }}" data-cat="alert" data-label="{{ row.name }}" class="{{ 'row-paused' if is_paused else '' }}">
                   <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono">{{ clean_code }}</td>
+                  <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('{{ clean_code }}', '{{ row.name }}')" title="點擊開啟個股快捷選單">{{ clean_code }}</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="{{ clean_code }}" style="display:none;">★</span>{{ row.name }}</td>
                   <td data-label="收盤" class="num font-mono">{{ row.close }}</td>
                   <td data-label="處置條件" class="condition">
@@ -1945,7 +2005,7 @@
                 {% set clean_code = row.code.replace('⏸','').strip() %}
                 <tr data-code="{{ clean_code }}" data-cat="amber" data-label="{{ row.name }}">
                   <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono">{{ clean_code }}</td>
+                  <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('{{ clean_code }}', '{{ row.name }}')" title="點擊開啟個股快捷選單">{{ clean_code }}</span></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="{{ clean_code }}" style="display:none;">★</span>{{ row.name }}</td>
                   <td data-label="原撮合"><span class="badge">{{ row.matching }}</span></td>
                   <td data-label="處置起訖" class="font-mono">{{ row.start_date }} ~ {{ row.end_date }}</td>
@@ -2057,7 +2117,7 @@
                 {% set clean_code = row.code.replace('⏸','').strip() %}
                 <tr data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
                   <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono">{{ clean_code }}</td>
+                  <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('{{ clean_code }}', '{{ row.name }}')" title="點擊開啟個股快捷選單">{{ clean_code }}</span></td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
                   <td data-label="收盤" class="num font-mono">{{ row.close }}</td>
                   <td data-label="量(張)" class="num font-mono">{{ row.volume }}</td>
@@ -2107,7 +2167,7 @@
                 {% set clean_code = row.code.replace('⏸','').strip() %}
                 <tr data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
                   <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono">{{ clean_code }}</td>
+                  <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('{{ clean_code }}', '{{ row.name }}')" title="點擊開啟個股快捷選單">{{ clean_code }}</span></td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
                   <td data-label="收盤" class="num font-mono">{{ row.close }}</td>
                   <td data-label="量(張)" class="num font-mono">{{ row.volume }}</td>
@@ -2418,23 +2478,41 @@
   <!-- TOAST NOTIFICATION -->
   <div id="toast" class="toast" role="alert" aria-live="polite"></div>
 
+  
+  <!-- STOCK QUICK ACTION MODAL -->
+  <div id="stock-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.closeStockModal()" role="dialog" aria-modal="true" aria-label="個股快捷操作">
+    <div class="modal-card stock-modal-card">
+      <div class="modal-head">
+        <div class="modal-title">📈 個股快捷操作</div>
+        <button class="modal-close" type="button" onclick="window.pm.closeStockModal()">✕</button>
+      </div>
+      <div class="modal-body" style="padding:16px;">
+        <div id="stock-modal-info" style="font-size:16px; font-weight:700; margin-bottom:14px; font-family:var(--font-mono); color:var(--text-main);"></div>
+        <div class="stock-action-grid">
+          <button type="button" class="stock-act-btn" onclick="window.pm.copyCurrentStock()"><span style="font-size:16px;">📋</span> 一鍵複製代號</button>
+          <a id="stock-link-yahoo" target="_blank" rel="noopener" class="stock-act-btn"><span style="font-size:16px;">🟣</span> Yahoo 股市</a>
+          <a id="stock-link-goodinfo" target="_blank" rel="noopener" class="stock-act-btn"><span style="font-size:16px;">🟢</span> Goodinfo! 股市資訊</a>
+          <a id="stock-link-tv" target="_blank" rel="noopener" class="stock-act-btn"><span style="font-size:16px;">🔵</span> TradingView 圖表</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- KEYBOARD SHORTCUTS MODAL -->
   <div id="shortcuts-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.toggleShortcutsModal()" role="dialog" aria-modal="true" aria-label="鍵盤快捷鍵清單">
     <div class="modal-card">
       <h3 class="modal-title">⌨️ 鍵盤快捷鍵</h3>
       <div class="shortcut-list">
-        <div class="shortcut-item"><span class="kbd">1</span> <span>今日摘要</span></div>
-        <div class="shortcut-item"><span class="kbd">2</span> <span>今日警示</span></div>
-        <div class="shortcut-item"><span class="kbd">3</span> <span>今日候選股</span></div>
-        <div class="shortcut-item"><span class="kbd">4</span> <span>市場背景</span></div>
-        <div class="shortcut-item"><span class="kbd">5</span> <span>補充資訊</span></div>
-        <div class="shortcut-item"><span class="kbd">6</span> <span>系統資訊</span></div>
-        <div class="shortcut-item"><span class="kbd">/</span> <span>聚焦自選輸入</span></div>
+        <div class="shortcut-item"><span class="kbd">1~6</span> <span>快速跳轉區塊</span></div>
+        <div class="shortcut-item"><span class="kbd">b</span> <span>切換盤前速讀模式</span></div>
+        <div class="shortcut-item"><span class="kbd">e</span> <span>匯出重點 Markdown</span></div>
+        <div class="shortcut-item"><span class="kbd">c</span> <span>複製今日 ★★★ 事件</span></div>
         <div class="shortcut-item"><span class="kbd">d</span> <span>切換深/淺色</span></div>
         <div class="shortcut-item"><span class="kbd">w</span> <span>切換只看自選</span></div>
+        <div class="shortcut-item"><span class="kbd">/</span> <span>聚焦自選輸入</span></div>
         <div class="shortcut-item"><span class="kbd">t</span> <span>回到頂部</span></div>
         <div class="shortcut-item"><span class="kbd">?</span> <span>開啟快捷鍵表</span></div>
-        <div class="shortcut-item"><span class="kbd">Esc</span> <span>關閉彈窗</span></div>
+        <div class="shortcut-item"><span class="kbd">Esc</span> <span>關閉所有彈窗</span></div>
       </div>
     </div>
   </div>
@@ -2653,8 +2731,269 @@
     });
   };
 
-  // Export Daily Premarket Summary Markdown
+
+  // Stock Action Popover Modal
+  window.pm.currentStock = { code: '', name: '' };
+  window.pm.openStockModal = function(code, name) {
+    window.pm.currentStock = { code: code, name: name || '' };
+    var infoEl = document.getElementById('stock-modal-info');
+    if (infoEl) infoEl.textContent = code + ' ' + (name || '');
+    var yLink = document.getElementById('stock-link-yahoo');
+    if (yLink) yLink.href = 'https://tw.stock.yahoo.com/quote/' + code;
+    var gLink = document.getElementById('stock-link-goodinfo');
+    if (gLink) gLink.href = 'https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=' + code;
+    var tvLink = document.getElementById('stock-link-tv');
+    if (tvLink) tvLink.href = 'https://www.tradingview.com/chart/?symbol=TWSE%3A' + code;
+    var modal = document.getElementById('stock-modal');
+    if (modal) modal.classList.add('is-open');
+  };
+
+  window.pm.closeStockModal = function() {
+    var modal = document.getElementById('stock-modal');
+    if (modal) modal.classList.remove('is-open');
+  };
+
+  window.pm.copyCurrentStock = function() {
+    if (!window.pm.currentStock.code) return;
+    navigator.clipboard.writeText(window.pm.currentStock.code).then(function() {
+      window.pm.showToast('已複製代號 ' + window.pm.currentStock.code);
+    });
+  };
+
+  // Watchlist JSON Backup & Restore
+  window.pm.exportWatchlistJson = function() {
+    var raw = localStorage.getItem(window.WATCH_KEY);
+    var codes = raw ? JSON.parse(raw) : [];
+    var data = {
+      app: "premarket-intel-tool",
+      backup_time: new Date().toISOString(),
+      count: codes.length,
+      watchlist: codes
+    };
+    var blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = "pmit_watchlist_backup.json";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    window.pm.showToast('已匯出自選股 JSON 備份 (' + codes.length + ' 檔)');
+  };
+
+  window.pm.importWatchlistJson = function(e) {
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        var parsed = JSON.parse(evt.target.result);
+        var list = Array.isArray(parsed) ? parsed : (parsed.watchlist || []);
+        var validCodes = [];
+        list.forEach(function(c) {
+          var sc = String(c).trim();
+          if (/^\d{4,5}$/.test(sc) && validCodes.indexOf(sc) < 0) {
+            validCodes.push(sc);
+          }
+        });
+        if (validCodes.length > 0) {
+          localStorage.setItem(window.WATCH_KEY, JSON.stringify(validCodes));
+          var inp = document.getElementById('watch-input');
+          if (inp) inp.value = validCodes.join(', ');
+          renderWatch();
+          if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
+          window.pm.closeBatchModal();
+          window.pm.showToast('已成功還原 ' + validCodes.length + ' 檔自選股！');
+        } else {
+          window.pm.showToast('JSON 檔案內未找到有效的股票代號');
+        }
+      } catch(err) {
+        window.pm.showToast('JSON 解析失敗，請確認檔案格式');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  };
+
+  // Executive Briefing Mode (盤前 3 分鐘速讀模式)
+  window.pm.toggleBriefingMode = function() {
+    document.body.classList.toggle('briefing-mode');
+    var isBrief = document.body.classList.contains('briefing-mode');
+    var b = document.getElementById('briefing-toggle');
+    if (b) b.classList.toggle('is-active', isBrief);
+    window.pm.showToast(isBrief ? '⚡ 已進入盤前 3 分鐘速讀模式' : '已恢復標準檢視模式');
+  };
+
+  // Export Daily Premarket Summary Markdown with data-metric
   window.pm.exportDailyMarkdown = function() {
+    var lines = [];
+    var buildTime = document.querySelector('.meta-item:nth-child(1) .meta-val')?.textContent.trim() || '';
+    var dataDate = document.querySelector('.meta-item:nth-child(2) .meta-val')?.textContent.trim() || '';
+    lines.push('# 📈 盤前情報決策總覽 · ' + (dataDate || new Date().toLocaleDateString('zh-TW')));
+    lines.push('> 產生時間：' + buildTime + ' ｜ 資料日期：' + dataDate + '\n');
+    
+    // Twii
+    var twiiVal = document.querySelector('[data-metric="twii-close"]')?.textContent.trim() || '—';
+    var twiiChg = document.querySelector('[data-metric="twii-change"]')?.textContent.trim() || '';
+    lines.push('## 1. 大盤與籌碼概況');
+    lines.push('- **加權指數昨收**：' + twiiVal + (twiiChg ? ' (' + twiiChg + ')' : ''));
+    
+    // Institutional
+    var instEl = document.querySelector('[data-metric="institutional-chips"]');
+    var instParts = [];
+    if (instEl) {
+      instEl.querySelectorAll('.chip').forEach(function(ch) {
+        instParts.push(ch.textContent.trim().replace(/\s+/g, ' '));
+      });
+    }
+    lines.push('- **三大法人籌碼**：' + (instParts.length ? instParts.join(' ｜ ') : '—'));
+
+    // Unreflected
+    var unrefVal = document.querySelector('[data-metric="unreflected-count"]')?.textContent.trim() || '0';
+    lines.push('- **市場未反映公告**：' + unrefVal);
+
+    // Alerts
+    var alertRows = document.querySelectorAll('#alerts tr[data-code]');
+    lines.push('\n## 2. 今日重點警示 (共 ' + alertRows.length + ' 檔)');
+    alertRows.forEach(function(r) {
+      var code = r.getAttribute('data-code');
+      var name = r.getAttribute('data-label') || '';
+      var cat = r.getAttribute('data-cat') === 'alert' ? '差1次處置' : '今日出關';
+      lines.push('- [' + cat + '] `' + code + '` ' + name);
+    });
+
+    // High impact calendar
+    lines.push('\n## 3. 今日重大財經事件 (★★★)');
+    var events = document.querySelectorAll('.cal-date-section.is-today-section .cal-event-card[data-importance="3"]');
+    if (events.length) {
+      events.forEach(function(c) {
+        var time = c.querySelector('.cal-time-tpe')?.textContent.trim() || '';
+        var title = c.getAttribute('data-title') || '';
+        lines.push('- ' + (time ? time + ' ' : '') + title);
+      });
+    } else {
+      lines.push('- 今日無 ★★★ 重大事件');
+    }
+
+    var text = lines.join('\n');
+    navigator.clipboard.writeText(text).then(function() {
+      window.pm.showToast('已匯出今日盤前重點 Markdown');
+    });
+  };
+
+  // Robust Table Column Sorter supporting data-sort-value, dates, percentages, numbers
+  window.pm.sortTable = function(th, colIdx) {
+    var table = th.closest('table');
+    if (!table) return;
+    var tbody = table.querySelector('tbody');
+    if (!tbody) return;
+    var rows = Array.from(tbody.querySelectorAll('tr'));
+    if (!rows.length) return;
+    
+    var curAsc = th.classList.contains('sort-asc') || th.classList.contains('asc');
+    var isAsc = !curAsc;
+    
+    table.querySelectorAll('th').forEach(function(h) {
+      h.classList.remove('sort-asc', 'sort-desc', 'asc', 'desc', 'sorted');
+    });
+    th.classList.add('sorted', isAsc ? 'sort-asc' : 'sort-desc', isAsc ? 'asc' : 'desc');
+
+    function getVal(row) {
+      var cell = row.children[colIdx];
+      if (!cell) return '';
+      if (cell.hasAttribute('data-sort-value')) {
+        var sv = parseFloat(cell.getAttribute('data-sort-value'));
+        return isNaN(sv) ? cell.getAttribute('data-sort-value') : sv;
+      }
+      var text = cell.textContent.trim();
+      // Date match (e.g. 08-25, 08/25, 2026-08-25)
+      var dateMatch = text.match(/\b(?:\d{4}[-/])?(\d{2})[-/](\d{2})\b/);
+      if (dateMatch) {
+        return parseInt(dateMatch[1] + dateMatch[2], 10);
+      }
+      // Pure number or percentage match
+      var numMatch = text.replace(/,/g, '').match(/[-+]?\d*\.?\d+/);
+      if (numMatch) {
+        var num = parseFloat(numMatch[0]);
+        if (!isNaN(num)) return num;
+      }
+      return text.toLowerCase();
+    }
+
+    rows.sort(function(a, b) {
+      var va = getVal(a);
+      var vb = getVal(b);
+      if (typeof va === 'number' && typeof vb === 'number') {
+        return isAsc ? (va - vb) : (vb - va);
+      }
+      return isAsc ? String(va).localeCompare(String(vb), 'zh-Hant') : String(vb).localeCompare(String(va), 'zh-Hant');
+    });
+
+    rows.forEach(function(r) { tbody.appendChild(r); });
+  };
+
+  // Separated Fast & Slow Timers
+  function updateSlowTimers() {
+    var el = document.querySelector('.last-build');
+    if (el) {
+      var m = (el.textContent || '').match(/(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2})/);
+      if (m) {
+        var bt = new Date(m[1].replace(' ', 'T') + '+08:00').getTime();
+        var hrs = (Date.now() - bt) / 36e5;
+        var cls = hrs < 6 ? 'fresh' : (hrs < 12 ? 'aging' : 'stale');
+        el.classList.remove('fresh', 'aging', 'stale');
+        el.classList.add(cls);
+        var banner = document.querySelector('.stale-banner');
+        if (banner) {
+          banner.textContent = '資料時間 ' + m[1] + '，距今 ' + hrs.toFixed(1) + ' 小時';
+          banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
+          banner.classList.toggle('is-warning', hrs >= 6 && hrs < 12);
+          banner.classList.toggle('is-danger', hrs >= 12);
+        }
+      }
+    }
+  }
+
+  function updateFastTimers() {
+    var cel = document.getElementById('open-countdown');
+    if (cel) {
+      var now = new Date();
+      var isHoliday = isTWHoliday(now);
+      var openToday = new Date(now);
+      openToday.setHours(9, 0, 0, 0);
+      var closeToday = new Date(now);
+      closeToday.setHours(13, 30, 0, 0);
+
+      if (!isHoliday && now >= openToday && now < closeToday) {
+        var diffClose = closeToday - now;
+        cel.textContent = '● 盤中撮合中｜收盤倒數 ' + formatCountdownHuman(diffClose);
+        cel.classList.remove('closed');
+      } else {
+        var nextOpen = getNextTradingDayOpen(now);
+        var diffOpen = nextOpen - now;
+        var prefix = isHoliday ? '休市中' : '今日已收盤';
+        cel.textContent = prefix + '｜下次 09:00 開盤倒數 ' + formatCountdownHuman(diffOpen);
+        cel.classList.add('closed');
+      }
+    }
+    updateEventCountdowns();
+  }
+
+  function startTimers() {
+    updateSlowTimers();
+    updateFastTimers();
+    if (!liveTimer) liveTimer = setInterval(updateSlowTimers, 60000);
+    if (!countdownTimer) countdownTimer = setInterval(updateFastTimers, 1000);
+  }
+
+  function stopTimers() {
+    if (liveTimer) { clearInterval(liveTimer); liveTimer = null; }
+    if (countdownTimer) { clearInterval(countdownTimer); countdownTimer = null; }
+  }
+
+  // Old export Daily stub removed
+  window.pm._oldExport = function() {
     var lines = [];
     var buildTime = document.querySelector('.meta-item:nth-child(1) .meta-val')?.textContent.trim() || '';
     var dataDate = document.querySelector('.meta-item:nth-child(2) .meta-val')?.textContent.trim() || '';
@@ -3168,7 +3507,7 @@
 
   window.pm.toggleShortcutsModal = function() {
     var m = document.getElementById('shortcuts-modal');
-    if (m) m.classList.toggle('open');
+    if (m) m.classList.toggle('is-open');
   };
 
   // Table Column Click Sorter
@@ -3463,10 +3802,17 @@
           <div id="batch-preview-chips" class="batch-preview-chips"></div>
         </div>
       </div>
-      <div class="modal-foot">
-        <button type="button" class="watch-btn" onclick="window.pm.closeBatchModal()">取消</button>
-        <button type="button" class="watch-btn" onclick="window.pm.applyBatchCodes(false)">➕ 追加至現有</button>
-        <button type="button" class="watch-btn primary" onclick="window.pm.applyBatchCodes(true)">🔄 覆蓋現有清單</button>
+      <div class="modal-foot" style="justify-content: space-between; flex-wrap: wrap;">
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="watch-btn" onclick="window.pm.exportWatchlistJson()" title="下載 JSON 備份檔">💾 匯出 JSON</button>
+          <input type="file" id="json-backup-input" accept=".json" style="display:none;" onchange="window.pm.importWatchlistJson(event)">
+          <button type="button" class="watch-btn" onclick="document.getElementById('json-backup-input').click()" title="從 JSON 備份檔還原">📥 匯入 JSON</button>
+        </div>
+        <div style="display:flex; gap:6px;">
+          <button type="button" class="watch-btn" onclick="window.pm.closeBatchModal()">取消</button>
+          <button type="button" class="watch-btn" onclick="window.pm.applyBatchCodes(false)">➕ 追加至現有</button>
+          <button type="button" class="watch-btn primary" onclick="window.pm.applyBatchCodes(true)">🔄 覆蓋現有清單</button>
+        </div>
       </div>
     </div>
   </div>
