@@ -115,18 +115,8 @@
 <style id="cw-page-max-style">body{--cw-page-max:1168px}</style>
 <script defer src="/visual-effects.js?v=20260501-lean2"></script>
     <style>
-      :root {
+      :root, :root[data-theme="light"], html.light, body.light {
         --bg-page: transparent;
-        --bg-card: #1E293B;
-        --bg-sub: #0F172A;
-        --text-main: #F8FAFC;
-        --text-muted: #94A3B8;
-        --border: #334155;
-        --border-light: #1E293B;
-        --blue: #60A5FA;
-      }
-      :root[data-theme="light"], html[data-theme="light"], body.light, html.light {
-        --bg-page: #FFFFFF;
         --bg-card: #FFFFFF;
         --bg-sub: #F8FAFC;
         --text-main: #0F172A;
@@ -134,8 +124,10 @@
         --border: #E2E8F0;
         --border-light: #F1F5F9;
         --blue: #2563EB;
+        --btn-bg: #FFFFFF;
+        --btn-hover: #F1F5F9;
       }
-      :root[data-theme="dark"], html[data-theme="dark"], body.dark, html.dark {
+      :root[data-theme="dark"], html[data-theme="dark"], html.dark, body.dark, body[data-theme="dark"] {
         --bg-page: transparent;
         --bg-card: #1E293B;
         --bg-sub: #0F172A;
@@ -144,8 +136,10 @@
         --border: #334155;
         --border-light: #1E293B;
         --blue: #60A5FA;
+        --btn-bg: #1E293B;
+        --btn-hover: #0F172A;
       }
-      body { background: var(--bg-page) !important; color: var(--text-main) !important; padding: 0 !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; }
+      body { background: transparent !important; color: var(--text-main) !important; padding: 0 !important; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important; }
       nav, .header, .ai-warn, .ai-warn-bottom, .search-container, #load-archive-btn, footer { display: none !important; }
       .container { padding: 0 !important; margin: 0 !important; max-width: 100% !important; background: transparent !important; }
       #app { margin-top: 0 !important; min-height: 0 !important; background: transparent !important; }
@@ -165,15 +159,15 @@
       .detail-context-title .ctx-code { color: var(--blue) !important; }
       .detail-context-title .ctx-name { color: var(--text-main) !important; }
       .detail-context-title .ctx-meta { color: var(--text-muted) !important; }
-      .raw-text { background: var(--bg-sub) !important; color: var(--text-main) !important; border: 1px solid var(--border) !important; border-radius: 6px !important; }
-      .btn-link { border: 1px solid var(--border) !important; color: var(--text-muted) !important; background: var(--bg-card) !important; }
-      .btn-link:hover { background: var(--bg-sub) !important; color: var(--text-main) !important; border-color: var(--text-muted) !important; }
+      .raw-text { background: var(--bg-card) !important; color: var(--text-main) !important; border: 1px solid var(--border) !important; border-radius: 6px !important; }
+      .btn-link { border: 1px solid var(--border) !important; color: var(--text-muted) !important; background: var(--btn-bg) !important; }
+      .btn-link:hover { background: var(--btn-hover) !important; color: var(--text-main) !important; border-color: var(--text-muted) !important; }
       .filter-bar { background: var(--bg-sub) !important; border: 1px solid var(--border) !important; border-radius: 8px !important; color: var(--text-muted) !important; }
       .filter-bar span { color: var(--text-muted) !important; }
       .filter-bar .filter-label { color: var(--text-main) !important; }
-      .filter-bar button { background: var(--bg-card) !important; border: 1px solid var(--border) !important; color: var(--text-main) !important; }
-      .filter-bar button:hover { background: var(--bg-sub) !important; color: var(--text-main) !important; }
-      .filter-bar input[type="text"], .filter-bar input[type="number"] { background: var(--bg-card) !important; border: 1px solid var(--border) !important; color: var(--text-main) !important; }
+      .filter-bar button { background: var(--btn-bg) !important; border: 1px solid var(--border) !important; color: var(--text-main) !important; }
+      .filter-bar button:hover { background: var(--btn-hover) !important; color: var(--text-main) !important; }
+      .filter-bar input[type="text"], .filter-bar input[type="number"] { background: var(--btn-bg) !important; border: 1px solid var(--border) !important; color: var(--text-main) !important; }
       .filter-bar input[type="checkbox"] { accent-color: var(--blue) !important; }
       .empty { padding: 24px 16px !important; color: var(--text-muted) !important; font-size: 12px !important; }
       ::-webkit-scrollbar { width: 6px; height: 6px; }
@@ -186,7 +180,7 @@
           if (!theme) {
             try {
               var p = new URLSearchParams(location.search);
-              theme = p.get('theme') || localStorage.getItem('premarket.theme');
+              theme = p.get('theme');
             } catch(e){}
             if (!theme) {
               try {
@@ -194,20 +188,23 @@
               } catch(e){}
             }
             if (!theme) {
-              theme = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark';
+              try {
+                theme = localStorage.getItem('premarket.theme');
+              } catch(e){}
             }
           }
-          document.documentElement.setAttribute('data-theme', theme);
-          if (theme === 'light') {
-            document.documentElement.classList.add('light');
-            document.body.classList.add('light');
-            document.documentElement.classList.remove('dark');
-            document.body.classList.remove('dark');
-          } else {
+          var isDark = (theme === 'dark');
+          document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+          if (isDark) {
             document.documentElement.classList.add('dark');
-            document.body.classList.add('dark');
             document.documentElement.classList.remove('light');
+            document.body.classList.add('dark');
             document.body.classList.remove('light');
+          } else {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+            document.body.classList.add('light');
+            document.body.classList.remove('dark');
           }
         }
         window.addEventListener('message', function(e) {
