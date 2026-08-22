@@ -158,6 +158,7 @@ nav, nav a, nav input { line-height: normal; }html{scrollbar-gutter:stable;overf
       .filter-bar button:hover { background: var(--bg-sub) !important; color: var(--text-main) !important; }
       .filter-bar input[type="text"], .filter-bar input[type="number"] { background: var(--bg-card) !important; border: 1px solid var(--border) !important; color: var(--text-main) !important; }
       .filter-bar input[type="checkbox"] { accent-color: var(--blue) !important; }
+      .empty { padding: 24px 16px !important; color: var(--text-muted) !important; font-size: 12px !important; }
       ::-webkit-scrollbar { width: 6px; height: 6px; }
       ::-webkit-scrollbar-track { background: var(--bg-sub); }
       ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -199,6 +200,14 @@ nav, nav a, nav input { line-height: normal; }html{scrollbar-gutter:stable;overf
           applyTheme();
           send();
         });
+        // 3.5s timeout safety to avoid hanging on '載入中...'
+        setTimeout(function() {
+          var app = document.getElementById('app');
+          if (app && app.innerHTML.indexOf('載入中') >= 0) {
+            app.innerHTML = '<div class="empty">⚠️ 資料連線逾時（已沿用 build-time 快照）</div>';
+            send();
+          }
+        }, 3500);
         setTimeout(function() { applyTheme(); send(); }, 300);
       })();
     </script>
