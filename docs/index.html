@@ -363,12 +363,13 @@
   .summary-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 14px;
+    border-radius: 10px;
+    padding: 16px 18px;
     box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    min-height: 100px;
   }
   .summary-card.alert-highlight {
     background: var(--danger-bg);
@@ -630,12 +631,12 @@
     align-items: center;
   }
   .unref-summary:hover { background: var(--bg-sub); }
-  .unref-content { padding: 12px 16px; background: var(--bg-sub); }
-  .embed-frame {
+  .unref-content { padding: 12px 16px; background: var(--bg-card); }
+  .embed-frame, .unref-frame {
     width: 100%;
     border: none;
-    border-radius: 6px;
-    background: #FFFFFF;
+    border-radius: 8px;
+    background: transparent;
     transition: height 0.2s ease;
   }
 
@@ -647,13 +648,18 @@
     margin-bottom: 12px;
   }
   .tile-card {
-    background: var(--bg-sub);
+    background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 10px 12px;
+    border-radius: 8px;
+    padding: 12px 14px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.15s ease;
+  }
+  .tile-card:hover {
+    border-color: var(--border-strong);
   }
   .tile-head {
     display: flex;
@@ -1355,7 +1361,7 @@
         <h1 class="page-title">盤前情報準備台</h1>
       </div>
       <div class="meta-row">
-        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/23 00:42</span></span>
+        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">2026/08/23 00:45</span></span>
         
         <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">08/24</span></span>
         
@@ -1393,7 +1399,7 @@
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" aria-label="切換截圖模式">📸 截圖</button>
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" aria-label="切換深淺色主題">🌙 深色</button>
         <button class="nav-btn refresh-btn" onclick="location.reload(true)" type="button" title="重新載入最新版" aria-label="重新整理頁面">
-          🔄 <span class="last-build">建置 2026-08-23 00:42</span><span class="short-build">重整</span>
+          🔄 <span class="last-build">建置 2026-08-23 00:45</span><span class="short-build">重整</span>
         </button>
       </div>
     </div>
@@ -2157,7 +2163,7 @@
           <div class="card-title-group">
             <h3 class="card-title">美股四大指數與跨海連動標的</h3>
           </div>
-          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 20.7 小時</span>
+          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 20.8 小時</span>
         </div>
 
         <div class="data-block">
@@ -2168,7 +2174,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">標普 500</span>
-                <span class="tile-delay-pill pill-fresh">20.7h ago</span>
+                <span class="tile-delay-pill pill-fresh">20.8h ago</span>
               </div>
               
               <div class="tile-val font-mono rise">7,674.37</div>
@@ -2180,7 +2186,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">那斯達克</span>
-                <span class="tile-delay-pill pill-fresh">20.7h ago</span>
+                <span class="tile-delay-pill pill-fresh">20.8h ago</span>
               </div>
               
               <div class="tile-val font-mono rise">26,180.46</div>
@@ -2192,7 +2198,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">道瓊工業</span>
-                <span class="tile-delay-pill pill-fresh">20.7h ago</span>
+                <span class="tile-delay-pill pill-fresh">20.8h ago</span>
               </div>
               
               <div class="tile-val font-mono rise">53,277.00</div>
@@ -2204,7 +2210,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">費城半導體</span>
-                <span class="tile-delay-pill pill-fresh">20.7h ago</span>
+                <span class="tile-delay-pill pill-fresh">20.8h ago</span>
               </div>
               
               <div class="tile-val font-mono fall">11,740.37</div>
@@ -3985,7 +3991,7 @@
         <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
         <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日重點清單；未在清單內之標的自動略過。</li>
       </ul>
-      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-23 00:38</span></div>
+      <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:6px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">2026-08-23 00:42</span></div>
       <div class="footer-copy" style="margin-top:4px; text-align:center;">盤前情報準備台 · 自用盤前決策工作台</div>
     </div>
   </footer>
