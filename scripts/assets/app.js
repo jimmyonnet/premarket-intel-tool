@@ -249,6 +249,15 @@ function renderFlow(name, value, max) {
   return `<div class="flow-row"><span>${esc(name)}</span><div class="flow-bar ${n < 0 ? 'is-negative' : ''}" style="--flow-p:${width}%"></div><b class="flow-value ${metricClass(n)}">${esc(signed(n, 2, '億'))}</b></div>`;
 }
 
+function renderQuoteCard(item, fallbackLabel, kind) {
+  const quote = item || {};
+  const value = quote.value ?? quote.price;
+  const pct = num(quote.change_pct);
+  const trend = pct > 0 ? 'is-up' : pct < 0 ? 'is-down' : 'is-flat';
+  const arrow = pct > 0 ? '▲' : pct < 0 ? '▼' : '—';
+  return `<article class="quote-card ${trend}" data-market-kind="${esc(kind)}"><div class="quote-head"><strong>${esc(quote.name || fallbackLabel)}</strong><span>${esc(quote.ticker || '')}</span></div><div class="quote-value">${esc(fmt(value, value !== null && Math.abs(value) < 100 ? 2 : 2))}</div><div class="quote-change">${arrow} ${esc(pct === null ? '—' : signed(pct, 2, '%'))}</div></article>`;
+}
+
 function renderMacro(pkg) {
   const twse = pkg.twse || {};
   const indices = pkg.indices || {};
@@ -258,8 +267,12 @@ function renderMacro(pkg) {
   const maxInst = Math.max(Math.abs(num(inst.foreign) || 0), Math.abs(num(inst.trust) || 0), Math.abs(num(inst.dealer) || 0), 1);
   const strip = `<span class="market-item">加權 <b class="${metricClass(twse.twii?.change)}">${esc(fmt(twse.twii?.price))} ${esc(signed(twse.twii?.change_pct, 2, '%'))}</b></span><span class="market-item">外資 ${esc(signed(inst.foreign, 2, '億'))} · 投信 ${esc(signed(inst.trust, 2, '億'))} · 自營 ${esc(signed(inst.dealer, 2, '億'))}</span><span class="market-item">夜盤 <b class="${metricClass(night.change)}">${esc(fmt(night.price, 0))} ${esc(signed(night.change_pct, 2, '%'))}</b></span>`;
   $('#market-strip').innerHTML = strip;
-  const indexItems = Object.entries(us).filter(([key, value]) => value && !['^GSPC','^IXIC','^DJI','^SOX'].includes(key)).slice(0, 4);
-  $('#macro-panel').innerHTML = `<div class="market-strip"><span class="market-item">加權 <b class="${metricClass(twse.twii?.change)}">${esc(fmt(twse.twii?.price))} ${esc(signed(twse.twii?.change_pct, 2, '%'))}</b></span><span class="market-item">夜盤 <b class="${metricClass(night.change)}">${esc(fmt(night.price, 0))} ${esc(signed(night.change_pct, 2, '%'))}</b></span></div><h3>三大法人對稱橫條</h3><div>${renderFlow('外資', inst.foreign, maxInst)}${renderFlow('投信', inst.trust, maxInst)}${renderFlow('自營商', inst.dealer, maxInst)}</div><h3>美股收盤</h3><div class="detail-grid">${indexItems.map(([key, value]) => `<div><strong>${esc(value.name || key)}</strong><span class="${metricClass(value.change_pct)}">${esc(signed(value.change_pct, 2, '%'))}</span></div>`).join('') || '<span class="flat">尚無資料</span>'}</div>`;
+  const indexKeys = [['dow', '道瓊工業指數'], ['sp500', 'S&P 500指數'], ['nasdaq', 'NASDAQ指數'], ['sox', '費城半導體指數']];
+  const adrKeys = [['tsmc', '台積電 ADR'], ['nvda', '輝達 (NVDA)'], ['aapl', '蘋果 (AAPL)'], ['umc', '聯電 ADR'], ['ase', '日月光 ADR'], ['tsmc_tw', '台積電 現貨']];
+  const adrSource = indices.adrs || indices.key_stocks || {};
+  const indexCards = indexKeys.map(([key, label]) => renderQuoteCard(us[key], label, 'us-index')).join('');
+  const adrCards = adrKeys.map(([key, label]) => renderQuoteCard(adrSource[key], label, 'adr')).join('');
+  $('#macro-panel').innerHTML = `<div class="market-strip"><span class="market-item">加權 <b class="${metricClass(twse.twii?.change)}">${esc(fmt(twse.twii?.price))} ${esc(signed(twse.twii?.change_pct, 2, '%'))}</b></span><span class="market-item">夜盤 <b class="${metricClass(night.change)}">${esc(fmt(night.price, 0))} ${esc(signed(night.change_pct, 2, '%'))}</b></span></div><h3>三大法人對稱橫條</h3><div>${renderFlow('外資', inst.foreign, maxInst)}${renderFlow('投信', inst.trust, maxInst)}${renderFlow('自營商', inst.dealer, maxInst)}</div><h3>美股收盤</h3><div class="quote-grid">${indexCards || '<span class="flat">尚無美股資料</span>'}</div><h3>ADR / 關聯股</h3><div class="quote-grid quote-grid--adr">${adrCards || '<span class="flat">尚無 ADR 資料</span>'}</div>`;
 }
 
 function renderCalendar(pkg) {

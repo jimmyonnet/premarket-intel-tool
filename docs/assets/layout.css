@@ -101,6 +101,19 @@
   .ai-chip[data-tier="b"] { color:var(--n8); background:var(--n2); } .ai-chip[data-tier="c"] { color:var(--down); background:var(--down-bg); } .ai-chip[data-tier="d"] { color:var(--n0); background:var(--down); }
   .vol-cell { background:linear-gradient(to right,var(--n2) var(--volume-p),transparent var(--volume-p)); }
   .flow-row { display:grid; grid-template-columns:52px 1fr 86px; gap:8px; align-items:center; min-height:30px; font-size:12px; }
+  .quote-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:8px; margin:8px 0 16px; }
+  .quote-grid--adr { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .quote-card { min-width:0; padding:10px; border:1px solid var(--n3); border-top:3px solid var(--n6); border-radius:7px; background:var(--n0); }
+  .quote-card.is-up { border-top-color:var(--up); background:linear-gradient(180deg,var(--up-bg),var(--n0) 70%); }
+  .quote-card.is-down { border-top-color:var(--down); background:linear-gradient(180deg,var(--down-bg),var(--n0) 70%); }
+  .quote-head { display:flex; align-items:flex-start; justify-content:space-between; gap:6px; color:var(--n8); font-size:11px; }
+  .quote-head strong { color:var(--n12); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .quote-head span { flex:0 0 auto; color:var(--n6); font:10px var(--font-mono); }
+  .quote-value { margin-top:9px; color:var(--n12); font:700 17px var(--font-mono); }
+  .quote-change { margin-top:3px; font:700 13px var(--font-mono); }
+  .quote-card.is-up .quote-change { color:var(--up); }
+  .quote-card.is-down .quote-change { color:var(--down); }
+  .quote-card.is-flat .quote-change { color:var(--flat); }
   .flow-bar { position:relative; height:8px; overflow:hidden; border-radius:5px; background:var(--n2); }
   .flow-bar::after { content:""; position:absolute; left:0; top:0; bottom:0; width:var(--flow-p); border-radius:5px; background:var(--up); }
   .flow-bar.is-negative::after { left:auto; right:0; background:var(--down); }
@@ -160,6 +173,9 @@
   .data-table td.rule { display:block; text-align:left; }
   .data-table td.rule::before { display:block; margin-bottom:3px; }
   .detail-grid { grid-template-columns:1fr 1fr; }
+  .quote-grid,.quote-grid--adr { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .quote-card { padding:8px; }
+  .quote-value { font-size:15px; }
   .briefing-card { flex-wrap:wrap; align-items:baseline; }
   .briefing-card > strong, .briefing-card > span:not(.briefing-reason) { flex:0 0 auto; white-space:nowrap; }
   .briefing-card .briefing-reason { flex:1 1 100%; min-width:0; }
