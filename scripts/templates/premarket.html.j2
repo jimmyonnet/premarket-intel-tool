@@ -2247,7 +2247,7 @@
       <div class="nav-actions">
         <button class="nav-btn btn-briefing" id="briefing-toggle" onclick="window.pm.toggleBriefingMode()" type="button" title="切換盤前 3 分鐘速讀模式 (快捷鍵 B)" aria-pressed="false">⚡ 速讀<span class="btn-text-extra">模式</span></button>
         <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" title="切換只看自選 (快捷鍵 W)" aria-pressed="false">⭐ 自選<span class="btn-text-extra">股</span></button>
-        <button class="nav-btn btn-clean-link" onclick="window.pm.copyCleanUrl()" type="button" title="複製不含自選股代號的乾淨網址 (供除錯或截圖分享)">🔗 乾淨連結</button>
+        <button class="nav-btn btn-clean-link" onclick="window.pm.copyCleanUrl()" type="button" title="複製乾淨網址（不含自選股代號，方便截圖分享）">🔗 乾淨連結</button>
         <button class="nav-btn btn-export" onclick="window.pm.exportDailyMarkdown()" type="button" title="匯出今日重點 Markdown (快捷鍵 E)">📋 匯出<span class="btn-text-extra">重點</span></button>
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" title="切換截圖模式 (按 Esc 退出)">📸 截圖</button>
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" title="切換深淺色主題 (快捷鍵 D)">🌙 深色</button>
@@ -2299,7 +2299,7 @@
               <span class="event-more-tag">+{{ today_stars|length - 1 }}件</span>
               {% endif %}
             {% else %}
-              <span style="color:var(--text-muted); font-size:12px;">今日無 ★★★ 重磅總經數據</span>
+              <span style="color:var(--text-muted); font-size:12px;">今日無 ★★★ 重要總經事件</span>
             {% endif %}
           </div>
         </div>
@@ -2429,7 +2429,7 @@
             <h3 class="card-title">差 1 次就處置</h3>
             <span class="count-badge danger">{{ disposal.one_flag_from_disposal|length }} 檔</span>
           </div>
-          <span class="card-tip">今日若再觸發標準即進入處置</span>
+          <span class="card-tip">今天若再達標就會進處置</span>
         </div>
 
         <div class="data-block">
@@ -3076,7 +3076,7 @@
             </div>
             {% endfor %}
           {% else %}
-            <div class="empty-state">近期無排定之財經行事曆事件</div>
+            <div class="empty-state">近期沒有排定的財經事件</div>
           {% endif %}
         </div>
       </div>
@@ -4828,13 +4828,13 @@
       </div>
       <div class="modal-body">
         <div style="font-size:12.5px; color:var(--text-muted); margin-bottom:10px; line-height:1.6;">
-          💡 <strong>使用方式：</strong>直接在 Excel 中選取股票代號欄位按 <code>Ctrl+C</code>，然後在下方文字框中 <code>Ctrl+V</code> 貼上（支援代號與名稱混合、換行或逗號隔開），系統會自動過濾並提取出有效代號。
+          💡 <strong>使用方式：</strong>直接複製 Excel 欄位貼在下方（代號或含名稱皆可），系統會自動抓出有效代號。
         </div>
         <textarea id="batch-input-area" class="batch-textarea" placeholder="在此貼上 Excel 欄位內容，例如：&#10;2330&#10;2454 聯發科&#10;3163 波若威&#10;6716&#10;...&#10;" oninput="window.pm.previewBatchCodes()"></textarea>
         
         <div class="batch-preview-box">
           <div class="batch-preview-head">
-            <span>✨ 已識別標的：<strong id="batch-preview-count" class="font-mono">0</strong> 檔</span>
+            <span>✨ 已抓到標的：<strong id="batch-preview-count" class="font-mono">0</strong> 檔</span>
             <button type="button" class="btn-clear-preview" onclick="document.getElementById('batch-input-area').value=''; window.pm.previewBatchCodes();">清空內容</button>
           </div>
           <div id="batch-preview-chips" class="batch-preview-chips"></div>
