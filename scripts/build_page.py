@@ -665,6 +665,7 @@ def main():
         financials=financials_data,
         news=news_data,
         twse=twse_data,
+        twse_holidays_list=sorted(list(load_twse_holidays())),
     )
 
     out_path = Path(args.out)

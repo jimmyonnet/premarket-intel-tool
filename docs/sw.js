@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pmit-20260823_1245';
+const CACHE_NAME = 'pmit-20260823_1437';
 const SHELL_ASSETS = [
   './',
   './index.html',
@@ -13,9 +13,24 @@ const SHELL_ASSETS = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(SHELL_ASSETS))
-      .then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then(async cache => {
+      // Core shell assets
+      try {
+        await cache.addAll(['./', './index.html', './manifest.json']);
+      } catch (err) {
+        console.warn('SW core cache warning:', err);
+      }
+      // Optional / Embed shell assets
+      const optionalAssets = [
+        './embed/att.html',
+        './embed/fin.html',
+        './embed/rev.html',
+        './icon-192.png',
+        './icon-512.png',
+        './data_meta.json'
+      ];
+      await Promise.allSettled(optionalAssets.map(url => cache.add(url)));
+    }).then(() => self.skipWaiting())
   );
 });
 

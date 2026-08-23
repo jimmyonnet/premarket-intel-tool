@@ -139,3 +139,32 @@ def test_source_health_missing_file_degrades_to_caution():
     assert eval_res.overall_status == "caution"
     assert eval_res.is_fallback_page is True
     assert any("缺少來源狀態紀錄" in r for r in eval_res.summary_reasons)
+
+
+def test_source_health_dual_dimensions_stale():
+    """Test dual-dimension status fields (fetch_status=ok, freshness=stale)."""
+    now_iso = datetime.now(TAIPEI).isoformat()
+    sources = {
+        sid: {
+            "source_id": sid,
+            "name": meta["name"],
+            "is_required": meta["is_required"],
+            "status": "ok",
+            "fetched_at": now_iso,
+            "data_date": "08/24",
+            "age_minutes": 800.0,  # > 12 hours (stale)
+            "error_summary": None,
+            "fallback_used": False,
+            "impact_desc": meta["impact_desc"],
+        }
+        for sid, meta in SOURCES_METADATA.items()
+    }
+
+    eval_res = evaluate_source_health({"sources": sources})
+    assert eval_res.overall_status == "caution"
+    indices_item = next(s for s in eval_res.sources if s["source_id"] == "indices")
+    assert indices_item["fetch_status"] == "ok"
+    assert indices_item["freshness"] == "stale"
+    assert indices_item["combined_status_label"] == "必要・資料過期"
+    assert indices_item["status_badge_class"] == "is-caution"
+
