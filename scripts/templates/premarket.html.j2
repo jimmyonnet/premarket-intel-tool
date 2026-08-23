@@ -12,6 +12,7 @@
 <meta name="apple-mobile-web-app-title" content="PMIT 盤前">
 <script>
   (function() {
+    window.__PM_META__ = {{ (meta or {}) | tojson }};
     var savedTheme = localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme');
     var theme = (savedTheme === 'dark') ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', theme);
@@ -25,6 +26,15 @@
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(function(err) {
       if (localStorage.getItem('pmit_debug') === '1') console.warn('SW register info:', err);
+    });
+    navigator.serviceWorker.addEventListener('message', function(event) {
+      if (event.data && event.data.type === 'sw-updated') {
+        var toast = document.getElementById('toast');
+        if (toast) {
+          toast.innerHTML = '🔄 盤前資料已有新版本 <button onclick="location.reload(true)" style="background:var(--blue); color:#fff; border:none; border-radius:4px; padding:3px 8px; margin-left:6px; cursor:pointer; font-weight:700;">點此更新</button>';
+          toast.classList.add('show');
+        }
+      }
     });
   }
 </script>
@@ -989,6 +999,92 @@
     .data-table td.badge-col { text-align: left; }
   }
 
+  /* Wide Table Sticky Key Columns (Desktop / Tablet Scroll) */
+  @media (min-width: 769px) {
+    .disposal-table th:nth-child(1),
+    .disposal-table td:nth-child(1) {
+      position: sticky;
+      left: 0;
+      z-index: 2;
+      background: var(--bg-card);
+      min-width: 48px;
+    }
+    .disposal-table th:nth-child(2),
+    .disposal-table td:nth-child(2) {
+      position: sticky;
+      left: 48px;
+      z-index: 2;
+      background: var(--bg-card);
+      min-width: 65px;
+    }
+    .disposal-table th:nth-child(3),
+    .disposal-table td:nth-child(3) {
+      position: sticky;
+      left: 113px;
+      z-index: 2;
+      background: var(--bg-card);
+      min-width: 75px;
+      border-right: 1px solid var(--border);
+      box-shadow: 3px 0 5px rgba(0, 0, 0, 0.05);
+    }
+    .disposal-table th:nth-child(1),
+    .disposal-table th:nth-child(2),
+    .disposal-table th:nth-child(3) {
+      background: var(--bg-sub);
+      z-index: 4;
+    }
+  }
+
+  /* EMBED FRAME WRAPPER & RETRY */
+  .embed-frame-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 120px;
+    transition: min-height 0.2s ease;
+  }
+  .embed-frame-wrapper.is-loading::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, var(--bg-sub) 25%, var(--bg-hover) 50%, var(--bg-sub) 75%);
+    background-size: 200% 100%;
+    animation: skeleton-pulse 1.5s infinite;
+    border-radius: 8px;
+    z-index: 1;
+    pointer-events: none;
+  }
+  @keyframes skeleton-pulse {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+  .embed-fallback-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    background: var(--bg-sub);
+    border-radius: 6px;
+    margin: 8px 0;
+  }
+  .btn-retry {
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    color: var(--blue);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .btn-retry:hover {
+    background: var(--bg-hover);
+    border-color: var(--blue);
+  }
+
   /* FOOTER */
   .page-footer {
     background: var(--bg-card);
@@ -1934,22 +2030,24 @@
         <h1 class="page-title">盤前情報準備台</h1>
       </div>
       <div class="meta-row">
-        <span class="meta-item"><span class="meta-label">產生時間</span> <span class="meta-val font-mono">{{ generated_at }}</span></span>
-        {% if date_check and date_check.page_says_applies_to %}
-        <span class="meta-item"><span class="meta-label">資料日期</span> <span class="meta-val font-mono">{{ date_check.page_says_applies_to }}</span></span>
-        {% endif %}
-        <span class="meta-status" id="date-status-container">
-          {% if date_check_eval %}
-          <span class="status-badge {{ date_check_eval.class_name }}" title="{{ date_check_eval.tooltip }}">{{ date_check_eval.label }}</span>
-          {% elif date_check %}
-          <span class="status-badge is-ok">資料已就緒</span>
+        <span class="meta-item">
+          <span class="meta-icon">📅</span>
+          <span class="meta-label">資料日期</span>
+          <span class="meta-val font-mono font-bold">{{ data_date }}</span>
+          {% if date_check and date_check.page_says_applies_to %}
+          <span class="status-badge is-ok" title="資料已對齊次日盤前標準 ({{ date_check.page_says_applies_to }})" style="margin-left:4px; font-size:10.5px; padding:1px 6px;">已對齊次日</span>
           {% endif %}
+        </span>
+        <span class="meta-item">
+          <span class="meta-label">建置</span>
+          <span class="meta-val font-mono">{{ build_time }}</span>
+          <span class="meta-ago font-mono" id="header-age-display">（剛剛）</span>
         </span>
         <span class="meta-item health-item" id="source-health-indicator" title="資料源健康度">
           {% if indices_missing and indices_missing|length > 0 %}
           <span class="health-dot warn"></span><button type="button" class="health-btn" onclick="window.pm.showMissingModal()">⚠ 發現 {{ indices_missing|length }} 項缺漏</button>
           {% else %}
-          <span class="health-dot ok"></span><span style="font-size:11px; color:var(--text-muted);">源狀態正常</span>
+          <span class="health-dot ok"></span><span style="font-size:11.5px; color:var(--text-muted);" title="Yahoo Finance、TWSE、期交所、Chengwaye 來源正常">● 源正常</span>
           {% endif %}
         </span>
       </div>
@@ -1975,11 +2073,12 @@
       <div class="nav-actions">
         <button class="nav-btn btn-briefing" id="briefing-toggle" onclick="window.pm.toggleBriefingMode()" type="button" title="切換盤前 3 分鐘速讀模式 (快捷鍵 B)">⚡ 速讀<span class="btn-text-extra">模式</span></button>
         <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" title="切換只看自選 (快捷鍵 W)">⭐ 自選<span class="btn-text-extra">股</span></button>
+        <button class="nav-btn btn-clean-link" onclick="window.pm.copyCleanUrl()" type="button" title="複製不含自選股代號的乾淨網址 (供除錯或截圖分享)">🔗 乾淨連結</button>
         <button class="nav-btn btn-export" onclick="window.pm.exportDailyMarkdown()" type="button" title="匯出今日重點 Markdown (快捷鍵 E)">📋 匯出<span class="btn-text-extra">重點</span></button>
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" title="切換截圖模式 (按 Esc 退出)">📸 截圖</button>
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" title="切換深淺色主題 (快捷鍵 D)">🌙 深色</button>
         <button class="nav-btn refresh-btn" onclick="location.reload(true)" type="button" title="重新載入最新版" aria-label="重新整理頁面">
-          🔄 <span class="last-build">建置 {{ (meta.build_time if meta is defined and meta and meta.build_time else (build_time or '08:00')) }}</span><span class="short-build">重整</span>
+          🔄 <span class="last-build">建置 {{ build_time or '08:00' }}</span><span class="short-build">重整</span>
         </button>
       </div>
     </div>
@@ -2298,27 +2397,45 @@
               <span class="badge badge-blue">{{ financials.att|length if financials.att else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/att.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-att" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:280px;" scrolling="no"></iframe>
+              <div class="embed-frame-wrapper is-loading" id="wrapper-att">
+                <iframe src="embed/att.html?v={{ build_version or (generated_at | replace(' ','_') | replace('/','') | replace(':','')) }}" id="embed-att" class="embed-frame unref-frame" onload="window.pm.onIframeLoad('att')" loading="lazy" referrerpolicy="no-referrer" style="min-height:120px; height:auto;" scrolling="no"></iframe>
+                <div class="embed-fallback-notice" id="fallback-att" style="display:none;">
+                  <span>⚠️ 嵌入資料載入逾時</span>
+                  <button type="button" class="btn-retry" onclick="window.pm.retryEmbed('att')">🔄 重新載入此區塊</button>
+                </div>
+              </div>
             </div>
           </details>
 
-          <details class="unref-accordion">
+          <details class="unref-accordion" {% if financials.fin and financials.fin|length > 0 %}open{% endif %}>
             <summary class="unref-summary">
               <span>即時季報（市場未反映 {{ financials.fin|length if financials.fin else 0 }} 筆）</span>
               <span class="badge">{{ financials.fin|length if financials.fin else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/fin.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:640px;" scrolling="no"></iframe>
+              <div class="embed-frame-wrapper is-loading" id="wrapper-fin">
+                <iframe src="embed/fin.html?v={{ build_version or (generated_at | replace(' ','_') | replace('/','') | replace(':','')) }}" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.onIframeLoad('fin')" loading="lazy" referrerpolicy="no-referrer" style="min-height:120px; height:auto;" scrolling="no"></iframe>
+                <div class="embed-fallback-notice" id="fallback-fin" style="display:none;">
+                  <span>⚠️ 嵌入資料載入逾時</span>
+                  <button type="button" class="btn-retry" onclick="window.pm.retryEmbed('fin')">🔄 重新載入此區塊</button>
+                </div>
+              </div>
             </div>
           </details>
 
-          <details class="unref-accordion">
+          <details class="unref-accordion" {% if financials.rev and financials.rev|length > 0 %}open{% endif %}>
             <summary class="unref-summary">
               <span>即時營收（市場未反映 {{ financials.rev|length if financials.rev else 0 }} 筆）</span>
               <span class="badge">{{ financials.rev|length if financials.rev else 0 }} 筆</span>
             </summary>
             <div class="unref-content">
-              <iframe src="embed/rev.html?v={{ generated_at | replace(' ','_') | replace(':','') }}" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.syncIframeTheme()" loading="lazy" importance="low" referrerpolicy="no-referrer" style="height:160px;" scrolling="no"></iframe>
+              <div class="embed-frame-wrapper is-loading" id="wrapper-rev">
+                <iframe src="embed/rev.html?v={{ build_version or (generated_at | replace(' ','_') | replace('/','') | replace(':','')) }}" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.onIframeLoad('rev')" loading="lazy" referrerpolicy="no-referrer" style="min-height:120px; height:auto;" scrolling="no"></iframe>
+                <div class="embed-fallback-notice" id="fallback-rev" style="display:none;">
+                  <span>⚠️ 嵌入資料載入逾時</span>
+                  <button type="button" class="btn-retry" onclick="window.pm.retryEmbed('rev')">🔄 重新載入此區塊</button>
+                </div>
+              </div>
             </div>
           </details>
         </div>
@@ -2342,6 +2459,7 @@
       {% else %}
 
       <!-- 族群聚焦標的 -->
+      {% if pressplay.found_group.matched and pressplay.found_group.matched|length > 0 %}
       <div class="card">
         <div class="card-head">
           <div class="card-title-group">
@@ -2352,7 +2470,6 @@
         </div>
 
         <div class="data-block">
-          {% if pressplay.found_group.matched %}
           <!-- Quick Filter Toolbar for Candidate Table -->
           <div class="table-filter-toolbar" style="padding: 8px 12px; background: var(--bg-sub); border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center;">
             <input type="text" id="candidate-search" class="filter-input-sm" placeholder="🔍 搜尋候選標的代號 / 名稱 / 族群..." oninput="window.pm.filterCandidateTable(this.value)" style="padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-main); font-size: 12px; font-family: var(--font-mono); outline: none; min-width: 180px; flex: 1; max-width: 320px;">
@@ -2389,13 +2506,22 @@
               </tbody>
             </table>
           </div>
-          {% else %}
-          <div class="empty-state">今日無明確族群連動標的</div>
-          {% endif %}
         </div>
       </div>
+      {% else %}
+      <details class="unref-accordion" style="margin-bottom:12px;">
+        <summary class="unref-summary">
+          <span>🎯 族群聚焦標的 · 今日無明確族群連動標的</span>
+          <span class="badge">0 檔</span>
+        </summary>
+        <div class="unref-content" style="padding:14px; text-align:center; color:var(--text-muted); font-size:12.5px;">
+          今日無明確族群連動標的
+        </div>
+      </details>
+      {% endif %}
 
       <!-- 無明確族群標的 -->
+      {% if pressplay.not_found_group.matched and pressplay.not_found_group.matched|length > 0 %}
       <div class="card">
         <div class="card-head">
           <div class="card-title-group">
@@ -2406,7 +2532,6 @@
         </div>
 
         <div class="data-block">
-          {% if pressplay.not_found_group.matched %}
           <div class="table-scroll">
             <table class="data-table">
               <caption class="sr-only">無明確族群標的清單</caption>
@@ -2439,11 +2564,19 @@
               </tbody>
             </table>
           </div>
-          {% else %}
-          <div class="empty-state">今日無獨立題材標的</div>
-          {% endif %}
         </div>
       </div>
+      {% else %}
+      <details class="unref-accordion" style="margin-bottom:12px;">
+        <summary class="unref-summary">
+          <span>⚡ 無明確族群標的 · 今日無獨立題材標的</span>
+          <span class="badge">0 檔</span>
+        </summary>
+        <div class="unref-content" style="padding:14px; text-align:center; color:var(--text-muted); font-size:12.5px;">
+          今日無獨立題材標的
+        </div>
+      </details>
+      {% endif %}
       {% endif %}
     </section>
 
@@ -2539,18 +2672,18 @@
       </div>
 
       <!-- 隔夜重大新聞 -->
-      {% if news %}
       <div class="card">
         <div class="card-head">
           <div class="card-title-group">
             <h3 class="card-title">隔夜重大新聞 Top 5</h3>
-            <span class="count-badge">{{ news|length }} 則</span>
+            <span class="count-badge">{{ news|length if news else 0 }} 則</span>
           </div>
         </div>
         <div class="data-block">
+          {% if news and news|length > 0 %}
           <div class="news-list" style="display:flex; flex-direction:column; gap:8px;">
             {% for a in news %}
-            <a href="{{ a.link }}" target="_blank" rel="noopener noreferrer"  rel="noopener" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
+            <a href="{{ a.link }}" target="_blank" rel="noopener noreferrer" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
               <div class="news-title" style="font-weight:600; font-size:13px; margin-bottom:4px;">{{ a.title }}</div>
               <div class="news-meta font-mono" style="font-size:11px; color:var(--text-muted); display:flex; gap:12px;">
                 <span>{{ a.source }}</span>
@@ -2559,9 +2692,13 @@
             </a>
             {% endfor %}
           </div>
+          {% else %}
+          <div class="empty" style="padding:16px; text-align:center; color:var(--text-muted); font-size:12.5px;">
+            ℹ️ 今日新聞來源暫時無法取得 · 系統將於下次排程自動重試
+          </div>
+          {% endif %}
         </div>
       </div>
-      {% endif %}
 
       <!-- 財經行事曆 (時間軸儀表板) -->
       <div class="card cal-dashboard-card" id="cal-dashboard">
@@ -3821,6 +3958,42 @@
     history.replaceState(null, '', hash + '?theme=' + curTheme + '&watch=' + watch);
   };
 
+  window.pm.copyCleanUrl = function() {
+    var curTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    var cleanUrl = window.location.origin + window.location.pathname + '#summary?theme=' + curTheme;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(cleanUrl).then(function() {
+        window.pm.showToast('🔗 已複製乾淨網址（不含自選股代號）');
+      });
+    } else {
+      window.pm.showToast('🔗 ' + cleanUrl);
+    }
+  };
+
+  window.pm.onIframeLoad = function(id) {
+    var wrapper = document.getElementById('wrapper-' + id);
+    if (wrapper) wrapper.classList.remove('is-loading');
+    var fb = document.getElementById('fallback-' + id);
+    if (fb) fb.style.display = 'none';
+    var f = document.getElementById('embed-' + id);
+    if (f && f.contentWindow) {
+      f.contentWindow.postMessage({type: 'request-height'}, '*');
+    }
+    window.pm.syncIframeTheme();
+  };
+
+  window.pm.retryEmbed = function(id) {
+    var f = document.getElementById('embed-' + id);
+    if (f) {
+      var wrapper = document.getElementById('wrapper-' + id);
+      if (wrapper) wrapper.classList.add('is-loading');
+      var fb = document.getElementById('fallback-' + id);
+      if (fb) fb.style.display = 'none';
+      var base = f.src.split('?')[0];
+      f.src = base + '?v=' + Date.now();
+    }
+  };
+
   window.pm.showToast = function(msg) {
     var toast = document.getElementById('toast');
     if (!toast) return;
@@ -3892,20 +4065,39 @@
   }
 
   function updateSlowTimers() {
-    var genStr = '{{ generated_at }}';
+    var meta = window.__PM_META__ || {};
+    var genStr = meta.build_time || '{{ meta.build_time if meta and meta.build_time else generated_at }}';
     if (!genStr) return;
+    
     var genTime = new Date(genStr.replace(/\//g, '-').replace(' ', 'T') + ':00+08:00').getTime();
     if (isNaN(genTime)) genTime = new Date(genStr).getTime();
     if (isNaN(genTime)) return;
     
-    var hrs = Math.max(0, (Date.now() - genTime) / 36e5);
+    var diffMs = Math.max(0, Date.now() - genTime);
+    var hrs = diffMs / 36e5;
+    
+    // Update Header Age Badge
+    var headerAge = document.getElementById('header-age-display');
+    if (headerAge) {
+      if (hrs < 0.1) {
+        headerAge.textContent = '（剛剛）';
+      } else if (hrs < 1) {
+        headerAge.textContent = '（' + Math.max(1, Math.round(diffMs / 60000)) + 'm 前）';
+      } else {
+        headerAge.textContent = '（' + hrs.toFixed(1) + 'h 前）';
+      }
+    }
+
     var banner = document.querySelector('.stale-banner');
     if (banner) {
-      banner.textContent = '資料建置於 ' + genStr + '，距今 ' + hrs.toFixed(1) + ' 小時' + (hrs >= 12 ? ' (⚠️ 資料已逾 12 小時，建議於 Actions 手動觸發更新)' : '');
-      banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
-      banner.classList.toggle('is-warning', hrs >= 6 && hrs < 12);
-      banner.classList.toggle('is-danger', hrs >= 12);
-      banner.style.display = hrs >= 4 ? 'block' : 'none';
+      if (hrs >= 12) {
+        banner.textContent = '資料建置於 ' + genStr + '，距今 ' + hrs.toFixed(1) + ' 小時 (⚠️ 資料已逾 12 小時，建議於 GitHub Actions 手動重新觸發)';
+        banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
+        banner.className = 'stale-banner' + (hrs >= 24 ? ' is-danger' : ' is-warning');
+        banner.style.display = 'block';
+      } else {
+        banner.style.display = 'none';
+      }
     }
 
     var todayStr = new Date().toLocaleDateString('zh-TW', { month: '2-digit', day: '2-digit' }).replace('/', '-');
@@ -3968,9 +4160,19 @@
   // 10. Global Event Listeners & Init
   // ==========================================
   window.addEventListener('message', function(e) {
-    if (!e.data || e.data.type !== 'embed-height') return;
-    var f = document.getElementById('embed-' + e.data.id);
-    if (f && e.data.height) f.style.height = (e.data.height + 12) + 'px';
+    if (!e.data) return;
+    if (e.data.type === 'embed-height' && e.data.id) {
+      var f = document.getElementById('embed-' + e.data.id);
+      if (f && e.data.height) {
+        var h = Math.min(1200, e.data.height + 8);
+        f.style.height = h + 'px';
+        f.style.overflowY = (e.data.height > 1200) ? 'auto' : 'hidden';
+        var wrapper = document.getElementById('wrapper-' + e.data.id);
+        if (wrapper) wrapper.classList.remove('is-loading');
+        var fb = document.getElementById('fallback-' + e.data.id);
+        if (fb) fb.style.display = 'none';
+      }
+    }
   });
 
   document.addEventListener('keydown', function(e) {
@@ -4080,28 +4282,38 @@
     if (urlParams.get('watch') === '1') window.pm.watchOnly = true;
     if (window.pm.watchOnly) window.pm.applyWatchOnly();
 
+    // 3-second timeout fallback check for embeds
     setTimeout(function() {
-      document.querySelectorAll('iframe.unref-frame').forEach(function(iframe) {
-        var curH = parseInt(iframe.style.height || '0');
-        if (curH <= 80) {
-          var card = iframe.closest('.card') || iframe.parentElement;
-          var existing = card.querySelector('.embed-fallback-notice');
-          if (!existing) {
-            var n = document.createElement('div');
-            n.className = 'embed-fallback-notice';
-            n.style.cssText = 'padding:14px; font-size:12px; color:var(--text-muted); text-align:center; background:var(--bg-sub); border-radius:6px; margin:8px 0;';
-            n.textContent = '⚠️ 資料載入超時（已沿用 build-time 快照）';
-            iframe.parentElement.appendChild(n);
+      ['att', 'fin', 'rev'].forEach(function(id) {
+        var f = document.getElementById('embed-' + id);
+        if (f) {
+          var curH = parseInt(f.style.height || '0');
+          if (curH <= 60) {
+            var wrapper = document.getElementById('wrapper-' + id);
+            if (wrapper) wrapper.classList.remove('is-loading');
+            var fb = document.getElementById('fallback-' + id);
+            if (fb) fb.style.display = 'flex';
           }
         }
       });
-    }, 5000);
+    }, 3000);
 
     if (window.pm.calState && window.pm.calState.search) {
       var sinp = document.getElementById('cal-search-input');
       if (sinp) sinp.value = window.pm.calState.search;
     }
     if (window.pm.applyCalendarFilters) window.pm.applyCalendarFilters();
+
+    // Auto-expand today's section in financial calendar
+    var todayDateSec = document.querySelector('.cal-date-section.is-today-section') || document.querySelector('.cal-date-section');
+    if (todayDateSec) {
+      var dBody = todayDateSec.querySelector('.cal-date-body');
+      if (dBody && !dBody.classList.contains('is-open')) {
+        dBody.classList.add('is-open');
+        todayDateSec.classList.add('open-sec');
+      }
+    }
+
     document.querySelectorAll('.unref-accordion').forEach(function(det) {
       det.addEventListener('toggle', function() {
         if (det.open) {
@@ -4114,7 +4326,7 @@
     });
     if (window.matchMedia) {
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
-        if (!localStorage.getItem('premarket.theme')) {
+        if (!localStorage.getItem('pmit_theme') && !localStorage.getItem('premarket.theme')) {
           var newTheme = e.matches ? 'dark' : 'light';
           document.documentElement.setAttribute('data-theme', newTheme);
           var b = document.getElementById('theme-toggle');

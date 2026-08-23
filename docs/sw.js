@@ -1,4 +1,4 @@
-const CACHE_NAME = 'premarket-v6';
+const CACHE_NAME = 'pmit-20260823_1047';
 const SHELL_ASSETS = [
   './',
   './index.html',

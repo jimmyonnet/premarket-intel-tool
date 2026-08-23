@@ -5,7 +5,7 @@
       (function() {
         var t = 'light';
         try {
-          t = window.parent.document.documentElement.getAttribute('data-theme') || localStorage.getItem('premarket.theme');
+          t = window.parent.document.documentElement.getAttribute('data-theme') || localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme');
         } catch(e){}
         if (t !== 'dark') t = 'light';
         document.documentElement.setAttribute('data-theme', t);
@@ -185,7 +185,7 @@
       .filter-bar button:hover { background: var(--btn-hover) !important; color: var(--text-main) !important; }
       .filter-bar input[type="text"], .filter-bar input[type="number"] { background: var(--btn-bg) !important; border: 1px solid var(--btn-border) !important; color: var(--text-main) !important; border-radius: 6px !important; padding: 4px 8px !important; }
       .filter-bar input[type="checkbox"] { accent-color: var(--blue) !important; margin-right: 6px !important; }
-      .empty { padding: 24px 16px !important; color: var(--text-muted) !important; font-size: 12px !important; text-align: center !important; }
+      .empty { padding: 24px 16px !important; color: var(--text-muted) !important; font-size: 12.5px !important; text-align: center !important; }
       ::-webkit-scrollbar { width: 6px; height: 6px; }
       ::-webkit-scrollbar-track { background: var(--bg-sub); }
       ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -205,7 +205,7 @@
             }
             if (!theme) {
               try {
-                theme = localStorage.getItem('premarket.theme');
+                theme = localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme');
               } catch(e){}
             }
           }
@@ -239,19 +239,25 @@
             } else {
               totalH = document.body.scrollHeight + 16;
             }
-            var finalH = Math.max(120, Math.ceil(totalH));
+            var finalH = Math.max(100, Math.ceil(totalH));
             parent.postMessage({type:'embed-height', id: location.pathname.split('/').pop().replace('.html',''), height: finalH}, '*');
           } catch(e){}
         }
 
-        // MutationObserver to catch when tables render, filters change, or details expand
+        // MutationObserver and ResizeObserver to catch table rendering and details expansion
         var mo = new MutationObserver(function() {
           send();
         });
         document.addEventListener('DOMContentLoaded', function() {
           applyTheme();
           send();
-          if (document.body) mo.observe(document.body, { childList: true, subtree: true, attributes: true });
+          if (document.body) {
+            mo.observe(document.body, { childList: true, subtree: true, attributes: true });
+            if (window.ResizeObserver) {
+              var ro = new ResizeObserver(function() { send(); });
+              ro.observe(document.body);
+            }
+          }
         });
         window.addEventListener('load', function() {
           applyTheme();
@@ -260,10 +266,10 @@
         setTimeout(function() {
           var app = document.getElementById('app');
           if (app && app.innerHTML.indexOf('載入中') >= 0) {
-            app.innerHTML = '<div class="empty">⚠️ 資料連線逾時（已沿用 build-time 快照）</div>';
+            app.innerHTML = '<div class="empty">⚠️ 資料載入逾時 <button onclick="location.reload()" style="background:var(--btn-bg); color:var(--blue); border:1px solid var(--btn-border); border-radius:4px; padding:3px 8px; margin-left:6px; cursor:pointer; font-weight:700;">🔄 點此重試</button></div>';
             send();
           }
-        }, 3500);
+        }, 3000);
         setTimeout(function() { applyTheme(); send(); }, 100);
         setTimeout(function() { applyTheme(); send(); }, 300);
         setTimeout(function() { applyTheme(); send(); }, 800);

@@ -522,6 +522,7 @@ def main():
     ap.add_argument("--financials", required=False, help="Path to financials.json")
     ap.add_argument("--news", required=False, help="Path to news.json")
     ap.add_argument("--twse-summary", required=False, help="Path to twse_summary.json")
+    ap.add_argument("--data-date", required=False, default=None, help="Optional data date override (e.g. 08/24)")
     ap.add_argument("--out", required=True)
     ap.add_argument(
         "--template-dir",
@@ -529,13 +530,18 @@ def main():
     )
     args = ap.parse_args()
 
+    # Single Source of Truth for Build Timestamp & Version
+    now = datetime.now(TAIPEI)
+    build_time_str = now.strftime("%Y-%m-%d %H:%M")
+    build_time_hm = now.strftime("%H:%M")
+    build_version = now.strftime("%Y%m%d_%H%M")
+    generated_at_str = now.strftime("%Y/%m/%d %H:%M")
+
     indices = normalize_indices(load_json(args.indices) or {}) or {}
     night = load_json(args.night_session) or {}
     disposal = load_json(args.disposal) or {}
     pressplay_raw = load_json(args.pressplay) or {}
-    # Fully pre-default every nested key the template touches -- see the
-    # module docstring's note on --pressplay for why this can't be left to
-    # the template's own `or {}` fallbacks.
+
     if not pressplay_raw:
         pressplay = {
             "source_article": {},
@@ -558,7 +564,7 @@ def main():
     chengwaye_daily = load_json(args.chengwaye_daily) or {}
     institutional = build_institutional_section(pressplay, chengwaye_daily)
 
-    calendar_raw = load_json(args.calendar)
+    calendar_raw = load_json(args.calendar) or {}
     financials_data = load_json(args.financials) if args.financials else {}
     news_data = load_json(args.news) if args.news else []
     twse_data = load_json(args.twse_summary) if args.twse_summary else {} or {}
@@ -574,10 +580,19 @@ def main():
         calendar_section["today"], calendar_section["range_end"], calendar_section["events"]
     )
 
-    now = datetime.now(TAIPEI)
-
-    # Calculate data_date, stale_hours and hours_since_us_close
-    data_date = disposal.get("date_check", {}).get("today") or night.get("date") or now.strftime("%Y-%m-%d")
+    # Determine data_date from single authority
+    if args.data_date and args.data_date.strip():
+        data_date = args.data_date.strip()
+    else:
+        page_applies = (disposal.get("date_check", {}) or {}).get("page_says_applies_to")
+        if page_applies:
+            data_date = page_applies
+        else:
+            raw_d = (disposal.get("date_check", {}) or {}).get("today") or night.get("date") or now.strftime("%Y-%m-%d")
+            if len(raw_d) == 10 and raw_d[4] == '-' and raw_d[7] == '-':
+                data_date = raw_d[5:].replace('-', '/')
+            else:
+                data_date = raw_d
     
     # Calculate hours since last US close (US 16:00 EDT == 04:00 Taipei next day)
     us_close_today = now.replace(hour=4, minute=0, second=0, microsecond=0)
@@ -592,42 +607,40 @@ def main():
             data_dt = datetime.fromisoformat(data_dt_str)
             stale_hours = round((now - data_dt).total_seconds() / 3600, 1)
         except Exception:
-            stale_hours = 0
+            stale_hours = 0.0
     else:
-        stale_hours = 0
+        stale_hours = 0.0
 
-    stale_hours = max(0, stale_hours)
-    build_time = now.strftime("%H:%M")
+    stale_hours = max(0.0, stale_hours)
 
     meta_path = Path(args.out).parent / "data_meta.json"
     meta_path.parent.mkdir(parents=True, exist_ok=True)
     
-    if meta_path.exists():
-        try:
-            loaded_meta = json.loads(meta_path.read_text(encoding="utf-8"))
-            if loaded_meta.get("data_date"):
-                data_date = loaded_meta["data_date"]
-            if loaded_meta.get("build_time"):
-                build_time = loaded_meta["build_time"]
-            if "stale_hours" in loaded_meta:
-                stale_hours = loaded_meta["stale_hours"]
-        except Exception:
-            pass
-
     meta_data = {
-        "build_time": now.strftime("%Y-%m-%d %H:%M"),
+        "build_time": build_time_str,
+        "build_version": build_version,
         "data_date": data_date,
         "stale_hours": stale_hours,
         "hours_since_us_close": hours_since_us_close,
     }
     meta_path.write_text(json.dumps(meta_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    # Automate sw.js cache versioning
+    sw_path = Path(args.out).parent / "sw.js"
+    if sw_path.exists():
+        import re
+        sw_content = sw_path.read_text(encoding="utf-8")
+        sw_content = re.sub(r"const CACHE_NAME = '[^']+';", f"const CACHE_NAME = 'pmit-{build_version}';", sw_content)
+        sw_path.write_text(sw_content, encoding="utf-8")
+        print(f"updated {sw_path} cache name to pmit-{build_version}")
+
     env = Environment(loader=FileSystemLoader(args.template_dir), autoescape=True)
     tmpl = env.get_template("premarket.html.j2")
 
     html = tmpl.render(
-        generated_at=now.strftime("%Y/%m/%d %H:%M"),
-        build_time=build_time,
+        generated_at=generated_at_str,
+        build_time=build_time_hm,
+        build_version=build_version,
         data_date=data_date,
         stale_hours=stale_hours,
         hours_since_us_close=hours_since_us_close,
