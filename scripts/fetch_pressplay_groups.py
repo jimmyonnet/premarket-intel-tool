@@ -274,36 +274,65 @@ def find_latest_premarket_article(page):
     the first title containing 盤前 and NOT 盤後 -- no date parsing needed.
     """
     page.goto(ARTICLES_URL, wait_until="domcontentloaded", timeout=30000)
-    page.wait_for_selector(".article-card", timeout=20000)
+    try:
+        page.wait_for_load_state("networkidle", timeout=10000)
+    except PlaywrightTimeoutError:
+        pass
 
-    cards = page.locator(".article-card")
-    for i in range(cards.count()):
-        header = cards.nth(i).locator(".article-card-header")
-        if header.count() == 0:
-            continue
-        title = header.first.inner_text().strip()
+    try:
+        page.wait_for_selector('.article-card, [class*="article-card"], a[href*="/articles/"]', timeout=20000)
+    except PlaywrightTimeoutError:
+        pass
+
+    # 1. Search article links directly
+    links = page.locator('a[href*="/articles/"]')
+    for i in range(links.count()):
+        el = links.nth(i)
+        title = el.inner_text().strip()
+        if not title:
+            parent = el.locator('..')
+            if parent.count() > 0:
+                title = parent.inner_text().strip()
         if "盤前" in title and "盤後" not in title:
-            href = header.first.get_attribute("href")
-            if not href:
-                continue
-            url = href if href.startswith("http") else BASE_URL + href
-            return title, url
+            href = el.get_attribute("href")
+            if href:
+                url = href if href.startswith("http") else BASE_URL + href
+                clean_title = title.split("\n")[0].strip()
+                return clean_title, url
+
+    # 2. Search card elements
+    cards = page.locator('.article-card, [class*="article-card"], [class*="ArticleCard"]')
+    for i in range(cards.count()):
+        card = cards.nth(i)
+        header = card.locator('.article-card-header, [class*="header"], h2, h3, a')
+        title = (header.first.inner_text() if header.count() > 0 else card.inner_text()).strip()
+        if "盤前" in title and "盤後" not in title:
+            link = card.locator('a[href*="/articles/"], a').first
+            if link.count() > 0:
+                href = link.get_attribute("href")
+                if href:
+                    url = href if href.startswith("http") else BASE_URL + href
+                    clean_title = title.split("\n")[0].strip()
+                    return clean_title, url
+
     return None, None
 
 
 def read_article_text(page, url: str) -> str:
     page.goto(url, wait_until="domcontentloaded", timeout=30000)
-    # Client-side rendered SPA content -- wait for real text, not a fixed
-    # delay (see tx_night_session.py's module docstring for why a fixed
-    # wait_for_timeout was proven unreliable for this kind of page).
+    try:
+        page.wait_for_load_state("networkidle", timeout=10000)
+    except PlaywrightTimeoutError:
+        pass
     page.wait_for_function(
         """() => {
-            const el = document.querySelector('.article-content');
+            const el = document.querySelector('.article-content, [class*="article-content"], [class*="ArticleContent"], .article-body, article');
             return !!el && el.innerText.trim().length > 20;
         }""",
-        timeout=15000,
+        timeout=20000,
     )
-    return page.locator(".article-content").first.inner_text()
+    el = page.locator('.article-content, [class*="article-content"], [class*="ArticleContent"], .article-body, article').first
+    return el.inner_text()
 
 
 def fetch_article_via_browser():
@@ -523,6 +552,12 @@ def main():
     elif email and password:
         try:
             source_article, article_text = fetch_article_via_browser()
+            try:
+                local_md.parent.mkdir(parents=True, exist_ok=True)
+                hdr = f"Title: {source_article.get('title', '')}\nURL: {source_article.get('url', '')}\nCollected: {now.isoformat()}\n---\n"
+                local_md.write_text(hdr + article_text, encoding="utf-8")
+            except Exception:
+                pass
         except Exception as e:
             print(f"PressPlay browser fetch failed: {e}, falling back to empty", file=sys.stderr)
             source_article, article_text = {"title": "PressPlay 整理文章 (載入失敗)", "url": None}, ""

@@ -86,24 +86,20 @@ def fetch_source(
         if not target_file.exists() or target_file.stat().st_size == 0:
             target_file.write_text(fallback_content, encoding="utf-8")
     else:
-        # If script wrote output to stdout instead of directly to target_file
-        if stdout.strip() and (not target_file.exists() or target_file.stat().st_size == 0 or ">" in " ".join(cmd)):
+        # If script wrote output to stdout, update target_file
+        if stdout.strip():
             try:
                 # Validate JSON stdout
                 parsed = json.loads(stdout)
                 target_file.write_text(json.dumps(parsed, ensure_ascii=False, indent=2), encoding="utf-8")
             except Exception:
                 target_file.write_text(stdout, encoding="utf-8")
-
-        # A successful command must either emit data or update its target file.
-        # Otherwise an unchanged previous snapshot could be mislabeled as fresh.
-        current_signature = None
-        if target_file.exists():
-            current_signature = (target_file.stat().st_mtime_ns, target_file.stat().st_size)
-        if not stdout.strip() and previous_signature is not None and current_signature == previous_signature:
-            status = "failed"
-            fallback_used = True
-            error_summary = "指令成功但未產生新資料，沿用前次快照"
+        else:
+            current_signature = (target_file.stat().st_mtime_ns, target_file.stat().st_size) if target_file.exists() else None
+            if previous_signature is not None and current_signature == previous_signature:
+                status = "failed"
+                fallback_used = True
+                error_summary = "指令成功但未產生新資料，沿用前次快照"
 
         # Validate target file exists and is valid JSON
         if not target_file.exists() or target_file.stat().st_size == 0:
