@@ -106,7 +106,6 @@ def test_deployed_news_section_uses_top_ten_cap():
     page = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
     app = APP.read_text(encoding="utf-8")
 
-    assert 'id="news-panel"' in page
-    assert "function renderNews(pkg)" in app
-    assert "盤前新聞" in app
+    assert "隔夜重大新聞 Top 10" in page
+    assert "隔夜重大新聞 Top 5" not in page
     assert "items.slice(0, 10)" in app

@@ -7,29 +7,25 @@ DEPLOYED = ROOT / "docs" / "index.html"
 
 
 def _announcement_block(text: str) -> str:
-    marker = '<details id="announcements"'
+    marker = '<details class="card announcements-collapsible"'
     start = text.index(marker)
-    end = text.index("</details>", start) + len("</details>")
+    end = text.index('    </section>', start)
     return text[start:end]
 
 
 def test_source_template_announcement_section_is_collapsed_by_default():
     block = _announcement_block(TEMPLATE.read_text(encoding="utf-8"))
 
-    assert block.startswith('<details id="announcements"')
-    assert '<summary class="section-heading compact"' in block
+    assert block.startswith('<details class="card announcements-collapsible"')
+    assert '<summary class="card-head"' in block
     assert ' open' in block.split(">", 1)[0]
-    assert 'id="announcements-panel"' in block
-    assert 'data-package="announcements"' in block
 
 
-def test_deployed_announcement_section_keeps_outer_open_and_inner_rows_collapsed():
-    page = DEPLOYED.read_text(encoding="utf-8")
-    block = _announcement_block(page)
-    app = (ROOT / "scripts" / "assets" / "app.js").read_text(encoding="utf-8")
+def test_deployed_announcement_card_shows_collapsed_rows_by_default():
+    block = _announcement_block(DEPLOYED.read_text(encoding="utf-8"))
 
-    assert block.startswith('<details id="announcements"')
-    assert '<summary class="section-heading compact"' in block
+    assert block.startswith('<details class="card announcements-collapsible"')
+    assert '<summary class="card-head"' in block
     assert ' open' in block.split(">", 1)[0]
-    assert 'return `<details class="native-details" ${rows.length ? \'\' : \'\'}>' in app
-    assert 'native-details" open' not in app
+    assert block.count('class="unref-accordion"') == 3
+    assert 'class="unref-accordion" open' not in block
