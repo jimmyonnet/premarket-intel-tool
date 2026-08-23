@@ -1,1 +1,74 @@
-[]
+[
+  {
+    "title": "本週操盤筆記：輝達財報、華許演說與PCE三大關卡來了",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBqSkN0eGR2MGhQWFhlQzhLMVJkb1RicGhPYVhGVHloZVlYWDhIenl6cnlFSExGd192eXJWSEVaUUthcXlfb2RadFFsTENXSGc?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/23 21:50",
+    "timestamp": 1787493003.0,
+    "score": 14,
+    "quality_score": 4,
+    "impact_score": 10,
+    "matched_groups": [
+      "macro_policy",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "輝達財報將超越市場期待？華許會對美債殖利率議題表態？本週投資人得留意這3件事",
+    "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1VT3ktNmdCZEdNSTcwQkxyZUktRGc2bDdfSkJRV251eUk5WFdhWHVZTXpaYUhLcWhUWDRQTjd1blgyWlExYjJVbklJNWZsXy1yUlB0V2dGaDJSZ0dxNHcwb29ZSllVWkVpQ1JUa1dLSXdoSDhoSkJqTWdtRQ?oc=5",
+    "source": "財訊",
+    "time": "08/23 17:00",
+    "timestamp": 1787475600.0,
+    "score": 14,
+    "quality_score": 4,
+    "impact_score": 10,
+    "matched_groups": [
+      "macro_policy",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "投資人本周將迎華許演說、輝達財報 牽動美股後市表現",
+    "link": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBjZVoycll6MTJaS3haU2Y1Z1NjcE81UkMwZjZUdlpmcTl1VzNPM29TaXdSLUpBZGI0UGR6Q2lVeWNJd1VHOW1YRnc4WW1VSVJtZVhkaGpuc3hzWm1ONlhPT2hHSHd1b1ZHRmhkbVFfRmdxSURzc2lTQ25n0gFiQVVfeXFMTXFIVWx6XzhrbjBDZjNCbzdfV0NOcmFRUVdxdk9ST1otdXQwdFdHS2ZvNHlMVjRFSk10T1dXdjVYSFpqZ3E0ODhNN3RPQ0xxbTNIeG4wUkdISU9ZTVRIUlRNRVE?oc=5",
+    "source": "經濟日報",
+    "time": "08/23 01:57",
+    "timestamp": 1787421474.0,
+    "score": 13,
+    "quality_score": 4,
+    "impact_score": 9,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "輝達財報、Fed接力登場 美股下週迎2考驗",
+    "link": "https://news.google.com/rss/articles/CBMijwJBVV95cUxNQjNwRmVWZ3o1N0tnalIxRzRPdTlDUFhSa2VndGFRNDBrSkplMWdtZ2Fta0lacTRQRDJFM3Q4NlNkMFpYenhtT281VktqdVEtSkZ3eDJwaV82a042N1NmUkQ4MmUwYVh6QjdGcmZzc0hsblg3akZySDFlNkNrMjVBMkYxcFJ3ZUlzSnQ5bHBfXzJTS0l0NlBiU2pscjM2OUNXRUR5TkJrNU5OeGFCXzlBcVBtbnNzZ084TERMamxfX3I1SURndTlYcGRmQmxiMGtTR2owNE1EbnNBUFNSem9OZ1dJdkFRMm82WFI2b1pWbGNob1I1YWZDUUlCTUNHRUo4c1RmV1N5eWVlbC1tVUFB?oc=5",
+    "source": "Yahoo新聞",
+    "time": "08/23 07:14",
+    "timestamp": 1787440499.0,
+    "score": 12,
+    "quality_score": 3,
+    "impact_score": 9,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  }
+]

@@ -2,6 +2,7 @@ import html
 import json
 import os
 import re
+import sys
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -201,7 +202,7 @@ def fetch_feed(query):
         with urllib.request.urlopen(request, timeout=15) as response:
             return response.read()
     except Exception as exc:
-        print(f"Error fetching RSS query {query!r}: {exc}")
+        print(f"Error fetching RSS query {query!r}: {exc}", file=sys.stderr)
         return b""
 
 
@@ -216,7 +217,7 @@ def select_top_news(articles, limit=MAX_NEWS):
 
 def main():
     start_time, end_time = get_time_window()
-    print(f"Time Window: {start_time} to {end_time}")
+    print(f"Time Window: {start_time} to {end_time}", file=sys.stderr)
 
     queries = [
         "台股 財經",
@@ -224,17 +225,32 @@ def main():
         "台積電 NVIDIA 科技股",
     ]
     articles = []
+    successful_feeds = 0
     for query in queries:
-        articles.extend(parse_feed(fetch_feed(query), start_time, end_time))
+        feed = fetch_feed(query)
+        if feed:
+            successful_feeds += 1
+            articles.extend(parse_feed(feed, start_time, end_time))
 
     selected = select_top_news(articles)
-    print(f"Found {len(dedupe_articles(articles))} unique candidates; selected {len(selected)} qualified articles (max {MAX_NEWS}, no padding).")
+    print(
+        f"Found {len(dedupe_articles(articles))} unique candidates; selected {len(selected)} qualified articles (max {MAX_NEWS}, no padding).",
+        file=sys.stderr,
+    )
     for article in selected:
-        print(f"[{article['score']}] Q{article['quality_score']} I{article['impact_score']} {article['title']}")
+        print(f"[{article['score']}] Q{article['quality_score']} I{article['impact_score']} {article['title']}", file=sys.stderr)
 
     out_dir = "data/latest"
     os.makedirs(out_dir, exist_ok=True)
-    with open(f"{out_dir}/news.json", "w", encoding="utf-8") as output:
+    output_path = f"{out_dir}/news.json"
+    if successful_feeds == 0:
+        if os.path.exists(output_path) and os.path.getsize(output_path) > 0:
+            print("All RSS feeds failed; retaining the most recent valid news snapshot.", file=sys.stderr)
+            return
+        print("All RSS feeds failed and no previous news snapshot exists.", file=sys.stderr)
+        raise SystemExit(1)
+
+    with open(output_path, "w", encoding="utf-8") as output:
         json.dump(selected, output, ensure_ascii=False, indent=2)
 
 

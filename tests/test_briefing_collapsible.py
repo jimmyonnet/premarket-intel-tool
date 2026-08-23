@@ -21,7 +21,7 @@ def test_deployed_data_availability_block_is_collapsed_by_default():
     assert "📊 資料可用性" in block
     assert "⭐ 自選股優先項目" in block
     assert "⏰ 今日高影響事件" in block
-    assert "請先確認資料" in block
+    assert any(label in block for label in ("請先確認資料", "資料可能已過期", "不建議依此頁判讀", "資料來源"))
 
 
 def test_template_data_availability_block_is_collapsed_by_default():

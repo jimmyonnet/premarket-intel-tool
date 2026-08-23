@@ -1,5 +1,8 @@
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+import json
+
+import scripts.fetch_news as fetch_news
 
 from scripts.fetch_news import (
     MIN_TOTAL_SCORE,
@@ -109,3 +112,16 @@ def test_deployed_news_section_uses_top_ten_cap():
     assert "隔夜重大新聞 Top 10" in page
     assert "隔夜重大新聞 Top 5" not in page
     assert "items.slice(0, 10)" in app
+
+
+def test_all_rss_failures_retain_previous_news_snapshot(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / "data" / "latest").mkdir(parents=True)
+    news_path = tmp_path / "data" / "latest" / "news.json"
+    previous = [{"title": "保留的高品質新聞", "link": "https://example.com/previous"}]
+    news_path.write_text(json.dumps(previous, ensure_ascii=False), encoding="utf-8")
+    monkeypatch.setattr(fetch_news, "fetch_feed", lambda _query: b"")
+
+    fetch_news.main()
+
+    assert json.loads(news_path.read_text(encoding="utf-8")) == previous
