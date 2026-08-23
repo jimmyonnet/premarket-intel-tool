@@ -101,9 +101,12 @@ def test_template_rendering_filters_and_hidden_comment():
         calendar={"events": [], "grid": None},
         financials={
             "att": [],
-            "fin": [],
+            "fin": [{"code": "2330"}],
             "rev": [],
-            "source_status": {"rev": {"state": "fetch_failed"}},
+            "source_status": {
+                "fin": {"state": "stale_cached"},
+                "rev": {"state": "fetch_failed"},
+            },
         },
         news=[],
         twse={},
@@ -115,3 +118,5 @@ def test_template_rendering_filters_and_hidden_comment():
     assert "3293" in rendered_html
     assert "即時營收（資料抓取失敗，無法確認市場未反映筆數）" in rendered_html
     assert "抓取失敗" in rendered_html
+    assert "即時季報（沿用前次 1 筆）" in rendered_html
+    assert "沿用快取" in rendered_html
