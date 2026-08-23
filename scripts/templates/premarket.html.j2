@@ -2433,6 +2433,24 @@
       </div>
       </details>
 
+      <script>
+        // Preserve 280a9dc styles while placing the existing market block
+        // immediately after the data-availability disclosure.
+        (function () {
+          var moveMarketContext = function () {
+            var availability = document.getElementById('today-briefing-details');
+            var marketContext = document.getElementById('market-context');
+            if (availability && marketContext && availability.nextElementSibling !== marketContext) {
+              availability.insertAdjacentElement('afterend', marketContext);
+            }
+          };
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', moveMarketContext, { once: true });
+          } else {
+            moveMarketContext();
+          }
+        })();
+      </script>
       <div class="summary-grid">
         <!-- 昨收大盤 -->
         <div class="summary-card">

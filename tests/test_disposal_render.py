@@ -3,11 +3,11 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 from jinja2 import Environment, FileSystemLoader
 
-from scripts.fetch_disposal import parse_active, parse_one_away, DisposalEntry
+from scripts.fetch_disposal import parse_active, parse_one_away, DisposalEntry, expected_market_day
 
 
 def test_disposal_entry_dataclass():
-    """Test DisposalEntry dataclass with int | None typing."""
+    """Test DisposalEntry retains countdown and source exit markers."""
     entry_none = DisposalEntry(code="1101", name="台泥", trading_days_left=None)
     assert entry_none.trading_days_left is None
 
@@ -19,11 +19,14 @@ def test_disposal_entry_dataclass():
     assert entry_three.trading_days_left == 3
     assert isinstance(entry_three.trading_days_left, int)
 
+    entry_exit = DisposalEntry(code="3163", name="波若威", trading_days_left="出關")
+    assert entry_exit.trading_days_left == "出關"
+
 
 def test_fetch_disposal_parser_three_scenarios():
     """
     Test parsing from HTML fixture covering 3 scenarios:
-    (a) 已出關: trading_days_left is None
+    (a) 空白欄位: trading_days_left is None
     (b) 倒數今日: trading_days_left == 0
     (c) 倒數 N 日: trading_days_left == 3 (> 0)
     """
@@ -44,6 +47,12 @@ def test_fetch_disposal_parser_three_scenarios():
     # (c) 倒數 N 日 (3天 -> 3)
     stock_c = next(r for r in active_rows if r["code"] == "2455")
     assert stock_c["trading_days_left"] == 3
+
+
+def test_non_trading_day_uses_next_twse_session_for_source_context():
+    from datetime import date
+
+    assert expected_market_day(date(2026, 8, 23)).isoformat() == "2026-08-24"
 
 
 def test_template_rendering_filters_and_hidden_comment():

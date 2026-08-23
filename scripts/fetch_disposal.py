@@ -42,6 +42,11 @@ import sys
 from pathlib import Path
 
 try:
+    from trading_calendar import get_next_trading_day, is_twse_trading_day
+except ImportError:  # imported as scripts.fetch_disposal in tests
+    from scripts.trading_calendar import get_next_trading_day, is_twse_trading_day
+
+try:
     import requests
 except ImportError:
     requests = None
@@ -199,7 +204,7 @@ class DisposalEntry:
     start_date: str | None = None
     end_date: str | None = None
     exit_date: str | None = None
-    trading_days_left: int | None = None
+    trading_days_left: int | str | None = None
     reason: str | None = None
 
 
@@ -215,16 +220,25 @@ class OneAwayEntry:
     condition_segments: list[dict] = field(default_factory=list)
 
 
-def parse_trading_days_left(val: str | None) -> int | None:
+def parse_trading_days_left(val: str | None) -> int | str | None:
     if val is None:
         return None
     val = val.strip()
-    if not val or val == "出關":
+    if not val:
         return None
+    if val == "出關":
+        return "出關"
     m = re.search(r"\d+", val)
     if m:
         return int(m.group(0))
     return None
+
+
+def expected_market_day(today: datetime.date) -> datetime.date:
+    """The source displays the next session on weekends and TWSE closures."""
+    if is_twse_trading_day(today):
+        return today
+    return get_next_trading_day(today)
 
 def rows_as_dicts(table, columns, with_badges=False, with_condition_segments=False):
     """Iterate <tr> in <tbody>, zip cell text with `columns` names.
@@ -389,20 +403,22 @@ def main():
     else:
         today = datetime.datetime.now(datetime.timezone(datetime.timedelta(hours=8))).date()
 
-    expected_prev = previous_trading_day(today)
+    market_day = expected_market_day(today)
+    expected_prev = previous_trading_day(market_day)
     applies_to_str, selected_dropdown = parse_date_context(soup, html)
 
-    # applies_to_str is "MM/DD" with no year; compare month/day only against
-    # today (the forecast should apply to *today's* session).
+    # applies_to_str is "MM/DD" with no year.  On a closure day the source
+    # forecasts the next TWSE session rather than the calendar date itself.
     date_ok = None
     if applies_to_str:
         mm, dd = applies_to_str.split("/")
-        date_ok = (int(mm), int(dd)) == (today.month, today.day)
+        date_ok = (int(mm), int(dd)) == (market_day.month, market_day.day)
 
     result = {
         "source": URL,
         "date_check": {
             "today": today.isoformat(),
+            "effective_market_day": market_day.isoformat(),
             "expected_previous_trading_day": expected_prev.isoformat(),
             "page_says_applies_to": applies_to_str,
             "page_dropdown_selected": selected_dropdown,
@@ -415,8 +431,8 @@ def main():
 
     if date_ok is False and not args.skip_date_check and not (args.fixture or args.fixture_dir):
         print(
-            f"ABORT: page applies_to={applies_to_str} does not match today="
-            f"{today.isoformat()}. Refusing to emit possibly-stale data. "
+            f"ABORT: page applies_to={applies_to_str} does not match effective market day="
+            f"{market_day.isoformat()}. Refusing to emit possibly-stale data. "
             "Pass --skip-date-check to override.",
             file=sys.stderr,
         )

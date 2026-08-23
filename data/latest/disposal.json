@@ -2,10 +2,11 @@
   "source": "https://chengwaye.com/disposal-forecast",
   "date_check": {
     "today": "2026-08-23",
+    "effective_market_day": "2026-08-24",
     "expected_previous_trading_day": "2026-08-21",
     "page_says_applies_to": "08/24",
     "page_dropdown_selected": null,
-    "applies_to_matches_today": false
+    "applies_to_matches_today": true
   },
   "one_flag_from_disposal": [
     {
@@ -552,7 +553,7 @@
       "start_date": "08-13",
       "end_date": "08-21",
       "exit_date": "08-24",
-      "trading_days_left": null,
+      "trading_days_left": "出關",
       "reason": "連續5日｜第1次處置"
     },
     {
@@ -563,7 +564,7 @@
       "start_date": "08-13",
       "end_date": "08-21",
       "exit_date": "08-24",
-      "trading_days_left": null,
+      "trading_days_left": "出關",
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -574,7 +575,7 @@
       "start_date": "08-17",
       "end_date": "08-21",
       "exit_date": "08-24",
-      "trading_days_left": null,
+      "trading_days_left": "出關",
       "reason": "連續3日第一款｜第1次處置"
     },
     {
