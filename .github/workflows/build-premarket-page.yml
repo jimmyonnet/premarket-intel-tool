@@ -74,6 +74,10 @@ jobs:
         run: |
           python scripts/run_fetchers.py --mode full --date "${{ steps.date.outputs.today }}" --allow-unsafe-exit
 
+      - name: Validate fetched data contracts
+        if: steps.trading_day.outputs.is_trading_day == 'true'
+        run: python scripts/validate_data.py --data-dir data/latest
+
       - name: Minify frontend module
         run: npx --yes terser scripts/assets/app.js -c passes=3,unsafe=true -m --comments false -o docs/assets/app.js
 
