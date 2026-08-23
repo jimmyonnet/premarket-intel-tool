@@ -2434,17 +2434,6 @@
 
         <div class="data-block">
           {% if disposal.one_flag_from_disposal %}
-          <!-- Quick Filter Toolbar for Disposal Table -->
-          <div class="table-filter-toolbar" style="padding: 8px 12px; background: var(--bg-sub); border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-            <input type="text" id="disposal-search" class="filter-input-sm" placeholder="🔍 搜尋代號 / 名稱..." oninput="window.pm.filterDisposalTable(this.value)" style="padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-main); font-size: 12px; font-family: var(--font-mono); outline: none; min-width: 140px;">
-            <div class="filter-btn-group" style="display: flex; gap: 4px; align-items: center; flex-wrap: wrap;">
-              <button type="button" class="filter-chip-sm is-active" data-filter="market" data-val="all" onclick="window.pm.setDisposalMarketFilter('all', this)">全部</button>
-              <button type="button" class="filter-chip-sm" data-filter="market" data-val="上市" onclick="window.pm.setDisposalMarketFilter('上市', this)">上市</button>
-              <button type="button" class="filter-chip-sm" data-filter="market" data-val="上櫃" onclick="window.pm.setDisposalMarketFilter('上櫃', this)">上櫃</button>
-              <button type="button" class="filter-chip-sm" data-filter="market" data-val="5m" onclick="window.pm.setDisposalMarketFilter('5m', this)">5分盤</button>
-              <button type="button" class="filter-chip-sm" data-filter="market" data-val="20m" onclick="window.pm.setDisposalMarketFilter('20m', this)">20分盤</button>
-            </div>
-          </div>
           <div class="table-scroll">
             <table class="data-table disposal-table">
               <caption class="sr-only">差 1 次就處置股票清單</caption>
@@ -4221,7 +4210,7 @@
     if (btn) btn.classList.toggle('is-active', window.pm.watchOnly);
     
     var raw = localStorage.getItem(window.WATCH_KEY);
-    var codes = raw ? JSON.parse(raw) : [];
+    var codes = safeJsonParse(window.WATCH_KEY, []);
 
     document.querySelectorAll('tr[data-code]').forEach(function(row) {
       var code = row.getAttribute('data-code');
@@ -4232,7 +4221,6 @@
       }
     });
 
-    if (window.pm.applyDisposalFilter) window.pm.applyDisposalFilter();
     if (window.pm.applyCandidateFilter) window.pm.applyCandidateFilter();
 
     var alertBadge = document.getElementById('nav-alert-badge');
@@ -4240,53 +4228,6 @@
       var visibleAlerts = document.querySelectorAll('#alerts tr[data-code]:not([style*="display: none"])').length;
       alertBadge.textContent = visibleAlerts;
     }
-  };
-
-  // Disposal Table Search & Market Filters
-  var disposalSearchTimer = null;
-  window.pm.disposalMarketFilter = 'all';
-  window.pm.disposalKeyword = '';
-
-  window.pm.setDisposalMarketFilter = function(val, btn) {
-    window.pm.disposalMarketFilter = val;
-    btn.parentElement.querySelectorAll('.filter-chip-sm').forEach(function(b) { b.classList.remove('is-active'); });
-    btn.classList.add('is-active');
-    window.pm.applyDisposalFilter();
-  };
-
-  window.pm.filterDisposalTable = function(val) {
-    if (disposalSearchTimer) clearTimeout(disposalSearchTimer);
-    disposalSearchTimer = setTimeout(function() {
-      window.pm.disposalKeyword = (val || '').trim().toLowerCase();
-      window.pm.applyDisposalFilter();
-    }, 150);
-  };
-
-  window.pm.applyDisposalFilter = function() {
-    var kw = window.pm.disposalKeyword;
-    var mkt = window.pm.disposalMarketFilter;
-    var rawWatch = localStorage.getItem(window.WATCH_KEY) || '[]';
-    var watchCodes = [];
-    try { watchCodes = JSON.parse(rawWatch); } catch(e){}
-
-    document.querySelectorAll('.disposal-table tbody tr').forEach(function(r) {
-      var code = (r.getAttribute('data-code') || '').toLowerCase();
-      var label = (r.getAttribute('data-label') || '').toLowerCase();
-      var marketCell = r.querySelector('[data-label="市場"]');
-      var mktText = marketCell ? marketCell.textContent.trim() : '';
-      var edCell = r.querySelector('[data-label="最快處置"]');
-      var edText = edCell ? edCell.textContent.trim() : '';
-
-      var matchesKw = !kw || code.indexOf(kw) >= 0 || label.indexOf(kw) >= 0;
-      var matchesMkt = (mkt === 'all') ||
-                       (mkt === '上市' && mktText.indexOf('上市') >= 0) ||
-                       (mkt === '上櫃' && mktText.indexOf('上櫃') >= 0) ||
-                       (mkt === '5m' && (edText.indexOf('5分') >= 0 || edText.indexOf('2分') >= 0)) ||
-                       (mkt === '20m' && (edText.indexOf('20分') >= 0 || edText.indexOf('25分') >= 0 || edText.indexOf('全額') >= 0));
-      var matchesWatch = !window.pm.watchOnly || watchCodes.indexOf(code) >= 0;
-
-      r.style.display = (matchesKw && matchesMkt && matchesWatch) ? '' : 'none';
-    });
   };
 
   // Candidate Table Search Filter
