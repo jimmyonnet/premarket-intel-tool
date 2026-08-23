@@ -2330,8 +2330,8 @@
         {% set exiting_today = disposal.currently_in_disposal | rejectattr('trading_days_left', 'none') | selectattr('trading_days_left', 'in', ['0', '0天', 0, '出關']) | list %}
         {% set hidden_disposal = disposal.currently_in_disposal | selectattr('trading_days_left', 'none') | list %}
         {% set alert_total = (disposal.one_flag_from_disposal|length) + (exiting_today|length) %}
-        <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">今日警示 {% if alert_total > 0 %}<span class="nav-badge" id="nav-alert-badge">{{ alert_total }}</span>{% endif %}{% if stale_hours and stale_hours > 12 %}<span class="nav-badge" style="background:var(--amber); color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
-        <a href="#watchlist" class="nav-link">今日候選股</a>
+        <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">處置股 {% if alert_total > 0 %}<span class="nav-badge" id="nav-alert-badge">{{ alert_total }}</span>{% endif %}{% if stale_hours and stale_hours > 12 %}<span class="nav-badge" style="background:var(--amber); color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
+        <a href="#watchlist" class="nav-link">籌碼股</a>
         <a href="#market-context" class="nav-link">市場背景</a>
         <a href="#news-calendar" class="nav-link">補充資訊</a>
         <a href="#system-info" class="nav-link">系統</a>
@@ -2515,10 +2515,10 @@
       </div>
     </section>
 
-    <!-- 2. 今日警示 (Alerts) -->
+    <!-- 2. 處置股 (Alerts) -->
     <section id="alerts" class="content-section">
       <div class="section-header">
-        <h2 class="section-title"><span class="title-icon">⚠️</span> 今日警示</h2>
+        <h2 class="section-title"><span class="title-icon">⚠️</span> 處置股</h2>
         <span class="section-desc">處置股預警、今日出關與盤後重大財務自結</span>
       </div>
 
@@ -2746,10 +2746,10 @@
       </div>
     </section>
 
-    <!-- 3. 今日候選股 (Watchlist) -->
+    <!-- 3. 籌碼股 (Watchlist) -->
     <section id="watchlist" class="content-section">
       <div class="section-header">
-        <h2 class="section-title"><span class="title-icon">🎯</span> 今日候選股</h2>
+        <h2 class="section-title"><span class="title-icon">🎯</span> 籌碼股</h2>
         <span class="section-desc">盤前族群整理、法人動向與主力當沖籌碼明細</span>
       </div>
 
