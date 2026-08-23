@@ -56,7 +56,6 @@ export function initializeManualUpdateBridge({
       try { popup.close(); } catch (_) {}
     } else {
       finish("⚠ 更新未完成", data.message || "資料更新未成功完成，請稍後再試。", true);
-      try { popup.close(); } catch (_) {}
     }
   };
   const onClick = () => {
