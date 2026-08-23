@@ -1,42 +1,74 @@
 [
   {
-    "title": "美股期指反彈、比特幣概念股狂飆市場緊盯聯準會降息訊號與輝達財報",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5nMFUzdDFHY0NQdlhycm5OSE5HZTROVmdXcWVmNU9BOEJ6V3AyRVRxMlo1N194T0ZKTW1aNHpQR1JLQUtlNnU3YUUxVHhNeTA?oc=5",
+    "title": "本週操盤筆記：輝達財報、華許演說與PCE三大關卡來了",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBqSkN0eGR2MGhQWFhlQzhLMVJkb1RicGhPYVhGVHloZVlYWDhIenl6cnlFSExGd192eXJWSEVaUUthcXlfb2RadFFsTENXSGc?oc=5",
     "source": "news.cnyes.com",
-    "time": "08/21 20:30",
-    "score": 16,
-    "timestamp": 1787315406.0
+    "time": "08/23 21:50",
+    "timestamp": 1787493003.0,
+    "score": 14,
+    "quality_score": 4,
+    "impact_score": 10,
+    "matched_groups": [
+      "macro_policy",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
   },
   {
-    "title": "NVIDIA 財報能否帶動美股大漲？分析師：光演出「三殺」還不夠 | 外媒解析 | 國際",
-    "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9PSGxpZ2VENzh4Y2ZWYXFFRmxZMFBxQlFBR2thdWlCNEpYY21Bcm10eGJBa21Nb0YwdlpOVjl1R0ZmQVktZk4zcXVYRXNuX1VJMzNDV01GRTQtYm5E?oc=5",
+    "title": "輝達財報將超越市場期待？華許會對美債殖利率議題表態？本週投資人得留意這3件事",
+    "link": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1VT3ktNmdCZEdNSTcwQkxyZUktRGc2bDdfSkJRV251eUk5WFdhWHVZTXpaYUhLcWhUWDRQTjd1blgyWlExYjJVbklJNWZsXy1yUlB0V2dGaDJSZ0dxNHcwb29ZSllVWkVpQ1JUa1dLSXdoSDhoSkJqTWdtRQ?oc=5",
+    "source": "財訊",
+    "time": "08/23 17:00",
+    "timestamp": 1787475600.0,
+    "score": 14,
+    "quality_score": 4,
+    "impact_score": 10,
+    "matched_groups": [
+      "macro_policy",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "投資人本周將迎華許演說、輝達財報 牽動美股後市表現",
+    "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9TVEFMUGJTcXotaklkOFZJZFhwVWRhRlJvSXA5R3VCTG1DQ3l1eUZVblA5dVFHdlNLU24zd1dNQnVEU0ZPM3dmeHNZc0IwVjNiME1FajdfTmcyampK0gFiQVVfeXFMTXFIVWx6XzhrbjBDZjNCbzdfV0NOcmFRUVdxdk9ST1otdXQwdFdHS2ZvNHlMVjRFSk10T1dXdjVYSFpqZ3E0ODhNN3RPQ0xxbTNIeG4wUkdISU9ZTVRIUlRNRVE?oc=5",
     "source": "經濟日報",
-    "time": "08/21 22:32",
-    "score": 10,
-    "timestamp": 1787322741.0
+    "time": "08/23 01:57",
+    "timestamp": 1787421474.0,
+    "score": 13,
+    "quality_score": 4,
+    "impact_score": 9,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
   },
   {
-    "title": "台股量縮外資防禦、本土調節？ 下週進入關鍵期，台積電撐盤後資金輪動看「三大族群」！",
-    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE5ELU1rVGVxS0poNHkxQVFTMEpfRHJPcUVoR20xWkJVTFRZSHBKOE5kNHotOXhSMkxETk5qbm83a3BrYVFpTWVvTnpMNA?oc=5",
-    "source": "鉅亨網",
-    "time": "08/21 16:25",
-    "score": 9,
-    "timestamp": 1787300759.0
-  },
-  {
-    "title": "台積漲35元台股漲290點 台股區間震盪靜待NVIDIA財報揭曉",
-    "link": "https://news.google.com/rss/articles/CBMi0wJBVV95cUxPaU54QkYwVTNib3lvNXZvN3ZWc2ptbjB1bEtFOG5VbExrYlNFSEp2Zjk5a3NubTlORzNMaGlVMm1kVnNJTkNLemd5enBFdzhmeDV6bFRPVUM5Yk90djlGN29JeHZEeGZpX213Y2QtcllLR0s1elp3ODNtSjlnU3ZlZ1dZS193Ny0td1VFVUlzamo1Q2ZfdE9aOVRtLWp2V3Y3RU5vVTVXd3lSbVdjb0NRR2Z6VjJpRzcta0xDTnZtbEJCQUJ3VDlhZ0wyMnZSWl9OYmRZN2FTaGFYeUppY1RXYlJEMzItSXFxcDVKOUtPZVNaZGhMLUlGSWZKUHVmTE5fcWpEUVlnb2gyMGpTZG5Bak1CNnNFbnRLLWs5UFREUC1zUG41MjNROWxjMXhEQXlIMG1OSk9sX3BiaWJfcTRfWkF5RVlOd0ZBVk5Zbi0wbHFZWFU?oc=5",
+    "title": "輝達財報、Fed接力登場 美股下週迎2考驗",
+    "link": "https://news.google.com/rss/articles/CBMijwJBVV95cUxNQjNwRmVWZ3o1N0tnalIxRzRPdTlDUFhSa2VndGFRNDBrSkplMWdtZ2Fta0lacTRQRDJFM3Q4NlNkMFpYenhtT281VktqdVEtSkZ3eDJwaV82a042N1NmUkQ4MmUwYVh6QjdGcmZzc0hsblg3akZySDFlNkNrMjVBMkYxcFJ3ZUlzSnQ5bHBfXzJTS0l0NlBiU2pscjM2OUNXRUR5TkJrNU5OeGFCXzlBcVBtbnNzZ084TERMamxfX3I1SURndTlYcGRmQmxiMGtTR2owNE1EbnNBUFNSem9OZ1dJdkFRMm82WFI2b1pWbGNob1I1YWZDUUlCTUNHRUo4c1RmV1N5eWVlbC1tVUFB?oc=5",
     "source": "Yahoo新聞",
-    "time": "08/21 20:23",
-    "score": 8,
-    "timestamp": 1787314992.0
-  },
-  {
-    "title": "台股中秋前「衝上5萬點」反而不妙？杜金龍揭2大隱憂：最怕大盤一路狂飆",
-    "link": "https://news.google.com/rss/articles/CBMi-wJBVV95cUxOWmpQUkdrelpOTTJxcmpMbmFQckpvcE4wM19fQzU1RW5HMGpzVE1fWko2emJfbXRScTBlUC1LN0E4alhhY1ZDcWUwUmQ4X25aQVh1ZzdCRE9FWm0wX1VwR0RMSzhEaUtkYkZSQXFZZFlsNXVTR0V0ZmtVRG9Telp1ZU9hT2Jfd3JUdUlsWW1XTzA1SmdxZ0t4SGl6Yk9SSnctak5SSTAxeDdmVURoVXdZNmNKdjFlUUhEbGM3dHhpWjN2d0xMUE1Td2JlSTNobnVsRmNwcVJqa29zR0RwcTdKSjV1eHJMQkJEMEw2VVNwVlpZYl82enVqdkQyaTdkbDdzZk1EYTZocWNtdlpWMUQtc0ZxWTc4SW1qdmtxUjJSLTBHaklXVzEyYzZ3Yno1U2V4R3JYMDZuclpDNXFPdDdIYnNKTzVJdW9tTlM1ak9fSDItelowQlc2bGUxWXBuSFN0VU9kMjVJWDlJRzYtZkh1LWh2b1JfSTVZbVpN?oc=5",
-    "source": "Yahoo新聞",
-    "time": "08/21 19:41",
-    "score": 8,
-    "timestamp": 1787312476.0
+    "time": "08/23 07:14",
+    "timestamp": 1787440499.0,
+    "score": 12,
+    "quality_score": 3,
+    "impact_score": 9,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
   }
 ]
