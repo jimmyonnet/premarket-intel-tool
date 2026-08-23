@@ -43,6 +43,18 @@ PressPlay 讀文章內容，所以多了兩個帳密 Secrets（見下方部署�
 6. 跑過一次 build-premarket-page 之後，頁面網址會是
    `https://<你的帳號>.github.io/<repo名稱>/`。
 
+## 前端優化架構
+
+目前頁面採用輕量 shell + JSON 分包架構：`docs/index.html` 只保留首屏契約與必要的無障礙骨架，處置倒數與市場資料由 `data/disposition.json`、`data/macro.json` 優先載入；候選股、公告、行事曆與新聞則分別從 `data/candidates.json`、`data/announcements.json`、`data/calendar.json`、`data/news.json` 在閒置或進入視窗後載入。`assets/app.js` 是原生 ES module，`assets/tokens.css` 集中 L0 漲跌色、L1 風險狀態色與 L2 中性色，`assets/layout.css` 負責首屏 Action Deck、響應式表格與 `content-visibility`。
+
+首屏現在以三欄 Action Deck 呈現「處置倒數」、「今日出關」與「自選命中」，處置表另提供最短路徑條與觸發價靶心，候選股表提供量能背景長條，財報公告則改為原生 7 欄 Δ 優先表格。舊有 `docs/embed/` 檔案暫予保留作為相容資產，但目前頁面 iframe 數量為 0，公告已由 `financials.json` 轉成原生資料包。
+
+本機可用以下指令驗證：
+
+```bash
+PYTHONPATH=. pytest -q
+PYTHONPATH=scripts python scripts/build_page.py --indices data/latest/indices.json --night-session data/latest/night_session.json --disposal data/latest/disposal.json --pressplay data/latest/pressplay.json --chengwaye-daily data/latest/chengwaye_daily.json --calendar data/latest/calendar.json --financials data/latest/financials.json --news data/latest/news.json --twse-summary data/latest/twse_summary.json --source-status data/latest/source_status.json --out docs/index.html
+```
 
 ## 如何觸發手動 Rebuild（即時更新頁面）
 

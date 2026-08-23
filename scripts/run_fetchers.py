@@ -275,7 +275,7 @@ def main() -> None:
             extract_date_fn=lambda c: c.get("today"),
         )
 
-        # 8. Financials announcements + Embeds build
+        # 8. Financial announcements (native front-end package)
         status_map["financials"] = fetch_source(
             "financials",
             [python_bin, "scripts/fetch_financials.py"],
@@ -283,9 +283,6 @@ def main() -> None:
             "{}",
             timeout=30,
         )
-        # Always build embeds
-        run_command([python_bin, "scripts/build_embeds.py"], timeout=30)
-
         # 9. News
         status_map["news"] = fetch_source(
             "news",

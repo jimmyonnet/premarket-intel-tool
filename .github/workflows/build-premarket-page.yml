@@ -74,6 +74,9 @@ jobs:
         run: |
           python scripts/run_fetchers.py --mode full --date "${{ steps.date.outputs.today }}" --allow-unsafe-exit
 
+      - name: Minify frontend module
+        run: npx --yes terser scripts/assets/app.js -c passes=3,unsafe=true -m --comments false -o docs/assets/app.js
+
       - name: Build page
         if: steps.trading_day.outputs.is_trading_day == 'true'
         run: |
@@ -101,7 +104,7 @@ jobs:
         run: |
           git config user.name "premarket-intel-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add docs/index.html docs/data_meta.json docs/sw.js docs/assets/ docs/embed/ data/latest/ history/
+          git add docs/index.html docs/data_meta.json docs/data/ docs/assets/ docs/sw.js docs/embed/ data/latest/ history/
           git diff --cached --quiet && echo "no change" && exit 0
           git commit -m "build premarket page for ${{ steps.date.outputs.today }}"
           git push

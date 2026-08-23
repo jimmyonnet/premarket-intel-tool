@@ -73,6 +73,7 @@ from trading_calendar import (
     load_twse_holidays,
 )
 from source_status import evaluate_source_health, SOURCES_METADATA
+from build_packages import write_packages
 
 TAIPEI = timezone(timedelta(hours=8))
 
@@ -627,6 +628,19 @@ def main():
         "summary_reasons": health_eval.summary_reasons,
         "sources": health_eval.sources,
     }
+    meta_data = write_packages(
+        meta_path.parent,
+        indices=indices,
+        night=night,
+        disposal=disposal,
+        pressplay=pressplay,
+        chengwaye_daily=chengwaye_daily,
+        calendar=calendar_section,
+        financials=financials_data or {},
+        news=news_data,
+        twse=twse_data,
+        meta=meta_data,
+    )
     meta_path.write_text(json.dumps(meta_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
     # Automate sw.js cache versioning
