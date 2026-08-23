@@ -26,16 +26,18 @@ def test_template_keeps_280_visual_button_class_with_in_place_update():
 
 def test_manual_update_uses_strict_gateway_bridge_without_client_credentials():
     page = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
-    bridge = (ROOT / "docs" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
-    assert f'GATEWAY_ORIGIN = "{GATEWAY_ORIGIN}"' in bridge
+    deployed_bridge = (ROOT / "docs" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
+    source_bridge = (ROOT / "scripts" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
+    assert re.search(rf'GATEWAY_ORIGIN\s*=\s*"{re.escape(GATEWAY_ORIGIN)}"', deployed_bridge)
+    assert f'GATEWAY_ORIGIN = "{GATEWAY_ORIGIN}"' in source_bridge
     assert "manual-update-bridge.mjs" in page
-    assert "windowRef.open(bridgeUrl.toString()" in bridge
-    assert 'bridgeUrl.searchParams.set("origin", windowRef.location.origin)' in bridge
-    assert 'bridgeUrl.searchParams.set("requestId", requestId)' in bridge
-    assert "event.origin !== gatewayOrigin || event.source !== popup" in bridge
-    assert 'data.source !== "premarket-update-gateway"' in bridge
-    assert "GITHUB_TOKEN" not in page + bridge
-    assert "PRIVATE KEY" not in page + bridge
+    assert "windowRef.open(bridgeUrl.toString()" in source_bridge
+    assert 'bridgeUrl.searchParams.set("origin", windowRef.location.origin)' in source_bridge
+    assert 'bridgeUrl.searchParams.set("requestId", requestId)' in source_bridge
+    assert "event.origin !== gatewayOrigin || event.source !== popup" in source_bridge
+    assert 'data.source !== "premarket-update-gateway"' in source_bridge
+    assert "GITHUB_TOKEN" not in page + source_bridge + deployed_bridge
+    assert "PRIVATE KEY" not in page + source_bridge + deployed_bridge
 
 
 def test_manual_update_keeps_popup_open_until_terminal_status():
