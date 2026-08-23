@@ -106,8 +106,8 @@
   "us_indices": {
     "dow": {
       "name": "道瓊工業指數",
-      "value": 53277.0,
-      "change": 517.8,
+      "value": 53277.01,
+      "change": 517.81,
       "change_pct": 0.98
     },
     "sp500": {

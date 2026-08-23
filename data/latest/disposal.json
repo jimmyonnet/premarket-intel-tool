@@ -1,7 +1,7 @@
 {
   "source": "https://chengwaye.com/disposal-forecast",
   "date_check": {
-    "today": "2026-08-22",
+    "today": "2026-08-23",
     "expected_previous_trading_day": "2026-08-21",
     "page_says_applies_to": "08/24",
     "page_dropdown_selected": null,
@@ -552,7 +552,7 @@
       "start_date": "08-13",
       "end_date": "08-21",
       "exit_date": "08-24",
-      "trading_days_left": "出關",
+      "trading_days_left": null,
       "reason": "連續5日｜第1次處置"
     },
     {
@@ -563,7 +563,7 @@
       "start_date": "08-13",
       "end_date": "08-21",
       "exit_date": "08-24",
-      "trading_days_left": "出關",
+      "trading_days_left": null,
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -574,7 +574,7 @@
       "start_date": "08-17",
       "end_date": "08-21",
       "exit_date": "08-24",
-      "trading_days_left": "出關",
+      "trading_days_left": null,
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -585,7 +585,7 @@
       "start_date": "08-18",
       "end_date": "08-24",
       "exit_date": "08-25",
-      "trading_days_left": "1天",
+      "trading_days_left": 1,
       "reason": "連續3日第1款｜第1次處置"
     },
     {
@@ -596,7 +596,7 @@
       "start_date": "08-18",
       "end_date": "08-24",
       "exit_date": "08-25",
-      "trading_days_left": "1天",
+      "trading_days_left": 1,
       "reason": "連續5日（第1~7款）｜第2次處置"
     },
     {
@@ -607,7 +607,7 @@
       "start_date": "08-20",
       "end_date": "08-26",
       "exit_date": "08-27",
-      "trading_days_left": "3天",
+      "trading_days_left": 3,
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -618,7 +618,7 @@
       "start_date": "08-20",
       "end_date": "08-26",
       "exit_date": "08-27",
-      "trading_days_left": "3天",
+      "trading_days_left": 3,
       "reason": "連續3日第一款｜第2次處置"
     },
     {
@@ -629,7 +629,7 @@
       "start_date": "08-20",
       "end_date": "08-26",
       "exit_date": "08-27",
-      "trading_days_left": "3天",
+      "trading_days_left": 3,
       "reason": "連續3日第1款｜變更交易方法｜第1次處置"
     },
     {
@@ -640,7 +640,7 @@
       "start_date": "08-24",
       "end_date": "08-28",
       "exit_date": "08-31",
-      "trading_days_left": "5天",
+      "trading_days_left": 5,
       "reason": "已達處置標準：連續5日（第1~7款）｜第2次處置"
     },
     {
@@ -651,7 +651,7 @@
       "start_date": "08-24",
       "end_date": "08-28",
       "exit_date": "08-31",
-      "trading_days_left": "5天",
+      "trading_days_left": 5,
       "reason": "連續3日第一款｜第2次處置"
     },
     {
@@ -662,7 +662,7 @@
       "start_date": "08-24",
       "end_date": "08-28",
       "exit_date": "08-31",
-      "trading_days_left": "5天",
+      "trading_days_left": 5,
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -673,7 +673,7 @@
       "start_date": "08-24",
       "end_date": "08-28",
       "exit_date": "08-31",
-      "trading_days_left": "5天",
+      "trading_days_left": 5,
       "reason": "10日內6次｜第1次處置"
     }
   ]
