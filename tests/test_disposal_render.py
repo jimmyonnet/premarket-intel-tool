@@ -99,7 +99,12 @@ def test_template_rendering_filters_and_hidden_comment():
         pressplay={"not_found_group": {"raw_tokens": [], "matched": [], "unmatched": []}, "found_group": {"raw_tokens": [], "matched": [], "unmatched": []}, "source_article": {}},
         institutional={"stocks": [], "matched_count": 0, "candidate_count": 0},
         calendar={"events": [], "grid": None},
-        financials={},
+        financials={
+            "att": [],
+            "fin": [],
+            "rev": [],
+            "source_status": {"rev": {"state": "fetch_failed"}},
+        },
         news=[],
         twse={},
     )
@@ -108,3 +113,5 @@ def test_template_rendering_filters_and_hidden_comment():
     assert "<!-- 隱藏 1 筆（資料缺欄位，請回報） -->" in rendered_html
     # Verify stock (b) 3293 is rendered under exiting
     assert "3293" in rendered_html
+    assert "即時營收（資料抓取失敗，無法確認市場未反映筆數）" in rendered_html
+    assert "抓取失敗" in rendered_html

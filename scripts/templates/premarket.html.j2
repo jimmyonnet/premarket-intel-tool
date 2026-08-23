@@ -2732,6 +2732,10 @@
       {% endif %}
 
       <!-- 市場未反映財務公告 (Iframes) -->
+      {% set financial_source_status = financials.source_status or {} %}
+      {% set att_state = (financial_source_status.get('att') or {}).get('state', 'fresh') %}
+      {% set fin_state = (financial_source_status.get('fin') or {}).get('state', 'fresh') %}
+      {% set rev_state = (financial_source_status.get('rev') or {}).get('state', 'fresh') %}
       <details class="card announcements-collapsible" open>
         <summary class="card-head" style="cursor:pointer; list-style:none;">
           <div class="card-title-group">
@@ -2744,8 +2748,16 @@
         <div class="data-block" style="padding:0;">
           <details class="unref-accordion">
             <summary class="unref-summary">
+              {% if att_state == 'fetch_failed' %}
+              <span>即時自結（資料抓取失敗，無法確認市場未反映筆數）</span>
+              <span class="badge badge-amber">抓取失敗</span>
+              {% elif att_state == 'stale_cached' %}
+              <span>即時自結（沿用前次 {{ financials.att|length if financials.att else 0 }} 筆）</span>
+              <span class="badge badge-amber">沿用快取</span>
+              {% else %}
               <span>即時自結（市場未反映 {{ financials.att|length if financials.att else 0 }} 筆）</span>
               <span class="badge badge-blue">{{ financials.att|length if financials.att else 0 }} 筆</span>
+              {% endif %}
             </summary>
             <div class="unref-content">
               <div class="embed-frame-wrapper is-loading" id="wrapper-att">
@@ -2760,8 +2772,16 @@
 
           <details class="unref-accordion">
             <summary class="unref-summary">
+              {% if fin_state == 'fetch_failed' %}
+              <span>即時季報（資料抓取失敗，無法確認市場未反映筆數）</span>
+              <span class="badge badge-amber">抓取失敗</span>
+              {% elif fin_state == 'stale_cached' %}
+              <span>即時季報（沿用前次 {{ financials.fin|length if financials.fin else 0 }} 筆）</span>
+              <span class="badge badge-amber">沿用快取</span>
+              {% else %}
               <span>即時季報（市場未反映 {{ financials.fin|length if financials.fin else 0 }} 筆）</span>
               <span class="badge">{{ financials.fin|length if financials.fin else 0 }} 筆</span>
+              {% endif %}
             </summary>
             <div class="unref-content">
               <div class="embed-frame-wrapper is-loading" id="wrapper-fin">
@@ -2776,8 +2796,16 @@
 
           <details class="unref-accordion">
             <summary class="unref-summary">
+              {% if rev_state == 'fetch_failed' %}
+              <span>即時營收（資料抓取失敗，無法確認市場未反映筆數）</span>
+              <span class="badge badge-amber">抓取失敗</span>
+              {% elif rev_state == 'stale_cached' %}
+              <span>即時營收（沿用前次 {{ financials.rev|length if financials.rev else 0 }} 筆）</span>
+              <span class="badge badge-amber">沿用快取</span>
+              {% else %}
               <span>即時營收（市場未反映 {{ financials.rev|length if financials.rev else 0 }} 筆）</span>
               <span class="badge">{{ financials.rev|length if financials.rev else 0 }} 筆</span>
+              {% endif %}
             </summary>
             <div class="unref-content">
               <div class="embed-frame-wrapper is-loading" id="wrapper-rev">
