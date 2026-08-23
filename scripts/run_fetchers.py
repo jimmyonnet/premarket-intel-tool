@@ -297,7 +297,7 @@ def main() -> None:
             "financials",
             [python_bin, "scripts/fetch_financials.py"],
             DATA_LATEST / "financials.json",
-            "{}",
+            '{"att":[],"fin":[],"rev":[]}',
             timeout=30,
         )
         # 9. News
