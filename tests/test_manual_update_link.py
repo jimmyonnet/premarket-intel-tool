@@ -34,3 +34,15 @@ def test_manual_update_uses_strict_gateway_bridge_without_client_credentials():
     assert "data.source !== 'premarket-update-gateway'" in page
     assert "GITHUB_TOKEN" not in page
     assert "PRIVATE KEY" not in page
+
+
+def test_manual_update_keeps_popup_open_until_terminal_status():
+    for path in (ROOT / "docs" / "index.html", ROOT / "scripts" / "templates" / "premarket.html.j2"):
+        page = path.read_text(encoding="utf-8")
+        assert "data.state === 'queued'" in page
+        assert "data.state === 'completed'" in page
+        assert "data.state === 'failed'" not in page  # failure remains the guarded final else branch
+        queued_handler = re.search(r"if \(data\.state === 'queued'\) \{(.*?)\} else if", page, re.DOTALL)
+        assert queued_handler
+        assert "popup.close" not in queued_handler.group(1)
+        assert "try { popup.close(); }" in page

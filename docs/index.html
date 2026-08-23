@@ -2473,7 +2473,7 @@
 
         <!-- 台指期夜盤 -->
         
-        <div class="summary-card">
+        <a class="summary-card" href="https://www.cmoney.tw/forum/futures/TXF1?s=p" target="_blank" rel="noopener noreferrer" aria-label="開啟 CMoney 台指期主連續期貨頁面" style="color:inherit; text-decoration:none; cursor:pointer;">
           <div class="card-label">台指期夜盤 (05:00) · 來源：Wantgoo / TAIFEX</div>
           
           <div class="card-val font-mono fall">
@@ -2485,7 +2485,7 @@
           <div class="benchmark-note font-mono" style="font-size:11px; color:var(--text-muted); margin-top:2px;">
             基準：vs 期貨日盤收盤 (45,138)
           </div>
-        </div>
+        </a>
         
 
         <div id="open-countdown" class="open-countdown"></div>
@@ -3385,7 +3385,7 @@
       <div class="card">
         <div class="card-head">
           <div class="card-title-group">
-            <h3 class="card-title">隔夜重大新聞 Top 5</h3>
+            <h3 class="card-title">隔夜重大新聞 Top 10</h3>
             <span class="count-badge">0 則</span>
           </div>
         </div>
@@ -7092,11 +7092,21 @@
         if (event.origin !== GATEWAY_ORIGIN || event.source !== popup) return;
         var data = event.data || {};
         if (data.source !== 'premarket-update-gateway' || data.requestId !== requestId || !ACTIVE_STATES[data.state]) return;
-        if (data.state === 'queued') finish('✓ 已啟動更新', '已啟動資料更新，通常約需 2 分鐘完成。', false);
-        else if (data.state === 'in_progress' || data.state === 'already_running') finish('⏳ 更新進行中', data.message || '已有資料更新正在執行中，請稍候。', false);
-        else if (data.state === 'completed') finish('✓ 更新已完成', data.message || '資料更新已完成，請重新整理頁面取得最新內容。', false);
-        else finish('⚠ 更新未啟動', data.message || '暫時無法啟動更新，請稍後再試。', true);
-        try { popup.close(); } catch (_) {}
+        if (data.state === 'queued') {
+          button.textContent = '⏳ 已啟動更新';
+          button.title = data.message || '已啟動資料更新，正在安全追蹤執行結果。';
+          notify(button.title);
+        } else if (data.state === 'in_progress' || data.state === 'already_running') {
+          button.textContent = '⏳ 更新進行中';
+          button.title = data.message || '已有資料更新正在執行中，請稍候。';
+          notify(button.title);
+        } else if (data.state === 'completed') {
+          finish('✓ 更新已完成', data.message || '資料更新已完成，請重新整理頁面取得最新內容。', false);
+          try { popup.close(); } catch (_) {}
+        } else {
+          finish('⚠ 更新未完成', data.message || '資料更新未成功完成，請稍後再試。', true);
+          try { popup.close(); } catch (_) {}
+        }
       });
       button.addEventListener('click', function() {
         if (button.disabled) return;
