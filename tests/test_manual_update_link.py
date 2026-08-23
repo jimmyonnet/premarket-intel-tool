@@ -26,23 +26,27 @@ def test_template_keeps_280_visual_button_class_with_in_place_update():
 
 def test_manual_update_uses_strict_gateway_bridge_without_client_credentials():
     page = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
-    assert f"GATEWAY_ORIGIN = '{GATEWAY_ORIGIN}'" in page
-    assert "window.open(bridgeUrl.toString()" in page
-    assert "bridgeUrl.searchParams.set('origin', window.location.origin)" in page
-    assert "bridgeUrl.searchParams.set('requestId', requestId)" in page
-    assert "event.origin !== GATEWAY_ORIGIN || event.source !== popup" in page
-    assert "data.source !== 'premarket-update-gateway'" in page
-    assert "GITHUB_TOKEN" not in page
-    assert "PRIVATE KEY" not in page
+    bridge = (ROOT / "docs" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
+    assert f'GATEWAY_ORIGIN = "{GATEWAY_ORIGIN}"' in bridge
+    assert "manual-update-bridge.mjs" in page
+    assert "windowRef.open(bridgeUrl.toString()" in bridge
+    assert 'bridgeUrl.searchParams.set("origin", windowRef.location.origin)' in bridge
+    assert 'bridgeUrl.searchParams.set("requestId", requestId)' in bridge
+    assert "event.origin !== gatewayOrigin || event.source !== popup" in bridge
+    assert 'data.source !== "premarket-update-gateway"' in bridge
+    assert "GITHUB_TOKEN" not in page + bridge
+    assert "PRIVATE KEY" not in page + bridge
 
 
 def test_manual_update_keeps_popup_open_until_terminal_status():
     for path in (ROOT / "docs" / "index.html", ROOT / "scripts" / "templates" / "premarket.html.j2"):
         page = path.read_text(encoding="utf-8")
-        assert "data.state === 'queued'" in page
-        assert "data.state === 'completed'" in page
-        assert "data.state === 'failed'" not in page  # failure remains the guarded final else branch
-        queued_handler = re.search(r"if \(data\.state === 'queued'\) \{(.*?)\} else if", page, re.DOTALL)
-        assert queued_handler
-        assert "popup.close" not in queued_handler.group(1)
-        assert "try { popup.close(); }" in page
+        assert "manual-update-bridge.mjs" in page
+    bridge = (ROOT / "scripts" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
+    assert 'data.state === "queued"' in bridge
+    assert 'data.state === "completed"' in bridge
+    assert 'data.state === "failed"' not in bridge  # failure remains the guarded final else branch
+    queued_handler = re.search(r'if \(data\.state === "queued"\) \{(.*?)\} else if', bridge, re.DOTALL)
+    assert queued_handler
+    assert "popup.close" not in queued_handler.group(1)
+    assert "try { popup.close(); }" in bridge
