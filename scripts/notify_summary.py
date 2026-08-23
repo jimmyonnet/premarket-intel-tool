@@ -61,16 +61,30 @@ def build_summary_content() -> dict:
     meta_file = Path("docs/data_meta.json")
     meta = json.loads(meta_file.read_text("utf-8")) if meta_file.exists() else {}
     data_date = meta.get("data_date") or now.strftime("%m/%d")
+    overall_status = meta.get("overall_status", "caution")
+    status_label = meta.get("status_label", "請先確認資料")
+    summary_reasons = meta.get("summary_reasons", [])
 
     # Format text lists
     one_away_strs = [f"{r.get('code')} {r.get('name')}" for r in one_away[:6]]
     exiting_strs = [f"{r.get('code')} {r.get('name')}" for r in exiting[:6]]
     found_strs = [f"{r.get('code', '').replace('⏸','')} {r.get('name')}" for r in found_group[:8]]
 
+    status_icon = "🟢" if overall_status == "ready" else ("🟡" if overall_status == "caution" else "🔴")
     msg_lines = [
         f"📊【台股盤前情報準備台】{data_date} 盤前情報速報",
+        f"狀態評級：{status_icon} {status_label} ({overall_status.upper()})",
         "────────────────────"
     ]
+
+    if overall_status == "unsafe":
+        msg_lines.append("🚨【嚴重警報】今日盤前資料存在關鍵異常（不建議依此判讀）！")
+        for r in summary_reasons:
+            msg_lines.append(f"  • {r}")
+        msg_lines.append("────────────────────")
+    elif overall_status == "caution" and summary_reasons:
+        msg_lines.append(f"⚠️ 注意事項：{'; '.join(summary_reasons)}")
+        msg_lines.append("────────────────────")
 
     if one_away:
         msg_lines.append(f"🚨 差 1 次處置預警 ({len(one_away)}檔):")
@@ -93,9 +107,11 @@ def build_summary_content() -> dict:
     return {
         "text": raw_text,
         "date": data_date,
+        "overall_status": overall_status,
+        "status_label": status_label,
         "one_away": one_away_strs,
         "exiting": exiting_strs,
-        "candidates": found_strs
+        "candidates": found_strs,
     }
 
 def notify_success():

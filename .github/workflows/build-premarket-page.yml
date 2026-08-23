@@ -1,22 +1,13 @@
 name: Build premarket page
 
-# Runs once each weekday morning before market prep. 07:35 Taipei time ==
-# 23:35 UTC the PREVIOUS UTC calendar day (Taipei is UTC+8), so the UTC
-# weekday is shifted back by one vs. the Taipei weekday this fires for:
-#   UTC Sun 23:35 -> Taipei Mon 07:35
-#   UTC Mon 23:35 -> Taipei Tue 07:35
-#   UTC Tue 23:35 -> Taipei Wed 07:35
-#   UTC Wed 23:35 -> Taipei Thu 07:35
-#   UTC Thu 23:35 -> Taipei Fri 07:35
-# Taiwan market holidays are NOT accounted for (see README) -- on a holiday
-# this will still run and publish a page nobody needed; harmless.
+# Runs on schedule before Taiwan stock market open:
+#   07:35 Taipei (UTC 23:35 previous day) - Full premarket fetch & build
+#   08:05 Taipei (UTC 00:05 current day) - Asian markets (Nikkei/Kospi) initial open refresh
+#   08:20 Taipei (UTC 00:20 current day) - Asian markets opening stabilization refresh
 on:
   schedule:
-    # 台灣時間 07:35 (UTC 23:35 前一天) - 主要抓取美股收盤與各項早報
     - cron: "35 23 * * 0-4"
-    # 台灣時間 08:05 (UTC 00:05 當天) - 捕捉日韓股剛開盤的初步走勢
     - cron: "5 0 * * 1-5"
-    # 台灣時間 08:20 (UTC 00:20 當天) - 捕捉日韓股開盤20分鐘後的穩定走勢 (供台指期08:45開盤參考)
     - cron: "20 0 * * 1-5"
   workflow_dispatch:
     inputs:
@@ -24,7 +15,11 @@ on:
         description: 'Override data date (e.g. 08/24)'
         required: false
         default: ''
-
+      force_build:
+        description: 'Force build even if market holiday'
+        required: false
+        default: false
+        type: boolean
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -32,7 +27,6 @@ concurrency:
 
 permissions:
   contents: write
-
 
 jobs:
   build:
@@ -47,81 +41,41 @@ jobs:
       - run: pip install -r requirements.txt
 
       - name: Run unit tests
-        run: python -m pytest tests/
+        run: python -m pytest tests/ -v
 
       - name: Install Playwright's Chromium (needed for Part 3's PressPlay login)
         run: playwright install --with-deps chromium
-
 
       - name: Figure out today's date (Asia/Taipei)
         id: date
         run: echo "today=$(TZ=Asia/Taipei date +%F)" >> "$GITHUB_OUTPUT"
 
-      - name: Fetch Part 0 -- TWSE yesterday recap
+      - name: Check TWSE trading day
+        id: trading_day
         run: |
-          python scripts/fetch_twse_summary.py || echo '{}' > data/latest/twse_summary.json
-      - name: Fetch Part 1 -- indices
-        run: python scripts/fetch_indices.py > data/latest/indices.json
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && ([ "${{ inputs.force_build }}" = "true" ] || [ -n "${{ inputs.data_date }}" ]); then
+            echo "is_trading_day=true" >> "$GITHUB_OUTPUT"
+            echo "Manual force build enabled."
+          else
+            if python scripts/trading_calendar.py is-trading-day --date "${{ steps.date.outputs.today }}"; then
+              echo "is_trading_day=true" >> "$GITHUB_OUTPUT"
+              echo "Today (${{ steps.date.outputs.today }}) is a TWSE trading day."
+            else
+              echo "is_trading_day=false" >> "$GITHUB_OUTPUT"
+              echo "Today (${{ steps.date.outputs.today }}) is NOT a TWSE trading day (weekend/holiday). Skipping fetch & build."
+            fi
+          fi
 
-      - name: Assemble Part 1 -- TX night session series
-        run: |
-          python scripts/tx_night_session.py assemble \
-            --data-dir data/night_session \
-            --date "${{ steps.date.outputs.today }}" \
-            > data/latest/night_session.json
-
-      - name: Fetch Part 2 -- disposal forecast
-        # --skip-date-check: if chengwaye.com's date context looks wrong we
-        # still want *a* page this morning -- build_page.py surfaces the
-        # mismatch as a visible warning banner instead of us publishing
-        # nothing. See README "About the date-check" section.
-        run: |
-          python scripts/fetch_disposal.py --skip-date-check \
-            > data/latest/disposal.json
-
-      - name: Fetch Part 3 -- PressPlay group lists
-        # Allowed to fail without blocking Part 1/2: PressPlay login
-        # automation carries real, accepted risk (ToS + GitHub Actions'
-        # datacenter IPs getting flagged -- see fetch_pressplay_groups.py's
-        # module docstring, KNOWN RISK). On failure this falls back to an
-        # empty JSON; build_page.py and the template both render a clean
-        # "no data yet" Part 3 instead of the whole page build crashing.
+      - name: Fetch data sources and audit source health
+        if: steps.trading_day.outputs.is_trading_day == 'true'
         env:
           PRESSPLAY_EMAIL: ${{ secrets.PRESSPLAY_EMAIL }}
           PRESSPLAY_PASSWORD: ${{ secrets.PRESSPLAY_PASSWORD }}
         run: |
-          python scripts/fetch_pressplay_groups.py > data/latest/pressplay.json \
-            || echo '{}' > data/latest/pressplay.json
+          python scripts/run_fetchers.py --mode full --date "${{ steps.date.outputs.today }}" --allow-unsafe-exit
 
-      - name: Fetch Part 3 extra -- chengwaye.com/daily 法人買賣/當沖 detail
-        # Public page, no login -- allowed to fail without blocking the
-        # rest of the build (same fallback pattern as Part 3 above);
-        # build_page.py/the template just skip this sub-section when the
-        # JSON is empty.
-        run: |
-          python scripts/fetch_chengwaye_daily.py > data/latest/chengwaye_daily.json \
-            || echo '{}' > data/latest/chengwaye_daily.json
-
-      - name: Fetch Part 4 -- financial calendar
-        # Public Google Calendar ICS feed the user maintains themselves --
-        # allowed to fail without blocking the rest of the build (same
-        # fallback pattern as Part 3 above); build_page.py/the template
-        # both render a clean "no events" Part 4 when the JSON is empty.
-        run: |
-          python scripts/fetch_calendar.py > data/latest/calendar.json \
-            || echo '{}' > data/latest/calendar.json
-
-      - name: Fetch Part 5 -- financials
-        run: |
-          python scripts/fetch_financials.py || echo '{}' > data/latest/financials.json
-          python scripts/build_embeds.py
-      - name: Fetch Part 0 -- TWSE yesterday recap
-        run: |
-          python scripts/fetch_twse_summary.py || echo '{}' > data/latest/twse_summary.json
-      - name: Fetch Part 1.5 -- overnight news
-        run: |
-          python scripts/fetch_news.py || echo '[]' > data/latest/news.json
       - name: Build page
+        if: steps.trading_day.outputs.is_trading_day == 'true'
         run: |
           python scripts/build_page.py \
             --indices data/latest/indices.json \
@@ -133,14 +87,17 @@ jobs:
             --financials data/latest/financials.json \
             --news data/latest/news.json \
             --twse-summary data/latest/twse_summary.json \
+            --source-status data/latest/source_status.json \
             --data-date "${{ inputs.data_date }}" \
             --out docs/index.html
 
       - name: Archive daily data to history
+        if: steps.trading_day.outputs.is_trading_day == 'true'
         run: |
           python scripts/archive_history.py
 
       - name: Commit page, history + raw data snapshot
+        if: steps.trading_day.outputs.is_trading_day == 'true'
         run: |
           git config user.name "premarket-intel-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -150,7 +107,7 @@ jobs:
           git push
 
       - name: Send Premarket Summary Webhook
-        if: success()
+        if: success() && steps.trading_day.outputs.is_trading_day == 'true'
         env:
           LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -160,7 +117,7 @@ jobs:
           python scripts/notify_summary.py --mode success || true
 
       - name: Send Failure Notification Webhook
-        if: failure()
+        if: failure() && steps.trading_day.outputs.is_trading_day == 'true'
         env:
           LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -168,4 +125,5 @@ jobs:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         run: |
           python scripts/notify_summary.py --mode failure || true
+
 

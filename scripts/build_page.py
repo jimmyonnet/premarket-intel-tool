@@ -62,30 +62,19 @@ import argparse
 import json
 from datetime import date, datetime, timezone, timedelta
 from pathlib import Path
+from typing import Any
 
 from jinja2 import Environment, FileSystemLoader
 
+from trading_calendar import (
+    get_next_trading_day,
+    get_current_trading_day,
+    is_twse_trading_day,
+    load_twse_holidays,
+)
+from source_status import evaluate_source_health, SOURCES_METADATA
+
 TAIPEI = timezone(timedelta(hours=8))
-
-TW_HOLIDAYS_2026 = {
-    "2026-01-01", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20",
-    "2026-02-27", "2026-04-03", "2026-04-06", "2026-05-01", "2026-06-19", "2026-09-25",
-    "2026-10-09", "2026-10-10"
-}
-
-
-def get_next_trading_day(d: date) -> date:
-    nxt = d + timedelta(days=1)
-    while nxt.weekday() >= 5 or nxt.isoformat() in TW_HOLIDAYS_2026:
-        nxt += timedelta(days=1)
-    return nxt
-
-
-def get_current_trading_day(d: date) -> date:
-    cur = d
-    while cur.weekday() >= 5 or cur.isoformat() in TW_HOLIDAYS_2026:
-        cur -= timedelta(days=1)
-    return cur
 
 
 
@@ -204,36 +193,39 @@ def prepare_calendar_timeline(events, today_str):
     date_groups = [by_date[d] for d in sorted(by_date.keys())]
     return date_groups
 
-def evaluate_date_check(today: date, page_applies_to: str | None):
-    if not page_applies_to:
+def evaluate_date_check(today: date, page_applies_to: str | None) -> dict[str, Any]:
+    """
+    Rigorously evaluates whether the disposal source date aligns with the intended trading day.
+    """
+    if not page_applies_to or not str(page_applies_to).strip():
         return {
-            "status": "ready",
-            "label": "資料已就緒",
-            "class_name": "is-ok",
-            "tooltip": "資料已載入"
+            "status": "unknown",
+            "label": "日期待確認",
+            "class_name": "is-warning",
+            "tooltip": "處置資料未標註適用日期",
         }
-    
-    # Parse MM/DD or YYYY-MM-DD
+
     target_date = None
-    if "/" in page_applies_to:
-        parts = page_applies_to.split("/")
+    clean_applies = str(page_applies_to).strip()
+    if "/" in clean_applies:
+        parts = clean_applies.split("/")
         if len(parts) == 2:
             try:
                 target_date = date(today.year, int(parts[0]), int(parts[1]))
             except ValueError:
                 pass
-    elif "-" in page_applies_to:
+    elif "-" in clean_applies:
         try:
-            target_date = date.fromisoformat(page_applies_to)
+            target_date = date.fromisoformat(clean_applies)
         except ValueError:
             pass
 
     if target_date is None:
         return {
-            "status": "ready",
-            "label": "資料已就緒",
-            "class_name": "is-ok",
-            "tooltip": f"資料適用: {page_applies_to}"
+            "status": "unknown",
+            "label": "格式未辨識",
+            "class_name": "is-warning",
+            "tooltip": f"處置資料日期格式無法解析: {clean_applies}",
         }
 
     next_td = get_next_trading_day(today)
@@ -244,23 +236,23 @@ def evaluate_date_check(today: date, page_applies_to: str | None):
             "status": "aligned_next",
             "label": "已對齊次日",
             "class_name": "is-ok",
-            "tooltip": f"資料日期已對齊次一交易日（{next_td.strftime('%m/%d')}）"
+            "tooltip": f"資料日期已對齊次一交易日（{next_td.strftime('%m/%d')}）",
         }
     elif target_date == today or target_date == curr_td:
         return {
             "status": "same_day",
             "label": "當日盤後",
             "class_name": "is-info",
-            "tooltip": f"資料日期為當日交易日（{target_date.strftime('%m/%d')}）"
+            "tooltip": f"資料日期為當日交易日（{target_date.strftime('%m/%d')}）",
         }
     else:
         diff_days = (target_date - today).days
         diff_str = f"相差 {diff_days:+d} 天" if diff_days != 0 else "日期待確認"
         return {
             "status": "warning",
-            "label": "日期待確認",
-            "class_name": "is-warning",
-            "tooltip": f"頁面顯示適用 {page_applies_to}，但今天為 {today.strftime('%m/%d')}（次交易日為 {next_td.strftime('%m/%d')}，{diff_str}）"
+            "label": "日期異常",
+            "class_name": "is-danger",
+            "tooltip": f"處置來源標註適用 {clean_applies}，但目標交易日為 {next_td.strftime('%m/%d')}（{diff_str}）",
         }
 
 
@@ -522,6 +514,7 @@ def main():
     ap.add_argument("--financials", required=False, help="Path to financials.json")
     ap.add_argument("--news", required=False, help="Path to news.json")
     ap.add_argument("--twse-summary", required=False, help="Path to twse_summary.json")
+    ap.add_argument("--source-status", required=False, default=None, help="Path to source_status.json")
     ap.add_argument("--data-date", required=False, default=None, help="Optional data date override (e.g. 08/24)")
     ap.add_argument("--out", required=True)
     ap.add_argument(
@@ -613,6 +606,12 @@ def main():
 
     stale_hours = max(0.0, stale_hours)
 
+    # Health & Credibility Evaluation
+    status_file_path = args.source_status or (Path("data") / "latest" / "source_status.json")
+    status_json = load_json(status_file_path)
+    date_check_eval = evaluate_date_check(now.date(), (disposal.get("date_check", {}) or {}).get("page_says_applies_to"))
+    health_eval = evaluate_source_health(status_json, date_check_eval)
+
     meta_path = Path(args.out).parent / "data_meta.json"
     meta_path.parent.mkdir(parents=True, exist_ok=True)
     
@@ -622,6 +621,11 @@ def main():
         "data_date": data_date,
         "stale_hours": stale_hours,
         "hours_since_us_close": hours_since_us_close,
+        "overall_status": health_eval.overall_status,
+        "status_label": health_eval.status_label,
+        "status_badge_class": health_eval.status_badge_class,
+        "summary_reasons": health_eval.summary_reasons,
+        "sources": health_eval.sources,
     }
     meta_path.write_text(json.dumps(meta_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -645,6 +649,7 @@ def main():
         stale_hours=stale_hours,
         hours_since_us_close=hours_since_us_close,
         meta=meta_data,
+        health=health_eval.to_dict(),
         indices=indices,
         us_indices=indices.get("us_indices", {}),
         asia_open=indices.get("asia_open", {}),
@@ -653,7 +658,7 @@ def main():
         spark=spark,
         disposal=disposal,
         date_check=disposal.get("date_check", {}),
-        date_check_eval=evaluate_date_check(now.date(), (disposal.get("date_check", {}) or {}).get("page_says_applies_to")),
+        date_check_eval=date_check_eval,
         pressplay=pressplay,
         institutional=institutional,
         calendar=calendar_section,

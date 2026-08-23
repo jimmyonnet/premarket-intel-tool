@@ -482,6 +482,150 @@
   }
   .inst-chips-mobile { display: none; }
 
+  /* ACCESSIBLE FOCUS INDICATOR */
+  :focus-visible {
+    outline: 2px solid var(--blue) !important;
+    outline-offset: 2px !important;
+  }
+  :root[data-theme="dark"] :focus-visible {
+    outline: 2px solid #60A5FA !important;
+    outline-offset: 2px !important;
+  }
+
+  /* HEADER STATUS BUTTON */
+  .header-status-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-main);
+    transition: all 0.15s ease;
+  }
+  .header-status-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+  .header-status-btn .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+  }
+  .header-status-btn.is-ready {
+    background: var(--green-bg);
+    color: var(--green-fg);
+    border-color: var(--green-border);
+  }
+  .header-status-btn.is-caution {
+    background: var(--amber-bg);
+    color: var(--amber-fg);
+    border-color: var(--amber-border);
+  }
+  .header-status-btn.is-unsafe {
+    background: var(--danger-bg);
+    color: var(--danger-fg);
+    border-color: var(--danger-border);
+  }
+
+  /* TODAY INTEL BRIEFING CARD */
+  .today-briefing-card {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1.2fr;
+    gap: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow-sm);
+  }
+  .today-briefing-card.is-unsafe-alert {
+    border: 2px solid var(--danger-border);
+    background: var(--danger-bg);
+  }
+  .today-briefing-card.is-caution-alert {
+    border: 1.5px solid var(--amber-border);
+    background: var(--amber-bg);
+  }
+  .briefing-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+  }
+  .briefing-col-lbl {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .briefing-status-val, .briefing-watch-val, .briefing-events-val {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .briefing-reason-summary {
+    font-size: 11.5px;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 180px;
+  }
+  .briefing-watch-val .hit-count {
+    color: var(--blue);
+    font-weight: 700;
+  }
+  .briefing-watch-val .hit-count.has-hit {
+    color: var(--rise);
+  }
+  .event-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--bg-sub);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    border: 1px solid var(--border);
+  }
+  .event-more-tag {
+    font-size: 10.5px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+  .mobile-scroll-hint {
+    display: none;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    padding: 4px 0;
+    background: var(--bg-sub);
+    border-radius: 4px;
+    margin-bottom: 6px;
+  }
+  @media (max-width: 768px) {
+    .today-briefing-card {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 8px 10px;
+    }
+    .mobile-scroll-hint {
+      display: block;
+    }
+  }
+
   /* STALE BANNER */
   .stale-banner {
     padding: 6px 14px;
@@ -2061,8 +2205,8 @@
           <span class="meta-icon">📅</span>
           <span class="meta-label">資料日期</span>
           <span class="meta-val font-mono font-bold">{{ data_date }}</span>
-          {% if date_check and date_check.page_says_applies_to %}
-          <span class="status-badge is-ok" title="資料已對齊次日盤前標準 ({{ date_check.page_says_applies_to }})" style="margin-left:4px; font-size:10.5px; padding:1px 6px;">已對齊次日</span>
+          {% if date_check_eval %}
+          <span class="status-badge {{ date_check_eval.class_name }}" title="{{ date_check_eval.tooltip }}" style="margin-left:4px; font-size:10.5px; padding:1px 6px;">{{ date_check_eval.label }}</span>
           {% endif %}
         </span>
         <span class="meta-item">
@@ -2070,12 +2214,15 @@
           <span class="meta-val font-mono">{{ build_time }}</span>
           <span class="meta-ago font-mono" id="header-age-display">（剛剛）</span>
         </span>
-        <span class="meta-item health-item" id="source-health-indicator" title="資料源健康度">
-          {% if indices_missing and indices_missing|length > 0 %}
-          <span class="health-dot warn"></span><button type="button" class="health-btn" onclick="window.pm.showMissingModal()">⚠ 發現 {{ indices_missing|length }} 項缺漏</button>
-          {% else %}
-          <span class="health-dot ok"></span><span style="font-size:11.5px; color:var(--text-muted);" title="Yahoo Finance、TWSE、期交所、Chengwaye 來源正常">● 源正常</span>
-          {% endif %}
+        <span class="meta-item health-item" id="source-health-indicator">
+          {% set h = health if (health is defined and health) else (meta.health if (meta is defined and meta and meta.health is defined) else {}) %}
+          {% set o_status = h.overall_status or (meta.overall_status if meta is defined and meta else 'caution') %}
+          {% set o_label = h.status_label or (meta.status_label if meta is defined and meta else '請先確認資料') %}
+          {% set o_badge = h.status_badge_class or (meta.status_badge_class if meta is defined and meta else 'is-caution') %}
+          {% set o_reasons = (h.summary_reasons if (h.summary_reasons is defined and h.summary_reasons) else (meta.summary_reasons if (meta is defined and meta and meta.summary_reasons) else [])) or [] %}
+          <button type="button" class="header-status-btn {{ o_badge }}" id="source-status-btn" onclick="window.pm.openSourceStatusModal(this)" title="【{{ o_label }}】{{ o_reasons|join('；') }} · 點擊查看完整來源健康度清單" aria-label="開啟資料來源狀態清單">
+            <span class="status-dot"></span><span class="status-text">{{ o_label }}</span>
+          </button>
         </span>
       </div>
     </div>
@@ -2098,8 +2245,8 @@
       </div>
       
       <div class="nav-actions">
-        <button class="nav-btn btn-briefing" id="briefing-toggle" onclick="window.pm.toggleBriefingMode()" type="button" title="切換盤前 3 分鐘速讀模式 (快捷鍵 B)">⚡ 速讀<span class="btn-text-extra">模式</span></button>
-        <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" title="切換只看自選 (快捷鍵 W)">⭐ 自選<span class="btn-text-extra">股</span></button>
+        <button class="nav-btn btn-briefing" id="briefing-toggle" onclick="window.pm.toggleBriefingMode()" type="button" title="切換盤前 3 分鐘速讀模式 (快捷鍵 B)" aria-pressed="false">⚡ 速讀<span class="btn-text-extra">模式</span></button>
+        <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" title="切換只看自選 (快捷鍵 W)" aria-pressed="false">⭐ 自選<span class="btn-text-extra">股</span></button>
         <button class="nav-btn btn-clean-link" onclick="window.pm.copyCleanUrl()" type="button" title="複製不含自選股代號的乾淨網址 (供除錯或截圖分享)">🔗 乾淨連結</button>
         <button class="nav-btn btn-export" onclick="window.pm.exportDailyMarkdown()" type="button" title="匯出今日重點 Markdown (快捷鍵 E)">📋 匯出<span class="btn-text-extra">重點</span></button>
         <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" title="切換截圖模式 (按 Esc 退出)">📸 截圖</button>
@@ -2120,6 +2267,44 @@
 
     <!-- 1. 摘要 (Summary) -->
     <section id="summary" class="content-section">
+      <!-- 今日判讀卡 (Today's Intel Briefing Card) -->
+      <div class="today-briefing-card {{ 'is-unsafe-alert' if o_status == 'unsafe' else ('is-caution-alert' if o_status == 'caution' else 'is-ready-card') }}" id="today-briefing-block">
+        <div class="briefing-col col-status">
+          <div class="briefing-col-lbl">📊 資料可用性</div>
+          <div class="briefing-status-val">
+            <span class="status-badge {{ o_badge }}" style="font-weight:700;">{{ o_label }}</span>
+            <span class="briefing-reason-summary" title="{{ o_reasons|join('；') }}">{{ o_reasons[0] if o_reasons else '全數來源正常且在時限內' }}</span>
+          </div>
+        </div>
+
+        <div class="briefing-col col-watchlist">
+          <div class="briefing-col-lbl">⭐ 自選股優先項目</div>
+          <div class="briefing-watch-val font-mono" id="briefing-watchlist-val">
+            載入中...
+          </div>
+        </div>
+
+        <div class="briefing-col col-events">
+          <div class="briefing-col-lbl">⏰ 今日高影響事件</div>
+          <div class="briefing-events-val">
+            {% set today_stars = [] %}
+            {% for group in calendar.date_groups if group.is_today %}
+              {% for ev in group.events if ev.importance == 3 %}
+                {% set _ = today_stars.append(ev) %}
+              {% endfor %}
+            {% endfor %}
+            {% if today_stars|length > 0 %}
+              <span class="event-pill font-mono">★★★ {{ today_stars[0].time_tpe_str }} {{ today_stars[0].title }}</span>
+              {% if today_stars|length > 1 %}
+              <span class="event-more-tag">+{{ today_stars|length - 1 }}件</span>
+              {% endif %}
+            {% else %}
+              <span style="color:var(--text-muted); font-size:12px;">今日無 ★★★ 重磅總經數據</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
       <div class="summary-grid">
         <!-- 昨收大盤 -->
         <div class="summary-card">
@@ -2876,7 +3061,7 @@
                         {% if ev.note %}<div class="cal-note-text">{{ ev.note }}</div>{% endif %}
                         <div class="cal-action-links">
                           {% if ev.source_url %}
-                          <a href="{{ ev.source_url }}" target="_blank" rel="noopener noreferrer"  rel="noopener" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
+                          <a href="{{ ev.source_url }}" target="_blank" rel="noopener noreferrer" class="cal-link-btn" onclick="event.stopPropagation()">📊 MacroMicro 圖表 ↗</a>
                           {% endif %}
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.copyEventText('{{ ev.id }}')">📋 複製事件</button>
                           <button type="button" class="cal-link-btn" onclick="event.stopPropagation(); window.pm.addToGoogleCalendar('{{ ev.id }}')">📅 加到 Google 行事曆</button>
@@ -2907,62 +3092,127 @@
 
   
   <!-- STOCK QUICK ACTION MODAL -->
-  <div id="stock-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.closeStockModal()" role="dialog" aria-modal="true" aria-label="個股快捷操作">
+  <div id="stock-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.closeStockModal()" role="dialog" aria-modal="true" aria-labelledby="stock-modal-title" aria-hidden="true">
     <div class="modal-card stock-modal-card">
       <div class="modal-head">
-        <div class="modal-title">📈 個股快捷操作</div>
-        <button class="modal-close" type="button" onclick="window.pm.closeStockModal()">✕</button>
+        <div class="modal-title" id="stock-modal-title">📈 個股快捷操作</div>
+        <button class="modal-close" type="button" onclick="window.pm.closeStockModal()" aria-label="關閉個股快捷操作視窗">✕</button>
       </div>
       <div class="modal-body" style="padding:16px;">
         <div id="stock-modal-info" style="font-size:16px; font-weight:700; margin-bottom:14px; font-family:var(--font-mono); color:var(--text-main);"></div>
         <div class="stock-action-grid">
           <button type="button" class="stock-act-btn" onclick="window.pm.copyCurrentStock()"><span style="font-size:16px;">📋</span> 一鍵複製代號</button>
-          <a id="stock-link-yahoo" target="_blank" rel="noopener" class="stock-act-btn"><span style="font-size:16px;">🟣</span> Yahoo 股市</a>
-          <a id="stock-link-goodinfo" target="_blank" rel="noopener" class="stock-act-btn"><span style="font-size:16px;">🟢</span> Goodinfo! 股市資訊</a>
-          <a id="stock-link-tv" target="_blank" rel="noopener" class="stock-act-btn"><span style="font-size:16px;">🔵</span> TradingView 圖表</a>
+          <a id="stock-link-yahoo" target="_blank" rel="noopener noreferrer" class="stock-act-btn"><span style="font-size:16px;">🟣</span> Yahoo 股市</a>
+          <a id="stock-link-goodinfo" target="_blank" rel="noopener noreferrer" class="stock-act-btn"><span style="font-size:16px;">🟢</span> Goodinfo! 股市資訊</a>
+          <a id="stock-link-tv" target="_blank" rel="noopener noreferrer" class="stock-act-btn"><span style="font-size:16px;">🔵</span> TradingView 圖表</a>
         </div>
       </div>
     </div>
   </div>
 
   <!-- KEYBOARD SHORTCUTS MODAL -->
-  <div id="shortcuts-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.toggleShortcutsModal()" role="dialog" aria-modal="true" aria-label="鍵盤快捷鍵清單">
+  <div id="shortcuts-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.toggleShortcutsModal()" role="dialog" aria-modal="true" aria-labelledby="shortcuts-modal-title" aria-hidden="true">
     <div class="modal-card">
-      <h3 class="modal-title">⌨️ 鍵盤快捷鍵</h3>
-      <div class="shortcut-list">
-        <div class="shortcut-item"><span class="kbd">1~6</span> <span>快速跳轉區塊</span></div>
-        <div class="shortcut-item"><span class="kbd">b</span> <span>切換盤前速讀模式</span></div>
-        <div class="shortcut-item"><span class="kbd">e</span> <span>匯出重點 Markdown</span></div>
-        <div class="shortcut-item"><span class="kbd">c</span> <span>複製今日 ★★★ 事件</span></div>
-        <div class="shortcut-item"><span class="kbd">d</span> <span>切換深/淺色</span></div>
-        <div class="shortcut-item"><span class="kbd">w</span> <span>切換只看自選</span></div>
-        <div class="shortcut-item"><span class="kbd">/</span> <span>聚焦自選輸入</span></div>
-        <div class="shortcut-item"><span class="kbd">t</span> <span>回到頂部</span></div>
-        <div class="shortcut-item"><span class="kbd">?</span> <span>開啟快捷鍵表</span></div>
-        <div class="shortcut-item"><span class="kbd">Esc</span> <span>關閉所有彈窗</span></div>
+      <div class="modal-head">
+        <h3 class="modal-title" id="shortcuts-modal-title">⌨️ 鍵盤快捷鍵</h3>
+        <button class="modal-close" type="button" onclick="window.pm.toggleShortcutsModal()" aria-label="關閉快捷鍵視窗">✕</button>
+      </div>
+      <div class="modal-body" style="padding:14px 16px;">
+        <div class="shortcut-list">
+          <div class="shortcut-item"><span class="kbd">1~6</span> <span>快速跳轉區塊</span></div>
+          <div class="shortcut-item"><span class="kbd">b</span> <span>切換盤前速讀模式</span></div>
+          <div class="shortcut-item"><span class="kbd">e</span> <span>匯出重點 Markdown</span></div>
+          <div class="shortcut-item"><span class="kbd">c</span> <span>複製今日 ★★★ 事件</span></div>
+          <div class="shortcut-item"><span class="kbd">d</span> <span>切換深/淺色</span></div>
+          <div class="shortcut-item"><span class="kbd">w</span> <span>切換只看自選</span></div>
+          <div class="shortcut-item"><span class="kbd">/</span> <span>聚焦自選輸入</span></div>
+          <div class="shortcut-item"><span class="kbd">t</span> <span>回到頂部</span></div>
+          <div class="shortcut-item"><span class="kbd">?</span> <span>開啟快捷鍵表</span></div>
+          <div class="shortcut-item"><span class="kbd">Esc</span> <span>關閉所有彈窗</span></div>
+        </div>
       </div>
     </div>
   </div>
 
-  
-  <!-- MISSING FIELDS MODAL -->
-  <div id="missing-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.toggleMissingModal()" role="dialog" aria-modal="true" aria-label="資料源狀態清單">
-    <div class="modal-card">
-      <h3 class="modal-title">ℹ️ 資料源狀態與缺漏檢查</h3>
-      <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">
-        {% if indices_missing and indices_missing|length > 0 %}
-        以下資料源在本次建置時未能成功取得即時報價，系統已自動啟用 Fallback 機制或標記缺漏：
-        <ul style="margin:8px 0 0 16px; color:var(--amber);">
-          {% for item in indices_missing %}
-          <li><strong>{{ item }}</strong>：即時報價缺漏</li>
-          {% endfor %}
-        </ul>
-        {% else %}
-        目前所有資料來源（美股四大指數、台指期夜盤、處置股、三大法人、財經行事曆）均正常抓取無缺漏。
-        {% endif %}
+  <!-- SOURCE STATUS AUDIT MODAL -->
+  <div id="source-status-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.closeSourceStatusModal()" role="dialog" aria-modal="true" aria-labelledby="status-modal-title" aria-hidden="true">
+    <div class="modal-card modal-lg">
+      <div class="modal-head">
+        <h3 class="modal-title" id="status-modal-title">🛡️ 資料來源健康度與可信度稽核</h3>
+        <button class="modal-close" type="button" onclick="window.pm.closeSourceStatusModal()" aria-label="關閉資料來源狀態視窗">✕</button>
       </div>
-      <div style="display:flex; justify-content:flex-end;">
-        <button type="button" class="btn" style="background:var(--blue); color:#fff; border:none; padding:6px 14px; border-radius:6px; font-weight:600; cursor:pointer;" onclick="window.pm.toggleMissingModal()">我知道了</button>
+      <div class="modal-body" style="padding:16px;">
+        <div class="status-modal-summary {{ o_badge }}">
+          <div style="font-weight:700; font-size:14px; margin-bottom:4px;">目前狀態評級：{{ o_label }} ({{ o_status|upper }})</div>
+          <ul style="margin:0; padding-left:18px; font-size:12.5px; line-height:1.5;">
+            {% for r in o_reasons %}
+            <li>{{ r }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="table-scroll" style="margin-top:12px;">
+          <table class="data-table status-table">
+            <thead>
+              <tr>
+                <th scope="col">來源項目</th>
+                <th scope="col">重要性</th>
+                <th scope="col">狀態</th>
+                <th scope="col">取得時間</th>
+                <th scope="col">適用日期</th>
+                <th scope="col">備援狀態</th>
+                <th scope="col">異常/備註</th>
+                <th scope="col">對判讀影響</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% set src_list = h.sources or (meta.sources if (meta is defined and meta and meta.sources is defined) else []) %}
+              {% for src in src_list %}
+              <tr>
+                <td class="font-bold">{{ src.name }}</td>
+                <td>
+                  {% if src.is_required %}
+                  <span class="badge badge-danger" style="background:var(--danger-bg); color:var(--danger-fg); border:1px solid var(--danger-border);">必要</span>
+                  {% else %}
+                  <span class="badge">非必要</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if src.status == 'ok' %}
+                  <span class="status-badge is-ok">正常</span>
+                  {% elif src.status == 'failed' %}
+                  <span class="status-badge is-danger">失敗</span>
+                  {% elif src.status == 'stale' %}
+                  <span class="status-badge is-warning">過期</span>
+                  {% elif src.status == 'missing' %}
+                  <span class="status-badge is-danger">遺失</span>
+                  {% else %}
+                  <span class="status-badge is-info">{{ src.status }}</span>
+                  {% endif %}
+                </td>
+                <td class="font-mono" style="font-size:11px;">{{ src.fetched_at[11:16] if (src.fetched_at and src.fetched_at|length >= 16) else '—' }}</td>
+                <td class="font-mono" style="font-size:11.5px;">{{ src.data_date or '—' }}</td>
+                <td>
+                  {% if src.fallback_used %}
+                  <span class="badge badge-amber" title="已降級使用備援資料">備援啟用</span>
+                  {% else %}
+                  <span style="color:var(--text-muted); font-size:11.5px;">即時</span>
+                  {% endif %}
+                </td>
+                <td style="font-size:12px; color:var(--text-muted);">{{ src.error_summary or '—' }}</td>
+                <td style="font-size:12px; color:var(--text-main);">{{ src.impact_desc }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-foot" style="display:flex; justify-content:space-between; align-items:center; padding:12px 16px; border-top:1px solid var(--border); flex-wrap:wrap; gap:8px;">
+        <span style="font-size:11.5px; color:var(--text-muted);">建置基準時間：{{ build_time }}（每早 07:35 自動更新）</span>
+        <div style="display:flex; gap:8px;">
+          <button type="button" class="watch-btn" onclick="window.pm.closeSourceStatusModal()">關閉</button>
+          <button type="button" class="watch-btn primary" onclick="location.reload(true)">🔄 重新整理檢查</button>
+        </div>
       </div>
     </div>
   </div>
@@ -2992,6 +3242,23 @@
 <script>
   window.pm = window.pm || {};
 
+  // Safe LocalStorage Parser with recovery toast
+  function safeJsonParse(key, fallback) {
+    try {
+      var raw = localStorage.getItem(key);
+      if (!raw) return fallback;
+      var parsed = JSON.parse(raw);
+      return parsed !== null && parsed !== undefined ? parsed : fallback;
+    } catch(e) {
+      console.warn('LocalStorage key corrupted:', key, e);
+      try { localStorage.removeItem(key); } catch(ex) {}
+      if (window.pm && typeof window.pm.showToast === 'function') {
+        window.pm.showToast('⚠️ 本機偏好設定異常已自動修復');
+      }
+      return fallback;
+    }
+  }
+
   // LocalStorage Transparent Migration to pmit_ prefix
   (function() {
     try {
@@ -3015,8 +3282,8 @@
   // ==========================================
   window.pm.calState = {
     quick: localStorage.getItem('pmit_cal_quick') || 'all',
-    countries: JSON.parse(localStorage.getItem('pmit_cal_countries') || '[]'),
-    categories: JSON.parse(localStorage.getItem('pmit_cal_categories') || '[]'),
+    countries: safeJsonParse('pmit_cal_countries', []),
+    categories: safeJsonParse('pmit_cal_categories', []),
     search: localStorage.getItem('pmit_cal_search') || '',
     tzMode: localStorage.getItem('pmit_cal_tz_mode') || 'dual' // 'dual' or 'tpe_only'
   };
@@ -3237,26 +3504,85 @@
   }
 
   // ==========================================
-  // 2. Stock Quick Action Modal
+  // Accessible Modal Manager (Focus Trap & Restoration)
   // ==========================================
+  window.pm.lastFocusedTrigger = null;
+
+  window.pm.openModal = function(modalId, triggerEl) {
+    window.pm.lastFocusedTrigger = triggerEl || document.activeElement;
+    var modal = document.getElementById(modalId);
+    if (!modal) return;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+
+    // Focus first focusable element inside modal
+    var focusables = modal.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+    if (focusables.length > 0) {
+      focusables[0].focus();
+    }
+  };
+
+  window.pm.closeModal = function(modalId) {
+    var modal = document.getElementById(modalId);
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    if (window.pm.lastFocusedTrigger && typeof window.pm.lastFocusedTrigger.focus === 'function') {
+      try { window.pm.lastFocusedTrigger.focus(); } catch(e) {}
+    }
+  };
+
+  // 2. Stock Quick Action Modal
   window.pm.currentStock = { code: '', name: '' };
-  window.pm.openStockModal = function(code, name) {
+  window.pm.openStockModal = function(code, name, triggerEl) {
     window.pm.currentStock = { code: code, name: name || '' };
     var infoEl = document.getElementById('stock-modal-info');
     if (infoEl) infoEl.textContent = code + ' ' + (name || '');
     var yLink = document.getElementById('stock-link-yahoo');
-    if (yLink) yLink.href = 'https://tw.stock.yahoo.com/quote/' + code;
+    if (yLink) yLink.href = 'https://tw.stock.yahoo.com/quote/' + encodeURIComponent(code);
     var gLink = document.getElementById('stock-link-goodinfo');
-    if (gLink) gLink.href = 'https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=' + code;
+    if (gLink) gLink.href = 'https://goodinfo.tw/tw/StockDetail.asp?STOCK_ID=' + encodeURIComponent(code);
     var tvLink = document.getElementById('stock-link-tv');
-    if (tvLink) tvLink.href = 'https://www.tradingview.com/chart/?symbol=TWSE%3A' + code;
-    var modal = document.getElementById('stock-modal');
-    if (modal) modal.classList.add('is-open');
+    if (tvLink) tvLink.href = 'https://www.tradingview.com/chart/?symbol=TWSE%3A' + encodeURIComponent(code);
+    window.pm.openModal('stock-modal', triggerEl);
   };
 
   window.pm.closeStockModal = function() {
-    var modal = document.getElementById('stock-modal');
-    if (modal) modal.classList.remove('is-open');
+    window.pm.closeModal('stock-modal');
+  };
+
+  window.pm.openSourceStatusModal = function(triggerEl) {
+    window.pm.openModal('source-status-modal', triggerEl);
+  };
+
+  window.pm.closeSourceStatusModal = function() {
+    window.pm.closeModal('source-status-modal');
+  };
+
+  window.pm.showMissingModal = function() {
+    window.pm.openSourceStatusModal();
+  };
+
+  window.pm.toggleShortcutsModal = function(triggerEl) {
+    var m = document.getElementById('shortcuts-modal');
+    if (m && m.classList.contains('is-open')) {
+      window.pm.closeModal('shortcuts-modal');
+    } else {
+      window.pm.openModal('shortcuts-modal', triggerEl);
+    }
+  };
+
+  window.pm.openBatchModal = function(triggerEl) {
+    window.pm.openModal('batch-modal', triggerEl);
+    var area = document.getElementById('batch-input-area');
+    if (area) {
+      area.focus();
+      window.pm.previewBatchCodes();
+    }
+  };
+
+  window.pm.closeBatchModal = function() {
+    window.pm.closeModal('batch-modal');
   };
 
   window.pm.copyCurrentStock = function() {
@@ -3331,7 +3657,11 @@
     document.body.classList.toggle('briefing-mode');
     var isBrief = document.body.classList.contains('briefing-mode');
     var b = document.getElementById('briefing-toggle');
-    if (b) b.classList.toggle('is-active', isBrief);
+    if (b) {
+      b.classList.toggle('is-active', isBrief);
+      b.setAttribute('aria-pressed', isBrief ? 'true' : 'false');
+    }
+    localStorage.setItem('pmit_briefing_mode', isBrief ? '1' : '0');
     window.pm.showToast(isBrief ? '⚡ 已進入盤前 3 分鐘速讀模式' : '已恢復標準檢視模式');
   };
 
@@ -3632,8 +3962,7 @@
 
   function updateWatchlistStars() {
     var raw = localStorage.getItem(window.WATCH_KEY) || '[]';
-    var codes = [];
-    try { codes = JSON.parse(raw); } catch(e) { codes = []; }
+    var codes = safeJsonParse(window.WATCH_KEY, []);
     
     var guide = document.getElementById('watchlist-empty-guide');
     if (guide) guide.style.display = codes.length === 0 ? 'block' : 'none';
@@ -3660,6 +3989,42 @@
     if (alertBanner && alertCountEl) {
       alertCountEl.textContent = String(alertCount);
       alertBanner.style.display = alertCount > 0 ? 'flex' : 'none';
+    }
+
+    // Update Briefing Card Priorities
+    var briefingWatchVal = document.getElementById('briefing-watchlist-val');
+    if (briefingWatchVal) {
+      if (codes.length === 0) {
+        briefingWatchVal.innerHTML = '<span style="color:var(--text-muted); font-size:12px;">尚未設定自選股</span>';
+      } else {
+        var hitAlert = 0;
+        var hitExit = 0;
+        document.querySelectorAll('#alerts tr[data-code]').forEach(function(tr) {
+          var c = tr.getAttribute('data-code');
+          if (codes.indexOf(c) >= 0) {
+            if (tr.textContent.indexOf('今日出關') >= 0 || tr.textContent.indexOf('出關') >= 0) {
+              hitExit++;
+            } else {
+              hitAlert++;
+            }
+          }
+        });
+
+        var hitCand = 0;
+        document.querySelectorAll('#watchlist tr[data-code]').forEach(function(tr) {
+          var c = tr.getAttribute('data-code');
+          if (codes.indexOf(c) >= 0) {
+            hitCand++;
+          }
+        });
+
+        var totalHits = hitAlert + hitExit + hitCand;
+        if (totalHits === 0) {
+          briefingWatchVal.innerHTML = '<span style="color:var(--text-muted); font-size:12.5px;">自選 (' + codes.length + ' 檔) 今日無處置/出關/候選命中</span>';
+        } else {
+          briefingWatchVal.innerHTML = '處置預警 <strong class="hit-count ' + (hitAlert > 0 ? 'has-hit' : '') + '">' + hitAlert + '</strong> 檔 · 今日出關 <strong class="hit-count ' + (hitExit > 0 ? 'has-hit' : '') + '">' + hitExit + '</strong> 檔 · 候選 <strong class="hit-count ' + (hitCand > 0 ? 'has-hit' : '') + '">' + hitCand + '</strong> 檔';
+        }
+      }
     }
   }
 
@@ -4226,6 +4591,9 @@
   // ==========================================
   window.addEventListener('message', function(e) {
     if (!e.data) return;
+    if (window.location.origin && window.location.origin !== 'null' && e.origin && e.origin !== 'null' && e.origin !== window.location.origin) {
+      return;
+    }
     if (e.data.type === 'embed-height' && e.data.id) {
       var f = document.getElementById('embed-' + e.data.id);
       if (f && e.data.height) {
@@ -4241,16 +4609,38 @@
   });
 
   document.addEventListener('keydown', function(e) {
+    var openModal = document.querySelector('.modal-overlay.is-open');
+
+    // Focus trap within open modal
+    if (openModal && e.key === 'Tab') {
+      var focusables = Array.prototype.slice.call(openModal.querySelectorAll('button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+      if (focusables.length > 0) {
+        var first = focusables[0];
+        var last = focusables[focusables.length - 1];
+        if (e.shiftKey) {
+          if (document.activeElement === first || !openModal.contains(document.activeElement)) {
+            last.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === last || !openModal.contains(document.activeElement)) {
+            first.focus();
+            e.preventDefault();
+          }
+        }
+      }
+      return;
+    }
+
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
       if (e.key === 'Enter' && e.target.id === 'watch-input') {
         window.saveWatch();
       }
       if (e.key === 'Escape') {
         e.target.blur();
-        if (window.pm.closeStockModal) window.pm.closeStockModal();
-        document.querySelectorAll('.modal-overlay.is-open').forEach(function(m) {
-          m.classList.remove('is-open');
-        });
+        if (openModal) {
+          window.pm.closeModal(openModal.id);
+        }
       }
       return;
     }
@@ -4259,10 +4649,9 @@
       if (document.body.classList.contains('snapshot-mode')) {
         document.body.classList.remove('snapshot-mode');
       }
-      if (window.pm.closeStockModal) window.pm.closeStockModal();
-      document.querySelectorAll('.modal-overlay.is-open').forEach(function(m) {
-        m.classList.remove('is-open');
-      });
+      if (openModal) {
+        window.pm.closeModal(openModal.id);
+      }
       return;
     }
 
@@ -4339,13 +4728,23 @@
     if (metaTheme) metaTheme.content = activeTheme === 'dark' ? '#0B1220' : '#F8FAFC';
 
     var rawWatch = localStorage.getItem(window.WATCH_KEY);
-    var codes = rawWatch ? JSON.parse(rawWatch) : [];
+    var codes = safeJsonParse(window.WATCH_KEY, []);
     var inp = document.getElementById('watch-input');
     if (inp && codes.length) inp.value = codes.join(', ');
     renderWatch();
 
     if (urlParams.get('watch') === '1') window.pm.watchOnly = true;
     if (window.pm.watchOnly) window.pm.applyWatchOnly();
+
+    // Restore Briefing Mode
+    if (localStorage.getItem('pmit_briefing_mode') === '1') {
+      document.body.classList.add('briefing-mode');
+      var bt = document.getElementById('briefing-toggle');
+      if (bt) {
+        bt.classList.add('is-active');
+        bt.setAttribute('aria-pressed', 'true');
+      }
+    }
 
     // 3-second timeout fallback check for embeds
     setTimeout(function() {
@@ -4421,11 +4820,11 @@
 
   
   <!-- BATCH IMPORT MODAL -->
-  <div id="batch-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.closeBatchModal()">
+  <div id="batch-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.closeBatchModal()" role="dialog" aria-modal="true" aria-labelledby="batch-modal-title" aria-hidden="true">
     <div class="modal-card">
       <div class="modal-head">
-        <div class="modal-title">📋 批次匯入自選股（支援 Excel / CSV 複製貼上）</div>
-        <button class="modal-close" type="button" onclick="window.pm.closeBatchModal()">✕</button>
+        <div class="modal-title" id="batch-modal-title">📋 批次匯入自選股（支援 Excel / CSV 複製貼上）</div>
+        <button class="modal-close" type="button" onclick="window.pm.closeBatchModal()" aria-label="關閉批次匯入視窗">✕</button>
       </div>
       <div class="modal-body">
         <div style="font-size:12.5px; color:var(--text-muted); margin-bottom:10px; line-height:1.6;">

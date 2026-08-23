@@ -1,17 +1,7 @@
 {
-  "build_time": "2026-08-23 12:33",
-  "build_version": "20260823_1233",
-  "data_date": "08/24",
-  "stale_hours": 14.1,
-  "hours_since_us_close": 8.6,
-  "overall_status": "caution",
-  "status_label": "請先確認資料",
-  "status_badge_class": "is-caution",
-  "summary_reasons": [
-    "必要來源【處置股與出關預警】資料已逾 12 小時"
-  ],
-  "sources": [
-    {
+  "updated_at": "2026-08-23T12:32:50.064247+08:00",
+  "sources": {
+    "indices": {
       "source_id": "indices",
       "name": "指數行情 (美股/亞股/ADR)",
       "is_required": true,
@@ -23,19 +13,7 @@
       "fallback_used": false,
       "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向"
     },
-    {
-      "source_id": "disposal",
-      "name": "處置股與出關預警",
-      "is_required": true,
-      "status": "ok",
-      "fetched_at": "2026-08-22T22:24:26.447558+08:00",
-      "data_date": "08/24",
-      "age_minutes": 848.4,
-      "error_summary": null,
-      "fallback_used": false,
-      "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險"
-    },
-    {
+    "twse_summary": {
       "source_id": "twse_summary",
       "name": "大盤昨收與三大法人",
       "is_required": false,
@@ -47,7 +25,7 @@
       "fallback_used": false,
       "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整"
     },
-    {
+    "night_session": {
       "source_id": "night_session",
       "name": "台指期夜盤走勢",
       "is_required": false,
@@ -59,7 +37,19 @@
       "fallback_used": false,
       "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數"
     },
-    {
+    "disposal": {
+      "source_id": "disposal",
+      "name": "處置股與出關預警",
+      "is_required": true,
+      "status": "ok",
+      "fetched_at": "2026-08-22T22:24:26.447558+08:00",
+      "data_date": "08/24",
+      "age_minutes": 848.4,
+      "error_summary": null,
+      "fallback_used": false,
+      "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險"
+    },
+    "pressplay": {
       "source_id": "pressplay",
       "name": "PressPlay 盤前族群與標的",
       "is_required": false,
@@ -71,7 +61,7 @@
       "fallback_used": false,
       "impact_desc": "缺少每日專欄族群整理，候選股清單將呈現空白"
     },
-    {
+    "chengwaye_daily": {
       "source_id": "chengwaye_daily",
       "name": "主力券商與當沖籌碼明細",
       "is_required": false,
@@ -83,7 +73,7 @@
       "fallback_used": false,
       "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行"
     },
-    {
+    "calendar": {
       "source_id": "calendar",
       "name": "總經財經行事曆",
       "is_required": false,
@@ -95,7 +85,7 @@
       "fallback_used": false,
       "impact_desc": "缺少今日重磅總經數據與事件日程倒數"
     },
-    {
+    "financials": {
       "source_id": "financials",
       "name": "市場未反映重大公告 (財報/營收/處分)",
       "is_required": false,
@@ -107,7 +97,7 @@
       "fallback_used": false,
       "impact_desc": "缺少昨日盤後自結損益與營收公告統計"
     },
-    {
+    "news": {
       "source_id": "news",
       "name": "盤前即時新聞聚合",
       "is_required": false,
@@ -119,5 +109,5 @@
       "fallback_used": false,
       "impact_desc": "缺少隔夜美股與產業焦點新聞快訊"
     }
-  ]
+  }
 }
