@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pmit-20260824_0041';
+const CACHE_NAME = 'pmit-20260824_0048';
 const SHELL_ASSETS = [
   './',
   './index.html',

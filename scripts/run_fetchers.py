@@ -298,7 +298,7 @@ def main() -> None:
             [python_bin, "scripts/fetch_financials.py"],
             DATA_LATEST / "financials.json",
             '{"att":[],"fin":[],"rev":[]}',
-            timeout=30,
+            timeout=150,
         )
         # 9. News
         status_map["news"] = fetch_source(

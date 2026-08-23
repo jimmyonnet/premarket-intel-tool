@@ -31,3 +31,18 @@ def test_fetch_source_accepts_target_updated_by_command(tmp_path, monkeypatch):
     assert result["status"] == "ok"
     assert result["fallback_used"] is False
     assert json.loads(target.read_text(encoding="utf-8"))["items"][0]["title"] == "fresh"
+
+
+def test_fetch_source_keeps_file_json_when_fetcher_only_reports_progress_on_stderr(tmp_path, monkeypatch):
+    target = tmp_path / "financials.json"
+
+    def fake_run_command(*args, **kwargs):
+        target.write_text(json.dumps({"att": [{"code": "2615"}], "fin": [], "rev": []}), encoding="utf-8")
+        return 0, "", "att: 22 total, 4 unreflected"
+
+    monkeypatch.setattr("scripts.run_fetchers.run_command", fake_run_command)
+
+    result = fetch_source("financials", ["fake-fetcher"], target, '{"att":[],"fin":[],"rev":[]}')
+
+    assert result["status"] == "ok"
+    assert json.loads(target.read_text(encoding="utf-8"))["att"][0]["code"] == "2615"

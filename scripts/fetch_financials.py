@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import json
 import os
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -116,7 +117,7 @@ def main():
                 "unreflected": len(rows),
                 "fetched_at": payload.get("fetched_at") if isinstance(payload, dict) else None,
             }
-            print(f"{key}: {len(entries)} total, {len(rows)} unreflected")
+            print(f"{key}: {len(entries)} total, {len(rows)} unreflected", file=sys.stderr)
         except (requests.RequestException, ValueError, json.JSONDecodeError) as exc:
             fallback = cached_rows(previous, key)
             results[key] = fallback
@@ -125,7 +126,10 @@ def main():
                 "total": None,
                 "unreflected": len(fallback),
             }
-            print(f"{key}: fetch failed; retained {len(fallback)} cached unreflected rows ({type(exc).__name__})")
+            print(
+                f"{key}: fetch failed; retained {len(fallback)} cached unreflected rows ({type(exc).__name__})",
+                file=sys.stderr,
+            )
 
     os.makedirs(DATA_FILE.parent, exist_ok=True)
     DATA_FILE.write_text(json.dumps(results, ensure_ascii=False, indent=2), encoding="utf-8")
