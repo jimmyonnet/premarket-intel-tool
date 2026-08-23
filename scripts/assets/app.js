@@ -324,7 +324,7 @@ function renderCalendar(pkg) {
 
 function renderNews(pkg) {
   const items = Array.isArray(pkg) ? pkg : (pkg.items || pkg.news || []);
-  $('#news-panel').innerHTML = `<div class="panel-toolbar"><strong>盤前新聞</strong><span class="section-note">${items.length} 則</span></div>${items.slice(0, 12).map((item) => `<div class="news-item"><a href="${esc(item.url || '#')}" target="_blank" rel="noopener noreferrer">${esc(item.title || item.headline || '未命名新聞')}</a><span class="section-note">${esc(item.source || '')}</span></div>`).join('') || '<div class="empty">尚無新聞資料。</div>'}`;
+  $('#news-panel').innerHTML = `<div class="panel-toolbar"><strong>盤前新聞</strong><span class="section-note">${Math.min(items.length, 10)} 則</span></div>${items.slice(0, 10).map((item) => `<div class="news-item"><a href="${esc(item.url || item.link || '#')}" target="_blank" rel="noopener noreferrer">${esc(item.title || item.headline || '未命名新聞')}</a><span class="section-note">${esc(item.source || '')}</span></div>`).join('') || '<div class="empty">尚無新聞資料。</div>'}`;
 }
 
 function refreshCommands() {
