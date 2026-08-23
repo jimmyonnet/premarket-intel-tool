@@ -424,71 +424,72 @@
   }
   .data-block { padding: 14px 16px; }
 
-  /* 1. SUMMARY GRID */
+  /* 1. SUMMARY GRID (COMPACT DASHBOARD) */
   .summary-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
+    gap: 8px;
+    margin-bottom: 8px;
   }
   .summary-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 16px 18px;
+    border-radius: 8px;
+    padding: 8px 12px;
     box-shadow: var(--shadow-sm);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 100px;
+    min-height: 66px;
   }
   .summary-card.alert-highlight {
     background: var(--danger-bg);
     border-color: var(--danger-border);
   }
   .card-label {
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 700;
     color: var(--text-muted);
     text-transform: uppercase;
-    letter-spacing: 0.04em;
-    margin-bottom: 6px;
+    letter-spacing: 0.03em;
+    margin-bottom: 2px;
   }
   .card-val {
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 800;
     color: var(--text-main);
     line-height: 1.2;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
   .card-val.rise { color: var(--rise); }
   .card-val.fall { color: var(--fall); }
   .card-val.amber { color: var(--amber); }
   .card-sub {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-muted);
     font-weight: 500;
   }
   .inst-chips {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-top: 4px;
+    gap: 2px;
+    margin-top: 2px;
   }
   .inst-chips .chip {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
+    font-size: 11px;
   }
   .inst-chips-mobile { display: none; }
 
   /* STALE BANNER */
   .stale-banner {
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 11.5px;
     font-weight: 600;
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     background: var(--green-bg);
     color: var(--green-fg);
     border: 1px solid var(--green-border);
@@ -499,10 +500,10 @@
   /* COUNTDOWN COMPONENT */
   .open-countdown {
     font-family: var(--font-mono);
-    font-size: 12px;
+    font-size: 11.5px;
     color: var(--text-muted);
     text-align: center;
-    padding: 8px 0 4px;
+    padding: 4px 0 2px;
     letter-spacing: 0.02em;
     grid-column: 1 / -1;
   }
@@ -518,12 +519,13 @@
   .watch-control-bar {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
     flex-wrap: wrap;
   }
   .watch-input-wrapper {
     flex: 1;
-    min-width: 280px;
+    min-width: 260px;
     display: flex;
     align-items: center;
     background: var(--bg-sub);
@@ -561,8 +563,8 @@
     color: #FFFFFF;
     border: none;
     border-radius: 6px;
-    padding: 6px 14px;
-    font-size: 12.5px;
+    padding: 5px 12px;
+    font-size: 12px;
     font-weight: 700;
     cursor: pointer;
     transition: opacity 0.15s ease;
@@ -574,12 +576,13 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    flex-wrap: wrap;
   }
   .watch-btn-modern {
     background: var(--bg-sub);
     border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 7px 12px;
+    border-radius: 6px;
+    padding: 6px 11px;
     font-size: 12px;
     font-weight: 600;
     color: var(--text-main);
@@ -589,6 +592,14 @@
     gap: 4px;
     transition: all 0.15s ease;
     white-space: nowrap;
+  }
+  .watch-btn-modern.primary {
+    background: var(--blue);
+    color: #FFFFFF;
+    border-color: var(--blue);
+  }
+  .watch-btn-modern.primary:hover {
+    opacity: 0.9;
   }
   .watch-btn-modern:hover {
     background: var(--bg-hover);
@@ -605,8 +616,8 @@
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 5px 10px;
-    font-size: 12.5px;
+    padding: 4px 10px;
+    font-size: 12px;
     font-family: var(--font-mono);
     display: inline-flex;
     align-items: center;
@@ -628,6 +639,22 @@
   .watch-chip .wc-del { cursor: pointer; color: var(--text-light); margin-left: 2px; }
   .watch-chip .wc-del:hover { color: var(--rise); }
   .watch-hint { color: var(--text-muted); font-size: 12px; padding: 6px 0; }
+
+  /* WATCHLIST ROW HIGHLIGHT */
+  tr.highlight-row,
+  tr.highlight-row td {
+    background-color: #FEF9C3 !important;
+  }
+  :root[data-theme="dark"] tr.highlight-row,
+  :root[data-theme="dark"] tr.highlight-row td {
+    background-color: rgba(234, 179, 8, 0.16) !important;
+  }
+  tr.highlight-row:hover td {
+    background-color: #FEF08A !important;
+  }
+  :root[data-theme="dark"] tr.highlight-row:hover td {
+    background-color: rgba(234, 179, 8, 0.26) !important;
+  }
 
   /* FLASH HIGHLIGHT */
   @keyframes flash-pulse {
@@ -2176,21 +2203,24 @@
           <span class="card-tip">即時比對今日處置、出關與候選清單 · 本機自動儲存</span>
         </div>
 
-        <div class="card-body" style="padding: 14px 16px;">
+        <div class="card-body" style="padding: 12px 14px;">
           <div class="watch-control-bar">
-            <div class="watch-input-wrapper">
-              <span class="watch-input-icon">🔍</span>
-              <input id="watch-input" class="watch-input-modern" placeholder="輸入台股代號（如 2330, 2454）或直接貼上 Excel 欄位..." autocomplete="off" aria-label="輸入自選股代號">
-              <button class="watch-btn-inline primary" onclick="window.saveWatch()" type="button" title="儲存 / 新增至自選">➕ 新增</button>
-            </div>
-            
             <div class="watch-actions-group">
+              <button class="watch-btn-modern primary" id="watch-edit-toggle-btn" onclick="window.pm.toggleWatchEdit()" type="button" title="展開 / 收合代號編輯輸入框">
+                ✏️ 編輯清單
+              </button>
               <button class="watch-btn-modern" onclick="window.pm.openBatchModal()" type="button" title="開啟 Excel / CSV 批次匯入與 JSON 備份視窗">
                 📋 批次匯入 / 備份
               </button>
               <button class="watch-btn-modern danger-hover" onclick="window.clearWatch()" type="button" title="清空全部自選股">
                 🗑️ 清空
               </button>
+            </div>
+
+            <div class="watch-input-wrapper" id="watch-input-container" style="display: none;">
+              <span class="watch-input-icon">🔍</span>
+              <input id="watch-input" class="watch-input-modern" placeholder="輸入台股代號（如 2330, 2454）或直接貼上 Excel 欄位..." autocomplete="off" aria-label="輸入自選股代號">
+              <button class="watch-btn-inline primary" onclick="window.saveWatch()" type="button" title="儲存清單">💾 儲存</button>
             </div>
           </div>
 
@@ -2253,7 +2283,7 @@
                 {% set clean_code = row.code.replace('⏸','').strip() %}
                 <tr data-code="{{ clean_code }}" data-cat="alert" data-label="{{ row.name }}" class="{{ 'row-paused' if is_paused else '' }}">
                   <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('{{ clean_code }}', '{{ row.name }}')" title="點擊開啟個股快捷選單">{{ clean_code }}</span></td>
+                  <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="{{ clean_code }}" style="display:none;">★</span>{{ row.name }}</td>
                   <td data-label="收盤" class="num font-mono" data-sort="{{ row.close }}">{{ row.close }}</td>
                   <td data-label="處置條件" class="condition">
@@ -2356,7 +2386,7 @@
                 {% set clean_code = row.code.replace('⏸','').strip() %}
                 <tr data-code="{{ clean_code }}" data-cat="amber" data-label="{{ row.name }}">
                   <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('{{ clean_code }}', '{{ row.name }}')" title="點擊開啟個股快捷選單">{{ clean_code }}</span></td>
+                  <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
                   <td data-label="名稱" class="name font-bold"><span class="watchlist-star-marker" data-code="{{ clean_code }}" style="display:none;">★</span>{{ row.name }}</td>
                   <td data-label="原撮合">
                     {% set is_row_20m = ('20分' in row.matching or '25分' in row.matching or '全額' in row.matching) %}
@@ -2494,7 +2524,7 @@
                 {% set clean_code = row.code.replace('⏸','').strip() %}
                 <tr data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
                   <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('{{ clean_code }}', '{{ row.name }}')" title="點擊開啟個股快捷選單">{{ clean_code }}</span></td>
+                  <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
                   <td data-label="收盤" class="num font-mono" data-sort="{{ row.close }}">{{ row.close }}</td>
                   <td data-label="量(張)" class="num font-mono" data-sort="{{ row.volume }}">{{ row.volume }}</td>
@@ -2552,7 +2582,7 @@
                 {% set clean_code = row.code.replace('⏸','').strip() %}
                 <tr data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
                   <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono"><span class="clickable-stock-code" onclick="window.pm.openStockModal('{{ clean_code }}', '{{ row.name }}')" title="點擊開啟個股快捷選單">{{ clean_code }}</span></td>
+                  <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
                   <td data-label="收盤" class="num font-mono" data-sort="{{ row.close }}">{{ row.close }}</td>
                   <td data-label="量(張)" class="num font-mono" data-sort="{{ row.volume }}">{{ row.volume }}</td>
@@ -3447,12 +3477,36 @@
     return unique;
   }
 
+  window.pm.getStockChartUrl = function(code, market) {
+    var m = (market || '').trim();
+    var isOtc = (m.indexOf('櫃') >= 0 || m.indexOf('OTC') >= 0 || m.indexOf('TPEX') >= 0);
+    return 'https://tw.tradingview.com/chart/?symbol=' + (isOtc ? 'TPEX' : 'TWSE') + ':' + encodeURIComponent(code);
+  };
+
+  window.pm.toggleWatchEdit = function() {
+    var container = document.getElementById('watch-input-container');
+    var btn = document.getElementById('watch-edit-toggle-btn');
+    if (container) {
+      var isHidden = (container.style.display === 'none' || !container.style.display);
+      container.style.display = isHidden ? 'flex' : 'none';
+      if (btn) btn.innerHTML = isHidden ? '✕ 關閉編輯' : '✏️ 編輯清單';
+      if (isHidden) {
+        var inp = document.getElementById('watch-input');
+        if (inp) { inp.focus(); inp.select(); }
+      }
+    }
+  };
+
   window.saveWatch = function() {
     var input = document.getElementById('watch-input');
     var codes = extractStockCodes(input.value || '');
     localStorage.setItem(window.WATCH_KEY, JSON.stringify(codes));
     renderWatch();
     if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
+    var container = document.getElementById('watch-input-container');
+    if (container) container.style.display = 'none';
+    var btn = document.getElementById('watch-edit-toggle-btn');
+    if (btn) btn.innerHTML = '✏️ 編輯清單';
     window.pm.showToast('已儲存自選股清單 (' + codes.length + ' 檔)');
   };
 
@@ -3462,6 +3516,10 @@
     document.getElementById('watch-input').value = '';
     renderWatch();
     if (window.pm.applyWatchOnly) window.pm.applyWatchOnly();
+    var container = document.getElementById('watch-input-container');
+    if (container) container.style.display = 'none';
+    var btn = document.getElementById('watch-edit-toggle-btn');
+    if (btn) btn.innerHTML = '✏️ 編輯清單';
     window.pm.showToast('已清空自選股');
   };
 
@@ -3588,6 +3646,13 @@
       if (isWatched && star.closest('#alerts')) {
         alertCount++;
       }
+    });
+
+    // Highlight entire table rows matching watchlist
+    document.querySelectorAll('tr[data-code]').forEach(function(tr) {
+      var code = tr.getAttribute('data-code');
+      var isWatched = (codes.indexOf(code) >= 0);
+      tr.classList.toggle('highlight-row', isWatched);
     });
 
     var alertBanner = document.getElementById('watchlist-alert-banner');
