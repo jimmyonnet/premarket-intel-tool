@@ -148,13 +148,57 @@ function targetMarkup(item) {
 function renderDispositionPanel(pkg) {
   const panel = $('#disposition-panel');
   const items = pkg.items || [];
-  if (!items.length) { panel.innerHTML = '<div class="empty">今日無差 1 次即處置的標的。</div>'; return; }
+  const releases = pkg.releases || [];
+  if (!items.length && !releases.length) { panel.innerHTML = '<div class="empty">今日無處置倒數或出關資料。</div>'; return; }
   panel.innerHTML = `<div class="panel-toolbar"><strong>差 1 次即處置 · ${items.length} 檔</strong><span class="section-note">按最短剩餘次數排序</span></div><div class="table-wrap"><table class="data-table"><thead><tr><th>市場</th><th>代號 / 名稱</th><th class="rule">最短路徑</th><th>觸發價靶心</th><th>最快處置</th></tr></thead><tbody>${items.map((item) => {
     const rule = item.primary_rule;
     const progress = rule ? Math.min(100, Math.max(0, (rule.hit / rule.need) * 100)) : 0;
     return `<tr data-code="${esc(item.code)}"><td data-label="市場">${esc(item.market)}</td><td data-label="代號 / 名稱" class="code"><a href="${stockHref(item.code, item.market)}" target="_blank" rel="noopener noreferrer">${esc(item.code)}</a><br><span>${esc(item.name)}</span>${item.locked ? ' <span class="badge locked">⚑ 鎖定</span>' : ''}</td><td data-label="最短路徑" class="rule">${rule ? `<div class="rule-bar ${rule.remain <= 1 ? 'is-near' : ''}" style="--progress:${progress}%"><span>${esc(rule.label || rule.id)} · ${rule.hit}/${rule.need} · ${rule.remain ? `再 ${rule.remain} 次` : '已達標'}</span></div>` : '<span class="flat">規則待確認</span>'}</td><td data-label="觸發價靶心">${targetMarkup(item)}</td><td data-label="最快處置" class="font-mono">${esc(item.earliest_disposal || '—')}</td></tr>`;
   }).join('')}</tbody></table></div>`;
+  if (releases.length) panel.insertAdjacentHTML('beforeend', `<div class="release-inline"><div class="panel-toolbar"><strong>🟢 今日出關 · ${releases.length} 檔</strong><span class="section-note">解除處置限制</span></div>${releases.map((item) => releaseRow(item, false)).join('')}</div>`);
   bindStockRows(panel);
+}
+
+function normalizeWatchCodes(value) {
+  return String(value || '').split(/[,\s，、;；]+/).map((code) => code.trim()).filter((code) => /^[0-9]{4,6}$/.test(code));
+}
+
+function renderWatchlistManager() {
+  const chips = $('#watchlist-chips');
+  if (!chips) return;
+  const codes = state.store.watchlist || [];
+  chips.innerHTML = codes.length ? codes.map((code) => `<span class="watch-chip"><span>${esc(code)}</span><button type="button" data-remove-watch="${esc(code)}" aria-label="移除 ${esc(code)}">×</button></span>`).join('') : '<span class="empty">尚未設定自選股。</span>';
+  chips.querySelectorAll('[data-remove-watch]').forEach((button) => button.addEventListener('click', () => removeWatchlist(button.dataset.removeWatch)));
+}
+
+function refreshWatchlistViews() {
+  const candidates = state.packages.get('candidates');
+  if (candidates?.items) {
+    renderWatchDeck(candidates);
+    renderCrossMatch();
+  }
+  refreshCommands();
+}
+
+function addWatchlist() {
+  const input = $('#watchlist-input');
+  const raw = input?.value || '';
+  const codes = normalizeWatchCodes(raw);
+  if (!codes.length) { showToast('請輸入 4–6 位數字股票代號'); input?.focus(); return; }
+  const merged = [...new Set([...(state.store.watchlist || []), ...codes])];
+  saveStore({watchlist: merged});
+  renderWatchlistManager();
+  refreshWatchlistViews();
+  if (input) { input.value = ''; input.focus(); }
+  showToast(`已加入 ${codes.length} 檔自選股`);
+}
+
+function removeWatchlist(code) {
+  const next = (state.store.watchlist || []).filter((item) => String(item) !== String(code));
+  saveStore({watchlist: next});
+  renderWatchlistManager();
+  refreshWatchlistViews();
+  showToast(`已移除 ${code}`);
 }
 
 function renderWatchDeck(pkg) {
@@ -265,8 +309,6 @@ function renderMacro(pkg) {
   const night = pkg.night?.latest || {};
   const inst = twse.inst || {};
   const maxInst = Math.max(Math.abs(num(inst.foreign) || 0), Math.abs(num(inst.trust) || 0), Math.abs(num(inst.dealer) || 0), 1);
-  const strip = `<span class="market-item">加權 <b class="${metricClass(twse.twii?.change)}">${esc(fmt(twse.twii?.price))} ${esc(signed(twse.twii?.change_pct, 2, '%'))}</b></span><span class="market-item">外資 ${esc(signed(inst.foreign, 2, '億'))} · 投信 ${esc(signed(inst.trust, 2, '億'))} · 自營 ${esc(signed(inst.dealer, 2, '億'))}</span><span class="market-item">夜盤 <b class="${metricClass(night.change)}">${esc(fmt(night.price, 0))} ${esc(signed(night.change_pct, 2, '%'))}</b></span>`;
-  $('#market-strip').innerHTML = strip;
   const indexKeys = [['dow', '道瓊工業指數'], ['sp500', 'S&P 500指數'], ['nasdaq', 'NASDAQ指數'], ['sox', '費城半導體指數']];
   const adrKeys = [['tsmc', '台積電 ADR'], ['nvda', '輝達 (NVDA)'], ['aapl', '蘋果 (AAPL)'], ['umc', '聯電 ADR'], ['ase', '日月光 ADR'], ['tsmc_tw', '台積電 現貨']];
   const adrSource = indices.adrs || indices.key_stocks || {};
@@ -345,6 +387,7 @@ function observeLazyBlocks() {
 }
 
 async function boot() {
+  renderWatchlistManager();
   try {
     state.meta = await fetchJson('meta');
     document.documentElement.dataset.theme = state.store.theme === 'dark' ? 'dark' : 'light';
@@ -365,6 +408,8 @@ async function boot() {
 }
 
 $('#cmdk-button')?.addEventListener('click', openCommandDialog);
+$('#watchlist-add')?.addEventListener('click', addWatchlist);
+$('#watchlist-input')?.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); addWatchlist(); } });
 $('#source-status-btn')?.addEventListener('click', toggleHealth);
 $('[data-close-health]')?.addEventListener('click', () => { $('#health-popover').hidden = true; $('#source-status-modal').hidden = true; });
 $('#command-input')?.addEventListener('input', (event) => { state.selectedCommand = 0; renderCommandList(event.target.value); });

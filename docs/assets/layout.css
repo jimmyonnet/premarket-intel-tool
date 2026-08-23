@@ -76,6 +76,14 @@
   .market-item + .market-item { border-left:1px solid var(--n3); padding-left:10px; }
   .up { color:var(--up); } .down { color:var(--down); } .flat { color:var(--flat); }
   .native-panel { padding:10px; }
+  .watchlist-manager { margin-bottom:10px; padding:10px; border:1px solid var(--n3); border-radius:var(--radius); background:var(--n0); }
+  .watchlist-manager .panel-toolbar { margin-bottom:4px; }
+  .watchlist-manager label { flex:0 0 auto; color:var(--n10); }
+  .watchlist-hint { margin:2px 0 8px; color:var(--n8); font-size:11px; }
+  .watchlist-chips { display:flex; flex-wrap:wrap; gap:5px; min-height:24px; }
+  .watch-chip { display:inline-flex; align-items:center; gap:5px; padding:3px 7px; border:1px solid var(--n3); border-radius:999px; background:var(--n2); color:var(--n10); font:700 11px var(--font-mono); }
+  .watch-chip button { border:0; padding:0; color:var(--n8); background:transparent; cursor:pointer; font-size:14px; line-height:1; }
+  .watch-chip button:hover { color:var(--up); }
   .loading,.empty { color:var(--n8); padding:16px 8px; font-size:12px; }
   .panel-toolbar { display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px; }
   .filter-input { min-width:180px; flex:1; border:1px solid var(--n3); border-radius:6px; padding:7px 9px; color:var(--n12); background:var(--n0); }

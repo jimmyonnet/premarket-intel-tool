@@ -49,14 +49,13 @@
       </div>
       <section id="market-context" class="content-section market-context--hero" aria-labelledby="market-title">
         <div class="section-heading compact"><div><span class="eyebrow">CONTEXT</span><h2 id="market-title">市場背景</h2></div><span class="section-note">降級資訊</span></div>
-        <div id="macro-panel" class="native-panel lazy-block" data-package="macro"><div class="loading">載入市場背景中…</div></div>
+        <div id="macro-panel" class="native-panel lazy-block" data-package="macro"><div class="loading">載入市場背景中…</div>{% if night is defined and night and night.latest %}<span hidden>來源：{{ night.latest.provider_name or night.provider_name }}</span>{% if night.latest.is_fallback %}<span hidden>⚠️ 抓取失敗，使用最近一次 fixtures/{{ night.date }}</span>{% endif %}{% endif %}</div>
       </section>
       <div class="action-deck" id="action-deck" aria-live="polite">
         <article class="deck deck-disposition"><header><h2>🔴 處置倒數</h2><span class="deck-count" id="disposition-count">—</span></header><div class="deck-body" id="disposition-deck"><div class="loading">載入中…</div></div></article>
         <article class="deck deck-release"><header><h2>🟢 今日出關</h2><span class="deck-count" id="release-count">—</span></header><div class="deck-body" id="release-deck"><div class="loading">載入中…</div></div></article>
         <article class="deck deck-watch"><header><h2>⭐ 自選命中</h2><span class="deck-count" id="watch-count">—</span></header><div class="deck-body" id="watch-deck"><div class="loading">載入中…</div></div></article>
       </div>
-      <div class="market-strip" id="market-strip" aria-label="市場數據氣壓條"><span class="loading">市場資料載入中…</span>{% if night is defined and night and night.latest %}<span hidden>來源：{{ night.latest.provider_name or night.provider_name }}</span>{% if night.latest.is_fallback %}<span hidden>⚠️ 抓取失敗，使用最近一次 fixtures/{{ night.date }}</span>{% endif %}{% endif %}</div>
     </section>
 
     <section id="alerts" class="content-section block--offscreen" aria-labelledby="alerts-title">
@@ -66,6 +65,11 @@
 
     <section id="watchlist" class="content-section block--offscreen" aria-labelledby="watchlist-title">
       <div class="section-heading compact"><div><span class="eyebrow">FLOW / MOMENTUM</span><h2 id="watchlist-title">🎯 籌碼股</h2></div><span class="section-note" id="candidate-source">PressPlay · —</span></div>
+      <div class="watchlist-manager" id="watchlist-manager">
+        <div class="panel-toolbar"><label for="watchlist-input"><strong>自選股</strong></label><input class="filter-input" id="watchlist-input" type="text" inputmode="numeric" autocomplete="off" placeholder="輸入代號，例如 2330；可用逗號分隔多檔"><button class="ghost-btn" id="watchlist-add" type="button">加入</button></div>
+        <p class="watchlist-hint">輸入股票代號後按 Enter 或「加入」；點選代號旁的 × 可移除。設定只儲存在本瀏覽器。</p>
+        <div class="watchlist-chips" id="watchlist-chips" aria-live="polite"></div>
+      </div>
       <div id="candidate-panel" class="native-panel"><div class="loading">載入籌碼股中…</div></div>
       <div id="crossmatch-panel" class="native-panel block--offscreen" hidden></div>
     </section>
