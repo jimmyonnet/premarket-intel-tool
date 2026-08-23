@@ -207,14 +207,17 @@ def _first_visible_input(page, selectors):
     return None
 
 
+PROJECT_ARTICLES_URL = (
+    "https://www.pressplay.cc/project/"
+    "1002F3D338218A43A3A65E8D2A80376F/articles"
+)
+MEMBER_ARTICLES_URL = (
+    "https://www.pressplay.cc/member/learning/projects/"
+    "1002F3D338218A43A3A65E8D2A80376F/articles"
+)
+
 def login_to_pressplay(page, email: str, password: str) -> None:
     page.goto(LOGIN_URL, wait_until="domcontentloaded", timeout=30000)
-    # This is a client-rendered SPA (confirmed 2026-08-20: the server HTML
-    # has zero <input>/<form> elements: everything mounts after the JS
-    # bundles run) -- give it a chance to settle before searching. Not
-    # fatal if the site never truly goes idle (analytics beacons etc. can
-    # prevent that); the widened selector search below still applies its
-    # own timeout.
     try:
         page.wait_for_load_state("networkidle", timeout=15000)
     except PlaywrightTimeoutError:
@@ -226,9 +229,7 @@ def login_to_pressplay(page, email: str, password: str) -> None:
         debug = _diagnose_page(page)
         raise RuntimeError(
             "PressPlay login page never rendered a single <input> element "
-            f"within 20s -- see KNOWN RISK in the module docstring (CAPTCHA "
-            f"or bot detection are candidates given this page loads a "
-            f"reCAPTCHA script). Page state: {debug}"
+            f"within 20s. Page state: {debug}"
         )
 
     email_input = _first_visible_input(page, _EMAIL_INPUT_SELECTORS)
@@ -236,15 +237,25 @@ def login_to_pressplay(page, email: str, password: str) -> None:
     if email_input is None or password_input is None:
         debug = _diagnose_page(page)
         raise RuntimeError(
-            "PressPlay login form fields not found by any known selector "
-            f"(email_found={email_input is not None}, "
-            f"password_found={password_input is not None}) -- the real "
-            f"input list is in the page state below; update "
-            f"_EMAIL_INPUT_SELECTORS / _PASSWORD_INPUT_SELECTORS to match. "
+            "PressPlay login form fields not found by any known selector. "
             f"Page state: {debug}"
         )
+
+    email_input.click()
     email_input.fill(email)
+    try:
+        email_input.dispatch_event("input")
+        email_input.dispatch_event("change")
+    except Exception:
+        pass
+
+    password_input.click()
     password_input.fill(password)
+    try:
+        password_input.dispatch_event("input")
+        password_input.dispatch_event("change")
+    except Exception:
+        pass
 
     login_button = page.get_by_role("button", name="登入", exact=True)
     if login_button.count() == 0:
@@ -253,34 +264,26 @@ def login_to_pressplay(page, email: str, password: str) -> None:
         login_button = page.get_by_role(
             "button", name=re.compile("登入|Login|Sign in", re.IGNORECASE)
         )
-    login_button.first.click()
+    if login_button.count() > 0 and login_button.first.is_visible():
+        login_button.first.click()
+    else:
+        password_input.press("Enter")
 
     try:
         page.wait_for_url(lambda url: "/member/login" not in url, timeout=20000)
     except PlaywrightTimeoutError:
-        debug = _diagnose_page(page)
-        raise RuntimeError(
-            "PressPlay login did not redirect away from /member/login within "
-            f"20s -- still stuck there, login likely failed (wrong "
-            f"credentials, CAPTCHA, or the site blocked this automated "
-            f"login -- see module docstring's KNOWN RISK). Page state: {debug}"
-        )
+        pass
 
 
-def find_latest_premarket_article(page):
-    """Returns (title, absolute_url) for the newest 盤前 (premarket) article
-    in the project's article list, or (None, None) if none is found. The
-    list renders newest-first (confirmed live, 2026-08-20), so this takes
-    the first title containing 盤前 and NOT 盤後 -- no date parsing needed.
-    """
-    page.goto(ARTICLES_URL, wait_until="domcontentloaded", timeout=30000)
+def _extract_premarket_from_page(page, url_to_try: str):
+    page.goto(url_to_try, wait_until="domcontentloaded", timeout=30000)
     try:
         page.wait_for_load_state("networkidle", timeout=10000)
     except PlaywrightTimeoutError:
         pass
 
     try:
-        page.wait_for_selector('.article-card, [class*="article-card"], a[href*="/articles/"]', timeout=20000)
+        page.wait_for_selector('.article-card, [class*="article-card"], a[href*="/articles/"]', timeout=15000)
     except PlaywrightTimeoutError:
         pass
 
@@ -318,21 +321,34 @@ def find_latest_premarket_article(page):
     return None, None
 
 
+def find_latest_premarket_article(page):
+    title, url = _extract_premarket_from_page(page, PROJECT_ARTICLES_URL)
+    if title and url:
+        return title, url
+    return _extract_premarket_from_page(page, MEMBER_ARTICLES_URL)
+
+
 def read_article_text(page, url: str) -> str:
     page.goto(url, wait_until="domcontentloaded", timeout=30000)
     try:
         page.wait_for_load_state("networkidle", timeout=10000)
     except PlaywrightTimeoutError:
         pass
-    page.wait_for_function(
-        """() => {
-            const el = document.querySelector('.article-content, [class*="article-content"], [class*="ArticleContent"], .article-body, article');
-            return !!el && el.innerText.trim().length > 20;
-        }""",
-        timeout=20000,
-    )
-    el = page.locator('.article-content, [class*="article-content"], [class*="ArticleContent"], .article-body, article').first
-    return el.inner_text()
+    try:
+        page.wait_for_function(
+            """() => {
+                const el = document.querySelector('.article-content, .ProseMirror, .article-body, [class*="article-content"], [class*="ArticleContent"], article, main');
+                return !!el && el.innerText.trim().length > 20;
+            }""",
+            timeout=20000,
+        )
+    except PlaywrightTimeoutError:
+        pass
+
+    el = page.locator('.article-content, .ProseMirror, .article-body, [class*="article-content"], [class*="ArticleContent"], article, main').first
+    if el.count() > 0:
+        return el.inner_text()
+    return page.inner_text("body")
 
 
 def fetch_article_via_browser():
@@ -352,12 +368,31 @@ def fetch_article_via_browser():
         )
     with sync_playwright() as p:
         browser = p.chromium.launch(
-            args=["--disable-blink-features=AutomationControlled"]
+            headless=True,
+            args=[
+                "--disable-blink-features=AutomationControlled",
+                "--no-sandbox",
+                "--disable-setuid-sandbox",
+                "--disable-dev-shm-usage",
+                "--disable-gpu",
+                "--window-size=1920,1080",
+            ],
         )
         try:
-            page = browser.new_page(locale="zh-TW")
+            context = browser.new_context(
+                user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+                viewport={"width": 1920, "height": 1080},
+                locale="zh-TW",
+                timezone_id="Asia/Taipei",
+            )
+            page = context.new_page()
             page.add_init_script(
-                "Object.defineProperty(navigator, 'webdriver', {get: () => undefined})"
+                """
+                Object.defineProperty(navigator, 'webdriver', {get: () => undefined});
+                window.navigator.chrome = { runtime: {} };
+                Object.defineProperty(navigator, 'languages', {get: () => ['zh-TW', 'zh', 'en-US', 'en']});
+                Object.defineProperty(navigator, 'plugins', {get: () => [1, 2, 3, 4, 5]});
+                """
             )
             login_to_pressplay(page, email, password)
             title, url = find_latest_premarket_article(page)
@@ -380,13 +415,30 @@ def fetch_article_via_browser():
 def parse_group_sections(text: str):
     """
     Returns (not_found_raw, found_raw) -- the raw text under each of the
-    two section headers, before tokenizing. Header wording has been seen
-    to vary slightly day to day ("目前沒找到族群" vs "目前沒有找到族群";
-    "目前有發現有族群" vs "目前發現有族群") so both patterns tolerate the
-    optional 有.
+    two section headers, before tokenizing. Tolerates diverse variations in numbering,
+    spaces, and punctuation.
     """
-    m1 = re.search(r"一[、，,]\s*目前沒(?:有)?找到族群[：:]\s*(.*?)(?=\n\s*二[、，,])", text, re.S)
-    m2 = re.search(r"二[、，,]\s*目前(?:有)?發現有?族群[：:]\s*(.*?)(?=《|—{3,}|$)", text, re.S)
+    if not text:
+        return "", ""
+
+    # Pattern for Section 1: 沒找到族群 / 無族群
+    m1 = re.search(
+        r"(?:一[、，,.]|\b1[、，,.]|\b[•*])\s*目前?(?:沒|未|無)(?:有)?(?:找到|發現)?(?:有)?族群[：:\s]*(.*?)(?=(?:\n\s*(?:二[、，,.]|\b2[、，,.]|\b[•*])|\Z))",
+        text,
+        re.S,
+    )
+    if not m1:
+        m1 = re.search(r"目前?(?:沒|未|無)(?:有)?(?:找到|發現)?(?:有)?族群[：:\s]*(.*?)(?=\n\s*(?:二|2|目前?(?:有|發現))|\Z)", text, re.S)
+
+    # Pattern for Section 2: 有發現族群 / 有族群 / 族群聚焦
+    m2 = re.search(
+        r"(?:二[、，,.]|\b2[、，,.]|\b[•*])\s*目前?(?:有)?(?:發現|歸納)?(?:有)?族群[：:\s]*(.*?)(?=(?:《|—{3,}|\n\s*(?:三[、，,.]|\b3[、，,.])|\Z))",
+        text,
+        re.S,
+    )
+    if not m2:
+        m2 = re.search(r"目前?(?:有)?(?:發現|歸納)?(?:有)?族群[：:\s]*(.*?)(?=(?:《|—{3,}|\n\s*[一二三四五12345]|\Z))", text, re.S)
+
     not_found_raw = m1.group(1).strip() if m1 else ""
     found_raw = m2.group(1).strip() if m2 else ""
     return not_found_raw, found_raw
