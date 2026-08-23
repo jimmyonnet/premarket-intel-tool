@@ -519,22 +519,17 @@ def main():
     email = os.getenv("PRESSPLAY_EMAIL")
     password = os.getenv("PRESSPLAY_PASSWORD")
 
-    # Local fallback candidates
+    # Check candidate files
     today_str = now.strftime("%Y-%m-%d")
     local_md = Path(f"data/pressplay/{today_str}.md")
     fixture_txt = Path("fixtures/pressplay_article.txt")
 
+    fixture_file = None
     if args.fixture_article is not None:
         fixture_file = args.fixture_article
-    elif not email or not password:
-        if local_md.exists():
-            fixture_file = local_md
-        elif fixture_txt.exists():
-            fixture_file = fixture_txt
-        else:
-            fixture_file = None
-    else:
-        fixture_file = None
+    elif local_md.exists():
+        # User or workflow provided today's article directly
+        fixture_file = local_md
 
     if fixture_file is not None and fixture_file.exists():
         raw = fixture_file.read_text(encoding="utf-8")
@@ -559,10 +554,24 @@ def main():
             except Exception:
                 pass
         except Exception as e:
-            print(f"PressPlay browser fetch failed: {e}, falling back to empty", file=sys.stderr)
-            source_article, article_text = {"title": "PressPlay 整理文章 (載入失敗)", "url": None}, ""
+            print(f"PressPlay browser fetch failed: {e}, falling back", file=sys.stderr)
+            if local_md.exists():
+                raw = local_md.read_text(encoding="utf-8")
+                article_text = raw.split("\n---\n", 1)[1] if "\n---\n" in raw else raw
+                source_article = {"title": "PressPlay 盤前整理文章 (本機快取)", "url": None, "fixture": str(local_md)}
+            elif fixture_txt.exists():
+                raw = fixture_txt.read_text(encoding="utf-8")
+                article_text = raw.split("\n---\n", 1)[1] if "\n---\n" in raw else raw
+                source_article = {"title": "PressPlay 整理文章 (備援快照)", "url": None, "fixture": str(fixture_txt)}
+            else:
+                source_article, article_text = {"title": "PressPlay 整理文章 (載入失敗)", "url": None}, ""
     else:
-        source_article, article_text = {"title": "PressPlay 整理文章 (無登入憑證)", "url": None}, "" 
+        if fixture_txt.exists():
+            raw = fixture_txt.read_text(encoding="utf-8")
+            article_text = raw.split("\n---\n", 1)[1] if "\n---\n" in raw else raw
+            source_article = {"title": "PressPlay 整理文章 (備援快照)", "url": None, "fixture": str(fixture_txt)}
+        else:
+            source_article, article_text = {"title": "PressPlay 整理文章 (無登入憑證)", "url": None}, "" 
 
     source_article["collected_at"] = now.isoformat()
 
