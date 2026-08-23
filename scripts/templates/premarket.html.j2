@@ -1999,23 +1999,21 @@
 
 
   /* WATCHLIST REDESIGN */
-  .watch-stat-bar {
+  .watch-main-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 8px 12px;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 10px 14px;
-    margin-top: 10px;
-    font-size: 12.5px;
+    padding: 8px 12px;
   }
   .watch-stat-left {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
     color: var(--text-main);
   }
@@ -2023,21 +2021,35 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 2px 8px;
+    padding: 3px 9px;
     border-radius: 12px;
     font-size: 11.5px;
     font-weight: 700;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg-sub);
+    color: var(--text-muted);
+    transition: all 0.15s ease;
   }
-  .watch-stat-pill.danger { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
-  .watch-stat-pill.blue { background: var(--blue-bg); color: var(--blue-fg); border: 1px solid var(--blue-border); }
-  .watch-stat-pill.gray { background: var(--bg-sub); color: var(--text-muted); border: 1px solid var(--border); }
+  .watch-stat-pill:hover {
+    background: var(--bg-hover);
+    color: var(--text-main);
+  }
+  .watch-stat-pill.is-active {
+    border-color: var(--blue);
+    background: var(--blue-bg);
+    color: var(--blue-fg);
+  }
+  .watch-stat-pill.danger { background: var(--danger-bg); color: var(--danger-fg); border-color: var(--danger-border); }
+  .watch-stat-pill.blue { background: var(--blue-bg); color: var(--blue-fg); border-color: var(--blue-border); }
+  .watch-stat-pill.gray { background: var(--bg-sub); color: var(--text-muted); border-color: var(--border); }
   
   .watch-toggle-btn {
     background: var(--bg-sub);
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 4px 10px;
-    font-size: 12px;
+    padding: 3px 8px;
+    font-size: 11.5px;
     font-weight: 600;
     color: var(--text-muted);
     cursor: pointer;
@@ -2046,6 +2058,18 @@
   .watch-toggle-btn:hover {
     background: var(--bg-hover);
     color: var(--text-main);
+  }
+
+  .watch-hit-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: var(--bg-sub);
+    border: 1px solid var(--border);
+    border-radius: 8px;
   }
 
   .watch-group {
@@ -2389,7 +2413,8 @@
         </div>
 
         <div class="card-body" style="padding: 12px 14px;">
-          <div class="watch-control-bar">
+          <div class="watch-main-bar" id="watch-main-bar">
+            <div class="watch-stat-left" id="watch-filter-pills"></div>
             <div class="watch-actions-group">
               <button class="watch-btn-modern primary" id="watch-edit-toggle-btn" onclick="window.pm.toggleWatchEdit()" type="button" title="展開 / 收合代號編輯輸入框">
                 ✏️ 編輯清單
@@ -2401,12 +2426,12 @@
                 🗑️ 清空
               </button>
             </div>
+          </div>
 
-            <div class="watch-input-wrapper" id="watch-input-container" style="display: none;">
-              <span class="watch-input-icon">🔍</span>
-              <input id="watch-input" class="watch-input-modern" placeholder="輸入台股代號（如 2330, 2454）或直接貼上 Excel 欄位..." autocomplete="off" aria-label="輸入自選股代號">
-              <button class="watch-btn-inline primary" onclick="window.saveWatch()" type="button" title="儲存清單">💾 儲存</button>
-            </div>
+          <div class="watch-input-wrapper" id="watch-input-container" style="display: none; margin-top: 8px;">
+            <span class="watch-input-icon">🔍</span>
+            <input id="watch-input" class="watch-input-modern" placeholder="輸入台股代號（如 2330, 2454）或直接貼上 Excel 欄位..." autocomplete="off" aria-label="輸入自選股代號">
+            <button class="watch-btn-inline primary" onclick="window.saveWatch()" type="button" title="儲存清單">💾 儲存</button>
           </div>
 
           <div id="watch-chips" class="watch-chips"></div>
@@ -4020,11 +4045,13 @@
   function renderWatch() {
     var box = document.getElementById('watch-chips');
     var hint = document.getElementById('watch-hint');
+    var pillBox = document.getElementById('watch-filter-pills');
     if (!box || !hint) return;
     box.innerHTML = '';
+    if (pillBox) pillBox.innerHTML = '';
     
     var raw = localStorage.getItem(window.WATCH_KEY);
-    var codes = raw ? JSON.parse(raw) : [];
+    var codes = safeJsonParse(window.WATCH_KEY, []);
     
     var totalBadge = document.getElementById('watch-total-badge');
     if (totalBadge) {
@@ -4033,7 +4060,7 @@
     }
 
     if (!codes.length) {
-      hint.textContent = '💡 尚未建立自選股，請在上方搜尋框輸入代號或點擊「📋 批次匯入 / 備份」貼上 Excel 清單。';
+      hint.textContent = '💡 尚未建立自選股，請點擊上方「✏️ 編輯清單」輸入代號或「📋 批次匯入 / 備份」貼上 Excel 清單。';
       updateWatchlistStars();
       return;
     }
@@ -4067,63 +4094,45 @@
 
     var curGrp = window.pm.watchFilterGroup || 'all';
 
-    var statBar = document.createElement('div');
-    statBar.className = 'watch-stat-bar';
-    
-    var statLeft = document.createElement('div');
-    statLeft.className = 'watch-stat-left';
-    statLeft.style.display = 'flex';
-    statLeft.style.alignItems = 'center';
-    statLeft.style.gap = '6px';
-    statLeft.style.flexWrap = 'wrap';
+    // Row 1: Filter Pills + Expand toggle (Left side of Row 1)
+    if (pillBox) {
+      var allBtn = document.createElement('button');
+      allBtn.type = 'button';
+      allBtn.className = 'watch-stat-pill ' + (curGrp === 'all' ? 'is-active' : 'gray');
+      allBtn.textContent = '⭐ 全部 (' + codes.length + ')';
+      allBtn.onclick = function() { window.pm.setWatchFilterGroup('all'); };
+      pillBox.appendChild(allBtn);
 
-    var allBtn = document.createElement('button');
-    allBtn.type = 'button';
-    allBtn.className = 'watch-stat-pill ' + (curGrp === 'all' ? 'is-active' : 'gray');
-    allBtn.style.cursor = 'pointer';
-    allBtn.style.border = 'none';
-    allBtn.textContent = '⭐ 全部 (' + codes.length + ')';
-    allBtn.onclick = function() { window.pm.setWatchFilterGroup('all'); };
-    statLeft.appendChild(allBtn);
+      var alertBtn = document.createElement('button');
+      alertBtn.type = 'button';
+      alertBtn.className = 'watch-stat-pill ' + (curGrp === 'alert' ? 'is-active ' : '') + (hitAlerts.length ? 'danger' : 'gray');
+      alertBtn.textContent = '🚨 警示/處置 (' + hitAlerts.length + ')';
+      alertBtn.onclick = function() { window.pm.setWatchFilterGroup('alert'); };
+      pillBox.appendChild(alertBtn);
 
-    var alertBtn = document.createElement('button');
-    alertBtn.type = 'button';
-    alertBtn.className = 'watch-stat-pill ' + (curGrp === 'alert' ? 'is-active ' : '') + (hitAlerts.length ? 'danger' : 'gray');
-    alertBtn.style.cursor = 'pointer';
-    alertBtn.style.border = 'none';
-    alertBtn.textContent = '🚨 警示/處置 (' + hitAlerts.length + ')';
-    alertBtn.onclick = function() { window.pm.setWatchFilterGroup('alert'); };
-    statLeft.appendChild(alertBtn);
+      var candBtn = document.createElement('button');
+      candBtn.type = 'button';
+      candBtn.className = 'watch-stat-pill ' + (curGrp === 'candidate' ? 'is-active ' : '') + (hitCandidates.length ? 'blue' : 'gray');
+      candBtn.textContent = '🔵 候選觀察 (' + hitCandidates.length + ')';
+      candBtn.onclick = function() { window.pm.setWatchFilterGroup('candidate'); };
+      pillBox.appendChild(candBtn);
 
-    var candBtn = document.createElement('button');
-    candBtn.type = 'button';
-    candBtn.className = 'watch-stat-pill ' + (curGrp === 'candidate' ? 'is-active ' : '') + (hitCandidates.length ? 'blue' : 'gray');
-    candBtn.style.cursor = 'pointer';
-    candBtn.style.border = 'none';
-    candBtn.textContent = '🔵 候選觀察 (' + hitCandidates.length + ')';
-    candBtn.onclick = function() { window.pm.setWatchFilterGroup('candidate'); };
-    statLeft.appendChild(candBtn);
+      var otherBtn = document.createElement('button');
+      otherBtn.type = 'button';
+      otherBtn.className = 'watch-stat-pill ' + (curGrp === 'other' ? 'is-active ' : '') + 'gray';
+      otherBtn.textContent = '⚪ 其餘標的 (' + otherStocks.length + ')';
+      otherBtn.onclick = function() { window.pm.setWatchFilterGroup('other'); };
+      pillBox.appendChild(otherBtn);
 
-    var otherBtn = document.createElement('button');
-    otherBtn.type = 'button';
-    otherBtn.className = 'watch-stat-pill ' + (curGrp === 'other' ? 'is-active ' : '') + 'gray';
-    otherBtn.style.cursor = 'pointer';
-    otherBtn.style.border = 'none';
-    otherBtn.textContent = '⚪ 其餘標的 (' + otherStocks.length + ')';
-    otherBtn.onclick = function() { window.pm.setWatchFilterGroup('other'); };
-    statLeft.appendChild(otherBtn);
-
-    statBar.appendChild(statLeft);
-
-    if (codes.length > 12 && curGrp === 'all') {
-      var toggleBtn = document.createElement('button');
-      toggleBtn.type = 'button';
-      toggleBtn.className = 'watch-toggle-btn';
-      toggleBtn.textContent = window.pm.watchlistExpanded ? '▴ 收合清單' : '▾ 展開全部 (' + codes.length + ' 檔)';
-      toggleBtn.onclick = window.pm.toggleWatchlistExpand;
-      statBar.appendChild(toggleBtn);
+      if (codes.length > 12 && curGrp === 'all') {
+        var toggleBtn = document.createElement('button');
+        toggleBtn.type = 'button';
+        toggleBtn.className = 'watch-toggle-btn';
+        toggleBtn.textContent = window.pm.watchlistExpanded ? '▴ 收合清單' : '▾ 展開全部 (' + codes.length + ' 檔)';
+        toggleBtn.onclick = window.pm.toggleWatchlistExpand;
+        pillBox.appendChild(toggleBtn);
+      }
     }
-    box.appendChild(statBar);
 
     function createChip(item) {
       var c = item.code;
@@ -4154,27 +4163,48 @@
       return chip;
     }
 
-    if ((curGrp === 'all' || curGrp === 'alert' || curGrp === 'candidate') && (hitAlerts.length || hitCandidates.length)) {
-      var hitGroup = document.createElement('div');
-      hitGroup.className = 'watch-group';
-      hitGroup.innerHTML = '<div class="watch-group-title">🎯 盤前清單命中標的（點擊可定位至下方表格）</div>';
+    // Row 2: 🎯 盤前清單命中標的（點擊可定位至下方表格） [標的出現在右邊]
+    if (curGrp === 'all' || curGrp === 'alert' || curGrp === 'candidate') {
+      var hitRow = document.createElement('div');
+      hitRow.className = 'watch-hit-row';
+
+      var hitTitle = document.createElement('div');
+      hitTitle.className = 'watch-group-title';
+      hitTitle.style.margin = '0';
+      hitTitle.style.whiteSpace = 'nowrap';
+      hitTitle.style.fontSize = '12.5px';
+      hitTitle.style.fontWeight = '700';
+      hitTitle.textContent = '🎯 盤前清單命中標的（點擊可定位至下方表格）';
+      hitRow.appendChild(hitTitle);
+
       var hitChips = document.createElement('div');
       hitChips.className = 'watch-chips-container';
+      hitChips.style.display = 'inline-flex';
+      hitChips.style.alignItems = 'center';
+      hitChips.style.flexWrap = 'wrap';
+      hitChips.style.gap = '6px';
 
       var targets = [];
       if (curGrp === 'all') targets = hitAlerts.concat(hitCandidates);
       else if (curGrp === 'alert') targets = hitAlerts;
       else if (curGrp === 'candidate') targets = hitCandidates;
 
-      targets.forEach(function(item) {
-        hitChips.appendChild(createChip(item));
-      });
       if (targets.length > 0) {
-        hitGroup.appendChild(hitChips);
-        box.appendChild(hitGroup);
+        targets.forEach(function(item) {
+          hitChips.appendChild(createChip(item));
+        });
+      } else {
+        var emptyHit = document.createElement('span');
+        emptyHit.style.fontSize = '12px';
+        emptyHit.style.color = 'var(--text-muted)';
+        emptyHit.textContent = '（今日無命中標的）';
+        hitChips.appendChild(emptyHit);
       }
+      hitRow.appendChild(hitChips);
+      box.appendChild(hitRow);
     }
 
+    // Row 3: 其餘標的 (未觸發之自選標的)
     if ((curGrp === 'all' || curGrp === 'other') && otherStocks.length) {
       var otherGroup = document.createElement('div');
       otherGroup.className = 'watch-group';
