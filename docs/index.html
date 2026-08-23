@@ -545,6 +545,28 @@
     margin-bottom: 10px;
     box-shadow: var(--shadow-sm);
   }
+  .today-briefing-details {
+    margin-bottom: 10px;
+  }
+  .today-briefing-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--amber-border);
+    border-radius: 8px;
+    background: var(--amber-bg);
+    color: var(--text-main);
+    cursor: pointer;
+    list-style: none;
+    box-shadow: var(--shadow-sm);
+  }
+  .today-briefing-summary::-webkit-details-marker { display: none; }
+  .today-briefing-summary::after { content: '▾'; color: var(--text-muted); font-size: 12px; }
+  .today-briefing-details[open] > .today-briefing-summary { border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+  .briefing-summary-title { font-size: 12px; font-weight: 700; }
+  .briefing-summary-status { margin-left: auto; font-size: 11.5px; font-weight: 600; color: var(--text-muted); }
   .today-briefing-card.is-unsafe-alert {
     border: 2px solid var(--danger-border);
     background: var(--danger-bg);
@@ -2367,6 +2389,11 @@
     <!-- 1. 摘要 (Summary) -->
     <section id="summary" class="content-section">
       <!-- 今日判讀卡 (Today's Intel Briefing Card) -->
+      <details class="today-briefing-details" id="today-briefing-details">
+        <summary class="today-briefing-summary">
+          <span class="briefing-summary-title">📊 資料可用性</span>
+          <span class="briefing-summary-status">請先確認資料</span>
+        </summary>
       <div class="today-briefing-card is-caution-alert" id="today-briefing-block">
         <div class="briefing-col col-status">
           <div class="briefing-col-lbl">📊 資料可用性</div>
@@ -2394,6 +2421,7 @@
           </div>
         </div>
       </div>
+      </details>
 
     <!-- 4. 市場背景 (Market Context) -->
     <section id="market-context" class="content-section">
