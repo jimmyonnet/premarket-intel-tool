@@ -3,6 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "docs" / "index.html"
+APP = ROOT / "scripts" / "assets" / "app.js"
 TARGET = "https://www.cmoney.tw/forum/futures/TXF1?s=p"
 
 
@@ -22,3 +23,12 @@ def test_night_session_card_links_to_cmoney_in_new_tab():
     assert "45,074" in block
     assert "-64.0 (-0.14%)" in block
     assert "基準：vs 期貨日盤收盤 (45,138)" in block
+
+
+def test_modern_market_renderer_links_night_session_to_cmoney():
+    app = APP.read_text(encoding="utf-8")
+
+    assert f'href="{TARGET}"' in app
+    assert 'target="_blank" rel="noopener noreferrer"' in app
+    assert 'class="market-item"' in app
+    assert "夜盤" in app
