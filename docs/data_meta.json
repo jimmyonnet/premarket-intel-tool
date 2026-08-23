@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-08-23 15:53",
-  "build_version": "20260823_1553",
+  "build_time": "2026-08-23 14:37",
+  "build_version": "20260823_1437",
   "data_date": "08/24",
-  "stale_hours": 17.4,
-  "hours_since_us_close": 11.9,
+  "stale_hours": 16.2,
+  "hours_since_us_close": 10.6,
   "overall_status": "caution",
   "status_label": "請先確認資料",
   "status_badge_class": "is-caution",
@@ -162,24 +162,5 @@
       "combined_status_label": "抓取正常・資料過期",
       "status_badge_class": "is-caution"
     }
-  ],
-  "schema_version": 1,
-  "built_at": "2026-08-23T07:53:51.514198+00:00",
-  "hash": {
-    "disposition": "28b395c1e053",
-    "candidates": "d616c2c1fa6d",
-    "announcements": "4cb58626697a",
-    "macro": "ba1c29320179",
-    "calendar": "b4e5d460abb6",
-    "news": "7fcdf5410120"
-  },
-  "packages": {
-    "disposition": "data/disposition.json",
-    "candidates": "data/candidates.json",
-    "announcements": "data/announcements.json",
-    "macro": "data/macro.json",
-    "calendar": "data/calendar.json",
-    "news": "data/news.json"
-  },
-  "show_banner": true
+  ]
 }
