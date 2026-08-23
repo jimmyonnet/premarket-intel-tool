@@ -119,13 +119,13 @@
     "nasdaq": {
       "name": "NASDAQ指數",
       "value": 26180.46,
-      "change": 113.29,
+      "change": 113.26,
       "change_pct": 0.43
     },
     "sox": {
       "name": "費城半導體指數",
       "value": 11740.37,
-      "change": -59.65,
+      "change": -59.63,
       "change_pct": -0.51
     }
   },
@@ -133,7 +133,7 @@
     "nikkei225": {
       "name": "日經225指數",
       "value": 66016.36,
-      "change": -200.43,
+      "change": -200.44,
       "change_pct": -0.3,
       "updated_cst": "08/21 14:45"
     },
