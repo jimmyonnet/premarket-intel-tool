@@ -47,6 +47,10 @@
       <div class="briefing-card {{ 'is-unsafe-alert' if o_status == 'unsafe' else ('is-caution-alert' if o_status == 'caution' else 'is-ready-card') }}" id="today-briefing-block">
         <strong>資料可用性 · 首屏契約</strong><span>{{ o_label }}</span><span class="briefing-reason">{{ o_reasons[0] if o_reasons else '處置、出關與籌碼訊號優先' }}</span>
       </div>
+      <section id="market-context" class="content-section market-context--hero" aria-labelledby="market-title">
+        <div class="section-heading compact"><div><span class="eyebrow">CONTEXT</span><h2 id="market-title">市場背景</h2></div><span class="section-note">降級資訊</span></div>
+        <div id="macro-panel" class="native-panel lazy-block" data-package="macro"><div class="loading">載入市場背景中…</div></div>
+      </section>
       <div class="action-deck" id="action-deck" aria-live="polite">
         <article class="deck deck-disposition"><header><h2>🔴 處置倒數</h2><span class="deck-count" id="disposition-count">—</span></header><div class="deck-body" id="disposition-deck"><div class="loading">載入中…</div></div></article>
         <article class="deck deck-release"><header><h2>🟢 今日出關</h2><span class="deck-count" id="release-count">—</span></header><div class="deck-body" id="release-deck"><div class="loading">載入中…</div></div></article>
@@ -71,10 +75,6 @@
       <div id="announcements-panel" class="native-panel lazy-block" data-package="announcements"><div class="loading">展開或捲動後載入財報資料…</div></div>
     </section>
 
-    <section id="market-context" class="content-section block--offscreen" aria-labelledby="market-title">
-      <div class="section-heading compact"><div><span class="eyebrow">CONTEXT</span><h2 id="market-title">市場背景</h2></div><span class="section-note">降級資訊</span></div>
-      <div id="macro-panel" class="native-panel lazy-block" data-package="macro"><div class="loading">載入市場背景中…</div></div>
-    </section>
 
     <section id="news-calendar" class="content-section block--offscreen" aria-labelledby="calendar-title">
       <div class="section-heading compact"><div><span class="eyebrow">CATALYSTS</span><h2 id="calendar-title">補充資訊</h2></div><span class="section-note">行事曆 · 新聞</span></div>

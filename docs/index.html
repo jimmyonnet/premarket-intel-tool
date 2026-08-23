@@ -11,11 +11,11 @@
   <link rel="stylesheet" href="assets/tokens.css">
   <link rel="stylesheet" href="assets/layout.css">
 </head>
-<body data-build-version="20260823_1543">
+<body data-build-version="20260823_1548">
 
   <header class="topbar" id="topbar">
     <a class="brand" href="#summary" aria-label="回到盤前摘要">盤前</a>
-    <span class="date-chip" id="date-chip">08/24 · 15:43<span class="status-badge is-ok" title="資料日期已對齊次一交易日（08/24）">已對齊次日</span></span>
+    <span class="date-chip" id="date-chip">08/24 · 15:48<span class="status-badge is-ok" title="資料日期已對齊次一交易日（08/24）">已對齊次日</span></span>
     <button type="button" class="health-dot is-caution" id="source-status-btn" aria-label="資料健康度：請先確認資料" aria-expanded="false" title="必要來源【處置股與出關預警】資料已逾 12 小時；次要來源【大盤昨收與三大法人】資料可能過期；次要來源【台指期夜盤走勢】資料可能過期；次要來源【PressPlay 盤前族群與標的】資料可能過期；次要來源【主力券商與當沖籌碼明細】資料可能過期；次要來源【總經財經行事曆】資料可能過期；次要來源【市場未反映重大公告 (財報/營收/處分)】資料可能過期；次要來源【盤前即時新聞聚合】資料可能過期">
       <span class="status-dot" aria-hidden="true"></span><span class="health-label">請先確認資料</span>
     </button>
@@ -38,10 +38,14 @@
   <main id="app" class="page-shell">
     <div class="briefing-card is-caution-alert" id="conditional-health-banner"><span>⚠️ 資料健康度需要確認</span><span class="briefing-reason">必要來源【處置股與出關預警】資料已逾 12 小時；次要來源【大盤昨收與三大法人】資料可能過期；次要來源【台指期夜盤走勢】資料可能過期；次要來源【PressPlay 盤前族群與標的】資料可能過期；次要來源【主力券商與當沖籌碼明細】資料可能過期；次要來源【總經財經行事曆】資料可能過期；次要來源【市場未反映重大公告 (財報/營收/處分)】資料可能過期；次要來源【盤前即時新聞聚合】資料可能過期</span></div>
     <section id="summary" class="summary-section" aria-labelledby="summary-title">
-      <div class="section-heading"><div><span class="eyebrow">PREMARKET · 08/24</span><h1 id="summary-title">今日決策摘要</h1></div><span class="build-note">建置 15:43</span></div>
+      <div class="section-heading"><div><span class="eyebrow">PREMARKET · 08/24</span><h1 id="summary-title">今日決策摘要</h1></div><span class="build-note">建置 15:48</span></div>
       <div class="briefing-card is-caution-alert" id="today-briefing-block">
         <strong>資料可用性 · 首屏契約</strong><span>請先確認資料</span><span class="briefing-reason">必要來源【處置股與出關預警】資料已逾 12 小時</span>
       </div>
+      <section id="market-context" class="content-section market-context--hero" aria-labelledby="market-title">
+        <div class="section-heading compact"><div><span class="eyebrow">CONTEXT</span><h2 id="market-title">市場背景</h2></div><span class="section-note">降級資訊</span></div>
+        <div id="macro-panel" class="native-panel lazy-block" data-package="macro"><div class="loading">載入市場背景中…</div></div>
+      </section>
       <div class="action-deck" id="action-deck" aria-live="polite">
         <article class="deck deck-disposition"><header><h2>🔴 處置倒數</h2><span class="deck-count" id="disposition-count">—</span></header><div class="deck-body" id="disposition-deck"><div class="loading">載入中…</div></div></article>
         <article class="deck deck-release"><header><h2>🟢 今日出關</h2><span class="deck-count" id="release-count">—</span></header><div class="deck-body" id="release-deck"><div class="loading">載入中…</div></div></article>
@@ -66,10 +70,6 @@
       <div id="announcements-panel" class="native-panel lazy-block" data-package="announcements"><div class="loading">展開或捲動後載入財報資料…</div></div>
     </section>
 
-    <section id="market-context" class="content-section block--offscreen" aria-labelledby="market-title">
-      <div class="section-heading compact"><div><span class="eyebrow">CONTEXT</span><h2 id="market-title">市場背景</h2></div><span class="section-note">降級資訊</span></div>
-      <div id="macro-panel" class="native-panel lazy-block" data-package="macro"><div class="loading">載入市場背景中…</div></div>
-    </section>
 
     <section id="news-calendar" class="content-section block--offscreen" aria-labelledby="calendar-title">
       <div class="section-heading compact"><div><span class="eyebrow">CATALYSTS</span><h2 id="calendar-title">補充資訊</h2></div><span class="section-note">行事曆 · 新聞</span></div>
@@ -80,7 +80,7 @@
     </section>
 
     <section id="system-info" class="content-section system-section" aria-labelledby="system-title">
-      <div class="section-heading compact"><div><span class="eyebrow">SYSTEM</span><h2 id="system-title">系統</h2></div><span class="section-note">Build 20260823_1543</span></div>
+      <div class="section-heading compact"><div><span class="eyebrow">SYSTEM</span><h2 id="system-title">系統</h2></div><span class="section-note">Build 20260823_1548</span></div>
       <div class="system-grid"><p>資料採分包載入；P0 優先顯示處置與市場，財報、行事曆與新聞採閒置或進入視窗後載入。</p><p id="package-status">尚未完成資料分包載入。</p></div>
     </section>
   </main>
