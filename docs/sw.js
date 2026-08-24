@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pmit-20260824_1758';
+const CACHE_NAME = 'pmit-20260824_1800';
 const SHELL_ASSETS = [
   './',
   './index.html',
@@ -10,8 +10,7 @@ const SHELL_ASSETS = [
   './icon-192.png',
   './icon-512.png',
   './data_meta.json',
-  './data/tw_holidays.json',
-  './data/stock_history.json'
+  './data/tw_holidays.json'
 ];
 
 self.addEventListener('install', event => {
@@ -32,8 +31,7 @@ self.addEventListener('install', event => {
         './icon-192.png',
         './icon-512.png',
         './data_meta.json',
-        './data/tw_holidays.json',
-        './data/stock_history.json'
+        './data/tw_holidays.json'
       ];
       await Promise.allSettled(optionalAssets.map(url => cache.add(url)));
     }).then(() => self.skipWaiting())
