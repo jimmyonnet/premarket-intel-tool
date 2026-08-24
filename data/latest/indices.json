@@ -133,8 +133,8 @@
     "nikkei225": {
       "name": "日經225指數",
       "value": 66016.36,
-      "change": -200.44,
-      "change_pct": -0.3,
+      "change": -0.0,
+      "change_pct": -0.0,
       "updated_cst": "08/21 14:45"
     },
     "kospi": {
