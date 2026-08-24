@@ -4,7 +4,7 @@
     "link": "https://news.google.com/rss/articles/CBMivgJBVV95cUxNR3IzaVR4aHdJVnJPc3RpTHJueFQzbVlYeDF1Q0hQX1BFSVNmbzdhMmxMakZXbGZPSVc1cndWdmlwNU9PelNXX0EwZ3VTUF8tT3BHaUk5emxmV2QxdGtoNjNPNlFlZmViUXpjN1d0ZXBsd0lYRnN1ZngyV3Vqd0pHTXhlSjR6eFpBNVFQcEpmMkxuTVVjQmhjeVRaU3NrclNScWtDaTB4ZGc0clNncUR0emhCR2Znc0ZlOXczRDJRV0FfQ1hHOFFOX2RzNWY2b2ZGcTYwa0RaMGV1alpfaUpXR1U4Vms4dWJmaUhGVEcyekdyNUxfMDZ4ZURzVmZDMW5iXzZ4LVVPWmF3MTZ5ZnpTRFBlX2NPS0dnUlRJX3RiYjBacW1MdThlbmxJR0ctd0hBcFdZS0J3ZFpacC1maXc?oc=5",
     "source": "Yahoo股市",
     "time": "08/24 11:52",
-    "timestamp": 1787543561.0,
+    "timestamp": 1787543568.0,
     "score": 16,
     "quality_score": 3,
     "impact_score": 13,
@@ -45,26 +45,6 @@
     "source": "Yahoo股市",
     "time": "08/24 07:31",
     "timestamp": 1787527912.0,
-    "score": 16,
-    "quality_score": 3,
-    "impact_score": 13,
-    "matched_groups": [
-      "macro_policy",
-      "market_benchmark",
-      "systemic_company",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "台股缺量2／輝達財報＋央行年會來了！台股本週先「停看聽」",
-    "link": "https://news.google.com/rss/articles/CBMi4gJBVV95cUxObzl5cEZZQ3VTNHVrY0JyOEFlV1c2ejlBYkhSdVBadDdrdi1yWHFob3pldVd2U25nNUE1UHRiM1hrRGtZRHhKc2VRTjg1ellJdGJwOTZxeVdRTVRTd2gzcTBvWUtYVHVEWWQwWVpPWkZ0QUhhTzZmWFo3c3k2amdIeHhJNlRKNG93dXlXOHVKc2d3ZjZYSXB4b2NxQnRWVUdpOHdfX1dydDRpdXg1a3BLNU9oZTNCWEZGUWlWTzhfUFJxUDgtSW50NmpOQ3ktbHVSOFFLclh1MnNNWGxyMVAtT0Y2aHA0UVZRc3hSMVRWSkxhQ0FLRy1pSFRyWTc5ZzRTeE01YUJrVnpLSF9jUG5QYUV3MHdUcGcwLUJwUzNmc0YxdS12RTZRSThsZ2tuUER3eUw2RDZzeFJtM1N3MHlheUtQbzJNNDNPYUUtdHBEOGd1OExfSXpqRXdGOXEwejBITFE?oc=5",
-    "source": "Yahoo新聞",
-    "time": "08/24 07:00",
-    "timestamp": 1787526000.0,
     "score": 16,
     "quality_score": 3,
     "impact_score": 13,
@@ -156,18 +136,18 @@
     "qualified": true
   },
   {
-    "title": "MSCI台灣升至新興市場全球第一外資大調倉永豐優息存股ETF配息連升輝達財報和傑克遜霍爾登場中油宣布油價凍漲｜投資早知道",
-    "link": "https://news.google.com/rss/articles/CBMi4wVBVV95cUxPTldpc19yZFJhb1ZFNDBIM1lzNlRScENaaUVmMTM1ZVFXRzlYeUhZTVlTb19sNHV1SWwyd2xsd0trZHhxdEZjWktoVEl3N3Z5OTUzWGh5N29sU050NlA5ckE0OFEyemIyRUV4V2F6SmhqTGZyLWhrRXJWU0JBdDZBWl8tNUhwNDBnb2QwRW90NTlYRW9wTVlmQ2d0ZkhOT01PaFByRzNuSDBDU3I1T0lEZHE4am96cThTZ3llemJkTEZKcUVucVAtdDhyemtoanFqZjlFdTd1V1lLRWx4Yi1xZjNUNC1tY29feklzNXl0U3lsc2o3clEwTVJxQzJoZVNNSVpFYzZheXV0WlFCTTY1bnU4X19mazg0UWx5dHBaelN1YmxmNWh3aW4welQtQkphZlNuQy1WMlphaS05b1RpN3VZTXB2YmxoX0ptQkUzU0h4X3hqTHF5NnA2Y29GVllJRm5LNDBiNTdKNlFWdTd5dDViOUxkN2ExUGF2emZWeDA0cW1lNTBEaF9JaFJFeEp5V3Bqck00ZzlYQzJVQVNqdGFTM1hjVW5UcW4zYTE4bGVVY3BmaVBuLXoweVVVVVlhM2p6WmF3RkFkV0lBNm9kYXZMa0FnWlpsN2dTOFNENFNHMGtDemRVVi1ELUg3MnM1Qk5kZVF1RDZsMkZXU3AwSXlIZkIzb0k1aWZqY3ZvM0hWRVpaRkdjdFFINGVkelowWHFiVDcwM3BGZGx2YXNVM1ZzaFBPOTIxTHZYYUxGSnkyOURYUjJtM3hXQ2RqaG9LRjhhOEcwOFhtQ1hHendObnFheVBESVFvdENNRXEzSVpUbFk2di1CdUxTVURPOUNoWXVOMTNIbmhoLUNjZTNzQ3NSQmVfb1Q1SW5IaElhSUxXX0hCUk8zM1ZYaGxrMGNPclRnY29NbGt6RE9Cc01SM3QwSnlhbDhwOFZNa2JFNENyNlRWMFh2cXdDb0tSSlB3WjJF?oc=5",
-    "source": "Yahoo股市",
-    "time": "08/23 13:25",
-    "timestamp": 1787462700.0,
-    "score": 11,
+    "title": "周五美股漲多於跌 觀望輝達財報開獎 周一台股震盪力守45000點",
+    "link": "https://news.google.com/rss/articles/CBMi_gJBVV95cUxNanRIVzdnT2pSTlp4ZVN5YTNNVDVsMExMR2NQelRGRlNiYjEwVmNWRk1Na3huMnpoUWVMaEFwZTBSUkI5QWc1VTI3b1V0UGJGdk5kNlM3cmFpMXdHNll6WDlkWXVJTGpuaU9JcGt5N3Ywd0pKUEgzYWxZVUUzM1pvNHVwYjk0TTA0YS11dnB3MUdaSkNDc2c0dGZJZVBwc19YYzhQVm5CVlZwQjYyS3F3U0dxdXJUSmp4OUh1dndWSVBHU2JnUHFKNkk3QnNfWEpTU3ZBSzRtSzlodHpsVmxZVzhRWEg0MHgyRHZiYXA0ZkJPUFN1UFhpeDdUckFlZzVHZ2tWaW9CWmpxbFFLZjRpcUFFR0VtVEtOTG45azFHeXNzQmZJY0xTbW9BN2xaQVBHbnEtZmVNWk9kM25SRGttQllrbW1IY0MtTW1PTjlLTmdNaEJFRUxwdkJuYTNCZU5aOG9XNUR0Z09IOXdFd1F3c1BlM0R3VzJ3a1hEQVhR?oc=5",
+    "source": "Yahoo新聞",
+    "time": "08/24 12:32",
+    "timestamp": 1787545972.0,
+    "score": 12,
     "quality_score": 3,
-    "impact_score": 8,
+    "impact_score": 9,
     "matched_groups": [
+      "market_benchmark",
       "systemic_company",
-      "earnings_financial",
-      "market_structure"
+      "earnings_financial"
     ],
     "low_signal_hits": [],
     "quality_pass": true,
@@ -185,6 +165,24 @@
     "impact_score": 6,
     "matched_groups": [
       "systemic_company",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "金融業布局台股 轉區間操作 銀行圈：逢高獲利落袋...非全面看空",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5SYkJjV1JuSlpBdjhpNmpYQnR4d3FEeWZqY1Zqb1pRcjFyUHFIWTdqMFVEanZYZWdCSUdsLURmamUxdU1iV0QxTUNWaEk5Uk90OHUzQ21sLUxFQdIBX0FVX3lxTE5WbUwtMkFUdzlHZlhsbElLS081N2RmRTZYamVLRksxaEFPNDZQMVdJZHBWVTQySndIN1VIYjRuMjNoR0cyTmplY3JVam5JQk1qSjdlckwtUnpTS0s3NVlZ?oc=5",
+    "source": "經濟日報",
+    "time": "08/24 02:18",
+    "timestamp": 1787509101.0,
+    "score": 10,
+    "quality_score": 4,
+    "impact_score": 6,
+    "matched_groups": [
+      "market_benchmark",
       "earnings_financial"
     ],
     "low_signal_hits": [],

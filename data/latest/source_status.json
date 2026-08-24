@@ -1,16 +1,17 @@
 {
-  "updated_at": "2026-08-24T12:15:14.200150+08:00",
+  "updated_at": "2026-08-24T13:39:16.154090+08:00",
   "sources": {
     "indices": {
       "source_id": "indices",
       "name": "指數行情 (美股/亞股/ADR)",
       "is_required": true,
       "status": "ok",
-      "fetched_at": "2026-08-24T12:15:06.505252+08:00",
+      "fetched_at": "2026-08-24T13:39:08.179016+08:00",
       "data_date": null,
       "age_minutes": 0.0,
       "error_summary": null,
       "fallback_used": false,
+      "retry_attempts": 0,
       "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向"
     },
     "twse_summary": {
@@ -18,11 +19,12 @@
       "name": "大盤昨收與三大法人",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-08-24T12:14:57.905554+08:00",
+      "fetched_at": "2026-08-24T13:38:59.448682+08:00",
       "data_date": null,
       "age_minutes": 0.0,
       "error_summary": null,
       "fallback_used": false,
+      "retry_attempts": 0,
       "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整"
     },
     "night_session": {
@@ -30,11 +32,12 @@
       "name": "台指期夜盤走勢",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-08-24T12:14:59.189989+08:00",
+      "fetched_at": "2026-08-24T13:39:01.054541+08:00",
       "data_date": "2026-08-24",
       "age_minutes": 0.0,
       "error_summary": null,
       "fallback_used": false,
+      "retry_attempts": 0,
       "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數"
     },
     "disposal": {
@@ -42,11 +45,12 @@
       "name": "處置股與出關預警",
       "is_required": true,
       "status": "ok",
-      "fetched_at": "2026-08-24T12:15:10.547779+08:00",
+      "fetched_at": "2026-08-24T13:39:12.200389+08:00",
       "data_date": "08/24",
       "age_minutes": 0.0,
       "error_summary": null,
       "fallback_used": false,
+      "retry_attempts": 0,
       "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險"
     },
     "pressplay": {
@@ -54,11 +58,12 @@
       "name": "PressPlay 盤前族群與標的",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-08-24T12:15:11.061229+08:00",
+      "fetched_at": "2026-08-24T13:39:12.634307+08:00",
       "data_date": null,
       "age_minutes": 0.0,
       "error_summary": null,
       "fallback_used": false,
+      "retry_attempts": 0,
       "impact_desc": "缺少每日專欄族群整理，候選股清單將呈現空白"
     },
     "chengwaye_daily": {
@@ -66,11 +71,12 @@
       "name": "主力券商與當沖籌碼明細",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-08-24T12:15:11.596489+08:00",
+      "fetched_at": "2026-08-24T13:39:13.267042+08:00",
       "data_date": "2026/08/21",
       "age_minutes": 0.0,
       "error_summary": null,
       "fallback_used": false,
+      "retry_attempts": 0,
       "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行"
     },
     "calendar": {
@@ -78,11 +84,12 @@
       "name": "總經財經行事曆",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-08-24T12:15:03.035699+08:00",
+      "fetched_at": "2026-08-24T13:39:05.296977+08:00",
       "data_date": "2026-08-24",
       "age_minutes": 0.0,
       "error_summary": null,
       "fallback_used": false,
+      "retry_attempts": 0,
       "impact_desc": "缺少今日重磅總經數據與事件日程倒數"
     },
     "financials": {
@@ -90,11 +97,12 @@
       "name": "市場未反映重大公告 (財報/營收/處分)",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-08-24T12:15:12.003420+08:00",
+      "fetched_at": "2026-08-24T13:39:13.687279+08:00",
       "data_date": null,
       "age_minutes": 0.0,
       "error_summary": null,
       "fallback_used": false,
+      "retry_attempts": 0,
       "impact_desc": "缺少昨日盤後自結損益與營收公告統計"
     },
     "news": {
@@ -102,11 +110,12 @@
       "name": "盤前即時新聞聚合",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-08-24T12:15:05.203761+08:00",
+      "fetched_at": "2026-08-24T13:39:06.986280+08:00",
       "data_date": null,
       "age_minutes": 0.0,
       "error_summary": null,
       "fallback_used": false,
+      "retry_attempts": 0,
       "impact_desc": "缺少隔夜美股與產業焦點新聞快訊"
     }
   }
