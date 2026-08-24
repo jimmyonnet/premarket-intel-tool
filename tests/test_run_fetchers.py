@@ -1,6 +1,13 @@
 import json
 
-from scripts.run_fetchers import fetch_source
+from scripts.run_fetchers import fetch_source, pressplay_fallback_info
+
+
+def test_pressplay_fallback_info_distinguishes_live_and_cached_payloads():
+    assert pressplay_fallback_info({"source_article": {"fetch_mode": "live_browser"}}) == (False, None)
+    assert pressplay_fallback_info({"source_article": {"fetch_mode": "fallback_cache"}})[0] is True
+    assert pressplay_fallback_info({"source_article": {"fetch_mode": "manual_override"}})[1] == "使用手動提供的 PressPlay 文章覆寫"
+    assert pressplay_fallback_info({"source_article": {"fixture": "data/pressplay/old.md"}})[0] is True
 
 
 def test_fetch_source_marks_unchanged_snapshot_as_fallback(tmp_path, monkeypatch):

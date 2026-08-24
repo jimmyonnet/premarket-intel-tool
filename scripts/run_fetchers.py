@@ -35,6 +35,31 @@ TAIPEI = timezone(timedelta(hours=8))
 DATA_LATEST = Path(__file__).parent.parent / "data" / "latest"
 
 
+def pressplay_fallback_info(content: Any) -> tuple[bool, str | None]:
+    """Return whether a PressPlay payload is not from the live browser fetch."""
+    if not isinstance(content, dict):
+        return False, None
+    article = content.get("source_article") or {}
+    if not isinstance(article, dict):
+        return False, None
+    mode = article.get("fetch_mode")
+    if mode == "live_browser":
+        return False, None
+    labels = {
+        "fallback_cache": "PressPlay 登入抓取失敗，沿用當日快取文章",
+        "fallback_fixture": "PressPlay 登入抓取失敗，沿用備援 fixture 文章",
+        "manual_override": "使用手動提供的 PressPlay 文章覆寫",
+        "fixture": "使用離線 fixture PressPlay 文章",
+        "no_credentials": "未設定 PressPlay 登入憑證",
+        "fallback_empty": "PressPlay 登入抓取失敗且沒有可用文章",
+    }
+    if mode in labels:
+        return True, labels[mode]
+    if article.get("fixture"):
+        return True, "PressPlay 文章來自快取或 fixture，未確認為即時登入抓取"
+    return False, None
+
+
 def run_command(cmd: list[str], env: dict[str, str] | None = None, timeout: int = 60) -> tuple[int, str, str]:
     """Runs a shell command and returns (exit_code, stdout, stderr)."""
     try:
@@ -149,6 +174,12 @@ def fetch_source(
                 if isinstance(content, dict):
                     if content.get("is_fallback") or (content.get("latest") or {}).get("is_fallback"):
                         fallback_used = True
+                    if source_id == "pressplay":
+                        pp_fallback, pp_reason = pressplay_fallback_info(content)
+                        if pp_fallback:
+                            fallback_used = True
+                            status = "warning"
+                            error_summary = content.get("source_article", {}).get("fallback_reason") or pp_reason
                     if content.get("_status") == "fetch_failed":
                         fallback_used = True
                         error_summary = content.get("_error", "登入或來源抓取失敗")
@@ -203,6 +234,12 @@ def inspect_existing_source_file(source_id: str, file_path: Path) -> dict[str, A
         if isinstance(content, dict):
             if content.get("is_fallback") or (content.get("latest") or {}).get("is_fallback"):
                 fallback_used = True
+            if source_id == "pressplay":
+                pp_fallback, pp_reason = pressplay_fallback_info(content)
+                if pp_fallback:
+                    fallback_used = True
+                    status = "warning"
+                    error_summary = content.get("source_article", {}).get("fallback_reason") or pp_reason
             if content.get("_status") == "fetch_failed":
                 status = "failed"
                 fallback_used = True

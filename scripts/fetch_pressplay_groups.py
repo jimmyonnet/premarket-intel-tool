@@ -622,6 +622,96 @@ def match_section(raw_tokens, rows, stock_dict=None):
     return {"raw_tokens": raw_tokens, "matched": matched, "unmatched": unmatched}
 
 
+def _read_article_file(path: Path, fetch_mode: str):
+    """Read a saved/manual article and retain its title and URL metadata."""
+    raw = path.read_text(encoding="utf-8")
+    title, url = None, None
+    if "\n---\n" in raw:
+        header, article_text = raw.split("\n---\n", 1)
+        for line in header.splitlines():
+            if line.startswith("Title:"):
+                title = line[len("Title:"):].strip()
+            elif line.startswith("URL:"):
+                url = line[len("URL:"):].strip()
+    else:
+        article_text = raw
+    source_article = {
+        "title": title or "PressPlay 盤前整理文章",
+        "url": url,
+        "fixture": str(path),
+        "fetch_mode": fetch_mode,
+    }
+    return source_article, article_text
+
+
+def load_article_source(
+    now: datetime.datetime,
+    *,
+    fixture_article: Path | None = None,
+    manual_override_path: Path | None = None,
+    local_md: Path | None = None,
+    fixture_txt: Path | None = None,
+    email: str | None = None,
+    password: str | None = None,
+):
+    """Load the newest PressPlay article without letting a stale cache win.
+
+    Explicit fixtures/manual overrides are honored first. Otherwise credentials
+    always mean a live browser attempt; the same-day cache is only a fallback
+    after that attempt fails.
+    """
+    email = os.getenv("PRESSPLAY_EMAIL") if email is None else email
+    password = os.getenv("PRESSPLAY_PASSWORD") if password is None else password
+    local_md = local_md or Path(f"data/pressplay/{now.strftime('%Y-%m-%d')}.md")
+    fixture_txt = fixture_txt or Path("fixtures/pressplay_article.txt")
+
+    if fixture_article is not None and fixture_article.exists():
+        return _read_article_file(fixture_article, "fixture")
+    if manual_override_path is not None and manual_override_path.exists():
+        return _read_article_file(manual_override_path, "manual_override")
+
+    if email and password:
+        try:
+            source_article, article_text = fetch_article_via_browser()
+            source_article = dict(source_article or {})
+            source_article["fetch_mode"] = "live_browser"
+            try:
+                local_md.parent.mkdir(parents=True, exist_ok=True)
+                hdr = (
+                    f"Title: {source_article.get('title', '')}\n"
+                    f"URL: {source_article.get('url', '')}\n"
+                    f"Collected: {now.isoformat()}\n---\n"
+                )
+                local_md.write_text(hdr + article_text, encoding="utf-8")
+            except Exception:
+                pass
+            return source_article, article_text
+        except Exception as exc:
+            print(f"PressPlay browser fetch failed: {exc}, falling back", file=sys.stderr)
+            if local_md.exists():
+                source_article, article_text = _read_article_file(local_md, "fallback_cache")
+                source_article["fallback_reason"] = str(exc)[:300]
+                return source_article, article_text
+            if fixture_txt.exists():
+                source_article, article_text = _read_article_file(fixture_txt, "fallback_fixture")
+                source_article["fallback_reason"] = str(exc)[:300]
+                return source_article, article_text
+            return {
+                "title": "PressPlay 整理文章 (載入失敗)",
+                "url": None,
+                "fetch_mode": "fallback_empty",
+                "fallback_reason": str(exc)[:300],
+            }, ""
+
+    if fixture_txt.exists():
+        return _read_article_file(fixture_txt, "fallback_fixture")
+    return {
+        "title": "PressPlay 整理文章 (無登入憑證)",
+        "url": None,
+        "fetch_mode": "no_credentials",
+    }, ""
+
+
 # ---------------------------------------------------------------------------
 # main
 # ---------------------------------------------------------------------------
@@ -643,60 +733,20 @@ def main():
     email = os.getenv("PRESSPLAY_EMAIL")
     password = os.getenv("PRESSPLAY_PASSWORD")
 
-    # Check candidate files
     today_str = now.strftime("%Y-%m-%d")
-    local_md = Path(f"data/pressplay/{today_str}.md")
-    fixture_txt = Path("fixtures/pressplay_article.txt")
-
-    fixture_file = None
-    if args.fixture_article is not None:
-        fixture_file = args.fixture_article
-    elif local_md.exists():
-        # User or workflow provided today's article directly
-        fixture_file = local_md
-
-    if fixture_file is not None and fixture_file.exists():
-        raw = fixture_file.read_text(encoding="utf-8")
-        title, url = None, None
-        if "\n---\n" in raw:
-            header, article_text = raw.split("\n---\n", 1)
-            for line in header.splitlines():
-                if line.startswith("Title:"):
-                    title = line[len("Title:"):].strip()
-                elif line.startswith("URL:"):
-                    url = line[len("URL:"):].strip()
-        else:
-            article_text = raw
-        source_article = {"title": title or "PressPlay 盤前整理文章", "url": url, "fixture": str(fixture_file)}
-    elif email and password:
-        try:
-            source_article, article_text = fetch_article_via_browser()
-            try:
-                local_md.parent.mkdir(parents=True, exist_ok=True)
-                hdr = f"Title: {source_article.get('title', '')}\nURL: {source_article.get('url', '')}\nCollected: {now.isoformat()}\n---\n"
-                local_md.write_text(hdr + article_text, encoding="utf-8")
-            except Exception:
-                pass
-        except Exception as e:
-            print(f"PressPlay browser fetch failed: {e}, falling back", file=sys.stderr)
-            if local_md.exists():
-                raw = local_md.read_text(encoding="utf-8")
-                article_text = raw.split("\n---\n", 1)[1] if "\n---\n" in raw else raw
-                source_article = {"title": "PressPlay 盤前整理文章 (本機快取)", "url": None, "fixture": str(local_md)}
-            elif fixture_txt.exists():
-                raw = fixture_txt.read_text(encoding="utf-8")
-                article_text = raw.split("\n---\n", 1)[1] if "\n---\n" in raw else raw
-                source_article = {"title": "PressPlay 整理文章 (備援快照)", "url": None, "fixture": str(fixture_txt)}
-            else:
-                source_article, article_text = {"title": "PressPlay 整理文章 (載入失敗)", "url": None}, ""
-    else:
-        if fixture_txt.exists():
-            raw = fixture_txt.read_text(encoding="utf-8")
-            article_text = raw.split("\n---\n", 1)[1] if "\n---\n" in raw else raw
-            source_article = {"title": "PressPlay 整理文章 (備援快照)", "url": None, "fixture": str(fixture_txt)}
-        else:
-            source_article, article_text = {"title": "PressPlay 整理文章 (無登入憑證)", "url": None}, "" 
-
+    source_article, article_text = load_article_source(
+        now,
+        fixture_article=args.fixture_article,
+        manual_override_path=(
+            Path(os.getenv("PRESSPLAY_MANUAL_ARTICLE_PATH"))
+            if os.getenv("PRESSPLAY_MANUAL_ARTICLE_PATH")
+            else None
+        ),
+        local_md=Path(f"data/pressplay/{today_str}.md"),
+        fixture_txt=Path("fixtures/pressplay_article.txt"),
+        email=email,
+        password=password,
+    )
     source_article["collected_at"] = now.isoformat()
 
     not_found_raw, found_raw = parse_group_sections(article_text)

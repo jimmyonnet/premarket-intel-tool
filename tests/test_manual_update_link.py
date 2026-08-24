@@ -52,3 +52,6 @@ def test_manual_update_keeps_popup_open_until_terminal_status():
     assert queued_handler
     assert "popup.close" not in queued_handler.group(1)
     assert "try { popup.close(); }" in bridge
+    assert "reloadPageWithFreshData" in bridge
+    assert 'nextUrl.searchParams.set("refresh", String(Date.now()))' in bridge
+    assert "windowRef.setTimeout(reloadPageWithFreshData, 700)" in bridge

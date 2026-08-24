@@ -39,6 +39,11 @@ export function initializeManualUpdateBridge({
     windowRef.clearTimeout(resetTimer);
     resetTimer = windowRef.setTimeout(resetButton, isError ? 4500 : 3200);
   };
+  const reloadPageWithFreshData = () => {
+    const nextUrl = new URL(windowRef.location.href);
+    nextUrl.searchParams.set("refresh", String(Date.now()));
+    windowRef.location.assign(nextUrl.toString());
+  };
   const onMessage = (event) => {
     if (event.origin !== gatewayOrigin || event.source !== popup) return;
     const data = event.data || {};
@@ -52,8 +57,9 @@ export function initializeManualUpdateBridge({
       button.title = data.message || "已有資料更新正在執行中，請稍候。";
       notify(button.title);
     } else if (data.state === "completed") {
-      finish("✓ 更新已完成", data.message || "資料更新已完成，請重新整理頁面取得最新內容。", false);
+      finish("✓ 更新已完成", data.message || "資料更新已完成，頁面即將重新整理取得最新內容。", false);
       try { popup.close(); } catch (_) {}
+      windowRef.setTimeout(reloadPageWithFreshData, 700);
     } else {
       finish("⚠ 更新未完成", data.message || "資料更新未成功完成，請稍後再試。", true);
     }

@@ -81,6 +81,7 @@ jobs:
           cat << 'EOF' > "data/pressplay/${{ steps.date.outputs.today }}.md"
           ${{ inputs.pressplay_text }}
           EOF
+          echo "PRESSPLAY_MANUAL_ARTICLE_PATH=data/pressplay/${{ steps.date.outputs.today }}.md" >> "$GITHUB_ENV"
 
       - name: Fetch data sources and audit source health
         if: steps.trading_day.outputs.is_trading_day == 'true'
