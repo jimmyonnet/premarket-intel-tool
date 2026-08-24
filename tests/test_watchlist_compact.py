@@ -22,8 +22,11 @@ def test_watchlist_uses_collapsed_summary_with_hit_placeholder():
     assert '我在看（自選關注標的）' not in block
     assert 'id="watch-summary-hits"' in block
     assert '<details class="card watchlist-card watchlist-details" open>' not in block
-    assert 'summaryTargets = hitAlerts.concat(hitCandidates)' in source
-    assert "primary.code + (primary.hit.label" in source
+    assert 'summaryItems = hitAlerts.concat(hitCandidates, otherStocks)' in source
+    assert 'summaryItems.forEach(function(item)' in source
+    assert "item.code + (item.hit && item.hit.label" in source
+    assert 'watch-summary-more' not in source
+    assert "watch-summary-chip.is-other" in source
 
 
 def test_deployed_watchlist_is_collapsed_by_default_and_keeps_management_controls():

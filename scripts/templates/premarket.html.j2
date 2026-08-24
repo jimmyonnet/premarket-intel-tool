@@ -787,6 +787,7 @@
     min-width: 0;
     gap: 6px;
     margin-left: 8px;
+    flex-wrap: wrap;
   }
   .watch-summary-chip {
     display: inline-flex;
@@ -805,8 +806,8 @@
   }
   .watch-summary-chip.is-alert { border-color: var(--danger-border); background: var(--danger-bg); color: var(--danger-fg); }
   .watch-summary-chip.is-candidate { border-color: var(--blue-border); background: var(--blue-bg); color: var(--blue-fg); }
+  .watch-summary-chip.is-other { border-color: var(--border); background: var(--bg-sub); color: var(--text-main); }
   .watch-summary-empty { color: var(--text-muted); font-size: 12px; white-space: nowrap; }
-  .watch-summary-more { color: var(--text-muted); font-size: 11px; font-family: var(--font-mono); white-space: nowrap; }
   .watchlist-summary .card-tip { margin-left: auto; }
   .watch-control-bar {
     display: flex;
@@ -4612,23 +4613,21 @@
     var summaryHits = document.getElementById('watch-summary-hits');
     if (summaryHits) {
       summaryHits.innerHTML = '';
-      var summaryTargets = hitAlerts.concat(hitCandidates);
+      var summaryItems = hitAlerts.concat(hitCandidates, otherStocks);
       if (!codes.length) {
         summaryHits.innerHTML = '<span class="watch-summary-empty">尚未設定自選標的</span>';
-      } else if (!summaryTargets.length) {
-        summaryHits.innerHTML = '<span class="watch-summary-empty">今日無命中標的</span>';
+      } else if (!summaryItems.length) {
+        summaryHits.innerHTML = '<span class="watch-summary-empty">尚未設定自選標的</span>';
       } else {
-        var primary = summaryTargets[0];
-        var summaryChip = document.createElement('span');
-        summaryChip.className = 'watch-summary-chip ' + (primary.hit.type === 'alert' || primary.hit.type === 'amber' ? 'is-alert' : 'is-candidate');
-        summaryChip.textContent = primary.code + (primary.hit.label ? ' ' + primary.hit.label : '');
-        summaryHits.appendChild(summaryChip);
-        if (summaryTargets.length > 1) {
-          var more = document.createElement('span');
-          more.className = 'watch-summary-more';
-          more.textContent = '+' + (summaryTargets.length - 1) + ' 檔';
-          summaryHits.appendChild(more);
-        }
+        summaryItems.forEach(function(item) {
+          var summaryChip = document.createElement('span');
+          var summaryClass = 'is-other';
+          if (item.hit && (item.hit.type === 'alert' || item.hit.type === 'amber')) summaryClass = 'is-alert';
+          else if (item.hit && (item.hit.type === 'blue' || item.hit.type === 'normal')) summaryClass = 'is-candidate';
+          summaryChip.className = 'watch-summary-chip ' + summaryClass;
+          summaryChip.textContent = item.code + (item.hit && item.hit.label ? ' ' + item.hit.label : '');
+          summaryHits.appendChild(summaryChip);
+        });
       }
     }
 
