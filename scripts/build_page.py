@@ -142,6 +142,52 @@ def build_us_market_context(now, indices):
 
 
 
+ASIA_SESSION_WINDOWS_TPE = {
+    # Japan: 09:00-11:30 and 12:30-15:30 JST (UTC+9), displayed in Taipei time.
+    "^N225": ((8 * 60, 10 * 60 + 30), (11 * 60 + 30, 14 * 60 + 30)),
+    # Korea: 09:00-15:30 KST (UTC+9), displayed in Taipei time.
+    "^KS11": ((8 * 60, 14 * 60 + 30),),
+}
+
+
+def build_asia_market_context(now, symbol, quote=None):
+    """Describe an Asia quote's session without implying zero-delay data.
+
+    Yahoo's quote pages expose a source quote time for these cards, while the
+    page build timestamp is separate. The pill therefore describes the local
+    exchange session only; the adjacent source-time pill keeps the 20-minute
+    Yahoo delay disclosure visible.
+    """
+    quote = quote or {}
+    windows = ASIA_SESSION_WINDOWS_TPE.get(symbol, ())
+    minutes = now.hour * 60 + now.minute
+    is_weekday = now.weekday() < 5
+
+    if not quote or quote.get("price") is None and quote.get("value") is None:
+        badge = "行情未提供"
+        pill_class = "pill-amber"
+        session_key = "missing"
+    elif is_weekday and any(start <= minutes < end for start, end in windows):
+        badge = "盤中"
+        pill_class = "pill-live"
+        session_key = "regular"
+    elif not is_weekday:
+        badge = "休市"
+        pill_class = "pill-fresh"
+        session_key = "closed"
+    else:
+        badge = "收盤"
+        pill_class = "pill-fresh"
+        session_key = "closed"
+
+    return {
+        "session_key": session_key,
+        "badge": badge,
+        "pill_class": pill_class,
+        "title": f"{symbol} 交易時段狀態；旁側 Yahoo 來源時間仍以延遲 20 分鐘說明為準",
+    }
+
+
 def normalize_indices(raw_indices):
     norm = {}
     if not raw_indices:
@@ -673,6 +719,14 @@ def main():
     us_close_at_iso = us_close_today.isoformat()
 
     us_market_context = build_us_market_context(now, indices)
+    asia_market_context = {
+        symbol: build_asia_market_context(
+            now,
+            symbol,
+            (indices.get("asia_open", {}) or {}).get(symbol),
+        )
+        for symbol in ("^N225", "^KS11")
+    }
 
     # Calculate data stale hours
     data_dt_str = (night.get("latest") or {}).get("collected_at")
@@ -746,6 +800,7 @@ def main():
         hours_since_us_close=hours_since_us_close,
         us_close_at_iso=us_close_at_iso,
         us_market_context=us_market_context,
+        asia_market_context=asia_market_context,
         meta=meta_data,
         health=health_eval.to_dict(),
         indices=indices,
