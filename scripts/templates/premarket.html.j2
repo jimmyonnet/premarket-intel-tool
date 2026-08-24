@@ -277,6 +277,42 @@
     flex-wrap: wrap;
     gap: 6px;
   }
+  .nav-utility-panel {
+    margin-left: auto;
+    position: relative;
+  }
+  .nav-utility-panel > summary {
+    list-style: none;
+    background: var(--bg-card);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    padding: 0 9px;
+    height: 28px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-main);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+  .nav-utility-panel > summary::-webkit-details-marker { display: none; }
+  .nav-utility-panel > summary::after { content: '▾'; color: var(--text-muted); font-size: 11px; }
+  .nav-utility-panel[open] { flex-basis: 100%; }
+  .nav-utility-panel[open] > summary { margin-left: auto; }
+  .nav-utility-state { color: var(--text-muted); font-family: var(--font-mono); font-size: 10.5px; }
+  .nav-utility-content {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-light);
+  }
+  .nav-utility-content .nav-actions {
+    justify-content: flex-end;
+    margin-bottom: 8px;
+  }
+  .nav-utility-content .today-briefing-details { margin-bottom: 0; }
   .nav-btn {
     background: var(--bg-card);
     border: 1px solid var(--border-strong);
@@ -333,6 +369,10 @@
       border-top: 1px solid var(--border-light);
       padding-top: 4px;
     }
+    .nav-utility-panel { margin-left: 0; }
+    .nav-utility-panel > summary { height: 26px; font-size: 11.5px; }
+    .nav-utility-panel[open] { width: 100%; }
+    .nav-utility-content .nav-actions { margin-bottom: 6px; }
     .nav-btn {
       flex: 1;
       padding: 0 4px;
@@ -2382,6 +2422,12 @@
         <a href="#system-info" class="nav-link">系統</a>
       </div>
 
+      <details class="nav-utility-panel" id="nav-utility-panel">
+        <summary title="展開工具與資料狀態">
+          <span>⚙️ 工具與資料狀態</span>
+          <span class="nav-utility-state">{{ o_label }}</span>
+        </summary>
+        <div class="nav-utility-content">
       <div class="nav-actions">
         <button class="nav-btn btn-briefing" id="briefing-toggle" onclick="window.pm.toggleBriefingMode()" type="button" title="切換盤前 3 分鐘速讀模式 (快捷鍵 B)" aria-pressed="false">⚡ 速讀<span class="btn-text-extra">模式</span></button>
         <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" title="切換只看自選 (快捷鍵 W)" aria-pressed="false">⭐ 自選<span class="btn-text-extra">股</span></button>
@@ -2394,25 +2440,6 @@
           🔄 <span class="last-build">建置 {{ build_time or '08:00' }}</span><span class="short-build">重整</span>
         </button>
       </div>
-    </div>
-  </nav>
-
-  <main class="page-main">
-
-    <!-- Executive Briefing Mode Active Banner -->
-    <div class="briefing-banner" id="briefing-banner">
-      <span>⚡ 目前為盤前 3 分鐘速讀模式 · 已精簡市場背景、完整新聞與詳細嵌入資料</span>
-      <button type="button" onclick="window.pm.toggleBriefingMode()" style="background:transparent; border:1px solid currentColor; color:inherit; border-radius:4px; padding:2px 8px; font-size:11.5px; cursor:pointer; font-weight:700;">結束速讀</button>
-    </div>
-
-    <!-- Stale Banner -->
-    <div class="stale-banner" data-hours="{{ ((meta.stale_hours if meta is defined and meta.stale_hours is defined else stale_hours) or 0)|int }}">
-      資料時間 {{ (meta.data_date if meta is defined and meta.data_date else None) or data_date or '今日' }}，距今 {{ (meta.stale_hours if meta is defined and meta.stale_hours is defined else stale_hours) or 0 }} 小時
-    </div>
-
-    <!-- 1. 摘要 (Summary) -->
-    <section id="summary" class="content-section">
-      <!-- 今日判讀卡 (Today's Intel Briefing Card) -->
       <details class="today-briefing-details" id="today-briefing-details">
         <summary class="today-briefing-summary">
           <span class="briefing-summary-title">📊 資料可用性</span>
@@ -2455,13 +2482,33 @@
         </div>
       </div>
       </details>
+        </div>
+      </details>
+    </div>
+  </nav>
 
+  <main class="page-main">
+
+    <!-- Executive Briefing Mode Active Banner -->
+    <div class="briefing-banner" id="briefing-banner">
+      <span>⚡ 目前為盤前 3 分鐘速讀模式 · 已精簡市場背景、完整新聞與詳細嵌入資料</span>
+      <button type="button" onclick="window.pm.toggleBriefingMode()" style="background:transparent; border:1px solid currentColor; color:inherit; border-radius:4px; padding:2px 8px; font-size:11.5px; cursor:pointer; font-weight:700;">結束速讀</button>
+    </div>
+
+    <!-- Stale Banner -->
+    <div class="stale-banner" data-hours="{{ ((meta.stale_hours if meta is defined and meta.stale_hours is defined else stale_hours) or 0)|int }}">
+      資料時間 {{ (meta.data_date if meta is defined and meta.data_date else None) or data_date or '今日' }}，距今 {{ (meta.stale_hours if meta is defined and meta.stale_hours is defined else stale_hours) or 0 }} 小時
+    </div>
+
+    <!-- 1. 摘要 (Summary) -->
+    <section id="summary" class="content-section">
+      <span id="summary-briefing-anchor" aria-hidden="true"></span>
       <script>
-        // Preserve 280a9dc styles while placing the existing market block
-        // immediately after the data-availability disclosure.
+        // Keep market context at the start of the summary after low-frequency
+        // tools and data availability move into the utility disclosure.
         (function () {
           var moveMarketContext = function () {
-            var availability = document.getElementById('today-briefing-details');
+            var availability = document.getElementById('summary-briefing-anchor');
             var marketContext = document.getElementById('market-context');
             if (availability && marketContext && availability.nextElementSibling !== marketContext) {
               availability.insertAdjacentElement('afterend', marketContext);

@@ -34,9 +34,9 @@ def test_modern_market_renderer_links_night_session_to_cmoney():
     assert "夜盤" in app
 
 
-def test_market_context_is_reordered_after_data_availability_without_style_changes():
+def test_market_context_stays_first_in_summary_after_utility_panel():
     template = (ROOT / "scripts" / "templates" / "premarket.html.j2").read_text(encoding="utf-8")
 
-    assert "var availability = document.getElementById('today-briefing-details');" in template
+    assert "var availability = document.getElementById('summary-briefing-anchor');" in template
     assert "var marketContext = document.getElementById('market-context');" in template
     assert "availability.insertAdjacentElement('afterend', marketContext)" in template
