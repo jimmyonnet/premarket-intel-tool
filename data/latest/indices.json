@@ -132,17 +132,17 @@
   "asia_open": {
     "nikkei225": {
       "name": "日經225指數",
-      "value": 66016.36,
-      "change": -0.0,
-      "change_pct": -0.0,
-      "updated_cst": "08/21 14:45"
+      "value": 65870.33,
+      "change": -146.03,
+      "change_pct": -0.22,
+      "updated_cst": "08/24 08:35"
     },
     "kospi": {
       "name": "韓國綜合指數",
-      "value": 6912.95,
-      "change": 60.37,
-      "change_pct": 0.88,
-      "updated_cst": "08/21 17:05"
+      "value": 6775.23,
+      "change": -137.72,
+      "change_pct": -1.99,
+      "updated_cst": "08/24 08:30"
     }
   },
   "_missing_fields": []
