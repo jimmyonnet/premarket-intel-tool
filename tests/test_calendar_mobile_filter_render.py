@@ -23,3 +23,20 @@ def test_mobile_calendar_filter_toolbar_uses_authorized_scroll_and_wrap_rules():
     assert "min-height: 32px;" in mobile_rules
     assert ".cal-search-input" in mobile_rules
     assert "width: 100%;" in mobile_rules
+
+
+def test_mobile_primary_navigation_scrolls_in_one_touch_sized_row():
+    nav_rule_start = TEMPLATE.index("@media (max-width: 768px) {", TEMPLATE.index("/* NAV"))
+    nav_rule_end = TEMPLATE.index("\n  }", nav_rule_start)
+    nav_rules = TEMPLATE[nav_rule_start:nav_rule_end]
+
+    assert ".nav-sections" in nav_rules
+    assert "justify-content: flex-start;" in nav_rules
+    assert "flex-wrap: nowrap;" in nav_rules
+    assert "overflow-x: auto;" in nav_rules
+    assert "-webkit-overflow-scrolling: touch;" in nav_rules
+    assert ".nav-link" in nav_rules
+    assert "flex: 0 0 auto;" in nav_rules
+    assert "height: 32px;" in nav_rules
+    assert ".nav-utility-panel" in nav_rules
+    assert "justify-content: flex-end;" in nav_rules
