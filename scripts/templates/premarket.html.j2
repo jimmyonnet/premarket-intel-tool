@@ -2651,7 +2651,7 @@
               <span class="event-more-tag">+{{ today_stars|length - 1 }}件</span>
               {% endif %}
             {% else %}
-              <span style="color:var(--text-muted); font-size:12px;">今日無 ★★★ 重要總經事件</span>
+              <span id="briefing-no-high-impact" style="color:var(--text-muted); font-size:12px;">今日無 ★★★ 重要總經事件</span>
             {% endif %}
           </div>
         </div>
@@ -3380,6 +3380,7 @@
           <div class="card-title-group">
             <h3 class="card-title">📅 財經行事曆</h3>
             <span class="count-badge" id="cal-count-badge">顯示 {{ calendar.events|length }} / {{ calendar.events|length }} 筆</span>
+            <span class="card-tip cal-next-event-tip" id="cal-next-event-tip" role="button" tabindex="0" hidden onclick="window.pm.focusNextHighImpactEvent()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.pm.focusNextHighImpactEvent()}"></span>
           </div>
           <div class="cal-head-tools">
             <button class="cal-tool-btn" onclick="window.pm.copyTodayHighImpact()" type="button" title="一鍵複製今日重要 ★★★ 事件 Markdown">📋 複製今日 ★★★</button>
@@ -3755,6 +3756,90 @@
     categories: safeJsonParse('pmit_cal_categories', []),
     search: localStorage.getItem('pmit_cal_search') || '',
     tzMode: localStorage.getItem('pmit_cal_tz_mode') || 'dual' // 'dual' or 'tpe_only'
+  };
+
+  window.pm.calendarUserScrolled = false;
+
+  window.pm.formatCalendarCountdown = function(diffMs) {
+    var totalHours = Math.max(0, Math.floor(diffMs / 3600000));
+    var days = Math.floor(totalHours / 24);
+    var hours = totalHours % 24;
+    if (days > 0) return '倒數 ' + days + ' 天 ' + hours + ' 小時';
+    if (hours > 0) return '倒數 ' + hours + ' 小時';
+    return '即將公布';
+  };
+
+  window.pm.findNextHighImpactEvent = function() {
+    var nowMs = Date.now();
+    var future = [];
+    document.querySelectorAll('.cal-event-card[data-datetime-utc]').forEach(function(card) {
+      var eventMs = new Date(card.getAttribute('data-datetime-utc')).getTime();
+      var importance = parseInt(card.getAttribute('data-importance') || '1', 10);
+      if (!isNaN(eventMs) && eventMs > nowMs && importance >= 2) {
+        future.push({ card: card, eventMs: eventMs, importance: importance, diffMs: eventMs - nowMs });
+      }
+    });
+    future.sort(function(a, b) { return a.eventMs - b.eventMs; });
+    var preferred = future.find(function(item) {
+      return item.importance === 3 && item.diffMs <= 7 * 24 * 3600 * 1000;
+    });
+    var fallback = future.find(function(item) { return item.importance === 2; });
+    var chosen = preferred || fallback || null;
+    if (!chosen) return null;
+
+    var date = new Date(chosen.eventMs);
+    chosen.title = chosen.card.getAttribute('data-title') || '';
+    chosen.formattedDate = date.toLocaleDateString('zh-TW', {
+      timeZone: 'Asia/Taipei', month: '2-digit', day: '2-digit', weekday: 'short'
+    }) + ' ' + date.toLocaleTimeString('zh-TW', {
+      timeZone: 'Asia/Taipei', hour: '2-digit', minute: '2-digit', hour12: false
+    });
+    chosen.countdown = window.pm.formatCalendarCountdown(chosen.diffMs);
+    return chosen;
+  };
+
+  window.pm.openCalendarDateSection = function(section) {
+    if (!section) return;
+    var body = section.querySelector('.cal-date-body');
+    if (!body) return;
+    body.classList.add('is-open');
+    section.classList.add('open-sec');
+  };
+
+  window.pm.focusNextHighImpactEvent = function() {
+    var next = window.pm.findNextHighImpactEvent();
+    if (!next) return;
+    var section = next.card.closest('.cal-date-section');
+    window.pm.openCalendarDateSection(section);
+    if (!next.card.classList.contains('open')) window.pm.toggleEventDetail(next.card.id);
+    next.card.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  };
+
+  window.pm.updateNextHighImpactPresentation = function() {
+    var next = window.pm.findNextHighImpactEvent();
+    var tip = document.getElementById('cal-next-event-tip');
+    var briefingEmpty = document.getElementById('briefing-no-high-impact');
+    if (!next) {
+      if (tip) tip.hidden = true;
+      return;
+    }
+    var starLabel = next.importance === 3 ? '★★★' : '★★';
+    var summary = '下一個 ' + starLabel + '：' + next.formattedDate + ' ' + next.title + '（' + next.countdown + '）';
+    if (tip) {
+      tip.textContent = summary;
+      tip.hidden = false;
+    }
+    if (briefingEmpty) briefingEmpty.textContent = '下一個：' + next.title + ' · ' + next.countdown;
+  };
+
+  window.pm.autoFocusNextHighImpactEvent = function(hasSavedCalendarGroups) {
+    if (hasSavedCalendarGroups || window.pm.calendarUserScrolled) return;
+    if (document.querySelector('.cal-date-section.is-today-section')) return;
+    var next = window.pm.findNextHighImpactEvent();
+    if (!next) return;
+    var section = next.card.closest('.cal-date-section');
+    window.pm.openCalendarDateSection(section);
+    section.scrollIntoView({ block: 'nearest', behavior: 'auto' });
   };
 
   window.pm.toggleDateGroup = function(headerEl) {
@@ -5409,6 +5494,9 @@
   };
 
   document.addEventListener('DOMContentLoaded', function() {
+    ['wheel', 'touchstart', 'keydown'].forEach(function(eventName) {
+      document.addEventListener(eventName, function() { window.pm.calendarUserScrolled = true; }, { once: true, passive: true });
+    });
     var savedTheme = localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme');
     var urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
     if (urlParams.get('theme')) savedTheme = urlParams.get('theme');
@@ -5510,13 +5598,17 @@
     });
 
     // Auto-expand today's section only when no prior calendar preference exists.
-    var todayDateSec = document.querySelector('.cal-date-section.is-today-section') || document.querySelector('.cal-date-section');
+    var todayDateSec = document.querySelector('.cal-date-section.is-today-section');
     if (todayDateSec && !hasSavedCalendarGroups) {
       var dBody = todayDateSec.querySelector('.cal-date-body');
       if (dBody && !dBody.classList.contains('is-open')) {
         dBody.classList.add('is-open');
         todayDateSec.classList.add('open-sec');
       }
+    }
+    window.pm.updateNextHighImpactPresentation();
+    if (!todayDateSec) {
+      setTimeout(function() { window.pm.autoFocusNextHighImpactEvent(hasSavedCalendarGroups); }, 0);
     }
 
     var detailCounters = {};
