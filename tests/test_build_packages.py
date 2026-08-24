@@ -56,3 +56,6 @@ def test_write_packages_creates_schema_and_files(tmp_path: Path):
     assert meta["schema_version"] == 1
     assert set(meta["hash"]) == {"disposition", "candidates", "announcements", "macro", "calendar", "news"}
     assert json.loads((tmp_path / "data" / "meta.json").read_text())["schema_version"] == 1
+    candidates_raw = (tmp_path / "data" / "candidates.json").read_text(encoding="utf-8")
+    assert "\n" not in candidates_raw
+    assert ": " not in candidates_raw

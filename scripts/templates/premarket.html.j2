@@ -3363,27 +3363,14 @@
         <div class="card-head">
           <div class="card-title-group">
             <h3 class="card-title">隔夜重大新聞 Top 10</h3>
-            <span class="count-badge">{{ news|length if news else 0 }} 則</span>
+            <span class="count-badge" id="news-count-badge">{{ news|length if news else 0 }} 則</span>
           </div>
         </div>
-        <div class="data-block">
-          {% if news and news|length > 0 %}
-          <div class="news-list" style="display:flex; flex-direction:column; gap:8px;">
-            {% for a in news %}
-            <a href="{{ a.link }}" target="_blank" rel="noopener noreferrer" class="news-item" style="text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);">
-              <div class="news-title" style="font-weight:600; font-size:13px; margin-bottom:4px;">{{ a.title }}</div>
-              <div class="news-meta font-mono" style="font-size:11px; color:var(--text-muted); display:flex; gap:12px;">
-                <span>{{ a.source }}</span>
-                <span>{{ a.time }}</span>
-              </div>
-            </a>
-            {% endfor %}
-          </div>
-          {% else %}
-          <div class="empty" style="padding:16px; text-align:center; color:var(--text-muted); font-size:12.5px;">
+        <div class="data-block" id="news-lazy-block" data-news-src="data/news.json">
+          <div class="news-list" id="news-list" style="display:flex; flex-direction:column; gap:8px;" hidden></div>
+          <div class="empty" id="news-empty" style="padding:16px; text-align:center; color:var(--text-muted); font-size:12.5px;"{% if news and news|length > 0 %} hidden{% endif %}>
             ℹ️ 今日新聞來源暫時無法取得 · 系統將於下次排程自動重試
           </div>
-          {% endif %}
         </div>
       </div>
 
@@ -3737,6 +3724,28 @@
     } catch(e){}
   })();
 
+  // Persist work-state separately from existing watchlist/theme keys so older
+  // preferences remain compatible and a malformed value can safely fall back.
+  (function() {
+    var stored = safeJsonParse('pmit_ui_state_v1', {});
+    if (!stored || typeof stored !== 'object' || Array.isArray(stored)) stored = {};
+    window.pm.uiState = {
+      details: stored.details && typeof stored.details === 'object' ? stored.details : {},
+      candidateDetails: stored.candidateDetails && typeof stored.candidateDetails === 'object' ? stored.candidateDetails : {},
+      calendarGroups: stored.calendarGroups && typeof stored.calendarGroups === 'object' ? stored.calendarGroups : {},
+      calendarEvents: stored.calendarEvents && typeof stored.calendarEvents === 'object' ? stored.calendarEvents : {},
+      conditions: stored.conditions && typeof stored.conditions === 'object' ? stored.conditions : {},
+      watchlistExpanded: stored.watchlistExpanded === true,
+      watchFilterGroup: typeof stored.watchFilterGroup === 'string' ? stored.watchFilterGroup : 'all',
+      watchEditOpen: stored.watchEditOpen === true,
+      snapshotMode: stored.snapshotMode === true
+    };
+  })();
+
+  window.pm.saveUiState = function() {
+    try { localStorage.setItem('pmit_ui_state_v1', JSON.stringify(window.pm.uiState)); } catch(e) {}
+  };
+
   // ==========================================
   // 1. PMIT Calendar Dashboard State & Logic
   // ==========================================
@@ -3754,12 +3763,21 @@
     if (body) {
       body.classList.toggle('is-open');
       sec.classList.toggle('open-sec', body.classList.contains('is-open'));
+      var dateKey = sec.getAttribute('data-date');
+      if (dateKey) {
+        window.pm.uiState.calendarGroups[dateKey] = body.classList.contains('is-open');
+        window.pm.saveUiState();
+      }
     }
   };
 
   window.pm.toggleEventDetail = function(id) {
-    var detail = document.getElementById('detail-' + id);
-    if (detail) detail.classList.toggle('open');
+    var detail = document.getElementById(id);
+    if (detail) {
+      detail.classList.toggle('open');
+      window.pm.uiState.calendarEvents[id] = detail.classList.contains('open');
+      window.pm.saveUiState();
+    }
   };
 
   window.pm.setCalQuickFilter = function(val) {
@@ -4299,6 +4317,8 @@
     detailRow.hidden = !opening;
     row.setAttribute('aria-expanded', opening ? 'true' : 'false');
     row.classList.toggle('is-expanded', opening);
+    window.pm.uiState.candidateDetails[detailId] = opening;
+    window.pm.saveUiState();
   };
 
 
@@ -4552,6 +4572,8 @@
         var inp = document.getElementById('watch-input');
         if (inp) { inp.focus(); inp.select(); }
       }
+      window.pm.uiState.watchEditOpen = isHidden;
+      window.pm.saveUiState();
     }
   };
 
@@ -4565,6 +4587,8 @@
     if (container) container.style.display = 'none';
     var btn = document.getElementById('watch-edit-toggle-btn');
     if (btn) btn.innerHTML = '✏️ 編輯清單';
+    window.pm.uiState.watchEditOpen = false;
+    window.pm.saveUiState();
     window.pm.showToast('已儲存自選股清單 (' + codes.length + ' 檔)');
   };
 
@@ -4578,6 +4602,8 @@
     if (container) container.style.display = 'none';
     var btn = document.getElementById('watch-edit-toggle-btn');
     if (btn) btn.innerHTML = '✏️ 編輯清單';
+    window.pm.uiState.watchEditOpen = false;
+    window.pm.saveUiState();
     window.pm.showToast('已清空自選股');
   };
 
@@ -4607,16 +4633,20 @@
     e.target.value = '';
   };
 
-  window.pm.watchlistExpanded = false;
-  window.pm.watchFilterGroup = 'all'; // 'all', 'alert', 'candidate', 'other'
+  window.pm.watchlistExpanded = window.pm.uiState.watchlistExpanded;
+  window.pm.watchFilterGroup = window.pm.uiState.watchFilterGroup; // 'all', 'alert', 'candidate', 'other'
 
   window.pm.setWatchFilterGroup = function(grp) {
     window.pm.watchFilterGroup = grp;
+    window.pm.uiState.watchFilterGroup = grp;
+    window.pm.saveUiState();
     renderWatch();
   };
 
   window.pm.toggleWatchlistExpand = function() {
     window.pm.watchlistExpanded = !window.pm.watchlistExpanded;
+    window.pm.uiState.watchlistExpanded = window.pm.watchlistExpanded;
+    window.pm.saveUiState();
     renderWatch();
   };
 
@@ -4936,6 +4966,8 @@
   window.pm.toggleSnapshot = function() {
     document.body.classList.toggle('snapshot-mode');
     var isSnap = document.body.classList.contains('snapshot-mode');
+    window.pm.uiState.snapshotMode = isSnap;
+    window.pm.saveUiState();
     window.pm.showToast(isSnap ? '已開啟截圖模式（按 Esc 或點擊退出）' : '已關閉截圖模式');
   };
 
@@ -5058,6 +5090,11 @@
     var isExp = btn.getAttribute('aria-expanded') === 'true';
     btn.setAttribute('aria-expanded', !isExp);
     hidden.classList.toggle('is-open', !isExp);
+    var conditionKey = box.getAttribute('data-pmit-condition-key');
+    if (conditionKey) {
+      window.pm.uiState.conditions[conditionKey] = !isExp;
+      window.pm.saveUiState();
+    }
     var count = btn.textContent.match(/\d+/);
     btn.textContent = !isExp ? '收合 ▲' : '+' + (count ? count[0] : '') + ' 條件 ▾';
   };
@@ -5310,6 +5347,67 @@
     else startTimers();
   });
 
+  window.pm.hydrateNews = function() {
+    var block = document.getElementById('news-lazy-block');
+    if (!block || block.getAttribute('data-news-loaded') === 'true' || block.getAttribute('data-news-loading') === 'true') return;
+    block.setAttribute('data-news-loading', 'true');
+    var src = block.getAttribute('data-news-src') || 'data/news.json';
+    var list = document.getElementById('news-list');
+    var empty = document.getElementById('news-empty');
+    var badge = document.getElementById('news-count-badge');
+    fetch(src, { credentials: 'same-origin' })
+      .then(function(response) {
+        if (!response.ok) throw new Error('news package unavailable');
+        return response.json();
+      })
+      .then(function(payload) {
+        var items = Array.isArray(payload) ? payload : (payload && Array.isArray(payload.items) ? payload.items : []);
+        items = items.slice(0, 10);
+        if (badge) badge.textContent = items.length + ' 則';
+        if (!items.length) {
+          if (list) { list.innerHTML = ''; list.hidden = true; }
+          if (empty) empty.hidden = false;
+          return;
+        }
+        if (list) {
+          list.innerHTML = '';
+          items.forEach(function(item) {
+            var link = document.createElement('a');
+            link.href = item.link || '#';
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.className = 'news-item';
+            link.style.cssText = 'text-decoration:none; color:inherit; padding:8px 0; border-bottom:1px solid var(--border);';
+            var title = document.createElement('div');
+            title.className = 'news-title';
+            title.style.cssText = 'font-weight:600; font-size:13px; margin-bottom:4px;';
+            title.textContent = item.title || '未提供標題';
+            var meta = document.createElement('div');
+            meta.className = 'news-meta font-mono';
+            meta.style.cssText = 'font-size:11px; color:var(--text-muted); display:flex; gap:12px;';
+            [item.source, item.time].forEach(function(value) {
+              var span = document.createElement('span');
+              span.textContent = value || '—';
+              meta.appendChild(span);
+            });
+            link.appendChild(title);
+            link.appendChild(meta);
+            list.appendChild(link);
+          });
+          list.hidden = false;
+        }
+        if (empty) empty.hidden = true;
+      })
+      .catch(function() {
+        if (list) { list.innerHTML = ''; list.hidden = true; }
+        if (empty) empty.hidden = false;
+      })
+      .finally(function() {
+        block.setAttribute('data-news-loading', 'false');
+        block.setAttribute('data-news-loaded', 'true');
+      });
+  };
+
   document.addEventListener('DOMContentLoaded', function() {
     var savedTheme = localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme');
     var urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
@@ -5327,8 +5425,25 @@
     if (inp && codes.length) inp.value = codes.join(', ');
     renderWatch();
 
+    if (window.pm.uiState.watchEditOpen) {
+      var watchEditContainer = document.getElementById('watch-input-container');
+      var watchEditButton = document.getElementById('watch-edit-toggle-btn');
+      if (watchEditContainer) watchEditContainer.style.display = 'flex';
+      if (watchEditButton) watchEditButton.innerHTML = '✕ 關閉編輯';
+    }
+
     if (urlParams.get('watch') === '1') window.pm.watchOnly = true;
     if (window.pm.watchOnly) window.pm.applyWatchOnly();
+
+    document.querySelectorAll('#watchlist tr.candidate-stock-row[data-detail-id]').forEach(function(row) {
+      var detailId = row.getAttribute('data-detail-id');
+      var detailRow = detailId ? document.getElementById(detailId) : null;
+      if (detailRow && window.pm.uiState.candidateDetails[detailId] === true && row.style.display !== 'none') {
+        detailRow.hidden = false;
+        row.setAttribute('aria-expanded', 'true');
+        row.classList.add('is-expanded');
+      }
+    });
 
     // Restore Briefing Mode
     if (localStorage.getItem('pmit_briefing_mode') === '1') {
@@ -5339,6 +5454,7 @@
         bt.setAttribute('aria-pressed', 'true');
       }
     }
+    if (window.pm.uiState.snapshotMode) document.body.classList.add('snapshot-mode');
 
     // 3-second timeout fallback check for embeds
     setTimeout(function() {
@@ -5362,9 +5478,40 @@
     }
     if (window.pm.applyCalendarFilters) window.pm.applyCalendarFilters();
 
-    // Auto-expand today's section in financial calendar
+    var newsBlock = document.getElementById('news-lazy-block');
+    if (newsBlock) {
+      if ('IntersectionObserver' in window) {
+        var newsObserver = new IntersectionObserver(function(entries, observer) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              window.pm.hydrateNews();
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '500px 0px' });
+        newsObserver.observe(newsBlock);
+      } else {
+        setTimeout(window.pm.hydrateNews, 0);
+      }
+    }
+
+    var hasSavedCalendarGroups = Object.keys(window.pm.uiState.calendarGroups).length > 0;
+    document.querySelectorAll('.cal-date-section[data-date]').forEach(function(sec) {
+      var savedOpen = window.pm.uiState.calendarGroups[sec.getAttribute('data-date')];
+      if (typeof savedOpen === 'boolean') {
+        var savedBody = sec.querySelector('.cal-date-body');
+        if (savedBody) savedBody.classList.toggle('is-open', savedOpen);
+        sec.classList.toggle('open-sec', savedOpen);
+      }
+    });
+    document.querySelectorAll('.cal-event-card[data-id]').forEach(function(card) {
+      var savedEventOpen = window.pm.uiState.calendarEvents[card.getAttribute('data-id')];
+      if (typeof savedEventOpen === 'boolean') card.classList.toggle('open', savedEventOpen);
+    });
+
+    // Auto-expand today's section only when no prior calendar preference exists.
     var todayDateSec = document.querySelector('.cal-date-section.is-today-section') || document.querySelector('.cal-date-section');
-    if (todayDateSec) {
+    if (todayDateSec && !hasSavedCalendarGroups) {
       var dBody = todayDateSec.querySelector('.cal-date-body');
       if (dBody && !dBody.classList.contains('is-open')) {
         dBody.classList.add('is-open');
@@ -5372,8 +5519,19 @@
       }
     }
 
-    document.querySelectorAll('.unref-accordion').forEach(function(det) {
+    var detailCounters = {};
+    document.querySelectorAll('details').forEach(function(det) {
+      var section = det.closest('section');
+      var scope = (section && section.id) || 'page';
+      var classToken = (det.className || 'details').split(/\s+/)[0] || 'details';
+      var counterKey = scope + ':' + classToken;
+      detailCounters[counterKey] = (detailCounters[counterKey] || 0) + 1;
+      var stateKey = det.id || (counterKey + ':' + detailCounters[counterKey]);
+      det.setAttribute('data-pmit-state-key', stateKey);
+      if (typeof window.pm.uiState.details[stateKey] === 'boolean') det.open = window.pm.uiState.details[stateKey];
       det.addEventListener('toggle', function() {
+        window.pm.uiState.details[stateKey] = det.open;
+        window.pm.saveUiState();
         if (det.open) {
           var iframe = det.querySelector('iframe');
           if (iframe && iframe.contentWindow) {
@@ -5381,6 +5539,16 @@
           }
         }
       });
+    });
+    document.querySelectorAll('.cond-collapsible').forEach(function(box, index) {
+      var conditionKey = box.id || ('condition:' + index);
+      box.setAttribute('data-pmit-condition-key', conditionKey);
+      var desiredOpen = window.pm.uiState.conditions[conditionKey];
+      var currentOpen = box.querySelector('.cond-hidden')?.classList.contains('is-open');
+      var button = box.querySelector('[aria-expanded]');
+      if (typeof desiredOpen === 'boolean' && button && desiredOpen !== currentOpen) {
+        window.pm.toggleCondCollapsible(button);
+      }
     });
     if (window.matchMedia) {
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {

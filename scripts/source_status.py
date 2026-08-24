@@ -76,6 +76,7 @@ class SourceItem:
     error_summary: Optional[str]
     fallback_used: bool
     impact_desc: str
+    retry_attempts: int = 0
     fetch_status: str = "ok"  # "ok", "failed", "fallback", "missing"
     freshness: str = "fresh"  # "fresh", "stale", "expired"
     combined_status_label: str = "抓取正常・資料新鮮"
@@ -167,6 +168,7 @@ def create_empty_source_item(
         error_summary=error_summary,
         fallback_used=fallback_used,
         impact_desc=meta["impact_desc"],
+        retry_attempts=0,
         fetch_status=f_status,
         freshness=freshness,
         combined_status_label=label,
@@ -236,6 +238,7 @@ def evaluate_source_health(
                 error_summary=src_dict.get("error_summary"),
                 fallback_used=fb_used,
                 impact_desc=meta["impact_desc"],
+                retry_attempts=int(src_dict.get("retry_attempts", 0) or 0),
                 fetch_status=f_status,
                 freshness=freshness,
                 combined_status_label=label,
@@ -252,6 +255,9 @@ def evaluate_source_health(
             elif item.freshness == "expired":
                 has_unsafe_issue = True
                 reasons.append(f"必要來源【{item.name}】嚴重過期 (距今 {item.age_minutes/60:.1f} 小時)")
+            elif item.fallback_used:
+                has_caution_issue = True
+                reasons.append(f"必要來源【{item.name}】已降級使用近期快取")
             elif item.freshness == "stale":
                 has_caution_issue = True
                 reasons.append(f"必要來源【{item.name}】資料已逾 12 小時")

@@ -108,7 +108,7 @@ jobs:
 
       - name: Validate fetched data contracts
         if: steps.trading_day.outputs.is_trading_day == 'true'
-        run: python scripts/validate_data.py --data-dir data/latest || echo "::warning::Data validation contract reported warnings"
+        run: python scripts/validate_data.py --data-dir data/latest --normalize || echo "::warning::Data validation contract reported warnings"
 
       - name: Minify frontend module
         run: |

@@ -61,3 +61,35 @@ def test_validate_data_dir_reports_required_object_key(tmp_path):
 
     assert report["ok"] is False
     assert any("missing key 'sources'" in error for error in report["errors"])
+
+
+def test_validate_data_dir_normalizes_market_rows_before_static_build(tmp_path):
+    _write_payloads(tmp_path)
+    (tmp_path / "pressplay.json").write_text(json.dumps({
+        "found_group": {"matched": [{
+            "code": 2489,
+            "name": "瑞軒",
+            "close": "not-a-number",
+            "volume": "1,200",
+            "foreign": "+90",
+        }]},
+        "not_found_group": {"matched": [{"code": "", "name": "bad row", "close": "12"}]},
+    }), encoding="utf-8")
+    (tmp_path / "disposal.json").write_text(json.dumps({
+        "one_flag_from_disposal": [{"code": "⏸3490", "close": "53.9"}],
+        "two_flags_from_disposal": [{"code": None, "close": "12"}],
+        "currently_in_disposal": [],
+    }), encoding="utf-8")
+
+    report = validate_data_dir(tmp_path, normalize=True)
+    pressplay = json.loads((tmp_path / "pressplay.json").read_text(encoding="utf-8"))
+    disposal = json.loads((tmp_path / "disposal.json").read_text(encoding="utf-8"))
+
+    row = pressplay["found_group"]["matched"][0]
+    assert report["ok"] is True
+    assert row["code"] == "2489"
+    assert row["close"] == "—"
+    assert pressplay["not_found_group"]["matched"] == []
+    assert disposal["one_flag_from_disposal"][0]["code"] == "⏸3490"
+    assert disposal["two_flags_from_disposal"] == []
+    assert any("正規化" in warning for warning in report["warnings"])

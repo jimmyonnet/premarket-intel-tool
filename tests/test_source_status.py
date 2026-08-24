@@ -73,6 +73,40 @@ def test_source_health_optional_failure_is_caution():
     assert any("PressPlay" in r for r in eval_res.summary_reasons)
 
 
+def test_source_health_required_cached_warning_is_caution_not_unsafe():
+    """A required source may use a recent valid cache after retries without blocking build."""
+    now_iso = datetime.now(TAIPEI).isoformat()
+    sources = {
+        sid: {
+            "source_id": sid,
+            "name": meta["name"],
+            "is_required": meta["is_required"],
+            "status": "ok",
+            "fetched_at": now_iso,
+            "data_date": "08/24",
+            "age_minutes": 5.0,
+            "error_summary": None,
+            "fallback_used": False,
+            "impact_desc": meta["impact_desc"],
+        }
+        for sid, meta in SOURCES_METADATA.items()
+    }
+    sources["indices"].update({
+        "status": "warning",
+        "fallback_used": True,
+        "error_summary": "重試 3 次後沿用前次快照",
+        "retry_attempts": 2,
+    })
+
+    eval_res = evaluate_source_health({"sources": sources})
+    indices_item = next(s for s in eval_res.sources if s["source_id"] == "indices")
+
+    assert eval_res.overall_status == "caution"
+    assert indices_item["fetch_status"] == "fallback"
+    assert indices_item["status_badge_class"] == "is-caution"
+    assert indices_item["retry_attempts"] == 2
+
+
 def test_source_health_required_failure_is_unsafe():
     """When a required source fails (e.g. indices or disposal), overall status is 'unsafe'."""
     now_iso = datetime.now(TAIPEI).isoformat()
@@ -167,4 +201,3 @@ def test_source_health_dual_dimensions_stale():
     assert indices_item["freshness"] == "stale"
     assert indices_item["combined_status_label"] == "必要・資料過期"
     assert indices_item["status_badge_class"] == "is-caution"
-

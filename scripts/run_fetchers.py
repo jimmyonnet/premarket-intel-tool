@@ -11,9 +11,10 @@ import json
 import os
 import subprocess
 import sys
+import time
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import Any
+from typing import Any, Callable
 
 try:
     from source_status import (
@@ -61,17 +62,44 @@ def fetch_source(
     timeout: int = 45,
     env: dict[str, str] | None = None,
     extract_date_fn: Any = None,
+    max_attempts: int = 3,
+    retry_delay_seconds: int = 30,
+    sleep_fn: Callable[[float], None] = time.sleep,
 ) -> dict[str, Any]:
-    """Executes fetch command for a specific source and writes result & status dict."""
+    """Fetch one source with bounded retries and a safe previous-snapshot fallback."""
     target_file.parent.mkdir(parents=True, exist_ok=True)
     now = datetime.now(TAIPEI)
     now_iso = now.isoformat()
     previous_signature = None
+    previous_content = None
     if target_file.exists():
         previous_signature = (target_file.stat().st_mtime_ns, target_file.stat().st_size)
+        if target_file.stat().st_size > 0:
+            cached_bytes = target_file.read_bytes()
+            try:
+                json.loads(cached_bytes.decode("utf-8"))
+                previous_content = cached_bytes
+            except (UnicodeDecodeError, json.JSONDecodeError):
+                print(f"[Fetch Cache] {source_id} previous snapshot is invalid and will not be reused.", file=sys.stderr)
 
     print(f"[Fetch] Starting {source_id} -> {target_file.name}...")
-    exit_code, stdout, stderr = run_command(cmd, env=env, timeout=timeout)
+    attempts = max(1, max_attempts)
+    exit_code = 1
+    stdout = ""
+    stderr = ""
+    attempt = 0
+    for attempt in range(1, attempts + 1):
+        exit_code, stdout, stderr = run_command(cmd, env=env, timeout=timeout)
+        if exit_code == 0:
+            break
+        if attempt < attempts:
+            print(
+                f"[Fetch Retry] {source_id} attempt {attempt}/{attempts} failed; "
+                f"retrying in {retry_delay_seconds}s...",
+                file=sys.stderr,
+            )
+            sleep_fn(retry_delay_seconds)
+    retry_attempts = max(0, attempt - 1)
 
     fallback_used = False
     status = "ok"
@@ -80,10 +108,13 @@ def fetch_source(
 
     if exit_code != 0:
         print(f"[Fetch Error] {source_id} failed with code {exit_code}: {stderr[:200]}", file=sys.stderr)
-        status = "failed"
         fallback_used = True
-        error_summary = f"指令執行失敗 (code {exit_code})"
-        if not target_file.exists() or target_file.stat().st_size == 0:
+        error_summary = f"重試 {attempt} 次後指令執行失敗 (code {exit_code})"
+        if previous_content is not None:
+            target_file.write_bytes(previous_content)
+            status = "warning"
+        else:
+            status = "failed"
             target_file.write_text(fallback_content, encoding="utf-8")
     else:
         # If script wrote output to stdout, update target_file
@@ -97,16 +128,20 @@ def fetch_source(
         else:
             current_signature = (target_file.stat().st_mtime_ns, target_file.stat().st_size) if target_file.exists() else None
             if previous_signature is not None and current_signature == previous_signature:
-                status = "failed"
+                status = "warning"
                 fallback_used = True
                 error_summary = "指令成功但未產生新資料，沿用前次快照"
 
         # Validate target file exists and is valid JSON
         if not target_file.exists() or target_file.stat().st_size == 0:
-            target_file.write_text(fallback_content, encoding="utf-8")
-            status = "failed"
             fallback_used = True
             error_summary = "產出檔案為空"
+            if previous_content is not None:
+                target_file.write_bytes(previous_content)
+                status = "warning"
+            else:
+                target_file.write_text(fallback_content, encoding="utf-8")
+                status = "failed"
         else:
             try:
                 content = json.loads(target_file.read_text(encoding="utf-8"))
@@ -115,16 +150,24 @@ def fetch_source(
                     if content.get("is_fallback") or (content.get("latest") or {}).get("is_fallback"):
                         fallback_used = True
                     if content.get("_status") == "fetch_failed":
-                        status = "failed"
                         fallback_used = True
                         error_summary = content.get("_error", "登入或來源抓取失敗")
+                        if previous_content is not None:
+                            target_file.write_bytes(previous_content)
+                            status = "warning"
+                        else:
+                            status = "failed"
                     elif extract_date_fn:
                         data_date = extract_date_fn(content)
             except Exception as e:
-                status = "failed"
                 fallback_used = True
                 error_summary = f"JSON 解析失敗: {str(e)[:100]}"
-                target_file.write_text(fallback_content, encoding="utf-8")
+                if previous_content is not None:
+                    target_file.write_bytes(previous_content)
+                    status = "warning"
+                else:
+                    target_file.write_text(fallback_content, encoding="utf-8")
+                    status = "failed"
 
     meta = SOURCES_METADATA.get(source_id, {"name": source_id, "is_required": False, "impact_desc": ""})
 
@@ -138,6 +181,7 @@ def fetch_source(
         "age_minutes": 0.0,
         "error_summary": error_summary,
         "fallback_used": fallback_used,
+        "retry_attempts": retry_attempts,
         "impact_desc": meta["impact_desc"],
     }
 
@@ -176,6 +220,7 @@ def inspect_existing_source_file(source_id: str, file_path: Path) -> dict[str, A
             "age_minutes": round(age_minutes, 1),
             "error_summary": error_summary,
             "fallback_used": fallback_used,
+            "retry_attempts": 0,
             "impact_desc": meta["impact_desc"],
         }
     except Exception:
