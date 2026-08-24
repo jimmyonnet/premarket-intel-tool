@@ -86,6 +86,8 @@ def test_candidate_template_renders_expandable_chengwaye_details():
     assert 'id="candidate-detail-2489"' in rendered
     assert 'data-detail-id="candidate-detail-2489"' in rendered
     assert 'class="candidate-detail-row"' in rendered
+    assert '<h4 class="candidate-detail-title">2489 瑞軒</h4>' in rendered
+    assert "Chengwaye 籌碼明細" not in rendered
     assert "法人買賣 · 買超 Top15" in rendered
     assert "法人買賣 · 賣超 Top15" in rendered
     assert "當沖 Top10" in rendered
