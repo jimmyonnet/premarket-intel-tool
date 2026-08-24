@@ -1731,7 +1731,13 @@
   .cal-event-card.is-past {
     opacity: 0.55;
   }
+  .cal-event-card.is-past:hover {
+    opacity: 0.85;
+  }
   .cal-event-card.is-past .cal-card-title {
+    color: var(--text-muted);
+  }
+  .cal-date-section.is-past-group .cal-date-title {
     color: var(--text-muted);
   }
   .cal-event-card.is-past .cal-countdown-badge {
@@ -4121,6 +4127,7 @@
     document.querySelectorAll('.cal-date-section').forEach(function(section) {
       var cards = Array.prototype.slice.call(section.querySelectorAll('.cal-event-card[data-datetime-utc]'));
       var allPast = cards.length > 0 && cards.every(function(card) { return card.classList.contains('is-past'); });
+      section.classList.toggle('is-past-group', allPast);
       if (allPast && !section.hasAttribute('data-past-auto-collapsed')) {
         var body = section.querySelector('.cal-date-body');
         if (body) body.classList.remove('is-open');
