@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-08-24 10:03",
-  "build_version": "20260824_1003",
+  "build_time": "2026-08-24 10:12",
+  "build_version": "20260824_1012",
   "data_date": "08/24",
-  "stale_hours": 35.6,
-  "hours_since_us_close": 6.1,
+  "stale_hours": 35.8,
+  "hours_since_us_close": 6.2,
   "overall_status": "ready",
   "status_label": "可用",
   "status_badge_class": "is-ready",
@@ -16,7 +16,7 @@
       "name": "指數行情 (美股/亞股/ADR)",
       "is_required": true,
       "status": "ok",
-      "fetched_at": "2026-08-24T09:58:37.537128+08:00",
+      "fetched_at": "2026-08-24T10:11:47.024434+08:00",
       "data_date": null,
       "age_minutes": 0.0,
       "error_summary": null,
@@ -157,12 +157,12 @@
     }
   ],
   "schema_version": 1,
-  "built_at": "2026-08-24T02:03:12.335125+00:00",
+  "built_at": "2026-08-24T02:12:18.474431+00:00",
   "hash": {
     "disposition": "28b395c1e053",
     "candidates": "1c9e29706626",
     "announcements": "fae3191f99ff",
-    "macro": "01e5f24521e1",
+    "macro": "e42f14c55b35",
     "calendar": "464f88d0e1ce",
     "news": "a33e18cd4c1a"
   },

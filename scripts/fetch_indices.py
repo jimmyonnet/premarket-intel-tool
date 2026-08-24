@@ -5,6 +5,8 @@ Part 1 data source: previous-night US four major indices + Nikkei225 + KOSPI.
 Sources (verified live during design, see /fixtures for saved samples):
   - https://tw.stock.yahoo.com/markets/       -> Dow, S&P500, Nasdaq, SOX, Nikkei225 (+HSI, unused)
   - https://tw.stock.yahoo.com/world-indices  -> KOSPI (韓國綜合指數) + everything above again
+  - https://tw.stock.yahoo.com/quote/%5EN225  -> Nikkei 225 direct quote + Taipei quote time
+  - https://tw.stock.yahoo.com/quote/%5EKS11  -> KOSPI direct quote + Taipei quote time
 
 Both pages are server-side rendered: the numbers are present in the raw HTML
 response before any JavaScript runs (verified via `fetch(location.href)` on
@@ -62,6 +64,18 @@ HEADERS = {
 
 MARKETS_URL = "https://tw.stock.yahoo.com/markets/"
 WORLD_INDICES_URL = "https://tw.stock.yahoo.com/world-indices"
+ASIA_QUOTE_PAGES = {
+    "nikkei225": {
+        "name": "日經225指數",
+        "symbol": "^N225",
+        "url": "https://tw.stock.yahoo.com/quote/%5EN225",
+    },
+    "kospi": {
+        "name": "韓國綜合指數",
+        "symbol": "^KS11",
+        "url": "https://tw.stock.yahoo.com/quote/%5EKS11",
+    },
+}
 
 # name -> (chinese label, output key)
 MARKETS_TARGETS = [
@@ -226,6 +240,55 @@ def parse_world_indices_block(text: str, targets, soup=None):
     return results
 
 
+def parse_asia_quote_page(text: str, config: dict, soup=None):
+    """Parse a specified Yahoo index quote page into the shared index shape.
+
+    Yahoo's direct quote pages expose the latest quote, change and a Taipei
+    timestamp in their server-rendered text. The direct pages are the primary
+    Asia source; the summary market pages remain a fallback when this parser
+    or network request cannot provide a complete quote.
+    """
+    symbol = config["symbol"]
+    match = re.search(
+        re.escape(symbol)
+        + r"\s*\n+(?:\s*加入自選股\s*\n+)?\s*([\d,]+\.\d+)\s*\n+\s*(?:JPY|KRW)\s*\n+\s*(-?[\d,]+\.\d+)\s*\n+\s*\(([\-\d.]+)%\)"
+        + r"\s*\n+.*?(\d{4}/\d{2}/\d{2}\s+\d{2}:\d{2})\s+台北時間",
+        text,
+        flags=re.S,
+    )
+    if not match:
+        return None
+
+    value, change, change_pct, quote_time = match.groups()
+    sign = trend_sign(find_card(soup, symbol)) if soup is not None else 1
+    return {
+        "name": config["name"],
+        "value": float(value.replace(",", "")),
+        "change": abs(float(change.replace(",", ""))) * sign,
+        "change_pct": abs(float(change_pct)) * sign,
+        "updated_cst": quote_time[5:],
+        "source_url": config["url"],
+        "source_label": "Yahoo 個別指數頁",
+    }
+
+
+def fetch_direct_asia_quotes():
+    """Fetch direct Asia quote pages without making summary-source failure fatal."""
+    results = {}
+    for key, config in ASIA_QUOTE_PAGES.items():
+        try:
+            quote_html = fetch(config["url"])
+            quote_soup = BeautifulSoup(quote_html, "html.parser") if BeautifulSoup is not None else None
+            parsed = parse_asia_quote_page(get_text(quote_html), config, soup=quote_soup)
+            if parsed is None:
+                print(f"WARNING: could not parse direct Asia quote page for {config['symbol']}", file=sys.stderr)
+                continue
+            results[key] = parsed
+        except Exception as exc:
+            print(f"WARNING: could not fetch direct Asia quote page for {config['symbol']}: {exc}", file=sys.stderr)
+    return results
+
+
 def fetch(url: str, fixture_path: Path = None) -> str:
     if fixture_path is not None:
         return fixture_path.read_text(encoding="utf-8")
@@ -319,10 +382,12 @@ def main():
 
     us_indices = parse_markets_block(markets_text, MARKETS_TARGETS, soup=markets_soup)
     world_indices = parse_world_indices_block(world_text, WORLD_INDICES_TARGETS, soup=world_soup)
+    direct_asia_quotes = fetch_direct_asia_quotes()
 
-    # Nikkei appears on both pages; prefer the world-indices one since it
-    # carries a per-row timestamp, fall back to markets page.
-    nikkei = world_indices.get("nikkei225") or us_indices.get("nikkei225")
+    # Prefer the user-requested direct quote pages. Keep the historical
+    # market-summary parser as a resilient fallback for either index.
+    nikkei = direct_asia_quotes.get("nikkei225") or world_indices.get("nikkei225") or us_indices.get("nikkei225")
+    kospi = direct_asia_quotes.get("kospi") or world_indices.get("kospi")
 
     key_stocks, failed_stocks = fetch_key_stocks()
     
@@ -330,6 +395,7 @@ def main():
         "source": {
             "markets": MARKETS_URL,
             "world_indices": WORLD_INDICES_URL,
+            "asia_quote_pages": {key: item["url"] for key, item in ASIA_QUOTE_PAGES.items()},
         },
         "adrs": key_stocks,
         "key_stocks": key_stocks,
@@ -341,7 +407,7 @@ def main():
         },
         "asia_open": {
             "nikkei225": nikkei,
-            "kospi": world_indices.get("kospi"),
+            "kospi": kospi,
         },
     }
 
