@@ -25,6 +25,15 @@ def test_low_frequency_controls_and_data_status_are_collapsed_in_utility_panel()
         assert f'id="{control_id}"' in nav
 
 
+def test_open_utility_panel_keeps_its_trigger_in_the_top_right():
+    source = TEMPLATE.read_text(encoding="utf-8")
+
+    assert ".nav-utility-panel[open] { flex-basis: 100%; }" not in source
+    assert ".nav-utility-content {\n    position: absolute;" in source
+    assert "right: 0;" in source
+    assert "top: calc(100% + 8px);" in source
+
+
 def test_deployed_page_keeps_utility_panel_collapsed_and_summary_anchor_ready():
     page = DEPLOYED.read_text(encoding="utf-8")
     nav = _nav_block(page)
