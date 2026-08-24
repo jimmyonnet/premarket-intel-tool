@@ -1994,6 +1994,25 @@
   .badge-nowrap { white-space: nowrap !important; }
 
   @media (max-width: 768px) {
+    .cal-filter-toolbar {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cal-filter-row {
+      flex-wrap: nowrap;
+      min-width: max-content;
+    }
+    .cal-filter-row.secondary {
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+    .cal-chip {
+      flex: 0 0 auto;
+      min-height: 32px;
+    }
+    .cal-search-input {
+      width: 100%;
+    }
   }
 
 
