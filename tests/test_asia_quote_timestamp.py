@@ -11,10 +11,13 @@ INDICES = ROOT / "data" / "latest" / "indices.json"
 def test_asia_cards_render_source_quote_time_with_clear_context():
     source = TEMPLATE.read_text(encoding="utf-8")
 
-    assert "時間為來源行情時間" in source
-    assert "來源行情 {{ q.updated_cst }}" in source
+    assert "Yahoo 股市延遲 20 分鐘" in source
+    assert "Yahoo 股市 · {{ q.updated_cst }} · 延遲 20 分鐘" in source
     assert "非頁面建置時間" in source
-    assert "行情時間未提供" in source
+    assert "Yahoo 股市 · 行情時間未提供" in source
+    assert "https://tw.stock.yahoo.com/quote/%5EN225" in source
+    assert "https://tw.stock.yahoo.com/quote/%5EKS11" in source
+    assert 'target="_blank" rel="noopener noreferrer"' in source
 
 
 def test_deployed_asia_cards_show_current_source_quote_times():
@@ -22,4 +25,7 @@ def test_deployed_asia_cards_show_current_source_quote_times():
     asia_open = json.loads(INDICES.read_text(encoding="utf-8"))["asia_open"]
 
     for index_key in ("nikkei225", "kospi"):
-        assert f"來源行情 {asia_open[index_key]['updated_cst']}" in page
+        assert f"Yahoo 股市 · {asia_open[index_key]['updated_cst']} · 延遲 20 分鐘" in page
+
+    assert 'href="https://tw.stock.yahoo.com/quote/%5EN225"' in page
+    assert 'href="https://tw.stock.yahoo.com/quote/%5EKS11"' in page

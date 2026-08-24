@@ -1038,6 +1038,9 @@
     font-family: var(--font-mono);
   }
   .tile-quote-time { font-size: 10.5px; letter-spacing: 0; white-space: nowrap; }
+  .tile-source-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .tile-source-row .cal-link-btn { padding: 2px 6px; font-size: 10px; flex: 0 0 auto; }
+  .tile-source-row .tile-quote-time { margin-left: auto; }
   .pill-fresh { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); }
   .pill-amber { background: var(--amber-bg); color: var(--amber-fg); border: 1px solid var(--amber-border); }
   .pill-danger { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
@@ -3042,20 +3045,23 @@
           <div class="card-title-group">
             <h3 class="card-title">亞股開盤即時概況</h3>
           </div>
-          <span class="card-tip">日韓早盤開盤表現 · 時間為來源行情時間</span>
+          <span class="card-tip">日韓早盤 · Yahoo 股市延遲 20 分鐘</span>
         </div>
 
         <div class="data-block">
           <div class="tiles-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom:0;">
-            {% for symbol, label in [('^N225', '日經 225'), ('^KS11', '韓國 KOSPI')] %}
+            {% for symbol, label, yahoo_url in [('^N225', '日經 225', 'https://tw.stock.yahoo.com/quote/%5EN225'), ('^KS11', '韓國 KOSPI', 'https://tw.stock.yahoo.com/quote/%5EKS11')] %}
             {% set q = asia_open[symbol] if (asia_open and symbol in asia_open) else indices.get(symbol) %}
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">{{ label }}</span>
+              </div>
+              <div class="tile-source-row">
+                <a class="cal-link-btn" href="{{ yahoo_url }}" target="_blank" rel="noopener noreferrer" title="開啟 {{ label }} Yahoo 股市頁">Yahoo 股市 ↗</a>
                 {% if q and q.updated_cst %}
-                <span class="tile-delay-pill pill-fresh tile-quote-time" title="Yahoo 股市來源行情時間；非頁面建置時間">來源行情 {{ q.updated_cst }}</span>
+                <span class="tile-delay-pill pill-fresh tile-quote-time" title="Yahoo 股市來源行情時間；非頁面建置時間">Yahoo 股市 · {{ q.updated_cst }} · 延遲 20 分鐘</span>
                 {% else %}
-                <span class="tile-delay-pill pill-amber tile-quote-time" title="Yahoo 股市未提供來源行情時間">行情時間未提供</span>
+                <span class="tile-delay-pill pill-amber tile-quote-time" title="Yahoo 股市未提供來源行情時間">Yahoo 股市 · 行情時間未提供</span>
                 {% endif %}
               </div>
               {% if q and q.price is not none %}
