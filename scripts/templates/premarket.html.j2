@@ -307,18 +307,80 @@
     top: calc(100% + 8px);
     right: 0;
     z-index: 60;
-    width: min(720px, calc(100vw - 32px));
-    padding: 10px 12px 12px;
+    width: min(476px, calc(100vw - 32px));
+    padding: 13px;
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 10px;
     background: var(--bg-card);
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.16);
+  }
+  .nav-utility-content::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 28px;
+    width: 10px;
+    height: 10px;
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    transform: rotate(45deg);
+  }
+  .utility-panel-header {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 1px 2px 11px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .utility-panel-eyebrow {
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+  .utility-panel-title { margin-top: 2px; color: var(--text-main); font-size: 14px; font-weight: 800; }
+  .utility-panel-build {
+    padding: 3px 6px;
+    border: 1px solid var(--border-light);
+    border-radius: 999px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  .utility-panel-build strong { color: var(--text-main); }
+  .utility-panel-section { position: relative; z-index: 1; margin-top: 11px; }
+  .utility-section-label {
+    margin: 0 0 6px 2px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
   }
   .nav-utility-content .nav-actions {
-    justify-content: flex-end;
-    margin-bottom: 8px;
+    justify-content: flex-start;
+    gap: 6px;
+    margin: 0;
+    padding: 9px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    background: var(--bg-sub);
   }
-  .nav-utility-content .today-briefing-details { margin-bottom: 0; }
+  .nav-utility-content .today-briefing-details {
+    margin: 0;
+    overflow: hidden;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    background: var(--bg-sub);
+  }
+  .nav-utility-content .today-briefing-summary { padding: 9px 10px; background: transparent; }
+  .nav-utility-content .today-briefing-card { box-shadow: none; }
   .nav-btn {
     background: var(--bg-card);
     border: 1px solid var(--border-strong);
@@ -377,8 +439,9 @@
     }
     .nav-utility-panel { margin-left: auto; }
     .nav-utility-panel > summary { height: 26px; font-size: 11.5px; }
-    .nav-utility-content { width: min(100vw - 20px, 720px); padding: 8px 10px 10px; }
-    .nav-utility-content .nav-actions { margin-bottom: 6px; }
+    .nav-utility-content { width: min(100vw - 20px, 476px); padding: 10px; }
+    .utility-panel-header { padding-bottom: 9px; }
+    .nav-utility-content .nav-actions { padding: 7px; }
     .nav-btn {
       flex: 1;
       padding: 0 4px;
@@ -2446,7 +2509,16 @@
           <span class="nav-utility-state">{{ o_label }}</span>
         </summary>
         <div class="nav-utility-content">
-      <div class="nav-actions">
+          <div class="utility-panel-header">
+            <div>
+              <div class="utility-panel-eyebrow">QUICK CONTROLS</div>
+              <div class="utility-panel-title">常用工具</div>
+            </div>
+            <div class="utility-panel-build">建置 <strong>{{ build_time or '08:00' }}</strong></div>
+          </div>
+          <div class="utility-panel-section">
+            <div class="utility-section-label">快速操作</div>
+            <div class="nav-actions">
         <button class="nav-btn btn-briefing" id="briefing-toggle" onclick="window.pm.toggleBriefingMode()" type="button" title="切換盤前 3 分鐘速讀模式 (快捷鍵 B)" aria-pressed="false">⚡ 速讀<span class="btn-text-extra">模式</span></button>
         <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" title="切換只看自選 (快捷鍵 W)" aria-pressed="false">⭐ 自選<span class="btn-text-extra">股</span></button>
         <button class="nav-btn btn-clean-link" onclick="window.pm.copyCleanUrl()" type="button" title="複製乾淨網址（不含自選股代號，方便截圖分享）">🔗 乾淨連結</button>
@@ -2457,8 +2529,11 @@
         <button class="nav-btn refresh-btn" onclick="location.reload()" type="button" title="重新載入最新版" aria-label="重新整理頁面">
           🔄 <span class="last-build">建置 {{ build_time or '08:00' }}</span><span class="short-build">重整</span>
         </button>
-      </div>
-      <details class="today-briefing-details" id="today-briefing-details">
+            </div>
+          </div>
+          <div class="utility-panel-section">
+            <div class="utility-section-label">資料狀態</div>
+            <details class="today-briefing-details" id="today-briefing-details">
         <summary class="today-briefing-summary">
           <span class="briefing-summary-title">📊 資料可用性</span>
           <span class="briefing-summary-status">{{ o_label }}</span>
@@ -2499,7 +2574,8 @@
           </div>
         </div>
       </div>
-      </details>
+            </details>
+          </div>
         </div>
       </details>
     </div>

@@ -34,6 +34,17 @@ def test_open_utility_panel_keeps_its_trigger_in_the_top_right():
     assert "top: calc(100% + 8px);" in source
 
 
+def test_utility_panel_has_compact_visual_sections_for_tools_and_status():
+    source = TEMPLATE.read_text(encoding="utf-8")
+
+    assert 'class="utility-panel-header"' in source
+    assert "QUICK CONTROLS" in source
+    assert "快速操作" in source
+    assert "資料狀態" in source
+    assert "width: min(476px, calc(100vw - 32px));" in source
+    assert ".nav-utility-content::before" in source
+
+
 def test_deployed_page_keeps_utility_panel_collapsed_and_summary_anchor_ready():
     page = DEPLOYED.read_text(encoding="utf-8")
     nav = _nav_block(page)
