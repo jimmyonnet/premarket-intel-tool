@@ -117,6 +117,25 @@
     "qualified": true
   },
   {
+    "title": "台股開高16點陷震盪！聯電領軍電子股走強 本周聚焦輝達財報 | 市場焦點 | 證券",
+    "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9xLVZwY0ZBa0lfbFAtQ19SanhsSE1lbjRMVGd4SmtqUVZLWU4tSkVRenpSR0lvRVlmX2tDLW5ncDJ2NVp1MjVCN3RWU3g0M21QSjBzbl8yOTBlQTVxY0RvcWJfZ2ZacGRNWk9vQmtjWDJKdWx1dVk4?oc=5",
+    "source": "經濟日報",
+    "time": "08/24 09:18",
+    "timestamp": 1787534339.0,
+    "score": 13,
+    "quality_score": 4,
+    "impact_score": 9,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "MSCI台灣升至新興市場全球第一外資大調倉永豐優息存股ETF配息連升輝達財報和傑克遜霍爾登場中油宣布油價凍漲｜投資早知道",
     "link": "https://news.google.com/rss/articles/CBMi4wVBVV95cUxPTldpc19yZFJhb1ZFNDBIM1lzNlRScENaaUVmMTM1ZVFXRzlYeUhZTVlTb19sNHV1SWwyd2xsd0trZHhxdEZjWktoVEl3N3Z5OTUzWGh5N29sU050NlA5ckE0OFEyemIyRUV4V2F6SmhqTGZyLWhrRXJWU0JBdDZBWl8tNUhwNDBnb2QwRW90NTlYRW9wTVlmQ2d0ZkhOT01PaFByRzNuSDBDU3I1T0lEZHE4am96cThTZ3llemJkTEZKcUVucVAtdDhyemtoanFqZjlFdTd1V1lLRWx4Yi1xZjNUNC1tY29feklzNXl0U3lsc2o3clEwTVJxQzJoZVNNSVpFYzZheXV0WlFCTTY1bnU4X19mazg0UWx5dHBaelN1YmxmNWh3aW4welQtQkphZlNuQy1WMlphaS05b1RpN3VZTXB2YmxoX0ptQkUzU0h4X3hqTHF5NnA2Y29GVllJRm5LNDBiNTdKNlFWdTd5dDViOUxkN2ExUGF2emZWeDA0cW1lNTBEaF9JaFJFeEp5V3Bqck00ZzlYQzJVQVNqdGFTM1hjVW5UcW4zYTE4bGVVY3BmaVBuLXoweVVVVVlhM2p6WmF3RkFkV0lBNm9kYXZMa0FnWlpsN2dTOFNENFNHMGtDemRVVi1ELUg3MnM1Qk5kZVF1RDZsMkZXU3AwSXlIZkIzb0k1aWZqY3ZvM0hWRVpaRkdjdFFINGVkelowWHFiVDcwM3BGZGx2YXNVM1ZzaFBPOTIxTHZYYUxGSnkyOURYUjJtM3hXQ2RqaG9LRjhhOEcwOFhtQ1hHendObnFheVBESVFvdENNRXEzSVpUbFk2di1CdUxTVURPOUNoWXVOMTNIbmhoLUNjZTNzQ3NSQmVfb1Q1SW5IaElhSUxXX0hCUk8zM1ZYaGxrMGNPclRnY29NbGt6RE9Cc01SM3QwSnlhbDhwOFZNa2JFNENyNlRWMFh2cXdDb0tSSlB3WjJF?oc=5",
     "source": "Yahoo股市",
@@ -165,23 +184,6 @@
     "matched_groups": [
       "market_benchmark",
       "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "風向變了！金融三業6月大砍台股757億",
-    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1sUFJrUWhHT2tyY00wdTRPenB1QUVaS1RnREp2N1Mtek9KVVd1ek8tOWhyVEQzd09ZY284d19TR2h4RUNpZnFGUEphWGVrYkliUnVHVFhETU9vTXhSMjFF?oc=5",
-    "source": "工商時報",
-    "time": "08/23 22:21",
-    "timestamp": 1787494860.0,
-    "score": 7,
-    "quality_score": 4,
-    "impact_score": 3,
-    "matched_groups": [
-      "market_benchmark"
     ],
     "low_signal_hits": [],
     "quality_pass": true,
