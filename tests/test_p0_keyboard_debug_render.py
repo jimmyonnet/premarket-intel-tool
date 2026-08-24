@@ -6,19 +6,16 @@ from bs4 import BeautifulSoup
 TEMPLATE = Path("scripts/templates/premarket.html.j2").read_text(encoding="utf-8")
 
 
-def test_theme_and_snapshot_shortcuts_are_unambiguous_and_announced():
-    assert 'title="切換截圖模式 (快捷鍵 S)" aria-keyshortcuts="S"' in TEMPLATE
+def test_theme_shortcut_is_unambiguous_and_announced():
     assert 'id="theme-toggle" type="button" title="切換深淺色主題 (快捷鍵 D)" aria-keyshortcuts="D"' in TEMPLATE
     assert TEMPLATE.count("快捷鍵 D") == 1
-    assert TEMPLATE.count("快捷鍵 S") == 1
+    assert 'class="nav-btn btn-snapshot"' not in TEMPLATE
 
     keyboard_start = TEMPLATE.index("document.addEventListener('keydown'")
     keyboard_end = TEMPLATE.index("\n  });", keyboard_start)
     keyboard_handler = TEMPLATE[keyboard_start:keyboard_end]
     assert "e.key === 'd' || e.key === 'D'" in keyboard_handler
     assert "window.toggleTheme();" in keyboard_handler
-    assert "e.key === 's' || e.key === 'S'" in keyboard_handler
-    assert "window.pm.toggleSnapshot();" in keyboard_handler
 
 
 def test_debug_only_meta_consistency_warning_is_boot_scoped():

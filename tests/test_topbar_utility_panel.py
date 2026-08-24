@@ -21,8 +21,16 @@ def test_low_frequency_controls_and_data_status_are_collapsed_in_utility_panel()
     assert "⚙️ 工具與資料狀態" in nav
     assert '<div class="nav-actions">' in nav
     assert '<details class="today-briefing-details" id="today-briefing-details">' in nav
-    for control_id in ("briefing-toggle", "filter-watch-toggle", "manual-update-button"):
-        assert f'id="{control_id}"' in nav
+    quick_start = nav.index('<div class="utility-section-label">快速操作')
+    quick_end = nav.index('<div class="utility-section-label">資料狀態', quick_start)
+    quick_controls = nav[quick_start:quick_end]
+
+    for control_id in ("theme-toggle", "manual-update-button"):
+        assert f'id="{control_id}"' in quick_controls
+    assert 'aria-label="重新整理頁面"' in quick_controls
+
+    for removed_class in ("btn-briefing", "filter-watch-only", "btn-clean-link", "btn-export", "btn-snapshot"):
+        assert removed_class not in quick_controls
 
 
 def test_open_utility_panel_keeps_its_trigger_in_the_top_right():
