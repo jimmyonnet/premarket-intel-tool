@@ -263,6 +263,17 @@ def _last_day_of_month(year: int, month: int) -> datetime.date:
     return datetime.date(year, month + 1, 1) - datetime.timedelta(days=1)
 
 
+def get_local_rule_range_end(start_date: datetime.date, external_range_end: datetime.date) -> datetime.date:
+    """Keep deterministic TW rules visible through the next complete month.
+
+    The external ICS keeps its existing short look-ahead window, while Taiwan
+    deadline/settlement rules need to include the next monthly cycle to remain
+    actionable when that window ends before the next scheduled rule event.
+    """
+    next_month_start = (start_date.replace(day=28) + datetime.timedelta(days=4)).replace(day=1)
+    return max(external_range_end, _last_day_of_month(next_month_start.year, next_month_start.month))
+
+
 def _tw_rule_event(
     *,
     rule_type: str,
@@ -518,10 +529,11 @@ def main():
         else datetime.datetime.now(TAIPEI).date()
     )
     end_date = today + datetime.timedelta(days=args.days_ahead)
+    local_rule_range_end = get_local_rule_range_end(today, end_date)
 
     ics_bytes = fetch_ics_bytes(args.ics_url, args.fixture)
     external_events = extract_events(ics_bytes, today, end_date)
-    local_events = generate_tw_market_rule_events(today, end_date)
+    local_events = generate_tw_market_rule_events(today, local_rule_range_end)
     events = merge_tw_market_rule_events(external_events, local_events)
 
     result = {
