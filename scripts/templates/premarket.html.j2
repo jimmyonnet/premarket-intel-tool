@@ -2810,18 +2810,10 @@
       </details>
     </section>
 
-    {% macro candidate_detail_control(detail, code) -%}
-      {%- if detail -%}
-        <button type="button" class="candidate-detail-toggle" aria-expanded="false" aria-controls="candidate-detail-{{ code }}" data-detail-id="candidate-detail-{{ code }}" onclick="window.pm.toggleCandidateDetail(this)">查看明細</button>
-      {%- else -%}
-        <span class="candidate-detail-unavailable" title="Chengwaye 當日清單未提供此標的明細">暫無明細</span>
-      {%- endif -%}
-    {%- endmacro %}
-
     {% macro candidate_detail_panel(detail, code) -%}
       {%- if detail -%}
       <tr class="candidate-detail-row" id="candidate-detail-{{ code }}" hidden>
-        <td colspan="9">
+        <td colspan="8">
           <div class="candidate-detail-panel">
             <div class="candidate-detail-head">
               <h4 class="candidate-detail-title">{{ detail.code }} {{ detail.name }} · Chengwaye 籌碼明細</h4>
@@ -2898,7 +2890,8 @@
               <tbody>
                 {% for row in pressplay.found_group.matched %}
                 {% set clean_code = row.code.replace('⏸','').strip() %}
-                <tr class="candidate-stock-row" data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
+                {% set detail = institutional.stocks_by_code.get(clean_code) if institutional else none %}
+                <tr class="candidate-stock-row" data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}"{% if detail %} data-detail-id="candidate-detail-{{ clean_code }}" aria-controls="candidate-detail-{{ clean_code }}" aria-expanded="false"{% endif %}>
                   <td data-label="市場">{{ row.market }}</td>
                   <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
@@ -2908,6 +2901,7 @@
                   <td data-label="投信(張)" class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}" data-sort="{{ row.trust }}">{{ row.trust }}</td>
                   <td data-label="自營(張)" class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}" data-sort="{{ row.dealer }}">{{ row.dealer }}</td>
                 </tr>
+                {{ candidate_detail_panel(detail, clean_code) }}
                 {% endfor %}
               </tbody>
             </table>
@@ -2956,7 +2950,8 @@
               <tbody>
                 {% for row in pressplay.not_found_group.matched %}
                 {% set clean_code = row.code.replace('⏸','').strip() %}
-                <tr class="candidate-stock-row" data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
+                {% set detail = institutional.stocks_by_code.get(clean_code) if institutional else none %}
+                <tr class="candidate-stock-row" data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}"{% if detail %} data-detail-id="candidate-detail-{{ clean_code }}" aria-controls="candidate-detail-{{ clean_code }}" aria-expanded="false"{% endif %}>
                   <td data-label="市場">{{ row.market }}</td>
                   <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
@@ -2966,6 +2961,7 @@
                   <td data-label="投信(張)" class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}" data-sort="{{ row.trust }}">{{ row.trust }}</td>
                   <td data-label="自營(張)" class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}" data-sort="{{ row.dealer }}">{{ row.dealer }}</td>
                 </tr>
+                {{ candidate_detail_panel(detail, clean_code) }}
                 {% endfor %}
               </tbody>
             </table>
@@ -2985,50 +2981,6 @@
       {% endif %}
       {% endif %}
 
-      {% if institutional and institutional.stocks %}
-      <div class="card" id="candidate-institutional-details">
-        <div class="card-head">
-          <div class="card-title-group">
-            <h3 class="card-title">個股籌碼明細</h3>
-            <span class="count-badge">{{ institutional.matched_count }} 檔</span>
-            <a class="cal-link-btn" href="https://chengwaye.com/daily" target="_blank" rel="noopener noreferrer" title="開啟 Chengwaye 當日籌碼資料">Chengwaye ↗</a>
-          </div>
-          <span class="card-tip">點擊標的展開法人買賣與當沖 Top10 · 資料日 {{ institutional.page_date or '—' }}</span>
-        </div>
-        <div class="data-block" style="padding:10px;">
-          {% for detail in institutional.stocks %}
-          <details class="unref-accordion candidate-insight-detail" id="candidate-insight-{{ detail.code }}">
-            <summary class="unref-summary">
-              <span><strong class="font-mono">{{ detail.code }}</strong> {{ detail.name }} · 法人買賣／當沖 Top10</span>
-              <span class="badge">查看明細</span>
-            </summary>
-            <div class="candidate-detail-panel">
-              <div class="candidate-detail-grid">
-                <div class="candidate-detail-card">
-                  <h5>法人買賣 · 買超 Top15</h5>
-                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                  {% for item in detail.buyers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                  </tbody></table>
-                </div>
-                <div class="candidate-detail-card">
-                  <h5>法人買賣 · 賣超 Top15</h5>
-                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                  {% for item in detail.sellers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                  </tbody></table>
-                </div>
-                <div class="candidate-detail-card is-wide">
-                  <h5>當沖 Top10</h5>
-                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>交易張數</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                  {% for item in detail.daytraders %}<tr><td>{{ item.name }}</td><td>{{ item.total }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                  </tbody></table>
-                </div>
-              </div>
-            </div>
-          </details>
-          {% endfor %}
-        </div>
-      </div>
-      {% endif %}
     </section>
 
     <!-- 3. 處置股 (Alerts) -->
@@ -4336,30 +4288,24 @@
     });
   };
 
-  window.pm.toggleCandidateDetail = function(button) {
-    var detailId = button && button.getAttribute('data-detail-id');
+  window.pm.toggleCandidateDetail = function(row) {
+    var detailId = row && row.getAttribute('data-detail-id');
     var detailRow = detailId ? document.getElementById(detailId) : null;
-    if (!detailRow) return;
-    var opening = detailRow.hidden;
-    detailRow.hidden = !opening;
-    button.setAttribute('aria-expanded', opening ? 'true' : 'false');
-    button.textContent = opening ? '收合明細' : '查看明細';
-  };
-
-  window.pm.openCandidateInsight = function(code) {
-    var detail = code ? document.getElementById('candidate-insight-' + code) : null;
-    if (!detail) {
+    if (!detailRow) {
       if (window.pm.showToast) window.pm.showToast('此標的尚無 Chengwaye 當日籌碼明細');
       return;
     }
-    detail.open = true;
-    detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var opening = detailRow.hidden;
+    detailRow.hidden = !opening;
+    row.setAttribute('aria-expanded', opening ? 'true' : 'false');
+    row.classList.toggle('is-expanded', opening);
   };
+
 
   document.addEventListener('click', function(event) {
     var row = event.target.closest && event.target.closest('#watchlist tr.candidate-stock-row');
     if (!row || event.target.closest('a, button, input, label')) return;
-    window.pm.openCandidateInsight(row.getAttribute('data-code'));
+    window.pm.toggleCandidateDetail(row);
   });
 
   // ==========================================

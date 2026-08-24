@@ -56,6 +56,7 @@ def test_institutional_builder_keeps_candidate_detail_limits_and_clean_codes():
     assert len(detail["daytraders"]) == 10
     assert detail["buyers"][0]["net"] == "+2,706"
     assert detail["sellers"][0]["net"] == "-916"
+    assert section["stocks_by_code"]["2489"] == detail
 
 
 def test_candidate_template_renders_expandable_chengwaye_details():
@@ -82,11 +83,16 @@ def test_candidate_template_renders_expandable_chengwaye_details():
         twse={},
     )
 
-    assert 'id="candidate-insight-2489"' in rendered
+    assert 'id="candidate-detail-2489"' in rendered
+    assert 'data-detail-id="candidate-detail-2489"' in rendered
+    assert 'class="candidate-detail-row"' in rendered
     assert "法人買賣 · 買超 Top15" in rendered
     assert "法人買賣 · 賣超 Top15" in rendered
     assert "當沖 Top10" in rendered
-    assert "window.pm.openCandidateInsight" in rendered
+    assert "window.pm.toggleCandidateDetail(row)" in rendered
+    assert "window.pm.openCandidateInsight" not in rendered
+    assert "candidate-insight-" not in rendered
+    assert "candidate-institutional-details" not in rendered
     assert 'href="https://chengwaye.com/daily"' in rendered
 
 
@@ -96,8 +102,9 @@ def test_candidate_rows_keep_sort_and_open_detail_contracts_without_search_box()
     assert "tr:not(.candidate-detail-row)" in source
     assert source.count('<tr class="candidate-stock-row"') == 2
     assert "#watchlist tr.candidate-stock-row" in source
-    assert "candidate-insight-" in source
-    assert "window.pm.openCandidateInsight" in source
+    assert "candidate-detail-row" in source
+    assert "window.pm.toggleCandidateDetail" in source
+    assert "window.pm.openCandidateInsight" not in source
     assert 'id="candidate-search"' not in source
     assert "window.pm.filterCandidateTable" not in source
 

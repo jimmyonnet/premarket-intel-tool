@@ -384,7 +384,13 @@ def build_institutional_section(pressplay, chengwaye_daily):
     """
     codes_data = (chengwaye_daily or {}).get("codes") or {}
     if not codes_data:
-        return {"stocks": [], "candidate_count": 0, "matched_count": 0, "page_date": None}
+        return {
+            "stocks": [],
+            "stocks_by_code": {},
+            "candidate_count": 0,
+            "matched_count": 0,
+            "page_date": None,
+        }
 
     candidates = []
     seen_codes = set()
@@ -420,6 +426,7 @@ def build_institutional_section(pressplay, chengwaye_daily):
 
     return {
         "stocks": items,
+        "stocks_by_code": {item["code"]: item for item in items},
         "candidate_count": len(candidates),
         "matched_count": len(items),
         "page_date": (chengwaye_daily or {}).get("page_date"),
