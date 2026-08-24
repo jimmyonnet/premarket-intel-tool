@@ -56,4 +56,4 @@ def test_realtime_announcement_summary_keeps_count_but_omits_redundant_time_tip(
     assert '<h3 class="card-title">即時公告明細</h3>' in macro
     assert '<span class="count-badge">{{ unref_count }} 筆</span>' in macro
     assert '<span class="card-tip">昨日 13:30 盤後即時重訊</span>' not in macro
-    assert '<span class="section-desc">昨日 13:30 盤後即時重訊</span>' in page_section
+    assert '<span class="section-desc">昨日 13:30 盤後重大財務自結</span>' in page_section
