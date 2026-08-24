@@ -27,6 +27,7 @@
 <title>盤前 · {{ date_check.page_says_applies_to if date_check and date_check.page_says_applies_to else ((meta.data_date if meta is defined and meta and meta.data_date else '08/24')) }} · 近處置 {{ (disposal.one_flag_from_disposal|length if disposal and disposal.one_flag_from_disposal else 5) }} · 出關 {{ (exiting_today|length if exiting_today is defined and exiting_today else 3) }}</title>
 
 <link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icon-180.png">
 <script>
   if ('serviceWorker' in navigator) {
@@ -61,6 +62,7 @@
     --fall: #16A34A;
     --amber: #D97706;
     --blue: #2563EB;
+    --focus: var(--blue);
     --btn-bg: #FFFFFF;
     --btn-border: #E2E8F0;
     --btn-hover: #F1F5F9;
@@ -782,6 +784,19 @@
   }
   .stale-banner.is-warning { background: var(--amber-bg) !important; color: var(--amber-fg) !important; border-color: var(--amber-border) !important; }
   .stale-banner.is-danger  { background: var(--danger-bg) !important; color: var(--danger-fg) !important; border-color: var(--danger-border) !important; }
+  .holiday-notice { margin-top: 0; margin-bottom: 10px; }
+  .package-error-card {
+    display: grid;
+    gap: 6px;
+    padding: 10px 12px;
+    color: var(--danger-fg);
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    border-radius: 7px;
+    text-align: left;
+  }
+  .package-error-detail, .package-last-success { color: var(--text-muted); font-size: 11.5px; }
+  .package-inline-retry { margin-left: 6px; padding: 4px 8px; font-size: 11px; }
 
   /* WATCHLIST MODERN CARD */
   .watchlist-card {
@@ -2081,6 +2096,36 @@
   .health-dot.ok { background: var(--fall); box-shadow: 0 0 4px var(--fall); }
   .health-dot.warn { background: var(--amber); }
   .health-dot.error { background: var(--rise); animation: pulse-warn 1.5s infinite; }
+  .health-dot.disabled { background: var(--text-light); opacity: 0.7; }
+  .source-row.is-disabled { opacity: 0.55; }
+  .source-status-text.is-disabled { color: var(--text-muted); font-weight: 700; }
+  button:focus-visible, [role="button"]:focus-visible, a:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+  .diagnostic-details {
+    margin-top: 12px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    background: var(--bg-sub);
+  }
+  .diagnostic-details > summary {
+    cursor: pointer;
+    padding: 7px 10px;
+    color: var(--text-muted);
+    font-size: 11.5px;
+    font-weight: 700;
+  }
+  .diagnostic-details pre {
+    max-height: 180px;
+    overflow: auto;
+    margin: 0;
+    padding: 0 10px 10px;
+    color: var(--text-muted);
+    font: 10.5px/1.5 var(--font-mono);
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
 
 
   /* TABLE SCROLL CONTAINER */
@@ -2779,7 +2824,7 @@
       <details class="nav-utility-panel" id="nav-utility-panel">
         <summary title="展開工具與資料狀態">
           <span>⚙️ 工具與資料狀態</span>
-          <span class="nav-utility-state">{{ o_label }}</span>
+          <span class="nav-utility-state" id="nav-utility-state">{{ o_label }}</span>
         </summary>
         <div class="nav-utility-content">
           <div class="utility-panel-header">
@@ -2803,13 +2848,13 @@
             <details class="today-briefing-details" id="today-briefing-details">
         <summary class="today-briefing-summary">
           <span class="briefing-summary-title">📊 資料可用性</span>
-          <span class="briefing-summary-status">{{ o_label }}</span>
+          <span class="briefing-summary-status" id="briefing-summary-status">{{ o_label }}</span>
         </summary>
       <div class="today-briefing-card {{ 'is-unsafe-alert' if o_status == 'unsafe' else ('is-caution-alert' if o_status == 'caution' else 'is-ready-card') }}" id="today-briefing-block">
         <div class="briefing-col col-status">
           <div class="briefing-col-lbl">📊 資料可用性</div>
           <div class="briefing-status-val">
-            <span class="status-badge {{ o_badge }}" style="font-weight:700;">{{ o_label }}</span>
+            <span class="status-badge {{ o_badge }}" id="briefing-overall-badge" style="font-weight:700;">{{ o_label }}</span>
             <span class="briefing-reason-summary" title="{{ o_reasons|join('；') }}">{{ o_reasons[0] if o_reasons else '全數來源正常且在時限內' }}</span>
             <span id="briefing-built-relative" class="briefing-built-relative" aria-live="polite"></span>
           </div>
@@ -2859,8 +2904,10 @@
 
     <!-- Stale Banner -->
     <div class="stale-banner" data-hours="{{ ((meta.stale_hours if meta is defined and meta.stale_hours is defined else stale_hours) or 0)|int }}">
-      資料時間 {{ (meta.data_date if meta is defined and meta.data_date else None) or data_date or '今日' }}，距今 {{ (meta.stale_hours if meta is defined and meta.stale_hours is defined else stale_hours) or 0 }} 小時
+      資料建置於 <time datetime="{{ meta.built_at if meta is defined and meta.built_at is defined else '' }}" data-relative data-relative-kind="build">{{ build_time or '—' }}</time><span id="stale-banner-detail"></span>
     </div>
+
+    <div id="holiday-notice" class="stale-banner holiday-notice" role="status" aria-live="polite" hidden></div>
 
     <!-- 1. 摘要 (Summary) -->
     <section id="summary" class="content-section">
@@ -2978,6 +3025,9 @@
               <button class="watch-btn-modern" onclick="window.pm.openBatchModal()" type="button" title="開啟 Excel / CSV 批次匯入與 JSON 備份視窗">
                 📋 批次匯入 / 備份
               </button>
+              <button class="watch-btn-modern" onclick="window.pm.exportSettings()" type="button" title="匯出自選股、顯示密度與主題設定">匯出設定</button>
+              <input type="file" id="settings-backup-input" accept=".json,application/json" hidden aria-label="選擇設定備份 JSON 檔案" onchange="window.pm.importSettings(event)">
+              <button class="watch-btn-modern" onclick="window.pm.chooseSettingsImport()" type="button" title="匯入自選股、顯示密度與主題設定">匯入設定</button>
               <button class="watch-btn-modern danger-hover" onclick="window.clearWatch()" type="button" title="清空全部自選股">
                 🗑️ 清空
               </button>
@@ -3039,12 +3089,12 @@
       </div>
 
       {% if pressplay._status == 'fetch_failed' %}
-      <div class="part3-error">
+      <div class="part3-error empty" data-package="candidates">
         <strong>Part 3（PressPlay 摘要）收集失敗。</strong>
         請到 GitHub <code>Actions → build-premarket-page</code> 查看 Logs；其他章節照常運作，不受影響。
       </div>
       {% elif (pressplay.not_found_group.matched|length == 0 and pressplay.found_group.matched|length == 0) and (pressplay.not_found_group.unmatched|length == 0 and pressplay.found_group.unmatched|length == 0) %}
-      <div class="part3-empty">尚無資料（PressPlay 收集流程跑過，但今天沒有盤前文章）。</div>
+      <div class="part3-empty empty" data-package="candidates">尚無資料（PressPlay 收集流程跑過，但今天沒有盤前文章）。</div>
       {% else %}
 
       <!-- 族群聚焦標的 -->
@@ -3278,7 +3328,7 @@
             </table>
           </div>
           {% else %}
-          <div class="empty-state">今日無差 1 次即處置的標的</div>
+          <div class="empty-state" data-package="disposition">今日無差 1 次即處置的標的</div>
           {% endif %}
         </div>
       </div>
@@ -3330,7 +3380,7 @@
             </table>
           </div>
           {% else %}
-          <div class="empty-state">今日無處置期滿出關的標的</div>
+          <div class="empty-state" data-package="disposition">今日無處置期滿出關的標的</div>
           {% endif %}
         </div>
       </div>
@@ -3452,7 +3502,7 @@
             <h3 class="card-title">美股四大指數與跨海連動標的</h3>
             <a class="cal-link-btn" href="https://tw.stock.yahoo.com/markets" target="_blank" rel="noopener noreferrer" title="開啟 Yahoo 股市市場頁">Yahoo 股市 ↗</a>
           </div>
-          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 {{ hours_since_us_close if hours_since_us_close is defined else 18.9 }} 小時</span>
+          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 <time datetime="{{ us_close_at_iso if us_close_at_iso is defined else '' }}" data-relative data-relative-kind="delay">{{ hours_since_us_close if hours_since_us_close is defined else 18.9 }} 小時前</time></span>
         </div>
 
         <div class="data-block">
@@ -3463,7 +3513,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">{{ label }}</span>
-                <span class="tile-delay-pill {{ 'pill-fresh' if (hours_since_us_close if hours_since_us_close is defined else 18.9) < 24 else ('pill-amber' if (hours_since_us_close if hours_since_us_close is defined else 18.9) <= 36 else 'pill-danger') }}">{{ hours_since_us_close if hours_since_us_close is defined else 18.9 }}h ago</span>
+                <span class="tile-delay-pill {{ 'pill-fresh' if (hours_since_us_close if hours_since_us_close is defined else 18.9) < 24 else ('pill-amber' if (hours_since_us_close if hours_since_us_close is defined else 18.9) <= 36 else 'pill-danger') }}"><time datetime="{{ us_close_at_iso if us_close_at_iso is defined else '' }}" data-relative data-relative-kind="delay">{{ hours_since_us_close if hours_since_us_close is defined else 18.9 }} 小時前</time></span>
               </div>
               {% if q and q.price is not none %}
               <div class="tile-val font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{{ "{:,.2f}".format(q.price) }}</div>
@@ -3553,7 +3603,7 @@
         </div>
         <div class="data-block" id="news-lazy-block" data-news-src="data/news.json">
           <div class="news-list" id="news-list" style="display:flex; flex-direction:column; gap:8px;" hidden></div>
-          <div class="empty" id="news-empty" style="padding:16px; text-align:center; color:var(--text-muted); font-size:12.5px;"{% if news and news|length > 0 %} hidden{% endif %}>
+          <div class="empty" id="news-empty" data-package="news" style="padding:16px; text-align:center; color:var(--text-muted); font-size:12.5px;"{% if news and news|length > 0 %} hidden{% endif %}>
             ℹ️ 今日新聞來源暫時無法取得 · 系統將於下次排程自動重試
           </div>
         </div>
@@ -3587,7 +3637,7 @@
             </div>
             <!-- Search box -->
             <div class="cal-search-wrap">
-              <input type="text" id="cal-search-input" class="cal-search-input" placeholder="🔍 搜尋事件（如 CPI、GDP、非農...）" oninput="window.pm.onCalSearch(this.value)" autocomplete="off" aria-label="搜尋財經事件">
+              <input type="text" id="cal-search-input" class="cal-search-input" placeholder="🔍 搜尋事件（如 CPI、GDP、非農...）" autocomplete="off" aria-label="搜尋財經事件">
               <button class="cal-search-clear" onclick="window.pm.clearCalSearch()" type="button" aria-label="清除搜尋">✕</button>
             </div>
           </div>
@@ -3721,7 +3771,7 @@
             </div>
             {% endfor %}
           {% else %}
-            <div class="empty-state">近期沒有排定的財經事件</div>
+            <div class="empty-state" data-package="calendar">近期沒有排定的財經事件</div>
           {% endif %}
         </div>
       </div>
@@ -3745,7 +3795,8 @@
       </div>
       <div class="modal-body" style="padding:14px 16px;">
         <div class="shortcut-list">
-          <div class="shortcut-item"><span class="kbd">1~6</span> <span>快速跳轉區塊</span></div>
+          <div class="shortcut-item"><span class="kbd">g + 1~6</span> <span>快速跳轉區塊</span></div>
+          <div class="shortcut-item"><span class="kbd">? / /</span> <span>開啟 command dialog</span></div>
           <div class="shortcut-item"><span class="kbd">b</span> <span>切換盤前速讀模式</span></div>
           <div class="shortcut-item"><span class="kbd">e</span> <span>匯出重點 Markdown</span></div>
           <div class="shortcut-item"><span class="kbd">c</span> <span>複製今日 ★★★ 事件</span></div>
@@ -3769,12 +3820,13 @@
       </div>
       <div class="modal-body" style="padding:16px;">
         <div class="status-modal-summary {{ o_badge }}">
-          <div style="font-weight:700; font-size:14px; margin-bottom:4px;">目前狀態評級：{{ o_label }} ({{ o_status|upper }})</div>
+          <div id="source-modal-overall-label" style="font-weight:700; font-size:14px; margin-bottom:4px;">目前狀態評級：{{ o_label }} ({{ o_status|upper }})</div>
           <ul style="margin:0; padding-left:18px; font-size:12.5px; line-height:1.5;">
             {% for r in o_reasons %}
             <li>{{ r }}</li>
             {% endfor %}
           </ul>
+          <div id="source-health-hint" hidden style="margin-top:6px; color:var(--text-muted); font-size:12px;">詳見下方來源清單</div>
         </div>
 
         <div class="table-scroll" style="margin-top:12px;">
@@ -3795,8 +3847,10 @@
             <tbody>
               {% set src_list = h.sources or (meta.sources if (meta is defined and meta and meta.sources is defined) else []) %}
               {% for src in src_list %}
-              <tr>
-                <td data-label="來源項目" class="font-bold">{{ src.name }}</td>
+              {% set src_is_disabled = src.status in ['disabled', 'inactive'] %}
+              {% set src_dot = 'disabled' if src_is_disabled else ('error' if src.fetch_status in ['failed', 'missing'] or src.status in ['failed', 'missing'] else ('warn' if src.fetch_status == 'fallback' or src.fallback_used or src.freshness in ['stale', 'expired'] else 'ok')) %}
+              <tr data-source-id="{{ src.source_id }}" data-required="{{ 'true' if src.is_required else 'false' }}" class="source-row{{ ' is-disabled' if src_is_disabled else '' }}">
+                <td data-label="來源項目" class="font-bold"><span class="health-dot {{ src_dot }}" aria-hidden="true"></span>{{ src.name }}</td>
                 <td data-label="重要性">
                   {% if src.is_required %}
                   <span class="badge badge-danger" style="background:var(--danger-bg); color:var(--danger-fg); border:1px solid var(--danger-border);">必要</span>
@@ -3805,7 +3859,9 @@
                   {% endif %}
                 </td>
                 <td data-label="技術狀態">
-                  {% if src.fetch_status == 'ok' %}
+                  {% if src_is_disabled %}
+                  <span class="source-status-text is-disabled">已停用</span>
+                  {% elif src.fetch_status == 'ok' %}
                   <span class="status-badge is-ok">抓取成功</span>
                   {% elif src.fetch_status == 'fallback' or src.fallback_used %}
                   <span class="status-badge is-warning">使用備援</span>
@@ -3831,7 +3887,7 @@
                 <td data-label="綜合評級">
                   <span class="status-badge {{ src.status_badge_class or ('is-ok' if src.status=='ok' else 'is-caution') }}">{{ src.combined_status_label or (src.status|upper) }}</span>
                 </td>
-                <td data-label="取得時間" class="font-mono" style="font-size:11px;">{{ src.fetched_at[11:16] if (src.fetched_at and src.fetched_at|length >= 16) else '—' }}</td>
+                <td data-label="取得時間" class="font-mono" style="font-size:11px;"><time datetime="{{ src.fetched_at or '' }}" data-relative data-relative-kind="source">{{ src.fetched_at[11:16] if (src.fetched_at and src.fetched_at|length >= 16) else '—' }}</time></td>
                 <td data-label="適用日期" class="font-mono" style="font-size:11.5px;">{{ src.data_date or '—' }}</td>
                 <td data-label="對判讀影響" style="font-size:12px; color:var(--text-main);">{{ src.impact_desc }}</td>
               </tr>
@@ -3865,7 +3921,11 @@
             <li><strong>欄位說明：</strong>個股當沖明細原「總損益」欄位因公開資料無法可靠推算，為確保數據精準故不予顯示。</li>
             <li><strong>資料範圍：</strong>法人買賣與當沖明細僅涵蓋當日重點清單；未在清單內之標的自動略過。</li>
           </ul>
-          <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:8px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<span class="font-mono">{{ build_time or '08:00' }}</span></div>
+          <details class="diagnostic-details">
+            <summary>診斷紀錄</summary>
+            <pre id="pmit-log" role="log" aria-live="polite">尚無本次工作階段紀錄</pre>
+          </details>
+          <div class="footer-note" style="font-size:11px; color:var(--text-muted); margin-top:8px; text-align:center;">摘要來源：PressPlay 文章（僅供自用，未對外發布） · GitHub Actions 上次執行成功時間：<time class="font-mono" datetime="{{ meta.built_at if meta is defined and meta.built_at is defined else '' }}" data-relative data-relative-kind="clock">{{ build_time or '08:00' }}</time></div>
         </div>
       </details>
       <div class="footer-copy" style="margin-top:10px; text-align:center; font-size:11px; color:var(--text-muted);">盤前情報準備台 · 自用盤前決策工作台</div>
@@ -4413,23 +4473,50 @@
       btn.disabled = true;
       btn.textContent = '⏳ 檢查中...';
     }
-    fetch('data_meta.json?t=' + Date.now())
-      .then(function(res) { return res.json(); })
+    window.pm.fetchJson('data_meta.json', { retries: 1 })
       .then(function(meta) {
         window.__PM_META__ = meta;
-        if (meta.status_label) {
-          var btnHeader = document.getElementById('source-status-btn');
-          if (btnHeader) {
-            btnHeader.className = 'header-status-btn ' + (meta.status_badge_class || 'is-caution');
-            var textSpan = btnHeader.querySelector('.status-text');
-            if (textSpan) textSpan.textContent = meta.status_label;
-            btnHeader.title = '【' + meta.status_label + '】' + (meta.summary_reasons || []).join('；');
-          }
+        var requiredFailed = Array.isArray(meta.sources) && meta.sources.some(function(src) {
+          return src.is_required && (src.fetch_status === 'failed' || src.fetch_status === 'missing' || src.status === 'failed' || src.status === 'missing');
+        });
+        var displayLabel = requiredFailed ? '部分可用' : (meta.status_label || '請先確認資料');
+        var displayBadge = requiredFailed ? 'is-caution' : (meta.status_badge_class || 'is-caution');
+        var reasonText = (meta.summary_reasons || []).join('；') || '詳見下方來源清單';
+        var btnHeader = document.getElementById('source-status-btn');
+        if (btnHeader) {
+          btnHeader.className = 'header-status-btn ' + displayBadge;
+          var textSpan = btnHeader.querySelector('.status-text');
+          if (textSpan) textSpan.textContent = displayLabel;
+          btnHeader.title = '【' + displayLabel + '】' + reasonText;
         }
+        ['nav-utility-state', 'briefing-summary-status'].forEach(function(id) {
+          var el = document.getElementById(id);
+          if (el) el.textContent = displayLabel;
+        });
+        var briefingBadge = document.getElementById('briefing-overall-badge');
+        if (briefingBadge) {
+          briefingBadge.textContent = displayLabel;
+          briefingBadge.className = 'status-badge ' + displayBadge;
+        }
+        var modalLabel = document.getElementById('source-modal-overall-label');
+        if (modalLabel) modalLabel.textContent = '目前狀態評級：' + displayLabel + ' (' + String(meta.overall_status || 'caution').toUpperCase() + ')';
+        var hint = document.getElementById('source-health-hint');
+        if (hint) hint.hidden = !requiredFailed;
+        document.querySelectorAll('.source-row[data-source-id]').forEach(function(row) {
+          var src = (meta.sources || []).find(function(item) { return item.source_id === row.getAttribute('data-source-id'); });
+          if (!src) return;
+          var dot = row.querySelector('.health-dot');
+          if (dot) {
+            var state = src.status === 'disabled' || src.status === 'inactive' ? 'disabled' : ((src.fetch_status === 'failed' || src.fetch_status === 'missing' || src.status === 'failed' || src.status === 'missing') ? 'error' : ((src.fetch_status === 'fallback' || src.fallback_used || src.freshness === 'stale' || src.freshness === 'expired') ? 'warn' : 'ok'));
+            dot.className = 'health-dot ' + state;
+          }
+        });
+        window.pm.log('info', '來源健康度已更新', { label: displayLabel, requiredFailed: requiredFailed });
         window.pm.showToast('🛡️ 資料來源健康度狀態已更新');
       })
-      .catch(function() {
-        window.pm.showToast('⚠️ 來源狀態檢查連線逾時');
+      .catch(function(error) {
+        window.pm.log('error', '來源狀態檢查失敗', { error: String(error && error.message || error) });
+        window.pm.showToast('⚠️ 來源狀態檢查失敗，請稍後重試');
       })
       .finally(function() {
         if (btn) {
@@ -4895,6 +4982,83 @@
     };
     reader.readAsText(file);
     e.target.value = '';
+  };
+
+  var PM_SETTINGS_KEYS = [
+    'pmit_theme', 'pmit_watchlist', 'pmit_watch_only', 'pmit_ui_state_v1',
+    'pmit_cal_quick', 'pmit_cal_countries', 'pmit_cal_categories',
+    'pmit_cal_search', 'pmit_cal_tz_mode', 'pmit_display_density'
+  ];
+
+  window.pm.exportSettings = function() {
+    var store = {};
+    PM_SETTINGS_KEYS.forEach(function(key) {
+      var value = localStorage.getItem(key);
+      if (value !== null) store[key] = value;
+    });
+    var payload = {
+      app: 'premarket-intel-tool',
+      schema_version: 1,
+      exported_at: new Date().toISOString(),
+      pmit_store: store
+    };
+    var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'pmit-settings-' + new Date().toISOString().slice(0, 10) + '.json';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    window.pm.showToast('已匯出使用者設定備份');
+  };
+
+  window.pm.chooseSettingsImport = function() {
+    var input = document.getElementById('settings-backup-input');
+    if (input) input.click();
+  };
+
+  window.pm.importSettings = function(event) {
+    var input = event && event.target;
+    var file = input && input.files && input.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        var parsed = JSON.parse(evt.target.result);
+        var store = parsed && parsed.pmit_store;
+        if (!store || typeof store !== 'object' || Array.isArray(store)) throw new Error('缺少 pmit_store 設定物件');
+        if (parsed.schema_version !== undefined && Number(parsed.schema_version) !== 1) throw new Error('不支援的設定版本');
+
+        var accepted = 0;
+        PM_SETTINGS_KEYS.forEach(function(key) {
+          if (!Object.prototype.hasOwnProperty.call(store, key)) return;
+          var value = store[key];
+          if (typeof value !== 'string') throw new Error(key + ' 必須是字串化設定');
+          if (key === 'pmit_theme' && ['light', 'dark'].indexOf(value) < 0) throw new Error('主題設定無效');
+          if (key === 'pmit_watchlist') {
+            var codes = JSON.parse(value);
+            if (!Array.isArray(codes) || codes.some(function(code) { return !/^\d{4,5}$/.test(String(code)); })) throw new Error('自選股清單格式無效');
+          }
+          if (key === 'pmit_ui_state_v1') {
+            var ui = JSON.parse(value);
+            if (!ui || typeof ui !== 'object' || Array.isArray(ui)) throw new Error('介面狀態格式無效');
+          }
+          localStorage.setItem(key, value);
+          accepted += 1;
+        });
+        if (!accepted) throw new Error('備份檔沒有可套用的 PMIT 設定');
+        window.pm.log('info', '使用者設定匯入成功', { keys: accepted });
+        window.pm.showToast('設定匯入成功，正在更新畫面…');
+        setTimeout(function() { location.reload(); }, 250);
+      } catch (error) {
+        window.pm.log('error', '使用者設定匯入失敗', { error: String(error && error.message || error) });
+        window.pm.showToast('⚠️ 設定匯入失敗：' + (error.message || 'JSON 格式錯誤'));
+      }
+    };
+    reader.readAsText(file);
+    input.value = '';
   };
 
   window.pm.getStockChartUrl = function(code, market) {
@@ -5447,7 +5611,38 @@
   var liveTimer = null;
   var countdownTimer = null;
 
-  const TW_HOLIDAYS = {{ (twse_holidays_list or []) | tojson }};
+  var TW_HOLIDAYS = {{ (twse_holidays_list or []) | tojson }};
+
+  function getTaipeiDateKey(date) {
+    try {
+      return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit' }).format(date);
+    } catch (e) {
+      return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+    }
+  }
+
+  window.pm.loadHolidayData = function() {
+    return window.pm.fetchJson('data/tw_holidays.json', { retries: 1 }).then(function(payload) {
+      var today = getTaipeiDateKey(new Date());
+      var year = today.slice(0, 4);
+      var holidayDates = Array.isArray(payload && payload[year]) ? payload[year] : [];
+      TW_HOLIDAYS = Array.from(new Set((TW_HOLIDAYS || []).concat(holidayDates)));
+      var notices = [];
+      if (holidayDates.indexOf(today) >= 0) notices.push('📅 今日為假日（' + today + '）');
+      if (Array.isArray(payload && payload.typhoon) && payload.typhoon.indexOf(today) >= 0) notices.push('⚠️ 今日部分地區為颱風假／停班停課（' + today + '）');
+      var notice = document.getElementById('holiday-notice');
+      if (notice && notices.length) {
+        notice.textContent = notices.join(' · ');
+        notice.hidden = false;
+        notice.classList.toggle('is-warning', notices.some(function(item) { return item.indexOf('颱風') >= 0; }));
+      }
+      window.pm.log('info', '假日資料載入成功', { year: year, holidayCount: holidayDates.length });
+      return payload;
+    }).catch(function(error) {
+      window.pm.log('warn', '假日資料載入失敗，沿用建置時清單', { error: String(error && error.message || error) });
+      return null;
+    });
+  };
 
   function isTWHoliday(d) {
     var dow = d.getDay();
@@ -5493,7 +5688,7 @@
 
   function updateSlowTimers() {
     var meta = window.__PM_META__ || {};
-    var genStr = meta.build_time || '{{ meta.build_time if meta and meta.build_time else generated_at }}';
+    var genStr = meta.built_at || meta.build_time || '{{ meta.build_time if meta and meta.build_time else generated_at }}';
     if (!genStr) return;
 
     var genTime = new Date(genStr.replace(/\//g, '-').replace(' ', 'T') + ':00+08:00').getTime();
@@ -5502,6 +5697,7 @@
 
     var diffMs = Math.max(0, Date.now() - genTime);
     var hrs = diffMs / 36e5;
+    window.pm.updateRelativeTimes();
 
     // Update Header Age Badge
     var headerAge = document.getElementById('header-age-display');
@@ -5515,14 +5711,19 @@
       }
     }
 
-    var banner = document.querySelector('.stale-banner');
+    var banner = document.querySelector('.stale-banner:not(#holiday-notice)');
     if (banner) {
+      var staleDetail = document.getElementById('stale-banner-detail');
+      var bannerTime = banner.querySelector('time[data-relative]');
+      if (bannerTime && meta.built_at) bannerTime.setAttribute('datetime', meta.built_at);
       if (hrs >= 12) {
-        banner.textContent = '資料建置於 ' + genStr + '，距今 ' + hrs.toFixed(1) + ' 小時 (⚠️ 資料已逾 12 小時，建議於 GitHub Actions 手動重新觸發)';
+        if (staleDetail) staleDetail.textContent = '，距今 ' + hrs.toFixed(1) + ' 小時 (⚠️ 資料已逾 12 小時，建議於 GitHub Actions 手動重新觸發)';
         banner.dataset.hours = String(Math.min(48, Math.floor(hrs)));
         banner.className = 'stale-banner' + (hrs >= 24 ? ' is-danger' : ' is-warning');
         banner.style.display = 'block';
       } else {
+        if (staleDetail) staleDetail.textContent = '';
+        banner.className = 'stale-banner';
         banner.style.display = 'none';
       }
     }
@@ -5581,6 +5782,7 @@
     }
   });
 
+  var pendingGoShortcut = false;
   document.addEventListener('keydown', function(e) {
     var openModal = document.querySelector('.modal-overlay.is-open');
 
@@ -5619,6 +5821,7 @@
     }
 
     if (e.key === 'Escape') {
+      pendingGoShortcut = false;
       if (document.body.classList.contains('snapshot-mode')) {
         document.body.classList.remove('snapshot-mode');
       }
@@ -5628,7 +5831,17 @@
       return;
     }
 
-    if (e.key === '1') {
+    if (pendingGoShortcut && /^[1-6]$/.test(e.key)) {
+      pendingGoShortcut = false;
+      var goTargets = { '1': 'summary', '2': 'alerts', '3': 'watchlist', '4': 'market-context', '5': 'news-calendar', '6': 'system-info' };
+      document.getElementById(goTargets[e.key])?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
+    if (e.key === 'g' || e.key === 'G') {
+      pendingGoShortcut = true;
+      window.pm.showToast('G 後按 1–6 跳轉區塊');
+      return;
+    } else if (e.key === '1') {
       document.getElementById('summary')?.scrollIntoView({ behavior: 'smooth' });
     } else if (e.key === '2') {
       document.getElementById('alerts')?.scrollIntoView({ behavior: 'smooth' });
@@ -5642,8 +5855,7 @@
       document.getElementById('system-info')?.scrollIntoView({ behavior: 'smooth' });
     } else if (e.key === '/') {
       e.preventDefault();
-      var inp = document.getElementById('watch-input');
-      if (inp) { inp.focus(); inp.select(); }
+      window.pm.toggleShortcutsModal();
     } else if (e.key === 'r' || e.key === 'R') {
       location.reload(true);
     } else if (e.key === 'd' || e.key === 'D') {
@@ -5697,6 +5909,171 @@
     else startTimers();
   });
 
+  var PM_LOG_KEY = 'pmit_debug_log';
+  var PM_PACKAGE_LABELS = {
+    news: '盤前即時新聞',
+    candidates: '盤前族群候選',
+    disposition: '處置股與出關預警',
+    calendar: '財經行事曆',
+    macro: '市場背景',
+    announcements: '市場公告'
+  };
+
+  window.pm.log = function(level, message, context) {
+    var line = '[' + new Date().toISOString() + '] ' + String(level || 'info').toUpperCase() + ' ' + String(message || '');
+    if (context !== undefined) {
+      try { line += ' ' + JSON.stringify(context); } catch (e) {}
+    }
+    try {
+      var entries = safeJsonParse(PM_LOG_KEY, []);
+      if (!Array.isArray(entries)) entries = [];
+      entries.push(line);
+      entries = entries.slice(-100);
+      localStorage.setItem(PM_LOG_KEY, JSON.stringify(entries));
+      var logEl = document.getElementById('pmit-log');
+      if (logEl) logEl.textContent = entries.join('\\n');
+    } catch (e) {}
+    if (level === 'error' && localStorage.getItem('pmit_debug') === '1') console.error('[PMIT]', message, context || '');
+  };
+
+  window.pm.renderDebugLog = function() {
+    var logEl = document.getElementById('pmit-log');
+    if (!logEl) return;
+    var entries = safeJsonParse(PM_LOG_KEY, []);
+    logEl.textContent = Array.isArray(entries) && entries.length ? entries.join('\\n') : '尚無本次工作階段紀錄';
+  };
+
+  window.pm.fetchJson = function(path, options) {
+    options = options || {};
+    var retries = Number.isFinite(options.retries) ? options.retries : 1;
+    var timeoutMs = Number.isFinite(options.timeoutMs) ? options.timeoutMs : 12000;
+    var attempt = function(index) {
+      var controller = window.AbortController ? new AbortController() : null;
+      var timer = controller ? setTimeout(function() { controller.abort(); }, timeoutMs) : null;
+      return fetch(path + (path.indexOf('?') >= 0 ? '&' : '?') + 't=' + Date.now(), {
+        credentials: 'same-origin',
+        cache: 'no-store',
+        signal: controller ? controller.signal : undefined
+      }).then(function(response) {
+        if (!response.ok) throw new Error('HTTP ' + response.status + ' for ' + path);
+        return response.json();
+      }).then(function(payload) {
+        if (timer) clearTimeout(timer);
+        return payload;
+      }).catch(function(error) {
+        if (timer) clearTimeout(timer);
+        if (index < retries) {
+          window.pm.log('warn', '資料載入失敗，準備重試', { path: path, attempt: index + 1, error: String(error && error.message || error) });
+          return attempt(index + 1);
+        }
+        window.pm.log('error', '資料載入失敗', { path: path, error: String(error && error.message || error) });
+        throw error;
+      });
+    };
+    return attempt(0);
+  };
+
+  window.pm.markPackageSuccess = function(packageName) {
+    try { localStorage.setItem('pmit_pkg_success_' + packageName, new Date().toISOString()); } catch (e) {}
+  };
+
+  window.pm.packageLastSuccess = function(packageName) {
+    try {
+      return localStorage.getItem('pmit_pkg_success_' + packageName) || (window.__PM_META__ || {}).built_at || '';
+    } catch (e) {
+      return (window.__PM_META__ || {}).built_at || '';
+    }
+  };
+
+  window.pm.showPackageError = function(anchor, packageName, error) {
+    if (!anchor) return;
+    while (anchor.firstChild) anchor.removeChild(anchor.firstChild);
+    var card = document.createElement('div');
+    card.className = 'package-error-card';
+    var title = document.createElement('strong');
+    title.textContent = '⚠️ 無法載入「' + (PM_PACKAGE_LABELS[packageName] || packageName) + '」';
+    var detail = document.createElement('div');
+    detail.className = 'package-error-detail';
+    detail.textContent = '本次載入失敗，其他區塊仍可正常使用。';
+    var last = document.createElement('div');
+    last.className = 'package-last-success';
+    var lastSuccess = window.pm.packageLastSuccess(packageName);
+    last.textContent = '最後一次成功載入：' + (lastSuccess || '未知');
+    var retry = document.createElement('button');
+    retry.type = 'button';
+    retry.className = 'watch-btn primary';
+    retry.textContent = '重新載入';
+    retry.addEventListener('click', function() { window.pm.retryPackage(packageName, retry, anchor); });
+    card.appendChild(title);
+    card.appendChild(detail);
+    card.appendChild(last);
+    card.appendChild(retry);
+    anchor.appendChild(card);
+    anchor.hidden = false;
+    window.pm.log('error', '顯示資料降級卡片', { package: packageName, error: String(error && error.message || error || '') });
+  };
+
+  window.pm.retryPackage = function(packageName, button, anchor) {
+    if (button) { button.disabled = true; button.textContent = '重新載入中…'; }
+    var paths = {
+      news: 'data/news.json',
+      candidates: 'data/candidates.json',
+      disposition: 'data/disposition.json',
+      calendar: 'data/calendar.json',
+      macro: 'data/macro.json',
+      announcements: 'data/announcements.json'
+    };
+    var path = paths[packageName];
+    if (!path) { location.reload(); return; }
+    window.pm.fetchJson(path, { retries: 1 }).then(function() {
+      window.pm.markPackageSuccess(packageName);
+      if (packageName === 'news') {
+        var block = document.getElementById('news-lazy-block');
+        if (block) {
+          block.setAttribute('data-news-loaded', 'false');
+          block.setAttribute('data-news-loading', 'false');
+          window.pm.hydrateNews();
+        }
+      } else {
+        location.reload();
+      }
+    }).catch(function(error) {
+      if (button) { button.disabled = false; button.textContent = '重新載入'; }
+      window.pm.showPackageError(anchor || document.querySelector('[data-package="' + packageName + '"]'), packageName, error);
+    });
+  };
+
+  window.pm.updateRelativeTimes = function() {
+    var now = Date.now();
+    document.querySelectorAll('time[data-relative][datetime]').forEach(function(el) {
+      var stamp = el.getAttribute('datetime');
+      var parsed = new Date(stamp);
+      if (!stamp || isNaN(parsed.getTime())) return;
+      var diffMs = now - parsed.getTime();
+      var minutes = Math.max(0, Math.round(diffMs / 60000));
+      var hours = Math.floor(minutes / 60);
+      var days = Math.floor(minutes / 1440);
+      var kind = el.getAttribute('data-relative-kind') || 'build';
+      var text;
+      if (kind === 'delay') {
+        text = minutes < 1 ? '剛剛' : (minutes < 60 ? minutes + ' 分鐘前' : (hours < 24 ? hours + ' 小時前' : days + ' 天前'));
+      } else if (kind === 'source') {
+        if (days === 1) {
+          text = '昨天 ' + parsed.toLocaleTimeString('zh-TW', { hour: '2-digit', minute: '2-digit', hour12: false });
+        } else if (days > 1) {
+          text = days + ' 天前';
+        } else {
+          text = minutes < 1 ? '剛剛' : (minutes < 60 ? minutes + ' 分鐘前' : hours + ' 小時前');
+        }
+      } else {
+        text = minutes < 1 ? '剛剛' : (minutes < 60 ? minutes + ' 分鐘前' : (hours < 24 ? hours + ' 小時前' : (days === 1 ? '昨天' : days + ' 天前')));
+      }
+      el.textContent = text;
+      el.title = '絕對時間：' + parsed.toLocaleString('zh-TW');
+      el.dataset.stale = diffMs > 24 * 60 * 60 * 1000 ? 'true' : 'false';
+    });
+  };
+
   window.pm.hydrateNews = function() {
     var block = document.getElementById('news-lazy-block');
     if (!block || block.getAttribute('data-news-loaded') === 'true' || block.getAttribute('data-news-loading') === 'true') return;
@@ -5705,14 +6082,11 @@
     var list = document.getElementById('news-list');
     var empty = document.getElementById('news-empty');
     var badge = document.getElementById('news-count-badge');
-    fetch(src, { credentials: 'same-origin' })
-      .then(function(response) {
-        if (!response.ok) throw new Error('news package unavailable');
-        return response.json();
-      })
+    window.pm.fetchJson(src, { retries: 1 })
       .then(function(payload) {
         var items = Array.isArray(payload) ? payload : (payload && Array.isArray(payload.items) ? payload.items : []);
         items = items.slice(0, 10);
+        window.pm.markPackageSuccess('news');
         if (badge) badge.textContent = items.length + ' 則';
         if (!items.length) {
           if (list) { list.innerHTML = ''; list.hidden = true; }
@@ -5748,9 +6122,9 @@
         }
         if (empty) empty.hidden = true;
       })
-      .catch(function() {
+      .catch(function(error) {
         if (list) { list.innerHTML = ''; list.hidden = true; }
-        if (empty) empty.hidden = false;
+        window.pm.showPackageError(empty, 'news', error);
       })
       .finally(function() {
         block.setAttribute('data-news-loading', 'false');
@@ -5813,9 +6187,38 @@
     });
   };
 
+  window.pm.debounce = function(fn, wait) {
+    var timer = null;
+    return function() {
+      var args = arguments;
+      var context = this;
+      clearTimeout(timer);
+      timer = setTimeout(function() { fn.apply(context, args); }, wait || 250);
+    };
+  };
+
   document.addEventListener('DOMContentLoaded', function() {
+    window.pm.renderDebugLog();
     window.pm.updateBriefingFreshness();
     window.pm.ensureDataLabels();
+    var batchArea = document.getElementById('batch-input-area');
+    if (batchArea) batchArea.addEventListener('input', window.pm.debounce(function() { window.pm.previewBatchCodes(); }, 250));
+    var calendarSearch = document.getElementById('cal-search-input');
+    if (calendarSearch) calendarSearch.addEventListener('input', window.pm.debounce(function() { window.pm.onCalSearch(calendarSearch.value); }, 250));
+    document.querySelectorAll('.empty[data-package], .empty-state[data-package], .part3-empty[data-package], .part3-error[data-package]').forEach(function(empty) {
+      var packageName = empty.getAttribute('data-package');
+      var hasContent = empty.textContent && empty.textContent.trim();
+      if (hasContent && !empty.querySelector('.package-error-card')) {
+        var retry = document.createElement('button');
+        retry.type = 'button';
+        retry.className = 'watch-btn primary package-inline-retry';
+        retry.textContent = '重新載入';
+        retry.addEventListener('click', function() { window.pm.retryPackage(packageName, retry, empty); });
+        empty.appendChild(document.createTextNode(' '));
+        empty.appendChild(retry);
+      }
+    });
+    window.pm.loadHolidayData();
     window.pm.bindMobileScrollHints();
     window.addEventListener('resize', window.pm.refreshMobileScrollHints, { passive: true });
     ['wheel', 'touchstart', 'keydown'].forEach(function(eventName) {
@@ -6008,7 +6411,7 @@
         <div style="font-size:12.5px; color:var(--text-muted); margin-bottom:10px; line-height:1.6;">
           💡 <strong>使用方式：</strong>直接複製 Excel 欄位貼在下方（代號或含名稱皆可），系統會自動排除日期（如 2026/08/21）、金額與符號並精準去重。
         </div>
-        <textarea id="batch-input-area" class="batch-textarea" placeholder="在此貼上 Excel 欄位內容，例如：&#10;2330&#10;2454 聯發科&#10;3163 波若威&#10;6716&#10;...&#10;" oninput="window.pm.previewBatchCodes()"></textarea>
+        <textarea id="batch-input-area" class="batch-textarea" placeholder="在此貼上 Excel 欄位內容，例如：&#10;2330&#10;2454 聯發科&#10;3163 波若威&#10;6716&#10;...&#10;"></textarea>
 
         <div class="batch-preview-box" id="batch-preview-box">
           <div class="batch-preview-sec" id="batch-sec-valid">

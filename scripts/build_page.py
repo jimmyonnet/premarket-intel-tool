@@ -600,6 +600,7 @@ def main():
     if now < us_close_today:
         us_close_today -= timedelta(days=1)
     hours_since_us_close = round((now - us_close_today).total_seconds() / 3600, 1)
+    us_close_at_iso = us_close_today.isoformat()
 
     # Calculate data stale hours
     data_dt_str = (night.get("latest") or {}).get("collected_at")
@@ -669,6 +670,7 @@ def main():
         data_date=data_date,
         stale_hours=stale_hours,
         hours_since_us_close=hours_since_us_close,
+        us_close_at_iso=us_close_at_iso,
         meta=meta_data,
         health=health_eval.to_dict(),
         indices=indices,
