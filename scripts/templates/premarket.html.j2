@@ -1729,7 +1729,13 @@
     border-left: 3px solid var(--rise);
   }
   .cal-event-card.is-past {
-    opacity: 0.65;
+    opacity: 0.55;
+  }
+  .cal-event-card.is-past .cal-card-title {
+    color: var(--text-muted);
+  }
+  .cal-event-card.is-past .cal-countdown-badge {
+    display: none;
   }
   .cal-event-card.is-live {
     animation: pulse-live 2s infinite;
@@ -3929,6 +3935,35 @@
     });
   };
 
+  window.pm.calendarCardMatchesFilters = function(card, section, ignoreTodayQuickFilter) {
+    var quickVal = window.pm.calState.quick;
+    var imp = parseInt(card.getAttribute('data-importance') || '1', 10);
+    var country = card.getAttribute('data-country');
+    var category = card.getAttribute('data-category');
+    var title = (card.getAttribute('data-title') || '').toLowerCase();
+    if (quickVal === 'star3' && imp < 3) return false;
+    if (!ignoreTodayQuickFilter && quickVal === 'today' && !section.classList.contains('is-today-section')) return false;
+    if (window.pm.calState.countries.length > 0 && window.pm.calState.countries.indexOf(country) < 0) return false;
+    if (window.pm.calState.categories.length > 0 && window.pm.calState.categories.indexOf(category) < 0) return false;
+    if (window.pm.calState.search && title.indexOf(window.pm.calState.search) < 0) return false;
+    return true;
+  };
+
+  window.pm.findNextCalendarFallbackSection = function() {
+    var nowMs = Date.now();
+    var candidates = [];
+    document.querySelectorAll('.cal-date-section').forEach(function(section) {
+      section.querySelectorAll('.cal-event-card[data-datetime-utc]').forEach(function(card) {
+        var eventMs = new Date(card.getAttribute('data-datetime-utc')).getTime();
+        if (!isNaN(eventMs) && eventMs >= nowMs && window.pm.calendarCardMatchesFilters(card, section, true)) {
+          candidates.push({ section: section, eventMs: eventMs });
+        }
+      });
+    });
+    candidates.sort(function(a, b) { return a.eventMs - b.eventMs; });
+    return candidates.length ? candidates[0].section : null;
+  };
+
   window.pm.applyCalendarFilters = function() {
     var quickVal = window.pm.calState.quick;
     document.querySelectorAll('.cal-chip[data-filter="quick"]').forEach(function(btn) {
@@ -3951,31 +3986,11 @@
     var totalAll = 0;
 
     document.querySelectorAll('.cal-date-section').forEach(function(sec) {
-      var isToday = sec.classList.contains('is-today-section');
       var visibleInSec = 0;
 
       sec.querySelectorAll('.cal-event-card').forEach(function(card) {
         totalAll++;
-        var imp = parseInt(card.getAttribute('data-importance') || '1');
-        var country = card.getAttribute('data-country');
-        var cat = card.getAttribute('data-category');
-        var title = (card.getAttribute('data-title') || '').toLowerCase();
-        var match = true;
-
-        if (quickVal === 'star3' && imp < 3) match = false;
-        if (quickVal === 'today' && !isToday) match = false;
-
-        if (match && window.pm.calState.countries.length > 0) {
-          if (window.pm.calState.countries.indexOf(country) < 0) match = false;
-        }
-
-        if (match && window.pm.calState.categories.length > 0) {
-          if (window.pm.calState.categories.indexOf(cat) < 0) match = false;
-        }
-
-        if (match && window.pm.calState.search) {
-          if (title.indexOf(window.pm.calState.search) < 0) match = false;
-        }
+        var match = window.pm.calendarCardMatchesFilters(card, sec, false);
 
         card.style.display = match ? '' : 'none';
         if (match) {
@@ -3989,10 +4004,32 @@
       if (countEl) countEl.textContent = visibleInSec + ' 件';
     });
 
+    var fallbackSection = null;
+    if (quickVal === 'today' && totalVisible === 0) {
+      fallbackSection = window.pm.findNextCalendarFallbackSection();
+      if (fallbackSection) {
+        var fallbackVisible = 0;
+        fallbackSection.querySelectorAll('.cal-event-card').forEach(function(card) {
+          var matchFallback = window.pm.calendarCardMatchesFilters(card, fallbackSection, true);
+          card.style.display = matchFallback ? '' : 'none';
+          if (matchFallback) { fallbackVisible++; totalVisible++; }
+        });
+        fallbackSection.style.display = fallbackVisible > 0 ? '' : 'none';
+        var fallbackCount = fallbackSection.querySelector('.cal-date-count');
+        if (fallbackCount) fallbackCount.textContent = fallbackVisible + ' 件';
+        window.pm.openCalendarDateSection(fallbackSection);
+      }
+    }
+
     // Update Header Badge & Filter Summary
     var badge = document.getElementById('cal-count-badge');
     if (badge) {
-      badge.textContent = '顯示 ' + totalVisible + ' / ' + totalAll + ' 筆';
+      if (fallbackSection) {
+        var fallbackDate = fallbackSection.getAttribute('data-date') || '';
+        badge.textContent = '今日無事件 · 顯示下一個：' + fallbackDate.slice(5).replace('-', '/');
+      } else {
+        badge.textContent = '顯示 ' + totalVisible + ' / ' + totalAll + ' 筆';
+      }
     }
 
     var summaryEl = document.getElementById('cal-filter-summary');
@@ -4072,8 +4109,30 @@
     window.open(url, '_blank');
   };
 
+  window.pm.markPastEvents = function(nowMs) {
+    document.querySelectorAll('.cal-event-card').forEach(function(card) {
+      var utcStr = card.getAttribute('data-datetime-utc');
+      if (!utcStr) return;
+      var evTime = new Date(utcStr).getTime();
+      if (isNaN(evTime)) return;
+      card.classList.toggle('is-past', nowMs - evTime > 2 * 3600 * 1000);
+    });
+
+    document.querySelectorAll('.cal-date-section').forEach(function(section) {
+      var cards = Array.prototype.slice.call(section.querySelectorAll('.cal-event-card[data-datetime-utc]'));
+      var allPast = cards.length > 0 && cards.every(function(card) { return card.classList.contains('is-past'); });
+      if (allPast && !section.hasAttribute('data-past-auto-collapsed')) {
+        var body = section.querySelector('.cal-date-body');
+        if (body) body.classList.remove('is-open');
+        section.classList.remove('open-sec');
+        section.setAttribute('data-past-auto-collapsed', 'true');
+      }
+    });
+  };
+
   function updateEventCountdowns() {
     var nowMs = Date.now();
+    window.pm.markPastEvents(nowMs);
     document.querySelectorAll('.cal-event-card').forEach(function(card) {
       var utcStr = card.getAttribute('data-datetime-utc');
       if (!utcStr) return;
@@ -4090,9 +4149,9 @@
           cdBadge.textContent = '倒數 ' + String(mins).padStart(2, '0') + ':' + String(secs).padStart(2, '0');
           cdBadge.classList.add('show');
         }
-      } else if (diffMs <= 0 && diffMs >= -30 * 60 * 1000) {
+      } else if (diffMs <= 0 && diffMs >= -2 * 3600 * 1000) {
         if (cdBadge) {
-          cdBadge.textContent = '● 已公布';
+          cdBadge.textContent = '已公布';
           cdBadge.classList.add('show');
         }
       } else {
@@ -4102,8 +4161,6 @@
       var isLive = Math.abs(diffMs) <= 15 * 60 * 1000;
       card.classList.toggle('is-live', isLive);
 
-      var isPast = diffMs < -30 * 60 * 1000;
-      card.classList.toggle('is-past', isPast);
     });
   }
 
