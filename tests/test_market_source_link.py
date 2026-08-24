@@ -43,12 +43,12 @@ def test_market_indices_card_uses_micron_instead_of_tsmc_spot():
     deployed = DEPLOYED.read_text(encoding="utf-8")
 
     template_block = _cross_sea_block(template)
-    assert "('MU', '美光')" in template_block
+    assert "('MU', '美光 (MU)')" in template_block
     assert "台積電 現貨" not in template_block
     assert "2330.TW" not in template_block
 
     deployed_block = _cross_sea_block(deployed)
-    assert '<span class="tile-name">美光</span>' in deployed_block
+    assert '<span class="tile-name">美光 (MU)</span>' in deployed_block
     assert '<span class="tile-name">台積電 現貨</span>' not in deployed_block
     assert "2330.TW" not in deployed_block
 
