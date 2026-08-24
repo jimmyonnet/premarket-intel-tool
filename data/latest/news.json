@@ -1,8 +1,8 @@
 [
   {
     "title": "〈美股早盤〉市場靜待伊朗制裁、輝達財報與通膨數據 主要指數開低",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9ZUjJOV2h6QnE4SnR6a1Q0RVpJd1hURlRwWldBc2lvMF96YnlxYVdjUzFZQndpTFVQcEJQYzlRdng0c0otVWNCU2FDRVlLMlE?oc=5",
-    "source": "news.cnyes.com",
+    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9GeWxDVll3X09LT0JPWUd1WnJMaEJvWlRpcjhPc05COTdLS0hjaXhoT041N1VlbUhxTUhUc2JydGZtTFprbU1aT1Z1MA?oc=5",
+    "source": "鉅亨網",
     "time": "08/24 21:41",
     "timestamp": 1787578881.0,
     "score": 17,
@@ -33,6 +33,26 @@
       "systemic_company",
       "earnings_financial",
       "market_move"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "輝達財報牽動AI投資需求 聯準會主席將於杰克遜谷地論壇發聲",
+    "link": "https://news.google.com/rss/articles/CBMilwNBVV95cUxNaERrSmpfeVVsNXhySm00SjNndmMyb3VYYmtlU2FYZkROUVRSQjgxMHRFdHB0MTZBMnhuZ3JVMWU4RjNOX0RxNEhLdmNqa3o5LWlySklJeFIyNXhCU1BhQjN5a2xaMTZvNzQ0LUJjdDg0ajlMZ3k5TkI1aDctbE9NaWpQZVpsSmFFVXZRQzhMU2dUTlR5VUVtWUJJWGx5NUxjOFUzNGtjYV80YlFPNlNmQnRCVHNHaW95UUdoX0RpaWR3cExIRk1VWUZiMmpmdGZsNnRwUTJtWlEwR1FsRlo0UFBRUWNYbXVFWkpzUEZXczJ0akgxN3lJNGR2ZEZESXhuS2ZYbklnSHpwVWNXZWRuajNtNTR3Wk9QN2J1Z3ZmREgxNlRPa1g3SDZXeE11R0ZCbl9ZQUVYWmtzWS15Y2NXUkN4akZhWC01R1VSUjNGNVRhV2N5Z082ZjBDOE9GZzNOZHdZd0kxLUcxR09Cd1ZDRExLVUZPNm91ZXE5Vm96aUo2djdXTnVXVUhNZkxFT1VGMjR3dXhLNA?oc=5",
+    "source": "Yahoo股市",
+    "time": "08/24 15:09",
+    "timestamp": 1787555361.0,
+    "score": 15,
+    "quality_score": 3,
+    "impact_score": 12,
+    "matched_groups": [
+      "macro_policy",
+      "systemic_company",
+      "earnings_financial",
+      "sector_supply_chain"
     ],
     "low_signal_hits": [],
     "quality_pass": true,
