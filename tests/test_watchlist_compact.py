@@ -28,10 +28,16 @@ def test_watchlist_uses_collapsed_summary_with_hit_placeholder():
     assert 'summaryItems = hitAlerts.concat(hitCandidates)' in source
     assert 'summaryItems = hitAlerts.concat(hitCandidates, otherStocks)' not in source
     assert "totalBadge.textContent = summaryItems.length + ' 檔';" in source
-    assert 'summaryItems.forEach(function(item)' in source
+    assert "var summaryChip = document.createElement('button');" in source
+    assert 'summaryChip.onclick = function(event)' in source
+    assert 'focusWatchTarget(item.code);' in source
     assert "item.code + (item.hit && item.hit.label" in source
     assert 'watch-summary-more' not in source
-    assert "watch-summary-chip.is-other" in source
+    assert 'watch-summary-chip.is-amber' in source
+    assert 'watch-summary-chip.is-other' not in source
+    assert 'function focusWatchTarget(c)' in source
+    assert 'chip.onclick = function() { focusWatchTarget(c); };' in source
+    assert "hit.type === 'blue' || hit.type === 'normal'" in source
 
 
 def test_deployed_watchlist_is_collapsed_by_default_and_keeps_management_controls():
