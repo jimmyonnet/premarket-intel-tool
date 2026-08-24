@@ -1,12 +1,12 @@
 [
   {
     "title": "〈美股早盤〉市場靜待伊朗制裁、輝達財報與通膨數據 主要指數開低",
-    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9GeWxDVll3X09LT0JPWUd1WnJMaEJvWlRpcjhPc05COTdLS0hjaXhoT041N1VlbUhxTUhUc2JydGZtTFprbU1aT1Z1MA?oc=5",
-    "source": "鉅亨網",
+    "link": "https://news.google.com/rss/articles/CBMiowNBVV95cUxOYTliX1duLVZadEVZRjVxUXA3M3FUUjB3UWRURm9Fc29fNUU4QnJzNmFQTEVBaFQ5dnhvRGo3QkpWeXZzV2tzSnZiSU9zM3FRTl9wOUhZX09KbG95WERyTTFnakxtei1XRE9ZakZNc19VVW4yYTV0MkFyNXlMWWsxUERYN2U4Y0RvakdoZlhvZEJGeGxoQWhaNFM2Slc1cFBOemtKQzhlQTVpX2FBNUtJaFNuZ2RraTR3dHVhbzUxR1A2OEJsUmwzMU50Mk5JLTRRMm1CaVFYYnJVWVhiQXUtNC1GX3lNc0hUYmNyX1hCeHdwdEx2b3U2UVlfUDdIN2NLWDktbVZxb1pETzh2N0E3WXdUSXE1dExnWkl0VklUQW50RTFNU0tCTzZJd055dmdQY2FjNlBwa21QeW52R0dWMUVaTDBhZGlUeloxNl85elVMSjN5YXhlQlVlUDY1b00tVXRpN09XY24yc1I2Uk1pX3NJTl95NU9pZElQUFNrOGduS3QtYmlEem9nNUdqWHhqa19MdnlZMGdleHZweFMwS3VCWQ?oc=5",
+    "source": "Yahoo股市",
     "time": "08/24 21:41",
     "timestamp": 1787578881.0,
-    "score": 17,
-    "quality_score": 4,
+    "score": 16,
+    "quality_score": 3,
     "impact_score": 13,
     "matched_groups": [
       "macro_policy",
@@ -99,6 +99,24 @@
     "qualified": true
   },
   {
+    "title": "美股輪動迎兩大壓力測試：輝達、Fed華許",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA3VF9Fck5YcmhxM1g4ZjNyWHduZkJuYkh4aVBRZWQyRVlTWXBKb0FodmVFLUt3VGN3ZFBVRG1jUGI1LUlIRXZqak1lV3hGbGs?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/25 00:21",
+    "timestamp": 1787588505.0,
+    "score": 10,
+    "quality_score": 4,
+    "impact_score": 6,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "【噴出倒數？】輝達財報登場，46000真的要來了？",
     "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5iZm1QX0ZuclMyWVRQSEJXZmtCUFgydlRvVUlMM3pVbjNpS21sT2x3VVYwcDBWQVk2Y1FsQUwxckdUNGpQZjloUHkxeHFqT2x0SU1F?oc=5",
     "source": "news.cnyes.com",
@@ -128,6 +146,23 @@
     "matched_groups": [
       "market_benchmark",
       "systemic_company"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "〈財報前瞻〉邁威爾最大亮點不是營收！全場只盯Google這張大單",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5qeFBjdFdiZXNIVFJkVWdqVld6Z0FVZUZ2bEtOWlZHZV9XVFAtYTVhTEFMb1Q1NUdIUkxoajBzd05EMlQ5cGJhaEhMWVh2dGs?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/24 21:10",
+    "timestamp": 1787577003.0,
+    "score": 7,
+    "quality_score": 4,
+    "impact_score": 3,
+    "matched_groups": [
+      "earnings_financial"
     ],
     "low_signal_hits": [],
     "quality_pass": true,
