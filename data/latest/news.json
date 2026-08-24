@@ -20,26 +20,6 @@
     "qualified": true
   },
   {
-    "title": "輝達財報、聯準會論壇與地緣政治牽動美股本週動向",
-    "link": "https://news.google.com/rss/articles/CBMi5AJBVV95cUxOSzJvdi1jd2lOa1VibzVkTGFuV1M2UnllSmdySThpckJZVVZPNjlSUXBkdGZxQVFHWVhoSHN1ZlNyc0E0bEhSamdQU1ZlelBfVGJwNnJrdXdITUYzR19KZjk3YjNtVG9ZYzdkWERfeDJfcmVKRTZXTlhNSUxraG1WaUZNdnJEY1NnTEo0aWVxY0Y3b3RCbnVnVVlJYXpKTktrdHNlZEFnUVFrNW5yUkd3X2hxVlllblBvQWt3VFBGUjZZZHhMV3hFcWFuNzkwaWc0M1dWX3Q4WVlVWV94ZXhfX3p5WTQ3enRiZ0t2UjZaZHJMMlhHaDczRjBsOWl6ci0xYTZBZktQR0UzSXRabjhGeVlRX3d0Q3NjaXNPY0h6R0ZpSUNNMTI3NW5GRWJ2cC05WWQ3b1hkT0Q3N0VQVU1zWHJqQjQxSkVRWl9mbF83ZnlMT2Y3MVBZRDdVYS04WnNSOERXNw?oc=5",
-    "source": "Yahoo股市",
-    "time": "08/24 07:38",
-    "timestamp": 1787528290.0,
-    "score": 16,
-    "quality_score": 3,
-    "impact_score": 13,
-    "matched_groups": [
-      "macro_policy",
-      "market_benchmark",
-      "systemic_company",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
     "title": "美股三道關卡迎考驗 輝達財報、傑克森霍爾、PCE牽動市場走向",
     "link": "https://news.google.com/rss/articles/CBMigwNBVV95cUxQd2RDLW9BV0RUdlAwX25sM0NVSHozUFN4QnlTek9WLXNXTHVoaTNaNDhXLTlmdmVkQmtTTC1GNEVoNnctMGJ2RDZKY3hsdGRCZ245ZEhpY1dOdzAzWlBvRU52czVCREdZalV6NnFReDJKdThZOXhHM05DY1pjeENTWmlzQ2dQNTVQbXVxZGJiaVBnUE1aRXpaYjdGeWY4RGhxTHZTUXhQQ05xSTJxOGJ0dFJaNWdzVVNQcUhqWU1CcC11SkxRXy1yc3VqaHRWVzJLaW5UTGFteGZKSzhzOExrT2hrdGNjTDQ5N2cxS3FmenZfbTRyczI5aF9LUFRETjkzaG55S0g0a1BaUnJSRExjX3h3dGRGRjNiWWFRVnFEbEF4VEQ0SHYzZmp1VXJPa1ZUdGYyd3BBTjFOcGF0TnBsYjFxYXhzNDQtVHlUX1RxX1dKb2JjdXRwaTU5emdpUWlqSGdINHlFMlB4OWZpUGpNNndYaWhnYjJYbVZvLUJGZzN5a00?oc=5",
     "source": "Yahoo股市",
@@ -184,6 +164,24 @@
     "matched_groups": [
       "market_benchmark",
       "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "三大法人聯手擴大賣超708億元 台股續跌589點、退守44,700點",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBpeWpybUxpck91NjV6eHVQcFRiUExIekllLUR5WWE0VmlsV0dXaExqVlUySUhyTDRDLVZ2QmJRU3dRdlZ6dXFNS204d0VHWmRpSzFrTUVyeUdsUdIBX0FVX3lxTFBpYXdURHVJcUFKZkNfT2VOWkNiTnZpcXJFNV9nMzJ6U1JRRDdYYVhKWFBYeVU1TjNMWDhuOHR6RHVCcTN0VEhpcG5ZaG5OM0cydUU4RXl5U1drRGJ4YXln?oc=5",
+    "source": "經濟日報",
+    "time": "08/23 17:00",
+    "timestamp": 1787475600.0,
+    "score": 9,
+    "quality_score": 4,
+    "impact_score": 5,
+    "matched_groups": [
+      "market_benchmark",
+      "market_structure"
     ],
     "low_signal_hits": [],
     "quality_pass": true,
