@@ -40,6 +40,25 @@
     "qualified": true
   },
   {
+    "title": "本周除了輝達財報及全球央行年會之外 還有哪些變數？",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9mQ0VGOUR4QjFiZXpGMm9IWnZqZHJtYlFfal9jbGJ0T2FOeWdlSDJNUEJyM0kwNEZSTnFKbTN2c0tpNDd3VXdzUFN4LW5rdDJQUnUwNXAxOTZfUdIBX0FVX3lxTE9pMjJQNlB3UXc4TjRCMENnTE1LYmlrcG9xZkxmRURUODRHLV9pa0ZRTjJLMEU1VjlPT3oxRGFSZzdORlFmU2c1ZTBsTTVNTEE5bW4zQnpjSjBNNFpQbmNn?oc=5",
+    "source": "經濟日報",
+    "time": "08/24 13:01",
+    "timestamp": 1787547673.0,
+    "score": 14,
+    "quality_score": 4,
+    "impact_score": 10,
+    "matched_groups": [
+      "macro_policy",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "本週操盤筆記：輝達財報、華許演說與PCE三大關卡來了",
     "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBqSkN0eGR2MGhQWFhlQzhLMVJkb1RicGhPYVhGVHloZVlYWDhIenl6cnlFSExGd192eXJWSEVaUUthcXlfb2RadFFsTENXSGc?oc=5",
     "source": "news.cnyes.com",
@@ -154,7 +173,7 @@
   },
   {
     "title": "金融業布局台股 轉區間操作 銀行圈：逢高獲利落袋...非全面看空",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5SYkJjV1JuSlpBdjhpNmpYQnR4d3FEeWZqY1Zqb1pRcjFyUHFIWTdqMFVEanZYZWdCSUdsLURmamUxdU1iV0QxTUNWaEk5Uk90OHUzQ21sLUxFQdIBX0FVX3lxTE5WbUwtMkFUdzlHZlhsbElLS081N2RmRTZYamVLRksxaEFPNDZQMVdJZHBWVTQySndIN1VIYjRuMjNoR0cyTmplY3JVam5JQk1qSjdlckwtUnpTS0s3NVlZ?oc=5",
+    "link": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBfbmNCYnFqU2NFTHZfMDhxbDVfbG8ycnBwMlRnUUtiODJyVUZ6NDZ6VFdCQ1MyWGx4WUtGcHF1SmZlTU56UjIyRVFkRDhuOTZ4V2kxa1FtdExqNlNjRTBMR2YxRVQwNm1WR1N5YlJoUW9uWUVKNFV30gFfQVVfeXFMTlZtTC0yQVR3OUdmWGxsSUtLTzU3ZGZFNlhqZUtGSzFoQU80NlAxV0lkcFZVNDJKd0g3VUhiNG4yM2hHRzJOamVjclVqbklCTWpKN2VyTC1SelNLSzc1WVk?oc=5",
     "source": "經濟日報",
     "time": "08/24 02:18",
     "timestamp": 1787509101.0,
@@ -164,24 +183,6 @@
     "matched_groups": [
       "market_benchmark",
       "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "三大法人聯手擴大賣超708億元 台股續跌589點、退守44,700點",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBpeWpybUxpck91NjV6eHVQcFRiUExIekllLUR5WWE0VmlsV0dXaExqVlUySUhyTDRDLVZ2QmJRU3dRdlZ6dXFNS204d0VHWmRpSzFrTUVyeUdsUdIBX0FVX3lxTFBpYXdURHVJcUFKZkNfT2VOWkNiTnZpcXJFNV9nMzJ6U1JRRDdYYVhKWFBYeVU1TjNMWDhuOHR6RHVCcTN0VEhpcG5ZaG5OM0cydUU4RXl5U1drRGJ4YXln?oc=5",
-    "source": "經濟日報",
-    "time": "08/23 17:00",
-    "timestamp": 1787475600.0,
-    "score": 9,
-    "quality_score": 4,
-    "impact_score": 5,
-    "matched_groups": [
-      "market_benchmark",
-      "market_structure"
     ],
     "low_signal_hits": [],
     "quality_pass": true,
