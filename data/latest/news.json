@@ -1,5 +1,25 @@
 [
   {
+    "title": "〈美股早盤〉市場靜待伊朗制裁、輝達財報與通膨數據 主要指數開低",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9ZUjJOV2h6QnE4SnR6a1Q0RVpJd1hURlRwWldBc2lvMF96YnlxYVdjUzFZQndpTFVQcEJQYzlRdng0c0otVWNCU2FDRVlLMlE?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/24 21:41",
+    "timestamp": 1787578881.0,
+    "score": 17,
+    "quality_score": 4,
+    "impact_score": 13,
+    "matched_groups": [
+      "macro_policy",
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "輝達財報、PCE指數與Jackson Hole會議 本週考驗美股漲勢",
     "link": "https://news.google.com/rss/articles/CBMivgJBVV95cUxNR3IzaVR4aHdJVnJPc3RpTHJueFQzbVlYeDF1Q0hQX1BFSVNmbzdhMmxMakZXbGZPSVc1cndWdmlwNU9PelNXX0EwZ3VTUF8tT3BHaUk5emxmV2QxdGtoNjNPNlFlZmViUXpjN1d0ZXBsd0lYRnN1ZngyV3Vqd0pHTXhlSjR6eFpBNVFQcEpmMkxuTVVjQmhjeVRaU3NrclNScWtDaTB4ZGc0clNncUR0emhCR2Znc0ZlOXczRDJRV0FfQ1hHOFFOX2RzNWY2b2ZGcTYwa0RaMGV1alpfaUpXR1U4Vms4dWJmaUhGVEcyekdyNUxfMDZ4ZURzVmZDMW5iXzZ4LVVPWmF3MTZ5ZnpTRFBlX2NPS0dnUlRJX3RiYjBacW1MdThlbmxJR0ctd0hBcFdZS0J3ZFpacC1maXc?oc=5",
     "source": "Yahoo股市",
@@ -60,10 +80,10 @@
   },
   {
     "title": "本週操盤筆記：輝達財報、華許演說與PCE三大關卡來了",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBqSkN0eGR2MGhQWFhlQzhLMVJkb1RicGhPYVhGVHloZVlYWDhIenl6cnlFSExGd192eXJWSEVaUUthcXlfb2RadFFsTENXSGc?oc=5",
+    "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFB3dWNGYjgtRUs0Z1RLZ2t4YnBOZ0Zndm43R3BWdHVsemlSTHpJTUxiRTNJMW5GZEhfVER2d1prb2ItQzRHZVRQYTFnYVlsYTl5bDJN?oc=5",
     "source": "news.cnyes.com",
-    "time": "08/23 21:50",
-    "timestamp": 1787493003.0,
+    "time": "08/23 22:11",
+    "timestamp": 1787494301.0,
     "score": 14,
     "quality_score": 4,
     "impact_score": 10,
@@ -164,24 +184,6 @@
     "impact_score": 6,
     "matched_groups": [
       "systemic_company",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "金融業布局台股 轉區間操作 銀行圈：逢高獲利落袋...非全面看空",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5SYkJjV1JuSlpBdjhpNmpYQnR4d3FEeWZqY1Zqb1pRcjFyUHFIWTdqMFVEanZYZWdCSUdsLURmamUxdU1iV0QxTUNWaEk5Uk90OHUzQ21sLUxFQdIBX0FVX3lxTE5WbUwtMkFUdzlHZlhsbElLS081N2RmRTZYamVLRksxaEFPNDZQMVdJZHBWVTQySndIN1VIYjRuMjNoR0cyTmplY3JVam5JQk1qSjdlckwtUnpTS0s3NVlZ?oc=5",
-    "source": "經濟日報",
-    "time": "08/24 02:18",
-    "timestamp": 1787509101.0,
-    "score": 10,
-    "quality_score": 4,
-    "impact_score": 6,
-    "matched_groups": [
-      "market_benchmark",
       "earnings_financial"
     ],
     "low_signal_hits": [],
