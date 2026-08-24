@@ -1192,6 +1192,24 @@
     .data-table td.badge-col { text-align: left; }
   }
 
+  /* DESKTOP READABILITY: retain the 280a9dc layout while easing dense text scanning. */
+  @media (min-width: 769px) {
+    .section-title { font-size: 17px; }
+    .section-desc, .card-tip { font-size: 13px; line-height: 1.55; }
+    .card-title { font-size: 15px; }
+    .card-label, .briefing-col-lbl { font-size: 11px; }
+    .card-sub, .inst-chips .chip { font-size: 11.5px; line-height: 1.5; }
+    .briefing-summary-title, .briefing-status-val, .briefing-watch-val, .briefing-events-val { font-size: 13px; }
+    .briefing-summary-status, .briefing-reason-summary { font-size: 12px; }
+    .data-table { font-size: 14px; line-height: 1.5; }
+    .data-table th { font-size: 11.5px; line-height: 1.4; }
+    .cal-date-title, .cal-time-group { font-size: 13.5px; }
+    .cal-card-title { font-size: 14px; line-height: 1.55; }
+    .cal-metrics-grid { font-size: 11.5px; }
+    .news-title { font-size: 14px !important; line-height: 1.55; }
+    .news-meta { font-size: 11.5px !important; line-height: 1.5; }
+  }
+
   /* Wide Table Sticky Key Columns (Desktop / Tablet Scroll) */
   @media (min-width: 769px) {
     .disposal-table th:nth-child(1),
