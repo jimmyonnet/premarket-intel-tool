@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-08-24 08:14",
-  "build_version": "20260824_0814",
+  "build_time": "2026-08-24 08:22",
+  "build_version": "20260824_0822",
   "data_date": "08/24",
-  "stale_hours": 33.8,
-  "hours_since_us_close": 4.2,
+  "stale_hours": 33.9,
+  "hours_since_us_close": 4.4,
   "overall_status": "ready",
   "status_label": "可用",
   "status_badge_class": "is-ready",
@@ -157,14 +157,14 @@
     }
   ],
   "schema_version": 1,
-  "built_at": "2026-08-24T00:14:21.980747+00:00",
+  "built_at": "2026-08-24T00:22:04.978866+00:00",
   "hash": {
     "disposition": "28b395c1e053",
     "candidates": "a7ee69e8561c",
     "announcements": "fae3191f99ff",
     "macro": "da6cf57867ec",
     "calendar": "6d9ee85b5435",
-    "news": "1639af6f5a93"
+    "news": "fe999afb101f"
   },
   "packages": {
     "disposition": "data/disposition.json",

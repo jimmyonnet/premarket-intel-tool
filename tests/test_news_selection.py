@@ -55,6 +55,29 @@ def test_low_signal_or_unknown_source_does_not_pass_quality_gate():
     assert low_signal["qualified"] is False
 
 
+def test_recognized_yahoo_stock_source_can_pass_with_material_market_impact():
+    item = article("輝達財報、聯準會論壇與地緣政治牽動美股本週動向", "Yahoo股市")
+
+    assert item["quality_score"] == 3
+    assert item["impact_score"] >= 3
+    assert item["qualified"] is True
+
+
+def test_credible_single_topic_market_news_can_pass_relaxed_total_threshold():
+    item = article("風向變了！金融三業6月大砍台股757億", "工商時報")
+
+    assert item["score"] == 7
+    assert item["qualified"] is True
+
+
+def test_low_signal_phrase_is_rejected_even_from_a_recognized_source():
+    item = article("投資人必看：台積電財報牽動台股與美股", "經濟日報")
+
+    assert item["quality_score"] >= 4
+    assert item["low_signal_hits"] == ["投資人必看"]
+    assert item["qualified"] is False
+
+
 def test_dedupe_keeps_stronger_version_of_same_story():
     older = article("聯準會利率決策牽動美股與台股", "中央社", timestamp=1_700_000_000)
     newer = article("聯準會利率決策牽動美股與台股", "路透社", timestamp=1_700_001_000)

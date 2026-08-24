@@ -11,7 +11,8 @@ from email.utils import parsedate_to_datetime
 
 MAX_NEWS = 10
 MIN_TITLE_LENGTH = 12
-MIN_TOTAL_SCORE = 8
+# Keep the source and topic gates strict, but admit credible, single-topic market news.
+MIN_TOTAL_SCORE = 7
 TAIPEI = timezone(timedelta(hours=8))
 
 # The RSS feed is an aggregator; this score reflects the publisher named in each item.
@@ -36,6 +37,7 @@ SOURCE_QUALITY = {
     "今周刊": 3,
     "yahoo財經": 3,
     "yahoo新聞": 3,
+    "yahoo股市": 3,
     "news.cnyes.com": 4,
     "cnyes": 4,
 }
@@ -125,13 +127,15 @@ def impact_score(title):
 def score_breakdown(title, source=""):
     quality = source_quality(source)
     impact, groups = impact_score(title)
-    penalty = sum(1 for term in LOW_SIGNAL_TERMS if term.upper() in title.upper())
+    low_signal_hits = [term for term in LOW_SIGNAL_TERMS if term.upper() in title.upper()]
+    penalty = len(low_signal_hits)
     total = quality + impact - (penalty * 2)
     return {
         "score": total,
         "quality_score": quality,
         "impact_score": impact,
         "matched_groups": groups,
+        "low_signal_hits": low_signal_hits,
         "quality_pass": quality >= 2,
         "impact_pass": impact >= 3,
     }
@@ -148,6 +152,7 @@ def is_qualified(article):
         and article["quality_score"] >= 2
         and article["impact_score"] >= 3
         and article["score"] >= MIN_TOTAL_SCORE
+        and not article.get("low_signal_hits")
     )
 
 
