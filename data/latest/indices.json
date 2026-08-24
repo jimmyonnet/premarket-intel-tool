@@ -11,25 +11,25 @@
     "tsmc": {
       "name": "台積電 ADR",
       "ticker": "TSM",
-      "value": 407.59,
-      "change": -11.36,
-      "change_pct": -2.71,
+      "value": 407.89,
+      "change": -11.06,
+      "change_pct": -2.64,
       "is_missing": false
     },
     "nvda": {
       "name": "輝達 (NVDA)",
       "ticker": "NVDA",
-      "value": 209.78,
-      "change": -4.94,
-      "change_pct": -2.3,
+      "value": 209.81,
+      "change": -4.91,
+      "change_pct": -2.29,
       "is_missing": false
     },
     "aapl": {
       "name": "蘋果 (AAPL)",
       "ticker": "AAPL",
-      "value": 312.95,
-      "change": 3.6,
-      "change_pct": 1.17,
+      "value": 313.09,
+      "change": 3.74,
+      "change_pct": 1.21,
       "is_missing": false
     },
     "tsmc_tw": {
@@ -43,17 +43,17 @@
     "umc": {
       "name": "聯電 ADR",
       "ticker": "UMC",
-      "value": 18.93,
-      "change": 0.59,
-      "change_pct": 3.24,
+      "value": 18.9,
+      "change": 0.56,
+      "change_pct": 3.05,
       "is_missing": false
     },
     "ase": {
       "name": "日月光 ADR",
       "ticker": "ASX",
-      "value": 36.06,
-      "change": -0.45,
-      "change_pct": -1.22,
+      "value": 36.07,
+      "change": -0.44,
+      "change_pct": -1.21,
       "is_missing": false
     }
   },
@@ -61,25 +61,25 @@
     "tsmc": {
       "name": "台積電 ADR",
       "ticker": "TSM",
-      "value": 407.59,
-      "change": -11.36,
-      "change_pct": -2.71,
+      "value": 407.89,
+      "change": -11.06,
+      "change_pct": -2.64,
       "is_missing": false
     },
     "nvda": {
       "name": "輝達 (NVDA)",
       "ticker": "NVDA",
-      "value": 209.78,
-      "change": -4.94,
-      "change_pct": -2.3,
+      "value": 209.81,
+      "change": -4.91,
+      "change_pct": -2.29,
       "is_missing": false
     },
     "aapl": {
       "name": "蘋果 (AAPL)",
       "ticker": "AAPL",
-      "value": 312.95,
-      "change": 3.6,
-      "change_pct": 1.17,
+      "value": 313.09,
+      "change": 3.74,
+      "change_pct": 1.21,
       "is_missing": false
     },
     "tsmc_tw": {
@@ -93,44 +93,44 @@
     "umc": {
       "name": "聯電 ADR",
       "ticker": "UMC",
-      "value": 18.93,
-      "change": 0.59,
-      "change_pct": 3.24,
+      "value": 18.9,
+      "change": 0.56,
+      "change_pct": 3.05,
       "is_missing": false
     },
     "ase": {
       "name": "日月光 ADR",
       "ticker": "ASX",
-      "value": 36.06,
-      "change": -0.45,
-      "change_pct": -1.22,
+      "value": 36.07,
+      "change": -0.44,
+      "change_pct": -1.21,
       "is_missing": false
     }
   },
   "us_indices": {
     "dow": {
       "name": "道瓊工業指數",
-      "value": 53401.95,
-      "change": 124.94,
+      "value": 53402.1,
+      "change": 125.09,
       "change_pct": 0.23
     },
     "sp500": {
       "name": "S&P 500指數",
-      "value": 7655.29,
-      "change": -19.08,
+      "value": 7655.18,
+      "change": -19.19,
       "change_pct": -0.25
     },
     "nasdaq": {
       "name": "NASDAQ指數",
-      "value": 26021.6,
-      "change": -158.85,
+      "value": 26020.33,
+      "change": -160.13,
       "change_pct": -0.61
     },
     "sox": {
       "name": "費城半導體指數",
-      "value": 11344.68,
-      "change": -395.7,
-      "change_pct": -3.37
+      "value": 11341.48,
+      "change": -398.9,
+      "change_pct": -3.4
     }
   },
   "asia_open": {
