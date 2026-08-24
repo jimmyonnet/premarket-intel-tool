@@ -1037,6 +1037,7 @@
     border-radius: 4px;
     font-family: var(--font-mono);
   }
+  .tile-quote-time { font-size: 10.5px; letter-spacing: 0; white-space: nowrap; }
   .pill-fresh { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); }
   .pill-amber { background: var(--amber-bg); color: var(--amber-fg); border: 1px solid var(--amber-border); }
   .pill-danger { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
@@ -1206,6 +1207,7 @@
     .cal-date-title, .cal-time-group { font-size: 13.5px; }
     .cal-card-title { font-size: 14px; line-height: 1.55; }
     .cal-metrics-grid { font-size: 11.5px; }
+    .tile-quote-time { font-size: 11px; }
     .news-title { font-size: 14px !important; line-height: 1.55; }
     .news-meta { font-size: 11.5px !important; line-height: 1.5; }
   }
@@ -3040,7 +3042,7 @@
           <div class="card-title-group">
             <h3 class="card-title">亞股開盤即時概況</h3>
           </div>
-          <span class="card-tip">日韓早盤開盤表現</span>
+          <span class="card-tip">日韓早盤開盤表現 · 時間為來源行情時間</span>
         </div>
 
         <div class="data-block">
@@ -3048,7 +3050,14 @@
             {% for symbol, label in [('^N225', '日經 225'), ('^KS11', '韓國 KOSPI')] %}
             {% set q = asia_open[symbol] if (asia_open and symbol in asia_open) else indices.get(symbol) %}
             <div class="tile-card">
-              <div class="tile-head"><span class="tile-name">{{ label }}</span></div>
+              <div class="tile-head">
+                <span class="tile-name">{{ label }}</span>
+                {% if q and q.updated_cst %}
+                <span class="tile-delay-pill pill-fresh tile-quote-time" title="Yahoo 股市來源行情時間；非頁面建置時間">來源行情 {{ q.updated_cst }}</span>
+                {% else %}
+                <span class="tile-delay-pill pill-amber tile-quote-time" title="Yahoo 股市未提供來源行情時間">行情時間未提供</span>
+                {% endif %}
+              </div>
               {% if q and q.price is not none %}
               <div class="tile-val font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{{ "{:,.2f}".format(q.price) }}</div>
               <div class="tile-chg font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{% if q.change > 0 %}+{% endif %}{{ q.change }} ({{ '%+.2f'|format(q.change_pct) }}%)</div>
