@@ -7,62 +7,13 @@
   },
   "chengwaye_date": null,
   "not_found_group": {
-    "raw_tokens": [
-      "2301",
-      "6226"
-    ],
-    "matched": [
-      {
-        "market": "市",
-        "code": "2301",
-        "name": "光寶科",
-        "close": "287",
-        "volume": "44,389",
-        "foreign": "+8,748",
-        "trust": "+112",
-        "dealer": "+733",
-        "ai_reason": "電源供應與雲端設備布局，資料中心高功率電源需求題材吸引資金關注。",
-        "group": "🔋 電源模組",
-        "match_type": "code",
-        "raw_token": "2301"
-      },
-      {
-        "market": "市",
-        "code": "6226",
-        "name": "光鼎",
-        "close": "23.3",
-        "volume": "19,067",
-        "foreign": "+2,920",
-        "trust": "0",
-        "dealer": "-10",
-        "ai_reason": "LED與光電元件題材延續，面板光電族群輪動走強。",
-        "group": "📺 面板光電",
-        "match_type": "code",
-        "raw_token": "6226"
-      }
-    ],
+    "raw_tokens": [],
+    "matched": [],
     "unmatched": []
   },
   "found_group": {
-    "raw_tokens": [
-      "晶豪科"
-    ],
-    "matched": [
-      {
-        "market": "市",
-        "code": "3006",
-        "name": "晶豪科",
-        "close": "282",
-        "volume": "17,666",
-        "foreign": "+3,789",
-        "trust": "0",
-        "dealer": "+93",
-        "ai_reason": "記憶體IC與儲存需求題材升溫，記憶體族群輪動帶動資金集中。",
-        "group": "🧠 記憶體",
-        "match_type": "name",
-        "raw_token": "晶豪科"
-      }
-    ],
+    "raw_tokens": [],
+    "matched": [],
     "unmatched": []
   }
 }
