@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-08-24 18:00",
-  "build_version": "20260824_1800",
+  "build_time": "2026-08-24 19:09",
+  "build_version": "20260824_1909",
   "data_date": "08/24",
-  "stale_hours": 43.5,
-  "hours_since_us_close": 14.0,
+  "stale_hours": 44.7,
+  "hours_since_us_close": 15.2,
   "overall_status": "caution",
   "status_label": "請先確認資料",
   "status_badge_class": "is-caution",
@@ -118,7 +118,7 @@
       "name": "Chengwaye 個股漲停履歷",
       "is_required": false,
       "status": "missing",
-      "fetched_at": "2026-08-24T18:00:05.935599+08:00",
+      "fetched_at": "2026-08-24T19:09:01.238691+08:00",
       "data_date": null,
       "age_minutes": 0.0,
       "error_summary": "無此來源資料檔",
@@ -183,7 +183,7 @@
     }
   ],
   "schema_version": 1,
-  "built_at": "2026-08-24T10:00:05.938641+00:00",
+  "built_at": "2026-08-24T11:09:01.241195+00:00",
   "hash": {
     "disposition": "28b395c1e053",
     "candidates": "d6b0ff376890",

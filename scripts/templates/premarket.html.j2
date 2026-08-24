@@ -985,9 +985,26 @@
   .watch-chip .wc-del { cursor: pointer; color: var(--text-light); margin-left: 2px; }
   .watch-chip .wc-del:hover { color: var(--rise); }
   .watch-hint { color: var(--text-muted); font-size: 12px; padding: 6px 0; }
+  .manual-candidate-body { padding: 10px 14px 14px; }
+  .manual-candidate-input-row { display: flex; align-items: center; gap: 8px; }
+  .manual-candidate-input { flex: 1; min-width: 0; height: 36px; padding: 0 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-sub); color: var(--text-main); font: 13px var(--font-mono); }
+  .manual-candidate-input:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-color: var(--blue); }
+  .manual-candidate-hint { padding-top: 6px; color: var(--text-muted); font-size: 11px; }
+  .manual-candidate-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+  .manual-candidate-item { display: inline-flex; align-items: center; gap: 7px; max-width: 100%; padding: 5px 8px; border: 1px solid var(--blue-border); border-radius: 6px; background: var(--blue-bg); color: var(--blue-fg); font-size: 12px; }
+  .manual-candidate-item.is-hit { border-color: var(--amber-border); background: var(--amber-bg); color: var(--amber-fg); }
+  .manual-candidate-code { font: 700 12px var(--font-mono); }
+  .manual-candidate-name { color: var(--text-main); font-weight: 600; }
+  .manual-candidate-link { color: inherit; text-decoration: none; }
+  .manual-candidate-link:hover { text-decoration: underline; }
+  .manual-candidate-remove { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; }
+  .manual-candidate-remove:hover { background: rgba(15, 23, 42, .12); }
   @media (max-width: 768px) {
     .watchlist-summary { align-items: flex-start; }
     .watch-summary-hits { order: 3; width: 100%; margin: 0; }
+    .manual-candidate-input-row { align-items: stretch; flex-direction: column; }
+    .manual-candidate-input { width: 100%; height: 40px; box-sizing: border-box; }
+    .manual-candidate-input-row .watch-btn-inline { min-height: 40px; }
   }
 
   /* WATCHLIST ROW HIGHLIGHT */
@@ -3132,6 +3149,25 @@
         <span class="section-desc">盤前族群整理、法人動向與主力當沖籌碼明細</span>
       </div>
 
+      <div class="card manual-candidate-card" id="manual-candidate-panel">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">✚ 手動加入籌碼股</h3>
+            <span class="count-badge" id="manual-candidate-count" style="display:none;">0 檔</span>
+          </div>
+          <span class="card-tip">輸入代號後，會保存在本機並列在下方</span>
+        </div>
+        <div class="manual-candidate-body">
+          <div class="manual-candidate-input-row">
+            <label class="sr-only" for="manual-candidate-input">輸入要加入籌碼股的股票代號</label>
+            <input id="manual-candidate-input" class="manual-candidate-input" inputmode="numeric" autocomplete="off" placeholder="輸入股票代號，例如 2330、5314" aria-label="輸入要加入籌碼股的股票代號">
+            <button class="watch-btn-inline primary" onclick="window.pm.addManualCandidate()" type="button">＋加入籌碼股</button>
+          </div>
+          <div id="manual-candidate-hint" class="manual-candidate-hint" aria-live="polite">可一次輸入多個代號，以逗號、空白或換行分隔。</div>
+          <div id="manual-candidate-list" class="manual-candidate-list" aria-live="polite"></div>
+        </div>
+      </div>
+
       {% if pressplay._status == 'fetch_failed' %}
       <div class="part3-error empty" data-package="candidates">
         <strong>Part 3（PressPlay 摘要）收集失敗。</strong>
@@ -4805,6 +4841,7 @@
   // 6. Watchlist Core, Smart Parser & Grouping
   // ==========================================
   window.WATCH_KEY = 'pmit_watchlist';
+  window.MANUAL_CANDIDATE_KEY = 'pmit_manual_candidates';
 
   function smartParseWatchlist(rawText) {
     if (!rawText) return { valid: [], duplicates: [], invalid: [] };
@@ -4874,6 +4911,111 @@
   function extractStockCodes(rawText) {
     return smartParseWatchlist(rawText).valid;
   }
+
+  function loadManualCandidates() {
+    var raw = safeJsonParse(window.MANUAL_CANDIDATE_KEY, []);
+    if (!Array.isArray(raw)) return [];
+    var seen = {};
+    return raw.map(String).filter(function(code) {
+      if (!/^\d{4,5}$/.test(code) || seen[code]) return false;
+      seen[code] = true;
+      return true;
+    });
+  }
+
+  function findCandidateRow(code) {
+    var rows = document.querySelectorAll('#watchlist tr.candidate-stock-row[data-code]');
+    for (var i = 0; i < rows.length; i += 1) {
+      if (rows[i].getAttribute('data-code') === code) return rows[i];
+    }
+    return null;
+  }
+
+  window.pm.renderManualCandidates = function() {
+    var list = document.getElementById('manual-candidate-list');
+    var count = document.getElementById('manual-candidate-count');
+    var hint = document.getElementById('manual-candidate-hint');
+    if (!list) return;
+    var codes = loadManualCandidates();
+    list.innerHTML = '';
+    if (count) {
+      count.textContent = codes.length + ' 檔';
+      count.style.display = codes.length ? 'inline-flex' : 'none';
+    }
+    if (!codes.length) {
+      if (hint) hint.textContent = '可一次輸入多個代號，以逗號、空白或換行分隔。';
+      return;
+    }
+    if (hint) hint.textContent = '已加入的標的會保存在本機；若不是今日自動清單，仍可開啟 Chengwaye 個股頁查看資料。';
+    codes.forEach(function(code) {
+      var row = findCandidateRow(code);
+      var item = document.createElement('div');
+      item.className = 'manual-candidate-item' + (row ? ' is-hit' : '');
+      item.setAttribute('data-manual-code', code);
+
+      var codeLink = document.createElement('a');
+      codeLink.className = 'manual-candidate-link manual-candidate-code';
+      codeLink.href = 'https://chengwaye.com/stock/' + encodeURIComponent(code);
+      codeLink.target = '_blank';
+      codeLink.rel = 'noopener noreferrer';
+      codeLink.textContent = code;
+      codeLink.title = '開啟 ' + code + ' 的 Chengwaye 個股漲停履歷';
+      item.appendChild(codeLink);
+
+      var name = row ? (row.getAttribute('data-label') || '') : '';
+      var nameEl = document.createElement('span');
+      nameEl.className = 'manual-candidate-name';
+      nameEl.textContent = name || (row ? '今日籌碼股' : '手動標的');
+      item.appendChild(nameEl);
+
+      var remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'manual-candidate-remove';
+      remove.setAttribute('aria-label', '移除 ' + code + ' 這個手動籌碼股');
+      remove.title = '移除';
+      remove.textContent = '×';
+      remove.addEventListener('click', function() { window.pm.removeManualCandidate(code); });
+      item.appendChild(remove);
+      list.appendChild(item);
+    });
+  };
+
+  window.pm.addManualCandidate = function() {
+    var input = document.getElementById('manual-candidate-input');
+    if (!input) return;
+    var parsed = smartParseWatchlist(input.value || '');
+    if (!parsed.valid.length) {
+      window.pm.showToast('請輸入 4–5 位數字的台股代號');
+      input.focus();
+      return;
+    }
+    var current = loadManualCandidates();
+    var added = [];
+    var duplicates = [];
+    parsed.valid.forEach(function(code) {
+      if (current.indexOf(code) >= 0) duplicates.push(code);
+      else { current.push(code); added.push(code); }
+    });
+    localStorage.setItem(window.MANUAL_CANDIDATE_KEY, JSON.stringify(current));
+    input.value = '';
+    window.pm.renderManualCandidates();
+    if (added.length) {
+      window.pm.showToast('已加入籌碼股：' + added.join('、'));
+    } else {
+      window.pm.showToast('這些代號已在手動籌碼股清單中');
+    }
+    if (parsed.invalid.length) {
+      var hint = document.getElementById('manual-candidate-hint');
+      if (hint) hint.textContent = '已加入有效代號；未識別內容：' + parsed.invalid.join('、');
+    }
+  };
+
+  window.pm.removeManualCandidate = function(code) {
+    var current = loadManualCandidates().filter(function(item) { return item !== String(code); });
+    localStorage.setItem(window.MANUAL_CANDIDATE_KEY, JSON.stringify(current));
+    window.pm.renderManualCandidates();
+    window.pm.showToast('已移除手動籌碼股：' + code);
+  };
 
   window.pm.previewBatchCodes = function() {
     var area = document.getElementById('batch-input-area');
@@ -5029,7 +5171,7 @@
   };
 
   var PM_SETTINGS_KEYS = [
-    'pmit_theme', 'pmit_watchlist', 'pmit_watch_only', 'pmit_ui_state_v1',
+    'pmit_theme', 'pmit_watchlist', 'pmit_manual_candidates', 'pmit_watch_only', 'pmit_ui_state_v1',
     'pmit_cal_quick', 'pmit_cal_countries', 'pmit_cal_categories',
     'pmit_cal_search', 'pmit_cal_tz_mode', 'pmit_display_density'
   ];
@@ -5081,9 +5223,9 @@
           var value = store[key];
           if (typeof value !== 'string') throw new Error(key + ' 必須是字串化設定');
           if (key === 'pmit_theme' && ['light', 'dark'].indexOf(value) < 0) throw new Error('主題設定無效');
-          if (key === 'pmit_watchlist') {
+          if (key === 'pmit_watchlist' || key === 'pmit_manual_candidates') {
             var codes = JSON.parse(value);
-            if (!Array.isArray(codes) || codes.some(function(code) { return !/^\d{4,5}$/.test(String(code)); })) throw new Error('自選股清單格式無效');
+            if (!Array.isArray(codes) || codes.some(function(code) { return !/^\d{4,5}$/.test(String(code)); })) throw new Error('股票代號清單格式無效');
           }
           if (key === 'pmit_ui_state_v1') {
             var ui = JSON.parse(value);
@@ -5855,6 +5997,10 @@
       if (e.key === 'Enter' && e.target.id === 'watch-input') {
         window.saveWatch();
       }
+      if (e.key === 'Enter' && e.target.id === 'manual-candidate-input') {
+        e.preventDefault();
+        window.pm.addManualCandidate();
+      }
       if (e.key === 'Escape') {
         e.target.blur();
         if (openModal) {
@@ -6247,6 +6393,7 @@
     window.pm.renderDebugLog();
     window.pm.updateBriefingFreshness();
     window.pm.ensureDataLabels();
+    window.pm.renderManualCandidates();
     var batchArea = document.getElementById('batch-input-area');
     if (batchArea) batchArea.addEventListener('input', window.pm.debounce(function() { window.pm.previewBatchCodes(); }, 250));
     var calendarSearch = document.getElementById('cal-search-input');
