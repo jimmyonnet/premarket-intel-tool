@@ -3140,12 +3140,7 @@
           </div>
           <span class="card-tip">已比對 {{ pressplay.found_group.raw_tokens|length }} 檔，共 {{ pressplay.found_group.matched|length }} 檔具明確族群連動</span>
         </div>
-
         <div class="data-block">
-          <!-- Quick Filter Toolbar for Candidate Table -->
-          <div class="table-filter-toolbar" style="padding: 8px 12px; background: var(--bg-sub); border-bottom: 1px solid var(--border); display: flex; gap: 8px; align-items: center;">
-            <input type="text" id="candidate-search" class="filter-input-sm" placeholder="🔍 搜尋候選標的代號 / 名稱 / 族群..." oninput="window.pm.filterCandidateTable(this.value)" style="padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--bg-card); color: var(--text-main); font-size: 12px; font-family: var(--font-mono); outline: none; min-width: 180px; flex: 1; max-width: 320px;">
-          </div>
           <div class="table-scroll">
             <table class="data-table">
               <caption class="sr-only">族群聚焦標的清單</caption>
@@ -4985,47 +4980,11 @@
       }
     });
 
-    if (window.pm.applyCandidateFilter) window.pm.applyCandidateFilter();
-
     var alertBadge = document.getElementById('nav-alert-badge');
     if (alertBadge) {
       var visibleAlerts = document.querySelectorAll('#alerts tr[data-code]:not([style*="display: none"])').length;
       alertBadge.textContent = visibleAlerts;
     }
-  };
-
-  // Candidate Table Search Filter
-  var candidateSearchTimer = null;
-  window.pm.candidateKeyword = '';
-  window.pm.filterCandidateTable = function(val) {
-    if (candidateSearchTimer) clearTimeout(candidateSearchTimer);
-    candidateSearchTimer = setTimeout(function() {
-      window.pm.candidateKeyword = (val || '').trim().toLowerCase();
-      window.pm.applyCandidateFilter();
-    }, 150);
-  };
-
-  window.pm.applyCandidateFilter = function() {
-    var kw = window.pm.candidateKeyword;
-    var rawWatch = localStorage.getItem(window.WATCH_KEY) || '[]';
-    var watchCodes = [];
-    try { watchCodes = JSON.parse(rawWatch); } catch(e){}
-
-    document.querySelectorAll('#watchlist table tbody tr.candidate-stock-row').forEach(function(r) {
-      var text = (r.textContent || '').toLowerCase();
-      var code = (r.getAttribute('data-code') || '').toLowerCase();
-      var matchesKw = !kw || text.indexOf(kw) >= 0;
-      var matchesWatch = !window.pm.watchOnly || watchCodes.indexOf(code) >= 0;
-      r.style.display = (matchesKw && matchesWatch) ? '' : 'none';
-      var detailToggle = r.querySelector('.candidate-detail-toggle');
-      var detailId = detailToggle && detailToggle.getAttribute('data-detail-id');
-      var detailRow = detailId ? document.getElementById(detailId) : null;
-      if (detailRow && (!matchesKw || !matchesWatch)) {
-        detailRow.hidden = true;
-        detailToggle.setAttribute('aria-expanded', 'false');
-        detailToggle.textContent = '查看明細';
-      }
-    });
   };
 
   window.pm.toggleSnapshot = function() {

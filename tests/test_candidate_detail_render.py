@@ -6,6 +6,7 @@ from jinja2 import Environment, FileSystemLoader
 
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE = ROOT / "scripts" / "templates" / "premarket.html.j2"
+LEGACY_APP = ROOT / "scripts" / "assets" / "app.js"
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from build_page import build_institutional_section
@@ -89,10 +90,17 @@ def test_candidate_template_renders_expandable_chengwaye_details():
     assert 'href="https://chengwaye.com/daily"' in rendered
 
 
-def test_candidate_rows_keep_sort_filter_and_open_detail_contracts():
+def test_candidate_rows_keep_sort_and_open_detail_contracts_without_search_box():
     source = TEMPLATE.read_text(encoding="utf-8")
 
     assert "tr:not(.candidate-detail-row)" in source
-    assert "#watchlist table tbody tr.candidate-stock-row" in source
+    assert source.count('<tr class="candidate-stock-row"') == 2
+    assert "#watchlist tr.candidate-stock-row" in source
     assert "candidate-insight-" in source
     assert "window.pm.openCandidateInsight" in source
+    assert 'id="candidate-search"' not in source
+    assert "window.pm.filterCandidateTable" not in source
+
+    legacy_app = LEGACY_APP.read_text(encoding="utf-8")
+    assert 'id="candidate-filter"' not in legacy_app
+    assert "filterCandidateRows" not in legacy_app

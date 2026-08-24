@@ -217,8 +217,7 @@ function renderCandidatePanel(pkg) {
   $('#candidate-source').textContent = `PressPlay · ${pkg.chengwaye_date || '日期待確認'}`;
   const panel = $('#candidate-panel');
   if (!items.length) { panel.innerHTML = '<div class="empty">尚無籌碼股資料。</div>'; return; }
-  panel.innerHTML = `<div class="panel-toolbar"><input class="filter-input" id="candidate-filter" type="search" placeholder="搜尋代號 / 名稱 / 族群…" aria-label="搜尋籌碼股"><span class="section-note">${items.length} 檔 · 量能以背景長條表示</span></div><div class="table-wrap"><table class="data-table"><thead><tr><th>市場</th><th>代號 / 名稱</th><th class="num">收盤</th><th class="num">量(張)</th><th class="num">外資</th><th class="num">投信</th><th class="num">自營</th><th>訊號</th></tr></thead><tbody id="candidate-body">${items.map(candidateRow).join('')}</tbody></table></div>`;
-  $('#candidate-filter').addEventListener('input', (event) => filterCandidateRows(event.target.value));
+  panel.innerHTML = `<div class="panel-toolbar"><span class="section-note">${items.length} 檔 · 量能以背景長條表示</span></div><div class="table-wrap"><table class="data-table"><thead><tr><th>市場</th><th>代號 / 名稱</th><th class="num">收盤</th><th class="num">量(張)</th><th class="num">外資</th><th class="num">投信</th><th class="num">自營</th><th>訊號</th></tr></thead><tbody id="candidate-body">${items.map(candidateRow).join('')}</tbody></table></div>`;
   bindStockRows(panel);
   renderWatchDeck(pkg);
   renderCrossMatch();
@@ -259,12 +258,7 @@ function candidateRow(item) {
   const volume = num(item.volume) || 0;
   const score = num(item.ai_score);
   const tier = score === null ? 'b' : score >= 6 ? 's' : score >= 3 ? 'a' : score >= -2 ? 'b' : score >= -5 ? 'c' : 'd';
-  return `<tr data-code="${esc(item.code)}" data-search="${esc(`${item.code} ${item.name} ${item.group || ''}`.toLowerCase())}"><td data-label="市場">${esc(item.market)}</td><td data-label="代號 / 名稱" class="code"><a href="${stockHref(item.code, item.market)}" target="_blank" rel="noopener noreferrer">${esc(item.code)}</a><br><span>${esc(item.name)}</span></td><td data-label="收盤" class="num font-mono">${esc(fmt(item.close, 2))}</td><td data-label="量(張)" class="num font-mono vol-cell" style="--volume-p:${Math.round(volume / max * 100)}%">${esc(item.volume_display ?? fmt(item.volume, 0))}</td><td data-label="外資" class="num font-mono ${metricClass(item.foreign)}">${esc(item.foreign_display ?? signed(item.foreign, 0))}</td><td data-label="投信" class="num font-mono ${metricClass(item.trust)}">${esc(item.trust_display ?? signed(item.trust, 0))}</td><td data-label="自營" class="num font-mono ${metricClass(item.dealer)}">${esc(item.dealer_display ?? signed(item.dealer, 0))}</td><td data-label="訊號"><span class="badge">${esc(item.group || '籌碼')}</span></td></tr>`;
-}
-
-function filterCandidateRows(query) {
-  const needle = String(query || '').trim().toLowerCase();
-  document.querySelectorAll('#candidate-body tr').forEach((row) => { row.hidden = Boolean(needle && !row.dataset.search.includes(needle)); });
+  return `<tr data-code="${esc(item.code)}"><td data-label="市場">${esc(item.market)}</td><td data-label="代號 / 名稱" class="code"><a href="${stockHref(item.code, item.market)}" target="_blank" rel="noopener noreferrer">${esc(item.code)}</a><br><span>${esc(item.name)}</span></td><td data-label="收盤" class="num font-mono">${esc(fmt(item.close, 2))}</td><td data-label="量(張)" class="num font-mono vol-cell" style="--volume-p:${Math.round(volume / max * 100)}%">${esc(item.volume_display ?? fmt(item.volume, 0))}</td><td data-label="外資" class="num font-mono ${metricClass(item.foreign)}">${esc(item.foreign_display ?? signed(item.foreign, 0))}</td><td data-label="投信" class="num font-mono ${metricClass(item.trust)}">${esc(item.trust_display ?? signed(item.trust, 0))}</td><td data-label="自營" class="num font-mono ${metricClass(item.dealer)}">${esc(item.dealer_display ?? signed(item.dealer, 0))}</td><td data-label="訊號"><span class="badge">${esc(item.group || '籌碼')}</span></td></tr>`;
 }
 
 function deltaMarkup(value, previous, explicit = null, suffix = '') {
