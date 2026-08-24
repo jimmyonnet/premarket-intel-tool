@@ -44,3 +44,16 @@ def test_announcement_template_distinguishes_fetch_failure_and_cached_data_from_
     assert "資料抓取失敗，無法確認市場未反映筆數" in block
     assert "沿用前次" in block
     assert "沿用快取" in block
+
+
+def test_realtime_announcement_summary_keeps_count_but_omits_redundant_time_tip():
+    template = TEMPLATE.read_text(encoding="utf-8")
+    macro_start = template.index('{% macro render_announcements')
+    macro_end = template.index('{% endmacro %}', macro_start)
+    macro = template[macro_start:macro_end]
+    page_section = _announcement_block(template)
+
+    assert '<h3 class="card-title">即時公告明細</h3>' in macro
+    assert '<span class="count-badge">{{ unref_count }} 筆</span>' in macro
+    assert '<span class="card-tip">昨日 13:30 盤後即時重訊</span>' not in macro
+    assert '<span class="section-desc">昨日 13:30 盤後即時重訊</span>' in page_section
