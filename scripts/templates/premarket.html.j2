@@ -13,6 +13,12 @@
 <script>
   (function() {
     window.__PM_META__ = {{ (meta or {}) | tojson }};
+    if (localStorage.getItem('pmit_debug') === '1') {
+      var pmMeta = window.__PM_META__;
+      if (pmMeta && Number(pmMeta.stale_hours) >= 24 && pmMeta.overall_status === 'ready') {
+        console.warn('[PMIT] stale_hours >= 24 but overall_status=ready', pmMeta);
+      }
+    }
     var savedTheme = localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme');
     var theme = (savedTheme === 'dark') ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', theme);
@@ -2636,8 +2642,8 @@
         <button class="nav-btn filter-watch-only" id="filter-watch-toggle" onclick="window.pm.toggleWatchOnly()" type="button" title="切換只看自選 (快捷鍵 W)" aria-pressed="false">⭐ 自選<span class="btn-text-extra">股</span></button>
         <button class="nav-btn btn-clean-link" onclick="window.pm.copyCleanUrl()" type="button" title="複製乾淨網址（不含自選股代號，方便截圖分享）">🔗 乾淨連結</button>
         <button class="nav-btn btn-export" onclick="window.pm.exportDailyMarkdown()" type="button" title="匯出今日重點 Markdown (快捷鍵 E)">📋 匯出<span class="btn-text-extra">重點</span></button>
-        <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" title="切換截圖模式 (快捷鍵 D)">📸 截圖</button>
-        <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" title="切換深淺色主題 (快捷鍵 D)">🌙 深色</button>
+        <button class="nav-btn btn-snapshot" onclick="window.pm.toggleSnapshot()" type="button" title="切換截圖模式 (快捷鍵 S)" aria-keyshortcuts="S">📸 截圖</button>
+        <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" title="切換深淺色主題 (快捷鍵 D)" aria-keyshortcuts="D">🌙 深色</button>
         <button class="nav-btn manual-update-btn" id="manual-update-button" type="button" title="安全啟動資料更新" aria-label="手動更新資料">🔄 手動更新資料</button>
         <button class="nav-btn refresh-btn" onclick="location.reload()" type="button" title="重新載入最新版" aria-label="重新整理頁面">
           🔄 重新整理
@@ -2908,14 +2914,14 @@
               <caption class="sr-only">族群聚焦標的清單</caption>
               <thead>
                 <tr>
-                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="0">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="1">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="2">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="3">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="4">量(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="5">外資(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="6">投信(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="7">自營(張) <span class="sort-arrow">▲▼</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -2968,14 +2974,14 @@
               <caption class="sr-only">無明確族群標的清單</caption>
               <thead>
                 <tr>
-                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="0">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="1">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="2">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="3">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="4">量(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="5">外資(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="6">投信(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="7">自營(張) <span class="sort-arrow">▲▼</span></th>
                 </tr>
               </thead>
               <tbody>
@@ -3038,12 +3044,12 @@
               <caption class="sr-only">差 1 次就處置股票清單</caption>
               <thead>
                 <tr>
-                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="0">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="1">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="2">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="3">收盤 <span class="sort-arrow">▲▼</span></th>
                   <th scope="col">處置標準條件</th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">最快處置 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" role="button" tabindex="0" aria-sort="none" data-sort-col="5">最快處置 <span class="sort-arrow">▲▼</span></th>
                   <th scope="col" class="badge-col" title="連續3日第1款">3①</th>
                   <th scope="col" class="badge-col" title="連續5日（第1~7款）">5</th>
                   <th scope="col" class="badge-col" title="10日內6次（第1~7款）">6</th>
@@ -3145,12 +3151,12 @@
               <caption class="sr-only">今日出關股票清單</caption>
               <thead>
                 <tr>
-                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 3)">原撮合 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 4)">處置起訖 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 5)">預計出關 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="0">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="1">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="2">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="3">原撮合 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="4">處置起訖 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" role="button" tabindex="0" aria-sort="none" data-sort-col="5">預計出關 <span class="sort-arrow">▲▼</span></th>
                   <th scope="col">處置原因</th>
                 </tr>
               </thead>
@@ -4430,8 +4436,10 @@
 
     table.querySelectorAll('th').forEach(function(h) {
       h.classList.remove('sort-asc', 'sort-desc', 'asc', 'desc', 'sorted');
+      if (h.hasAttribute('data-sort-col')) h.setAttribute('aria-sort', 'none');
     });
     th.classList.add('sorted', isAsc ? 'sort-asc' : 'sort-desc', isAsc ? 'asc' : 'desc');
+    th.setAttribute('aria-sort', isAsc ? 'ascending' : 'descending');
 
     function getVal(row) {
       var cell = row.children[colIdx];
@@ -4473,6 +4481,22 @@
       if (detailRow) tbody.appendChild(detailRow);
     });
   };
+
+  document.querySelectorAll('.data-table thead').forEach(function(thead) {
+    function sortFromEvent(event) {
+      var th = event.target.closest && event.target.closest('th[data-sort-col]');
+      if (!th || !thead.contains(th)) return;
+      window.pm.sortTable(th, Number(th.getAttribute('data-sort-col')));
+    }
+    thead.addEventListener('click', sortFromEvent);
+    thead.addEventListener('keydown', function(event) {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      var th = event.target.closest && event.target.closest('th[data-sort-col]');
+      if (!th || !thead.contains(th)) return;
+      event.preventDefault();
+      window.pm.sortTable(th, Number(th.getAttribute('data-sort-col')));
+    });
+  });
 
   window.pm.toggleCandidateDetail = function(row) {
     var detailId = row && row.getAttribute('data-detail-id');
@@ -5474,6 +5498,8 @@
       location.reload(true);
     } else if (e.key === 'd' || e.key === 'D') {
       window.toggleTheme();
+    } else if (e.key === 's' || e.key === 'S') {
+      window.pm.toggleSnapshot();
     } else if (e.key === 'w' || e.key === 'W') {
       window.pm.toggleWatchOnly();
     } else if (e.key === 'b' || e.key === 'B') {
