@@ -1081,6 +1081,18 @@
   .tile-source-row { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
   .tile-source-row .cal-link-btn { padding: 2px 6px; font-size: 10px; flex: 0 0 auto; }
   .tile-source-row .tile-quote-time { margin-left: auto; }
+  .asia-quote-card { padding: 14px 16px; min-height: 116px; }
+  .asia-quote-card .tile-head { order: 0; margin-bottom: 2px; }
+  .asia-quote-card .tile-name { font-size: 14px; font-weight: 800; letter-spacing: 0.01em; }
+  .asia-quote-card .tile-val { order: 1; margin-top: 2px; font-size: 25px; line-height: 1.12; letter-spacing: 0.01em; }
+  .asia-quote-card .tile-chg { order: 2; margin-top: 3px; font-size: 13px; line-height: 1.3; font-weight: 800; }
+  .asia-quote-card .tile-source-row {
+    order: 3;
+    margin: 10px 0 0;
+    padding-top: 7px;
+    border-top: 1px solid var(--border-light);
+  }
+  .asia-quote-card .tile-source-row .tile-quote-time { font-size: 10px; font-weight: 600; }
   .pill-fresh { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); }
   .pill-amber { background: var(--amber-bg); color: var(--amber-fg); border: 1px solid var(--amber-border); }
   .pill-danger { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
@@ -3099,7 +3111,7 @@
           <div class="tiles-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom:0;">
             {% for symbol, label, yahoo_url in [('^N225', '日經 225', 'https://tw.stock.yahoo.com/quote/%5EN225'), ('^KS11', '韓國 KOSPI', 'https://tw.stock.yahoo.com/quote/%5EKS11')] %}
             {% set q = asia_open[symbol] if (asia_open and symbol in asia_open) else indices.get(symbol) %}
-            <div class="tile-card">
+            <div class="tile-card asia-quote-card">
               <div class="tile-head">
                 <span class="tile-name">{{ label }}</span>
               </div>
