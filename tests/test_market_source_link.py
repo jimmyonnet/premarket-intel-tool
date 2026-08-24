@@ -84,3 +84,26 @@ def test_market_indices_card_uses_dynamic_market_status_instead_of_fixed_delay_l
     assert "us_market_context.detail" in source
     assert "昨日收盤（美東 16:00）" not in source
     assert "資料延遲 <time" not in source
+
+
+def test_market_quote_cards_support_right_click_replacement_and_local_storage():
+    source = TEMPLATE.read_text(encoding="utf-8")
+    deployed = DEPLOYED.read_text(encoding="utf-8")
+    cross_sea = _cross_sea_block(source)
+
+    for slot in ("NVDA", "AAPL", "MU"):
+        assert f"'{slot}'" in source
+    assert "quote-card-customizable" in cross_sea
+    assert 'data-quote-slot="{{ symbol }}"' in cross_sea
+    assert "contextmenu" in source
+    assert "quote-customize-modal" in source
+    assert "pmit_market_quote_overrides" in source
+    assert "https://r.jina.ai/http://" in source
+    assert "query2.finance.yahoo.com/v8/finance/chart/" in source
+    assert "window.pm.initMarketQuoteCards();" in source
+    assert "已恢復" in source
+    assert "原卡片資料未變更" in source
+
+    assert 'id="quote-customize-modal"' in deployed
+    assert 'id="quote-symbol-input"' in deployed
+    assert 'id="quote-customize-reset"' in deployed

@@ -1232,6 +1232,31 @@
   .tile-card:hover {
     border-color: var(--border-strong);
   }
+  .quote-card-customizable { cursor: context-menu; }
+  .quote-card-customizable:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+  .quote-customize-form { display: grid; gap: 10px; }
+  .quote-customize-label { font-size: 12px; font-weight: 800; color: var(--text-main); }
+  .quote-symbol-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    background: var(--bg-sub);
+    color: var(--text-main);
+    padding: 10px 12px;
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
+  .quote-symbol-input:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+  .quote-customize-note { color: var(--text-muted); font-size: 12px; line-height: 1.55; }
+  .quote-customize-actions { display: flex; justify-content: flex-end; gap: 8px; flex-wrap: wrap; }
+  .quote-customize-actions .watch-btn { min-width: 86px; }
   .tile-head {
     display: flex;
     justify-content: space-between;
@@ -3696,7 +3721,7 @@
           <div class="tiles-grid">
             {% for symbol, label in [('TSM', '台積電 ADR'), ('NVDA', '輝達 (NVDA)'), ('AAPL', '蘋果 (AAPL)'), ('MU', '美光 (MU)')] %}
             {% set q = indices.get(symbol) %}
-            <div class="tile-card">
+            <div class="tile-card{% if symbol in ['NVDA', 'AAPL', 'MU'] %} quote-card-customizable{% endif %}"{% if symbol in ['NVDA', 'AAPL', 'MU'] %} data-quote-slot="{{ symbol }}" data-default-symbol="{{ symbol }}" data-default-label="{{ label }}" tabindex="0" role="button" title="右鍵輸入美股代號以替換此卡片" aria-label="{{ label }}，右鍵輸入美股代號以替換卡片資訊"{% endif %}>
               <div class="tile-head">
                 <span class="tile-name">{{ label }}</span>
                 <span class="tile-delay-pill {{ us_market_context.pill_class if us_market_context is defined else 'pill-amber' }}" title="{{ us_market_context.title if us_market_context is defined else '來源時間未提供' }}">{{ us_market_context.badge_short if us_market_context is defined else '時效未提供' }}</span>
@@ -5263,7 +5288,7 @@
   var PM_SETTINGS_KEYS = [
     'pmit_theme', 'pmit_watchlist', 'pmit_manual_candidates', 'pmit_watch_only', 'pmit_ui_state_v1',
     'pmit_cal_quick', 'pmit_cal_countries', 'pmit_cal_categories',
-    'pmit_cal_search', 'pmit_cal_tz_mode', 'pmit_display_density'
+    'pmit_cal_search', 'pmit_cal_tz_mode', 'pmit_display_density', 'pmit_market_quote_overrides'
   ];
 
   window.pm.exportSettings = function() {
@@ -6479,6 +6504,176 @@
     };
   };
 
+  // Customizable US / ADR market cards: right-click or keyboard to replace ticker.
+  var MARKET_QUOTE_SLOTS = ['NVDA', 'AAPL', 'MU'];
+  var MARKET_QUOTE_PATTERN = /^[A-Z][A-Z0-9.-]{0,14}$/;
+  var MARKET_QUOTE_OVERRIDE_KEY = 'pmit_market_quote_overrides';
+  var MARKET_QUOTE_READER_PREFIX = 'https://r.jina.ai/http://';
+
+  function marketQuoteOverrides() {
+    var parsed = safeJsonParse(MARKET_QUOTE_OVERRIDE_KEY, {});
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return {};
+    var result = {};
+    MARKET_QUOTE_SLOTS.forEach(function(slot) {
+      var symbol = String(parsed[slot] || '').trim().toUpperCase();
+      if (MARKET_QUOTE_PATTERN.test(symbol)) result[slot] = symbol;
+    });
+    return result;
+  }
+
+  function saveMarketQuoteOverrides(overrides) {
+    try { localStorage.setItem(MARKET_QUOTE_OVERRIDE_KEY, JSON.stringify(overrides || {})); } catch (e) { window.pm.log('warn', '美股卡片設定無法保存', { error: String(e) }); }
+  }
+
+  function marketQuoteEndpoint(symbol) {
+    return MARKET_QUOTE_READER_PREFIX + 'query2.finance.yahoo.com/v8/finance/chart/' + encodeURIComponent(symbol) + '?range=5d&interval=1d';
+  }
+
+  function parseMarketQuotePayload(text) {
+    var marker = 'Markdown Content:';
+    var raw = String(text || '').trim();
+    var markerIndex = raw.indexOf(marker);
+    if (markerIndex >= 0) raw = raw.slice(markerIndex + marker.length).trim();
+    if (raw.indexOf('```') === 0) raw = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
+    return JSON.parse(raw);
+  }
+
+  function marketQuoteNumber(value) {
+    if (value === null || value === undefined || value === '') return null;
+    var parsed = Number(String(value).replace(/,/g, ''));
+    return isFinite(parsed) ? parsed : null;
+  }
+
+  function fetchMarketQuote(symbol) {
+    return fetch(marketQuoteEndpoint(symbol), { cache: 'no-store', headers: { Accept: 'text/plain, application/json' } }).then(function(response) {
+      if (!response.ok) throw new Error('Yahoo Finance HTTP ' + response.status);
+      return response.text();
+    }).then(function(text) {
+      var payload = parseMarketQuotePayload(text);
+      var result = payload && payload.chart && payload.chart.result && payload.chart.result[0];
+      var meta = result && result.meta ? result.meta : {};
+      var quote = result && result.indicators && result.indicators.quote && result.indicators.quote[0] ? result.indicators.quote[0] : {};
+      var closes = Array.isArray(quote.close) ? quote.close.map(marketQuoteNumber).filter(function(value) { return value !== null; }) : [];
+      var price = marketQuoteNumber(meta.regularMarketPrice);
+      if (price === null && closes.length) price = closes[closes.length - 1];
+      if (price === null) throw new Error('找不到有效價格');
+      var previous = marketQuoteNumber(meta.chartPreviousClose || meta.previousClose);
+      if (previous === null && closes.length > 1) previous = closes[closes.length - 2];
+      var change = previous === null ? null : Number((price - previous).toFixed(2));
+      var changePct = previous === null || previous === 0 ? null : Number(((change / previous) * 100).toFixed(2));
+      var marketState = String(meta.marketState || '').toUpperCase();
+      var badge = marketState === 'REGULAR' ? '盤中' : (marketState === 'PRE' ? '盤前' : (marketState === 'POST' ? '盤後' : '收盤'));
+      var pillClass = marketState === 'REGULAR' ? 'pill-live' : (marketState === 'PRE' || marketState === 'POST' ? 'pill-amber' : 'pill-fresh');
+      var updated = meta.regularMarketTime ? new Date(meta.regularMarketTime * 1000).toLocaleString('zh-TW', {timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false}) : '';
+      var name = meta.shortName || meta.longName || symbol;
+      return {symbol: symbol, label: name + ' (' + symbol + ')', price: price, change: change, changePct: changePct, badge: badge, pillClass: pillClass, updated: updated};
+    });
+  }
+
+  function renderCustomMarketQuote(card, quote) {
+    var changeClass = quote.change > 0 ? 'rise' : (quote.change < 0 ? 'fall' : '');
+    var priceText = quote.price.toLocaleString('zh-TW', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    var changeText = quote.change === null ? '—' : ((quote.change > 0 ? '+' : '') + quote.change.toFixed(2) + ' (' + (quote.changePct === null ? '—' : ((quote.changePct > 0 ? '+' : '') + quote.changePct.toFixed(2) + '%')) + ')');
+    var sourceTitle = 'Yahoo Finance Chart · ' + quote.badge + (quote.updated ? ' · 來源更新 ' + quote.updated : ' · 來源時間未提供');
+    card.innerHTML = '<div class="tile-head"><span class="tile-name">' + escapeHtml(quote.label) + '</span><span class="tile-delay-pill ' + quote.pillClass + '" title="' + escapeHtml(sourceTitle) + '">' + quote.badge + '</span></div><div class="tile-val font-mono ' + changeClass + '">' + priceText + '</div><div class="tile-chg font-mono ' + changeClass + '">' + escapeHtml(changeText) + '</div>';
+    card.dataset.currentSymbol = quote.symbol;
+    card.dataset.currentLabel = quote.label;
+    card.classList.add('is-customized');
+    card.title = '右鍵輸入美股代號以替換此卡片，目前：' + quote.label;
+  }
+
+  function escapeHtml(value) {
+    return String(value === null || value === undefined ? '' : value).replace(/[&<>"']/g, function(ch) { return {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[ch]; });
+  }
+
+  window.pm.initMarketQuoteCards = function() {
+    var modal = document.getElementById('quote-customize-modal');
+    var form = document.getElementById('quote-customize-form');
+    var input = document.getElementById('quote-symbol-input');
+    var error = document.getElementById('quote-customize-error');
+    var current = document.getElementById('quote-customize-current');
+    if (!modal || !form || !input || !error || !current) return;
+    var targetCard = null;
+    var overrides = marketQuoteOverrides();
+
+    function close() {
+      window.pm.closeModal('quote-customize-modal');
+      var card = targetCard;
+      targetCard = null;
+      if (card) card.focus();
+    }
+    function open(card) {
+      targetCard = card;
+      var symbol = card.dataset.currentSymbol || card.dataset.defaultSymbol || '';
+      current.textContent = '目前卡片：' + (card.dataset.currentLabel || card.dataset.defaultLabel || symbol);
+      input.value = symbol;
+      error.hidden = true;
+      error.textContent = '';
+      window.pm.openModal('quote-customize-modal', card);
+      input.focus();
+      input.select();
+    }
+    function restoreDefault() {
+      if (!targetCard) return;
+      var card = targetCard;
+      card.innerHTML = card.dataset.defaultHtml || card.innerHTML;
+      delete card.dataset.currentSymbol;
+      delete card.dataset.currentLabel;
+      card.classList.remove('is-customized');
+      card.title = '右鍵輸入美股代號以替換此卡片';
+      delete overrides[card.dataset.quoteSlot];
+      saveMarketQuoteOverrides(overrides);
+      close();
+      window.pm.showToast('已恢復 ' + (card.dataset.defaultLabel || '此卡片') + ' 的預設行情');
+    }
+
+    document.getElementById('quote-customize-close').addEventListener('click', close);
+    document.getElementById('quote-customize-cancel').addEventListener('click', close);
+    document.getElementById('quote-customize-reset').addEventListener('click', restoreDefault);
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      var card = targetCard;
+      var symbol = input.value.trim().toUpperCase();
+      if (!card) return;
+      if (!MARKET_QUOTE_PATTERN.test(symbol)) {
+        error.hidden = false;
+        error.textContent = '請輸入有效美股代號：英文字母開頭，可包含數字、句點或連字號。';
+        input.focus();
+        return;
+      }
+      var submit = form.querySelector('button[type="submit"]');
+      if (submit) { submit.disabled = true; submit.textContent = '查詢中…'; }
+      error.hidden = true;
+      fetchMarketQuote(symbol).then(function(quote) {
+        renderCustomMarketQuote(card, quote);
+        if (symbol === card.dataset.defaultSymbol) delete overrides[card.dataset.quoteSlot];
+        else overrides[card.dataset.quoteSlot] = symbol;
+        saveMarketQuoteOverrides(overrides);
+        close();
+        window.pm.showToast('已將卡片替換為 ' + quote.label);
+      }).catch(function(fetchError) {
+        error.hidden = false;
+        error.textContent = '無法取得 ' + symbol + ' 行情：' + (fetchError.message || '查詢失敗') + '。原卡片資料未變更。';
+      }).then(function() {
+        if (submit) { submit.disabled = false; submit.textContent = '套用代號'; }
+      });
+    });
+
+    document.querySelectorAll('.quote-card-customizable[data-quote-slot]').forEach(function(card) {
+      if (card.dataset.quoteBound) return;
+      card.dataset.quoteBound = '1';
+      card.dataset.defaultHtml = card.innerHTML;
+      card.addEventListener('contextmenu', function(event) { event.preventDefault(); open(card); });
+      card.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(card); }
+      });
+      var saved = overrides[card.dataset.quoteSlot];
+      if (saved && saved !== card.dataset.defaultSymbol) {
+        fetchMarketQuote(saved).then(function(quote) { renderCustomMarketQuote(card, quote); }).catch(function() { window.pm.showToast(saved + ' 暫時無法載入，已保留預設行情'); });
+      }
+    });
+  };
+
   document.addEventListener('DOMContentLoaded', function() {
     window.pm.renderDebugLog();
     window.pm.updateBriefingFreshness();
@@ -6522,6 +6717,7 @@
     var inp = document.getElementById('watch-input');
     if (inp && codes.length) inp.value = codes.join(', ');
     renderWatch();
+    window.pm.initMarketQuoteCards();
 
     if (window.pm.uiState.watchEditOpen) {
       var watchEditContainer = document.getElementById('watch-input-container');
@@ -6688,6 +6884,30 @@
   });
 </script>
 
+
+  <!-- CUSTOMIZE MARKET QUOTE MODAL -->
+  <div id="quote-customize-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="quote-customize-title" aria-hidden="true">
+    <div class="modal-card" role="document">
+      <div class="modal-head">
+        <h3 class="modal-title" id="quote-customize-title">✎ 替換美股行情卡片</h3>
+        <button id="quote-customize-close" class="modal-close" type="button" aria-label="關閉替換行情視窗">✕</button>
+      </div>
+      <form id="quote-customize-form" class="quote-customize-form" novalidate>
+        <div id="quote-customize-current" class="quote-customize-note"></div>
+        <div>
+          <label class="quote-customize-label" for="quote-symbol-input">美股代號</label>
+          <input id="quote-symbol-input" class="quote-symbol-input" type="text" inputmode="latin" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="15" placeholder="例如：NVDA、MSFT、AMD" aria-describedby="quote-customize-note quote-customize-error" required>
+        </div>
+        <div id="quote-customize-note" class="quote-customize-note">輸入英文字母、數字、句點或連字號，例如 NVDA、MSFT、BRK.B。資料將從 Yahoo Finance Chart 取得，設定只保存在此瀏覽器。</div>
+        <div id="quote-customize-error" class="quote-customize-note" role="alert" hidden></div>
+        <div class="quote-customize-actions">
+          <button id="quote-customize-reset" class="watch-btn" type="button">恢復預設</button>
+          <button id="quote-customize-cancel" class="watch-btn" type="button">取消</button>
+          <button class="watch-btn primary" type="submit">套用代號</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- BATCH IMPORT MODAL -->
   <div id="batch-modal" class="modal-overlay" onclick="if(event.target===this)window.pm.closeBatchModal()" role="dialog" aria-modal="true" aria-labelledby="batch-modal-title" aria-hidden="true">
