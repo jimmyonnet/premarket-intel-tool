@@ -35,6 +35,10 @@ def test_watchlist_uses_collapsed_summary_with_hit_placeholder():
     assert 'watch-summary-more' not in source
     assert 'watch-summary-chip.is-amber' in source
     assert 'watch-summary-chip.is-other' not in source
+    assert '.watch-summary-chip.is-amber,\n  .watch-chip.amber' in source
+    assert '.watch-summary-chip.is-candidate,\n  .watch-chip.blue' in source
+    assert 'button.watch-summary-chip.is-amber { color: var(--amber) !important; }' in source
+    assert 'button.watch-summary-chip.is-candidate { color: var(--blue) !important; }' in source
     assert 'function focusWatchTarget(c)' in source
     assert 'chip.onclick = function() { focusWatchTarget(c); };' in source
     assert "hit.type === 'blue' || hit.type === 'normal'" in source

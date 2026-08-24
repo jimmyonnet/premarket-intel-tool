@@ -2319,24 +2319,30 @@
     background: var(--bg-hover);
     border-color: var(--border-strong);
   }
+  .watch-summary-chip.is-alert,
   .watch-chip.alert {
     background: var(--danger-bg);
     color: var(--danger-fg);
     border-color: var(--danger-border);
     font-weight: 700;
   }
+  .watch-summary-chip.is-amber,
   .watch-chip.amber {
     background: var(--amber-bg);
     color: var(--amber-fg);
     border-color: var(--amber-border);
     font-weight: 700;
   }
+  .watch-summary-chip.is-candidate,
   .watch-chip.blue {
     background: var(--blue-bg);
     color: var(--blue-fg);
     border-color: var(--blue-border);
     font-weight: 700;
   }
+  button.watch-summary-chip.is-alert { color: var(--danger-fg) !important; }
+  button.watch-summary-chip.is-amber { color: var(--amber) !important; }
+  button.watch-summary-chip.is-candidate { color: var(--blue) !important; }
   .wc-code { font-weight: 700; }
   .wc-name { font-weight: 600; }
   .wc-del {
