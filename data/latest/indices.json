@@ -35,9 +35,9 @@
     "tsmc_tw": {
       "name": "台積電 現貨",
       "ticker": "2330.TW",
-      "value": 2395.0,
-      "change": -15.0,
-      "change_pct": -0.62,
+      "value": 2390.0,
+      "change": -20.0,
+      "change_pct": -0.83,
       "is_missing": false
     },
     "umc": {
@@ -85,9 +85,9 @@
     "tsmc_tw": {
       "name": "台積電 現貨",
       "ticker": "2330.TW",
-      "value": 2395.0,
-      "change": -15.0,
-      "change_pct": -0.62,
+      "value": 2390.0,
+      "change": -20.0,
+      "change_pct": -0.83,
       "is_missing": false
     },
     "umc": {
@@ -136,19 +136,19 @@
   "asia_open": {
     "nikkei225": {
       "name": "日經225指數",
-      "value": 65968.71,
-      "change": -47.65,
-      "change_pct": -0.07,
-      "updated_cst": "08/24 10:35",
+      "value": 65640.03,
+      "change": -376.33,
+      "change_pct": -0.57,
+      "updated_cst": "08/24 11:48",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
       "source_label": "Yahoo 個別指數頁"
     },
     "kospi": {
       "name": "韓國綜合指數",
-      "value": 6765.93,
-      "change": -147.02,
-      "change_pct": -2.13,
-      "updated_cst": "08/24 10:42",
+      "value": 6691.61,
+      "change": -221.34,
+      "change_pct": -3.2,
+      "updated_cst": "08/24 11:43",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
       "source_label": "Yahoo 個別指數頁"
     }
