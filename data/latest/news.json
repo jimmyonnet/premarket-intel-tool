@@ -20,6 +20,26 @@
     "qualified": true
   },
   {
+    "title": "輝達財報倒數！美股觀望氣氛濃 費半大跌逾3%、台積電ADR跌近3%",
+    "link": "https://news.google.com/rss/articles/CBMi-gJBVV95cUxQRHIzb2NoYVVYY19aZ0dQa0drXy1YLXBnLXdzLVNWWkV5dzRfU1o4LUVpT3NJdkk3WGh1c2U3VF80bEtVWkFhQi1aVEowbUc2N0pPcHV6VG1IWVFVcXNsQWcwWGQ0a1dXemt2Nk1LZVNBSkw0dDJkNVRlejdJV0ZSdTAybHNlb0F6by1zTnpRdmhGcm8yWEhBSHR4U2h2RFdPTndfU3VqLWlNOXZLdkk5Um5PRENnNndjN1oxQXUxV2lLTUVkRDVHcl80bnVIT0dvd0FhZzhVeDVyZmc5TURYR0ZsYkdXbkIwazMtYVE4YkZQdWRrODAxN2lVNVZjUmFLQVZEVXZDMFRFSnVKMkdGaFI0czZmR19GcVdrbEN3LWU1R1ZldXRnc1lJbmtDdENjXzNlb3NnSEZCTXV0UFZUbXhLR1pTVHpjQ2xEU0pmYjVnX29KeHFESjdyY19GTlJ3T3lBY09KMEk2b1NHV2twM1E1d0pSWE5WZWc?oc=5",
+    "source": "Yahoo股市",
+    "time": "08/24 23:00",
+    "timestamp": 1787583600.0,
+    "score": 15,
+    "quality_score": 3,
+    "impact_score": 12,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial",
+      "market_move"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "美股盤前快報｜輝達財報前AI股降溫，記憶體、光通訊領跌，鋼鐵股逆勢走強",
     "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5mNlh3OGJ4Q3hhdGozLVc3UkRFOVVIY0NFSm9zMElOaWg2QVpSYVExR2lTVEUyMjhvRUpld2lsZk9JaTVjN1ZFSFg3RkhXeGM?oc=5",
     "source": "news.cnyes.com",
@@ -52,6 +72,24 @@
       "systemic_company",
       "earnings_financial",
       "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "【噴出倒數？】輝達財報登場，46000真的要來了？",
+    "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE5iZm1QX0ZuclMyWVRQSEJXZmtCUFgydlRvVUlMM3pVbjNpS21sT2x3VVYwcDBWQVk2Y1FsQUwxckdUNGpQZjloUHkxeHFqT2x0SU1F?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/24 14:45",
+    "timestamp": 1787553900.0,
+    "score": 10,
+    "quality_score": 4,
+    "impact_score": 6,
+    "matched_groups": [
+      "systemic_company",
+      "earnings_financial"
     ],
     "low_signal_hits": [],
     "quality_pass": true,
