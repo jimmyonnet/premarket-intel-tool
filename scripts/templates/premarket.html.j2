@@ -781,6 +781,45 @@
     background: var(--bg-card);
     overflow: hidden;
   }
+  .watchlist-details > summary {
+    cursor: pointer;
+    list-style: none;
+  }
+  .watchlist-details > summary::-webkit-details-marker { display: none; }
+  .watchlist-details > summary::after {
+    content: '▾';
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-left: 4px;
+  }
+  .watchlist-details[open] > summary { border-bottom-color: var(--border); }
+  .watch-summary-hits {
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    gap: 6px;
+    margin-left: 8px;
+  }
+  .watch-summary-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+    padding: 3px 8px;
+    border: 1px solid var(--amber-border);
+    border-radius: 6px;
+    background: var(--amber-bg);
+    color: var(--amber-fg);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .watch-summary-chip.is-alert { border-color: var(--danger-border); background: var(--danger-bg); color: var(--danger-fg); }
+  .watch-summary-chip.is-candidate { border-color: var(--blue-border); background: var(--blue-bg); color: var(--blue-fg); }
+  .watch-summary-empty { color: var(--text-muted); font-size: 12px; white-space: nowrap; }
+  .watch-summary-more { color: var(--text-muted); font-size: 11px; font-family: var(--font-mono); white-space: nowrap; }
+  .watchlist-summary .card-tip { margin-left: auto; }
   .watch-control-bar {
     display: flex;
     align-items: center;
@@ -904,6 +943,11 @@
   .watch-chip .wc-del { cursor: pointer; color: var(--text-light); margin-left: 2px; }
   .watch-chip .wc-del:hover { color: var(--rise); }
   .watch-hint { color: var(--text-muted); font-size: 12px; padding: 6px 0; }
+  @media (max-width: 768px) {
+    .watchlist-summary { align-items: flex-start; }
+    .watch-summary-hits { order: 3; width: 100%; margin: 0; }
+    .watchlist-summary .card-tip { display: none; }
+  }
 
   /* WATCHLIST ROW HIGHLIGHT */
   tr.highlight-row,
@@ -2669,14 +2713,15 @@
 
     <!-- Self Watchlist -->
     <section id="self-watchlist" class="content-section">
-      <div class="card watchlist-card">
-        <div class="card-head">
+      <details class="card watchlist-card watchlist-details">
+        <summary class="card-head watchlist-summary">
           <div class="card-title-group">
-            <h2 class="card-title"><span class="title-icon">⭐</span> 我在看（自選關注標的）</h2>
+            <h2 class="card-title"><span class="title-icon">⭐</span> 我在看</h2>
             <span class="count-badge" id="watch-total-badge" style="display:none;">0 檔</span>
           </div>
+          <div class="watch-summary-hits" id="watch-summary-hits" aria-live="polite"></div>
           <span class="card-tip">即時比對今日處置、出關與候選清單 · 本機自動儲存</span>
-        </div>
+        </summary>
 
         <div class="card-body" style="padding: 12px 14px;">
           <div class="watch-main-bar" id="watch-main-bar">
@@ -2703,7 +2748,7 @@
           <div id="watch-chips" class="watch-chips"></div>
           <div class="watch-hint" id="watch-hint"></div>
         </div>
-      </div>
+      </details>
     </section>
 
     <!-- 2. 處置股 (Alerts) -->
@@ -2875,6 +2920,7 @@
       <!-- 隱藏 {{ hidden_disposal|length }} 筆（資料缺欄位，請回報） -->
       {% endif %}
 
+      {% macro render_announcements(financials, unref_count, build_version, generated_at) %}
       <!-- 市場未反映財務公告 (Iframes) -->
       {% set financial_source_status = financials.source_status or {} %}
       {% set att_state = (financial_source_status.get('att') or {}).get('state', 'fresh') %}
@@ -2883,7 +2929,7 @@
       <details class="card announcements-collapsible" open>
         <summary class="card-head" style="cursor:pointer; list-style:none;">
           <div class="card-title-group">
-            <h3 class="card-title">市場未反映公告</h3>
+            <h3 class="card-title">即時公告明細</h3>
             <span class="count-badge">{{ unref_count }} 筆</span>
           </div>
           <span class="card-tip">昨日 13:30 盤後即時重訊</span>
@@ -2963,6 +3009,7 @@
           </details>
         </div>
       </details>
+      {% endmacro %}
     </section>
 
     <!-- 3. 籌碼股 (Watchlist) -->
@@ -3103,7 +3150,16 @@
       {% endif %}
     </section>
 
-    <!-- 4. 市場背景 (Market Context) -->
+    <!-- 4. 市場未反映公告 -->
+    <section id="announcements" class="content-section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="title-icon">📣</span> 市場未反映公告</h2>
+        <span class="section-desc">昨日 13:30 盤後即時重訊</span>
+      </div>
+      {{ render_announcements(financials, unref_count, build_version, generated_at) }}
+    </section>
+
+    <!-- 5. 市場背景 (Market Context) -->
     <section id="market-context" class="content-section">
       <div class="section-header">
         <h2 class="section-title"><span class="title-icon">🌐</span> 市場背景</h2>
@@ -4561,6 +4617,28 @@
     });
 
     var curGrp = window.pm.watchFilterGroup || 'all';
+    var summaryHits = document.getElementById('watch-summary-hits');
+    if (summaryHits) {
+      summaryHits.innerHTML = '';
+      var summaryTargets = hitAlerts.concat(hitCandidates);
+      if (!codes.length) {
+        summaryHits.innerHTML = '<span class="watch-summary-empty">尚未設定自選標的</span>';
+      } else if (!summaryTargets.length) {
+        summaryHits.innerHTML = '<span class="watch-summary-empty">今日無命中標的</span>';
+      } else {
+        var primary = summaryTargets[0];
+        var summaryChip = document.createElement('span');
+        summaryChip.className = 'watch-summary-chip ' + (primary.hit.type === 'alert' || primary.hit.type === 'amber' ? 'is-alert' : 'is-candidate');
+        summaryChip.textContent = primary.code + (primary.hit.label ? ' ' + primary.hit.label : '');
+        summaryHits.appendChild(summaryChip);
+        if (summaryTargets.length > 1) {
+          var more = document.createElement('span');
+          more.className = 'watch-summary-more';
+          more.textContent = '+' + (summaryTargets.length - 1) + ' 檔';
+          summaryHits.appendChild(more);
+        }
+      }
+    }
 
     // Row 1: Filter Pills + Expand toggle (Left side of Row 1)
     if (pillBox) {
