@@ -4582,12 +4582,6 @@
     var raw = localStorage.getItem(window.WATCH_KEY);
     var codes = safeJsonParse(window.WATCH_KEY, []);
 
-    var totalBadge = document.getElementById('watch-total-badge');
-    if (totalBadge) {
-      totalBadge.textContent = codes.length + ' 檔';
-      totalBadge.style.display = codes.length > 0 ? 'inline-flex' : 'none';
-    }
-
     if (!codes.length) {
       hint.textContent = '💡 尚未建立自選股，請點擊上方「✏️ 編輯清單」輸入代號或「📋 批次匯入 / 備份」貼上 Excel 清單。';
       updateWatchlistStars();
@@ -4625,11 +4619,16 @@
     var summaryHits = document.getElementById('watch-summary-hits');
     if (summaryHits) {
       summaryHits.innerHTML = '';
-      var summaryItems = hitAlerts.concat(hitCandidates, otherStocks);
+      var summaryItems = hitAlerts.concat(hitCandidates);
+      var totalBadge = document.getElementById('watch-total-badge');
+      if (totalBadge) {
+        totalBadge.textContent = summaryItems.length + ' 檔';
+        totalBadge.style.display = summaryItems.length > 0 ? 'inline-flex' : 'none';
+      }
       if (!codes.length) {
         summaryHits.innerHTML = '<span class="watch-summary-empty">尚未設定自選標的</span>';
       } else if (!summaryItems.length) {
-        summaryHits.innerHTML = '<span class="watch-summary-empty">尚未設定自選標的</span>';
+        summaryHits.innerHTML = '<span class="watch-summary-empty">今日無命中標的</span>';
       } else {
         summaryItems.forEach(function(item) {
           var summaryChip = document.createElement('span');

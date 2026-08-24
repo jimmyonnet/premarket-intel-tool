@@ -25,7 +25,9 @@ def test_watchlist_uses_collapsed_summary_with_hit_placeholder():
     assert 'title="即時比對今日處置、出關與候選清單 · 本機自動儲存"' in block
     assert '>即時比對今日處置、出關與候選清單 · 本機自動儲存<' not in block
     assert '<details class="card watchlist-card watchlist-details" open>' not in block
-    assert 'summaryItems = hitAlerts.concat(hitCandidates, otherStocks)' in source
+    assert 'summaryItems = hitAlerts.concat(hitCandidates)' in source
+    assert 'summaryItems = hitAlerts.concat(hitCandidates, otherStocks)' not in source
+    assert "totalBadge.textContent = summaryItems.length + ' 檔';" in source
     assert 'summaryItems.forEach(function(item)' in source
     assert "item.code + (item.hit && item.hit.label" in source
     assert 'watch-summary-more' not in source
