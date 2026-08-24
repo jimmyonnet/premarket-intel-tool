@@ -12,7 +12,7 @@ def test_desktop_readability_rules_are_scoped_to_desktop_only():
     assert "@media (min-width: 769px)" in source
     assert ".data-table { font-size: 14px; line-height: 1.5; }" in source
     assert ".news-title { font-size: 14px !important; line-height: 1.55; }" in source
-    assert ".news-meta { font-size: 11.5px !important; line-height: 1.5; }" in source
+    assert ".news-meta { font-size: 12px !important; line-height: 1.5; color: var(--text-muted); }" in source
 
 
 def test_desktop_readability_rules_keep_mobile_breakpoint_separate():

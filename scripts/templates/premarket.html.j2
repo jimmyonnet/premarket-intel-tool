@@ -61,8 +61,8 @@
     --border-light: #F0E7DC;
     --border-strong: #D6C5B3;
     --text-main: #2A241F;
-    --text-muted: #75695D;
-    --text-light: #A09283;
+    --text-muted: #65584D;
+    --text-light: #8A7A6B;
     --rise: #C94448;
     --fall: #2F8458;
     --amber: #B67B24;
@@ -1591,7 +1591,35 @@
     .cal-metrics-grid { font-size: 11.5px; }
     .tile-quote-time { font-size: 11px; }
     .news-title { font-size: 14px !important; line-height: 1.55; }
-    .news-meta { font-size: 11.5px !important; line-height: 1.5; }
+    .news-meta { font-size: 12px !important; line-height: 1.5; color: var(--text-muted); }
+
+    /* Global readability pass: keep dense data compact, strengthen labels and secondary copy. */
+    .section-desc { font-size: 13px; font-weight: 600; }
+    .card-title { font-size: 15px; font-weight: 800; }
+    .card-tip { font-size: 13px; }
+    .card-label { font-size: 12px; }
+    .card-val { font-size: 19px; }
+    .card-sub { font-size: 12px; font-weight: 600; }
+    .inst-chips .chip { font-size: 12px; }
+    .count-badge { font-size: 12px; }
+    .briefing-col-lbl { font-size: 11.5px; }
+    .briefing-status-val, .briefing-watch-val, .briefing-events-val { font-size: 13.5px; }
+    .briefing-summary-title { font-size: 13px; }
+    .briefing-summary-status { font-size: 12px; }
+    .data-table th { font-size: 12.5px; font-weight: 800; }
+    .unref-summary { font-size: 14px; }
+    /* Calendar rules are finalized after the component base styles below. */
+  }
+
+  @media (max-width: 768px) {
+    .section-desc { font-size: 12.5px; font-weight: 600; }
+    .card-label { font-size: 11.5px; }
+    .card-sub { font-size: 11.5px; font-weight: 600; }
+    .briefing-col-lbl { font-size: 11px; }
+    .briefing-status-val, .briefing-watch-val, .briefing-events-val { font-size: 13px; }
+    .data-table th { font-size: 12px; }
+    .news-meta { font-size: 12px !important; }
+    /* Calendar rules are finalized after the component base styles below. */
   }
 
   /* Wide Table Sticky Key Columns (Desktop / Tablet Scroll) */
@@ -2824,6 +2852,28 @@
   }
   .cal-filter-summary strong {
     color: var(--blue);
+  }
+
+  /* FINAL READABILITY OVERRIDES: placed after component base styles. */
+  @media (min-width: 769px) {
+    .cal-filter-lbl { font-size: 12px; }
+    .cal-chip { font-size: 12px; }
+    .cal-date-title { font-size: 14px; }
+    .cal-date-count { font-size: 12px; }
+    .cal-time-group { font-size: 13px; }
+    .cal-country-badge { font-size: 12px; }
+    .cal-category-badge { font-size: 11px; }
+    .cal-card-title { font-size: 14px; line-height: 1.5; }
+    .cal-metrics-grid { font-size: 12px; }
+    .cal-card-detail { font-size: 13px; }
+    .cal-link-btn { font-size: 12px; }
+  }
+  @media (max-width: 768px) {
+    .cal-filter-lbl, .cal-chip { font-size: 12px; }
+    .cal-date-title { font-size: 13.5px; }
+    .cal-time-group { font-size: 12.5px; }
+    .cal-card-title { font-size: 14px; line-height: 1.5; }
+    .cal-metrics-grid { font-size: 12px; }
   }
 
   /* ACCESSIBILITY: REDUCED MOTION */
