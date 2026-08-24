@@ -76,10 +76,12 @@ def test_template_renders_ready_header_and_briefing_card(jinja_env):
     assert "is-ready" in status_btn["class"]
     assert "可用" in status_btn.text
 
-    # 2. Date Check Badge
-    date_badge = soup.find("span", class_="status-badge")
-    assert date_badge is not None
-    assert "已對齊次日" in date_badge.text
+    # 2. Header keeps only the useful date and overall source state.
+    header = soup.find("header", class_="page-header")
+    assert "資料日期" in header.text
+    assert "08/24" in header.text
+    assert "已對齊次日" not in header.text
+    assert soup.find(id="header-age-display") is None
 
     # 3. Today's Briefing Card
     briefing_card = soup.find("div", id="today-briefing-block")

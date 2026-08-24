@@ -2464,14 +2464,6 @@
           <span class="meta-icon">📅</span>
           <span class="meta-label">資料日期</span>
           <span class="meta-val font-mono font-bold">{{ data_date }}</span>
-          {% if date_check_eval %}
-          <span class="status-badge {{ date_check_eval.class_name }}" title="{{ date_check_eval.tooltip }}" style="margin-left:4px; font-size:10.5px; padding:1px 6px;">{{ date_check_eval.label }}</span>
-          {% endif %}
-        </span>
-        <span class="meta-item">
-          <span class="meta-label">建置</span>
-          <span class="meta-val font-mono">{{ build_time }}</span>
-          <span class="meta-ago font-mono" id="header-age-display">（剛剛）</span>
         </span>
         <span class="meta-item health-item" id="source-health-indicator">
           {% set h = health if (health is defined and health) else (meta.health if (meta is defined and meta and meta.health is defined) else {}) %}
@@ -2514,7 +2506,6 @@
               <div class="utility-panel-eyebrow">QUICK CONTROLS</div>
               <div class="utility-panel-title">常用工具</div>
             </div>
-            <div class="utility-panel-build">建置 <strong>{{ build_time or '08:00' }}</strong></div>
           </div>
           <div class="utility-panel-section">
             <div class="utility-section-label">快速操作</div>
