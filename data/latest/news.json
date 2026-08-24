@@ -79,25 +79,6 @@
     "qualified": true
   },
   {
-    "title": "本週操盤筆記：輝達財報、華許演說與PCE三大關卡來了",
-    "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFB3dWNGYjgtRUs0Z1RLZ2t4YnBOZ0Zndm43R3BWdHVsemlSTHpJTUxiRTNJMW5GZEhfVER2d1prb2ItQzRHZVRQYTFnYVlsYTl5bDJN?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/23 22:11",
-    "timestamp": 1787494301.0,
-    "score": 14,
-    "quality_score": 4,
-    "impact_score": 10,
-    "matched_groups": [
-      "macro_policy",
-      "systemic_company",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
     "title": "聯準會主席演說領銜 傑克森論壇、PCE與輝達財報牽動全球股市",
     "link": "https://news.google.com/rss/articles/CBMijgNBVV95cUxOOF96eFVvRkdtOWVwV2dPVl9RWnNCSk1uS1pqM2Z2all2eUlRLUNUOTVkeUgtck03bEp2VkI4NjkwTnYyQWNERFI0d3Z5bjJvS2tNS09Ba192MkNvb2hXa3BaQ2REUEpfNWZFOXdjaXZOeFVGSkRwUEt6ZUY0VXRvc21peTc0Ukd2VWt0OU5IZ2FZc2tiRHRiWDc2cV9iT3RVM0d0U2RidGlENlBwT1BPdnlMVzVXQXFmNHU4MmFWWktiS1ZmRGljeE9tNFNHZUpWUEZWWE1iRUp5NTdjNklxUS1HbWFWTjJibFFpenE2VjU4cGZBSlVlV19kNi1RNXduYmF1eXdubVROVTB1ek9RWmplYjFNT3Fsd1JNN2JpNURmQXczeUtxZ2llbUcya0lnZzdKdk82bWZmS0xFS3lGaUlqbl95MjdCd1dfaHhXTXVPaDVtTVJLUTg5OV90ajJpYURqR2dxaGhRM0pWMXY5cTI4SFFqUkFCdFdoR0pVakZNUWR4S2NUTS1NNmF3UQ?oc=5",
     "source": "Yahoo股市",
@@ -184,6 +165,24 @@
     "impact_score": 6,
     "matched_groups": [
       "systemic_company",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "金融業布局台股 轉區間操作 銀行圈：逢高獲利落袋...非全面看空",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5SYkJjV1JuSlpBdjhpNmpYQnR4d3FEeWZqY1Zqb1pRcjFyUHFIWTdqMFVEanZYZWdCSUdsLURmamUxdU1iV0QxTUNWaEk5Uk90OHUzQ21sLUxFQdIBX0FVX3lxTE5WbUwtMkFUdzlHZlhsbElLS081N2RmRTZYamVLRksxaEFPNDZQMVdJZHBWVTQySndIN1VIYjRuMjNoR0cyTmplY3JVam5JQk1qSjdlckwtUnpTS0s3NVlZ?oc=5",
+    "source": "經濟日報",
+    "time": "08/24 02:18",
+    "timestamp": 1787509101.0,
+    "score": 10,
+    "quality_score": 4,
+    "impact_score": 6,
+    "matched_groups": [
+      "market_benchmark",
       "earnings_financial"
     ],
     "low_signal_hits": [],
