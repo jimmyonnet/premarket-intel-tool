@@ -184,7 +184,12 @@ def inspect_existing_source_file(source_id: str, file_path: Path) -> dict[str, A
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Premarket Intel Tool Fetch Runner")
-    parser.add_argument("--mode", choices=["full", "asia-open-update"], default="full")
+    parser.add_argument(
+        "--mode",
+        choices=["full", "morning-core", "asia-open-update", "disposal", "candidates", "financials"],
+        default="full",
+        help="full is used for manual updates; scheduled modes refresh only their named page section.",
+    )
     parser.add_argument("--date", help="Today's date (YYYY-MM-DD)", default=None)
     parser.add_argument("--allow-unsafe-exit", action="store_true", help="Do not exit with code 1 even if unsafe")
     args = parser.parse_args()
@@ -214,17 +219,23 @@ def main() -> None:
         "news": DATA_LATEST / "news.json",
     }
 
-    # Pre-fill status for sources present on disk
+    # Pre-fill status for sources present on disk. On a partial refresh, keep
+    # the prior fetch outcome but recalculate every untouched source's age from
+    # its actual file modification time, so the page never reports old data as
+    # freshly fetched merely because a different section was refreshed.
     for sid, fpath in source_file_map.items():
-        if sid not in status_map:
-            item = inspect_existing_source_file(sid, fpath)
-            if item:
+        item = inspect_existing_source_file(sid, fpath)
+        if item:
+            if sid not in status_map:
                 status_map[sid] = item
+            else:
+                status_map[sid]["age_minutes"] = item["age_minutes"]
 
     python_bin = sys.executable
 
-    if args.mode == "full":
-        # 1. TWSE Summary
+    if args.mode in ("full", "morning-core"):
+        # Morning market context: yesterday's Taiwan close, overnight futures,
+        # macro calendar and overnight news.
         status_map["twse_summary"] = fetch_source(
             "twse_summary",
             [python_bin, "scripts/fetch_twse_summary.py"],
@@ -233,16 +244,6 @@ def main() -> None:
             timeout=30,
         )
 
-        # 2. Indices
-        status_map["indices"] = fetch_source(
-            "indices",
-            [python_bin, "scripts/fetch_indices.py"],
-            DATA_LATEST / "indices.json",
-            "{}",
-            timeout=35,
-        )
-
-        # 3. Night session
         status_map["night_session"] = fetch_source(
             "night_session",
             [python_bin, "scripts/tx_night_session.py", "assemble", "--data-dir", "data/night_session", "--date", today_str],
@@ -251,8 +252,38 @@ def main() -> None:
             timeout=30,
             extract_date_fn=lambda c: c.get("date"),
         )
+        status_map["calendar"] = fetch_source(
+            "calendar",
+            [python_bin, "scripts/fetch_calendar.py"],
+            DATA_LATEST / "calendar.json",
+            "{}",
+            timeout=30,
+            extract_date_fn=lambda c: c.get("today"),
+        )
+        status_map["news"] = fetch_source(
+            "news",
+            [python_bin, "scripts/fetch_news.py"],
+            DATA_LATEST / "news.json",
+            "[]",
+            timeout=30,
+        )
 
-        # 4. Disposal forecast
+    if args.mode in ("full", "morning-core", "asia-open-update"):
+        # Broad indices are refreshed in the morning and again around the
+        # Japan/Korea open; the latter mode intentionally leaves other data
+        # sources untouched.
+        status_map["indices"] = fetch_source(
+            "indices",
+            [python_bin, "scripts/fetch_indices.py"],
+            DATA_LATEST / "indices.json",
+            "{}",
+            timeout=35,
+        )
+
+    if args.mode in ("full", "disposal"):
+        # Chengwaye publishes the forecast for the next trading day at about
+        # 19:30 Taipei time. The scheduled workflow gives it a five-minute
+        # buffer before fetching this source.
         status_map["disposal"] = fetch_source(
             "disposal",
             [python_bin, "scripts/fetch_disposal.py", "--skip-date-check"],
@@ -262,7 +293,9 @@ def main() -> None:
             extract_date_fn=lambda c: (c.get("date_check") or {}).get("page_says_applies_to"),
         )
 
-        # 5. PressPlay
+    if args.mode in ("full", "candidates"):
+        # Candidate stocks combine the PressPlay premarket article with the
+        # Chengwaye daily institutional / day-trading detail.
         status_map["pressplay"] = fetch_source(
             "pressplay",
             [python_bin, "scripts/fetch_pressplay_groups.py"],
@@ -272,7 +305,6 @@ def main() -> None:
             extract_date_fn=lambda c: c.get("chengwaye_date"),
         )
 
-        # 6. Chengwaye Daily detail
         status_map["chengwaye_daily"] = fetch_source(
             "chengwaye_daily",
             [python_bin, "scripts/fetch_chengwaye_daily.py"],
@@ -282,17 +314,8 @@ def main() -> None:
             extract_date_fn=lambda c: c.get("page_date"),
         )
 
-        # 7. Financial Calendar
-        status_map["calendar"] = fetch_source(
-            "calendar",
-            [python_bin, "scripts/fetch_calendar.py"],
-            DATA_LATEST / "calendar.json",
-            "{}",
-            timeout=30,
-            extract_date_fn=lambda c: c.get("today"),
-        )
-
-        # 8. Financial announcements (native front-end package)
+    if args.mode in ("full", "financials"):
+        # Post-market self-reported earnings, financials and revenue notices.
         status_map["financials"] = fetch_source(
             "financials",
             [python_bin, "scripts/fetch_financials.py"],
@@ -300,25 +323,6 @@ def main() -> None:
             '{"att":[],"fin":[],"rev":[]}',
             timeout=150,
         )
-        # 9. News
-        status_map["news"] = fetch_source(
-            "news",
-            [python_bin, "scripts/fetch_news.py"],
-            DATA_LATEST / "news.json",
-            "[]",
-            timeout=30,
-        )
-
-    elif args.mode == "asia-open-update":
-        print("[Fetch] Updating indices (Asia market open refresh)...")
-        status_map["indices"] = fetch_source(
-            "indices",
-            [python_bin, "scripts/fetch_indices.py"],
-            DATA_LATEST / "indices.json",
-            "{}",
-            timeout=35,
-        )
-
     # Save consolidated source status JSON
     save_source_status(status_map)
 

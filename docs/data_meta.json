@@ -1,8 +1,8 @@
 {
-  "build_time": "2026-08-24 12:04",
-  "build_version": "20260824_1204",
+  "build_time": "2026-08-24 12:06",
+  "build_version": "20260824_1206",
   "data_date": "08/24",
-  "stale_hours": 37.6,
+  "stale_hours": 37.7,
   "hours_since_us_close": 8.1,
   "overall_status": "ready",
   "status_label": "可用",
@@ -157,7 +157,7 @@
     }
   ],
   "schema_version": 1,
-  "built_at": "2026-08-24T04:04:12.193898+00:00",
+  "built_at": "2026-08-24T04:06:50.397371+00:00",
   "hash": {
     "disposition": "28b395c1e053",
     "candidates": "63bd5c1babe1",

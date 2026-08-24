@@ -1,14 +1,22 @@
 name: Build premarket page
 
-# Runs on schedule before Taiwan stock market open:
-#   07:35 Taipei (UTC 23:35 previous day) - Full premarket fetch & build
-#   08:05 Taipei (UTC 00:05 current day) - Asian markets (Nikkei/Kospi) initial open refresh
-#   08:20 Taipei (UTC 00:20 current day) - Asian markets opening stabilization refresh
+# All scheduled times below are Taiwan time (UTC+8):
+#   19:35 - Chengwaye disposal forecast (source publishes about 19:30)
+#   20:00 / 22:00 / 24:00 - candidate stocks and institutional detail
+#   21:00 / 08:00 / 08:30 - post-market unreflected announcements
+#   07:35 / 08:05 / 08:20 - morning market context and Asia opening refreshes
 on:
   schedule:
+    - cron: "35 11 * * 1-5"
+    - cron: "0 12 * * 1-5"
+    - cron: "0 13 * * 1-5"
+    - cron: "0 14 * * 1-5"
+    - cron: "0 16 * * 1-5"
     - cron: "35 23 * * 0-4"
+    - cron: "0 0 * * 1-5"
     - cron: "5 0 * * 1-5"
     - cron: "20 0 * * 1-5"
+    - cron: "30 0 * * 1-5"
   workflow_dispatch:
     inputs:
       data_date:
@@ -84,7 +92,19 @@ jobs:
           PRESSPLAY_EMAIL: ${{ secrets.PRESSPLAY_EMAIL }}
           PRESSPLAY_PASSWORD: ${{ secrets.PRESSPLAY_PASSWORD }}
         run: |
-          python scripts/run_fetchers.py --mode full --date "${{ steps.date.outputs.today }}" --allow-unsafe-exit
+          mode="full"
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            case "${{ github.event.schedule }}" in
+              "35 11 * * 1-5") mode="disposal" ;;
+              "0 12 * * 1-5"|"0 14 * * 1-5"|"0 16 * * 1-5") mode="candidates" ;;
+              "0 13 * * 1-5"|"0 0 * * 1-5"|"30 0 * * 1-5") mode="financials" ;;
+              "35 23 * * 0-4") mode="morning-core" ;;
+              "5 0 * * 1-5"|"20 0 * * 1-5") mode="asia-open-update" ;;
+              *) echo "Unknown schedule: ${{ github.event.schedule }}" >&2; exit 1 ;;
+            esac
+          fi
+          echo "Refreshing mode: ${mode}"
+          python scripts/run_fetchers.py --mode "${mode}" --date "${{ steps.date.outputs.today }}" --allow-unsafe-exit
 
       - name: Validate fetched data contracts
         if: steps.trading_day.outputs.is_trading_day == 'true'
@@ -147,4 +167,3 @@ jobs:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         run: |
           python scripts/notify_summary.py --mode failure || true
-
