@@ -5824,6 +5824,8 @@
       pendingGoShortcut = false;
       if (document.body.classList.contains('snapshot-mode')) {
         document.body.classList.remove('snapshot-mode');
+        window.pm.uiState.snapshotMode = false;
+        window.pm.saveUiState();
       }
       if (openModal) {
         window.pm.closeModal(openModal.id);
@@ -6269,7 +6271,13 @@
         bt.setAttribute('aria-pressed', 'true');
       }
     }
-    if (window.pm.uiState.snapshotMode) document.body.classList.add('snapshot-mode');
+    // Screenshot mode is intentionally session-only. Older versions persisted
+    // snapshotMode and could make a normal reload look like a cropped page.
+    if (window.pm.uiState.snapshotMode) {
+      window.pm.uiState.snapshotMode = false;
+      window.pm.saveUiState();
+    }
+    document.body.classList.remove('snapshot-mode');
 
     // 3-second timeout fallback check for embeds
     setTimeout(function() {

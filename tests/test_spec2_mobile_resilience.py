@@ -42,6 +42,13 @@ def test_spec2_resilience_contract_is_present_in_template_and_deployed_page():
         assert "g + 1~6" in source
 
 
+def test_snapshot_mode_is_session_only():
+    source = TEMPLATE.read_text(encoding="utf-8")
+    assert "if (window.pm.uiState.snapshotMode) document.body.classList.add('snapshot-mode')" not in source
+    assert "Screenshot mode is intentionally session-only" in source
+    assert "document.body.classList.remove('snapshot-mode')" in source
+
+
 def test_holiday_and_service_worker_assets_are_present():
     holiday_path = ROOT / "docs" / "data" / "tw_holidays.json"
     sw_path = ROOT / "docs" / "sw.js"
