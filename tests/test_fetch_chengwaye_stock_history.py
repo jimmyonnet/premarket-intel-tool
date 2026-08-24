@@ -47,4 +47,8 @@ def test_live_snapshot_is_valid_json():
     snapshot = ROOT / "data" / "latest" / "stock_history.json"
     payload = json.loads(snapshot.read_text(encoding="utf-8"))
     assert payload["_status"] == "ok"
-    assert payload["codes"]["5314"]["record_count"] == 11
+    assert isinstance(payload.get("codes"), dict)
+    assert payload["codes"]
+    for code, item in payload["codes"].items():
+        assert code.isdigit()
+        assert item["record_count"] == len(item.get("records") or [])
