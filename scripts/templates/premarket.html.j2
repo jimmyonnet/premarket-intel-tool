@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="個人自用，勿分享">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#F8FAFC">
+<meta name="theme-color" content="#FAF9F7">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -26,6 +26,9 @@
 </script>
 <title>盤前 · {{ date_check.page_says_applies_to if date_check and date_check.page_says_applies_to else ((meta.data_date if meta is defined and meta and meta.data_date else '08/24')) }} · 近處置 {{ (disposal.one_flag_from_disposal|length if disposal and disposal.one_flag_from_disposal else 5) }} · 出關 {{ (exiting_today|length if exiting_today is defined and exiting_today else 3) }}</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -48,48 +51,50 @@
 
 <style>
   :root {
-    --bg-page: #F8FAFC;
+    /* tool-to-decide visual language: warm paper, deep ink, cobalt action */
+    --bg-page: oklch(98.5% 0.004 75);
     --bg-card: #FFFFFF;
-    --bg-sub: #F1F5F9;
-    --bg-hover: #E2E8F0;
-    --border: #E2E8F0;
-    --border-light: #F1F5F9;
-    --border-strong: #CBD5E1;
-    --text-main: #0F172A;
-    --text-muted: #64748B;
-    --text-light: #94A3B8;
-    --rise: #E11D48;
-    --fall: #16A34A;
-    --amber: #D97706;
-    --blue: #2563EB;
+    --bg-sub: oklch(97.5% 0.004 75);
+    --bg-hover: oklch(94% 0.004 75);
+    --border: oklch(91% 0.005 75);
+    --border-light: oklch(94% 0.004 75);
+    --border-strong: oklch(86% 0.008 75);
+    --text-main: oklch(20% 0.01 75);
+    --text-muted: oklch(46% 0.01 75);
+    --text-light: oklch(56% 0.01 75);
+    --rise: oklch(53% 0.18 25);
+    --fall: oklch(48% 0.13 150);
+    --amber: oklch(58% 0.14 80);
+    --blue: oklch(52% 0.15 260);
     --focus: var(--blue);
     --btn-bg: #FFFFFF;
-    --btn-border: #E2E8F0;
-    --btn-hover: #F1F5F9;
+    --btn-border: var(--border);
+    --btn-hover: oklch(95% 0.02 260);
 
-    --danger-bg: #FFF1F2;
-    --danger-fg: #BE123C;
-    --danger-border: #FECDD3;
+    --danger-bg: oklch(96% 0.04 25);
+    --danger-fg: oklch(43% 0.16 25);
+    --danger-border: oklch(84% 0.08 25);
 
-    --amber-bg: #FFFBEB;
-    --amber-fg: #92400E;
-    --amber-border: #FDE68A;
+    --amber-bg: oklch(96% 0.05 80);
+    --amber-fg: oklch(43% 0.1 80);
+    --amber-border: oklch(86% 0.09 80);
 
-    --blue-bg: #EFF6FF;
-    --blue-fg: #1D4ED8;
-    --blue-border: #BFDBFE;
+    --blue-bg: oklch(95% 0.02 260);
+    --blue-fg: oklch(44% 0.16 260);
+    --blue-border: oklch(88% 0.04 260);
 
-    --green-bg: #ECFDF5;
-    --green-fg: #047857;
-    --green-border: #A7F3D0;
+    --green-bg: oklch(95% 0.05 150);
+    --green-fg: oklch(40% 0.13 150);
+    --green-border: oklch(84% 0.08 150);
 
-    --row-paused-bg: rgba(217, 119, 6, 0.08);
+    --row-paused-bg: oklch(96% 0.05 80 / 0.8);
 
-    --font-ui: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI", Roboto, "PingFang TC", "Noto Sans TC", sans-serif;
-    --font-mono: ui-monospace, "SF Mono", "Menlo", "Consolas", monospace;
-    --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
-    --shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08);
-    --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.08);
+    --font-ui: Manrope, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+    --font-sans: var(--font-ui);
+    --font-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+    --shadow-sm: none;
+    --shadow: 0 4px 14px rgba(37, 31, 23, 0.07);
+    --shadow-md: 0 16px 34px rgba(37, 31, 23, 0.12);
     --safe-top: env(safe-area-inset-top, 0px);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
     --safe-left: env(safe-area-inset-left, 0px);
@@ -97,44 +102,45 @@
   }
 
   :root[data-theme="dark"] {
-    --bg-page: #090D16;
-    --bg-card: #111827;
-    --bg-sub: #1A2234;
-    --bg-hover: #242E44;
-    --border: rgba(255, 255, 255, 0.08);
-    --border-light: rgba(255, 255, 255, 0.04);
-    --border-strong: rgba(255, 255, 255, 0.15);
-    --text-main: #F8FAFC;
-    --text-muted: #94A3B8;
-    --text-light: #64748B;
-    --rise: #F87171;
-    --fall: #34D399;
-    --amber: #FBBF24;
-    --blue: #60A5FA;
-    --btn-bg: #1A2234;
-    --btn-border: rgba(255, 255, 255, 0.1);
-    --btn-hover: #242E44;
+    /* warm charcoal companion theme; the same cobalt and semantic accents remain */
+    --bg-page: #171411;
+    --bg-card: #211D19;
+    --bg-sub: #2A2520;
+    --bg-hover: #393129;
+    --border: rgba(255, 244, 230, 0.13);
+    --border-light: rgba(255, 244, 230, 0.07);
+    --border-strong: rgba(255, 244, 230, 0.22);
+    --text-main: #F8F4EE;
+    --text-muted: #C4B8A9;
+    --text-light: #998D7E;
+    --rise: #FF8A9B;
+    --fall: #70D9A1;
+    --amber: #F4C76A;
+    --blue: #82AFFF;
+    --btn-bg: #211D19;
+    --btn-border: rgba(255, 244, 230, 0.16);
+    --btn-hover: #393129;
 
-    --danger-bg: rgba(225, 29, 72, 0.14);
-    --danger-fg: #FDA4AF;
-    --danger-border: rgba(225, 29, 72, 0.3);
+    --danger-bg: rgba(255, 102, 125, 0.16);
+    --danger-fg: #FFB4BF;
+    --danger-border: rgba(255, 138, 155, 0.36);
 
-    --amber-bg: rgba(217, 119, 6, 0.14);
-    --amber-fg: #FCD34D;
-    --amber-border: rgba(217, 119, 6, 0.3);
+    --amber-bg: rgba(244, 199, 106, 0.16);
+    --amber-fg: #FFE0A0;
+    --amber-border: rgba(244, 199, 106, 0.36);
 
-    --blue-bg: rgba(37, 99, 235, 0.14);
-    --blue-fg: #93C5FD;
-    --blue-border: rgba(37, 99, 235, 0.3);
+    --blue-bg: rgba(130, 175, 255, 0.16);
+    --blue-fg: #B5CCFF;
+    --blue-border: rgba(130, 175, 255, 0.36);
 
-    --green-bg: rgba(16, 185, 129, 0.14);
-    --green-fg: #6EE7B7;
-    --green-border: rgba(16, 185, 129, 0.3);
+    --green-bg: rgba(112, 217, 161, 0.16);
+    --green-fg: #A8EBC6;
+    --green-border: rgba(112, 217, 161, 0.36);
 
-    --row-paused-bg: rgba(217, 119, 6, 0.16);
-    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
-    --shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 6px 12px -2px rgba(0, 0, 0, 0.5);
+    --row-paused-bg: rgba(244, 199, 106, 0.16);
+    --shadow-sm: none;
+    --shadow: 0 4px 16px rgba(0, 0, 0, 0.24);
+    --shadow-md: 0 16px 34px rgba(0, 0, 0, 0.36);
   }
 
   * { box-sizing: border-box; }
@@ -260,7 +266,7 @@
     text-decoration: none;
     font-size: 12.5px;
     font-weight: 600;
-    border-radius: 6px;
+    border-radius: 10px;
     transition: all 0.15s ease;
     box-sizing: border-box;
   }
@@ -297,7 +303,7 @@
     list-style: none;
     background: var(--bg-card);
     border: 1px solid var(--border-strong);
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 0 9px;
     height: 28px;
     font-size: 12px;
@@ -322,9 +328,9 @@
     width: min(476px, calc(100vw - 32px));
     padding: 13px;
     border: 1px solid var(--border);
-    border-radius: 10px;
+    border-radius: 16px;
     background: var(--bg-card);
-    box-shadow: 0 16px 34px rgba(15, 23, 42, 0.16);
+    box-shadow: var(--shadow-md);
   }
   .nav-utility-content::before {
     content: '';
@@ -386,7 +392,7 @@
   .nav-btn {
     background: var(--bg-card);
     border: 1px solid var(--border-strong);
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 0 9px;
     height: 28px;
     font-size: 12px;
@@ -496,7 +502,7 @@
   .card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 16px;
     box-shadow: var(--shadow-sm);
     margin-bottom: 14px;
     overflow: hidden;
@@ -549,7 +555,7 @@
   .summary-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 16px;
     padding: 8px 12px;
     box-shadow: var(--shadow-sm);
     display: flex;
@@ -655,7 +661,7 @@
     gap: 10px;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 16px;
     padding: 10px 14px;
     margin-bottom: 10px;
     box-shadow: var(--shadow-sm);
@@ -670,7 +676,7 @@
     gap: 10px;
     padding: 10px 14px;
     border: 1.5px solid var(--amber-border);
-    border-radius: 8px;
+    border-radius: 12px;
     background: var(--amber-bg);
     color: var(--text-main);
     cursor: pointer;
@@ -800,7 +806,7 @@
 
   /* WATCHLIST MODERN CARD */
   .watchlist-card {
-    border-radius: 10px;
+    border-radius: 16px;
     border: 1px solid var(--border);
     background: var(--bg-card);
     overflow: hidden;
@@ -876,7 +882,7 @@
     align-items: center;
     background: var(--bg-sub);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 10px;
     padding: 3px 4px 3px 12px;
     transition: all 0.15s ease;
   }
@@ -908,7 +914,7 @@
     background: var(--blue);
     color: #FFFFFF;
     border: none;
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 5px 12px;
     font-size: 12px;
     font-weight: 700;
@@ -927,7 +933,7 @@
   .watch-btn-modern {
     background: var(--bg-sub);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 6px 11px;
     font-size: 12px;
     font-weight: 600;
@@ -961,7 +967,7 @@
   .watch-chip {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 10px;
     padding: 4px 10px;
     font-size: 12px;
     font-family: var(--font-mono);
@@ -1213,7 +1219,7 @@
   .tile-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 16px;
     padding: 12px 14px;
     display: flex;
     flex-direction: column;
@@ -2461,7 +2467,7 @@
     gap: 8px 12px;
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 8px 12px;
   }
   .watch-stat-left {
@@ -2701,7 +2707,7 @@
     background: var(--blue-bg);
     color: var(--blue-fg);
     border: 1px solid var(--blue-border);
-    border-radius: 8px;
+    border-radius: 12px;
     padding: 10px 14px;
     font-size: 13px;
     font-weight: 700;
@@ -5683,7 +5689,7 @@
     document.documentElement.setAttribute('data-theme', nextTheme);
     localStorage.setItem('pmit_theme', nextTheme);
     var metaTheme = document.querySelector('meta[name="theme-color"]');
-    if (metaTheme) metaTheme.content = nextTheme === 'dark' ? '#0B1220' : '#F8FAFC';
+    if (metaTheme) metaTheme.content = nextTheme === 'dark' ? '#171411' : '#FAF9F7';
     var b = document.getElementById('theme-toggle');
     if (b) b.textContent = nextTheme === 'dark' ? '☀️ 淺色' : '🌙 深色';
     window.pm.syncIframeTheme(nextTheme);
