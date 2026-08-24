@@ -2579,8 +2579,8 @@
         {% set alert_total = (disposal.one_flag_from_disposal|length) + (exiting_today|length) %}
         {% set disposal_source = (health.sources | selectattr('source_id', 'equalto', 'disposal') | list | first) if health is defined and health.sources is defined else none %}
         {% set disposal_is_stale = disposal_source and (disposal_source.freshness in ['stale', 'expired'] or disposal_source.status in ['failed', 'missing']) %}
-        <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">處置股 {% if alert_total > 0 %}<span class="nav-badge" id="nav-alert-badge">{{ alert_total }}</span>{% endif %}{% if disposal_is_stale %}<span class="nav-badge" style="background:var(--amber); color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
         <a href="#watchlist" class="nav-link">籌碼股</a>
+        <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">處置股 {% if alert_total > 0 %}<span class="nav-badge" id="nav-alert-badge">{{ alert_total }}</span>{% endif %}{% if disposal_is_stale %}<span class="nav-badge" style="background:var(--amber); color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
         <a href="#market-context" class="nav-link">市場背景</a>
         <a href="#news-calendar" class="nav-link">補充資訊</a>
         <a href="#system-info" class="nav-link">系統</a>
@@ -2810,7 +2810,228 @@
       </details>
     </section>
 
-    <!-- 2. 處置股 (Alerts) -->
+    {% macro candidate_detail_control(detail, code) -%}
+      {%- if detail -%}
+        <button type="button" class="candidate-detail-toggle" aria-expanded="false" aria-controls="candidate-detail-{{ code }}" data-detail-id="candidate-detail-{{ code }}" onclick="window.pm.toggleCandidateDetail(this)">查看明細</button>
+      {%- else -%}
+        <span class="candidate-detail-unavailable" title="Chengwaye 當日清單未提供此標的明細">暫無明細</span>
+      {%- endif -%}
+    {%- endmacro %}
+
+    {% macro candidate_detail_panel(detail, code) -%}
+      {%- if detail -%}
+      <tr class="candidate-detail-row" id="candidate-detail-{{ code }}" hidden>
+        <td colspan="9">
+          <div class="candidate-detail-panel">
+            <div class="candidate-detail-head">
+              <h4 class="candidate-detail-title">{{ detail.code }} {{ detail.name }} · Chengwaye 籌碼明細</h4>
+              <span class="candidate-detail-meta">資料日 {{ institutional.page_date or '—' }} · <a href="https://chengwaye.com/daily" target="_blank" rel="noopener noreferrer">Chengwaye ↗</a></span>
+            </div>
+            <div class="candidate-detail-grid">
+              <div class="candidate-detail-card">
+                <h5>法人買賣 · 買超 Top15</h5>
+                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                {% for item in detail.buyers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                </tbody></table>
+              </div>
+              <div class="candidate-detail-card">
+                <h5>法人買賣 · 賣超 Top15</h5>
+                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                {% for item in detail.sellers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                </tbody></table>
+              </div>
+              <div class="candidate-detail-card is-wide">
+                <h5>當沖 Top10</h5>
+                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>交易張數</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                {% for item in detail.daytraders %}<tr><td>{{ item.name }}</td><td>{{ item.total }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                </tbody></table>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      {%- endif -%}
+    {%- endmacro %}
+
+    <!-- 2. 籌碼股 (Watchlist) -->
+    <section id="watchlist" class="content-section">
+      <div class="section-header">
+        <h2 class="section-title"><span class="title-icon">🎯</span> 籌碼股</h2>
+        <span class="section-desc">盤前族群整理、法人動向與主力當沖籌碼明細</span>
+      </div>
+
+      {% if pressplay._status == 'fetch_failed' %}
+      <div class="part3-error">
+        <strong>Part 3（PressPlay 摘要）收集失敗。</strong>
+        請到 GitHub <code>Actions → build-premarket-page</code> 查看 Logs；其他章節照常運作，不受影響。
+      </div>
+      {% elif (pressplay.not_found_group.matched|length == 0 and pressplay.found_group.matched|length == 0) and (pressplay.not_found_group.unmatched|length == 0 and pressplay.found_group.unmatched|length == 0) %}
+      <div class="part3-empty">尚無資料（PressPlay 收集流程跑過，但今天沒有盤前文章）。</div>
+      {% else %}
+
+      <!-- 族群聚焦標的 -->
+      {% if pressplay.found_group.matched and pressplay.found_group.matched|length > 0 %}
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">族群聚焦標的</h3>
+            <span class="count-badge">{{ pressplay.found_group.matched|length }} 檔</span>
+          </div>
+          <span class="card-tip">已比對 {{ pressplay.found_group.raw_tokens|length }} 檔，共 {{ pressplay.found_group.matched|length }} 檔具明確族群連動</span>
+        </div>
+        <div class="data-block">
+          <div class="table-scroll">
+            <table class="data-table">
+              <caption class="sr-only">族群聚焦標的清單</caption>
+              <thead>
+                <tr>
+                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in pressplay.found_group.matched %}
+                {% set clean_code = row.code.replace('⏸','').strip() %}
+                <tr class="candidate-stock-row" data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
+                  <td data-label="市場">{{ row.market }}</td>
+                  <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
+                  <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
+                  <td data-label="收盤" class="num font-mono" data-sort="{{ row.close }}">{{ row.close }}</td>
+                  <td data-label="量(張)" class="num font-mono" data-sort="{{ row.volume }}">{{ row.volume }}</td>
+                  <td data-label="外資(張)" class="num font-mono {% if row.foreign and '+' in row.foreign %}rise{% elif row.foreign and '-' in row.foreign %}fall{% endif %}" data-sort="{{ row.foreign }}">{{ row.foreign }}</td>
+                  <td data-label="投信(張)" class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}" data-sort="{{ row.trust }}">{{ row.trust }}</td>
+                  <td data-label="自營(張)" class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}" data-sort="{{ row.dealer }}">{{ row.dealer }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <details class="unref-accordion" style="margin-bottom:12px;">
+        <summary class="unref-summary">
+          <span>🎯 族群聚焦標的（今日無共同聚焦族群標的；下方列出 {{ pressplay.not_found_group.matched|length if (pressplay.not_found_group and pressplay.not_found_group.matched) else 0 }} 檔個別動能標的）</span>
+          <span class="badge">0 檔</span>
+        </summary>
+        <div class="unref-content" style="padding:14px; text-align:center; color:var(--text-muted); font-size:12.5px;">
+          今日盤前專欄未歸納出共同聚焦族群標的；請參考下方個別動能標的。
+        </div>
+      </details>
+      {% endif %}
+
+      <!-- 無明確族群標的 -->
+      {% if pressplay.not_found_group.matched and pressplay.not_found_group.matched|length > 0 %}
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">無明確族群標的</h3>
+            <span class="count-badge">{{ pressplay.not_found_group.matched|length }} 檔</span>
+          </div>
+          <span class="card-tip">獨立題材或個股動能</span>
+        </div>
+
+        <div class="data-block">
+          <div class="table-scroll">
+            <table class="data-table">
+              <caption class="sr-only">無明確族群標的清單</caption>
+              <thead>
+                <tr>
+                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
+                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in pressplay.not_found_group.matched %}
+                {% set clean_code = row.code.replace('⏸','').strip() %}
+                <tr class="candidate-stock-row" data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
+                  <td data-label="市場">{{ row.market }}</td>
+                  <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
+                  <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
+                  <td data-label="收盤" class="num font-mono" data-sort="{{ row.close }}">{{ row.close }}</td>
+                  <td data-label="量(張)" class="num font-mono" data-sort="{{ row.volume }}">{{ row.volume }}</td>
+                  <td data-label="外資(張)" class="num font-mono {% if row.foreign and '+' in row.foreign %}rise{% elif row.foreign and '-' in row.foreign %}fall{% endif %}" data-sort="{{ row.foreign }}">{{ row.foreign }}</td>
+                  <td data-label="投信(張)" class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}" data-sort="{{ row.trust }}">{{ row.trust }}</td>
+                  <td data-label="自營(張)" class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}" data-sort="{{ row.dealer }}">{{ row.dealer }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <details class="unref-accordion" style="margin-bottom:12px;">
+        <summary class="unref-summary">
+          <span>⚡ 無明確族群標的 · 今日無獨立題材標的</span>
+          <span class="badge">0 檔</span>
+        </summary>
+        <div class="unref-content" style="padding:14px; text-align:center; color:var(--text-muted); font-size:12.5px;">
+          今日無獨立題材標的
+        </div>
+      </details>
+      {% endif %}
+      {% endif %}
+
+      {% if institutional and institutional.stocks %}
+      <div class="card" id="candidate-institutional-details">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">個股籌碼明細</h3>
+            <span class="count-badge">{{ institutional.matched_count }} 檔</span>
+            <a class="cal-link-btn" href="https://chengwaye.com/daily" target="_blank" rel="noopener noreferrer" title="開啟 Chengwaye 當日籌碼資料">Chengwaye ↗</a>
+          </div>
+          <span class="card-tip">點擊標的展開法人買賣與當沖 Top10 · 資料日 {{ institutional.page_date or '—' }}</span>
+        </div>
+        <div class="data-block" style="padding:10px;">
+          {% for detail in institutional.stocks %}
+          <details class="unref-accordion candidate-insight-detail" id="candidate-insight-{{ detail.code }}">
+            <summary class="unref-summary">
+              <span><strong class="font-mono">{{ detail.code }}</strong> {{ detail.name }} · 法人買賣／當沖 Top10</span>
+              <span class="badge">查看明細</span>
+            </summary>
+            <div class="candidate-detail-panel">
+              <div class="candidate-detail-grid">
+                <div class="candidate-detail-card">
+                  <h5>法人買賣 · 買超 Top15</h5>
+                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                  {% for item in detail.buyers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                  </tbody></table>
+                </div>
+                <div class="candidate-detail-card">
+                  <h5>法人買賣 · 賣超 Top15</h5>
+                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                  {% for item in detail.sellers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                  </tbody></table>
+                </div>
+                <div class="candidate-detail-card is-wide">
+                  <h5>當沖 Top10</h5>
+                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>交易張數</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                  {% for item in detail.daytraders %}<tr><td>{{ item.name }}</td><td>{{ item.total }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                  </tbody></table>
+                </div>
+              </div>
+            </div>
+          </details>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </section>
+
+    <!-- 3. 處置股 (Alerts) -->
     <section id="alerts" class="content-section">
       <div class="section-header">
         <h2 class="section-title"><span class="title-icon">⚠️</span> 處置股</h2>
@@ -3069,227 +3290,6 @@
         </div>
       </details>
       {% endmacro %}
-    </section>
-
-    {% macro candidate_detail_control(detail, code) -%}
-      {%- if detail -%}
-        <button type="button" class="candidate-detail-toggle" aria-expanded="false" aria-controls="candidate-detail-{{ code }}" data-detail-id="candidate-detail-{{ code }}" onclick="window.pm.toggleCandidateDetail(this)">查看明細</button>
-      {%- else -%}
-        <span class="candidate-detail-unavailable" title="Chengwaye 當日清單未提供此標的明細">暫無明細</span>
-      {%- endif -%}
-    {%- endmacro %}
-
-    {% macro candidate_detail_panel(detail, code) -%}
-      {%- if detail -%}
-      <tr class="candidate-detail-row" id="candidate-detail-{{ code }}" hidden>
-        <td colspan="9">
-          <div class="candidate-detail-panel">
-            <div class="candidate-detail-head">
-              <h4 class="candidate-detail-title">{{ detail.code }} {{ detail.name }} · Chengwaye 籌碼明細</h4>
-              <span class="candidate-detail-meta">資料日 {{ institutional.page_date or '—' }} · <a href="https://chengwaye.com/daily" target="_blank" rel="noopener noreferrer">Chengwaye ↗</a></span>
-            </div>
-            <div class="candidate-detail-grid">
-              <div class="candidate-detail-card">
-                <h5>法人買賣 · 買超 Top15</h5>
-                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                {% for item in detail.buyers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                </tbody></table>
-              </div>
-              <div class="candidate-detail-card">
-                <h5>法人買賣 · 賣超 Top15</h5>
-                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                {% for item in detail.sellers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                </tbody></table>
-              </div>
-              <div class="candidate-detail-card is-wide">
-                <h5>當沖 Top10</h5>
-                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>交易張數</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                {% for item in detail.daytraders %}<tr><td>{{ item.name }}</td><td>{{ item.total }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                </tbody></table>
-              </div>
-            </div>
-          </div>
-        </td>
-      </tr>
-      {%- endif -%}
-    {%- endmacro %}
-
-    <!-- 3. 籌碼股 (Watchlist) -->
-    <section id="watchlist" class="content-section">
-      <div class="section-header">
-        <h2 class="section-title"><span class="title-icon">🎯</span> 籌碼股</h2>
-        <span class="section-desc">盤前族群整理、法人動向與主力當沖籌碼明細</span>
-      </div>
-
-      {% if pressplay._status == 'fetch_failed' %}
-      <div class="part3-error">
-        <strong>Part 3（PressPlay 摘要）收集失敗。</strong>
-        請到 GitHub <code>Actions → build-premarket-page</code> 查看 Logs；其他章節照常運作，不受影響。
-      </div>
-      {% elif (pressplay.not_found_group.matched|length == 0 and pressplay.found_group.matched|length == 0) and (pressplay.not_found_group.unmatched|length == 0 and pressplay.found_group.unmatched|length == 0) %}
-      <div class="part3-empty">尚無資料（PressPlay 收集流程跑過，但今天沒有盤前文章）。</div>
-      {% else %}
-
-      <!-- 族群聚焦標的 -->
-      {% if pressplay.found_group.matched and pressplay.found_group.matched|length > 0 %}
-      <div class="card">
-        <div class="card-head">
-          <div class="card-title-group">
-            <h3 class="card-title">族群聚焦標的</h3>
-            <span class="count-badge">{{ pressplay.found_group.matched|length }} 檔</span>
-          </div>
-          <span class="card-tip">已比對 {{ pressplay.found_group.raw_tokens|length }} 檔，共 {{ pressplay.found_group.matched|length }} 檔具明確族群連動</span>
-        </div>
-        <div class="data-block">
-          <div class="table-scroll">
-            <table class="data-table">
-              <caption class="sr-only">族群聚焦標的清單</caption>
-              <thead>
-                <tr>
-                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for row in pressplay.found_group.matched %}
-                {% set clean_code = row.code.replace('⏸','').strip() %}
-                <tr class="candidate-stock-row" data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
-                  <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
-                  <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
-                  <td data-label="收盤" class="num font-mono" data-sort="{{ row.close }}">{{ row.close }}</td>
-                  <td data-label="量(張)" class="num font-mono" data-sort="{{ row.volume }}">{{ row.volume }}</td>
-                  <td data-label="外資(張)" class="num font-mono {% if row.foreign and '+' in row.foreign %}rise{% elif row.foreign and '-' in row.foreign %}fall{% endif %}" data-sort="{{ row.foreign }}">{{ row.foreign }}</td>
-                  <td data-label="投信(張)" class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}" data-sort="{{ row.trust }}">{{ row.trust }}</td>
-                  <td data-label="自營(張)" class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}" data-sort="{{ row.dealer }}">{{ row.dealer }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      {% else %}
-      <details class="unref-accordion" style="margin-bottom:12px;">
-        <summary class="unref-summary">
-          <span>🎯 族群聚焦標的（今日無共同聚焦族群標的；下方列出 {{ pressplay.not_found_group.matched|length if (pressplay.not_found_group and pressplay.not_found_group.matched) else 0 }} 檔個別動能標的）</span>
-          <span class="badge">0 檔</span>
-        </summary>
-        <div class="unref-content" style="padding:14px; text-align:center; color:var(--text-muted); font-size:12.5px;">
-          今日盤前專欄未歸納出共同聚焦族群標的；請參考下方個別動能標的。
-        </div>
-      </details>
-      {% endif %}
-
-      <!-- 無明確族群標的 -->
-      {% if pressplay.not_found_group.matched and pressplay.not_found_group.matched|length > 0 %}
-      <div class="card">
-        <div class="card-head">
-          <div class="card-title-group">
-            <h3 class="card-title">無明確族群標的</h3>
-            <span class="count-badge">{{ pressplay.not_found_group.matched|length }} 檔</span>
-          </div>
-          <span class="card-tip">獨立題材或個股動能</span>
-        </div>
-
-        <div class="data-block">
-          <div class="table-scroll">
-            <table class="data-table">
-              <caption class="sr-only">無明確族群標的清單</caption>
-              <thead>
-                <tr>
-                  <th scope="col" onclick="window.pm.sortTable(this, 0)">市場 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 1)">代號 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" onclick="window.pm.sortTable(this, 2)">名稱 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 3)">收盤 <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 4)">量(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 5)">外資(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 6)">投信(張) <span class="sort-arrow">▲▼</span></th>
-                  <th scope="col" class="num" onclick="window.pm.sortTable(this, 7)">自營(張) <span class="sort-arrow">▲▼</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for row in pressplay.not_found_group.matched %}
-                {% set clean_code = row.code.replace('⏸','').strip() %}
-                <tr class="candidate-stock-row" data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
-                  <td data-label="市場">{{ row.market }}</td>
-                  <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
-                  <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
-                  <td data-label="收盤" class="num font-mono" data-sort="{{ row.close }}">{{ row.close }}</td>
-                  <td data-label="量(張)" class="num font-mono" data-sort="{{ row.volume }}">{{ row.volume }}</td>
-                  <td data-label="外資(張)" class="num font-mono {% if row.foreign and '+' in row.foreign %}rise{% elif row.foreign and '-' in row.foreign %}fall{% endif %}" data-sort="{{ row.foreign }}">{{ row.foreign }}</td>
-                  <td data-label="投信(張)" class="num font-mono {% if row.trust and '+' in row.trust %}rise{% elif row.trust and '-' in row.trust %}fall{% endif %}" data-sort="{{ row.trust }}">{{ row.trust }}</td>
-                  <td data-label="自營(張)" class="num font-mono {% if row.dealer and '+' in row.dealer %}rise{% elif row.dealer and '-' in row.dealer %}fall{% endif %}" data-sort="{{ row.dealer }}">{{ row.dealer }}</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      {% else %}
-      <details class="unref-accordion" style="margin-bottom:12px;">
-        <summary class="unref-summary">
-          <span>⚡ 無明確族群標的 · 今日無獨立題材標的</span>
-          <span class="badge">0 檔</span>
-        </summary>
-        <div class="unref-content" style="padding:14px; text-align:center; color:var(--text-muted); font-size:12.5px;">
-          今日無獨立題材標的
-        </div>
-      </details>
-      {% endif %}
-      {% endif %}
-
-      {% if institutional and institutional.stocks %}
-      <div class="card" id="candidate-institutional-details">
-        <div class="card-head">
-          <div class="card-title-group">
-            <h3 class="card-title">個股籌碼明細</h3>
-            <span class="count-badge">{{ institutional.matched_count }} 檔</span>
-            <a class="cal-link-btn" href="https://chengwaye.com/daily" target="_blank" rel="noopener noreferrer" title="開啟 Chengwaye 當日籌碼資料">Chengwaye ↗</a>
-          </div>
-          <span class="card-tip">點擊標的展開法人買賣與當沖 Top10 · 資料日 {{ institutional.page_date or '—' }}</span>
-        </div>
-        <div class="data-block" style="padding:10px;">
-          {% for detail in institutional.stocks %}
-          <details class="unref-accordion candidate-insight-detail" id="candidate-insight-{{ detail.code }}">
-            <summary class="unref-summary">
-              <span><strong class="font-mono">{{ detail.code }}</strong> {{ detail.name }} · 法人買賣／當沖 Top10</span>
-              <span class="badge">查看明細</span>
-            </summary>
-            <div class="candidate-detail-panel">
-              <div class="candidate-detail-grid">
-                <div class="candidate-detail-card">
-                  <h5>法人買賣 · 買超 Top15</h5>
-                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                  {% for item in detail.buyers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                  </tbody></table>
-                </div>
-                <div class="candidate-detail-card">
-                  <h5>法人買賣 · 賣超 Top15</h5>
-                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                  {% for item in detail.sellers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                  </tbody></table>
-                </div>
-                <div class="candidate-detail-card is-wide">
-                  <h5>當沖 Top10</h5>
-                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>交易張數</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                  {% for item in detail.daytraders %}<tr><td>{{ item.name }}</td><td>{{ item.total }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                  </tbody></table>
-                </div>
-              </div>
-            </div>
-          </details>
-          {% endfor %}
-        </div>
-      </div>
-      {% endif %}
     </section>
 
     <!-- 4. 市場未反映公告 -->
