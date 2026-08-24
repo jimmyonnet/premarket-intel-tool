@@ -21,6 +21,9 @@ def test_watchlist_uses_collapsed_summary_with_hit_placeholder():
     assert '<h2 class="card-title"><span class="title-icon">⭐</span> 我在看</h2>' in block
     assert '我在看（自選關注標的）' not in block
     assert 'id="watch-summary-hits"' in block
+    assert 'class="watch-summary-info"' in block
+    assert 'title="即時比對今日處置、出關與候選清單 · 本機自動儲存"' in block
+    assert '>即時比對今日處置、出關與候選清單 · 本機自動儲存<' not in block
     assert '<details class="card watchlist-card watchlist-details" open>' not in block
     assert 'summaryItems = hitAlerts.concat(hitCandidates, otherStocks)' in source
     assert 'summaryItems.forEach(function(item)' in source

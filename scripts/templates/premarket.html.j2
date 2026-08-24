@@ -808,7 +808,20 @@
   .watch-summary-chip.is-candidate { border-color: var(--blue-border); background: var(--blue-bg); color: var(--blue-fg); }
   .watch-summary-chip.is-other { border-color: var(--border); background: var(--bg-sub); color: var(--text-main); }
   .watch-summary-empty { color: var(--text-muted); font-size: 12px; white-space: nowrap; }
-  .watchlist-summary .card-tip { margin-left: auto; }
+  .watch-summary-info {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-left: auto;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+  }
   .watch-control-bar {
     display: flex;
     align-items: center;
@@ -935,7 +948,6 @@
   @media (max-width: 768px) {
     .watchlist-summary { align-items: flex-start; }
     .watch-summary-hits { order: 3; width: 100%; margin: 0; }
-    .watchlist-summary .card-tip { display: none; }
   }
 
   /* WATCHLIST ROW HIGHLIGHT */
@@ -2710,7 +2722,7 @@
             <span class="count-badge" id="watch-total-badge" style="display:none;">0 檔</span>
           </div>
           <div class="watch-summary-hits" id="watch-summary-hits" aria-live="polite"></div>
-          <span class="card-tip">即時比對今日處置、出關與候選清單 · 本機自動儲存</span>
+          <span class="watch-summary-info" role="note" tabindex="0" title="即時比對今日處置、出關與候選清單 · 本機自動儲存" aria-label="即時比對今日處置、出關與候選清單；本機自動儲存">ⓘ</span>
         </summary>
 
         <div class="card-body" style="padding: 12px 14px;">
