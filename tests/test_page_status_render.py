@@ -76,6 +76,11 @@ def test_template_renders_ready_header_and_briefing_card(jinja_env):
     assert "is-ready" in status_btn["class"]
     assert "可用" in status_btn.text
 
+    # 處置股警示只應依處置股來源本身的狀態判定，不可誤用全頁／夜盤時效。
+    nav_alert = soup.find("a", class_="nav-alert")
+    assert nav_alert is not None
+    assert "⚠️ 資料過期" not in nav_alert.text
+
     # 2. Header keeps only the useful date and overall source state.
     header = soup.find("header", class_="page-header")
     assert "資料日期" in header.text
@@ -167,3 +172,43 @@ def test_template_renders_unsafe_header_and_alert_card(jinja_env):
     briefing_card = soup.find("div", id="today-briefing-block")
     assert briefing_card is not None
     assert "is-unsafe-alert" in briefing_card["class"]
+
+
+def test_disposal_navigation_warning_uses_disposal_source_freshness(jinja_env):
+    """處置股來源過期時才顯示導覽警示，與其他來源時效無關。"""
+    tmpl = jinja_env.get_template("premarket.html.j2")
+    health_data = {
+        "overall_status": "caution",
+        "status_label": "請先確認資料",
+        "status_badge_class": "is-caution",
+        "summary_reasons": ["必要來源【處置股與出關預警】資料已逾 12 小時"],
+        "sources": [{
+            "source_id": "disposal",
+            "name": "處置股與出關預警",
+            "is_required": True,
+            "status": "ok",
+            "freshness": "stale",
+            "fetched_at": "2026-08-23T07:35:00+08:00",
+            "data_date": "08/23",
+            "age_minutes": 1500.0,
+            "error_summary": None,
+            "fallback_used": False,
+            "impact_desc": "無影響",
+        }],
+    }
+
+    html = tmpl.render(
+        generated_at="2026/08/24 07:35", build_time="07:35", build_version="20260824_0735",
+        data_date="08/24", stale_hours=0.1, hours_since_us_close=3.5,
+        meta={"overall_status": "caution"}, health=health_data, indices={}, us_indices={},
+        asia_open={}, indices_missing=[], night={}, spark=None,
+        disposal={"one_flag_from_disposal": [], "currently_in_disposal": []},
+        date_check={"page_says_applies_to": "08/24"}, date_check_eval={},
+        pressplay={"not_found_group": {"raw_tokens": [], "matched": [], "unmatched": []}, "found_group": {"raw_tokens": [], "matched": [], "unmatched": []}, "source_article": {}},
+        institutional={"stocks": [], "matched_count": 0, "candidate_count": 0},
+        calendar={"events": [], "date_groups": []}, financials={}, news=[], twse={},
+    )
+
+    nav_alert = BeautifulSoup(html, "html.parser").find("a", class_="nav-alert")
+    assert nav_alert is not None
+    assert "⚠️ 資料過期" in nav_alert.text

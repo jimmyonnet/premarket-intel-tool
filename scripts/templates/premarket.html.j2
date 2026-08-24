@@ -2475,7 +2475,9 @@
         {% set exiting_today = disposal.currently_in_disposal | rejectattr('trading_days_left', 'none') | selectattr('trading_days_left', 'in', ['0', '0天', 0, '出關']) | list %}
         {% set hidden_disposal = disposal.currently_in_disposal | selectattr('trading_days_left', 'none') | list %}
         {% set alert_total = (disposal.one_flag_from_disposal|length) + (exiting_today|length) %}
-        <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">處置股 {% if alert_total > 0 %}<span class="nav-badge" id="nav-alert-badge">{{ alert_total }}</span>{% endif %}{% if stale_hours and stale_hours > 12 %}<span class="nav-badge" style="background:var(--amber); color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
+        {% set disposal_source = (health.sources | selectattr('source_id', 'equalto', 'disposal') | list | first) if health is defined and health.sources is defined else none %}
+        {% set disposal_is_stale = disposal_source and (disposal_source.freshness in ['stale', 'expired'] or disposal_source.status in ['failed', 'missing']) %}
+        <a href="#alerts" class="nav-link nav-alert tab-pill" data-count="{{ alert_total }}">處置股 {% if alert_total > 0 %}<span class="nav-badge" id="nav-alert-badge">{{ alert_total }}</span>{% endif %}{% if disposal_is_stale %}<span class="nav-badge" style="background:var(--amber); color:#FFF; margin-left:4px;">⚠️ 資料過期</span>{% endif %}</a>
         <a href="#watchlist" class="nav-link">籌碼股</a>
         <a href="#market-context" class="nav-link">市場背景</a>
         <a href="#news-calendar" class="nav-link">補充資訊</a>
