@@ -9,7 +9,7 @@ TARGET = "https://www.cmoney.tw/forum/futures/TXF1?s=p"
 
 def _night_session_block(html: str) -> str:
     start = html.index("<!-- 台指期夜盤 -->")
-    end = html.index('<div id="open-countdown"', start)
+    end = html.index("<!-- 亞股開盤走勢 -->", start)
     return html[start:end]
 
 
