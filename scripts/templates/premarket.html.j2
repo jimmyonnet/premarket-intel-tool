@@ -2343,6 +2343,53 @@
   button.watch-summary-chip.is-alert { color: var(--danger-fg) !important; }
   button.watch-summary-chip.is-amber { color: var(--amber) !important; }
   button.watch-summary-chip.is-candidate { color: var(--blue) !important; }
+  .candidate-detail-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 27px;
+    padding: 4px 9px;
+    border: 1px solid var(--blue-border);
+    border-radius: 6px;
+    background: var(--blue-bg);
+    color: var(--blue-fg);
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .candidate-detail-toggle:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .candidate-detail-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  .candidate-detail-unavailable { color: var(--text-light); font-size: 11px; white-space: nowrap; }
+  .candidate-detail-row > td { padding: 0 !important; background: var(--bg-sub); }
+  .candidate-detail-panel {
+    padding: 14px;
+    border-top: 1px dashed var(--blue-border);
+    background: linear-gradient(180deg, var(--blue-bg), var(--bg-sub) 42%);
+  }
+  .candidate-detail-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+  .candidate-detail-title { margin: 0; font-size: 13px; font-weight: 800; color: var(--text-main); }
+  .candidate-detail-meta { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
+  .candidate-detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+  .candidate-detail-card { min-width: 0; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); }
+  .candidate-detail-card.is-wide { grid-column: 1 / -1; }
+  .candidate-detail-card h5 { margin: 0; padding: 8px 10px; border-bottom: 1px solid var(--border); background: var(--bg-sub); color: var(--text-main); font-size: 11.5px; }
+  .candidate-detail-table { width: 100%; border-collapse: collapse; font-size: 11px; font-family: var(--font-mono); }
+  .candidate-detail-table th, .candidate-detail-table td { padding: 5px 7px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; }
+  .candidate-detail-table th { color: var(--text-muted); font-weight: 700; background: var(--bg-card); }
+  .candidate-detail-table th:first-child, .candidate-detail-table td:first-child { text-align: left; font-family: var(--font-sans); }
+  .candidate-detail-table tr:last-child td { border-bottom: 0; }
+  .candidate-stock-row { cursor: pointer; }
+  .candidate-stock-row:hover td { background: var(--blue-bg); }
+  .candidate-stock-row .stock-chart-link { position: relative; z-index: 1; }
+  @media (max-width: 768px) {
+    .candidate-detail-grid { grid-template-columns: 1fr; }
+    .candidate-detail-card.is-wide { grid-column: auto; }
+    .candidate-detail-row > td::before { content: none; }
+    .candidate-detail-row > td { display: block; }
+    .candidate-detail-panel { padding: 10px; }
+    .candidate-detail-card { overflow-x: auto; }
+  }
   .wc-code { font-weight: 700; }
   .wc-name { font-weight: 600; }
   .wc-del {
@@ -3024,6 +3071,49 @@
       {% endmacro %}
     </section>
 
+    {% macro candidate_detail_control(detail, code) -%}
+      {%- if detail -%}
+        <button type="button" class="candidate-detail-toggle" aria-expanded="false" aria-controls="candidate-detail-{{ code }}" data-detail-id="candidate-detail-{{ code }}" onclick="window.pm.toggleCandidateDetail(this)">查看明細</button>
+      {%- else -%}
+        <span class="candidate-detail-unavailable" title="Chengwaye 當日清單未提供此標的明細">暫無明細</span>
+      {%- endif -%}
+    {%- endmacro %}
+
+    {% macro candidate_detail_panel(detail, code) -%}
+      {%- if detail -%}
+      <tr class="candidate-detail-row" id="candidate-detail-{{ code }}" hidden>
+        <td colspan="9">
+          <div class="candidate-detail-panel">
+            <div class="candidate-detail-head">
+              <h4 class="candidate-detail-title">{{ detail.code }} {{ detail.name }} · Chengwaye 籌碼明細</h4>
+              <span class="candidate-detail-meta">資料日 {{ institutional.page_date or '—' }} · <a href="https://chengwaye.com/daily" target="_blank" rel="noopener noreferrer">Chengwaye ↗</a></span>
+            </div>
+            <div class="candidate-detail-grid">
+              <div class="candidate-detail-card">
+                <h5>法人買賣 · 買超 Top15</h5>
+                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                {% for item in detail.buyers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                </tbody></table>
+              </div>
+              <div class="candidate-detail-card">
+                <h5>法人買賣 · 賣超 Top15</h5>
+                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                {% for item in detail.sellers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                </tbody></table>
+              </div>
+              <div class="candidate-detail-card is-wide">
+                <h5>當沖 Top10</h5>
+                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>交易張數</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                {% for item in detail.daytraders %}<tr><td>{{ item.name }}</td><td>{{ item.total }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                </tbody></table>
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      {%- endif -%}
+    {%- endmacro %}
+
     <!-- 3. 籌碼股 (Watchlist) -->
     <section id="watchlist" class="content-section">
       <div class="section-header">
@@ -3074,7 +3164,7 @@
               <tbody>
                 {% for row in pressplay.found_group.matched %}
                 {% set clean_code = row.code.replace('⏸','').strip() %}
-                <tr data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
+                <tr class="candidate-stock-row" data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
                   <td data-label="市場">{{ row.market }}</td>
                   <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
@@ -3132,7 +3222,7 @@
               <tbody>
                 {% for row in pressplay.not_found_group.matched %}
                 {% set clean_code = row.code.replace('⏸','').strip() %}
-                <tr data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
+                <tr class="candidate-stock-row" data-code="{{ clean_code }}" data-cat="normal" data-label="{{ row.name }}">
                   <td data-label="市場">{{ row.market }}</td>
                   <td data-label="代號" class="code font-mono"><a href="https://tw.tradingview.com/chart/?symbol={{ 'TPEX' if ('櫃' in row.market or 'OTC' in row.market or 'TPEX' in row.market) else 'TWSE' }}:{{ clean_code }}" target="_blank" rel="noopener noreferrer" class="clickable-stock-code stock-chart-link" title="前往 TradingView 即時看盤">{{ clean_code }}</a></td>
                   <td data-label="名稱" class="name font-bold">{{ row.name }}{% if row.match_type == 'fuzzy_name' %} <span class="badge" title="原文：{{ row.raw_token }}">模糊比對</span>{% endif %}</td>
@@ -3159,6 +3249,51 @@
         </div>
       </details>
       {% endif %}
+      {% endif %}
+
+      {% if institutional and institutional.stocks %}
+      <div class="card" id="candidate-institutional-details">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">個股籌碼明細</h3>
+            <span class="count-badge">{{ institutional.matched_count }} 檔</span>
+            <a class="cal-link-btn" href="https://chengwaye.com/daily" target="_blank" rel="noopener noreferrer" title="開啟 Chengwaye 當日籌碼資料">Chengwaye ↗</a>
+          </div>
+          <span class="card-tip">點擊標的展開法人買賣與當沖 Top10 · 資料日 {{ institutional.page_date or '—' }}</span>
+        </div>
+        <div class="data-block" style="padding:10px;">
+          {% for detail in institutional.stocks %}
+          <details class="unref-accordion candidate-insight-detail" id="candidate-insight-{{ detail.code }}">
+            <summary class="unref-summary">
+              <span><strong class="font-mono">{{ detail.code }}</strong> {{ detail.name }} · 法人買賣／當沖 Top10</span>
+              <span class="badge">查看明細</span>
+            </summary>
+            <div class="candidate-detail-panel">
+              <div class="candidate-detail-grid">
+                <div class="candidate-detail-card">
+                  <h5>法人買賣 · 買超 Top15</h5>
+                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                  {% for item in detail.buyers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                  </tbody></table>
+                </div>
+                <div class="candidate-detail-card">
+                  <h5>法人買賣 · 賣超 Top15</h5>
+                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                  {% for item in detail.sellers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                  </tbody></table>
+                </div>
+                <div class="candidate-detail-card is-wide">
+                  <h5>當沖 Top10</h5>
+                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>交易張數</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                  {% for item in detail.daytraders %}<tr><td>{{ item.name }}</td><td>{{ item.total }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                  </tbody></table>
+                </div>
+              </div>
+            </div>
+          </details>
+          {% endfor %}
+        </div>
+      </div>
       {% endif %}
     </section>
 
@@ -4154,7 +4289,7 @@
     if (!table) return;
     var tbody = table.querySelector('tbody');
     if (!tbody) return;
-    var rows = Array.from(tbody.querySelectorAll('tr'));
+    var rows = Array.from(tbody.querySelectorAll('tr:not(.candidate-detail-row)'));
     if (!rows.length) return;
 
     var curAsc = th.classList.contains('sort-asc') || th.classList.contains('asc');
@@ -4198,8 +4333,39 @@
       return isAsc ? String(va).localeCompare(String(vb), 'zh-Hant') : String(vb).localeCompare(String(va), 'zh-Hant');
     });
 
-    rows.forEach(function(r) { tbody.appendChild(r); });
+    rows.forEach(function(r) {
+      tbody.appendChild(r);
+      var detailId = r.getAttribute('data-detail-id');
+      var detailRow = detailId ? document.getElementById(detailId) : null;
+      if (detailRow) tbody.appendChild(detailRow);
+    });
   };
+
+  window.pm.toggleCandidateDetail = function(button) {
+    var detailId = button && button.getAttribute('data-detail-id');
+    var detailRow = detailId ? document.getElementById(detailId) : null;
+    if (!detailRow) return;
+    var opening = detailRow.hidden;
+    detailRow.hidden = !opening;
+    button.setAttribute('aria-expanded', opening ? 'true' : 'false');
+    button.textContent = opening ? '收合明細' : '查看明細';
+  };
+
+  window.pm.openCandidateInsight = function(code) {
+    var detail = code ? document.getElementById('candidate-insight-' + code) : null;
+    if (!detail) {
+      if (window.pm.showToast) window.pm.showToast('此標的尚無 Chengwaye 當日籌碼明細');
+      return;
+    }
+    detail.open = true;
+    detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  document.addEventListener('click', function(event) {
+    var row = event.target.closest && event.target.closest('#watchlist tr.candidate-stock-row');
+    if (!row || event.target.closest('a, button, input, label')) return;
+    window.pm.openCandidateInsight(row.getAttribute('data-code'));
+  });
 
   // ==========================================
   // 6. Watchlist Core, Smart Parser & Grouping
@@ -4845,12 +5011,20 @@
     var watchCodes = [];
     try { watchCodes = JSON.parse(rawWatch); } catch(e){}
 
-    document.querySelectorAll('#watchlist table tbody tr').forEach(function(r) {
+    document.querySelectorAll('#watchlist table tbody tr.candidate-stock-row').forEach(function(r) {
       var text = (r.textContent || '').toLowerCase();
       var code = (r.getAttribute('data-code') || '').toLowerCase();
       var matchesKw = !kw || text.indexOf(kw) >= 0;
       var matchesWatch = !window.pm.watchOnly || watchCodes.indexOf(code) >= 0;
       r.style.display = (matchesKw && matchesWatch) ? '' : 'none';
+      var detailToggle = r.querySelector('.candidate-detail-toggle');
+      var detailId = detailToggle && detailToggle.getAttribute('data-detail-id');
+      var detailRow = detailId ? document.getElementById(detailId) : null;
+      if (detailRow && (!matchesKw || !matchesWatch)) {
+        detailRow.hidden = true;
+        detailToggle.setAttribute('aria-expanded', 'false');
+        detailToggle.textContent = '查看明細';
+      }
     });
   };
 

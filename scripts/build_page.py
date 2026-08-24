@@ -392,11 +392,11 @@ def build_institutional_section(pressplay, chengwaye_daily):
         (pressplay.get("not_found_group", {}).get("matched") or [])
         + (pressplay.get("found_group", {}).get("matched") or [])
     ):
-        code = row.get("code")
+        code = (row.get("code") or "").replace("⏸", "").strip()
         if not code or code in seen_codes:
             continue
         seen_codes.add(code)
-        candidates.append(row)
+        candidates.append({**row, "code": code})
 
     items = []
     for row in candidates:
