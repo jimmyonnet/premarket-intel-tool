@@ -55,3 +55,12 @@ def test_manual_update_keeps_popup_open_until_terminal_status():
     assert "reloadPageWithFreshData" in bridge
     assert 'nextUrl.searchParams.set("refresh", String(Date.now()))' in bridge
     assert "windowRef.setTimeout(reloadPageWithFreshData, 700)" in bridge
+
+
+def test_manual_update_reconciles_gateway_failure_against_public_workflow_state():
+    bridge = (ROOT / "scripts" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
+    assert 'WORKFLOW_RUNS_API = "https://api.github.com/repos/jimmyonnet/premarket-intel-tool/actions/workflows/build-premarket-page.yml/runs"' in bridge
+    assert "reconcileGatewayFailure" in bridge
+    assert "event=workflow_dispatch" in bridge
+    assert "run.conclusion === \"success\"" in bridge
+    assert "GitHub Actions 已完成資料更新" in bridge
