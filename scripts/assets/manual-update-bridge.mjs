@@ -11,6 +11,7 @@ const ACTIVE_STATES = Object.freeze({
 });
 const RECONCILE_ATTEMPTS = 12;
 const RECONCILE_INTERVAL_MS = 5000;
+const GATEWAY_LOCK_FAILURE = /workflow_dispatch_locks|Failed query:\s*insert into/i;
 
 function isRecentManualRun(run, startedAt) {
   if (!run || run.event !== "workflow_dispatch") return false;
@@ -78,7 +79,22 @@ export function initializeManualUpdateBridge({
     const payload = await response.json();
     return (payload.workflow_runs || []).find((run) => isRecentManualRun(run, startedAt)) || null;
   };
+  const formatGatewayFailure = (gatewayMessage) => {
+    if (GATEWAY_LOCK_FAILURE.test(gatewayMessage || "")) {
+      return "安全更新服務目前無法建立更新鎖，這次未能正常啟動 GitHub Actions；請稍後再試。若持續發生，請改由 GitHub Actions 手動執行 Build premarket page。";
+    }
+    return gatewayMessage || "更新未成功完成，請稍後再試。";
+  };
   const reconcileGatewayFailure = async (expectedRequestId, startedAt, gatewayMessage) => {
+    if (GATEWAY_LOCK_FAILURE.test(gatewayMessage || "")) {
+      let run = null;
+      try {
+        run = await findRecentWorkflowRun(startedAt);
+      } catch (_) {
+        run = null;
+      }
+      if (!run) return { success: false, message: formatGatewayFailure(gatewayMessage) };
+    }
     for (let attempt = 0; attempt < RECONCILE_ATTEMPTS; attempt += 1) {
       if (requestId !== expectedRequestId) return null;
       let run = null;
@@ -103,7 +119,7 @@ export function initializeManualUpdateBridge({
       }
       if (attempt < RECONCILE_ATTEMPTS - 1) await new Promise((resolve) => windowRef.setTimeout(resolve, RECONCILE_INTERVAL_MS));
     }
-    return { success: false, message: gatewayMessage || "更新未成功完成，請稍後再試。" };
+    return { success: false, message: formatGatewayFailure(gatewayMessage) };
   };
   const onMessage = (event) => {
     if (event.origin !== gatewayOrigin || event.source !== popup) return;

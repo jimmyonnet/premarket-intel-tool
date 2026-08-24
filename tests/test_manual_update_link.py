@@ -57,6 +57,16 @@ def test_manual_update_keeps_popup_open_until_terminal_status():
     assert "windowRef.setTimeout(reloadPageWithFreshData, 700)" in bridge
 
 
+def test_manual_update_gives_a_friendly_message_for_gateway_lock_failures():
+    bridge = (ROOT / "scripts" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
+    assert "workflow_dispatch_locks" in bridge
+    assert "Failed query" in bridge
+    assert "無法建立更新鎖" in bridge
+    assert "這次未能正常啟動 GitHub Actions" in bridge
+    assert "請改由 GitHub Actions 手動執行 Build premarket page" in bridge
+    assert "formatGatewayFailure" in bridge
+
+
 def test_manual_update_reconciles_gateway_failure_against_public_workflow_state():
     bridge = (ROOT / "scripts" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
     assert 'WORKFLOW_RUNS_API = "https://api.github.com/repos/jimmyonnet/premarket-intel-tool/actions/workflows/build-premarket-page.yml/runs"' in bridge
