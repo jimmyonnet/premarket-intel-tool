@@ -1,9 +1,19 @@
 {
-  "build_time": "2026-08-24 22:49",
-  "build_version": "20260824_2249",
-  "data_date": "08/25",
-  "stale_hours": 48.4,
-  "hours_since_us_close": 18.8,
+  "build_time": "2026-08-24 23:01",
+  "build_version": "20260824_2301",
+  "data_date": "08/24",
+  "stale_hours": 48.6,
+  "hours_since_us_close": 19.0,
+  "us_market_context": {
+    "session_key": "regular",
+    "label": "美股盤中快照",
+    "badge": "盤中",
+    "badge_short": "盤中",
+    "pill_class": "pill-live",
+    "updated_label": "08/24 22:58",
+    "detail": "Yahoo Finance · 來源更新 08/24 22:58（4 分鐘前）· 延遲分鐘數未提供 · 美國正常交易時段",
+    "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
+  },
   "overall_status": "ready",
   "status_label": "可用",
   "status_badge_class": "is-ready",
@@ -183,13 +193,13 @@
     }
   ],
   "schema_version": 1,
-  "built_at": "2026-08-24T14:49:05.787442+00:00",
+  "built_at": "2026-08-24T15:01:35.198304+00:00",
   "hash": {
     "disposition": "e0e54deced16",
     "candidates": "060b4af9a6ef",
     "stock_history": "3105fd00e04e",
     "announcements": "c8ea0c7b4411",
-    "macro": "940744eadded",
+    "macro": "d239fe20859b",
     "calendar": "fb5e4986bc01",
     "news": "bdad7d1f3e53"
   },

@@ -42,7 +42,11 @@ import argparse
 import json
 import re
 import sys
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
+from urllib.parse import quote
+
+TAIPEI = timezone(timedelta(hours=8))
 
 try:
     import requests
@@ -64,6 +68,14 @@ HEADERS = {
 
 MARKETS_URL = "https://tw.stock.yahoo.com/markets/"
 WORLD_INDICES_URL = "https://tw.stock.yahoo.com/world-indices"
+CHART_INDEX_TARGETS = {
+    "dow": {"ticker": "^DJI", "name": "道瓊工業指數"},
+    "sp500": {"ticker": "^GSPC", "name": "S&P 500指數"},
+    "nasdaq": {"ticker": "^IXIC", "name": "NASDAQ指數"},
+    "sox": {"ticker": "^SOX", "name": "費城半導體指數"},
+}
+
+
 ASIA_QUOTE_PAGES = {
     "nikkei225": {
         "name": "日經225指數",
@@ -299,6 +311,71 @@ def fetch(url: str, fixture_path: Path = None) -> str:
     return resp.text
 
 
+def parse_chart_quote(meta: dict, config: dict) -> dict:
+    """Convert Yahoo Finance Chart metadata into the shared quote shape.
+
+    `regularMarketTime` is retained as the source timestamp so the page can
+    distinguish a current session snapshot from an older close. Yahoo's chart
+    endpoint does not expose a dependable delay-minutes field, so the UI must
+    not claim zero delay merely because the timestamp is recent.
+    """
+    value = meta.get("regularMarketPrice")
+    previous = meta.get("chartPreviousClose") or meta.get("previousClose")
+    item = {
+        "name": config["name"],
+        "ticker": config["ticker"],
+        "value": round(value, 2) if value is not None else None,
+        "is_missing": value is None or previous is None,
+        "source_label": "Yahoo Finance Chart",
+        "market_state": meta.get("marketState"),
+    }
+    timestamp = meta.get("regularMarketTime")
+    if timestamp:
+        updated = datetime.fromtimestamp(timestamp, timezone.utc).astimezone(TAIPEI)
+        item["updated_at"] = updated.isoformat()
+        item["updated_taipei"] = updated.strftime("%Y-%m-%d %H:%M")
+    if value is not None and previous is not None:
+        change = value - previous
+        item["change"] = round(change, 2)
+        item["change_pct"] = round((change / previous) * 100, 2) if previous else 0.0
+    else:
+        item["change"] = None
+        item["change_pct"] = None
+    return item
+
+
+def fetch_chart_quotes(targets: dict):
+    results = {}
+    failed_keys = []
+    import urllib.request
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+    }
+    for key, config in targets.items():
+        encoded_ticker = quote(config["ticker"], safe="")
+        url = f"https://query2.finance.yahoo.com/v8/finance/chart/{encoded_ticker}?interval=1m&range=1d"
+        req = urllib.request.Request(url, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=8) as response:
+                data = json.loads(response.read().decode())
+            result = (data.get("chart", {}).get("result") or [None])[0]
+            meta = (result or {}).get("meta", {})
+            parsed = parse_chart_quote(meta, config)
+            results[key] = parsed
+            if parsed["is_missing"]:
+                failed_keys.append(key)
+        except Exception as exc:
+            print(f"Failed to fetch quote {config['ticker']}: {exc}", file=sys.stderr)
+            results[key] = {
+                "name": config["name"], "ticker": config["ticker"],
+                "value": None, "change": None, "change_pct": None,
+                "is_missing": True, "source_label": "Yahoo Finance Chart",
+            }
+            failed_keys.append(key)
+    return results, failed_keys
+
 
 def fetch_key_stocks():
     stocks = {
@@ -307,46 +384,9 @@ def fetch_key_stocks():
         "aapl": {"ticker": "AAPL", "name": "蘋果 (AAPL)"},
         "tsmc_tw": {"ticker": "2330.TW", "name": "台積電 現貨"},
         "umc": {"ticker": "UMC", "name": "聯電 ADR"},
-        "ase": {"ticker": "ASX", "name": "日月光 ADR"}
+        "ase": {"ticker": "ASX", "name": "日月光 ADR"},
     }
-    results = {}
-    failed_keys = []
-    import urllib.request
-    import json
-    import sys
-    
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
-    }
-    
-    for key, info in stocks.items():
-        url = f"https://query2.finance.yahoo.com/v8/finance/chart/{info['ticker']}?interval=1d&range=1d"
-        req = urllib.request.Request(url, headers=headers)
-        try:
-            with urllib.request.urlopen(req, timeout=8) as response:
-                data = json.loads(response.read().decode())
-                meta = data['chart']['result'][0]['meta']
-                reg_price = meta.get('regularMarketPrice')
-                prev_close = meta.get('chartPreviousClose')
-                if reg_price is not None and prev_close is not None:
-                    change = reg_price - prev_close
-                    change_pct = (change / prev_close) * 100 if prev_close else 0.0
-                    results[key] = {
-                        "name": info["name"],
-                        "ticker": info["ticker"],
-                        "value": round(reg_price, 2),
-                        "change": round(change, 2),
-                        "change_pct": round(change_pct, 2),
-                        "is_missing": False
-                    }
-                else:
-                    results[key] = {"name": info["name"], "ticker": info["ticker"], "value": None, "is_missing": True}
-                    failed_keys.append(key)
-        except Exception as e:
-            print(f"Failed to fetch stock {info['ticker']}: {e}", file=sys.stderr)
-            results[key] = {"name": info["name"], "ticker": info["ticker"], "value": None, "is_missing": True}
-            failed_keys.append(key)
-    return results, failed_keys
+    return fetch_chart_quotes(stocks)
 
 
 def main():
@@ -382,6 +422,13 @@ def main():
 
     us_indices = parse_markets_block(markets_text, MARKETS_TARGETS, soup=markets_soup)
     world_indices = parse_world_indices_block(world_text, WORLD_INDICES_TARGETS, soup=world_soup)
+    if args.fixture_dir:
+        chart_us_indices, failed_us_indices = {}, []
+    else:
+        chart_us_indices, failed_us_indices = fetch_chart_quotes(CHART_INDEX_TARGETS)
+    for key, quote in chart_us_indices.items():
+        if not quote.get("is_missing"):
+            us_indices[key] = quote
     direct_asia_quotes = fetch_direct_asia_quotes()
 
     # Prefer the user-requested direct quote pages. Keep the historical
@@ -414,6 +461,11 @@ def main():
     missing = [k for k, v in out["us_indices"].items() if v is None]
     missing += [k for k, v in out["asia_open"].items() if v is None]
     missing += failed_stocks
+    # A chart failure is only fatal when the summary-page fallback also failed.
+    missing += [
+        key for key in failed_us_indices
+        if not isinstance(us_indices.get(key), dict) or us_indices.get(key, {}).get("is_missing")
+    ]
     out["_missing_fields"] = missing
     if missing:
         print(f"WARNING: could not parse fields: {missing}", file=sys.stderr)

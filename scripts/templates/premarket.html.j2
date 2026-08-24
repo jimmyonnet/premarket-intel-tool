@@ -1263,8 +1263,15 @@
   }
   .asia-quote-card .tile-source-row .tile-quote-time { font-size: 10px; font-weight: 600; }
   .pill-fresh { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); }
+  .pill-live { background: var(--blue-bg); color: var(--blue-fg); border: 1px solid var(--blue-border); }
   .pill-amber { background: var(--amber-bg); color: var(--amber-fg); border: 1px solid var(--amber-border); }
   .pill-danger { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
+  .market-status-detail { display: inline-flex; align-items: center; gap: 5px; flex-wrap: wrap; justify-content: flex-end; text-align: right; }
+  .market-status-detail strong { color: var(--text-main); font-weight: 800; }
+  .market-status-note { color: var(--text-muted); }
+  @media (max-width: 720px) {
+    .market-status-detail { font-size: 10.5px; line-height: 1.45; max-width: 100%; }
+  }
   .tile-val {
     margin-top: 3px;
     font-size: 22px;
@@ -3652,7 +3659,7 @@
     <section id="market-context" class="content-section">
       <div class="section-header">
         <h2 class="section-title"><span class="title-icon">🌐</span> 市場背景</h2>
-        <span class="section-desc">美股收盤、跨海連動 ADR 與亞股早盤概況</span>
+        <span class="section-desc">美股／ADR 行情與亞股早盤概況</span>
       </div>
 
       <!-- 美股四大指數 & 跨海連動 -->
@@ -3662,7 +3669,7 @@
             <h3 class="card-title">美股四大指數與跨海連動標的</h3>
             <a class="cal-link-btn" href="https://tw.stock.yahoo.com/markets" target="_blank" rel="noopener noreferrer" title="開啟 Yahoo 股市市場頁">Yahoo 股市 ↗</a>
           </div>
-          <span class="card-tip font-mono">美股 · 昨日收盤（美東 16:00）· 資料延遲 <time datetime="{{ us_close_at_iso if us_close_at_iso is defined else '' }}" data-relative data-relative-kind="delay">{{ hours_since_us_close if hours_since_us_close is defined else 18.9 }} 小時前</time></span>
+          <span class="card-tip font-mono market-status-detail" title="{{ us_market_context.title if us_market_context is defined else '來源時間未提供，請以 Yahoo Finance 報價頁交易資訊為準' }}"><strong>{{ us_market_context.label if us_market_context is defined else '行情狀態未提供' }}</strong><span class="market-status-note">{{ us_market_context.detail if us_market_context is defined else 'Yahoo Finance · 來源時間未提供 · 延遲分鐘數未提供' }}</span></span>
         </div>
 
         <div class="data-block">
@@ -3673,7 +3680,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">{{ label }}</span>
-                <span class="tile-delay-pill {{ 'pill-fresh' if (hours_since_us_close if hours_since_us_close is defined else 18.9) < 24 else ('pill-amber' if (hours_since_us_close if hours_since_us_close is defined else 18.9) <= 36 else 'pill-danger') }}"><time datetime="{{ us_close_at_iso if us_close_at_iso is defined else '' }}" data-relative data-relative-kind="delay">{{ hours_since_us_close if hours_since_us_close is defined else 18.9 }} 小時前</time></span>
+                <span class="tile-delay-pill {{ us_market_context.pill_class if us_market_context is defined else 'pill-amber' }}" title="{{ us_market_context.title if us_market_context is defined else '來源時間未提供' }}">{{ us_market_context.badge_short if us_market_context is defined else '時效未提供' }}</span>
               </div>
               {% if q and q.price is not none %}
               <div class="tile-val font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{{ "{:,.2f}".format(q.price) }}</div>
@@ -3692,6 +3699,7 @@
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">{{ label }}</span>
+                {% if symbol != '2330.TW' %}<span class="tile-delay-pill {{ us_market_context.pill_class if us_market_context is defined else 'pill-amber' }}" title="{{ us_market_context.title if us_market_context is defined else '來源時間未提供' }}">{{ us_market_context.badge_short if us_market_context is defined else '時效未提供' }}</span>{% endif %}
               </div>
               {% if q and q.price is not none %}
               <div class="tile-val font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{{ "{:,.2f}".format(q.price) }}</div>

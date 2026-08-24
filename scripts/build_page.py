@@ -62,6 +62,7 @@ import argparse
 import json
 from datetime import date, datetime, timezone, timedelta
 from pathlib import Path
+from zoneinfo import ZoneInfo
 from typing import Any
 
 from jinja2 import Environment, FileSystemLoader
@@ -76,6 +77,68 @@ from source_status import evaluate_source_health, SOURCES_METADATA
 from build_packages import write_packages
 
 TAIPEI = timezone(timedelta(hours=8))
+NEW_YORK = ZoneInfo("America/New_York")
+
+
+
+def build_us_market_context(now, indices):
+    """Describe the US session and the newest source timestamp conservatively.
+
+    Yahoo Finance Chart exposes a source update timestamp but not a dependable
+    delay-minutes entitlement field. The page therefore reports the observed
+    quote time and session, without claiming that the snapshot is zero-delay.
+    """
+    ny_now = now.astimezone(NEW_YORK)
+    minutes = ny_now.hour * 60 + ny_now.minute
+    is_weekday = ny_now.weekday() < 5
+    if is_weekday and 9 * 60 + 30 <= minutes < 16 * 60:
+        session_key, session_label, badge, pill_class = "regular", "美股盤中快照", "盤中", "pill-live"
+    elif is_weekday and 4 * 60 <= minutes < 9 * 60 + 30:
+        session_key, session_label, badge, pill_class = "pre", "美股盤前", "盤前", "pill-amber"
+    elif is_weekday and 16 * 60 <= minutes < 20 * 60:
+        session_key, session_label, badge, pill_class = "after", "美股盤後", "盤後", "pill-amber"
+    else:
+        session_key, session_label, badge, pill_class = "closed", "最新收盤快照", "收盤", "pill-fresh"
+
+    timestamps = []
+    for quote in (indices.get("us_indices", {}) or {}).values():
+        raw = quote.get("updated_at") if isinstance(quote, dict) else None
+        if raw:
+            try:
+                timestamps.append(datetime.fromisoformat(raw))
+            except (TypeError, ValueError):
+                pass
+    latest = max(timestamps) if timestamps else None
+    if latest is not None:
+        age_minutes = max(0, round((now - latest).total_seconds() / 60))
+        age_label = f"{max(1, age_minutes)} 分鐘前" if age_minutes < 60 else f"{age_minutes / 60:.1f} 小時前"
+        updated_label = latest.strftime("%m/%d %H:%M")
+        detail = f"Yahoo Finance · 來源更新 {updated_label}（{age_label}）· 延遲分鐘數未提供"
+        title = "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
+    else:
+        updated_label = "來源時間未提供"
+        detail = "Yahoo Finance · 來源時間未提供 · 延遲分鐘數未提供"
+        title = "來源未提供可驗證的行情時間，請以 Yahoo Finance 報價頁交易資訊為準"
+
+    if session_key == "regular":
+        detail += " · 美國正常交易時段"
+    elif session_key == "pre":
+        detail += " · 尚未進入美股正常交易時段"
+    elif session_key == "after":
+        detail += " · 正常交易時段已結束"
+    else:
+        detail += " · 美國非正常交易時段"
+
+    return {
+        "session_key": session_key,
+        "label": session_label,
+        "badge": badge,
+        "badge_short": badge,
+        "pill_class": pill_class,
+        "updated_label": updated_label,
+        "detail": detail,
+        "title": title,
+    }
 
 
 
@@ -609,6 +672,8 @@ def main():
     hours_since_us_close = round((now - us_close_today).total_seconds() / 3600, 1)
     us_close_at_iso = us_close_today.isoformat()
 
+    us_market_context = build_us_market_context(now, indices)
+
     # Calculate data stale hours
     data_dt_str = (night.get("latest") or {}).get("collected_at")
     if data_dt_str:
@@ -637,6 +702,7 @@ def main():
         "data_date": data_date,
         "stale_hours": stale_hours,
         "hours_since_us_close": hours_since_us_close,
+        "us_market_context": us_market_context,
         "overall_status": health_eval.overall_status,
         "status_label": health_eval.status_label,
         "status_badge_class": health_eval.status_badge_class,
@@ -679,6 +745,7 @@ def main():
         stale_hours=stale_hours,
         hours_since_us_close=hours_since_us_close,
         us_close_at_iso=us_close_at_iso,
+        us_market_context=us_market_context,
         meta=meta_data,
         health=health_eval.to_dict(),
         indices=indices,
