@@ -60,6 +60,26 @@
     "qualified": true
   },
   {
+    "title": "美股盤前快報｜輝達財報前AI股降溫，記憶體、光通訊領跌，鋼鐵股逆勢走強",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5mNlh3OGJ4Q3hhdGozLVc3UkRFOVVIY0NFSm9zMElOaWg2QVpSYVExR2lTVEUyMjhvRUpld2lsZk9JaTVjN1ZFSFg3RkhXeGM?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/24 21:30",
+    "timestamp": 1787578204.0,
+    "score": 15,
+    "quality_score": 4,
+    "impact_score": 11,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "本周除了輝達財報及全球央行年會之外 還有哪些變數？",
     "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9mQ0VGOUR4QjFiZXpGMm9IWnZqZHJtYlFfal9jbGJ0T2FOeWdlSDJNUEJyM0kwNEZSTnFKbTN2c0tpNDd3VXdzUFN4LW5rdDJQUnUwNXAxOTZfUdIBX0FVX3lxTE9pMjJQNlB3UXc4TjRCMENnTE1LYmlrcG9xZkxmRURUODRHLV9pa0ZRTjJLMEU1VjlPT3oxRGFSZzdORlFmU2c1ZTBsTTVNTEE5bW4zQnpjSjBNNFpQbmNn?oc=5",
     "source": "經濟日報",
@@ -165,24 +185,6 @@
     "impact_score": 6,
     "matched_groups": [
       "systemic_company",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "金融業布局台股 轉區間操作 銀行圈：逢高獲利落袋...非全面看空",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5SYkJjV1JuSlpBdjhpNmpYQnR4d3FEeWZqY1Zqb1pRcjFyUHFIWTdqMFVEanZYZWdCSUdsLURmamUxdU1iV0QxTUNWaEk5Uk90OHUzQ21sLUxFQdIBX0FVX3lxTE5WbUwtMkFUdzlHZlhsbElLS081N2RmRTZYamVLRksxaEFPNDZQMVdJZHBWVTQySndIN1VIYjRuMjNoR0cyTmplY3JVam5JQk1qSjdlckwtUnpTS0s3NVlZ?oc=5",
-    "source": "經濟日報",
-    "time": "08/24 02:18",
-    "timestamp": 1787509101.0,
-    "score": 10,
-    "quality_score": 4,
-    "impact_score": 6,
-    "matched_groups": [
-      "market_benchmark",
       "earnings_financial"
     ],
     "low_signal_hits": [],
