@@ -6,7 +6,7 @@ import sys
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, time, timedelta, timezone
 from email.utils import parsedate_to_datetime
 
 MAX_NEWS = 10
@@ -14,6 +14,12 @@ MIN_TITLE_LENGTH = 12
 # Keep the source and topic gates strict, but admit credible, single-topic market news.
 MIN_TOTAL_SCORE = 7
 TAIPEI = timezone(timedelta(hours=8))
+POST_MARKET_TIME = time(13, 30)
+HOLIDAYS_2026 = {
+    "2026-01-01", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20",
+    "2026-02-27", "2026-04-03", "2026-04-06", "2026-05-01", "2026-06-19", "2026-09-25",
+    "2026-10-09",
+}
 
 # The RSS feed is an aggregator; this score reflects the publisher named in each item.
 SOURCE_QUALITY = {
@@ -56,25 +62,25 @@ IMPACT_GROUPS = {
 LOW_SIGNAL_TERMS = ["投資人必看", "懶人包", "這檔會", "老師", "飆股密碼", "買點", "賣點", "報明牌"]
 
 
+def is_trading_day(day):
+    return day.weekday() < 5 and day.strftime("%Y-%m-%d") not in HOLIDAYS_2026
+
+
+def previous_trading_day(day):
+    candidate = day - timedelta(days=1)
+    for _ in range(10):
+        if is_trading_day(candidate):
+            return candidate
+        candidate -= timedelta(days=1)
+    return day - timedelta(days=1)
+
+
 def get_time_window(now=None):
     now = now or datetime.now(TAIPEI)
-
-    def is_trading_day(day):
-        if day.weekday() >= 5:
-            return False
-        holidays_2026 = {
-            "2026-01-01", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20",
-            "2026-02-27", "2026-04-03", "2026-04-06", "2026-05-01", "2026-06-19", "2026-09-25",
-            "2026-10-09",
-        }
-        return day.strftime("%Y-%m-%d") not in holidays_2026
-
-    start_time = now
-    for _ in range(10):
-        start_time -= timedelta(days=1)
-        if is_trading_day(start_time):
-            return start_time.replace(hour=13, minute=30, second=0, microsecond=0), now
-    return now - timedelta(days=1), now
+    after_today_close = is_trading_day(now.date()) and now.timetz().replace(tzinfo=None) >= POST_MARKET_TIME
+    start_date = now.date() if after_today_close else previous_trading_day(now.date())
+    start_time = datetime.combine(start_date, POST_MARKET_TIME, tzinfo=TAIPEI)
+    return start_time, now
 
 
 def parse_pubdate(date_str):

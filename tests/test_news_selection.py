@@ -7,6 +7,7 @@ import scripts.fetch_news as fetch_news
 from scripts.fetch_news import (
     MIN_TOTAL_SCORE,
     dedupe_articles,
+    get_time_window,
     is_qualified,
     parse_feed,
     select_top_news,
@@ -106,6 +107,57 @@ def test_select_top_news_returns_fewer_than_ten_when_qualified_items_are_insuffi
     result = select_top_news(items)
 
     assert len(result) == 1
+
+
+def test_after_close_window_starts_at_today_post_market_cutoff():
+    now = datetime(2026, 8, 24, 22, 0, tzinfo=TAIPEI)
+
+    start, end = get_time_window(now)
+
+    assert start == datetime(2026, 8, 24, 13, 30, tzinfo=TAIPEI)
+    assert end == now
+
+
+def test_before_close_window_starts_at_previous_trading_day_cutoff():
+    now = datetime(2026, 8, 24, 10, 0, tzinfo=TAIPEI)
+
+    start, end = get_time_window(now)
+
+    assert start == datetime(2026, 8, 21, 13, 30, tzinfo=TAIPEI)
+    assert end == now
+
+
+def test_weekend_window_starts_at_previous_trading_day_cutoff():
+    now = datetime(2026, 8, 23, 10, 0, tzinfo=TAIPEI)
+
+    start, end = get_time_window(now)
+
+    assert start == datetime(2026, 8, 21, 13, 30, tzinfo=TAIPEI)
+    assert end == now
+
+
+def test_parse_feed_excludes_article_before_post_market_cutoff():
+    xml = """<?xml version="1.0"?>
+    <rss><channel>
+      <item>
+        <title>聯準會政策影響台股與美股財報 13:29</title>
+        <link>https://example.com/before</link>
+        <pubDate>Mon, 24 Aug 2026 05:29:00 GMT</pubDate>
+        <source>中央社</source>
+      </item>
+      <item>
+        <title>聯準會政策影響台股與美股財報 13:30</title>
+        <link>https://example.com/at-cutoff</link>
+        <pubDate>Mon, 24 Aug 2026 05:30:00 GMT</pubDate>
+        <source>中央社</source>
+      </item>
+    </channel></rss>"""
+    start = datetime(2026, 8, 24, 13, 30, tzinfo=TAIPEI)
+    end = datetime(2026, 8, 24, 14, 0, tzinfo=TAIPEI)
+
+    parsed = parse_feed(xml.encode("utf-8"), start, end)
+
+    assert [item["link"] for item in parsed] == ["https://example.com/at-cutoff"]
 
 
 def test_parse_feed_preserves_scoring_metadata_and_filters_time_window():
