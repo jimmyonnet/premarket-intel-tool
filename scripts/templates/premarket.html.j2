@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="個人自用，勿分享">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#FAF9F7">
+<meta name="theme-color" content="#F5EFE7">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -52,42 +52,43 @@
 <style>
   :root {
     /* tool-to-decide visual language: warm paper, deep ink, cobalt action */
-    --bg-page: oklch(98.5% 0.004 75);
-    --bg-card: #FFFFFF;
-    --bg-sub: oklch(97.5% 0.004 75);
-    --bg-hover: oklch(94% 0.004 75);
-    --border: oklch(91% 0.005 75);
-    --border-light: oklch(94% 0.004 75);
-    --border-strong: oklch(86% 0.008 75);
-    --text-main: oklch(20% 0.01 75);
-    --text-muted: oklch(46% 0.01 75);
-    --text-light: oklch(56% 0.01 75);
-    --rise: oklch(53% 0.18 25);
-    --fall: oklch(48% 0.13 150);
-    --amber: oklch(58% 0.14 80);
-    --blue: oklch(52% 0.15 260);
+    /* stronger light-theme separation so the warm paper surface is visible */
+    --bg-page: #F5EFE7;
+    --bg-card: #FFFDF9;
+    --bg-sub: #FAF6F0;
+    --bg-hover: #EFE7DC;
+    --border: #E7DBCD;
+    --border-light: #F0E7DC;
+    --border-strong: #D6C5B3;
+    --text-main: #2A241F;
+    --text-muted: #75695D;
+    --text-light: #A09283;
+    --rise: #C94448;
+    --fall: #2F8458;
+    --amber: #B67B24;
+    --blue: #3E62C8;
     --focus: var(--blue);
     --btn-bg: #FFFFFF;
     --btn-border: var(--border);
-    --btn-hover: oklch(95% 0.02 260);
+    --btn-hover: #EEF2FF;
 
-    --danger-bg: oklch(96% 0.04 25);
-    --danger-fg: oklch(43% 0.16 25);
-    --danger-border: oklch(84% 0.08 25);
+    --danger-bg: #FFF0EE;
+    --danger-fg: #A83A3D;
+    --danger-border: #E9B9B5;
 
-    --amber-bg: oklch(96% 0.05 80);
-    --amber-fg: oklch(43% 0.1 80);
-    --amber-border: oklch(86% 0.09 80);
+    --amber-bg: #FFF6DF;
+    --amber-fg: #8F611A;
+    --amber-border: #E8CD8A;
 
-    --blue-bg: oklch(95% 0.02 260);
-    --blue-fg: oklch(44% 0.16 260);
-    --blue-border: oklch(88% 0.04 260);
+    --blue-bg: #EEF2FF;
+    --blue-fg: #3154AE;
+    --blue-border: #C7D3F5;
 
-    --green-bg: oklch(95% 0.05 150);
-    --green-fg: oklch(40% 0.13 150);
-    --green-border: oklch(84% 0.08 150);
+    --green-bg: #EEF8F1;
+    --green-fg: #286D4B;
+    --green-border: #B8DEC4;
 
-    --row-paused-bg: oklch(96% 0.05 80 / 0.8);
+    --row-paused-bg: #FFF6DF;
 
     --font-ui: Manrope, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
     --font-sans: var(--font-ui);
@@ -271,8 +272,9 @@
     box-sizing: border-box;
   }
   .nav-link:hover, .nav-link.is-active {
-    color: var(--text-main);
-    background: var(--bg-sub);
+    color: var(--blue-fg);
+    background: var(--blue-bg);
+    border-color: var(--blue-border);
   }
   .nav-link.is-active {
     color: var(--blue);
@@ -5689,7 +5691,7 @@
     document.documentElement.setAttribute('data-theme', nextTheme);
     localStorage.setItem('pmit_theme', nextTheme);
     var metaTheme = document.querySelector('meta[name="theme-color"]');
-    if (metaTheme) metaTheme.content = nextTheme === 'dark' ? '#171411' : '#FAF9F7';
+    if (metaTheme) metaTheme.content = nextTheme === 'dark' ? '#171411' : '#F5EFE7';
     var b = document.getElementById('theme-toggle');
     if (b) b.textContent = nextTheme === 'dark' ? '☀️ 淺色' : '🌙 深色';
     window.pm.syncIframeTheme(nextTheme);
