@@ -1238,7 +1238,7 @@
     align-items: baseline;
     margin-bottom: 4px;
   }
-  .tile-name { font-size: 12px; font-weight: 700; color: var(--text-main); }
+  .tile-name { font-size: 14px; font-weight: 800; letter-spacing: 0.01em; color: var(--text-main); }
   .tile-delay-pill {
     font-size: 10px;
     font-weight: 700;
@@ -1265,8 +1265,30 @@
   .pill-fresh { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); }
   .pill-amber { background: var(--amber-bg); color: var(--amber-fg); border: 1px solid var(--amber-border); }
   .pill-danger { background: var(--danger-bg); color: var(--danger-fg); border: 1px solid var(--danger-border); }
-  .tile-val { font-size: 15px; font-weight: 800; }
-  .tile-chg { font-size: 11px; font-weight: 600; }
+  .tile-val {
+    margin-top: 3px;
+    font-size: 22px;
+    line-height: 1.18;
+    letter-spacing: 0.01em;
+    font-weight: 800;
+  }
+  .tile-chg {
+    margin-top: 3px;
+    font-size: 13px;
+    line-height: 1.35;
+    font-weight: 800;
+  }
+  #market-context .card-title { font-size: 16px; font-weight: 800; }
+  #market-context .tile-card:not(.asia-quote-card) { min-height: 104px; }
+  #market-context .tile-card:not(.asia-quote-card) .tile-name { font-size: 14px; }
+  #market-context .tile-card:not(.asia-quote-card) .tile-val { font-size: 22px; }
+  #market-context .tile-card:not(.asia-quote-card) .tile-chg { font-size: 13px; }
+  @media (max-width: 768px) {
+    #market-context .tile-card:not(.asia-quote-card) { min-height: 96px; padding: 11px 12px; }
+    #market-context .tile-card:not(.asia-quote-card) .tile-name { font-size: 13px; }
+    #market-context .tile-card:not(.asia-quote-card) .tile-val { font-size: 19px; }
+    #market-context .tile-card:not(.asia-quote-card) .tile-chg { font-size: 11.5px; }
+  }
 
   /* BACK TO TOP */
   .back-to-top {
