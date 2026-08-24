@@ -11,7 +11,7 @@ DEPLOYED = ROOT / "docs" / "index.html"
 def _quick_action_labels(source: str) -> list[str]:
     soup = BeautifulSoup(source, "html.parser")
     label = next(node for node in soup.select(".utility-section-label") if node.get_text(strip=True) == "快速操作")
-    return ["".join(button.stripped_strings) for button in label.parent.select("button")]
+    return ["".join(control.stripped_strings) for control in label.parent.select(".nav-btn")]
 
 
 def test_quick_controls_remain_limited_to_three_existing_actions():

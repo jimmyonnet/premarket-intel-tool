@@ -3,74 +3,73 @@ import re
 
 
 ROOT = Path(__file__).resolve().parents[1]
-GATEWAY_ORIGIN = "https://premarket-gw-pxz3yyqw.manus.space"
 WORKFLOW_URL = "https://github.com/jimmyonnet/premarket-intel-tool/actions/workflows/build-premarket-page.yml"
 
 
-def test_deployed_page_keeps_280_visual_button_class_with_in_place_update():
-    page = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
-    button = re.search(r'<button class="nav-btn manual-update-btn" id="manual-update-button"[^>]*>.*?</button>', page)
-    assert button
-    assert 'class="nav-btn manual-update-btn"' in page
-    assert "🔄 手動更新資料" in page
-    assert f'href="{WORKFLOW_URL}"' not in page
-    assert 'target="_blank"' not in button.group(0)
+def _read_template():
+    return (ROOT / "scripts" / "templates" / "premarket.html.j2").read_text(encoding="utf-8")
 
 
-def test_template_keeps_280_visual_button_class_with_in_place_update():
-    template = (ROOT / "scripts" / "templates" / "premarket.html.j2").read_text(encoding="utf-8")
-    assert '<button class="nav-btn manual-update-btn" id="manual-update-button" type="button"' in template
-    assert 'class="nav-btn manual-update-btn"' in template
-    assert f'href="{WORKFLOW_URL}"' not in template
+def _read_page():
+    return (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
 
 
-def test_manual_update_uses_strict_gateway_bridge_without_client_credentials():
-    page = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
-    deployed_bridge = (ROOT / "docs" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
-    source_bridge = (ROOT / "scripts" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
-    assert re.search(rf'GATEWAY_ORIGIN\s*=\s*"{re.escape(GATEWAY_ORIGIN)}"', deployed_bridge)
-    assert f'GATEWAY_ORIGIN = "{GATEWAY_ORIGIN}"' in source_bridge
-    assert "manual-update-bridge.mjs" in page
-    assert "windowRef.open(bridgeUrl.toString()" in source_bridge
-    assert 'bridgeUrl.searchParams.set("origin", windowRef.location.origin)' in source_bridge
-    assert 'bridgeUrl.searchParams.set("requestId", requestId)' in source_bridge
-    assert "event.origin !== gatewayOrigin || event.source !== popup" in source_bridge
-    assert 'data.source !== "premarket-update-gateway"' in source_bridge
-    assert "GITHUB_TOKEN" not in page + source_bridge + deployed_bridge
-    assert "PRIVATE KEY" not in page + source_bridge + deployed_bridge
+def _assert_direct_workflow_link(source):
+    link = re.search(
+        r'<a class="nav-btn manual-update-btn" id="manual-update-button"[^>]*>.*?</a>',
+        source,
+    )
+    assert link, "手動更新控制必須是可直接開啟 workflow 的連結"
+    markup = link.group(0)
+    assert f'href="{WORKFLOW_URL}"' in markup
+    assert 'target="_blank"' in markup
+    assert 'rel="noopener noreferrer"' in markup
+    assert 'title="開啟 GitHub Actions 手動執行頁面"' in markup
+    assert 'aria-label="開啟 GitHub Actions 手動執行頁面"' in markup
+    assert "🔄 手動更新資料" in markup
 
 
-def test_manual_update_keeps_popup_open_until_terminal_status():
-    for path in (ROOT / "docs" / "index.html", ROOT / "scripts" / "templates" / "premarket.html.j2"):
-        page = path.read_text(encoding="utf-8")
-        assert "manual-update-bridge.mjs" in page
-    bridge = (ROOT / "scripts" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
-    assert 'data.state === "queued"' in bridge
-    assert 'data.state === "completed"' in bridge
-    assert 'data.state === "failed"' not in bridge  # failure remains the guarded final else branch
-    queued_handler = re.search(r'if \(data\.state === "queued"\) \{(.*?)\} else if', bridge, re.DOTALL)
-    assert queued_handler
-    assert "popup.close" not in queued_handler.group(1)
-    assert "try { popup.close(); }" in bridge
-    assert "reloadPageWithFreshData" in bridge
-    assert 'nextUrl.searchParams.set("refresh", String(Date.now()))' in bridge
-    assert "windowRef.setTimeout(reloadPageWithFreshData, 700)" in bridge
+def test_deployed_page_links_manual_update_to_workflow():
+    page = _read_page()
+    _assert_direct_workflow_link(page)
+    assert "manual-update-bridge.mjs" not in page
+    assert "premarket-gw-pxz3yyqw.manus.space" not in page
 
 
-def test_manual_update_gives_a_friendly_message_for_gateway_lock_failures():
-    bridge = (ROOT / "scripts" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
-    assert "workflow_dispatch_locks" in bridge
-    assert "Failed query" in bridge
-    assert "無法建立更新鎖" in bridge
-    assert "這次未能正常啟動 GitHub Actions" in bridge
-    assert "請改由 GitHub Actions 手動執行 Build premarket page" in bridge
-    assert "formatGatewayFailure" in bridge
+def test_template_links_manual_update_to_workflow():
+    template = _read_template()
+    _assert_direct_workflow_link(template)
+    assert "manual-update-bridge.mjs" not in template
+    assert "premarket-gw-pxz3yyqw.manus.space" not in template
 
 
-def test_manual_update_reconciles_gateway_failure_against_public_workflow_state():
-    bridge = (ROOT / "scripts" / "assets" / "manual-update-bridge.mjs").read_text(encoding="utf-8")
-    assert 'WORKFLOW_RUNS_API = "https://api.github.com/repos/jimmyonnet/premarket-intel-tool/actions/workflows/build-premarket-page.yml/runs"' in bridge
-    assert "reconcileGatewayFailure" in bridge
-    assert "event=workflow_dispatch" in bridge
-    assert "run.conclusion === \"success\"" in bridge
-    assert "GitHub Actions 已完成資料更新" in bridge
+def test_manual_update_keeps_visual_button_class_and_id():
+    for source in (_read_template(), _read_page()):
+        assert 'class="nav-btn manual-update-btn"' in source
+        assert 'id="manual-update-button"' in source
+
+
+def test_manual_update_link_has_no_client_credentials_or_old_gateway_reference():
+    source_files = [
+        ROOT / "scripts" / "templates" / "premarket.html.j2",
+        ROOT / "templates" / "premarket.html.j2",
+        ROOT / "docs" / "index.html",
+        ROOT / "scripts" / "assets" / "app.js",
+        ROOT / "docs" / "assets" / "app.js",
+    ]
+    combined = "\n".join(path.read_text(encoding="utf-8") for path in source_files)
+    assert "GITHUB_TOKEN" not in combined
+    assert "PRIVATE KEY" not in combined
+    assert "premarket-gw-pxz3yyqw.manus.space" not in combined
+    assert "workflow_dispatch_locks" not in combined
+
+
+def test_manual_update_direct_link_is_not_a_form_submission():
+    for source in (_read_template(), _read_page()):
+        link = re.search(
+            r'<a class="nav-btn manual-update-btn" id="manual-update-button"[^>]*>.*?</a>',
+            source,
+        )
+        assert link
+        assert "onclick=" not in link.group(0)
+        assert "type=\"button\"" not in link.group(0)

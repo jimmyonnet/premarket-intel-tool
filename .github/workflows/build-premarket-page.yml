@@ -109,7 +109,6 @@ jobs:
       - name: Minify frontend module
         run: |
           npx --yes terser scripts/assets/app.js -c passes=3,unsafe=true -m --comments false -o docs/assets/app.js
-          npx --yes terser scripts/assets/manual-update-bridge.mjs -c passes=3 -m --comments false -o docs/assets/manual-update-bridge.mjs
 
       - name: Build page
         if: steps.trading_day.outputs.is_trading_day == 'true'

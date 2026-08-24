@@ -2981,7 +2981,7 @@
             <div class="utility-section-label">快速操作</div>
             <div class="nav-actions">
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" title="切換深淺色主題 (快捷鍵 D)" aria-keyshortcuts="D">🌙 深色</button>
-        <button class="nav-btn manual-update-btn" id="manual-update-button" type="button" title="安全啟動資料更新" aria-label="手動更新資料">🔄 手動更新資料</button>
+        <a class="nav-btn manual-update-btn" id="manual-update-button" href="https://github.com/jimmyonnet/premarket-intel-tool/actions/workflows/build-premarket-page.yml" target="_blank" rel="noopener noreferrer" title="開啟 GitHub Actions 手動執行頁面" aria-label="開啟 GitHub Actions 手動執行頁面">🔄 手動更新資料</a>
         <button class="nav-btn refresh-btn" onclick="location.reload()" type="button" title="重新載入最新版" aria-label="重新整理頁面">
           🔄 重新整理
         </button>
@@ -6964,9 +6964,6 @@
     {{ data_snapshot_json if data_snapshot_json is defined else '{}' }}
   </script>
   <!-- ===== DATA SNAPSHOT END ===== -->
-  <script type="module">
-    import { initializeManualUpdateBridge } from './assets/manual-update-bridge.mjs';
-    initializeManualUpdateBridge();
-  </script>
+
 </body>
 </html>

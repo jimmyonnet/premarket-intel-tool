@@ -23,8 +23,7 @@ const signed = (value, digits = 2, suffix = '') => {
 };
 const metricClass = (value) => num(value) > 0 ? 'up' : num(value) < 0 ? 'down' : 'flat';
 const idle = window.requestIdleCallback || ((callback) => window.setTimeout(callback, 80));
-const MANUAL_UPDATE_GATEWAY_ORIGIN = 'https://premarket-gw-pxz3yyqw.manus.space';
-const MANUAL_UPDATE_STATES = new Set(['queued', 'in_progress', 'completed', 'failed', 'already_running', 'not_configured']);
+const MANUAL_UPDATE_WORKFLOW_URL = 'https://github.com/jimmyonnet/premarket-intel-tool/actions/workflows/build-premarket-page.yml';
 
 function loadStore() {
   const fallbacks = ['pmit.store', 'pmit_watchlist', 'premarket.watchlist'];
@@ -365,58 +364,9 @@ function showToast(message) { const toast = $('#toast'); if (!toast) return; toa
 
 function bindManualUpdate() {
   const button = $('#manual-update-button');
-  if (!button) return;
-  const initialLabel = '🔄 手動更新資料';
-  let requestId = null;
-  let popup = null;
-  let resetTimer = null;
-
-  const resetButton = () => {
-    requestId = null;
-    popup = null;
-    button.disabled = false;
-    button.textContent = initialLabel;
-    button.title = '安全啟動資料更新';
-  };
-  const finish = (label, message, tone = 'info') => {
-    button.textContent = label;
-    button.title = message;
-    showToast(message);
-    window.clearTimeout(resetTimer);
-    resetTimer = window.setTimeout(resetButton, tone === 'error' ? 4500 : 3200);
-  };
-
-  window.addEventListener('message', (event) => {
-    if (event.origin !== MANUAL_UPDATE_GATEWAY_ORIGIN) return;
-    const data = event.data;
-    if (!data || typeof data !== 'object' || data.source !== 'premarket-update-gateway') return;
-    if (data.requestId !== requestId || !MANUAL_UPDATE_STATES.has(data.state)) return;
-
-    if (data.state === 'queued') {
-      finish('✓ 已啟動更新', '已啟動資料更新，通常約需 2 分鐘完成。', 'success');
-    } else if (data.state === 'in_progress' || data.state === 'already_running') {
-      finish('⏳ 更新進行中', data.message || '已有資料更新正在執行中，請稍候。');
-    } else if (data.state === 'completed') {
-      finish('✓ 更新已完成', data.message || '資料更新已完成，請重新整理頁面取得最新內容。', 'success');
-    } else {
-      finish('⚠ 更新未啟動', data.message || '暫時無法啟動更新，請稍後再試。', 'error');
-    }
-    try { popup?.close(); } catch (_) {}
-  });
-
+  if (!button || button.tagName === 'A') return;
   button.addEventListener('click', () => {
-    if (button.disabled) return;
-    requestId = (crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`).replace(/-/g, '');
-    const bridgeUrl = new URL('/bridge', MANUAL_UPDATE_GATEWAY_ORIGIN);
-    bridgeUrl.searchParams.set('origin', window.location.origin);
-    bridgeUrl.searchParams.set('requestId', requestId);
-    button.disabled = true;
-    button.textContent = '⏳ 正在安全啟動…';
-    button.title = '正在驗證授權並啟動資料更新';
-    popup = window.open(bridgeUrl.toString(), `premarket-update-${requestId}`, 'popup=yes,width=480,height=560');
-    if (!popup) {
-      finish('⚠ 無法開啟授權視窗', '瀏覽器封鎖了安全授權視窗，請允許彈出式視窗後再試。', 'error');
-    }
+    window.open(MANUAL_UPDATE_WORKFLOW_URL, '_blank', 'noopener,noreferrer');
   });
 }
 
