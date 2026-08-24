@@ -31,9 +31,9 @@
     "tsmc_tw": {
       "name": "台積電 現貨",
       "ticker": "2330.TW",
-      "value": 2410.0,
-      "change": 35.0,
-      "change_pct": 1.47,
+      "value": 2395.0,
+      "change": -15.0,
+      "change_pct": -0.62,
       "is_missing": false
     },
     "umc": {
@@ -81,9 +81,9 @@
     "tsmc_tw": {
       "name": "台積電 現貨",
       "ticker": "2330.TW",
-      "value": 2410.0,
-      "change": 35.0,
-      "change_pct": 1.47,
+      "value": 2395.0,
+      "change": -15.0,
+      "change_pct": -0.62,
       "is_missing": false
     },
     "umc": {
@@ -132,17 +132,17 @@
   "asia_open": {
     "nikkei225": {
       "name": "日經225指數",
-      "value": 65870.33,
-      "change": -146.03,
-      "change_pct": -0.22,
-      "updated_cst": "08/24 08:35"
+      "value": 66080.49,
+      "change": 64.13,
+      "change_pct": 0.1,
+      "updated_cst": "08/24 09:13"
     },
     "kospi": {
       "name": "韓國綜合指數",
-      "value": 6775.23,
-      "change": -137.72,
-      "change_pct": -1.99,
-      "updated_cst": "08/24 08:30"
+      "value": 6812.48,
+      "change": -100.47,
+      "change_pct": -1.45,
+      "updated_cst": "08/24 09:08"
     }
   },
   "_missing_fields": []
