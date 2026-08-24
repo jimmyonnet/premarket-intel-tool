@@ -8,7 +8,7 @@ TEMPLATE = ROOT / "scripts" / "templates" / "premarket.html.j2"
 def test_manual_candidate_controls_are_rendered_in_watchlist_section():
     source = TEMPLATE.read_text(encoding="utf-8")
 
-    assert 'id="manual-candidate-panel"' in source
+    assert 'id="manual-candidate-panel" hidden' in source
     assert 'id="manual-candidate-input"' in source
     assert 'id="manual-candidate-list"' in source
     assert 'onclick="window.pm.addManualCandidate()"' in source

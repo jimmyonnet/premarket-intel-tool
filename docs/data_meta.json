@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-08-24 19:10",
-  "build_version": "20260824_1910",
+  "build_time": "2026-08-24 19:43",
+  "build_version": "20260824_1943",
   "data_date": "08/24",
-  "stale_hours": 44.7,
-  "hours_since_us_close": 15.2,
+  "stale_hours": 45.3,
+  "hours_since_us_close": 15.7,
   "overall_status": "ready",
   "status_label": "可用",
   "status_badge_class": "is-ready",
@@ -183,7 +183,7 @@
     }
   ],
   "schema_version": 1,
-  "built_at": "2026-08-24T11:10:06.204360+00:00",
+  "built_at": "2026-08-24T11:43:13.147796+00:00",
   "hash": {
     "disposition": "28b395c1e053",
     "candidates": "2ed0396aae31",
