@@ -46,6 +46,11 @@ SOURCES_METADATA: dict[str, dict[str, Any]] = {
         "is_required": False,
         "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行",
     },
+    "chengwaye_stock_history": {
+        "name": "Chengwaye 個股漲停履歷",
+        "is_required": False,
+        "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
+    },
     "calendar": {
         "name": "總經財經行事曆",
         "is_required": False,

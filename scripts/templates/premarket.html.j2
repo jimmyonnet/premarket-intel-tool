@@ -2609,6 +2609,18 @@
   .candidate-detail-card { min-width: 0; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); }
   .candidate-detail-card.is-wide { grid-column: 1 / -1; }
   .candidate-detail-card h5 { margin: 0; padding: 8px 10px; border-bottom: 1px solid var(--border); background: var(--bg-sub); color: var(--text-main); font-size: 11.5px; }
+  .limit-up-history-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-right: 10px; border-bottom: 1px solid var(--border); background: var(--bg-sub); }
+  .limit-up-history-head h5 { border-bottom: 0; }
+  .limit-up-history-head a { color: var(--blue-fg); font-size: 11px; white-space: nowrap; }
+  .limit-up-history-metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; padding: 10px; }
+  .limit-up-history-metrics > div { padding: 7px 8px; border: 1px solid var(--border-light); border-radius: 6px; background: var(--bg-sub); }
+  .limit-up-history-metrics span { display: block; color: var(--text-muted); font-size: 10px; margin-bottom: 3px; }
+  .limit-up-history-metrics strong { display: block; color: var(--text-main); font: 700 12px/1.2 var(--font-mono); }
+  .limit-up-history-table-wrap { margin: 0 10px; border: 1px solid var(--border-light); border-radius: 6px; }
+  .limit-up-history-table { min-width: 680px; }
+  .limit-up-history-note { margin: 8px 10px 10px; color: var(--text-muted); font-size: 10.5px; line-height: 1.5; }
+  .limit-up-history-empty { padding: 12px 10px; color: var(--text-muted); font-size: 11.5px; line-height: 1.6; }
+  .limit-up-history-empty a { display: inline-block; margin-left: 6px; color: var(--blue-fg); }
   .candidate-detail-table { width: 100%; border-collapse: collapse; font-size: 11px; font-family: var(--font-mono); }
   .candidate-detail-table th, .candidate-detail-table td { padding: 5px 7px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; }
   .candidate-detail-table th { color: var(--text-muted); font-weight: 700; background: var(--bg-card); }
@@ -2624,6 +2636,9 @@
     .candidate-detail-row > td { display: block; }
     .candidate-detail-panel { padding: 10px; }
     .candidate-detail-card { overflow-x: auto; }
+    .limit-up-history-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .limit-up-history-head { padding-right: 8px; }
+    .limit-up-history-table-wrap { margin: 0 8px; }
   }
   .wc-code { font-weight: 700; }
   .wc-name { font-weight: 600; }
@@ -3073,6 +3088,35 @@
                 <table class="candidate-detail-table"><thead><tr><th>券商</th><th>交易張數</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
                 {% for item in detail.daytraders %}<tr><td>{{ item.name }}</td><td>{{ item.total }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
                 </tbody></table>
+              </div>
+              {% set history = detail.limit_up_history %}
+              <div class="candidate-detail-card is-wide limit-up-history-card">
+                <div class="limit-up-history-head">
+                  <h5>個股漲停履歷</h5>
+                  <a href="https://chengwaye.com/stock/{{ code }}" target="_blank" rel="noopener noreferrer">Chengwaye 個股頁 ↗</a>
+                </div>
+                {% if history %}
+                <div class="limit-up-history-metrics">
+                  <div><span>漲停次數</span><strong>{{ history.summary.limit_up_count }}</strong></div>
+                  <div><span>最近漲停</span><strong>{{ history.summary.latest_limit_up }}</strong></div>
+                  <div><span>隔日平均開盤</span><strong>{{ history.summary.avg_next_open }}</strong></div>
+                  <div><span>隔日平均收盤</span><strong>{{ history.summary.avg_next_close }}</strong></div>
+                </div>
+                <div class="table-scroll limit-up-history-table-wrap">
+                  <table class="candidate-detail-table limit-up-history-table">
+                    <caption class="sr-only">{{ detail.name }} {{ code }} 個股漲停履歷</caption>
+                    <thead><tr><th>漲停日</th><th>收盤</th><th>AI 族群</th><th>隔日開盤</th><th>隔日均價</th><th>隔日收盤</th><th>隔日走勢</th></tr></thead>
+                    <tbody>
+                    {% for item in history.records %}
+                    <tr><td>{{ item.date }}</td><td>{{ item.close }}</td><td>{{ item.group }}</td><td>{{ item.next_open }}</td><td>{{ item.next_avg }}</td><td>{{ item.next_close }}</td><td>{{ item.next_trend }}</td></tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <p class="limit-up-history-note">{{ history.period_note }} · 資料來源：Chengwaye 個股頁</p>
+                {% else %}
+                <div class="limit-up-history-empty">目前無法取得此標的漲停履歷；其他法人與當沖明細仍可正常查看。<a href="https://chengwaye.com/stock/{{ code }}" target="_blank" rel="noopener noreferrer">前往 Chengwaye 個股頁 ↗</a></div>
+                {% endif %}
               </div>
             </div>
           </div>

@@ -45,8 +45,36 @@ def _daily(code="2489"):
     }
 
 
+def _history(code="2489"):
+    return {
+        "codes": {
+            code: {
+                "code": code,
+                "name": "瑞軒",
+                "source_url": f"https://chengwaye.com/stock/{code}",
+                "summary": {
+                    "limit_up_count": "3 次",
+                    "latest_limit_up": "2026/08/21",
+                    "avg_next_open": "+2.00%",
+                    "avg_next_close": "+1.50%",
+                },
+                "period_note": "統計自 2026/03/17 起",
+                "records": [{
+                    "date": "2026/08/21",
+                    "close": "35.65",
+                    "group": "電子零組件",
+                    "next_open": "+2.00%",
+                    "next_avg": "+1.00%",
+                    "next_close": "+1.50%",
+                    "next_trend": "續漲",
+                }],
+            }
+        }
+    }
+
+
 def test_institutional_builder_keeps_candidate_detail_limits_and_clean_codes():
-    section = build_institutional_section(_pressplay("2489⏸"), _daily())
+    section = build_institutional_section(_pressplay("2489⏸"), _daily(), _history())
 
     assert section["matched_count"] == 1
     detail = section["stocks"][0]
@@ -54,6 +82,7 @@ def test_institutional_builder_keeps_candidate_detail_limits_and_clean_codes():
     assert len(detail["buyers"]) == 15
     assert len(detail["sellers"]) == 15
     assert len(detail["daytraders"]) == 10
+    assert detail["limit_up_history"]["summary"]["limit_up_count"] == "3 次"
     assert detail["buyers"][0]["net"] == "+2,706"
     assert detail["sellers"][0]["net"] == "-916"
     assert section["stocks_by_code"]["2489"] == detail
@@ -76,7 +105,8 @@ def test_candidate_template_renders_expandable_chengwaye_details():
         disposal={"date_check": {}, "one_flag_from_disposal": [], "two_flags_from_disposal": [], "currently_in_disposal": []},
         date_check={},
         pressplay=_pressplay(),
-        institutional=build_institutional_section(_pressplay(), _daily()),
+        institutional=build_institutional_section(_pressplay(), _daily(), _history()),
+        stock_history=_history(),
         calendar={"events": [], "grid": None},
         financials={},
         news=[],
@@ -91,6 +121,10 @@ def test_candidate_template_renders_expandable_chengwaye_details():
     assert "法人買賣 · 買超 Top15" in rendered
     assert "法人買賣 · 賣超 Top15" in rendered
     assert "當沖 Top10" in rendered
+    assert "個股漲停履歷" in rendered
+    assert "漲停次數" in rendered
+    assert "+2.00%" in rendered
+    assert 'href="https://chengwaye.com/stock/2489"' in rendered
     assert "window.pm.toggleCandidateDetail(row)" in rendered
     assert "window.pm.openCandidateInsight" not in rendered
     assert "candidate-insight-" not in rendered

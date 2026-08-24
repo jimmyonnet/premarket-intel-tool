@@ -124,6 +124,7 @@ jobs:
             --disposal data/latest/disposal.json \
             --pressplay data/latest/pressplay.json \
             --chengwaye-daily data/latest/chengwaye_daily.json \
+            --stock-history data/latest/stock_history.json \
             --calendar data/latest/calendar.json \
             --financials data/latest/financials.json \
             --news data/latest/news.json \

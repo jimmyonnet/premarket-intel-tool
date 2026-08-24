@@ -259,6 +259,7 @@ def main() -> None:
         "disposal": DATA_LATEST / "disposal.json",
         "pressplay": DATA_LATEST / "pressplay.json",
         "chengwaye_daily": DATA_LATEST / "chengwaye_daily.json",
+        "chengwaye_stock_history": DATA_LATEST / "stock_history.json",
         "calendar": DATA_LATEST / "calendar.json",
         "financials": DATA_LATEST / "financials.json",
         "news": DATA_LATEST / "news.json",
@@ -357,6 +358,15 @@ def main() -> None:
             "{}",
             timeout=40,
             extract_date_fn=lambda c: c.get("page_date"),
+        )
+
+        status_map["chengwaye_stock_history"] = fetch_source(
+            "chengwaye_stock_history",
+            [python_bin, "scripts/fetch_chengwaye_stock_history.py", "--pressplay", str(DATA_LATEST / "pressplay.json")],
+            DATA_LATEST / "stock_history.json",
+            '{"source":"https://chengwaye.com/stock/","codes":{},"failed_codes":[],"_status":"fetch_failed"}',
+            timeout=120,
+            extract_date_fn=lambda c: c.get("fetched_at"),
         )
 
     if args.mode in ("full", "financials"):

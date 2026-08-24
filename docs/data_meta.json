@@ -1,14 +1,14 @@
 {
-  "build_time": "2026-08-24 16:56",
-  "build_version": "20260824_1656",
+  "build_time": "2026-08-24 17:58",
+  "build_version": "20260824_1758",
   "data_date": "08/24",
-  "stale_hours": 42.5,
-  "hours_since_us_close": 12.9,
-  "overall_status": "ready",
-  "status_label": "可用",
-  "status_badge_class": "is-ready",
+  "stale_hours": 43.5,
+  "hours_since_us_close": 14.0,
+  "overall_status": "caution",
+  "status_label": "請先確認資料",
+  "status_badge_class": "is-caution",
   "summary_reasons": [
-    "所有必要與次要資料來源均正常取得且在時限內"
+    "次要來源【Chengwaye 個股漲停履歷】missing (無此來源資料檔)"
   ],
   "sources": [
     {
@@ -114,6 +114,23 @@
       "status_badge_class": "is-ok"
     },
     {
+      "source_id": "chengwaye_stock_history",
+      "name": "Chengwaye 個股漲停履歷",
+      "is_required": false,
+      "status": "missing",
+      "fetched_at": "2026-08-24T17:58:40.404203+08:00",
+      "data_date": null,
+      "age_minutes": 0.0,
+      "error_summary": "無此來源資料檔",
+      "fallback_used": false,
+      "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
+      "retry_attempts": 0,
+      "fetch_status": "missing",
+      "freshness": "expired",
+      "combined_status_label": "資料缺失",
+      "status_badge_class": "is-danger"
+    },
+    {
       "source_id": "calendar",
       "name": "總經財經行事曆",
       "is_required": false,
@@ -166,10 +183,11 @@
     }
   ],
   "schema_version": 1,
-  "built_at": "2026-08-24T08:56:11.138048+00:00",
+  "built_at": "2026-08-24T09:58:40.406883+00:00",
   "hash": {
     "disposition": "28b395c1e053",
     "candidates": "a2e0d7e38aba",
+    "stock_history": "c20e7e4c41da",
     "announcements": "6151c2547af7",
     "macro": "76ed1256e0dc",
     "calendar": "b1041b0582ac",
@@ -178,6 +196,7 @@
   "packages": {
     "disposition": "data/disposition.json",
     "candidates": "data/candidates.json",
+    "stock_history": "data/stock_history.json",
     "announcements": "data/announcements.json",
     "macro": "data/macro.json",
     "calendar": "data/calendar.json",

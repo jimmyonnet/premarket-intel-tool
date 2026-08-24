@@ -20,6 +20,7 @@ EXPECTED_TOP_LEVEL: dict[str, tuple[type[Any], ...]] = {
     "disposal": (dict,),
     "pressplay": (dict,),
     "chengwaye_daily": (dict,),
+    "stock_history": (dict,),
     "calendar": (dict,),
     "financials": (dict,),
     "news": (dict, list),

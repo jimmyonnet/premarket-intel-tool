@@ -371,7 +371,7 @@ def _fmt_broker_rows(entries, kind):
     return out
 
 
-def build_institutional_section(pressplay, chengwaye_daily):
+def build_institutional_section(pressplay, chengwaye_daily, stock_history=None):
     """
     Part 3 extra: per-stock 法人買賣Top15／當沖Top10 detail, for every
     stock already shown in Part 3 (found_group.matched + not_found_group.
@@ -383,6 +383,7 @@ def build_institutional_section(pressplay, chengwaye_daily):
     data, and this deliberately never estimates one.
     """
     codes_data = (chengwaye_daily or {}).get("codes") or {}
+    history_data = (stock_history or {}).get("codes") or {}
     if not codes_data:
         return {
             "stocks": [],
@@ -422,6 +423,7 @@ def build_institutional_section(pressplay, chengwaye_daily):
             "buyers": _fmt_broker_rows(buyers[:15], "buyers"),
             "sellers": _fmt_broker_rows(sellers[:15], "sellers"),
             "daytraders": _fmt_broker_rows(daytraders[:10], "daytraders"),
+            "limit_up_history": history_data.get(row.get("code")),
         })
 
     return {
@@ -512,7 +514,11 @@ def main():
     ap.add_argument(
         "--chengwaye-daily", default=None,
         help="optional: Part 3 extra -- chengwaye.com/daily 法人買賣/當沖 detail JSON; "
-        "omitted/missing/empty just skips this sub-section",
+             "omitted/missing/empty just skips this sub-section",
+    )
+    ap.add_argument(
+        "--stock-history", default=None,
+        help="optional: Chengwaye per-stock limit-up history JSON; missing entries render a fallback card",
     )
     ap.add_argument(
         "--calendar", default=None,
@@ -563,7 +569,8 @@ def main():
     spark = build_sparkline(night.get("points") or [])
 
     chengwaye_daily = load_json(args.chengwaye_daily) or {}
-    institutional = build_institutional_section(pressplay, chengwaye_daily)
+    stock_history = load_json(args.stock_history) or {}
+    institutional = build_institutional_section(pressplay, chengwaye_daily, stock_history)
 
     calendar_raw = load_json(args.calendar) or {}
     financials_data = load_json(args.financials) if args.financials else {}
@@ -648,6 +655,7 @@ def main():
         news=news_data,
         twse=twse_data,
         meta=meta_data,
+        stock_history=stock_history,
     )
     meta_path.write_text(json.dumps(meta_data, ensure_ascii=False, indent=2), encoding="utf-8")
 

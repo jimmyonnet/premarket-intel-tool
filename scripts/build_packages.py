@@ -233,6 +233,7 @@ def write_packages(
     news: Any,
     twse: dict[str, Any],
     meta: dict[str, Any],
+    stock_history: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Write the package files and return the final meta payload."""
     docs_path = Path(docs_dir)
@@ -241,6 +242,7 @@ def write_packages(
     packages = {
         "disposition": _disposition_package(disposal),
         "candidates": _candidate_package(pressplay, chengwaye_daily),
+        "stock_history": stock_history or {"source": "https://chengwaye.com/stock/", "codes": {}, "failed_codes": [], "_status": "fetch_failed"},
         "announcements": _announcements_package(financials),
         "macro": {"indices": indices, "night": night, "twse": twse},
         "calendar": {"today": calendar.get("today"), "range_end": calendar.get("range_end"), "events": calendar.get("events") or []},
