@@ -24,6 +24,21 @@ import requests
 import icalendar
 import recurring_ical_events
 
+try:
+    from trading_calendar import (
+        get_current_trading_day,
+        get_next_trading_day,
+        is_twse_trading_day,
+        load_twse_holidays,
+    )
+except ModuleNotFoundError:  # Support package-style imports in test runners.
+    from scripts.trading_calendar import (
+        get_current_trading_day,
+        get_next_trading_day,
+        is_twse_trading_day,
+        load_twse_holidays,
+    )
+
 DEFAULT_ICS_URL = (
     "https://calendar.google.com/calendar/ical/"
     "c_c040a8d14375de55799b6fdd8ece2ee2f32aa85fd0e5b39d14b1e07f90df424e"
@@ -227,6 +242,197 @@ def parse_economic_details(summary: str, description: str, ev_date: datetime.dat
         "comparison": comparison,
     }
 
+
+def _iter_months(start_date: datetime.date, end_date: datetime.date):
+    cursor = start_date.replace(day=1)
+    last_month = end_date.replace(day=1)
+    while cursor <= last_month:
+        yield cursor.year, cursor.month
+        cursor = (cursor.replace(day=28) + datetime.timedelta(days=4)).replace(day=1)
+
+
+def _third_wednesday(year: int, month: int) -> datetime.date:
+    first = datetime.date(year, month, 1)
+    days_to_wednesday = (2 - first.weekday()) % 7
+    return first + datetime.timedelta(days=days_to_wednesday + 14)
+
+
+def _last_day_of_month(year: int, month: int) -> datetime.date:
+    if month == 12:
+        return datetime.date(year + 1, 1, 1) - datetime.timedelta(days=1)
+    return datetime.date(year, month + 1, 1) - datetime.timedelta(days=1)
+
+
+def _tw_rule_event(
+    *,
+    rule_type: str,
+    ev_date: datetime.date,
+    title: str,
+    note: str,
+    category: str,
+    category_name: str,
+    importance: int,
+    id_suffix: str | None = None,
+) -> dict:
+    stable_suffix = id_suffix or ev_date.isoformat()
+    return {
+        "id": f"local-rule-{rule_type}-{stable_suffix}",
+        "date": ev_date.isoformat(),
+        "time": None,
+        "all_day": True,
+        "title": title,
+        "summary": title,
+        "description": note,
+        "note": note,
+        "mm_link": None,
+        "source_url": None,
+        "source": "local-rule",
+        "semantic_type": rule_type,
+        "category": category,
+        "category_name": category_name,
+        "country": "TW",
+        "flag": "🇹🇼",
+        "timezone_origin": "Asia/Taipei",
+        "timezone_label": "TPE",
+        "time_origin_str": "全天",
+        "time_tpe_str": "全天",
+        "datetime_utc": f"{ev_date.isoformat()}T00:00:00Z",
+        "importance": importance,
+        "forecast": None,
+        "previous": None,
+        "actual": None,
+        "comparison": "pending",
+    }
+
+
+def generate_tw_market_rule_events(
+    start_date: datetime.date,
+    end_date: datetime.date,
+    holidays: set[str] | None = None,
+) -> list[dict]:
+    """Generate deterministic Taiwan market events within the requested date range.
+
+    Rules are deliberately limited to recurring disclosure deadlines, the third
+    Wednesday derivatives settlement, quarter-end trading days, and dates
+    already maintained in the TWSE holiday/manual-override JSON. This function
+    never predicts temporary closures such as typhoon days.
+    """
+    active_holidays = holidays if holidays is not None else load_twse_holidays()
+    events: list[dict] = []
+
+    for year, month in _iter_months(start_date, end_date):
+        revenue_deadline = datetime.date(year, month, 10)
+        if start_date <= revenue_deadline <= end_date:
+            events.append(_tw_rule_event(
+                rule_type="revenue_deadline",
+                ev_date=revenue_deadline,
+                title="台股月營收申報截止日",
+                note="依上市櫃公司每月 10 日前公告前一月營收之規則推算。",
+                category="macro",
+                category_name="總經",
+                importance=2,
+            ))
+
+        scheduled_settlement = _third_wednesday(year, month)
+        settlement_date = scheduled_settlement
+        if not is_twse_trading_day(scheduled_settlement, active_holidays):
+            settlement_date = get_next_trading_day(scheduled_settlement, active_holidays)
+        if start_date <= settlement_date <= end_date:
+            shifted_note = ""
+            if settlement_date != scheduled_settlement:
+                shifted_note = (
+                    f"原訂 {scheduled_settlement.strftime('%m/%d')} 非交易日，"
+                    f"順延至 {settlement_date.strftime('%m/%d')}。"
+                )
+            events.append(_tw_rule_event(
+                rule_type="futures_settlement",
+                ev_date=settlement_date,
+                title="台指期／選擇權結算日",
+                note="依第三週週三結算與 TWSE 交易日曆規則推算。" + shifted_note,
+                category="macro",
+                category_name="總經",
+                importance=3,
+            ))
+
+        if month in (3, 6, 9, 12):
+            quarter_end = _last_day_of_month(year, month)
+            last_trading_day = get_current_trading_day(quarter_end, active_holidays)
+            if start_date <= last_trading_day <= end_date:
+                events.append(_tw_rule_event(
+                    rule_type="quarter_end_trading_day",
+                    ev_date=last_trading_day,
+                    title="台股季底最後交易日",
+                    note="依季末與 TWSE 交易日曆規則推算。",
+                    category="macro",
+                    category_name="總經",
+                    importance=2,
+                ))
+
+    closure_dates = sorted(
+        datetime.date.fromisoformat(iso_date)
+        for iso_date in active_holidays
+        if start_date <= datetime.date.fromisoformat(iso_date) <= end_date
+    )
+    closure_ranges: list[list[datetime.date]] = []
+    for closure_date in closure_dates:
+        if not closure_ranges or closure_date != closure_ranges[-1][-1] + datetime.timedelta(days=1):
+            closure_ranges.append([closure_date])
+        else:
+            closure_ranges[-1].append(closure_date)
+
+    for date_range in closure_ranges:
+        range_start, range_end = date_range[0], date_range[-1]
+        if range_start == range_end:
+            title = "台股休市"
+            date_label = range_start.strftime("%m/%d")
+        else:
+            title = f"台股休市（{range_start.strftime('%m/%d')}–{range_end.strftime('%m/%d')}）"
+            date_label = f"{range_start.strftime('%m/%d')}–{range_end.strftime('%m/%d')}"
+        events.append(_tw_rule_event(
+            rule_type="market_holiday",
+            ev_date=range_start,
+            title=title,
+            note=f"依 TWSE 開（休）市日期與人工停市覆蓋資料載入（{date_label}）。",
+            category="holiday",
+            category_name="假期",
+            importance=1,
+            id_suffix=f"{range_start.isoformat()}-{range_end.isoformat()}",
+        ))
+
+    return sorted(events, key=lambda event: (event["date"], event["time"] or "", event["id"]))
+
+
+def event_semantic_type(event: dict) -> str | None:
+    """Infer a narrow semantic type for external-vs-local rule de-duplication."""
+    if event.get("semantic_type"):
+        return event["semantic_type"]
+    text = " ".join(str(event.get(key) or "") for key in ("title", "summary", "description", "note")).upper()
+    country = event.get("country")
+    if "營收" in text:
+        return "revenue_deadline"
+    if any(keyword in text for keyword in ("結算", "SETTLEMENT", "期指", "選擇權")):
+        return "futures_settlement"
+    if "季底" in text and any(keyword in text for keyword in ("交易", "最後", "LAST")):
+        return "quarter_end_trading_day"
+    if country == "TW" and (event.get("category") == "holiday" or any(keyword in text for keyword in ("休市", "連假", "HOLIDAY"))):
+        return "market_holiday"
+    return None
+
+
+def merge_tw_market_rule_events(external_events: list[dict], local_events: list[dict]) -> list[dict]:
+    """Merge local rules without replacing same-day, same-type external events."""
+    external_keys = {
+        (event.get("date"), event_semantic_type(event))
+        for event in external_events
+        if event_semantic_type(event)
+    }
+    retained_local_events = [
+        event for event in local_events
+        if (event.get("date"), event_semantic_type(event)) not in external_keys
+    ]
+    merged = list(external_events) + retained_local_events
+    return sorted(merged, key=lambda event: (event.get("date") or "", event.get("time") or ""))
+
 def extract_events(ics_bytes: bytes, start_date, end_date):
     cal = icalendar.Calendar.from_ical(ics_bytes)
     occurrences = recurring_ical_events.of(cal).between(start_date, end_date)
@@ -314,7 +520,9 @@ def main():
     end_date = today + datetime.timedelta(days=args.days_ahead)
 
     ics_bytes = fetch_ics_bytes(args.ics_url, args.fixture)
-    events = extract_events(ics_bytes, today, end_date)
+    external_events = extract_events(ics_bytes, today, end_date)
+    local_events = generate_tw_market_rule_events(today, end_date)
+    events = merge_tw_market_rule_events(external_events, local_events)
 
     result = {
         "source": args.ics_url,
