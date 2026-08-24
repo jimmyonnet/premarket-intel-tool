@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-08-24 18:01",
-  "build_version": "20260824_1801",
+  "build_time": "2026-08-24 18:18",
+  "build_version": "20260824_1818",
   "data_date": "08/24",
-  "stale_hours": 43.6,
-  "hours_since_us_close": 14.0,
+  "stale_hours": 43.8,
+  "hours_since_us_close": 14.3,
   "overall_status": "ready",
   "status_label": "可用",
   "status_badge_class": "is-ready",
@@ -183,11 +183,11 @@
     }
   ],
   "schema_version": 1,
-  "built_at": "2026-08-24T10:01:32.425707+00:00",
+  "built_at": "2026-08-24T18:18:06.408215+08:00",
   "hash": {
     "disposition": "28b395c1e053",
-    "candidates": "98aeff826630",
-    "stock_history": "354052421bec",
+    "candidates": "e9e9d0d84c2d",
+    "stock_history": "904272b52ad8",
     "announcements": "5a0f6022b243",
     "macro": "6bfd2a638a65",
     "calendar": "f428515dd621",
