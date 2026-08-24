@@ -2,21 +2,17 @@ name: Build premarket page
 
 # All scheduled times below are Taiwan time (UTC+8):
 #   19:35 - Chengwaye disposal forecast (source publishes about 19:30)
-#   20:00 / 22:00 / 24:00 - candidate stocks and institutional detail
-#   21:00 / 08:00 / 08:30 - post-market unreflected announcements
-#   07:35 / 08:05 / 08:20 - morning market context and Asia opening refreshes
+#   21:00 / 23:00 - PressPlay premarket article & candidate stocks evening refresh
+#   07:30 - Morning full premarket fetch & PressPlay final check
+#   08:05 / 08:20 - Asian markets (Nikkei/Kospi) opening refresh
 on:
   schedule:
     - cron: "35 11 * * 1-5"
-    - cron: "0 12 * * 1-5"
-    - cron: "0 13 * * 1-5"
-    - cron: "0 14 * * 1-5"
-    - cron: "0 16 * * 1-5"
-    - cron: "35 23 * * 0-4"
-    - cron: "0 0 * * 1-5"
+    - cron: "0 13 * * 0-4"
+    - cron: "0 15 * * 0-4"
+    - cron: "30 23 * * 0-4"
     - cron: "5 0 * * 1-5"
     - cron: "20 0 * * 1-5"
-    - cron: "30 0 * * 1-5"
   workflow_dispatch:
     inputs:
       data_date:
@@ -96,9 +92,8 @@ jobs:
           if [ "${{ github.event_name }}" = "schedule" ]; then
             case "${{ github.event.schedule }}" in
               "35 11 * * 1-5") mode="disposal" ;;
-              "0 12 * * 1-5"|"0 14 * * 1-5"|"0 16 * * 1-5") mode="candidates" ;;
-              "0 13 * * 1-5"|"0 0 * * 1-5"|"30 0 * * 1-5") mode="financials" ;;
-              "35 23 * * 0-4") mode="morning-core" ;;
+              "0 13 * * 0-4"|"0 13 * * 1-5"|"0 15 * * 0-4"|"0 15 * * 1-5") mode="candidates" ;;
+              "30 23 * * 0-4"|"35 23 * * 0-4") mode="morning-core" ;;
               "5 0 * * 1-5"|"20 0 * * 1-5") mode="asia-open-update" ;;
               *) echo "Unknown schedule: ${{ github.event.schedule }}" >&2; exit 1 ;;
             esac

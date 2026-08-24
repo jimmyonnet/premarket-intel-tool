@@ -339,7 +339,7 @@ def main() -> None:
             extract_date_fn=lambda c: (c.get("date_check") or {}).get("page_says_applies_to"),
         )
 
-    if args.mode in ("full", "candidates"):
+    if args.mode in ("full", "candidates", "morning-core"):
         # Candidate stocks combine the PressPlay premarket article with the
         # Chengwaye daily institutional / day-trading detail.
         status_map["pressplay"] = fetch_source(

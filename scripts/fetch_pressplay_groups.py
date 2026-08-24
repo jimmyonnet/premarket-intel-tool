@@ -499,50 +499,122 @@ def parse_daily_rows(html: str):
     return rows, latest_date
 
 
-def match_token(token: str, rows):
-    """Match one article token against chengwaye's daily rows: exact code,
-    then exact name, then a typo-tolerant fuzzy name match. Returns a dict
-    with match_type, or None if nothing clears the fuzzy-match confidence
-    bar -- callers must surface unmatched tokens rather than dropping them
-    (a wrong silent match on a financial ticker is worse than an honest
-    "couldn't match this, check by hand").
+def load_stock_dict():
+    for p in [Path("data/tw_stock_names.json"), Path("docs/data/tw_stock_names.json")]:
+        if p.exists():
+            try:
+                return json.loads(p.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+    return {}
 
-    Known limitation (tested 2026-08-20): the 0.6 cutoff is deliberately
-    conservative to avoid false-matching two different stocks, but that
-    means a single mistyped character in a short 2-character name (e.g.
-    "鼎元" -> "鼎緣") often does NOT clear it and falls through to
-    unmatched -- each character carries too much weight in a 2-character
-    string for any similarity metric to stay both safe and lenient. Typos
-    in 3+ character names fuzzy-match reliably (tested: "中再保" ->
-    "中再堡", "聯一光" -> "聯一先" both matched correctly). This is an
-    accepted trade-off, not a bug: an honest "couldn't match, check by
-    hand" beats a confident wrong guess on financial data.
+
+def match_token(token: str, rows, stock_dict=None):
+    """Match one article token against chengwaye's daily rows: exact code,
+    then exact name, then a typo-tolerant fuzzy name match. If not found in daily rows,
+    falls back to the full Taiwan stock market dictionary.
     """
     token = token.strip()
     if not token:
         return None
 
+    # 1. Exact match in daily rows by code
     for row in rows:
         if row["code"] == token:
             return {**row, "match_type": "code", "raw_token": token}
 
+    # 2. Exact match in daily rows by name
     for row in rows:
         if row["name"] == token:
             return {**row, "match_type": "name", "raw_token": token}
 
+    # 3. Fuzzy match in daily rows by name
     names = [r["name"] for r in rows]
     close = difflib.get_close_matches(token, names, n=1, cutoff=0.6)
     if close:
         matched_row = next(r for r in rows if r["name"] == close[0])
         return {**matched_row, "match_type": "fuzzy_name", "raw_token": token}
 
+    # 4. Stock dictionary lookup fallback
+    if stock_dict:
+        name_to_code = stock_dict.get("name_to_code", {})
+        code_to_name = stock_dict.get("code_to_name", {})
+
+        # Check if token is a known stock name
+        if token in name_to_code:
+            code = name_to_code[token]
+            name = token
+            for row in rows:
+                if row["code"] == code:
+                    return {**row, "match_type": "dict_name", "raw_token": token}
+            return {
+                "market": "市",
+                "code": code,
+                "name": name,
+                "close": "-",
+                "volume": "-",
+                "foreign": "-",
+                "trust": "-",
+                "dealer": "-",
+                "ai_reason": "PressPlay 專欄族群標的",
+                "group": "📌 專欄標的",
+                "match_type": "dict_name",
+                "raw_token": token,
+            }
+
+        # Check if token is a known stock code
+        if token in code_to_name:
+            code = token
+            name = code_to_name[token]
+            for row in rows:
+                if row["code"] == code:
+                    return {**row, "match_type": "dict_code", "raw_token": token}
+            return {
+                "market": "市",
+                "code": code,
+                "name": name,
+                "close": "-",
+                "volume": "-",
+                "foreign": "-",
+                "trust": "-",
+                "dealer": "-",
+                "ai_reason": "PressPlay 專欄標的",
+                "group": "📌 專欄標的",
+                "match_type": "dict_code",
+                "raw_token": token,
+            }
+
+        # Fuzzy match across all stock names
+        dict_names = list(name_to_code.keys())
+        close_dict = difflib.get_close_matches(token, dict_names, n=1, cutoff=0.7)
+        if close_dict:
+            matched_name = close_dict[0]
+            code = name_to_code[matched_name]
+            for row in rows:
+                if row["code"] == code:
+                    return {**row, "match_type": "dict_fuzzy_name", "raw_token": token}
+            return {
+                "market": "市",
+                "code": code,
+                "name": matched_name,
+                "close": "-",
+                "volume": "-",
+                "foreign": "-",
+                "trust": "-",
+                "dealer": "-",
+                "ai_reason": "PressPlay 專欄標的",
+                "group": "📌 專欄標的",
+                "match_type": "dict_fuzzy_name",
+                "raw_token": token,
+            }
+
     return None
 
 
-def match_section(raw_tokens, rows):
+def match_section(raw_tokens, rows, stock_dict=None):
     matched, unmatched = [], []
     for token in raw_tokens:
-        result = match_token(token, rows)
+        result = match_token(token, rows, stock_dict=stock_dict)
         if result is not None:
             matched.append(result)
         else:
@@ -637,11 +709,12 @@ def main():
         daily_html = fetch_daily_html()
     daily_rows, chengwaye_latest_date = parse_daily_rows(daily_html)
 
+    stock_dict = load_stock_dict()
     result = {
         "source_article": source_article,
         "chengwaye_date": chengwaye_latest_date,
-        "not_found_group": match_section(not_found_tokens, daily_rows),
-        "found_group": match_section(found_tokens, daily_rows),
+        "not_found_group": match_section(not_found_tokens, daily_rows, stock_dict=stock_dict),
+        "found_group": match_section(found_tokens, daily_rows, stock_dict=stock_dict),
     }
 
     total_unmatched = (

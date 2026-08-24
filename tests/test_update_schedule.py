@@ -13,22 +13,25 @@ def test_scheduled_section_modes_and_manual_full_refresh_are_explicit():
     # 19:35 Taipei: allow five minutes after Chengwaye's 19:30 disposal update.
     assert '"35 11 * * 1-5") mode="disposal"' in workflow
 
-    # 20:00, 22:00 and 24:00 Taipei candidate / institutional refreshes.
-    assert '"0 12 * * 1-5"|"0 14 * * 1-5"|"0 16 * * 1-5") mode="candidates"' in workflow
+    # 21:00 and 23:00 Taipei candidate / PressPlay refreshes.
+    assert 'mode="candidates"' in workflow
+    assert '"0 13 * * 0-4"' in workflow
+    assert '"0 15 * * 0-4"' in workflow
 
-    # 21:00, 08:00 and 08:30 Taipei announcement refreshes.
-    assert '"0 13 * * 1-5"|"0 0 * * 1-5"|"30 0 * * 1-5") mode="financials"' in workflow
+    # 07:30 Taipei morning-core refresh.
+    assert '"30 23 * * 0-4"' in workflow
+    assert 'mode="morning-core"' in workflow
 
     # Manual workflow_dispatch retains complete-page refresh behavior.
     assert 'mode="full"' in workflow
-    for mode in ("morning-core", "asia-open-update", "disposal", "candidates", "financials"):
+    for mode in ("morning-core", "asia-open-update", "disposal", "candidates"):
         assert f'"{mode}"' in runner
 
 
 def test_candidate_and_announcement_modes_refresh_the_complete_section_sources():
     runner = RUNNER.read_text(encoding="utf-8")
 
-    assert 'if args.mode in ("full", "candidates"):' in runner
+    assert 'if args.mode in ("full", "candidates", "morning-core"):' in runner
     assert 'status_map["pressplay"] = fetch_source(' in runner
     assert 'status_map["chengwaye_daily"] = fetch_source(' in runner
     assert 'if args.mode in ("full", "financials"):' in runner

@@ -3,7 +3,7 @@
     "title": "0824盤前",
     "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/2FCA407267B7250FC0F321B0BF103006",
     "fixture": "data/pressplay/2026-08-24.md",
-    "collected_at": "2026-08-24T16:58:08.183790+08:00"
+    "collected_at": "2026-08-24T19:04:18.926889+08:00"
   },
   "chengwaye_date": null,
   "not_found_group": {
@@ -12,6 +12,20 @@
       "5314"
     ],
     "matched": [
+      {
+        "market": "市",
+        "code": "2489",
+        "name": "瑞軒",
+        "close": "—",
+        "volume": "—",
+        "foreign": "—",
+        "trust": "—",
+        "dealer": "—",
+        "ai_reason": "PressPlay 專欄標的",
+        "group": "📌 專欄標的",
+        "match_type": "dict_code",
+        "raw_token": "2489"
+      },
       {
         "market": "櫃",
         "code": "5314",
@@ -27,9 +41,7 @@
         "raw_token": "5314"
       }
     ],
-    "unmatched": [
-      "2489"
-    ]
+    "unmatched": []
   },
   "found_group": {
     "raw_tokens": [
@@ -37,11 +49,50 @@
       "中櫃",
       "萬海"
     ],
-    "matched": [],
-    "unmatched": [
-      "四維航",
-      "中櫃",
-      "萬海"
-    ]
+    "matched": [
+      {
+        "market": "市",
+        "code": "5608",
+        "name": "四維航",
+        "close": "—",
+        "volume": "—",
+        "foreign": "—",
+        "trust": "—",
+        "dealer": "—",
+        "ai_reason": "PressPlay 專欄族群標的",
+        "group": "📌 專欄標的",
+        "match_type": "dict_name",
+        "raw_token": "四維航"
+      },
+      {
+        "market": "市",
+        "code": "2613",
+        "name": "中櫃",
+        "close": "—",
+        "volume": "—",
+        "foreign": "—",
+        "trust": "—",
+        "dealer": "—",
+        "ai_reason": "PressPlay 專欄族群標的",
+        "group": "📌 專欄標的",
+        "match_type": "dict_name",
+        "raw_token": "中櫃"
+      },
+      {
+        "market": "市",
+        "code": "2615",
+        "name": "萬海",
+        "close": "—",
+        "volume": "—",
+        "foreign": "—",
+        "trust": "—",
+        "dealer": "—",
+        "ai_reason": "PressPlay 專欄族群標的",
+        "group": "📌 專欄標的",
+        "match_type": "dict_name",
+        "raw_token": "萬海"
+      }
+    ],
+    "unmatched": []
   }
 }
