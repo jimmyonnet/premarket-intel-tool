@@ -344,16 +344,6 @@
     letter-spacing: 0.08em;
   }
   .utility-panel-title { margin-top: 2px; color: var(--text-main); font-size: 14px; font-weight: 800; }
-  .utility-panel-build {
-    padding: 3px 6px;
-    border: 1px solid var(--border-light);
-    border-radius: 999px;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    font-size: 10px;
-    white-space: nowrap;
-  }
-  .utility-panel-build strong { color: var(--text-main); }
   .utility-panel-section { position: relative; z-index: 1; margin-top: 11px; }
   .utility-section-label {
     margin: 0 0 6px 2px;
@@ -1940,12 +1930,9 @@
   }
 
   /* MOBILE NAV & BADGE */
-  .short-build { display: none; }
   .badge-nowrap { white-space: nowrap !important; }
 
   @media (max-width: 768px) {
-    .last-build { display: none; }
-    .short-build { display: inline; }
   }
 
 
@@ -2518,7 +2505,7 @@
         <button class="nav-btn theme-toggle" onclick="window.toggleTheme()" id="theme-toggle" type="button" title="切換深淺色主題 (快捷鍵 D)">🌙 深色</button>
         <button class="nav-btn manual-update-btn" id="manual-update-button" type="button" title="安全啟動資料更新" aria-label="手動更新資料">🔄 手動更新資料</button>
         <button class="nav-btn refresh-btn" onclick="location.reload()" type="button" title="重新載入最新版" aria-label="重新整理頁面">
-          🔄 <span class="last-build">建置 {{ build_time or '08:00' }}</span><span class="short-build">重整</span>
+          🔄 重新整理
         </button>
             </div>
           </div>

@@ -43,7 +43,8 @@ def test_utility_panel_has_compact_visual_sections_for_tools_and_status():
     assert "資料狀態" in source
     assert "width: min(476px, calc(100vw - 32px));" in source
     assert ".nav-utility-content::before" in source
-    assert source.count("建置 {{ build_time or '08:00' }}") == 1
+    assert "建置 {{ build_time or '08:00' }}" not in source
+    assert "🔄 重新整理" in source
 
 
 def test_deployed_page_keeps_utility_panel_collapsed_and_summary_anchor_ready():
