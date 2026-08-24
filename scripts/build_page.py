@@ -218,7 +218,7 @@ def normalize_indices(raw_indices):
         "tsmc": ["TSM", "台積電 ADR", "tsmc"],
         "nvda": ["NVDA", "輝達 (NVDA)", "nvda"],
         "aapl": ["AAPL", "蘋果 (AAPL)", "aapl"],
-        "tsmc_tw": ["2330.TW", "台積電 現貨", "tsmc_tw", "2330"],
+        "micron": ["MU", "美光", "micron"],
         "umc": ["UMC", "聯電 ADR", "umc"],
         "ase": ["ASX", "日月光 ADR", "ase"],
     }

@@ -3694,12 +3694,12 @@
 
           <!-- 跨海連動 ADR / 關鍵標的 (Row 2) -->
           <div class="tiles-grid">
-            {% for symbol, label in [('TSM', '台積電 ADR'), ('NVDA', '輝達 (NVDA)'), ('AAPL', '蘋果 (AAPL)'), ('2330.TW', '台積電 現貨')] %}
+            {% for symbol, label in [('TSM', '台積電 ADR'), ('NVDA', '輝達 (NVDA)'), ('AAPL', '蘋果 (AAPL)'), ('MU', '美光')] %}
             {% set q = indices.get(symbol) %}
             <div class="tile-card">
               <div class="tile-head">
                 <span class="tile-name">{{ label }}</span>
-                {% if symbol != '2330.TW' %}<span class="tile-delay-pill {{ us_market_context.pill_class if us_market_context is defined else 'pill-amber' }}" title="{{ us_market_context.title if us_market_context is defined else '來源時間未提供' }}">{{ us_market_context.badge_short if us_market_context is defined else '時效未提供' }}</span>{% endif %}
+                <span class="tile-delay-pill {{ us_market_context.pill_class if us_market_context is defined else 'pill-amber' }}" title="{{ us_market_context.title if us_market_context is defined else '來源時間未提供' }}">{{ us_market_context.badge_short if us_market_context is defined else '時效未提供' }}</span>
               </div>
               {% if q and q.price is not none %}
               <div class="tile-val font-mono {% if q.change > 0 %}rise{% elif q.change < 0 %}fall{% endif %}">{{ "{:,.2f}".format(q.price) }}</div>

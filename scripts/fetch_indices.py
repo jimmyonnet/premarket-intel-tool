@@ -327,6 +327,7 @@ def parse_chart_quote(meta: dict, config: dict) -> dict:
         "value": round(value, 2) if value is not None else None,
         "is_missing": value is None or previous is None,
         "source_label": "Yahoo Finance Chart",
+        "source_url": config.get("source_url"),
         "market_state": meta.get("marketState"),
     }
     timestamp = meta.get("regularMarketTime")
@@ -382,7 +383,11 @@ def fetch_key_stocks():
         "tsmc": {"ticker": "TSM", "name": "台積電 ADR"},
         "nvda": {"ticker": "NVDA", "name": "輝達 (NVDA)"},
         "aapl": {"ticker": "AAPL", "name": "蘋果 (AAPL)"},
-        "tsmc_tw": {"ticker": "2330.TW", "name": "台積電 現貨"},
+        "micron": {
+            "ticker": "MU",
+            "name": "美光",
+            "source_url": "https://tw.stock.yahoo.com/quote/MU",
+        },
         "umc": {"ticker": "UMC", "name": "聯電 ADR"},
         "ase": {"ticker": "ASX", "name": "日月光 ADR"},
     }
