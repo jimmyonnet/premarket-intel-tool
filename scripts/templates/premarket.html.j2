@@ -2,7 +2,7 @@
 <html lang="zh-Hant" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="個人自用，勿分享">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#F8FAFC">
@@ -27,7 +27,7 @@
 <title>盤前 · {{ date_check.page_says_applies_to if date_check and date_check.page_says_applies_to else ((meta.data_date if meta is defined and meta and meta.data_date else '08/24')) }} · 近處置 {{ (disposal.one_flag_from_disposal|length if disposal and disposal.one_flag_from_disposal else 5) }} · 出關 {{ (exiting_today|length if exiting_today is defined and exiting_today else 3) }}</title>
 
 <link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
 <script>
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(function(err) {
@@ -88,6 +88,10 @@
     --shadow-sm: 0 1px 2px 0 rgba(15, 23, 42, 0.05);
     --shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08), 0 1px 2px -1px rgba(15, 23, 42, 0.08);
     --shadow-md: 0 4px 6px -1px rgba(15, 23, 42, 0.08), 0 2px 4px -2px rgba(15, 23, 42, 0.08);
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
   }
 
   :root[data-theme="dark"] {
@@ -426,9 +430,9 @@
     }
     .nav-link {
       flex: 0 0 auto;
-      padding: 2px 6px;
-      font-size: 11.5px;
-      height: 32px;
+      padding: 0 12px;
+      font-size: 12.5px;
+      height: 40px;
     }
     .nav-utility-panel {
       width: 100%;
@@ -438,15 +442,15 @@
       border-top: 1px solid var(--border-light);
       padding-top: 4px;
     }
-    .nav-utility-panel > summary { height: 32px; font-size: 11.5px; }
+    .nav-utility-panel > summary { min-height: 40px; height: 40px; font-size: 12px; }
     .nav-utility-content { width: min(100vw - 20px, 476px); padding: 10px; }
     .utility-panel-header { padding-bottom: 9px; }
     .nav-utility-content .nav-actions { padding: 7px; }
     .nav-btn {
       flex: 1;
-      padding: 0 4px;
-      font-size: 11px;
-      height: 28px;
+      padding: 0 6px;
+      font-size: 12px;
+      height: 40px;
     }
     .nav-btn .btn-text-extra {
       display: none;
@@ -713,6 +717,13 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 180px;
+  }
+  .briefing-built-relative {
+    display: none;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: var(--font-mono);
+    white-space: nowrap;
   }
   .briefing-watch-val .hit-count {
     color: var(--blue);
@@ -1364,6 +1375,142 @@
     }
     .data-table td.num { text-align: left; }
     .data-table td.badge-col { text-align: left; }
+  }
+
+  /* MOBILE OPTIMIZATIONS: preserve desktop rendering, improve phone/tablet use. */
+  @media (max-width: 768px) {
+    .page-nav { padding-top: calc(6px + var(--safe-top)); }
+    .page-main { padding-bottom: calc(60px + var(--safe-bottom)); }
+    .page-footer { padding-bottom: calc(16px + var(--safe-bottom)); }
+    .back-to-top {
+      bottom: calc(24px + var(--safe-bottom));
+      right: calc(24px + var(--safe-right));
+    }
+    .toast {
+      bottom: calc(24px + var(--safe-bottom));
+      left: calc(24px + var(--safe-left));
+    }
+
+    .cal-chip { min-height: 36px; padding: 6px 12px; }
+    .watch-input-modern,
+    .cal-search-input,
+    .nav-utility-content input { font-size: 16px; }
+    .wc-del { width: 24px; height: 24px; min-width: 24px; font-size: 14px; }
+
+    .data-table tr { padding: 12px 14px; }
+    .data-table td.num {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .table-scroll {
+      position: relative;
+      background:
+        linear-gradient(to right, var(--bg-card) 30%, rgba(255,255,255,0)) left / 40px 100% no-repeat local,
+        linear-gradient(to left, var(--bg-card) 30%, rgba(255,255,255,0)) right / 40px 100% no-repeat local,
+        radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.18), rgba(0,0,0,0)) left / 14px 100% no-repeat local,
+        radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.18), rgba(0,0,0,0)) right / 14px 100% no-repeat local;
+      background-color: var(--bg-card);
+    }
+    .table-scroll.is-overflowing::before {
+      content: '← 左右滑動查看完整欄位 →';
+      display: block;
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      padding: 4px 8px;
+      margin-bottom: 4px;
+      border-radius: 4px;
+      background: var(--bg-sub);
+      color: var(--text-muted);
+      text-align: center;
+      font-size: 11px;
+      line-height: 1.35;
+      pointer-events: none;
+    }
+    .table-scroll.is-overflowing.is-scrolled::before {
+      content: '← 繼續左右滑動查看完整欄位 →';
+    }
+    :root[data-theme="dark"] .table-scroll {
+      background:
+        linear-gradient(to right, var(--bg-card) 30%, rgba(255,255,255,0)) left / 40px 100% no-repeat local,
+        linear-gradient(to left, var(--bg-card) 30%, rgba(255,255,255,0)) right / 40px 100% no-repeat local,
+        radial-gradient(farthest-side at 0 50%, rgba(0,0,0,.45), rgba(0,0,0,0)) left / 14px 100% no-repeat local,
+        radial-gradient(farthest-side at 100% 50%, rgba(0,0,0,.45), rgba(0,0,0,0)) right / 14px 100% no-repeat local;
+      background-color: var(--bg-card);
+    }
+
+    /* The actual disposal table starts with 市場, then 代號; keep the identifier visible. */
+    .data-table.disposal-table {
+      display: table;
+      min-width: 640px;
+      width: max-content;
+    }
+    .data-table.disposal-table thead { display: table-header-group; }
+    .data-table.disposal-table tbody { display: table-row-group; }
+    .data-table.disposal-table tr {
+      display: table-row;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      margin: 0;
+      background: transparent;
+    }
+    .data-table.disposal-table th { display: table-cell; }
+    .data-table.disposal-table td {
+      display: table-cell;
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .data-table.disposal-table td::before { display: none; content: none; }
+    .disposal-table th:nth-child(2),
+    .disposal-table td:nth-child(2) {
+      position: sticky;
+      left: 0;
+      z-index: 3;
+      min-width: 65px;
+      background: var(--bg-card);
+      box-shadow: 2px 0 4px rgba(0,0,0,.08);
+    }
+    .disposal-table th:nth-child(3),
+    .disposal-table td:nth-child(3) {
+      position: sticky;
+      left: 65px;
+      z-index: 3;
+      min-width: 75px;
+      background: var(--bg-card);
+      border-right: 1px solid var(--border);
+      box-shadow: 3px 0 5px rgba(0,0,0,.08);
+    }
+    .disposal-table th:nth-child(2),
+    .disposal-table th:nth-child(3) {
+      background: var(--bg-sub);
+      z-index: 4;
+    }
+
+    .briefing-built-relative { display: inline; }
+    .content-section {
+      content-visibility: auto;
+      contain-intrinsic-size: 1px 800px;
+    }
+    .nav-link:active,
+    .nav-btn:active,
+    .cal-chip:active,
+    .watch-btn-modern:active,
+    .watch-btn-inline:active,
+    .wc-del:active {
+      opacity: .7;
+      transform: scale(.97);
+    }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    .summary-grid, .tiles-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .summary-grid, .tiles-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   /* DESKTOP READABILITY: retain the 280a9dc layout while easing dense text scanning. */
@@ -2018,10 +2165,12 @@
     }
     .cal-chip {
       flex: 0 0 auto;
-      min-height: 32px;
+      min-height: 36px;
+      padding: 6px 12px;
     }
     .cal-search-input {
       width: 100%;
+      font-size: 16px;
     }
   }
 
@@ -2662,6 +2811,7 @@
           <div class="briefing-status-val">
             <span class="status-badge {{ o_badge }}" style="font-weight:700;">{{ o_label }}</span>
             <span class="briefing-reason-summary" title="{{ o_reasons|join('；') }}">{{ o_reasons[0] if o_reasons else '全數來源正常且在時限內' }}</span>
+            <span id="briefing-built-relative" class="briefing-built-relative" aria-live="polite"></span>
           </div>
         </div>
 
@@ -3646,15 +3796,15 @@
               {% set src_list = h.sources or (meta.sources if (meta is defined and meta and meta.sources is defined) else []) %}
               {% for src in src_list %}
               <tr>
-                <td class="font-bold">{{ src.name }}</td>
-                <td>
+                <td data-label="來源項目" class="font-bold">{{ src.name }}</td>
+                <td data-label="重要性">
                   {% if src.is_required %}
                   <span class="badge badge-danger" style="background:var(--danger-bg); color:var(--danger-fg); border:1px solid var(--danger-border);">必要</span>
                   {% else %}
                   <span class="badge">非必要</span>
                   {% endif %}
                 </td>
-                <td>
+                <td data-label="技術狀態">
                   {% if src.fetch_status == 'ok' %}
                   <span class="status-badge is-ok">抓取成功</span>
                   {% elif src.fetch_status == 'fallback' or src.fallback_used %}
@@ -3667,7 +3817,7 @@
                   <span class="status-badge is-info">{{ src.fetch_status or src.status }}</span>
                   {% endif %}
                 </td>
-                <td>
+                <td data-label="時效/新鮮度">
                   {% if src.freshness == 'fresh' %}
                   <span class="badge badge-green" title="資料新鮮，符合當前盤前決策時效">新鮮</span>
                   {% elif src.freshness == 'stale' %}
@@ -3678,12 +3828,12 @@
                   <span class="badge">—</span>
                   {% endif %}
                 </td>
-                <td>
+                <td data-label="綜合評級">
                   <span class="status-badge {{ src.status_badge_class or ('is-ok' if src.status=='ok' else 'is-caution') }}">{{ src.combined_status_label or (src.status|upper) }}</span>
                 </td>
-                <td class="font-mono" style="font-size:11px;">{{ src.fetched_at[11:16] if (src.fetched_at and src.fetched_at|length >= 16) else '—' }}</td>
-                <td class="font-mono" style="font-size:11.5px;">{{ src.data_date or '—' }}</td>
-                <td style="font-size:12px; color:var(--text-main);">{{ src.impact_desc }}</td>
+                <td data-label="取得時間" class="font-mono" style="font-size:11px;">{{ src.fetched_at[11:16] if (src.fetched_at and src.fetched_at|length >= 16) else '—' }}</td>
+                <td data-label="適用日期" class="font-mono" style="font-size:11.5px;">{{ src.data_date or '—' }}</td>
+                <td data-label="對判讀影響" style="font-size:12px; color:var(--text-main);">{{ src.impact_desc }}</td>
               </tr>
               {% endfor %}
             </tbody>
@@ -5530,6 +5680,12 @@
           navLinks.forEach(function(link) {
             link.classList.toggle('is-active', link.getAttribute('href') === '#' + id);
           });
+          if (window.matchMedia && window.matchMedia('(max-width: 768px)').matches) {
+            var activeLink = Array.from(navLinks).find(function(link) {
+              return link.getAttribute('href') === '#' + id;
+            });
+            if (activeLink) activeLink.scrollIntoView({ inline: 'center', block: 'nearest' });
+          }
         }
       });
     }, { rootMargin: '-20% 0px -70% 0px' });
@@ -5602,7 +5758,66 @@
       });
   };
 
+  window.pm.updateBriefingFreshness = function() {
+    var target = document.getElementById('briefing-built-relative');
+    if (!target) return;
+    var meta = window.__PM_META__ || {};
+    var stamp = meta.built_at || meta.build_time;
+    if (!stamp) {
+      target.textContent = '';
+      return;
+    }
+    var normalized = String(stamp).trim().replace(' ', 'T');
+    var parsed = new Date(normalized);
+    if (isNaN(parsed.getTime())) {
+      target.textContent = '';
+      return;
+    }
+    var minutes = Math.max(0, Math.round((Date.now() - parsed.getTime()) / 60000));
+    var label = minutes < 1 ? '剛剛更新' : (minutes < 60 ? minutes + ' 分鐘前更新' : (minutes < 1440 ? Math.floor(minutes / 60) + ' 小時前更新' : Math.floor(minutes / 1440) + ' 天前更新'));
+    target.textContent = '· ' + label;
+    target.title = '最後建置時間：' + String(stamp);
+  };
+
+  window.pm.refreshMobileScrollHints = function() {
+    document.querySelectorAll('.table-scroll').forEach(function(scroller) {
+      var overflowing = scroller.scrollWidth > scroller.clientWidth + 2;
+      scroller.classList.toggle('is-overflowing', overflowing);
+      if (!overflowing) scroller.classList.remove('is-scrolled');
+    });
+  };
+
+  window.pm.bindMobileScrollHints = function() {
+    document.querySelectorAll('.table-scroll').forEach(function(scroller) {
+      if (scroller.dataset.mobileScrollBound === '1') return;
+      scroller.dataset.mobileScrollBound = '1';
+      scroller.addEventListener('scroll', function() {
+        if (scroller.scrollLeft > 2) scroller.classList.add('is-scrolled');
+      }, { passive: true });
+    });
+    window.pm.refreshMobileScrollHints();
+  };
+
+  window.pm.ensureDataLabels = function() {
+    document.querySelectorAll('.data-table').forEach(function(tbl) {
+      var heads = Array.from(tbl.querySelectorAll('thead th')).map(function(th) {
+        return th.textContent.replace(/[▲▼\s]+/g, '').trim();
+      });
+      tbl.querySelectorAll(':scope > tbody > tr').forEach(function(tr) {
+        Array.from(tr.children).forEach(function(td, i) {
+          if (td.tagName === 'TD' && !td.hasAttribute('data-label') && heads[i]) {
+            td.setAttribute('data-label', heads[i]);
+          }
+        });
+      });
+    });
+  };
+
   document.addEventListener('DOMContentLoaded', function() {
+    window.pm.updateBriefingFreshness();
+    window.pm.ensureDataLabels();
+    window.pm.bindMobileScrollHints();
+    window.addEventListener('resize', window.pm.refreshMobileScrollHints, { passive: true });
     ['wheel', 'touchstart', 'keydown'].forEach(function(eventName) {
       document.addEventListener(eventName, function() { window.pm.calendarUserScrolled = true; }, { once: true, passive: true });
     });

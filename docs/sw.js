@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pmit-20260824_1520';
+const CACHE_NAME = 'pmit-20260824_1604';
 const SHELL_ASSETS = [
   './',
   './index.html',
@@ -6,6 +6,7 @@ const SHELL_ASSETS = [
   './embed/att.html',
   './embed/fin.html',
   './embed/rev.html',
+  './icon-180.png',
   './icon-192.png',
   './icon-512.png',
   './data_meta.json'
@@ -25,6 +26,7 @@ self.addEventListener('install', event => {
         './embed/att.html',
         './embed/fin.html',
         './embed/rev.html',
+        './icon-180.png',
         './icon-192.png',
         './icon-512.png',
         './data_meta.json'
