@@ -178,7 +178,7 @@
       "market_state": null,
       "updated_at": "2026-08-25T04:37:38+08:00",
       "updated_taipei": "2026-08-25 04:37",
-      "change": 140.15,
+      "change": 140.16,
       "change_pct": 0.26
     },
     "sp500": {
@@ -224,19 +224,19 @@
   "asia_open": {
     "nikkei225": {
       "name": "日經225指數",
-      "value": 64609.47,
-      "change": -918.62,
-      "change_pct": -1.4,
-      "updated_cst": "08/25 08:17",
+      "value": 65027.9,
+      "change": -500.19,
+      "change_pct": -0.76,
+      "updated_cst": "08/25 09:10",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
       "source_label": "Yahoo 個別指數頁"
     },
     "kospi": {
       "name": "韓國綜合指數",
-      "value": 6474.24,
-      "change": -222.72,
-      "change_pct": -3.33,
-      "updated_cst": "08/25 08:12",
+      "value": 6541.32,
+      "change": -155.64,
+      "change_pct": -2.32,
+      "updated_cst": "08/25 09:05",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
       "source_label": "Yahoo 個別指數頁"
     }
