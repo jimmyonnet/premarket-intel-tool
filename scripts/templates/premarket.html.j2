@@ -2934,6 +2934,15 @@
     line-height: 1.55;
     margin: 0 0 7px;
   }
+  .ai-briefing-subhead {
+    margin-top: 8px;
+    margin-bottom: 3px;
+    color: var(--text-muted);
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+  }
   .ai-briefing-list {
     margin: 0;
     padding-left: 17px;
@@ -3876,14 +3885,24 @@
           <div class="ai-inline-panel ai-market-inline-panel">
             <div class="ai-briefing-kicker">🌙 隔夜市場總結</div>
             <h4 class="ai-briefing-headline">{{ ai_market.headline or '目前尚未產生隔夜市場總結。' }}</h4>
-            {% if ai_market.bullets %}
+            {% set market_observations = ai_market.observations if ai_market.observations is defined else (ai_market.bullets if ai_market.bullets is defined else []) %}
+            {% if market_observations %}
+            <div class="ai-briefing-subhead">市場訊號</div>
             <ul class="ai-briefing-list">
-              {% for bullet in ai_market.bullets[:4] %}
-              <li>{{ bullet }}</li>
+              {% for observation in market_observations[:4] %}
+              <li>{{ observation }}</li>
               {% endfor %}
             </ul>
             {% else %}
-            <p class="ai-briefing-empty">目前沒有足夠行情資料可供整理。</p>
+            <p class="ai-briefing-empty">目前沒有足夠行情資料可整理市場關係。</p>
+            {% endif %}
+            {% if ai_market.drivers %}
+            <div class="ai-briefing-subhead">新聞驅動線索</div>
+            <ul class="ai-briefing-list">
+              {% for driver in ai_market.drivers[:3] %}
+              <li>{{ driver }}</li>
+              {% endfor %}
+            </ul>
             {% endif %}
             {% if ai_market.risks %}
             <div class="ai-briefing-risk"><strong>風險：</strong>{{ ai_market.risks[0] }}</div>
@@ -3950,12 +3969,6 @@
             <span class="count-badge" id="news-count-badge">{{ news|length if news else 0 }} 則</span>
           </div>
         </div>
-        <div class="data-block" id="news-lazy-block" data-news-src="data/news.json">
-          <div class="news-list" id="news-list" style="display:flex; flex-direction:column; gap:8px;" hidden></div>
-          <div class="empty" id="news-empty" data-package="news" style="padding:16px; text-align:center; color:var(--text-muted); font-size:12.5px;"{% if news and news|length > 0 %} hidden{% endif %}>
-            ℹ️ 今日新聞來源暫時無法取得 · 系統將於下次排程自動重試
-          </div>
-        </div>
         <div class="ai-inline-panel ai-news-inline-panel">
           <div class="ai-briefing-kicker">📰 新聞多樣性與摘要</div>
           <h4 class="ai-briefing-headline">{{ ai_news.headline or '目前尚未產生新聞摘要。' }}</h4>
@@ -3980,6 +3993,12 @@
             {% endfor %}
           </div>
           {% endif %}
+        </div>
+        <div class="data-block" id="news-lazy-block" data-news-src="data/news.json">
+          <div class="news-list" id="news-list" style="display:flex; flex-direction:column; gap:8px;" hidden></div>
+          <div class="empty" id="news-empty" data-package="news" style="padding:16px; text-align:center; color:var(--text-muted); font-size:12.5px;"{% if news and news|length > 0 %} hidden{% endif %}>
+            ℹ️ 今日新聞來源暫時無法取得 · 系統將於下次排程自動重試
+          </div>
         </div>
       </div>
 

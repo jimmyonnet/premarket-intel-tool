@@ -64,17 +64,18 @@ SCHEMA = {
             "type": "object",
             "properties": {
                 "headline": {"type": "string"},
-                "bullets": {"type": "array", "items": {"type": "string"}},
+                "observations": {"type": "array", "items": {"type": "string"}},
+                "drivers": {"type": "array", "items": {"type": "string"}},
                 "risks": {"type": "array", "items": {"type": "string"}},
             },
-            "required": ["headline", "bullets", "risks"],
+            "required": ["headline", "observations", "drivers", "risks"],
         },
         "quality_note": {"type": "string"},
     },
     "required": ["news_summary", "market_summary", "quality_note"],
 }
 
-SYSTEM_PROMPT = """你是繁體中文的盤前研究助理。只能根據使用者提供的 INPUT JSON 撰寫整理，不能補造不存在的價格、漲跌幅、時間、公司、政策或新聞事實。\n\n規則：\n1. 新聞重點只能引用 INPUT 的新聞標題與欄位；不要把推測寫成已發生的事。\n2. 市場總結只能引用 INPUT 的行情數字與時間；若資料缺失，明確寫「資料未提供」。\n3. 不要提供買賣指令、目標價或投資保證。\n4. 以簡潔的繁體中文輸出；headline 一句，bullets 與 risks 各不超過 4 點。\n5. topic_summary 的 topic 必須使用 INPUT 已提供的 primary_topic 名稱，count 必須符合新聞筆數。\n6. 輸出必須符合指定 JSON schema。"""
+SYSTEM_PROMPT = """你是繁體中文的盤前研究助理。只能根據使用者提供的 INPUT JSON 撰寫整理，不能補造不存在的價格、漲跌幅、時間、公司、政策或新聞事實。\n\n規則：\n1. 新聞重點只能引用 INPUT 的新聞標題與欄位；不要把推測寫成已發生的事。\n2. 市場總結只能引用 INPUT 的行情數字與時間；若資料缺失，明確寫「資料未提供」。\n3. 不要提供買賣指令、目標價或投資保證。\n4. 以簡潔的繁體中文輸出；headline 一句，observations、drivers 與 risks 各不超過 4 點。\n5. 市場 observations 必須描述市場廣度、相對強弱、跨市場一致或分歧等關係，禁止逐一重抄行情卡片的價格、漲跌幅與時間。\n6. drivers 只能根據 INPUT 的新聞主題與標題提出「可能關聯」；不得把相關性寫成因果。\n7. topic_summary 的 topic 必須使用 INPUT 已提供的 primary_topic 名稱，count 必須符合新聞筆數。\n8. 輸出必須符合指定 JSON schema。"""
 
 
 def load_json(path: str | Path, default: Any) -> Any:
@@ -231,29 +232,53 @@ def fallback_news_summary(news: list[dict[str, Any]], quality: dict[str, Any]) -
     return {"headline": headline, "topic_summary": topic_summary, "key_points": key_points}
 
 
-def fallback_market_summary(quotes: list[dict[str, Any]]) -> dict[str, Any]:
+def fallback_market_summary(quotes: list[dict[str, Any]], news: list[dict[str, Any]]) -> dict[str, Any]:
     valid = [row for row in quotes if finite_number(row.get("change_pct")) is not None]
     down = [row for row in valid if finite_number(row.get("change_pct")) < 0]
     up = [row for row in valid if finite_number(row.get("change_pct")) > 0]
     if down and len(down) > len(up):
-        headline = f"隔夜行情偏弱，可比對行情中下跌 {len(down)} 筆、上漲 {len(up)} 筆。"
+        headline = "隔夜市場風險情緒偏弱，但仍有部分非科技標的相對抗跌。"
     elif up and len(up) > len(down):
-        headline = f"隔夜行情偏強，可比對行情中上漲 {len(up)} 筆、下跌 {len(down)} 筆。"
+        headline = "隔夜市場風險情緒偏強，但不同市場與產業之間仍有分化。"
     else:
-        headline = "隔夜行情漲跌互見，需搭配各市場與新聞題材判讀。"
-    ordered = sorted(valid, key=lambda row: abs(finite_number(row.get("change_pct")) or 0), reverse=True)
-    bullets = []
-    for row in ordered[:4]:
-        pct = finite_number(row.get("change_pct"))
-        if pct is None:
-            continue
-        bullets.append(f"{row['name']}：{pct:+.2f}%（資料時間 {row.get('updated_at') or '未提供'}）")
-    if not bullets:
-        bullets = ["沒有足夠的行情漲跌幅可供比較。"]
+        headline = "隔夜市場漲跌互見，重點在市場分化而非單一指數方向。"
+
+    observations: list[str] = []
+    if valid:
+        breadth = "下跌標的多於上漲標的" if len(down) > len(up) else ("上漲標的多於下跌標的" if len(up) > len(down) else "上漲與下跌標的數量接近")
+        observations.append(f"市場廣度：{breadth}，整體不是所有市場同步同幅度變動。")
+        groups: dict[str, list[float]] = {}
+        for row in valid:
+            groups.setdefault(row["group"], []).append(finite_number(row.get("change_pct")) or 0.0)
+        group_avg = {group: sum(values) / len(values) for group, values in groups.items() if values}
+        if group_avg:
+            strongest = max(group_avg, key=group_avg.get)
+            weakest = min(group_avg, key=group_avg.get)
+            if strongest == weakest:
+                observations.append(f"相對強弱：{strongest} 的內部標的表現方向較一致，尚未形成明顯跨市場分化。")
+            else:
+                observations.append(f"相對強弱：{strongest} 相對有支撐，{weakest} 相對承壓，市場表現呈現分化。")
+        night = next((row for row in valid if row.get("group") == "台指期夜盤"), None)
+        overseas = [row for row in valid if row.get("group") in ("美股指數", "ADR／跨海標的")]
+        if night and overseas:
+            night_direction = finite_number(night.get("change_pct")) or 0
+            overseas_avg = sum(finite_number(row.get("change_pct")) or 0 for row in overseas) / len(overseas)
+            relation = "方向一致" if (night_direction == 0 or overseas_avg == 0 or night_direction * overseas_avg > 0) else "方向分歧"
+            observations.append(f"跨市場觀察：台指期夜盤與美股／ADR 平均表現{relation}，可用來觀察台股開盤情緒是否延續。")
+    if not observations:
+        observations = ["目前沒有足夠行情資料可整理市場廣度與跨市場關係。"]
+
+    topic_counts = Counter(item.get("primary_topic", "other") for item in news)
+    topic_names = [TOPIC_LABELS.get(topic, topic) for topic, _ in topic_counts.most_common(3)]
+    drivers = [
+        f"新聞題材主要集中在：{'、'.join(topic_names)}；這是資訊分布，不代表已確認的因果關係。"
+        if topic_names else "目前沒有可用新聞題材可供交叉比對。"
+    ]
     return {
         "headline": headline,
-        "bullets": bullets,
-        "risks": ["行情時間與資料延遲請以各卡片標示為準。", "以上為快照整理，不代表價格方向預測。"],
+        "observations": observations[:4],
+        "drivers": drivers[:4],
+        "risks": ["行情時間與資料延遲請以各卡片標示為準。", "以上為快照關係整理，不代表價格方向預測。"],
     }
 
 
@@ -359,7 +384,8 @@ def normalize_ai_response(
         },
         "market_summary": {
             "headline": clean_text(market.get("headline"), fallback_market["headline"]),
-            "bullets": [clean_text(item) for item in (market.get("bullets") or []) if clean_text(item)][:4] or fallback_market["bullets"],
+            "observations": [clean_text(item) for item in (market.get("observations") or []) if clean_text(item)][:4] or fallback_market["observations"],
+            "drivers": [clean_text(item) for item in (market.get("drivers") or []) if clean_text(item)][:4] or fallback_market["drivers"],
             "risks": [clean_text(item) for item in (market.get("risks") or []) if clean_text(item)][:4] or fallback_market["risks"],
         },
         "quality_note": clean_text(raw.get("quality_note"), "資料品質請以右側檢查結果與各來源時間為準。"),
@@ -373,7 +399,7 @@ def generate_summary(indices: Any, night: Any, news: Any, source_status: Any, ap
     quotes = payload["market_quotes"]
     quality = deterministic_quality(news_items, quotes, source_status)
     fallback_news = fallback_news_summary(news_items, quality)
-    fallback_market = fallback_market_summary(quotes)
+    fallback_market = fallback_market_summary(quotes, news_items)
     key = (api_key or os.getenv("GEMINI_API_KEY", "")).strip()
     selected_model = (model or os.getenv("GEMINI_MODEL", DEFAULT_MODEL)).strip() or DEFAULT_MODEL
     status = "fallback"

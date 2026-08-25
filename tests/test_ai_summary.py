@@ -35,7 +35,9 @@ def test_generate_summary_uses_deterministic_fallback_without_key():
     assert result["data_quality"]["status"] == "attention"
     assert any("PressPlay" in issue["message"] for issue in result["data_quality"]["issues"])
     assert len(result["news_summary"]["key_points"]) == 3
-    assert result["market_summary"]["bullets"]
+    assert result["market_summary"]["observations"]
+    assert result["market_summary"]["drivers"]
+    assert all("資料時間" not in item for item in result["market_summary"]["observations"])
 
 
 def test_generate_summary_normalizes_gemini_response(monkeypatch):
@@ -50,7 +52,8 @@ def test_generate_summary_normalizes_gemini_response(monkeypatch):
             },
             "market_summary": {
                 "headline": "隔夜行情偏弱。",
-                "bullets": ["那斯達克下跌。"],
+                "observations": ["科技股相對承壓。"],
+                "drivers": ["市場關注財報。"],
                 "risks": ["行情時間需留意。"],
             },
             "quality_note": "PressPlay 使用備援資料。",
@@ -64,6 +67,8 @@ def test_generate_summary_normalizes_gemini_response(monkeypatch):
     assert result["model"] == "gemini-test"
     assert result["news_summary"]["headline"] == "新聞涵蓋台股、海外市場與債券題材。"
     assert result["quality_note"] == "PressPlay 使用備援資料。"
+    assert result["market_summary"]["observations"] == ["科技股相對承壓。"]
+    assert result["market_summary"]["drivers"] == ["市場關注財報。"]
 
 
 def test_ai_panels_are_embedded_in_requested_parent_sections():
