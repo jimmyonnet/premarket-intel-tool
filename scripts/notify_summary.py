@@ -142,31 +142,58 @@ def build_summary_content() -> dict:
         "candidates": found_strs,
     }
 
-def notify_success():
+def _dispatch_results(text: str, *, discord_url: str | None, generic_url: str | None, generic_payload: dict | None) -> bool:
+    """Send through configured channels and expose aggregate delivery failure."""
+    attempted = 0
+    delivered = 0
+
+    if os.getenv("LINE_CHANNEL_ACCESS_TOKEN") or os.getenv("LINE_USER_ID"):
+        attempted += 1
+        if send_line_message(text):
+            delivered += 1
+
+    if discord_url:
+        attempted += 1
+        if send_http_post(discord_url, data={"content": text}):
+            delivered += 1
+
+    if generic_url:
+        attempted += 1
+        if send_http_post(generic_url, data=generic_payload):
+            delivered += 1
+
+    if attempted == 0:
+        print("[Notify] No notification channel configured; delivery skipped.")
+        return True
+    if delivered == 0:
+        print("[Notify] All configured notification channels failed.", file=sys.stderr)
+        return False
+    if delivered < attempted:
+        print(f"[Notify] Notification partially delivered ({delivered}/{attempted} channels).", file=sys.stderr)
+    return True
+
+
+def notify_success() -> bool:
     summary = build_summary_content()
     text = summary["text"]
     print("=== SUMMARY MESSAGE ===")
     print(text)
-    
-    # 1. LINE Messaging API (optional replacement for discontinued LINE Notify)
-    send_line_message(text)
 
-    # 2. Discord Webhook
-    discord_url = os.getenv("DISCORD_WEBHOOK_URL")
-    if discord_url:
-        send_http_post(discord_url, data={"content": text})
-        
-    # 3. Generic Summary Webhook
     generic_url = os.getenv("SUMMARY_WEBHOOK_URL") or os.getenv("WEBHOOK_URL")
-    if generic_url:
-        send_http_post(generic_url, data={
+    return _dispatch_results(
+        text,
+        discord_url=os.getenv("DISCORD_WEBHOOK_URL"),
+        generic_url=generic_url,
+        generic_payload={
             "event": "premarket_summary",
             "message": text,
             "data": summary,
             "timestamp": datetime.now(timezone.utc).isoformat()
-        })
+        },
+    )
 
-def notify_failure():
+
+def notify_failure() -> bool:
     repo = os.getenv("GITHUB_REPOSITORY", "premarket-intel-tool")
     run_id = os.getenv("GITHUB_RUN_ID", "")
     server_url = os.getenv("GITHUB_SERVER_URL", "https://github.com")
@@ -183,34 +210,31 @@ def notify_failure():
     print("=== FAILURE MESSAGE ===")
     print(text)
 
-    # 1. LINE Messaging API (optional replacement for discontinued LINE Notify)
-    send_line_message(text)
-
-    # 2. Discord Webhook
     discord_url = os.getenv("DISCORD_WEBHOOK_URL") or os.getenv("ERROR_WEBHOOK_URL")
-    if discord_url:
-        send_http_post(discord_url, data={"content": text})
-
-    # 3. Generic Error Webhook
     error_url = os.getenv("ERROR_WEBHOOK_URL") or os.getenv("WEBHOOK_URL")
-    if error_url and error_url != discord_url:
-        send_http_post(error_url, data={
+    if error_url == discord_url:
+        error_url = None
+    return _dispatch_results(
+        text,
+        discord_url=discord_url,
+        generic_url=error_url,
+        generic_payload={
             "event": "workflow_failed",
             "repository": repo,
             "run_url": run_url,
             "message": text,
             "timestamp": datetime.now(timezone.utc).isoformat()
-        })
+        },
+    )
+
 
 def main():
     parser = argparse.ArgumentParser(description="Premarket Notification Dispatcher")
     parser.add_argument("--mode", choices=["success", "failure"], default="success")
     args = parser.parse_args()
 
-    if args.mode == "success":
-        notify_success()
-    else:
-        notify_failure()
+    delivered = notify_success() if args.mode == "success" else notify_failure()
+    raise SystemExit(0 if delivered else 1)
 
 if __name__ == "__main__":
     main()

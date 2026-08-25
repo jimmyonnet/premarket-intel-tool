@@ -74,7 +74,11 @@ def test_workflow_splits_full_quality_from_scheduled_smoke_and_caches_dependenci
     assert "notify-failure:" in workflow
     assert "needs: [full-quality, build]" in workflow
     assert "needs.full-quality.result == 'failure'" in workflow
+    assert "needs.full-quality.result == 'cancelled'" in workflow
     assert "needs.build.result == 'failure'" in workflow
+    assert "needs.build.result == 'cancelled'" in workflow
+    assert "notify_summary.py --mode success || true" not in workflow
+    assert "notify_summary.py --mode failure || true" not in workflow
     assert "npx --yes terser" not in workflow
     assert "cancel-in-progress: false" in workflow
 

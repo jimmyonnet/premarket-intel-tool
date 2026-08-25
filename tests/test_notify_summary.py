@@ -1,5 +1,9 @@
 from types import SimpleNamespace
 
+import sys
+
+import pytest
+
 from scripts import notify_summary
 
 
@@ -54,3 +58,27 @@ def test_webhook_failure_log_contains_only_scheme_and_host(monkeypatch, capsys):
     assert "https://hooks.example.test" in output
     assert "/path/secret-token" not in output
     assert "secret-query" not in output
+
+
+def test_configured_channels_all_failing_are_reported_as_delivery_failure(monkeypatch, capsys):
+    monkeypatch.setenv("DISCORD_WEBHOOK_URL", "https://hooks.example.test/path/token")
+    monkeypatch.delenv("ERROR_WEBHOOK_URL", raising=False)
+    monkeypatch.delenv("WEBHOOK_URL", raising=False)
+    monkeypatch.delenv("LINE_CHANNEL_ACCESS_TOKEN", raising=False)
+    monkeypatch.delenv("LINE_USER_ID", raising=False)
+    monkeypatch.setattr(notify_summary, "send_http_post", lambda *args, **kwargs: False)
+
+    assert notify_summary._dispatch_results(
+        "hello", discord_url="https://hooks.example.test/path/token", generic_url=None, generic_payload=None
+    ) is False
+    assert "All configured notification channels failed" in capsys.readouterr().err
+
+
+def test_cli_returns_nonzero_when_notification_delivery_fails(monkeypatch):
+    monkeypatch.setattr(sys, "argv", ["notify_summary.py", "--mode", "failure"])
+    monkeypatch.setattr(notify_summary, "notify_failure", lambda: False)
+
+    with pytest.raises(SystemExit) as exc_info:
+        notify_summary.main()
+
+    assert exc_info.value.code == 1

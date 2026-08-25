@@ -14,6 +14,9 @@ def test_280_visual_baseline_uses_self_contained_inline_style_system():
         assert visual_contract in template
     assert '<link rel="stylesheet" href="assets/tokens.css">' not in page
     assert '<link rel="stylesheet" href="assets/layout.css">' not in page
+    assert 'assets/style.css' not in page
+    assert '<link href="https://fonts.googleapis.com/css2?' in page
+    assert not (DOCS / "assets" / "style.css").exists()
 
 
 def test_manual_update_button_retains_280_navigation_button_visual_class():

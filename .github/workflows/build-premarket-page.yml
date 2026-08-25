@@ -250,14 +250,15 @@ jobs:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
           LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
           LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
-        run: python scripts/notify_summary.py --mode success || true
+        run: python scripts/notify_summary.py --mode success
 
 
   notify-failure:
     needs: [full-quality, build]
     if: >-
       always() &&
-      (needs.full-quality.result == 'failure' || needs.build.result == 'failure')
+      (needs.full-quality.result == 'failure' || needs.full-quality.result == 'cancelled' ||
+       needs.build.result == 'failure' || needs.build.result == 'cancelled')
     timeout-minutes: 5
     runs-on: ubuntu-latest
     permissions:
@@ -275,4 +276,4 @@ jobs:
           LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
           LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
           FAILED_JOBS: full-quality=${{ needs.full-quality.result }},build=${{ needs.build.result }}
-        run: python scripts/notify_summary.py --mode failure || true
+        run: python scripts/notify_summary.py --mode failure

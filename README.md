@@ -66,6 +66,14 @@ python -m pytest -q
 python scripts/build_page.py --indices data/latest/indices.json --night-session data/latest/night_session.json --disposal data/latest/disposal.json --pressplay data/latest/pressplay.json --chengwaye-daily data/latest/chengwaye_daily.json --stock-history data/latest/stock_history.json --calendar data/latest/calendar.json --financials data/latest/financials.json --news data/latest/news.json --ai-summary data/latest/ai_summary.json --twse-summary data/latest/twse_summary.json --source-status data/latest/source_status.json --out docs/index.html
 ```
 
+## 測試規範
+
+新增前端或模板測試時，應先用代表性 fixture render 出完整 HTML，再以
+BeautifulSoup/DOM 斷言實際元素、狀態與互動契約；不要只用模板字串比對推論畫面一定正確。
+資料處理、通知與 workflow 等非 UI 測試則直接驗證可觀測行為，例如回傳值、退出碼與
+mock 呼叫內容。既有的字串契約測試先維持不動，等對應 UI 區塊下次修改時再順手轉成
+render 後的 DOM 測試，避免為了整理而進行大規模重構。
+
 ## 如何觸發手動 Rebuild（即時更新頁面）
 
 若盤前想即時手動更新數據，不用等 GitHub Actions 排程時間：
