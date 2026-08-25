@@ -35,9 +35,10 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  # Never cancel an in-flight data build; it may already have published a
-  # consistent Pages snapshot and is protected by the push/rebase retry below.
-  cancel-in-progress: false
+  # Only one data-writing build may run at a time. A newer manual refresh
+  # supersedes an older one before both can fetch different snapshots and
+  # compete to rebase/push the same generated files.
+  cancel-in-progress: true
 
 permissions:
   contents: read

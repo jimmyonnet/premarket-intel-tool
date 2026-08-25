@@ -80,7 +80,7 @@ def test_workflow_splits_full_quality_from_scheduled_smoke_and_caches_dependenci
     assert "notify_summary.py --mode success || true" not in workflow
     assert "notify_summary.py --mode failure || true" not in workflow
     assert "npx --yes terser" not in workflow
-    assert "cancel-in-progress: false" in workflow
+    assert "cancel-in-progress: true" in workflow
 
 
 def test_requirements_are_exactly_pinned():
