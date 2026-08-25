@@ -93,6 +93,8 @@ Usage:
         --fixture-article ../fixtures/pressplay_article.txt \
         --fixture-daily ../fixtures/chengwaye_daily.html
 """
+from __future__ import annotations
+
 import argparse
 import datetime
 import difflib
