@@ -636,6 +636,7 @@ def main():
     )
     ap.add_argument("--financials", required=False, help="Path to financials.json")
     ap.add_argument("--news", required=False, help="Path to news.json")
+    ap.add_argument("--ai-summary", required=False, help="Optional path to ai_summary.json")
     ap.add_argument("--twse-summary", required=False, help="Path to twse_summary.json")
     ap.add_argument("--source-status", required=False, default=None, help="Path to source_status.json")
     ap.add_argument("--data-date", required=False, default=None, help="Optional data date override (e.g. 08/24)")
@@ -684,6 +685,7 @@ def main():
     calendar_raw = load_json(args.calendar) or {}
     financials_data = load_json(args.financials) if args.financials else {}
     news_data = load_json(args.news) if args.news else []
+    ai_summary_data = load_json(args.ai_summary) if args.ai_summary else {}
     twse_data = load_json(args.twse_summary) if args.twse_summary else {} or {}
     cal_events = calendar_raw.get("events") or []
     cal_today = calendar_raw.get("today") or now.strftime("%Y-%m-%d")
@@ -773,6 +775,7 @@ def main():
         calendar=calendar_section,
         financials=financials_data or {},
         news=news_data,
+        ai_summary=ai_summary_data or {},
         twse=twse_data,
         meta=meta_data,
         stock_history=stock_history,
@@ -817,6 +820,7 @@ def main():
         calendar=calendar_section,
         financials=financials_data,
         news=news_data,
+        ai_summary=ai_summary_data or {},
         twse=twse_data,
         twse_holidays_list=sorted(list(load_twse_holidays())),
     )

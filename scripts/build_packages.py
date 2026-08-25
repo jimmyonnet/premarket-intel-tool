@@ -231,6 +231,7 @@ def write_packages(
     calendar: dict[str, Any],
     financials: dict[str, Any],
     news: Any,
+    ai_summary: dict[str, Any] | None = None,
     twse: dict[str, Any],
     meta: dict[str, Any],
     stock_history: dict[str, Any] | None = None,
@@ -247,6 +248,7 @@ def write_packages(
         "macro": {"indices": indices, "night": night, "twse": twse},
         "calendar": {"today": calendar.get("today"), "range_end": calendar.get("range_end"), "events": calendar.get("events") or []},
         "news": _news_package(news),
+        "ai_summary": ai_summary or {"status": "fallback", "provider": "deterministic fallback"},
     }
     hashes = {}
     for key, payload in packages.items():

@@ -2908,6 +2908,95 @@
     .cal-metrics-grid { font-size: 12px; }
   }
 
+  /* AI BRIEFING */
+  .ai-briefing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .ai-briefing-panel {
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    background: var(--bg-sub);
+  }
+  .ai-briefing-kicker {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .01em;
+    margin-bottom: 7px;
+  }
+  .ai-briefing-headline {
+    color: var(--text-main);
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 0 0 7px;
+  }
+  .ai-briefing-list {
+    margin: 0;
+    padding-left: 17px;
+    color: var(--text-main);
+    font-size: 12px;
+    line-height: 1.6;
+  }
+  .ai-briefing-list li + li { margin-top: 3px; }
+  .ai-briefing-empty {
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .ai-briefing-risk {
+    margin-top: 8px;
+    padding: 7px 8px;
+    border-left: 3px solid var(--amber);
+    background: var(--amber-bg);
+    color: var(--amber-fg);
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
+  .ai-news-stats, .ai-topic-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 6px 0 8px;
+  }
+  .ai-news-stats span, .ai-topic-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 6px;
+    border: 1px solid var(--blue-border);
+    border-radius: 999px;
+    background: var(--blue-bg);
+    color: var(--blue-fg);
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+  .ai-quality-list { display: flex; flex-direction: column; gap: 5px; }
+  .ai-quality-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--text-main);
+    font-size: 11.5px;
+  }
+  .ai-briefing-footnote {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-light);
+    color: var(--text-muted);
+    font-size: 10.5px;
+    line-height: 1.5;
+  }
+  @media (max-width: 768px) {
+    .ai-briefing-grid { grid-template-columns: 1fr; }
+    .ai-briefing-panel { padding: 11px; }
+    .ai-briefing-headline { font-size: 13px; }
+  }
+
   /* ACCESSIBILITY: REDUCED MOTION */
   @media (prefers-reduced-motion: reduce) {
     *, ::before, ::after {
@@ -3802,6 +3891,87 @@
             ℹ️ 今日新聞來源暫時無法取得 · 系統將於下次排程自動重試
           </div>
         </div>
+      </div>
+
+      {% set ai = ai_summary if ai_summary is defined and ai_summary else {} %}
+      {% set ai_news = ai.news_summary if ai.news_summary is defined and ai.news_summary else {} %}
+      {% set ai_market = ai.market_summary if ai.market_summary is defined and ai.market_summary else {} %}
+      {% set ai_quality = ai.data_quality if ai.data_quality is defined and ai.data_quality else {} %}
+      {% set ai_quality_checks = ai_quality.checks if ai_quality.checks is defined and ai_quality.checks else [] %}
+      {% set ai_status_ok = ai.status == 'ok' %}
+
+      <!-- AI 盤前整理 -->
+      <div class="card ai-briefing-card-wrap" id="ai-briefing">
+        <div class="card-head">
+          <div class="card-title-group">
+            <h3 class="card-title">🧠 AI 盤前整理</h3>
+            <span class="count-badge">{{ ai.provider or '確定性整理' }}</span>
+          </div>
+          <span class="card-tip">原始數據優先</span>
+        </div>
+        <div class="ai-briefing-grid">
+          <article class="ai-briefing-panel">
+            <div class="ai-briefing-kicker">🌙 隔夜市場總結</div>
+            <h4 class="ai-briefing-headline">{{ ai_market.headline or '目前尚未產生隔夜市場總結。' }}</h4>
+            {% if ai_market.bullets %}
+            <ul class="ai-briefing-list">
+              {% for bullet in ai_market.bullets[:4] %}
+              <li>{{ bullet }}</li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p class="ai-briefing-empty">目前沒有足夠行情資料可供整理。</p>
+            {% endif %}
+            {% if ai_market.risks %}
+            <div class="ai-briefing-risk"><strong>風險：</strong>{{ ai_market.risks[0] }}</div>
+            {% endif %}
+          </article>
+
+          <article class="ai-briefing-panel">
+            <div class="ai-briefing-kicker">📰 新聞多樣性與摘要</div>
+            <h4 class="ai-briefing-headline">{{ ai_news.headline or '目前尚未產生新聞摘要。' }}</h4>
+            <div class="ai-news-stats">
+              <span>新聞 {{ (ai.news_stats.count if ai.news_stats is defined and ai.news_stats else (news|length if news else 0)) }} 則</span>
+              <span>主題 {{ (ai.news_stats.unique_topics if ai.news_stats is defined and ai.news_stats else 0) }} 類</span>
+              <span>輝達 {{ (ai.news_stats.nvidia_count if ai.news_stats is defined and ai.news_stats else 0) }} 則</span>
+            </div>
+            {% if ai_news.key_points %}
+            <ul class="ai-briefing-list">
+              {% for point in ai_news.key_points[:4] %}
+              <li>{{ point }}</li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p class="ai-briefing-empty">目前沒有可用新聞重點。</p>
+            {% endif %}
+            {% if ai_news.topic_summary %}
+            <div class="ai-topic-list">
+              {% for topic in ai_news.topic_summary[:5] %}
+              <span class="ai-topic-chip">{{ topic.topic }} · {{ topic.count }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </article>
+
+          <article class="ai-briefing-panel">
+            <div class="ai-briefing-kicker">🛡️ 資料品質檢查</div>
+            <h4 class="ai-briefing-headline"><span class="status-badge {{ 'is-ok' if ai_quality.status == 'ok' else 'is-warning' }}">{{ ai_quality.label or '待檢查' }}</span></h4>
+            <div class="ai-quality-list">
+              {% for check in ai_quality_checks[:6] %}
+              <div class="ai-quality-row">
+                <span>{{ check.name }}</span>
+                <span class="status-badge {{ 'is-ok' if check.status == 'ok' else 'is-warning' }}">{{ check.detail or check.status }}</span>
+              </div>
+              {% endfor %}
+            </div>
+            {% if ai_quality.issues %}
+            <div class="ai-briefing-risk"><strong>提醒：</strong>{{ ai_quality.issues[0].message }}</div>
+            {% else %}
+            <p class="ai-briefing-empty">目前未發現明顯資料品質警告。</p>
+            {% endif %}
+          </article>
+        </div>
+        <div class="ai-briefing-footnote">{{ ai.quality_note or 'AI 摘要僅根據本頁快照生成；價格、時間與來源以原始資料為準，不構成投資建議。' }}{% if ai.generated_at %} · {{ ai.generated_at[:16] }}{% endif %}</div>
       </div>
 
       <!-- 財經行事曆 (時間軸儀表板) -->

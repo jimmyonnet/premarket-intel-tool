@@ -102,6 +102,15 @@ jobs:
           echo "Refreshing mode: ${mode}"
           python scripts/run_fetchers.py --mode "${mode}" --date "${{ steps.date.outputs.today }}" --allow-unsafe-exit
 
+      # Optional repository secret: GEMINI_API_KEY. When absent, the script
+      # publishes deterministic summaries and data-quality checks instead.
+      - name: Generate optional Gemini AI briefing
+        if: steps.trading_day.outputs.is_trading_day == 'true'
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+        run: python scripts/generate_ai_summary.py --out data/latest/ai_summary.json
+
       - name: Validate fetched data contracts
         if: steps.trading_day.outputs.is_trading_day == 'true'
         run: python scripts/validate_data.py --data-dir data/latest --normalize || echo "::warning::Data validation contract reported warnings"
@@ -123,6 +132,7 @@ jobs:
             --calendar data/latest/calendar.json \
             --financials data/latest/financials.json \
             --news data/latest/news.json \
+            --ai-summary data/latest/ai_summary.json \
             --twse-summary data/latest/twse_summary.json \
             --source-status data/latest/source_status.json \
             --data-date "${{ inputs.data_date }}" \
