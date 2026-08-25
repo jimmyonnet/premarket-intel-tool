@@ -1,5 +1,5 @@
 {
-  "archived_at": "2026-08-25 19:37:53",
+  "archived_at": "2026-08-25 19:56:14",
   "data_date": "2026-08-25",
   "retention_days": 60,
   "sources": {
@@ -2157,7 +2157,7 @@
     },
     "source_status": {
       "schema_version": "source-status.v2",
-      "updated_at": "2026-08-25T19:37:40.239417+08:00",
+      "updated_at": "2026-08-25T19:56:01.233688+08:00",
       "reliability_tiers": {
         "core_stable": {
           "label": "核心穩定",
@@ -2195,7 +2195,7 @@
           "status": "ok",
           "fetched_at": "2026-08-25T19:37:11.104943+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2215,7 +2215,7 @@
           "status": "ok",
           "fetched_at": "2026-08-25T19:37:13.601458+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2235,7 +2235,7 @@
           "status": "ok",
           "fetched_at": "2026-08-25T19:37:13.001630+08:00",
           "data_date": "2026-08-25",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2253,14 +2253,16 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T19:37:11.104387+08:00",
+          "fetched_at": "2026-08-25T19:55:34.472502+08:00",
           "data_date": "08/26",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
         },
         "pressplay": {
           "source_id": "pressplay",
@@ -2297,7 +2299,7 @@
           "status": "ok",
           "fetched_at": "2026-08-25T19:37:39.452966+08:00",
           "data_date": "2026/08/25",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2317,7 +2319,7 @@
           "status": "ok",
           "fetched_at": "2026-08-25T19:37:11.104154+08:00",
           "data_date": "2026-08-25",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2337,7 +2339,7 @@
           "status": "ok",
           "fetched_at": "2026-08-25T19:37:11.104636+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2357,7 +2359,7 @@
           "status": "ok",
           "fetched_at": "2026-08-25T19:37:11.598386+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2380,7 +2382,7 @@
           "status": "ok",
           "fetched_at": "2026-08-25T19:37:39.861210+08:00",
           "data_date": "2026-08-25T19:37:40.213056+08:00",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2391,7 +2393,7 @@
     },
     "ai_summary": {
       "schema_version": 1,
-      "generated_at": "2026-08-25T19:37:52.743634+08:00",
+      "generated_at": "2026-08-25T19:56:13.927893+08:00",
       "status": "ok",
       "provider": "Gemini API",
       "model": "gemini-2.5-flash",
@@ -2451,58 +2453,58 @@
         }
       },
       "news_summary": {
-        "headline": "台股V轉大漲，美債殖利率攀升與美股回檔風險並存。",
+        "headline": "台股V轉大漲逾400點，外資賣超，美債殖利率與美股回檔風險受關注。",
         "topic_summary": [
           {
             "topic": "台股市場",
             "count": 3,
-            "summary": "台灣股市經歷V型反轉，大漲407點並收復季線，由航運、金融、生技及矽光子等族群帶動，但外資仍呈現賣超。"
+            "summary": "台灣股市昨日經歷V轉大漲407點，收復45K點，航運、金融、生技及矽光子類股表現亮眼，但外資仍賣超7億元。"
           },
           {
             "topic": "美元／債券／商品",
             "count": 1,
-            "summary": "30年期美債殖利率升至近20年高點，引發對AI投資熱潮可能受衝擊的討論。"
+            "summary": "30年期美債殖利率衝上近20年高點，引發市場對長天期利率上升是否衝擊AI投資熱潮的討論。"
           },
           {
             "topic": "美股／全球市場",
             "count": 1,
-            "summary": "美國銀行警告美股可能回檔逾10%，並指出若民主黨掌控參院，AI與金融股可能成為避險焦點。"
+            "summary": "美銀警告美股恐回檔逾10%，並指出若民主黨奪參院，AI與金融股可能成為避險焦點。"
           },
           {
             "topic": "公司／財報",
             "count": 1,
-            "summary": "漢測前七月營收已超越去年全年，顯示強勁成長動能。"
+            "summary": "漢測前七月營收已超越去年全年，展現強勁成長動能。"
           }
         ],
         "key_points": [
-          "台股V型反轉大漲407點，收復季線。",
-          "航運、金融、生技及矽光子族群表現亮眼。",
-          "30年期美債殖利率創近20年新高，引發對AI投資熱潮影響的關注。",
-          "美銀預警美股可能回檔逾10%。"
+          "台股大漲407點！ 外資竟賣超7億 「這檔」昨天大買今天砍最兇",
+          "30年期美債殖利率衝近20年高點！長天期利率上升是否開始衝擊AI投資熱潮？",
+          "美銀警告美股恐回檔逾10%！民主黨若奪參院「AI」與「金融股」將成避險焦點",
+          "台股近千點V轉收紅！航運股攜手金融軍團、矽光子護盤奪回季線"
         ]
       },
       "market_summary": {
-        "headline": "美股主要指數漲跌互見，科技股承壓，台指期夜盤小幅上漲。",
+        "headline": "美股主要指數漲跌互見，費半與科技股承壓，台指期夜盤小幅上漲。",
         "observations": [
-          "美股市場表現分歧，道瓊工業指數上漲，而S&P 500、NASDAQ及費城半導體指數均下跌，顯示市場廣度不一。",
-          "科技相關指數及ADR表現疲弱，費城半導體指數跌幅顯著，台積電、輝達、美光ADR均下跌，其中美光跌幅最大。",
-          "亞洲股市日經225與韓國綜合指數呈現下跌，與美股科技股走勢一致。",
-          "台指期夜盤逆勢上漲0.44%，與美股科技股的跌勢形成對比。"
+          "美股市場表現分歧，道瓊工業指數小幅上漲，而S&P 500、NASDAQ及費城半導體指數則呈現下跌。",
+          "科技相關指數與ADR普遍走弱，費城半導體指數跌幅最深，台積電、輝達、美光ADR均呈現下跌。",
+          "亞洲主要股市日經225與韓國綜合指數呈現下跌趨勢，與美股科技股走勢一致，但更新時間資料未提供。",
+          "台指期夜盤小幅上漲0.44%，顯示市場對台股開盤可能持謹慎樂觀態度，與美股科技股的弱勢形成對比。"
         ],
         "drivers": [
-          "30年期美債殖利率升至近20年高點，可能對科技股及AI投資熱潮造成壓力。",
-          "美銀警告美股可能出現逾10%的回檔，影響市場情緒。",
-          "台股盤中V轉，由航運、金融、生技及矽光子等族群帶動，顯示內資動能。",
-          "漢測營收強勁成長，可能提振個別公司表現。"
+          "長天期美債殖利率上升可能對AI投資熱潮造成衝擊。",
+          "美銀對美股可能回檔逾10%的警告，可能影響市場情緒。",
+          "台股昨日V轉收紅，金融、航運、生技及矽光子類股表現強勁。",
+          "外資在台股大漲後仍有賣超行為，可能影響後續市場動能。"
         ],
         "risks": [
-          "長天期美債殖利率持續攀升，可能衝擊AI等成長型股票的估值。",
-          "美股整體市場存在回檔風險，可能影響全球股市表現。",
-          "外資在台股大漲時仍呈現賣超，顯示對台股後市看法保守。",
-          "美股科技股普遍下跌，可能對台灣相關供應鏈造成壓力。"
+          "美國長天期公債殖利率持續走高，可能對科技股估值造成壓力。",
+          "美股存在回檔風險，特別是科技股可能面臨較大壓力。",
+          "外資在台股的賣超動向，可能影響市場信心與資金流向。",
+          "亞洲股市普遍下跌，可能對台股開盤造成外部壓力。"
         ]
       },
-      "quality_note": "所有資料來源狀態正常。"
+      "quality_note": "盤前研究報告的資訊截至2026-08-25T19:56:01.233688+08:00，部分亞洲股市行情資料未提供更新時間。"
     },
     "financials": {
       "cutoff_str": "08/25 13:30",
@@ -14389,11 +14391,11 @@
     }
   },
   "meta": {
-    "build_time": "2026-08-25 19:37",
-    "build_version": "20260825_1937",
+    "build_time": "2026-08-25 19:56",
+    "build_version": "20260825_1956",
     "data_date": "08/26",
-    "stale_hours": 0.0,
-    "hours_since_us_close": 15.6,
+    "stale_hours": 0.3,
+    "hours_since_us_close": 15.9,
     "us_market_context": {
       "session_key": "pre",
       "label": "美股盤前",
@@ -14401,7 +14403,7 @@
       "badge_short": "盤前",
       "pill_class": "pill-amber",
       "updated_label": "08/25 05:15",
-      "detail": "Yahoo Finance · 來源更新 08/25 05:15（14.4 小時前）· 延遲分鐘數未提供 · 尚未進入美股正常交易時段",
+      "detail": "Yahoo Finance · 來源更新 08/25 05:15（14.7 小時前）· 延遲分鐘數未提供 · 尚未進入美股正常交易時段",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "ready",
@@ -14418,7 +14420,7 @@
         "status": "ok",
         "fetched_at": "2026-08-25T19:37:11.104943+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向",
@@ -14441,9 +14443,9 @@
         "name": "處置股與出關預警",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-08-25T19:37:11.104387+08:00",
+        "fetched_at": "2026-08-25T19:55:34.472502+08:00",
         "data_date": "08/26",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險",
@@ -14468,7 +14470,7 @@
         "status": "ok",
         "fetched_at": "2026-08-25T19:37:13.601458+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整",
@@ -14493,7 +14495,7 @@
         "status": "ok",
         "fetched_at": "2026-08-25T19:37:13.001630+08:00",
         "data_date": "2026-08-25",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數",
@@ -14543,7 +14545,7 @@
         "status": "ok",
         "fetched_at": "2026-08-25T19:37:39.452966+08:00",
         "data_date": "2026/08/25",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行",
@@ -14570,7 +14572,7 @@
         "status": "ok",
         "fetched_at": "2026-08-25T19:37:39.861210+08:00",
         "data_date": "2026-08-25T19:37:40.213056+08:00",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
@@ -14598,7 +14600,7 @@
         "status": "ok",
         "fetched_at": "2026-08-25T19:37:11.104154+08:00",
         "data_date": "2026-08-25",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少今日重磅總經數據與事件日程倒數",
@@ -14623,7 +14625,7 @@
         "status": "ok",
         "fetched_at": "2026-08-25T19:37:11.104636+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少昨日盤後自結損益與營收公告統計",
@@ -14648,7 +14650,7 @@
         "status": "ok",
         "fetched_at": "2026-08-25T19:37:11.598386+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少隔夜美股與產業焦點新聞快訊",
@@ -14668,8 +14670,8 @@
       }
     ],
     "schema_version": 1,
-    "data_revision": "c101a51171276184",
-    "built_at": "2026-08-25T11:37:53.109540+00:00",
+    "data_revision": "e442e49b061c798f",
+    "built_at": "2026-08-25T11:56:14.314160+00:00",
     "hash": {
       "disposition": "08cbadd4573a",
       "candidates": "c36961c31e0e",
@@ -14678,7 +14680,7 @@
       "macro": "8ea638d053a0",
       "calendar": "b0c8a6bb68b0",
       "news": "d407f64d48f3",
-      "ai_summary": "a1d39648a528",
+      "ai_summary": "910393c63f67",
       "opening_forecast": "2b39a809cc49",
       "opening_result": "304d49ae289d",
       "learning_status": "58703cc60851"
