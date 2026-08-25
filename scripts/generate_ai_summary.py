@@ -303,12 +303,27 @@ def call_gemini(api_key: str, model: str, payload: dict[str, Any]) -> dict[str, 
             detail = "未提供詳細原因"
         raise ValueError(f"Gemini HTTP {exc.code}: {str(detail)[:240]}") from exc
     parts = (((result.get("candidates") or [{}])[0].get("content") or {}).get("parts") or [])
-    text = "".join(part.get("text", "") for part in parts if isinstance(part, dict))
+    text = "".join(part.get("text", "") for part in parts if isinstance(part, dict)).strip()
     if not text:
         raise ValueError("Gemini response did not contain text")
-    parsed = json.loads(text)
+    candidates = [text]
+    if "```" in text:
+        fenced = text.replace("```json", "```").split("```")
+        candidates.extend(part.strip() for part in fenced if part.strip() and not part.strip() == text)
+    start, end = text.find("{"), text.rfind("}")
+    if start >= 0 and end > start:
+        candidates.append(text[start:end + 1])
+    parsed = None
+    last_error = None
+    for candidate in candidates:
+        try:
+            parsed = json.loads(candidate)
+            break
+        except json.JSONDecodeError as exc:
+            last_error = exc
     if not isinstance(parsed, dict):
-        raise ValueError("Gemini response was not an object")
+        detail = f"{last_error.msg} line {last_error.lineno} column {last_error.colno}" if last_error else "not an object"
+        raise ValueError(f"Gemini JSON parse failed: {detail}")
     return parsed
 
 
