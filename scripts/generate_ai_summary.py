@@ -297,8 +297,17 @@ def call_gemini(api_key: str, model: str, payload: dict[str, Any]) -> dict[str, 
         headers={"Content-Type": "application/json", "x-goog-api-key": api_key},
         method="POST",
     )
-    with urllib.request.urlopen(request, timeout=45) as response:
-        result = json.loads(response.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(request, timeout=45) as response:
+            result = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as exc:
+        try:
+            error_payload = json.loads(exc.read().decode("utf-8"))
+            error_info = error_payload.get("error", {}) if isinstance(error_payload, dict) else {}
+            detail = error_info.get("message") or error_info.get("status") or "未提供詳細原因"
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+            detail = "未提供詳細原因"
+        raise ValueError(f"Gemini HTTP {exc.code}: {str(detail)[:240]}") from exc
     parts = (((result.get("candidates") or [{}])[0].get("content") or {}).get("parts") or [])
     text = "".join(part.get("text", "") for part in parts if isinstance(part, dict))
     if not text:
