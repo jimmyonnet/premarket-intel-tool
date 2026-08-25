@@ -52,7 +52,12 @@ def test_workflow_splits_full_quality_from_scheduled_smoke_and_caches_dependenci
     assert "python -m pytest tests/ -q" in workflow
     assert "cache: pip" in workflow
     assert "cache-dependency-path: requirements.txt" in workflow
-    assert "actions/cache@v4" in workflow
+    assert "actions/checkout@v7" in workflow
+    assert "actions/setup-python@v7" in workflow
+    assert "actions/cache@v6" in workflow
+    assert "actions/checkout@v4" not in workflow
+    assert "actions/setup-python@v5" not in workflow
+    assert "actions/cache@v4" not in workflow
     assert "~/.cache/ms-playwright" in workflow
     assert "playwright-${{ runner.os }}-1.62.0-${{ hashFiles('requirements.txt') }}" in workflow
     assert "playwright-${{ runner.os }}-1.62.0-" in workflow
