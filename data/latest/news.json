@@ -1,5 +1,32 @@
 [
   {
+    "title": "台股大漲407點！ 外資竟賣超7億 「這檔」昨天大買今天砍最兇",
+    "link": "https://news.google.com/rss/articles/CBMi7AJBVV95cUxNcXBRbGVMT2w3cmZDZjBHckhtTlAzWF9sb1E2MUNoSGFHTEw2eG9Uel9tcDA0NUFyMl8wUDdWU2c3YzBIQS0wbTV3VXpXTUV1Y3p4SkNwelpxSm1XbkdKb21scVIzZ3dkZHVhekxBYjQ1SDlZV2lzdVJQeUJPQnlnSFRfT2R1MS1CdHMxT0JGNnhremNvNDJTR3RoUDdaSUpMRXFEQVEzRmhlcjRFdjdIR09RVGJYQ1lMNkhvclVKNW1lR2tmc3Y3NXY5YThWOUZ4WkVYcS1RTWx6Zmg5MzVoWFNaWXVaMWl5U0xuX2hTb0FoZDhMbjNiaS1sWHRyQjduTER4aFJKYUd2TVo2cVhHUWxoeDc0OEFwSFFlZlRzblllMW1pdnV3VXhyMThDVFdTeG1uZ2pIWVhOZlpqeUZxMmg5c3hzdkFic1dzNW5YT3ZuRXZINmNWNlc4dV91MFhYeTI1QTNUVXpkZUct?oc=5",
+    "source": "Yahoo股市",
+    "time": "08/25 17:25",
+    "timestamp": 1787649900.0,
+    "score": 11,
+    "quality_score": 3,
+    "impact_score": 8,
+    "matched_groups": [
+      "market_benchmark",
+      "market_move",
+      "market_structure"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "market_structure"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "taiwan_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "30年期美債殖利率衝近20年高點！長天期利率上升是否開始衝擊AI投資熱潮？",
     "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE50NHE0QWFJbDhoSFFmOEJlaS1rNE41UkpqdEdEMTVoTlFxWWpTSGs1OUgySEhIUFY3OVVabVgyYkVJcUtiWlVrRWl2ZDBHbDQ?oc=5",
     "source": "news.cnyes.com",
@@ -20,33 +47,6 @@
     ],
     "primary_topic": "currency_commodities",
     "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "大奇蹟日！ 台積電、大立光尾盤狂拉 台股翻紅收漲407點",
-    "link": "https://news.google.com/rss/articles/CBMi3wJBVV95cUxNUlU4UzFva1lqUFozd2lMZ0hQZFRDbFhsV200aGt1U0xvME82YlhacV92WE5LaXU3UlFabUNvb1dMT0dhT3UwZVBORkFuY0hNQVZ1TG9pWEJ1b3dWV3dwaHhwWGdTMlNzVldPQW5qMVRsdzZEbURVNmJqWmpBM1RPTjJLMjlDOXd2aUp6R2VsSHU2VnRMUHVmZ0NtRXhKZ2I4YVJVRG5vazRYN3kxdTJQOFVCZUtldkZuMXVEN3c4ZTJkTjVES0RQdUx2WVN3eG9MWkdOVDBGdHRoYzBsZk12ZXNTbHhUb001NlVSdWJFSUFkV3pYaFhaYWxQX3JIYmRYUy1PcXdNUXVrZFJZR1I5RFRra2FGQTNLRC1jT3k5eUctVlpIOThVNjRERG1IQUwtYzl3WDlyVkhXbXlSVUxqNG9jUjAyTmJZLVNCNUwxRTBDb0p4alAzclJ4VWwtVHc?oc=5",
-    "source": "Yahoo股市",
-    "time": "08/25 14:35",
-    "timestamp": 1787639746.0,
-    "score": 9,
-    "quality_score": 3,
-    "impact_score": 6,
-    "matched_groups": [
-      "market_benchmark",
-      "systemic_company"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "taiwan_market",
-      "company_earnings"
-    ],
-    "primary_topic": "taiwan_market",
-    "named_entities": [
-      "tsmc",
-      "taiwan_market"
-    ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
