@@ -28,11 +28,34 @@ def test_scheduled_section_modes_and_manual_full_refresh_are_explicit():
         assert f'"{mode}"' in runner
 
 
-def test_candidate_and_announcement_modes_refresh_the_complete_section_sources():
+def test_candidate_and_announcement_modes_are_present_in_the_task_catalog():
     runner = RUNNER.read_text(encoding="utf-8")
 
-    assert 'if args.mode in ("full", "candidates", "morning-core"):' in runner
-    assert 'status_map["pressplay"] = fetch_source(' in runner
-    assert 'status_map["chengwaye_daily"] = fetch_source(' in runner
-    assert 'if args.mode in ("full", "financials"):' in runner
-    assert 'status_map["financials"] = fetch_source(' in runner
+    assert '"pressplay": FetchTask(' in runner
+    assert 'modes=("full", "candidates", "morning-core")' in runner
+    assert '"chengwaye_daily": FetchTask(' in runner
+    assert 'dependencies=("pressplay",)' in runner
+    assert '"chengwaye_stock_history": FetchTask(' in runner
+    assert 'dependencies=("pressplay", "chengwaye_daily")' in runner
+    assert '"financials": FetchTask(' in runner
+    assert 'modes=("full", "financials")' in runner
+
+
+def test_workflow_splits_full_quality_from_scheduled_smoke_and_caches_dependencies():
+    workflow = WORKFLOW.read_text(encoding="utf-8")
+    assert "pull_request:" in workflow
+    assert "push:" in workflow
+    assert "full-quality:" in workflow
+    assert "github.event_name == 'pull_request'" in workflow
+    assert "github.event_name == 'schedule'" in workflow
+    assert "tests/test_smoke_contract.py" in workflow
+    assert "python -m pytest tests/ -q" in workflow
+    assert "cache: pip" in workflow
+    assert "cache-dependency-path: requirements.txt" in workflow
+    assert "actions/cache@v4" in workflow
+    assert "~/.cache/ms-playwright" in workflow
+    assert "playwright-${{ runner.os }}-1.62.0-${{ hashFiles('requirements.txt') }}" in workflow
+    assert "playwright-${{ runner.os }}-1.62.0-" in workflow
+    assert "trading_calendar.py update" in workflow
+    assert "--respect-ttl" in workflow
+    assert "git pull --rebase origin main && git push" in workflow

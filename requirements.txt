@@ -1,7 +1,7 @@
 requests>=2.31
 beautifulsoup4>=4.12
 jinja2>=3.1
-playwright>=1.40
+playwright==1.62.0
 icalendar>=6.0
 recurring-ical-events>=2.2
 pytest>=8.0

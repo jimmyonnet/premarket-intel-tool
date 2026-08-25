@@ -20,6 +20,8 @@
       }
     }
     var savedTheme = localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme');
+    var hashTheme = String(window.location.hash || '').match(/[?&]theme=(dark|light)(?:&|$)/);
+    if (hashTheme) savedTheme = hashTheme[1];
     var theme = (savedTheme === 'dark') ? 'dark' : 'light';
     document.documentElement.setAttribute('data-theme', theme);
   })();
@@ -5723,6 +5725,18 @@
     }
   }
 
+  window.pm.focusWatchTarget = function(c) {
+    var targetRow = document.querySelector('tr[data-code="' + CSS.escape(String(c)) + '"]');
+    if (targetRow) {
+      targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      targetRow.classList.remove('highlight-flash');
+      void targetRow.offsetWidth;
+      targetRow.classList.add('highlight-flash');
+    } else {
+      window.pm.showToast(c + ' 未出現在今日警示或候選清單中');
+    }
+  };
+
   function renderWatch() {
     var box = document.getElementById('watch-chips');
     var hint = document.getElementById('watch-hint');
@@ -5792,11 +5806,7 @@
           summaryChip.className = 'watch-summary-chip ' + summaryClass;
           summaryChip.textContent = item.code + (item.hit && item.hit.label ? ' ' + item.hit.label : '');
           summaryChip.title = '定位至 ' + item.code + ' 的今日命中列';
-          summaryChip.onclick = function(event) {
-            event.preventDefault();
-            event.stopPropagation();
-            focusWatchTarget(item.code);
-          };
+          summaryChip.setAttribute('data-focus-watch', item.code);
           summaryHits.appendChild(summaryChip);
         });
       }
@@ -5808,28 +5818,28 @@
       allBtn.type = 'button';
       allBtn.className = 'watch-stat-pill ' + (curGrp === 'all' ? 'is-active' : 'gray');
       allBtn.textContent = '⭐ 全部 (' + codes.length + ')';
-      allBtn.onclick = function() { window.pm.setWatchFilterGroup('all'); };
+      allBtn.setAttribute('data-watch-filter', 'all');
       pillBox.appendChild(allBtn);
 
       var alertBtn = document.createElement('button');
       alertBtn.type = 'button';
       alertBtn.className = 'watch-stat-pill ' + (curGrp === 'alert' ? 'is-active ' : '') + (hitAlerts.length ? 'danger' : 'gray');
       alertBtn.textContent = '🚨 警示/處置 (' + hitAlerts.length + ')';
-      alertBtn.onclick = function() { window.pm.setWatchFilterGroup('alert'); };
+      alertBtn.setAttribute('data-watch-filter', 'alert');
       pillBox.appendChild(alertBtn);
 
       var candBtn = document.createElement('button');
       candBtn.type = 'button';
       candBtn.className = 'watch-stat-pill ' + (curGrp === 'candidate' ? 'is-active ' : '') + (hitCandidates.length ? 'blue' : 'gray');
       candBtn.textContent = '🔵 候選觀察 (' + hitCandidates.length + ')';
-      candBtn.onclick = function() { window.pm.setWatchFilterGroup('candidate'); };
+      candBtn.setAttribute('data-watch-filter', 'candidate');
       pillBox.appendChild(candBtn);
 
       var otherBtn = document.createElement('button');
       otherBtn.type = 'button';
       otherBtn.className = 'watch-stat-pill ' + (curGrp === 'other' ? 'is-active ' : '') + 'gray';
       otherBtn.textContent = '⚪ 其餘標的 (' + otherStocks.length + ')';
-      otherBtn.onclick = function() { window.pm.setWatchFilterGroup('other'); };
+      otherBtn.setAttribute('data-watch-filter', 'other');
       pillBox.appendChild(otherBtn);
 
       if (codes.length > 12 && curGrp === 'all') {
@@ -5837,20 +5847,8 @@
         toggleBtn.type = 'button';
         toggleBtn.className = 'watch-toggle-btn';
         toggleBtn.textContent = window.pm.watchlistExpanded ? '▴ 收合清單' : '▾ 展開全部 (' + codes.length + ' 檔)';
-        toggleBtn.onclick = window.pm.toggleWatchlistExpand;
+        toggleBtn.setAttribute('data-watch-expand', 'toggle');
         pillBox.appendChild(toggleBtn);
-      }
-    }
-
-    function focusWatchTarget(c) {
-      var targetRow = document.querySelector('tr[data-code="' + c + '"]');
-      if (targetRow) {
-        targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        targetRow.classList.remove('highlight-flash');
-        void targetRow.offsetWidth;
-        targetRow.classList.add('highlight-flash');
-      } else {
-        window.pm.showToast(c + ' 未出現在今日警示或候選清單中');
       }
     }
 
@@ -5867,9 +5865,9 @@
       chip.innerHTML = '<span>' + icon + '</span>'
         + '<span class="wc-code">' + c + '</span>'
         + (hit && hit.label ? '<span class="wc-name">' + hit.label + '</span>' : '')
-        + '<span class="wc-del" onclick="event.stopPropagation(); window.delWatch(\'' + c + '\')" title="刪除">✕</span>';
+        + '<span class="wc-del" data-delete-watch="' + escapeHtml(c) + '" title="刪除">✕</span>';
 
-      chip.onclick = function() { focusWatchTarget(c); };
+      chip.setAttribute('data-focus-watch', c);
       return chip;
     }
 
@@ -6877,6 +6875,36 @@
     window.pm.updateBriefingFreshness();
     window.pm.ensureDataLabels();
     window.pm.renderManualCandidates();
+    var watchChips = document.getElementById('watch-chips');
+    if (watchChips && !watchChips.getAttribute('data-delegation-bound')) {
+      watchChips.setAttribute('data-delegation-bound', '1');
+      watchChips.addEventListener('click', function(event) {
+        var remove = event.target.closest && event.target.closest('[data-delete-watch]');
+        if (remove) {
+          event.preventDefault();
+          event.stopPropagation();
+          window.delWatch(remove.getAttribute('data-delete-watch'));
+          return;
+        }
+        var focus = event.target.closest && event.target.closest('[data-focus-watch]');
+        if (focus) {
+          event.preventDefault();
+          window.pm.focusWatchTarget(focus.getAttribute('data-focus-watch'));
+          return;
+        }
+        var filter = event.target.closest && event.target.closest('[data-watch-filter]');
+        if (filter) {
+          event.preventDefault();
+          window.pm.setWatchFilterGroup(filter.getAttribute('data-watch-filter'));
+          return;
+        }
+        var expand = event.target.closest && event.target.closest('[data-watch-expand]');
+        if (expand) {
+          event.preventDefault();
+          window.pm.toggleWatchlistExpand();
+        }
+      });
+    }
     var batchArea = document.getElementById('batch-input-area');
     if (batchArea) batchArea.addEventListener('input', window.pm.debounce(function() { window.pm.previewBatchCodes(); }, 250));
     var calendarSearch = document.getElementById('cal-search-input');
@@ -6900,16 +6928,7 @@
     ['wheel', 'touchstart', 'keydown'].forEach(function(eventName) {
       document.addEventListener(eventName, function() { window.pm.calendarUserScrolled = true; }, { once: true, passive: true });
     });
-    var savedTheme = localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme');
     var urlParams = new URLSearchParams(window.location.hash.split('?')[1] || '');
-    if (urlParams.get('theme')) savedTheme = urlParams.get('theme');
-    var activeTheme = (savedTheme === 'dark') ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', activeTheme);
-    var b = document.getElementById('theme-toggle');
-    if (b) b.textContent = activeTheme === 'dark' ? '☀️ 淺色' : '🌙 深色';
-    var metaTheme = document.querySelector('meta[name="theme-color"]');
-    if (metaTheme) metaTheme.content = activeTheme === 'dark' ? '#171411' : '#F5EFE7';
-
     var rawWatch = localStorage.getItem(window.WATCH_KEY);
     var codes = safeJsonParse(window.WATCH_KEY, []);
     var inp = document.getElementById('watch-input');
@@ -7060,19 +7079,6 @@
           var b = document.getElementById('theme-toggle');
           if (b) b.textContent = newTheme === 'dark' ? '☀️ 淺色' : '🌙 深色';
           window.pm.syncIframeTheme(newTheme);
-        }
-      });
-    }
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('message', function(e) {
-        if (e.data && e.data.type === 'sw-updated') {
-          var toast = document.getElementById('toast');
-          if (toast) {
-            toast.innerHTML = '🔄 偵測到最新盤前資料 <button onclick="location.reload()" style="background:var(--blue); color:#fff; border:none; border-radius:4px; padding:2px 8px; margin-left:6px; cursor:pointer; font-weight:700;">點此更新</button>';
-            toast.classList.add('show');
-            setTimeout(function() { toast.classList.remove('show'); }, 8000);
-          }
         }
       });
     }

@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-08-25 11:12",
-  "build_version": "20260825_1112",
+  "build_time": "2026-08-25 11:53",
+  "build_version": "20260825_1153",
   "data_date": "08/25",
-  "stale_hours": 0.0,
-  "hours_since_us_close": 7.2,
+  "stale_hours": 0.7,
+  "hours_since_us_close": 7.9,
   "us_market_context": {
     "session_key": "closed",
     "label": "最新收盤快照",
@@ -11,7 +11,7 @@
     "badge_short": "收盤",
     "pill_class": "pill-fresh",
     "updated_label": "08/25 05:15",
-    "detail": "Yahoo Finance · 來源更新 08/25 05:15（5.9 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
+    "detail": "Yahoo Finance · 來源更新 08/25 05:15（6.6 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
     "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
   },
   "overall_status": "ready",
@@ -36,7 +36,15 @@
       "fetch_status": "ok",
       "freshness": "fresh",
       "combined_status_label": "抓取正常・資料新鮮",
-      "status_badge_class": "is-ok"
+      "status_badge_class": "is-ok",
+      "reliability_tier": "core_stable",
+      "reliability_label": "核心穩定",
+      "ttl_minutes": 720,
+      "hard_expiry_minutes": 1440,
+      "fallback_policy": "previous_snapshot_with_warning",
+      "notification_level": "critical",
+      "dependencies": [],
+      "notification": null
     },
     {
       "source_id": "disposal",
@@ -53,7 +61,15 @@
       "fetch_status": "ok",
       "freshness": "fresh",
       "combined_status_label": "抓取正常・資料新鮮",
-      "status_badge_class": "is-ok"
+      "status_badge_class": "is-ok",
+      "reliability_tier": "core_stable",
+      "reliability_label": "核心穩定",
+      "ttl_minutes": 720,
+      "hard_expiry_minutes": 1440,
+      "fallback_policy": "previous_snapshot_with_warning",
+      "notification_level": "critical",
+      "dependencies": [],
+      "notification": null
     },
     {
       "source_id": "twse_summary",
@@ -70,7 +86,15 @@
       "fetch_status": "ok",
       "freshness": "fresh",
       "combined_status_label": "抓取正常・資料新鮮",
-      "status_badge_class": "is-ok"
+      "status_badge_class": "is-ok",
+      "reliability_tier": "core_stable",
+      "reliability_label": "核心穩定",
+      "ttl_minutes": 720,
+      "hard_expiry_minutes": 1440,
+      "fallback_policy": "previous_snapshot_with_warning",
+      "notification_level": "warning",
+      "dependencies": [],
+      "notification": null
     },
     {
       "source_id": "night_session",
@@ -87,7 +111,15 @@
       "fetch_status": "ok",
       "freshness": "fresh",
       "combined_status_label": "抓取正常・資料新鮮",
-      "status_badge_class": "is-ok"
+      "status_badge_class": "is-ok",
+      "reliability_tier": "important_short_stale",
+      "reliability_label": "重要但可短暫過期",
+      "ttl_minutes": 180,
+      "hard_expiry_minutes": 720,
+      "fallback_policy": "previous_snapshot_with_warning",
+      "notification_level": "warning",
+      "dependencies": [],
+      "notification": null
     },
     {
       "source_id": "pressplay",
@@ -104,7 +136,15 @@
       "fetch_status": "ok",
       "freshness": "fresh",
       "combined_status_label": "抓取正常・資料新鮮",
-      "status_badge_class": "is-ok"
+      "status_badge_class": "is-ok",
+      "reliability_tier": "high_risk",
+      "reliability_label": "高風險來源",
+      "ttl_minutes": 360,
+      "hard_expiry_minutes": 720,
+      "fallback_policy": "fixture_or_previous_snapshot_with_warning",
+      "notification_level": "notice",
+      "dependencies": [],
+      "notification": null
     },
     {
       "source_id": "chengwaye_daily",
@@ -121,7 +161,17 @@
       "fetch_status": "ok",
       "freshness": "fresh",
       "combined_status_label": "抓取正常・資料新鮮",
-      "status_badge_class": "is-ok"
+      "status_badge_class": "is-ok",
+      "reliability_tier": "high_risk",
+      "reliability_label": "高風險來源",
+      "ttl_minutes": 360,
+      "hard_expiry_minutes": 720,
+      "fallback_policy": "previous_snapshot_with_warning",
+      "notification_level": "notice",
+      "dependencies": [
+        "pressplay"
+      ],
+      "notification": null
     },
     {
       "source_id": "chengwaye_stock_history",
@@ -138,7 +188,18 @@
       "fetch_status": "ok",
       "freshness": "fresh",
       "combined_status_label": "抓取正常・資料新鮮",
-      "status_badge_class": "is-ok"
+      "status_badge_class": "is-ok",
+      "reliability_tier": "high_risk",
+      "reliability_label": "高風險來源",
+      "ttl_minutes": 1440,
+      "hard_expiry_minutes": 2880,
+      "fallback_policy": "previous_snapshot_with_warning",
+      "notification_level": "notice",
+      "dependencies": [
+        "pressplay",
+        "chengwaye_daily"
+      ],
+      "notification": null
     },
     {
       "source_id": "calendar",
@@ -155,7 +216,15 @@
       "fetch_status": "ok",
       "freshness": "fresh",
       "combined_status_label": "抓取正常・資料新鮮",
-      "status_badge_class": "is-ok"
+      "status_badge_class": "is-ok",
+      "reliability_tier": "important_short_stale",
+      "reliability_label": "重要但可短暫過期",
+      "ttl_minutes": 720,
+      "hard_expiry_minutes": 1440,
+      "fallback_policy": "previous_snapshot_with_warning",
+      "notification_level": "warning",
+      "dependencies": [],
+      "notification": null
     },
     {
       "source_id": "financials",
@@ -172,7 +241,15 @@
       "fetch_status": "ok",
       "freshness": "fresh",
       "combined_status_label": "抓取正常・資料新鮮",
-      "status_badge_class": "is-ok"
+      "status_badge_class": "is-ok",
+      "reliability_tier": "important_short_stale",
+      "reliability_label": "重要但可短暫過期",
+      "ttl_minutes": 720,
+      "hard_expiry_minutes": 1440,
+      "fallback_policy": "previous_snapshot_with_warning",
+      "notification_level": "warning",
+      "dependencies": [],
+      "notification": null
     },
     {
       "source_id": "news",
@@ -189,11 +266,20 @@
       "fetch_status": "ok",
       "freshness": "fresh",
       "combined_status_label": "抓取正常・資料新鮮",
-      "status_badge_class": "is-ok"
+      "status_badge_class": "is-ok",
+      "reliability_tier": "high_risk",
+      "reliability_label": "高風險來源",
+      "ttl_minutes": 180,
+      "hard_expiry_minutes": 720,
+      "fallback_policy": "previous_snapshot_with_warning",
+      "notification_level": "notice",
+      "dependencies": [],
+      "notification": null
     }
   ],
   "schema_version": 1,
-  "built_at": "2026-08-25T03:12:22.116150+00:00",
+  "data_revision": "4f0fa40d64fb3aa1",
+  "built_at": "2026-08-25T03:53:04.744039+00:00",
   "hash": {
     "disposition": "e0e54deced16",
     "candidates": "04fef8f189e9",

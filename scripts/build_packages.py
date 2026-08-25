@@ -255,9 +255,13 @@ def write_packages(
         encoded = _write_json(data_path / f"{key}.json", payload)
         hashes[key] = hashlib.sha256(encoded).hexdigest()[:12]
 
+    data_revision = hashlib.sha256(
+        json.dumps(hashes, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()[:16]
     final_meta = dict(meta)
     final_meta.update({
         "schema_version": 1,
+        "data_revision": data_revision,
         "built_at": datetime.now().astimezone().isoformat(),
         "hash": hashes,
         "packages": {key: f"data/{key}.json" for key in packages},

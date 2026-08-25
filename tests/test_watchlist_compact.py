@@ -29,8 +29,8 @@ def test_watchlist_uses_collapsed_summary_with_hit_placeholder():
     assert 'summaryItems = hitAlerts.concat(hitCandidates, otherStocks)' not in source
     assert "totalBadge.textContent = summaryItems.length + ' 檔';" in source
     assert "var summaryChip = document.createElement('button');" in source
-    assert 'summaryChip.onclick = function(event)' in source
-    assert 'focusWatchTarget(item.code);' in source
+    assert "summaryChip.setAttribute('data-focus-watch', item.code);" in source
+    assert "window.pm.focusWatchTarget = function(c)" in source
     assert "item.code + (item.hit && item.hit.label" in source
     assert 'watch-summary-more' not in source
     assert 'watch-summary-chip.is-amber' in source
@@ -39,8 +39,8 @@ def test_watchlist_uses_collapsed_summary_with_hit_placeholder():
     assert '.watch-summary-chip.is-candidate,\n  .watch-chip.blue' in source
     assert 'button.watch-summary-chip.is-amber { color: var(--amber) !important; }' in source
     assert 'button.watch-summary-chip.is-candidate { color: var(--blue) !important; }' in source
-    assert 'function focusWatchTarget(c)' in source
-    assert 'chip.onclick = function() { focusWatchTarget(c); };' in source
+    assert "data-delete-watch=\"' + escapeHtml(c) + '\"" in source
+    assert "chip.setAttribute('data-focus-watch', c);" in source
     assert "hit.type === 'blue' || hit.type === 'normal'" in source
 
 

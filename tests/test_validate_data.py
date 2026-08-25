@@ -93,3 +93,79 @@ def test_validate_data_dir_normalizes_market_rows_before_static_build(tmp_path):
     assert disposal["one_flag_from_disposal"][0]["code"] == "⏸3490"
     assert disposal["two_flags_from_disposal"] == []
     assert any("正規化" in warning for warning in report["warnings"])
+
+
+
+def _write_calendar_for(root, holidays=None):
+    calendar = root.parent / "trading_calendar" / "twse_holidays.json"
+    calendar.parent.mkdir(parents=True, exist_ok=True)
+    calendar.write_text(json.dumps({"years": {"2026": {"holidays": holidays or []}}, "manual_overrides": []}), encoding="utf-8")
+
+
+def test_semantic_date_consistency_is_reported_as_warning(tmp_path):
+    root = tmp_path / "data" / "latest"
+    root.mkdir(parents=True)
+    _write_payloads(root)
+    _write_calendar_for(root)
+    (root / "night_session.json").write_text(json.dumps({"date": "2026-08-25", "latest": {}}), encoding="utf-8")
+    (root / "disposal.json").write_text(json.dumps({"date_check": {"today": "2026-08-24", "effective_market_day": "2026-08-24", "page_says_applies_to": "08/23"}}), encoding="utf-8")
+
+    report = validate_data_dir(root)
+    assert report["ok"] is True
+    assert any("資料日期不一致" in warning for warning in report["warnings"])
+
+
+def test_semantic_disposal_previous_trading_day_check_uses_authoritative_calendar(tmp_path):
+    root = tmp_path / "data" / "latest"
+    root.mkdir(parents=True)
+    _write_payloads(root)
+    _write_calendar_for(root, holidays=["2026-08-24"])
+    (root / "disposal.json").write_text(json.dumps({
+        "date_check": {
+            "today": "2026-08-25", "effective_market_day": "2026-08-25", "page_says_applies_to": "08/20"
+        }
+    }), encoding="utf-8")
+
+    report = validate_data_dir(root)
+    assert any("disposal page_says_applies_to" in warning for warning in report["warnings"])
+    assert report["semantic_checks"]["disposal_previous_trading_day"] == "checked"
+
+
+def test_semantic_index_change_pct_error_is_not_silently_normalized(tmp_path):
+    _write_payloads(tmp_path)
+    (tmp_path / "indices.json").write_text(json.dumps({"us_indices": {"sp500": {"change_pct": 55}}}), encoding="utf-8")
+
+    report = validate_data_dir(tmp_path)
+    assert report["ok"] is False
+    assert any("change_pct" in error and "語意上限" in error for error in report["errors"])
+
+
+def test_semantic_duplicate_codes_news_and_announcements_are_errors(tmp_path):
+    _write_payloads(tmp_path)
+    (tmp_path / "pressplay.json").write_text(json.dumps({
+        "found_group": {"matched": [{"code": "2330"}, {"code": "2330"}]}
+    }), encoding="utf-8")
+    (tmp_path / "news.json").write_text(json.dumps([
+        {"title": "同一標題", "link": "https://example.test/a"},
+        {"title": " 同一標題 ", "link": "https://example.test/a"},
+    ]), encoding="utf-8")
+    (tmp_path / "financials.json").write_text(json.dumps({
+        "att": [{"code": "2330", "subject": "公告相同"}, {"code": "2330", "subject": "公告相同"}],
+        "fin": [], "rev": [],
+    }), encoding="utf-8")
+
+    report = validate_data_dir(tmp_path)
+    assert report["ok"] is False
+    assert any("股票代號 2330 重複" in error for error in report["errors"])
+    assert any("news normalized title 重複" in error for error in report["errors"])
+    assert any("news normalized link 重複" in error for error in report["errors"])
+    assert any("financials announcement 重複" in error for error in report["errors"])
+
+
+def test_explicit_schema_catches_nonempty_field_drift(tmp_path):
+    _write_payloads(tmp_path)
+    (tmp_path / "disposal.json").write_text(json.dumps({"items": []}), encoding="utf-8")
+
+    report = validate_data_dir(tmp_path)
+    assert report["ok"] is False
+    assert any("schema violation in disposal" in error and "date_check" in error for error in report["errors"])

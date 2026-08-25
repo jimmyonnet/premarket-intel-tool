@@ -116,3 +116,92 @@ def test_fetch_source_does_not_restore_corrupt_previous_snapshot(tmp_path, monke
     assert result["status"] == "failed"
     assert result["fallback_used"] is True
     assert json.loads(target.read_text(encoding="utf-8")) == []
+
+
+
+def _graph_task(source_id, target_file, dependencies=()):
+    from scripts.run_fetchers import FetchTask
+
+    return FetchTask(
+        source_id=source_id,
+        command=["fake", source_id],
+        target_file=target_file,
+        fallback_content="{}",
+        dependencies=tuple(dependencies),
+        modes=("full",),
+        max_attempts=1,
+        retry_delay_seconds=0,
+    )
+
+
+def test_task_graph_runs_independent_nodes_in_parallel_and_dependants_after_inputs(tmp_path):
+    import threading
+    import time
+    from scripts.run_fetchers import run_task_graph
+
+    active = 0
+    peak = 0
+    lock = threading.Lock()
+    started = []
+    finished = []
+
+    def fake_fetch(source_id, _cmd, target_file, _fallback, *args):
+        nonlocal active, peak
+        with lock:
+            started.append(source_id)
+            active += 1
+            peak = max(peak, active)
+        time.sleep(0.05)
+        target_file.write_text("{}", encoding="utf-8")
+        with lock:
+            active -= 1
+            finished.append(source_id)
+        return {"source_id": source_id, "status": "ok", "fallback_used": False}
+
+    result = run_task_graph(
+        [_graph_task("alpha", tmp_path / "alpha.json"), _graph_task("beta", tmp_path / "beta.json"), _graph_task("child", tmp_path / "child.json", ("alpha",))],
+        "full", max_workers=2, fetch_fn=fake_fetch,
+    )
+    assert peak == 2
+    assert started.index("child") > started.index("alpha")
+    assert result.order.index("alpha") < result.order.index("child")
+    assert result.order == ["alpha", "beta", "child"]
+    assert result.statuses["child"]["status"] == "ok"
+
+
+def test_task_graph_isolates_independent_failure_and_blocks_only_dependants(tmp_path):
+    from scripts.run_fetchers import run_task_graph
+
+    def fake_fetch(source_id, _cmd, target_file, _fallback, *args):
+        if source_id == "alpha":
+            return {"source_id": source_id, "status": "failed", "fallback_used": True}
+        target_file.write_text("{}", encoding="utf-8")
+        return {"source_id": source_id, "status": "ok", "fallback_used": False}
+
+    result = run_task_graph(
+        [_graph_task("alpha", tmp_path / "alpha.json"), _graph_task("beta", tmp_path / "beta.json"), _graph_task("child", tmp_path / "child.json", ("alpha",))],
+        "full", max_workers=2, fetch_fn=fake_fetch,
+    )
+    assert result.statuses["beta"]["status"] == "ok"
+    assert result.statuses["child"]["status"] == "blocked"
+    assert "alpha" in result.statuses["child"]["error_summary"]
+
+
+def test_task_graph_respects_source_ttl_and_emits_skip_metadata(tmp_path):
+    from scripts.run_fetchers import run_task_graph
+
+    target = tmp_path / "news.json"
+    target.write_text(json.dumps({"items": [{"title": "cached"}]}), encoding="utf-8")
+    called = []
+
+    def fake_fetch(*args):
+        called.append(args[0])
+        raise AssertionError("TTL 內不應重抓")
+
+    result = run_task_graph(
+        [_graph_task("news", target)], "full", max_workers=1,
+        fetch_fn=fake_fetch, respect_ttl=True,
+    )
+    assert called == []
+    assert result.statuses["news"]["refresh_skipped"] is True
+    assert "TTL" in result.statuses["news"]["skip_reason"]

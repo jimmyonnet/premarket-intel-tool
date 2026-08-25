@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""
-Unified data fetch runner for Premarket Intel Tool.
-Executes individual fetchers, captures errors, provides safe fallbacks,
-and maintains an audit-ready data/latest/source_status.json file.
-"""
+"""Reliable, dependency-aware data fetch runner for Premarket Intel Tool."""
 from __future__ import annotations
 
 import argparse
@@ -12,9 +8,11 @@ import os
 import subprocess
 import sys
 import time
+from concurrent.futures import Future, ThreadPoolExecutor, as_completed
+from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
-from typing import Any, Callable
+from typing import Any, Callable, Iterable
 
 try:
     from source_status import (
@@ -22,17 +20,41 @@ try:
         SourceItem,
         evaluate_source_health,
         save_source_status,
+        source_policy,
     )
-except ModuleNotFoundError:  # Support package-style imports in test runners.
+except ModuleNotFoundError:
     from scripts.source_status import (
         SOURCES_METADATA,
         SourceItem,
         evaluate_source_health,
         save_source_status,
+        source_policy,
     )
 
 TAIPEI = timezone(timedelta(hours=8))
 DATA_LATEST = Path(__file__).parent.parent / "data" / "latest"
+
+
+@dataclass(frozen=True)
+class FetchTask:
+    """One graph node.  Dependencies are source IDs, not implementation order."""
+
+    source_id: str
+    command: list[str]
+    target_file: Path
+    fallback_content: str
+    timeout: int = 45
+    extract_date_fn: Any = None
+    dependencies: tuple[str, ...] = ()
+    modes: tuple[str, ...] = ("full",)
+    max_attempts: int = 3
+    retry_delay_seconds: int = 30
+
+
+@dataclass
+class TaskGraphResult:
+    statuses: dict[str, dict[str, Any]] = field(default_factory=dict)
+    order: list[str] = field(default_factory=list)
 
 
 def pressplay_fallback_info(content: Any) -> tuple[bool, str | None]:
@@ -61,22 +83,28 @@ def pressplay_fallback_info(content: Any) -> tuple[bool, str | None]:
 
 
 def run_command(cmd: list[str], env: dict[str, str] | None = None, timeout: int = 60) -> tuple[int, str, str]:
-    """Runs a shell command and returns (exit_code, stdout, stderr)."""
+    """Run a subprocess and return (exit_code, stdout, stderr)."""
     try:
         proc = subprocess.run(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-            timeout=timeout,
-            env=env or os.environ.copy(),
-            check=False,
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True,
+            timeout=timeout, env=env or os.environ.copy(), check=False,
         )
         return proc.returncode, proc.stdout, proc.stderr
     except subprocess.TimeoutExpired:
         return 124, "", f"Command timed out after {timeout}s"
     except Exception as exc:
         return 1, "", str(exc)
+
+
+def _safe_json_bytes(path: Path) -> bytes | None:
+    if not path.exists() or path.stat().st_size <= 0:
+        return None
+    try:
+        raw = path.read_bytes()
+        json.loads(raw.decode("utf-8"))
+        return raw
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return None
 
 
 def fetch_source(
@@ -91,38 +119,25 @@ def fetch_source(
     retry_delay_seconds: int = 30,
     sleep_fn: Callable[[float], None] = time.sleep,
 ) -> dict[str, Any]:
-    """Fetch one source with bounded retries and a safe previous-snapshot fallback."""
+    """Fetch one source with bounded retries and safe previous-snapshot fallback."""
     target_file.parent.mkdir(parents=True, exist_ok=True)
-    now = datetime.now(TAIPEI)
-    now_iso = now.isoformat()
+    now_iso = datetime.now(TAIPEI).isoformat()
     previous_signature = None
-    previous_content = None
+    previous_content = _safe_json_bytes(target_file)
     if target_file.exists():
         previous_signature = (target_file.stat().st_mtime_ns, target_file.stat().st_size)
-        if target_file.stat().st_size > 0:
-            cached_bytes = target_file.read_bytes()
-            try:
-                json.loads(cached_bytes.decode("utf-8"))
-                previous_content = cached_bytes
-            except (UnicodeDecodeError, json.JSONDecodeError):
-                print(f"[Fetch Cache] {source_id} previous snapshot is invalid and will not be reused.", file=sys.stderr)
+        if previous_content is None and target_file.stat().st_size > 0:
+            print(f"[Fetch Cache] {source_id} previous snapshot is invalid and will not be reused.", file=sys.stderr)
 
     print(f"[Fetch] Starting {source_id} -> {target_file.name}...")
     attempts = max(1, max_attempts)
-    exit_code = 1
-    stdout = ""
-    stderr = ""
-    attempt = 0
+    exit_code, stdout, stderr, attempt = 1, "", "", 0
     for attempt in range(1, attempts + 1):
         exit_code, stdout, stderr = run_command(cmd, env=env, timeout=timeout)
         if exit_code == 0:
             break
         if attempt < attempts:
-            print(
-                f"[Fetch Retry] {source_id} attempt {attempt}/{attempts} failed; "
-                f"retrying in {retry_delay_seconds}s...",
-                file=sys.stderr,
-            )
+            print(f"[Fetch Retry] {source_id} attempt {attempt}/{attempts} failed; retrying in {retry_delay_seconds}s...", file=sys.stderr)
             sleep_fn(retry_delay_seconds)
     retry_attempts = max(0, attempt - 1)
 
@@ -130,7 +145,6 @@ def fetch_source(
     status = "ok"
     error_summary = None
     data_date = None
-
     if exit_code != 0:
         print(f"[Fetch Error] {source_id} failed with code {exit_code}: {stderr[:200]}", file=sys.stderr)
         fallback_used = True
@@ -142,13 +156,11 @@ def fetch_source(
             status = "failed"
             target_file.write_text(fallback_content, encoding="utf-8")
     else:
-        # If script wrote output to stdout, update target_file
         if stdout.strip():
             try:
-                # Validate JSON stdout
                 parsed = json.loads(stdout)
-                target_file.write_text(json.dumps(parsed, ensure_ascii=False, indent=2), encoding="utf-8")
-            except Exception:
+                target_file.write_text(json.dumps(parsed, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            except (TypeError, ValueError):
                 target_file.write_text(stdout, encoding="utf-8")
         else:
             current_signature = (target_file.stat().st_mtime_ns, target_file.stat().st_size) if target_file.exists() else None
@@ -157,7 +169,6 @@ def fetch_source(
                 fallback_used = True
                 error_summary = "指令成功但未產生新資料，沿用前次快照"
 
-        # Validate target file exists and is valid JSON
         if not target_file.exists() or target_file.stat().st_size == 0:
             fallback_used = True
             error_summary = "產出檔案為空"
@@ -170,7 +181,6 @@ def fetch_source(
         else:
             try:
                 content = json.loads(target_file.read_text(encoding="utf-8"))
-                # Check for special internal status flags
                 if isinstance(content, dict):
                     if content.get("is_fallback") or (content.get("latest") or {}).get("is_fallback"):
                         fallback_used = True
@@ -190,9 +200,11 @@ def fetch_source(
                             status = "failed"
                     elif extract_date_fn:
                         data_date = extract_date_fn(content)
-            except Exception as e:
+                elif extract_date_fn:
+                    data_date = extract_date_fn(content)
+            except Exception as exc:
                 fallback_used = True
-                error_summary = f"JSON 解析失敗: {str(e)[:100]}"
+                error_summary = f"JSON 解析失敗: {str(exc)[:100]}"
                 if previous_content is not None:
                     target_file.write_bytes(previous_content)
                     status = "warning"
@@ -200,12 +212,20 @@ def fetch_source(
                     target_file.write_text(fallback_content, encoding="utf-8")
                     status = "failed"
 
-    meta = SOURCES_METADATA.get(source_id, {"name": source_id, "is_required": False, "impact_desc": ""})
-
+    meta = source_policy(source_id)
+    notification = None
+    if fallback_used or status in ("failed", "warning"):
+        notification = f"{meta['notification_level']}: {error_summary or '使用備援資料'}"
     return {
         "source_id": source_id,
         "name": meta["name"],
         "is_required": meta["is_required"],
+        "reliability_tier": meta["reliability_tier"],
+        "ttl_minutes": meta["ttl_minutes"],
+        "hard_expiry_minutes": meta["hard_expiry_minutes"],
+        "fallback_policy": meta["fallback_policy"],
+        "notification_level": meta["notification_level"],
+        "dependencies": list(meta.get("dependencies", [])),
         "status": status,
         "fetched_at": now_iso,
         "data_date": data_date,
@@ -214,23 +234,22 @@ def fetch_source(
         "fallback_used": fallback_used,
         "retry_attempts": retry_attempts,
         "impact_desc": meta["impact_desc"],
+        "notification": notification,
     }
 
 
 def inspect_existing_source_file(source_id: str, file_path: Path) -> dict[str, Any] | None:
-    """If source is already present on disk, construct a valid status map entry."""
+    """Construct a status entry for an existing on-disk snapshot."""
     if not file_path.exists() or file_path.stat().st_size == 0:
         return None
     try:
         content = json.loads(file_path.read_text(encoding="utf-8"))
         mtime = datetime.fromtimestamp(file_path.stat().st_mtime, tz=TAIPEI)
         age_minutes = max(0.0, (datetime.now(TAIPEI) - mtime).total_seconds() / 60.0)
-        
         fallback_used = False
-        data_date = None
         status = "ok"
         error_summary = None
-
+        data_date = None
         if isinstance(content, dict):
             if content.get("is_fallback") or (content.get("latest") or {}).get("is_fallback"):
                 fallback_used = True
@@ -241,195 +260,183 @@ def inspect_existing_source_file(source_id: str, file_path: Path) -> dict[str, A
                     status = "warning"
                     error_summary = content.get("source_article", {}).get("fallback_reason") or pp_reason
             if content.get("_status") == "fetch_failed":
-                status = "failed"
-                fallback_used = True
+                status, fallback_used = "failed", True
                 error_summary = content.get("_error", "前次抓取失敗")
             data_date = content.get("date") or content.get("page_date") or (content.get("date_check") or {}).get("page_says_applies_to") or content.get("today")
-
-        meta = SOURCES_METADATA.get(source_id, {"name": source_id, "is_required": False, "impact_desc": ""})
+        meta = source_policy(source_id)
         return {
-            "source_id": source_id,
-            "name": meta["name"],
-            "is_required": meta["is_required"],
-            "status": status,
-            "fetched_at": mtime.isoformat(),
-            "data_date": data_date,
-            "age_minutes": round(age_minutes, 1),
-            "error_summary": error_summary,
-            "fallback_used": fallback_used,
-            "retry_attempts": 0,
-            "impact_desc": meta["impact_desc"],
+            "source_id": source_id, "name": meta["name"], "is_required": meta["is_required"],
+            "reliability_tier": meta["reliability_tier"], "ttl_minutes": meta["ttl_minutes"],
+            "hard_expiry_minutes": meta["hard_expiry_minutes"], "fallback_policy": meta["fallback_policy"],
+            "notification_level": meta["notification_level"], "dependencies": list(meta.get("dependencies", [])),
+            "status": status, "fetched_at": mtime.isoformat(), "data_date": data_date,
+            "age_minutes": round(age_minutes, 1), "error_summary": error_summary,
+            "fallback_used": fallback_used, "retry_attempts": 0, "impact_desc": meta["impact_desc"],
+            "notification": None,
         }
     except Exception:
         return None
 
 
+def task_is_fresh(source_id: str, file_path: Path, now: datetime | None = None) -> bool:
+    """Return whether an existing snapshot is within its source TTL."""
+    if not file_path.exists() or file_path.stat().st_size <= 0:
+        return False
+    current = now or datetime.now(TAIPEI)
+    age_minutes = max(0.0, (current - datetime.fromtimestamp(file_path.stat().st_mtime, tz=TAIPEI)).total_seconds() / 60.0)
+    return age_minutes <= int(source_policy(source_id)["ttl_minutes"])
+
+
+def _task_catalog(python_bin: str, data_dir: Path, today_str: str) -> dict[str, FetchTask]:
+    return {
+        "twse_summary": FetchTask("twse_summary", [python_bin, "scripts/fetch_twse_summary.py"], data_dir / "twse_summary.json", "{}", 30, modes=("full", "morning-core")),
+        "night_session": FetchTask("night_session", [python_bin, "scripts/tx_night_session.py", "assemble", "--data-dir", "data/night_session", "--date", today_str], data_dir / "night_session.json", "{}", 30, lambda c: c.get("date"), modes=("full", "morning-core")),
+        "calendar": FetchTask("calendar", [python_bin, "scripts/fetch_calendar.py"], data_dir / "calendar.json", "{}", 30, lambda c: c.get("today"), modes=("full", "morning-core")),
+        "news": FetchTask("news", [python_bin, "scripts/fetch_news.py"], data_dir / "news.json", "[]", 30, modes=("full", "morning-core")),
+        "indices": FetchTask("indices", [python_bin, "scripts/fetch_indices.py"], data_dir / "indices.json", "{}", 35, modes=("full", "morning-core", "asia-open-update")),
+        "disposal": FetchTask("disposal", [python_bin, "scripts/fetch_disposal.py", "--skip-date-check"], data_dir / "disposal.json", "{}", 40, lambda c: (c.get("date_check") or {}).get("page_says_applies_to"), modes=("full", "disposal")),
+        "pressplay": FetchTask("pressplay", [python_bin, "scripts/fetch_pressplay_groups.py"], data_dir / "pressplay.json", "{}", 50, lambda c: c.get("chengwaye_date"), modes=("full", "candidates", "morning-core")),
+        "chengwaye_daily": FetchTask("chengwaye_daily", [python_bin, "scripts/fetch_chengwaye_daily.py"], data_dir / "chengwaye_daily.json", "{}", 40, lambda c: c.get("page_date"), dependencies=("pressplay",), modes=("full", "candidates", "morning-core")),
+        "chengwaye_stock_history": FetchTask("chengwaye_stock_history", [python_bin, "scripts/fetch_chengwaye_stock_history.py", "--pressplay", str(data_dir / "pressplay.json")], data_dir / "stock_history.json", '{"source":"https://chengwaye.com/stock/","codes":{},"failed_codes":[],"_status":"fetch_failed"}', 120, lambda c: c.get("fetched_at"), dependencies=("pressplay", "chengwaye_daily"), modes=("full", "candidates", "morning-core")),
+        "financials": FetchTask("financials", [python_bin, "scripts/fetch_financials.py"], data_dir / "financials.json", '{"att":[],"fin":[],"rev":[]}', 150, modes=("full", "financials")),
+    }
+
+
+def _blocked_status(task: FetchTask, reason: str) -> dict[str, Any]:
+    meta = source_policy(task.source_id)
+    return {
+        "source_id": task.source_id, "name": meta["name"], "is_required": meta["is_required"],
+        "reliability_tier": meta["reliability_tier"], "ttl_minutes": meta["ttl_minutes"],
+        "hard_expiry_minutes": meta["hard_expiry_minutes"], "fallback_policy": meta["fallback_policy"],
+        "notification_level": meta["notification_level"], "dependencies": list(task.dependencies),
+        "status": "blocked", "fetched_at": datetime.now(TAIPEI).isoformat(), "data_date": None,
+        "age_minutes": 9999.0, "error_summary": reason, "fallback_used": False, "retry_attempts": 0,
+        "impact_desc": meta["impact_desc"], "notification": f"{meta['notification_level']}: {reason}",
+    }
+
+
+def run_task_graph(
+    tasks: Iterable[FetchTask],
+    mode: str,
+    max_workers: int = 4,
+    fetch_fn: Callable[..., dict[str, Any]] = fetch_source,
+    status_map: dict[str, dict[str, Any]] | None = None,
+    respect_ttl: bool = False,
+) -> TaskGraphResult:
+    """Execute ready graph layers concurrently and dependants topologically.
+
+    A failed/fallback parent is considered settled so independent branches keep
+    running; a dependent node is blocked only when an upstream node is unable
+    to produce a usable file.  This isolates high-risk failures without
+    allowing stock history to race ahead of PressPlay input.
+    """
+    selected = {task.source_id: task for task in tasks if mode in task.modes}
+    result = TaskGraphResult(statuses=dict(status_map or {}))
+    pending = set(selected)
+    completed: set[str] = set()
+    max_workers = max(1, int(max_workers))
+
+    def dependency_failed(task: FetchTask) -> str | None:
+        for dep in task.dependencies:
+            dep_status = result.statuses.get(dep, {})
+            if dep in selected and dep not in completed:
+                return f"依賴來源 {dep} 尚未完成"
+            if dep_status.get("status") in ("failed", "blocked"):
+                return f"依賴來源 {dep} 未產出可用資料"
+            if not dep_status:
+                return f"依賴來源 {dep} 尚未完成"
+        return None
+
+    while pending:
+        ready = [selected[sid] for sid in sorted(pending) if all(dep not in selected or dep in completed for dep in selected[sid].dependencies)]
+        if not ready:
+            for sid in sorted(pending):
+                result.statuses[sid] = _blocked_status(selected[sid], "任務圖存在循環或未滿足依賴")
+                result.order.append(sid)
+            break
+
+        futures: dict[Future[dict[str, Any]], FetchTask] = {}
+        with ThreadPoolExecutor(max_workers=min(max_workers, len(ready))) as executor:
+            for task in ready:
+                reason = dependency_failed(task)
+                if reason:
+                    result.statuses[task.source_id] = _blocked_status(task, reason)
+                    result.order.append(task.source_id)
+                    continue
+                if respect_ttl and task_is_fresh(task.source_id, task.target_file):
+                    cached = inspect_existing_source_file(task.source_id, task.target_file) or _blocked_status(task, "TTL 內找不到可用快照")
+                    cached["refresh_skipped"] = True
+                    cached["skip_reason"] = f"現有快照仍在 TTL {source_policy(task.source_id)['ttl_minutes']} 分鐘內"
+                    result.statuses[task.source_id] = cached
+                    result.order.append(task.source_id)
+                    continue
+                futures[executor.submit(
+                    fetch_fn, task.source_id, task.command, task.target_file, task.fallback_content,
+                    task.timeout, None, task.extract_date_fn, task.max_attempts, task.retry_delay_seconds,
+                )] = task
+            for future in as_completed(futures):
+                task = futures[future]
+                try:
+                    result.statuses[task.source_id] = future.result()
+                except Exception as exc:
+                    result.statuses[task.source_id] = _blocked_status(task, f"任務執行例外：{exc}")
+            # Completion remains concurrent, but persisted audit order is stable.
+            result.order.extend(task.source_id for task in sorted(ready, key=lambda item: item.source_id))
+        completed.update(task.source_id for task in ready)
+        pending.difference_update(task.source_id for task in ready)
+    return result
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Premarket Intel Tool Fetch Runner")
-    parser.add_argument(
-        "--mode",
-        choices=["full", "morning-core", "asia-open-update", "disposal", "candidates", "financials"],
-        default="full",
-        help="full is used for manual updates; scheduled modes refresh only their named page section.",
-    )
+    parser.add_argument("--mode", choices=["full", "morning-core", "asia-open-update", "disposal", "candidates", "financials"], default="full")
     parser.add_argument("--date", help="Today's date (YYYY-MM-DD)", default=None)
     parser.add_argument("--allow-unsafe-exit", action="store_true", help="Do not exit with code 1 even if unsafe")
+    parser.add_argument("--workers", type=int, default=4, help="Independent fetch task maximum parallelism")
+    parser.add_argument("--respect-ttl", action="store_true", help="Skip external fetches when an existing snapshot is within its source TTL")
     args = parser.parse_args()
 
     today_str = args.date or datetime.now(TAIPEI).strftime("%Y-%m-%d")
     DATA_LATEST.mkdir(parents=True, exist_ok=True)
-
-    # Load existing status if updating partially
     existing_status_file = DATA_LATEST / "source_status.json"
     status_map: dict[str, Any] = {}
     if existing_status_file.exists():
         try:
             status_map = json.loads(existing_status_file.read_text(encoding="utf-8")).get("sources", {})
-        except Exception:
+        except (OSError, json.JSONDecodeError, TypeError):
             status_map = {}
 
-    # File mapping for all sources
     source_file_map = {
-        "twse_summary": DATA_LATEST / "twse_summary.json",
-        "indices": DATA_LATEST / "indices.json",
-        "night_session": DATA_LATEST / "night_session.json",
-        "disposal": DATA_LATEST / "disposal.json",
-        "pressplay": DATA_LATEST / "pressplay.json",
-        "chengwaye_daily": DATA_LATEST / "chengwaye_daily.json",
-        "chengwaye_stock_history": DATA_LATEST / "stock_history.json",
-        "calendar": DATA_LATEST / "calendar.json",
-        "financials": DATA_LATEST / "financials.json",
-        "news": DATA_LATEST / "news.json",
+        "twse_summary": DATA_LATEST / "twse_summary.json", "indices": DATA_LATEST / "indices.json",
+        "night_session": DATA_LATEST / "night_session.json", "disposal": DATA_LATEST / "disposal.json",
+        "pressplay": DATA_LATEST / "pressplay.json", "chengwaye_daily": DATA_LATEST / "chengwaye_daily.json",
+        "chengwaye_stock_history": DATA_LATEST / "stock_history.json", "calendar": DATA_LATEST / "calendar.json",
+        "financials": DATA_LATEST / "financials.json", "news": DATA_LATEST / "news.json",
     }
-
-    # Pre-fill status for sources present on disk. On a partial refresh, keep
-    # the prior fetch outcome but recalculate every untouched source's age from
-    # its actual file modification time, so the page never reports old data as
-    # freshly fetched merely because a different section was refreshed.
-    for sid, fpath in source_file_map.items():
-        item = inspect_existing_source_file(sid, fpath)
+    for sid, file_path in source_file_map.items():
+        item = inspect_existing_source_file(sid, file_path)
         if item:
             if sid not in status_map:
                 status_map[sid] = item
             else:
                 status_map[sid]["age_minutes"] = item["age_minutes"]
+                status_map[sid].setdefault("ttl_minutes", item["ttl_minutes"])
+                status_map[sid].setdefault("hard_expiry_minutes", item["hard_expiry_minutes"])
 
-    python_bin = sys.executable
-
-    if args.mode in ("full", "morning-core"):
-        # Morning market context: yesterday's Taiwan close, overnight futures,
-        # macro calendar and overnight news.
-        status_map["twse_summary"] = fetch_source(
-            "twse_summary",
-            [python_bin, "scripts/fetch_twse_summary.py"],
-            DATA_LATEST / "twse_summary.json",
-            "{}",
-            timeout=30,
-        )
-
-        status_map["night_session"] = fetch_source(
-            "night_session",
-            [python_bin, "scripts/tx_night_session.py", "assemble", "--data-dir", "data/night_session", "--date", today_str],
-            DATA_LATEST / "night_session.json",
-            "{}",
-            timeout=30,
-            extract_date_fn=lambda c: c.get("date"),
-        )
-        status_map["calendar"] = fetch_source(
-            "calendar",
-            [python_bin, "scripts/fetch_calendar.py"],
-            DATA_LATEST / "calendar.json",
-            "{}",
-            timeout=30,
-            extract_date_fn=lambda c: c.get("today"),
-        )
-        status_map["news"] = fetch_source(
-            "news",
-            [python_bin, "scripts/fetch_news.py"],
-            DATA_LATEST / "news.json",
-            "[]",
-            timeout=30,
-        )
-
-    if args.mode in ("full", "morning-core", "asia-open-update"):
-        # Broad indices are refreshed in the morning and again around the
-        # Japan/Korea open; the latter mode intentionally leaves other data
-        # sources untouched.
-        status_map["indices"] = fetch_source(
-            "indices",
-            [python_bin, "scripts/fetch_indices.py"],
-            DATA_LATEST / "indices.json",
-            "{}",
-            timeout=35,
-        )
-
-    if args.mode in ("full", "disposal"):
-        # Chengwaye publishes the forecast for the next trading day at about
-        # 19:30 Taipei time. The scheduled workflow gives it a five-minute
-        # buffer before fetching this source.
-        status_map["disposal"] = fetch_source(
-            "disposal",
-            [python_bin, "scripts/fetch_disposal.py", "--skip-date-check"],
-            DATA_LATEST / "disposal.json",
-            "{}",
-            timeout=40,
-            extract_date_fn=lambda c: (c.get("date_check") or {}).get("page_says_applies_to"),
-        )
-
-    if args.mode in ("full", "candidates", "morning-core"):
-        # Candidate stocks combine the PressPlay premarket article with the
-        # Chengwaye daily institutional / day-trading detail.
-        status_map["pressplay"] = fetch_source(
-            "pressplay",
-            [python_bin, "scripts/fetch_pressplay_groups.py"],
-            DATA_LATEST / "pressplay.json",
-            "{}",
-            timeout=50,
-            extract_date_fn=lambda c: c.get("chengwaye_date"),
-        )
-
-        status_map["chengwaye_daily"] = fetch_source(
-            "chengwaye_daily",
-            [python_bin, "scripts/fetch_chengwaye_daily.py"],
-            DATA_LATEST / "chengwaye_daily.json",
-            "{}",
-            timeout=40,
-            extract_date_fn=lambda c: c.get("page_date"),
-        )
-
-        status_map["chengwaye_stock_history"] = fetch_source(
-            "chengwaye_stock_history",
-            [python_bin, "scripts/fetch_chengwaye_stock_history.py", "--pressplay", str(DATA_LATEST / "pressplay.json")],
-            DATA_LATEST / "stock_history.json",
-            '{"source":"https://chengwaye.com/stock/","codes":{},"failed_codes":[],"_status":"fetch_failed"}',
-            timeout=120,
-            extract_date_fn=lambda c: c.get("fetched_at"),
-        )
-
-    if args.mode in ("full", "financials"):
-        # Post-market self-reported earnings, financials and revenue notices.
-        status_map["financials"] = fetch_source(
-            "financials",
-            [python_bin, "scripts/fetch_financials.py"],
-            DATA_LATEST / "financials.json",
-            '{"att":[],"fin":[],"rev":[]}',
-            timeout=150,
-        )
-    # Save consolidated source status JSON
-    save_source_status(status_map)
-
-    # Evaluate readiness
-    eval_result = evaluate_source_health({"sources": status_map})
+    graph = run_task_graph(_task_catalog(sys.executable, DATA_LATEST, today_str).values(), args.mode, args.workers, status_map=status_map, respect_ttl=args.respect_ttl)
+    save_source_status(graph.statuses)
+    eval_result = evaluate_source_health({"sources": graph.statuses})
     print("\n==========================================")
     print(f"PAGE READINESS: {eval_result.overall_status.upper()} ({eval_result.status_label})")
+    print(f"TASK GRAPH ORDER: {' → '.join(graph.order)}")
     print("Reasons / Alerts:")
-    for r in eval_result.summary_reasons:
-        print(f" - {r}")
+    for reason in eval_result.summary_reasons:
+        print(f" - {reason}")
+    for notification in eval_result.notifications:
+        print(f"NOTIFY[{notification['level']}] {notification['source_id']}: {notification['message']}")
     print("==========================================\n")
-
     if eval_result.overall_status == "unsafe" and not args.allow_unsafe_exit:
         print("CRITICAL: One or more required sources failed! Marked as UNSAFE.", file=sys.stderr)
-        # We allow workflow to build diagnostic page, but exit with failure if required
         sys.exit(1)
 
 

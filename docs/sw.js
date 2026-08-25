@@ -1,99 +1,74 @@
-const CACHE_NAME = 'pmit-20260825_1112';
+const CACHE_NAME = 'pmit-20260825_1153-data-4f0fa40d64fb3aa1';
+const DATA_REVISION = '4f0fa40d64fb3aa1';
 const SHELL_ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './embed/att.html',
-  './embed/fin.html',
-  './embed/rev.html',
-  './icon-180.png',
-  './icon-192.png',
-  './icon-512.png',
-  './data_meta.json',
-  './data/tw_holidays.json'
+  './', './index.html', './manifest.json', './embed/att.html', './embed/fin.html', './embed/rev.html',
+  './icon-180.png', './icon-192.png', './icon-512.png', './data_meta.json', './data/tw_holidays.json'
 ];
+
+const isSameOrigin = request => new URL(request.url).origin === self.location.origin;
+const isDataRequest = url => url.pathname.endsWith('.json') || url.pathname.includes('/data/');
+const isNavigation = (request, url) => request.mode === 'navigate' || request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname.endsWith('/');
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async cache => {
-      // Core shell assets
       try {
         await cache.addAll(['./', './index.html', './manifest.json']);
       } catch (err) {
         console.warn('SW core cache warning:', err);
       }
-      // Optional / Embed shell assets
-      const optionalAssets = [
-        './embed/att.html',
-        './embed/fin.html',
-        './embed/rev.html',
-        './icon-180.png',
-        './icon-192.png',
-        './icon-512.png',
-        './data_meta.json',
-        './data/tw_holidays.json'
-      ];
-      await Promise.allSettled(optionalAssets.map(url => cache.add(url)));
+      await Promise.allSettled(SHELL_ASSETS.slice(3).map(url => cache.add(url)));
     }).then(() => self.skipWaiting())
   );
 });
 
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-      )
-    ).then(() => {
-      self.clients.claim();
-      // Notify all open clients that a new version is active
-      self.clients.matchAll().then(clients => {
-        clients.forEach(client => client.postMessage({ type: 'sw-updated', version: CACHE_NAME }));
-      });
-    })
+    caches.keys().then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))))
+      .then(() => self.clients.claim())
+      .then(() => self.clients.matchAll())
+      .then(clients => clients.forEach(client => client.postMessage({ type: 'sw-updated', version: CACHE_NAME, dataRevision: DATA_REVISION })))
   );
 });
 
-self.addEventListener('fetch', event => {
-  if (event.request.method !== 'GET') return;
-  const url = new URL(event.request.url);
+async function networkFirst(request, fallbackRequest, cacheResponse) {
+  try {
+    const networkResponse = await fetch(request, { cache: 'no-store' });
+    if (networkResponse && networkResponse.ok && cacheResponse) {
+      // A response is cached only under the current revision's cache. The
+      // query hash from app.js/data_meta provides an additional revalidation key.
+      const cache = await caches.open(CACHE_NAME);
+      await cache.put(request, networkResponse.clone());
+    }
+    return networkResponse;
+  } catch (_) {
+    return caches.match(fallbackRequest || request).then(cached => cached || null);
+  }
+}
 
-  // Skip cross-origin ads, tracking, or external APIs
-  if (url.origin !== self.location.origin) return;
+self.addEventListener('fetch', event => {
+  if (event.request.method !== 'GET' || !isSameOrigin(event.request)) return;
+  const url = new URL(event.request.url);
   if (url.pathname.includes('/data/night_session/')) return;
 
-  const isNavigation = event.request.mode === 'navigate' || event.request.destination === 'document' || url.pathname.endsWith('.html') || url.pathname.endsWith('/');
-  const isDataRequest = url.pathname.endsWith('.json') || url.pathname.includes('/data/');
-
-  if (isNavigation || isDataRequest) {
-    // Network-First with Fallback for navigation and dynamic json data
-    event.respondWith(
-      fetch(event.request)
-        .then(networkResponse => {
-          if (networkResponse && networkResponse.status === 200) {
-            const clone = networkResponse.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          }
-          return networkResponse;
-        })
-        .catch(() => caches.match(event.request).then(cached => cached || (isNavigation ? caches.match('./index.html') : null)))
-    );
-  } else {
-    // Stale-While-Revalidate for static assets (images, icons, manifest)
-    event.respondWith(
-      caches.open(CACHE_NAME).then(cache => {
-        return cache.match(event.request).then(cachedResponse => {
-          const fetchPromise = fetch(event.request)
-            .then(networkResponse => {
-              if (networkResponse && networkResponse.status === 200) {
-                cache.put(event.request, networkResponse.clone());
-              }
-              return networkResponse;
-            })
-            .catch(() => cachedResponse);
-          return cachedResponse || fetchPromise;
-        });
-      })
-    );
+  if (isNavigation(event.request, url)) {
+    event.respondWith(networkFirst(event.request, event.request, true));
+    return;
   }
+  if (isDataRequest(url)) {
+    // data_meta and package JSON are never served stale when online. If the
+    // network is unavailable, the same revision's cache is still a safe fallback.
+    event.respondWith(networkFirst(event.request, event.request, true));
+    return;
+  }
+
+  event.respondWith(
+    caches.open(CACHE_NAME).then(cache => cache.match(event.request).then(cached => {
+      const revalidate = fetch(event.request).then(response => {
+        if (response && response.ok) cache.put(event.request, response.clone());
+        return response;
+      }).catch(() => cached);
+      return cached || revalidate;
+    }))
+  );
 });

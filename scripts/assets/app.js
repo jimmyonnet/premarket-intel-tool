@@ -4,6 +4,8 @@ const state = {
   store: loadStore(),
   selectedCommand: 0,
   commands: [],
+  crossMatchSignature: null,
+  delegatedEventsBound: false,
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -113,12 +115,38 @@ function releaseRow(item, compact = false) {
   </div>`;
 }
 
-function bindStockRows(root = document) {
-  root.querySelectorAll('[data-code]').forEach((row) => {
-    if (row.dataset.bound) return;
-    row.dataset.bound = '1';
-    row.addEventListener('click', () => focusStock(row.dataset.code));
-    row.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); focusStock(row.dataset.code); } });
+function isInteractiveTarget(target) {
+  return Boolean(target?.closest('a,button,input,label,summary,select,textarea'));
+}
+
+function bindDelegatedEvents() {
+  if (state.delegatedEventsBound) return;
+  state.delegatedEventsBound = true;
+  document.addEventListener('click', (event) => {
+    const remove = event.target.closest('[data-remove-watch]');
+    if (remove) { event.preventDefault(); removeWatchlist(remove.dataset.removeWatch); return; }
+    const goto = event.target.closest('[data-goto]');
+    if (goto) { document.getElementById(goto.dataset.goto)?.scrollIntoView({behavior:'smooth'}); return; }
+    const command = event.target.closest('[data-command-index]');
+    if (command) {
+      const query = $('#command-input')?.value || '';
+      const needle = query.trim().toLowerCase();
+      const filtered = state.commands.filter((item) => item.title.toLowerCase().includes(needle) || item.hint.toLowerCase().includes(needle));
+      filtered[Number(command.dataset.commandIndex)]?.run();
+      closeCommandDialog();
+      return;
+    }
+    const financial = event.target.closest('.financial-main');
+    if (financial) { const detail = financial.nextElementSibling; if (detail) detail.hidden = !detail.hidden; return; }
+    const row = event.target.closest('[data-code]');
+    if (row && !isInteractiveTarget(event.target)) focusStock(row.dataset.code);
+  });
+  document.addEventListener('keydown', (event) => {
+    const row = event.target.closest?.('[data-code]');
+    if (row && !isInteractiveTarget(event.target) && (event.key === 'Enter' || event.key === ' ')) {
+      event.preventDefault();
+      focusStock(row.dataset.code);
+    }
   });
 }
 
@@ -133,8 +161,6 @@ function renderActionDeck(pkg) {
   $('#release-deck').innerHTML = rel || '<div class="empty">今日無出關</div>';
   if (items.length > 5) $('#disposition-deck').insertAdjacentHTML('beforeend', `<button class="more-row" data-goto="alerts">+${items.length - 5} 檔 ▾</button>`);
   if (releases.length > 5) $('#release-deck').insertAdjacentHTML('beforeend', `<button class="more-row" data-goto="alerts">+${releases.length - 5} 檔 ▾</button>`);
-  bindStockRows($('#action-deck'));
-  $('#action-deck').querySelectorAll('[data-goto]').forEach((button) => button.addEventListener('click', () => document.getElementById(button.dataset.goto)?.scrollIntoView({behavior:'smooth'})));
   renderDispositionPanel(pkg);
   refreshCommands();
 }
@@ -157,7 +183,6 @@ function renderDispositionPanel(pkg) {
     return `<tr data-code="${esc(item.code)}"><td data-label="市場">${esc(item.market)}</td><td data-label="代號 / 名稱" class="code"><a href="${stockHref(item.code, item.market)}" target="_blank" rel="noopener noreferrer">${esc(item.code)}</a><br><span>${esc(item.name)}</span>${item.locked ? ' <span class="badge locked">⚑ 鎖定</span>' : ''}</td><td data-label="最短路徑" class="rule">${rule ? `<div class="rule-bar ${rule.remain <= 1 ? 'is-near' : ''}" style="--progress:${progress}%"><span>${esc(rule.label || rule.id)} · ${rule.hit}/${rule.need} · ${rule.remain ? `再 ${rule.remain} 次` : '已達標'}</span></div>` : '<span class="flat">規則待確認</span>'}</td><td data-label="觸發價靶心">${targetMarkup(item)}</td><td data-label="最快處置" class="font-mono">${esc(item.earliest_disposal || '—')}</td></tr>`;
   }).join('')}</tbody></table></div>`;
   if (releases.length) panel.insertAdjacentHTML('beforeend', `<div class="release-inline"><div class="panel-toolbar"><strong>🟢 今日出關 · ${releases.length} 檔</strong><span class="section-note">解除處置限制</span></div>${releases.map((item) => releaseRow(item, false)).join('')}</div>`);
-  bindStockRows(panel);
 }
 
 function normalizeWatchCodes(value) {
@@ -169,7 +194,6 @@ function renderWatchlistManager() {
   if (!chips) return;
   const codes = state.store.watchlist || [];
   chips.innerHTML = codes.length ? codes.map((code) => `<span class="watch-chip"><span>${esc(code)}</span><button type="button" data-remove-watch="${esc(code)}" aria-label="移除 ${esc(code)}">×</button></span>`).join('') : '<span class="empty">尚未設定自選股。</span>';
-  chips.querySelectorAll('[data-remove-watch]').forEach((button) => button.addEventListener('click', () => removeWatchlist(button.dataset.removeWatch)));
 }
 
 function refreshWatchlistViews() {
@@ -217,7 +241,6 @@ function renderCandidatePanel(pkg) {
   const panel = $('#candidate-panel');
   if (!items.length) { panel.innerHTML = '<div class="empty">尚無籌碼股資料。</div>'; return; }
   panel.innerHTML = `<div class="panel-toolbar"><span class="section-note">${items.length} 檔 · 量能以背景長條表示</span></div><div class="table-wrap"><table class="data-table"><thead><tr><th>市場</th><th>代號 / 名稱</th><th class="num">收盤</th><th class="num">量(張)</th><th class="num">外資</th><th class="num">投信</th><th class="num">自營</th><th>訊號</th></tr></thead><tbody id="candidate-body">${items.map(candidateRow).join('')}</tbody></table></div>`;
-  bindStockRows(panel);
   renderWatchDeck(pkg);
   renderCrossMatch();
   refreshCommands();
@@ -227,20 +250,33 @@ function renderCrossMatch() {
   const panel = $('#crossmatch-panel');
   if (!panel) return;
   const watchlist = (state.store.watchlist || []).map(String);
-  if (!watchlist.length) { panel.hidden = true; return; }
+  const disposition = state.packages.get('disposition');
+  const candidates = state.packages.get('candidates');
+  const announcements = state.packages.get('announcements');
+  const signature = JSON.stringify({
+    watchlist,
+    disposition: disposition?.items?.map((item) => [item.code, item.name, item.condition, item.earliest_disposal]) || [],
+    releases: disposition?.releases?.map((item) => [item.code, item.name, item.exit_date]) || [],
+    candidates: candidates?.items?.map((item) => [item.code, item.name, item.group]) || [],
+    announcements: Object.values(announcements?.blocks || {}).flatMap((block) => (block.rows || []).map((item) => [item.code, item.subject, item.type])),
+  });
+  if (state.crossMatchSignature === signature) return;
+  state.crossMatchSignature = signature;
+  if (!watchlist.length) { panel.hidden = true; panel.innerHTML = ''; return; }
   const byCode = new Map();
+  const seenSignals = new Set();
   const add = (signal, item) => {
     const code = String(item?.code || '').replace('⏸', '').trim();
     if (!code) return;
+    const identity = [signal, code, item?.id || item?.uid || item?.subject || item?.condition || item?.group || item?.name || ''].join('|');
+    if (seenSignals.has(identity)) return;
+    seenSignals.add(identity);
     if (!byCode.has(code)) byCode.set(code, []);
     byCode.get(code).push({signal, item});
   };
-  const disposition = state.packages.get('disposition');
   if (disposition?.items) disposition.items.forEach((item) => add('處置預警', item));
   if (disposition?.releases) disposition.releases.forEach((item) => add('今日出關', item));
-  const candidates = state.packages.get('candidates');
   if (candidates?.items) candidates.items.forEach((item) => add('籌碼股', item));
-  const announcements = state.packages.get('announcements');
   Object.values(announcements?.blocks || {}).forEach((block) => (block.rows || []).forEach((item) => add('財報未反映', item)));
   const matches = watchlist.map((code) => ({code, hits: byCode.get(code) || []})).filter((entry) => entry.hits.length).sort((a, b) => b.hits.length - a.hits.length);
   if (!matches.length) { panel.hidden = false; panel.innerHTML = '<div class="panel-toolbar"><strong>自選股 × 全訊號</strong></div><div class="empty">今日沒有自選股訊號命中。</div>'; return; }
@@ -249,7 +285,6 @@ function renderCrossMatch() {
     const first = entry.hits[0].item;
     return `<tr data-code="${esc(entry.code)}"><td class="code">${esc(entry.code)} ${esc(first.name || '')}</td><td class="num font-mono">${entry.hits.length}</td><td>${entry.hits.map((hit) => `<span class="badge ${hit.signal === '處置預警' ? 'halt' : hit.signal === '今日出關' ? 'release' : 'warn'}">${esc(hit.signal)}</span>`).join(' ')}</td><td>${esc(first.ai_reason || first.condition || first.earliest_disposal || first.group || '已命中')}</td></tr>`;
   }).join('')}</tbody></table></div>`;
-  bindStockRows(panel);
 }
 
 function candidateRow(item) {
@@ -279,7 +314,6 @@ function renderAnnouncements(pkg) {
     return `<details class="native-details" ${rows.length ? '' : ''}><summary>${label}<span class="badge">${rows.length} 筆</span></summary>${rows.length ? `<div class="table-wrap"><table class="data-table financial-table"><thead><tr><th>時間</th><th>代號 / 名稱</th><th>AI</th><th>季度</th><th class="num">EPS (Δ)</th><th class="num">毛利率 (Δ)</th><th class="num">營益率 (Δ)</th></tr></thead><tbody>${rows.map(renderFinancialRow).join('')}</tbody></table></div>` : '<div class="empty">此區塊今日無資料。</div>'}</details>`;
   }).join('');
   panel.innerHTML = html || '<div class="empty">尚無公告資料。</div>';
-  panel.querySelectorAll('.financial-main').forEach((row) => row.addEventListener('click', () => { const detail = row.nextElementSibling; if (detail) detail.hidden = !detail.hidden; }));
 }
 
 function renderFlow(name, value, max) {
@@ -348,13 +382,13 @@ function renderCommandList(query = '') {
   const filtered = state.commands.filter((command) => command.title.toLowerCase().includes(needle) || command.hint.toLowerCase().includes(needle));
   state.selectedCommand = Math.min(state.selectedCommand, Math.max(0, filtered.length - 1));
   list.innerHTML = filtered.slice(0, 40).map((command, index) => `<button class="command-item ${index === state.selectedCommand ? 'is-selected' : ''}" data-command-index="${index}" type="button"><span>${esc(command.title)}</span><small>${esc(command.hint)}</small></button>`).join('') || '<div class="empty">找不到符合的命令。</div>';
-  list.querySelectorAll('[data-command-index]').forEach((button) => button.addEventListener('click', () => { filtered[Number(button.dataset.commandIndex)]?.run(); closeCommandDialog(); }));
 }
 
 function openCommandDialog() { const dialog = $('#command-dialog'); if (!dialog) return; if (typeof dialog.showModal === 'function') dialog.showModal(); else dialog.setAttribute('open',''); const input = $('#command-input'); input.value = ''; state.selectedCommand = 0; renderCommandList(); input.focus(); }
 function closeCommandDialog() { const dialog = $('#command-dialog'); if (dialog?.open) dialog.close(); }
 function gotoSection(id) { document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }
-function toggleTheme() { const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'; document.documentElement.dataset.theme = theme; saveStore({theme}); }
+function applyTheme(theme) { const active = theme === 'dark' ? 'dark' : 'light'; document.documentElement.dataset.theme = active; saveStore({theme: active}); }
+function toggleTheme() { applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'); }
 function setDensity(density) { document.documentElement.dataset.density = density; saveStore({density}); showToast(`顯示密度：${density}`); }
 function exportCard() {
   const text = [...document.querySelectorAll('.deck')].map((deck) => `${deck.querySelector('h2')?.textContent}\n${deck.querySelector('.deck-body')?.innerText || '—'}`).join('\n\n');
@@ -393,14 +427,14 @@ async function boot() {
   renderWatchlistManager();
   try {
     state.meta = await fetchJson('meta');
-    document.documentElement.dataset.theme = state.store.theme === 'dark' ? 'dark' : 'light';
+    applyTheme(state.store.theme);
     document.documentElement.dataset.density = state.store.density || 'comfortable';
     renderHealth();
     const [disposition, macro] = await Promise.all([loadPackage('disposition'), loadPackage('macro')]);
     renderActionDeck(disposition);
     renderMacro(macro);
     idle(() => {
-      loadPackage('candidates', (payload) => { renderCandidatePanel(payload); renderCrossMatch(); }).catch(() => {});
+      loadPackage('candidates', renderCandidatePanel).catch(() => {});
       loadPackage('announcements', (payload) => { renderAnnouncements(payload); renderCrossMatch(); }).catch(() => {});
     });
     observeLazyBlocks();
@@ -410,6 +444,7 @@ async function boot() {
   }
 }
 
+bindDelegatedEvents();
 $('#cmdk-button')?.addEventListener('click', openCommandDialog);
 $('#watchlist-add')?.addEventListener('click', addWatchlist);
 $('#watchlist-input')?.addEventListener('keydown', (event) => { if (event.key === 'Enter') { event.preventDefault(); addWatchlist(); } });

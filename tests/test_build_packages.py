@@ -55,6 +55,8 @@ def test_write_packages_creates_schema_and_files(tmp_path: Path):
         stock_history={"source": "https://chengwaye.com/stock/", "codes": {"5314": {"records": []}}, "failed_codes": [], "_status": "ok"},
     )
     assert meta["schema_version"] == 1
+    assert len(meta["data_revision"]) == 16
+    assert json.loads((tmp_path / "data_meta.json").read_text())["data_revision"] == meta["data_revision"]
     assert set(meta["hash"]) == {"disposition", "candidates", "stock_history", "announcements", "macro", "calendar", "news", "ai_summary"}
     assert json.loads((tmp_path / "data" / "stock_history.json").read_text())["codes"]["5314"]["records"] == []
     assert json.loads((tmp_path / "data" / "meta.json").read_text())["schema_version"] == 1

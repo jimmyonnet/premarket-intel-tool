@@ -782,14 +782,22 @@ def main():
     )
     meta_path.write_text(json.dumps(meta_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
-    # Automate sw.js cache versioning
+    # Tie the runtime cache to both the build and the exact package hashes.
+    # This prevents a new index from reusing an old JSON package after a
+    # successful deployment, while network-first still keeps live data fresh.
     sw_path = Path(args.out).parent / "sw.js"
     if sw_path.exists():
         import re
+        data_revision = str(meta_data.get("data_revision") or build_version)
         sw_content = sw_path.read_text(encoding="utf-8")
-        sw_content = re.sub(r"const CACHE_NAME = '[^']+';", f"const CACHE_NAME = 'pmit-{build_version}';", sw_content)
+        sw_content = re.sub(
+            r"const CACHE_NAME = '[^']+';",
+            f"const CACHE_NAME = 'pmit-{build_version}-data-{data_revision}';",
+            sw_content,
+        )
+        sw_content = re.sub(r"const DATA_REVISION = '[^']+';", f"const DATA_REVISION = '{data_revision}';", sw_content)
         sw_path.write_text(sw_content, encoding="utf-8")
-        print(f"updated {sw_path} cache name to pmit-{build_version}")
+        print(f"updated {sw_path} cache name to pmit-{build_version}-data-{data_revision}")
 
     env = Environment(loader=FileSystemLoader(args.template_dir), autoescape=True)
     tmpl = env.get_template("premarket.html.j2")
