@@ -40,26 +40,6 @@
     "qualified": true
   },
   {
-    "title": "輝達財報牽動AI投資需求 聯準會主席將於杰克遜谷地論壇發聲",
-    "link": "https://news.google.com/rss/articles/CBMilwNBVV95cUxNaERrSmpfeVVsNXhySm00SjNndmMyb3VYYmtlU2FYZkROUVRSQjgxMHRFdHB0MTZBMnhuZ3JVMWU4RjNOX0RxNEhLdmNqa3o5LWlySklJeFIyNXhCU1BhQjN5a2xaMTZvNzQ0LUJjdDg0ajlMZ3k5TkI1aDctbE9NaWpQZVpsSmFFVXZRQzhMU2dUTlR5VUVtWUJJWGx5NUxjOFUzNGtjYV80YlFPNlNmQnRCVHNHaW95UUdoX0RpaWR3cExIRk1VWUZiMmpmdGZsNnRwUTJtWlEwR1FsRlo0UFBRUWNYbXVFWkpzUEZXczJ0akgxN3lJNGR2ZEZESXhuS2ZYbklnSHpwVWNXZWRuajNtNTR3Wk9QN2J1Z3ZmREgxNlRPa1g3SDZXeE11R0ZCbl9ZQUVYWmtzWS15Y2NXUkN4akZhWC01R1VSUjNGNVRhV2N5Z082ZjBDOE9GZzNOZHdZd0kxLUcxR09Cd1ZDRExLVUZPNm91ZXE5Vm96aUo2djdXTnVXVUhNZkxFT1VGMjR3dXhLNA?oc=5",
-    "source": "Yahoo股市",
-    "time": "08/24 15:09",
-    "timestamp": 1787555361.0,
-    "score": 15,
-    "quality_score": 3,
-    "impact_score": 12,
-    "matched_groups": [
-      "macro_policy",
-      "systemic_company",
-      "earnings_financial",
-      "sector_supply_chain"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
     "title": "美股盤前快報｜輝達財報前AI股降溫，記憶體、光通訊領跌，鋼鐵股逆勢走強",
     "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5mNlh3OGJ4Q3hhdGozLVc3UkRFOVVIY0NFSm9zMElOaWg2QVpSYVExR2lTVEUyMjhvRUpld2lsZk9JaTVjN1ZFSFg3RkhXeGM?oc=5",
     "source": "news.cnyes.com",
@@ -81,7 +61,7 @@
   },
   {
     "title": "美股｜晶片股賣壓重 費半挫2.7％ 美光崩5.8％ 輝達財報前連7黑 台積電ADR跌2.11％",
-    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE9hbEdzSm1BSzdYemc1NmxjWk1BWkgxeDZOQ1dHa3dtZEc0X1JEM1p2Q1FzS3dPWWtBZmYtbHdrWGU0ZEJtR093OUxNTE1mSURlcHo2ZGFQLUJqbjFWVjNR?oc=5",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBIdXRqUVAtakplRjd2dENLaks2RHFzaHEwSzNvM1VTdDloMXVuNlFkQ1dEd2lEWm5pbWg1TmFWZDdSNnEyeW05M0pfX0NjWU1zTXpyZUdIZnVKdw?oc=5",
     "source": "工商時報",
     "time": "08/25 06:55",
     "timestamp": 1787612100.0,
@@ -123,6 +103,25 @@
     "source": "Yahoo股市",
     "time": "08/25 07:26",
     "timestamp": 1787614000.0,
+    "score": 12,
+    "quality_score": 3,
+    "impact_score": 9,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "市場準備迎接輝達財報 美股漲跌互見、台積電ADR跌2.11％",
+    "link": "https://news.google.com/rss/articles/CBMizwJBVV95cUxPM1RHX3BYSy1IYldfOXNweHBaZzZVU0h4ZGdoUE9ScVVkMnM1WVZiZ3RtNHBkZUF4NU5JTWpDSXNBdjBDajNVSFVERVRiNmZlNjZYREY5STRBVzU0WWZldnNaWUxxci1aZWd6d3J0czAxZ2RvakRXYnh3NFJiLV9IdXlHMV91UFRWMGFVZXF3T2pZYi1jMmdwMFk3TUNWQkNiVjFsejlZelFoS2hpM0Zta0VpeWJGR3hFbk5RREpsS1BwdUFMTURJVG01UDZVWlAzdW92T0VNRzh6dEZyUmdSOVl3N0FJRDJoc2stLUI5NHRzUkRzNXg1X0pRZmtjWW5OY2FHMUxzYVlNT01yQ25VRFk3RFlhSzJTUEV3SDJkNmxWXzdaN082NWdyWG5LZW9CaW5teGFZZUs0TGlSTjM3U0hyN3JPcmhLeUNfcU8waw?oc=5",
+    "source": "Yahoo新聞",
+    "time": "08/25 07:09",
+    "timestamp": 1787612971.0,
     "score": 12,
     "quality_score": 3,
     "impact_score": 9,
