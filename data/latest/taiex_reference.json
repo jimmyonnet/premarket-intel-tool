@@ -1,0 +1,15 @@
+{
+  "schema_version": "taiex-reference.v1",
+  "market_date": "2026-08-25",
+  "previous_trade_date": "2026-08-24",
+  "status": "ok",
+  "previous_close": 44762.32,
+  "source": {
+    "name": "TWSE TAIEX historical index",
+    "url": "https://www.twse.com.tw/indicesReport/MI_5MINS_HIST?response=json&date=20260824",
+    "observed_at": "2026-08-24T13:30:00+08:00",
+    "fetched_at": "2026-08-25T19:05:44.642167+08:00",
+    "official": true
+  },
+  "error": null
+}
