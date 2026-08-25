@@ -10,15 +10,15 @@
   "latest": {
     "provider": "wantgoo",
     "provider_name": "Wantgoo / TAIFEX",
-    "collected_at": "2026-08-26T00:16:36.571228+08:00",
+    "collected_at": "2026-08-26T00:22:27.763176+08:00",
     "symbol": "臺指期096",
-    "price": 45350.0,
-    "change": 318.0,
-    "change_pct": 0.71,
+    "price": 45347.0,
+    "change": 315.0,
+    "change_pct": 0.7,
     "open": 45093.0,
     "prev_close": 45032.0,
     "high": 45417.0,
     "low": 45020.0,
-    "volume": 24553
+    "volume": 24649
   }
 }
