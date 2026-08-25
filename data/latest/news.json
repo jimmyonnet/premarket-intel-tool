@@ -61,13 +61,13 @@
     "qualified": true
   },
   {
-    "title": "〈台股盤前要聞〉量縮價穩站收復4萬5、攻4萬6留意輝達本周財報及投信籌碼鬆動",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5jS0xJODY0Uk5SbzNGQmY3Y3FKaEdXN3JxaHA2SG1FNXZqLUtvSFBxanZsM1pUZnc4bTByNnhxU0xRUld6SFdxUzJvajRGbTQ?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/24 15:04",
-    "timestamp": 1787555071.0,
-    "score": 13,
-    "quality_score": 4,
+    "title": "市場準備迎接輝達財報 美股漲跌互見、台積電ADR跌2.11％",
+    "link": "https://news.google.com/rss/articles/CBMi0AJBVV95cUxNTWFsd1ZYZW9PVndhd2VZMUxyWHlkZTFxY19uTl9UdFEwU1JjcFhzYXk3NUt1bDdDRGV0RlVZMUdtUTJiWGlGUzFMNG1MU29Ld3BTOEQxdmRUMWVxRFRUSHBqUzVaUjJkS2JXZkl2Yk9yNmcyckNpQlI5S3QzZzUzeGdWMzZNMU1uaE5EYzJwcVVWdEJ6T296OXlQUmdSRzIxaFFoZWdxd20wNHlNd0FlNUVfY0p6eFBad1FxM1BNYmFKbklZR0M4dlVJcUp0VWUwOTVvNUg2R24tbXlFQ2ktZTB2TGFValVCX1pORTlBenJISFhYc3p2MktQaWQ5SENSRjE0Tzk4NEVFLUJSS3dBb2xhVTR1U2FFTFpPWkZWYXVBbmswSjl4VmJJcm9YMGN1QXU0aUlrUFRZUTR6d0wzRzVQWGxwQnpTdkotWkdwMmI?oc=5",
+    "source": "Yahoo股市",
+    "time": "08/25 07:09",
+    "timestamp": 1787612971.0,
+    "score": 12,
+    "quality_score": 3,
     "impact_score": 9,
     "matched_groups": [
       "market_benchmark",
@@ -76,12 +76,38 @@
     ],
     "low_signal_hits": [],
     "topic_groups": [
-      "taiwan_market",
+      "global_market",
       "company_earnings"
+    ],
+    "primary_topic": "global_market",
+    "named_entities": [
+      "nvidia",
+      "tsmc",
+      "us_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "金融撐盤！台股下跌337點 「這妖股」再飆第8根漲停",
+    "link": "https://news.google.com/rss/articles/CBMivAJBVV95cUxQNks0dERzQVN6YWg3dDFUMTV3alJEWUtmc3FQeXJHaG5sUlpLbWp2MjVVa0lRUHJYbUdGVmpHQjBxekoxa210Y0FmeGk1X05OUGdLVURodXQ0bWlrWV9yVEIxRWJmYUY1Q2dVdTJvSlhaaC1Ed19KVnZJTjZ4ZHBBSmEtZEFqQUlibFFQVDJoaW9YUG9EakQyMC1ydkdDdEMyZHJiMEpHbVlJNzhZanJTemhZTlZGVUU2c2JjNUFzWkFuak5OT0FQaUdhN0pPQjdyWlFHZ3prTHhpdDJVS1F1Y3VTZm9mMUxOMEJUcDRuNnhEX1J5VTBxdnhfSFVKTDExRnlnMTk0VFU1OUx2LTQxZlkzV1lXYUtJMHVYNjN1OUVINE1DbWpEUFhxaHV5Sl9Xb2lCNXdsRUZxcDlX?oc=5",
+    "source": "Yahoo股市",
+    "time": "08/25 09:30",
+    "timestamp": 1787621425.0,
+    "score": 9,
+    "quality_score": 3,
+    "impact_score": 6,
+    "matched_groups": [
+      "market_benchmark",
+      "market_move"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market"
     ],
     "primary_topic": "taiwan_market",
     "named_entities": [
-      "nvidia",
       "taiwan_market"
     ],
     "quality_pass": true,
@@ -116,55 +142,6 @@
     "qualified": true
   },
   {
-    "title": "加拿大AI資料中心擴建潮遭反彈 水電環境疑慮多",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5qdkNRTXNRRWRoMHU0OGNVeVZMd3Y2bzN5aGR4QXd5dEZUd2xzY01qaWhMNDJrVTZJVmJBMnNDTUJJYVdvdmU1cUFSRGh2R3JyWFFXbkN5aW9KZ9IBX0FVX3lxTE5EWDNwMGJjUkExODJXOE1yVS1SOEtzQTZlQVRZNWxMSU9CZWlKNGpmbG1TMU9kNGNMRkt3bHlhd3FfdDZBVFZCajVsX3NpOUNMMEFsT3lUck1SOVBtS0l3?oc=5",
-    "source": "經濟日報",
-    "time": "08/25 08:12",
-    "timestamp": 1787616774.0,
-    "score": 9,
-    "quality_score": 4,
-    "impact_score": 5,
-    "matched_groups": [
-      "market_move",
-      "sector_supply_chain"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "sector_technology"
-    ],
-    "primary_topic": "sector_technology",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "美銀警告美股恐回檔逾10%！民主黨若奪參院「AI」與「金融股」將成避險焦點",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA2S3lVbVpRVy01S25wQ3FsMkpINVhJNlk3d0MyenZuMnFJVmNiSWtESnRZU3p4Z3l3dWp1cy0wWTMyd3Q5RmhYVkxDZUgtd2c?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/25 07:14",
-    "timestamp": 1787613249.0,
-    "score": 9,
-    "quality_score": 4,
-    "impact_score": 5,
-    "matched_groups": [
-      "market_benchmark",
-      "sector_supply_chain"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "global_market",
-      "sector_technology"
-    ],
-    "primary_topic": "global_market",
-    "named_entities": [
-      "us_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
     "title": "AI半導體需求強勁 泓格科技營收成長逾三成、下半年續看旺 | 自動化產業 | 商情",
     "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1jQUgyU1hpMGg4SWhzcGlZbVA1SEUxMU56aTJlWXdkbElqbDVXckNCZU5SUmdNcHdlZ3JLZF9YbEJWVXFNMzlyLTVxcC1Ma19oYW5lejVoal9HZw?oc=5",
     "source": "經濟日報",
@@ -192,8 +169,8 @@
     "title": "〈貴金屬盤後〉美回購長債效應 金價突破4600美元 聚焦CPI和傑克森洞年會",
     "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE11dVc0WXd0b1k3SjVMRENPT19xNm51WVU5YkZFY25OMTY0cEJfQllybUpvRWh5M3JfckNPaU1qMnc5UXJ3YlVoTkREcC1KSjQ?oc=5",
     "source": "news.cnyes.com",
-    "time": "08/25 08:22",
-    "timestamp": 1787617350.0,
+    "time": "08/25 08:33",
+    "timestamp": 1787618005.0,
     "score": 8,
     "quality_score": 4,
     "impact_score": 4,
@@ -253,6 +230,32 @@
     ],
     "primary_topic": "currency_commodities",
     "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "美銀警告美股恐回檔逾10%！民主黨若奪參院「AI」與「金融股」將成避險焦點",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA2S3lVbVpRVy01S25wQ3FsMkpINVhJNlk3d0MyenZuMnFJVmNiSWtESnRZU3p4Z3l3dWp1cy0wWTMyd3Q5RmhYVkxDZUgtd2c?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/25 07:14",
+    "timestamp": 1787613249.0,
+    "score": 9,
+    "quality_score": 4,
+    "impact_score": 5,
+    "matched_groups": [
+      "market_benchmark",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "global_market",
+      "sector_technology"
+    ],
+    "primary_topic": "global_market",
+    "named_entities": [
+      "us_market"
+    ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
