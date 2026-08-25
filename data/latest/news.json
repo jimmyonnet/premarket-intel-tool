@@ -15,26 +15,17 @@
       "earnings_financial"
     ],
     "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "輝達財報倒數！美股觀望氣氛濃 費半大跌逾3%、台積電ADR跌近3%",
-    "link": "https://news.google.com/rss/articles/CBMi-gJBVV95cUxQRHIzb2NoYVVYY19aZ0dQa0drXy1YLXBnLXdzLVNWWkV5dzRfU1o4LUVpT3NJdkk3WGh1c2U3VF80bEtVWkFhQi1aVEowbUc2N0pPcHV6VG1IWVFVcXNsQWcwWGQ0a1dXemt2Nk1LZVNBSkw0dDJkNVRlejdJV0ZSdTAybHNlb0F6by1zTnpRdmhGcm8yWEhBSHR4U2h2RFdPTndfU3VqLWlNOXZLdkk5Um5PRENnNndjN1oxQXUxV2lLTUVkRDVHcl80bnVIT0dvd0FhZzhVeDVyZmc5TURYR0ZsYkdXbkIwazMtYVE4YkZQdWRrODAxN2lVNVZjUmFLQVZEVXZDMFRFSnVKMkdGaFI0czZmR19GcVdrbEN3LWU1R1ZldXRnc1lJbmtDdENjXzNlb3NnSEZCTXV0UFZUbXhLR1pTVHpjQ2xEU0pmYjVnX29KeHFESjdyY19GTlJ3T3lBY09KMEk2b1NHV2twM1E1d0pSWE5WZWc?oc=5",
-    "source": "Yahoo股市",
-    "time": "08/24 23:00",
-    "timestamp": 1787583600.0,
-    "score": 15,
-    "quality_score": 3,
-    "impact_score": 12,
-    "matched_groups": [
-      "market_benchmark",
-      "systemic_company",
-      "earnings_financial",
-      "market_move"
+    "topic_groups": [
+      "geopolitics_trade",
+      "macro_policy",
+      "global_market",
+      "company_earnings"
     ],
-    "low_signal_hits": [],
+    "primary_topic": "geopolitics_trade",
+    "named_entities": [
+      "nvidia",
+      "us_market"
+    ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
@@ -55,35 +46,26 @@
       "sector_supply_chain"
     ],
     "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "美股｜晶片股賣壓重 費半挫2.7％ 美光崩5.8％ 輝達財報前連7黑 台積電ADR跌2.11％",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBIdXRqUVAtakplRjd2dENLaks2RHFzaHEwSzNvM1VTdDloMXVuNlFkQ1dEd2lEWm5pbWg1TmFWZDdSNnEyeW05M0pfX0NjWU1zTXpyZUdIZnVKdw?oc=5",
-    "source": "工商時報",
-    "time": "08/25 06:55",
-    "timestamp": 1787612100.0,
-    "score": 13,
-    "quality_score": 4,
-    "impact_score": 9,
-    "matched_groups": [
-      "market_benchmark",
-      "systemic_company",
-      "earnings_financial"
+    "topic_groups": [
+      "global_market",
+      "sector_technology",
+      "company_earnings"
     ],
-    "low_signal_hits": [],
+    "primary_topic": "global_market",
+    "named_entities": [
+      "nvidia",
+      "us_market"
+    ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
   },
   {
-    "title": "〈美股盤後〉輝達財報前連七黑 記憶體股崩跌 費半收黑2.7%",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5QZFlMOFVvNzJHRHhSajRqLTY2LTFpNU1Ea3VzVkdZMGJvSFNFOUZ0bTc0RlI0VC1tSk00bTBfSmwtX05ubTl3dDBnOVRCbVE?oc=5",
+    "title": "〈台股盤前要聞〉量縮價穩站收復4萬5、攻4萬6留意輝達本周財報及投信籌碼鬆動",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5jS0xJODY0Uk5SbzNGQmY3Y3FKaEdXN3JxaHA2SG1FNXZqLUtvSFBxanZsM1pUZnc4bTByNnhxU0xRUld6SFdxUzJvajRGbTQ?oc=5",
     "source": "news.cnyes.com",
-    "time": "08/25 05:11",
-    "timestamp": 1787605883.0,
+    "time": "08/24 15:04",
+    "timestamp": 1787555071.0,
     "score": 13,
     "quality_score": 4,
     "impact_score": 9,
@@ -93,99 +75,184 @@
       "earnings_financial"
     ],
     "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "company_earnings"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "nvidia",
+      "taiwan_market"
+    ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
   },
   {
-    "title": "伊朗地緣緊張與輝達財報預期夾擊 美股科技股承壓雙雙收黑",
-    "link": "https://news.google.com/rss/articles/CBMilANBVV95cUxNYU1kMUJsbjI4NmI4WWVtd096d2prSVZfS3RRUjZLMlM1WEJralRRcUhsUWZpVnlIemVUU1BEMXJGRHZzY3FPWkV0TmF0TU1iUG1hdlZWelp4QXNvZ0VvZzQzYTFFU2VGanIyYmlFZFNHMmxzOF9ZMUN3VEJPV2xYQnRoWFZPcHBXOG5xNnI2Z2NlZzh6c1pEYnJZVEl6cGVfVzdqSTZhd19PektCTUY5TFZLTDBfaG00M051dmdOSmVLVTd3ZkFEbjB5ZExhdXZuVHBtbEZCTFNUWDNCSzJtLXJJVWlkMnBlNjhLWUxyVE9BaDBFTm1pUFlXcU1rYS1SMDVDS3hjTXR6V0J6dks1NllsZURzLWtISm5BZE56cFktMGFTVUh6djQ4b3NDVkNxcmlhSWt3WWVQRlRZMTZHMzhiT3dybV9KdXJXZGVJYXF5bkRkcUxLUkw0amNoZUxvNGQtanFfb0ZQX21xSHZKQWcxMmkwY1RNb2dfb1lUOWwtblcxbGxUaDZTenM2cWl1TTRZSg?oc=5",
+    "title": "4萬5守不住！台股量縮僅6311億 台積電成交量同步急凍｜Yahoo財經掃描",
+    "link": "https://news.google.com/rss/articles/CBMiowNBVV95cUxOU091RWJTeTZ6ZHN3c05KeGJWUGdwcGR0R29IZEZEdy1ZZ0lBSnZ6ZE9xS2Q3TXM4TFJ4UXJ3cGIwUXdpOXhDTmhObTZLOVNTUzk2aTZaRlA3UzZpTEVoY2Z1U3ZSV0t5RlV4aXg0Q3EwZEpMc1lKaWEtN3NDd2psQ3VPUUlfSzQtLWp2Sjlab2pZRUNNWWNvanFjY08tY1JaWTVaRzlzNWxXQkZkRi1Od2d6NHdrU1Z2RV96TXBfS3JuTFotZXlmc0RSQ2l2RWRoYWtqWmNMOWZRNjYyQkRCQlcwbEEyaEMzTjRDdkJHVUEweFhEdkRuT2JLcEgwUVZtM3VLSk9lZzk3eWFXOFp4STBrZHFUeF9PcnpzZ2dBUEF5LVl5aWx6Ulk1emg5NWRWbWpGWDM5LXh6ZWlQSzFraHFRZVp0el85MWtNblEzQlJDZjZMQlpfWEFEYnFSQllRdE9FUlNPeVZQWFdlVHNkMUEweWJfR3d5YzRueFdDN3hQY21ydGUySW94ZWJQMnFXMHJ1b3ZvYzdac1BSOGxYZ2Rrcw?oc=5",
     "source": "Yahoo股市",
-    "time": "08/25 07:26",
-    "timestamp": 1787614000.0,
-    "score": 12,
+    "time": "08/24 17:22",
+    "timestamp": 1787563367.0,
+    "score": 9,
     "quality_score": 3,
-    "impact_score": 9,
-    "matched_groups": [
-      "market_benchmark",
-      "systemic_company",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "市場準備迎接輝達財報 美股漲跌互見、台積電ADR跌2.11％",
-    "link": "https://news.google.com/rss/articles/CBMizwJBVV95cUxPM1RHX3BYSy1IYldfOXNweHBaZzZVU0h4ZGdoUE9ScVVkMnM1WVZiZ3RtNHBkZUF4NU5JTWpDSXNBdjBDajNVSFVERVRiNmZlNjZYREY5STRBVzU0WWZldnNaWUxxci1aZWd6d3J0czAxZ2RvakRXYnh3NFJiLV9IdXlHMV91UFRWMGFVZXF3T2pZYi1jMmdwMFk3TUNWQkNiVjFsejlZelFoS2hpM0Zta0VpeWJGR3hFbk5RREpsS1BwdUFMTURJVG01UDZVWlAzdW92T0VNRzh6dEZyUmdSOVl3N0FJRDJoc2stLUI5NHRzUkRzNXg1X0pRZmtjWW5OY2FHMUxzYVlNT01yQ25VRFk3RFlhSzJTUEV3SDJkNmxWXzdaN082NWdyWG5LZW9CaW5teGFZZUs0TGlSTjM3U0hyN3JPcmhLeUNfcU8waw?oc=5",
-    "source": "Yahoo新聞",
-    "time": "08/25 07:09",
-    "timestamp": 1787612971.0,
-    "score": 12,
-    "quality_score": 3,
-    "impact_score": 9,
-    "matched_groups": [
-      "market_benchmark",
-      "systemic_company",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "輝達財報揭曉在即！AI狂潮面臨市場最嚴峻考驗 關鍵數據一次看",
-    "link": "https://news.google.com/rss/articles/CBMihgNBVV95cUxQMlhrN1lZYlpmOE85U3BmQm5ZQWVTSC1oSy11SWpxSWN0eGpuVDJObXFYY0lZT1hBcEhocmt1YnFPZW9zd0dqMVdHd05HVzlXbDgyd2xET0ZSWDFEVmowUnJ6akh1c3FlZXM2VVlZNnYyU1FHRndNWjBGdFlWNWhlX2NMT0hXODd0VnVlZ0JQSGxLVWhkMWNjU3laaVNlV1RCTHNILUZuTUQxbmFFQUtVWEtSWXR1LWR4dWlvcEJhQVp4QTNNaGJFbmszalFfdUNWUlBFRV9YUnZHWWZzT0FYWllCdUE3WnR4alBpWEhSVUlER3ktQ3VIMTJRU1U2a0FEVXJWM2xqQjRVM1FkdnhzblVxSUliWG01ckN6TTk2Y0V2Ymh2aHdzNHhwR2VyQmJXU3M1dWFCNnN2NEQ0Tng4NVBybnZpbVdoZmwzTEs4aExIUUx1UEtIRkhkenNBV1RQYW9pUi1tMGtsb0xZcDBFcWRNZV9VeWdoMXlVMDBwMnJ6RW1zRlE?oc=5",
-    "source": "Yahoo新聞",
-    "time": "08/24 17:04",
-    "timestamp": 1787562240.0,
-    "score": 11,
-    "quality_score": 3,
-    "impact_score": 8,
-    "matched_groups": [
-      "systemic_company",
-      "earnings_financial",
-      "sector_supply_chain"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "輝達財報倒數 高盛示警：「三大利多」沒實現恐不漲反跌",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9pdEZZYkdRX2VvLUg4eV9xOUVHeTZtdVpGY3ZoRm1TcmdMTGEwUm9ZQVlwZVYwVjdfOUozRGRiQmFCdnFYMWYxd2F1cy04Yms?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/25 05:11",
-    "timestamp": 1787605915.0,
-    "score": 10,
-    "quality_score": 4,
-    "impact_score": 6,
-    "matched_groups": [
-      "systemic_company",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "美股輪動迎兩大壓力測試：輝達、Fed華許",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA3VF9Fck5YcmhxM1g4ZjNyWHduZkJuYkh4aVBRZWQyRVlTWXBKb0FodmVFLUt3VGN3ZFBVRG1jUGI1LUlIRXZqak1lV3hGbGs?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/25 02:04",
-    "timestamp": 1787594677.0,
-    "score": 10,
-    "quality_score": 4,
     "impact_score": 6,
     "matched_groups": [
       "market_benchmark",
       "systemic_company"
     ],
     "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "company_earnings"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "tsmc",
+      "taiwan_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "加拿大AI資料中心擴建潮遭反彈 水電環境疑慮多",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5qdkNRTXNRRWRoMHU0OGNVeVZMd3Y2bzN5aGR4QXd5dEZUd2xzY01qaWhMNDJrVTZJVmJBMnNDTUJJYVdvdmU1cUFSRGh2R3JyWFFXbkN5aW9KZ9IBX0FVX3lxTE5EWDNwMGJjUkExODJXOE1yVS1SOEtzQTZlQVRZNWxMSU9CZWlKNGpmbG1TMU9kNGNMRkt3bHlhd3FfdDZBVFZCajVsX3NpOUNMMEFsT3lUck1SOVBtS0l3?oc=5",
+    "source": "經濟日報",
+    "time": "08/25 08:12",
+    "timestamp": 1787616774.0,
+    "score": 9,
+    "quality_score": 4,
+    "impact_score": 5,
+    "matched_groups": [
+      "market_move",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "sector_technology"
+    ],
+    "primary_topic": "sector_technology",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "美銀警告美股恐回檔逾10%！民主黨若奪參院「AI」與「金融股」將成避險焦點",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA2S3lVbVpRVy01S25wQ3FsMkpINVhJNlk3d0MyenZuMnFJVmNiSWtESnRZU3p4Z3l3dWp1cy0wWTMyd3Q5RmhYVkxDZUgtd2c?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/25 07:14",
+    "timestamp": 1787613249.0,
+    "score": 9,
+    "quality_score": 4,
+    "impact_score": 5,
+    "matched_groups": [
+      "market_benchmark",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "global_market",
+      "sector_technology"
+    ],
+    "primary_topic": "global_market",
+    "named_entities": [
+      "us_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "AI半導體需求強勁 泓格科技營收成長逾三成、下半年續看旺 | 自動化產業 | 商情",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1jQUgyU1hpMGg4SWhzcGlZbVA1SEUxMU56aTJlWXdkbElqbDVXckNCZU5SUmdNcHdlZ3JLZF9YbEJWVXFNMzlyLTVxcC1Ma19oYW5lejVoal9HZw?oc=5",
+    "source": "經濟日報",
+    "time": "08/24 16:22",
+    "timestamp": 1787559743.0,
+    "score": 9,
+    "quality_score": 4,
+    "impact_score": 5,
+    "matched_groups": [
+      "earnings_financial",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "sector_technology",
+      "company_earnings"
+    ],
+    "primary_topic": "sector_technology",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "〈貴金屬盤後〉美回購長債效應 金價突破4600美元 聚焦CPI和傑克森洞年會",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE11dVc0WXd0b1k3SjVMRENPT19xNm51WVU5YkZFY25OMTY0cEJfQllybUpvRWh5M3JfckNPaU1qMnc5UXJ3YlVoTkREcC1KSjQ?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/25 08:22",
+    "timestamp": 1787617350.0,
+    "score": 8,
+    "quality_score": 4,
+    "impact_score": 4,
+    "matched_groups": [
+      "macro_policy"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "macro_policy"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "美債殖利率回落！財政部擬動用1兆美元TGA買債 華許傑克森洞演說成關鍵",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBjUDdLVmlMSjdyN2RINDlib0hOVzUtc0dQZnRzZXhOdE5rWldBYlloZEJuSm1JdEoxMTRWVS15R3VLMG80VGtPcDVKVjl0ZXM?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/25 08:02",
+    "timestamp": 1787616171.0,
+    "score": 8,
+    "quality_score": 4,
+    "impact_score": 4,
+    "matched_groups": [
+      "macro_policy"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "macro_policy"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "美債拋售壓力沉重 全球央行年會聯準會主席華許面臨穩市考驗",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA0MkZvVXRGT2gtVE9yRUU0T3p4YmlhN2RrU3JOWjR5ZzFQMkpCVmZETmV1MUY2eVZiZjR6cUM4RTY5RGFEOHpmb3llTVhfRG8?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/24 14:10",
+    "timestamp": 1787551804.0,
+    "score": 8,
+    "quality_score": 4,
+    "impact_score": 4,
+    "matched_groups": [
+      "macro_policy"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "macro_policy"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true

@@ -89,6 +89,38 @@ def test_dedupe_keeps_stronger_version_of_same_story():
     assert result[0]["source"] == "路透社"
 
 
+def test_diversity_metadata_is_recorded_for_each_article():
+    item = article("輝達財報與 AI 需求牽動美股市場", "路透社")
+
+    assert item["primary_topic"] == "global_market"
+    assert "sector_technology" in item["topic_groups"]
+    assert "nvidia" in item["named_entities"]
+
+
+def test_select_top_news_limits_repetitive_entity_when_other_topics_are_available():
+    repetitive = [
+        article(f"輝達財報前瞻與 AI 需求展望第 {i}", "路透社", score=20, timestamp=1_700_000_000 + i)
+        for i in range(8)
+    ]
+    alternatives = [
+        article("聯準會利率決策牽動美元與美股行情", "中央社", score=15, timestamp=1_700_001_000),
+        article("原油大漲牽動美股與台股風險偏好", "彭博", score=14, timestamp=1_700_001_001),
+        article("日經與 KOSPI 股市大跌拖累亞股情緒", "工商時報", score=13, timestamp=1_700_001_002),
+        article("台積電財報展望牽動台股供應鏈", "經濟日報", score=13, timestamp=1_700_001_003),
+        article("伊朗制裁升溫引發市場避險與油價大漲", "鉅亨網", score=12, timestamp=1_700_001_004),
+        article("蘋果營收展望與消費電子需求受關注", "Yahoo股市", score=12, timestamp=1_700_001_005),
+        article("美元匯率與黃金價格大漲牽動市場", "news.cnyes.com", score=11, timestamp=1_700_001_006),
+        article("韓國 KOSPI 股市與記憶體類股大跌", "Yahoo新聞", score=10, timestamp=1_700_001_007),
+    ]
+
+    result = select_top_news(repetitive + alternatives)
+
+    assert len(result) == 10
+    assert sum("nvidia" in item["named_entities"] for item in result) == 3
+    assert len({item["primary_topic"] for item in result}) >= 5
+    assert all("primary_topic" in item and "named_entities" in item for item in result)
+
+
 def test_select_top_news_caps_at_ten_without_padding():
     items = [
         article(f"台股大盤與台積電財報重大消息第 {i}", "中央社", timestamp=1_700_000_000 + i)

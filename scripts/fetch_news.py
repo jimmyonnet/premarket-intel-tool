@@ -61,6 +61,49 @@ IMPACT_GROUPS = {
 
 LOW_SIGNAL_TERMS = ["投資人必看", "懶人包", "這檔會", "老師", "飆股密碼", "買點", "賣點", "報明牌"]
 
+# These are editorial buckets, not extra quality gates. They keep the Top 10 from
+# becoming ten rewrites of the same company or event when the feed is crowded.
+NEWS_TOPIC_RULES = (
+    ("geopolitics_trade", ("伊朗", "以色列", "俄烏", "戰爭", "地緣政治", "關稅", "制裁", "貿易戰", "出口管制")),
+    ("currency_commodities", ("美元", "美金", "日圓", "人民幣", "匯率", "原油", "油價", "黃金", "銅價", "美債", "債券", "殖利率", "商品")),
+    ("macro_policy", ("聯準會", "Fed", "升息", "降息", "利率", "CPI", "PCE", "非農", "失業率", "央行", "通膨")),
+    ("global_market", ("美股", "標普", "標普500", "道瓊", "那斯達克", "納斯達克", "費半", "華爾街", "美國股市")),
+    ("taiwan_market", ("台股", "加權指數", "台指期", "台灣股市", "櫃買", "集中市場")),
+    ("asia_market", ("日經", "日本股市", "KOSPI", "韓國股市", "韓股", "中國股市", "陸股", "上證", "恆生", "港股", "亞股")),
+    ("sector_technology", ("AI", "人工智慧", "半導體", "記憶體", "光通訊", "CPO", "矽光子", "機器人", "散熱", "面板")),
+    ("company_earnings", ("台積電", "TSMC", "輝達", "NVIDIA", "聯發科", "鴻海", "蘋果", "微軟", "亞馬遜", "Alphabet", "財報", "營收", "法說會", "財測", "獲利")),
+    ("market_structure", ("外資", "法人", "資金流", "ETF", "處置", "分盤", "解禁", "監管")),
+)
+
+NAMED_ENTITY_RULES = (
+    ("nvidia", ("輝達", "NVIDIA")),
+    ("tsmc", ("台積電", "TSMC")),
+    ("apple", ("蘋果", "Apple")),
+    ("microsoft", ("微軟", "Microsoft")),
+    ("amazon", ("亞馬遜", "Amazon")),
+    ("meta", ("Meta", "臉書")),
+    ("broadcom", ("博通", "Broadcom")),
+    ("taiwan_market", ("台股", "加權指數", "台指期")),
+    ("us_market", ("美股", "標普", "道瓊", "那斯達克", "納斯達克", "費半")),
+)
+
+# The caps are soft: the first pass enforces them, then a fallback fills the list
+# if the available qualified feed really lacks other topics. This avoids padding
+# with low-quality articles while still preventing one crowded story from winning
+# by score alone whenever alternatives exist.
+MAX_PER_TOPIC = 3
+MAX_PER_ENTITY = 3
+MAX_PER_SOURCE = 4
+
+QUERIES = [
+    "台股 財經",
+    "美股 財經",
+    "聯準會 通膨 利率 債券",
+    "中國 日本 韓國 歐洲 股市",
+    "原油 黃金 美元 匯率 關稅 地緣政治",
+    "半導體 AI 科技 財報",
+]
+
 
 def is_trading_day(day):
     return day.weekday() < 5 and day.strftime("%Y-%m-%d") not in HOLIDAYS_2026
@@ -130,9 +173,27 @@ def impact_score(title):
     return score, matched_groups
 
 
+def diversity_dimensions(title):
+    title_upper = title.upper()
+    topic_groups = [
+        topic for topic, keywords in NEWS_TOPIC_RULES
+        if any(keyword.upper() in title_upper for keyword in keywords)
+    ]
+    named_entities = [
+        entity for entity, keywords in NAMED_ENTITY_RULES
+        if any(keyword.upper() in title_upper for keyword in keywords)
+    ]
+    return {
+        "topic_groups": topic_groups,
+        "primary_topic": topic_groups[0] if topic_groups else "other",
+        "named_entities": named_entities,
+    }
+
+
 def score_breakdown(title, source=""):
     quality = source_quality(source)
     impact, groups = impact_score(title)
+    dimensions = diversity_dimensions(title)
     low_signal_hits = [term for term in LOW_SIGNAL_TERMS if term.upper() in title.upper()]
     penalty = len(low_signal_hits)
     total = quality + impact - (penalty * 2)
@@ -142,6 +203,7 @@ def score_breakdown(title, source=""):
         "impact_score": impact,
         "matched_groups": groups,
         "low_signal_hits": low_signal_hits,
+        **dimensions,
         "quality_pass": quality >= 2,
         "impact_pass": impact >= 3,
     }
@@ -217,24 +279,93 @@ def fetch_feed(query):
         return b""
 
 
+def _article_dimensions(article):
+    dimensions = diversity_dimensions(article.get("title", ""))
+    return {
+        "primary_topic": article.get("primary_topic") or dimensions["primary_topic"],
+        "named_entities": article.get("named_entities") or dimensions["named_entities"],
+    }
+
+
+def _source_key(article):
+    return normalize_text(article.get("source")) or "unknown"
+
+
+def _fits_diversity_caps(article, topic_counts, entity_counts, source_counts):
+    dimensions = _article_dimensions(article)
+    if topic_counts.get(dimensions["primary_topic"], 0) >= MAX_PER_TOPIC:
+        return False
+    if any(entity_counts.get(entity, 0) >= MAX_PER_ENTITY for entity in dimensions["named_entities"]):
+        return False
+    if source_counts.get(_source_key(article), 0) >= MAX_PER_SOURCE:
+        return False
+    return True
+
+
+def _record_diversity(article, topic_counts, entity_counts, source_counts):
+    dimensions = _article_dimensions(article)
+    topic = dimensions["primary_topic"]
+    topic_counts[topic] = topic_counts.get(topic, 0) + 1
+    for entity in dimensions["named_entities"]:
+        entity_counts[entity] = entity_counts.get(entity, 0) + 1
+    source = _source_key(article)
+    source_counts[source] = source_counts.get(source, 0) + 1
+
+
+def _fits_entity_caps(article, entity_counts):
+    return all(
+        entity_counts.get(entity, 0) < MAX_PER_ENTITY
+        for entity in _article_dimensions(article)["named_entities"]
+    )
+
+
 def select_top_news(articles, limit=MAX_NEWS):
     ranked = sorted(
         (article for article in dedupe_articles(articles) if article["qualified"]),
         key=lambda article: (article["score"], article["impact_score"], article["timestamp"]),
         reverse=True,
     )
-    return ranked[:limit]
+    selected = []
+    deferred = []
+    topic_counts = {}
+    entity_counts = {}
+    source_counts = {}
+    for article in ranked:
+        if len(selected) >= limit:
+            break
+        if _fits_diversity_caps(article, topic_counts, entity_counts, source_counts):
+            selected.append(article)
+            _record_diversity(article, topic_counts, entity_counts, source_counts)
+        else:
+            deferred.append(article)
+
+    # First relax topic/source caps while retaining entity caps. This prevents a
+    # crowded company story from returning in the final slots when other
+    # qualified entities are available but happen to share a feed/source cap.
+    if len(selected) < limit:
+        remaining = []
+        for article in deferred:
+            if len(selected) >= limit:
+                break
+            if _fits_entity_caps(article, entity_counts):
+                selected.append(article)
+                _record_diversity(article, topic_counts, entity_counts, source_counts)
+            else:
+                remaining.append(article)
+        deferred = remaining
+
+    # If the qualified pool is genuinely too narrow, fill the remaining slots
+    # with the strongest deferred items rather than lowering the quality gate.
+    if len(selected) < limit:
+        selected.extend(deferred[: limit - len(selected)])
+    return selected
 
 
 def main():
     start_time, end_time = get_time_window()
     print(f"Time Window: {start_time} to {end_time}", file=sys.stderr)
 
-    queries = [
-        "台股 財經",
-        "美股 聯準會 財報",
-        "台積電 NVIDIA 科技股",
-    ]
+    queries = QUERIES
     articles = []
     successful_feeds = 0
     for query in queries:
