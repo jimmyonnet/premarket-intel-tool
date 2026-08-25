@@ -25,7 +25,10 @@ def test_deployed_market_summary_cards_precede_asia_and_no_longer_show_trading_c
     page = DEPLOYED.read_text(encoding="utf-8")
     market = _market_context(page)
 
-    assert market.index('class="summary-grid market-summary-grid"') < market.index('亞股開盤即時概況')
+    summary_pos = market.index('class="summary-grid market-summary-grid"')
+    asia_titles = [title for title in ('亞股開盤即時概況', '亞股最近收盤概況') if title in market]
+    assert asia_titles, '部署頁面必須顯示盤中或最近收盤的亞股標題'
+    assert summary_pos < min(market.index(title) for title in asia_titles)
     assert '盤中撮合中' not in page
     assert '收盤倒數' not in page
     assert 'id="open-countdown"' not in page
