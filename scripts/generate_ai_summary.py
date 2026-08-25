@@ -47,37 +47,31 @@ SCHEMA = {
                         "type": "object",
                         "properties": {
                             "topic": {"type": "string"},
-                            "count": {"type": "integer", "minimum": 0},
+                            "count": {"type": "integer"},
                             "summary": {"type": "string"},
                         },
                         "required": ["topic", "count", "summary"],
-                        "additionalProperties": False,
                     },
-                    "maxItems": 8,
                 },
                 "key_points": {
                     "type": "array",
                     "items": {"type": "string"},
-                    "maxItems": 5,
                 },
             },
             "required": ["headline", "topic_summary", "key_points"],
-            "additionalProperties": False,
         },
         "market_summary": {
             "type": "object",
             "properties": {
                 "headline": {"type": "string"},
-                "bullets": {"type": "array", "items": {"type": "string"}, "maxItems": 4},
-                "risks": {"type": "array", "items": {"type": "string"}, "maxItems": 4},
+                "bullets": {"type": "array", "items": {"type": "string"}},
+                "risks": {"type": "array", "items": {"type": "string"}},
             },
             "required": ["headline", "bullets", "risks"],
-            "additionalProperties": False,
         },
         "quality_note": {"type": "string"},
     },
     "required": ["news_summary", "market_summary", "quality_note"],
-    "additionalProperties": False,
 }
 
 SYSTEM_PROMPT = """你是繁體中文的盤前研究助理。只能根據使用者提供的 INPUT JSON 撰寫整理，不能補造不存在的價格、漲跌幅、時間、公司、政策或新聞事實。\n\n規則：\n1. 新聞重點只能引用 INPUT 的新聞標題與欄位；不要把推測寫成已發生的事。\n2. 市場總結只能引用 INPUT 的行情數字與時間；若資料缺失，明確寫「資料未提供」。\n3. 不要提供買賣指令、目標價或投資保證。\n4. 以簡潔的繁體中文輸出；headline 一句，bullets 與 risks 各不超過 4 點。\n5. topic_summary 的 topic 必須使用 INPUT 已提供的 primary_topic 名稱，count 必須符合新聞筆數。\n6. 輸出必須符合指定 JSON schema。"""
