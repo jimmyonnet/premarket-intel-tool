@@ -282,7 +282,7 @@ def call_gemini(api_key: str, model: str, payload: dict[str, Any]) -> dict[str, 
             "responseMimeType": "application/json",
             "responseSchema": SCHEMA,
             "temperature": 0.2,
-            "maxOutputTokens": 2200,
+            "maxOutputTokens": 4096,
         },
     }
     request = urllib.request.Request(
