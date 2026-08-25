@@ -2,10 +2,8 @@
   "source_article": {
     "title": "0826盤前",
     "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/694E4F4E7828B8D31EB2556EC04B3915",
-    "fixture": "data/pressplay/2026-08-26.md",
-    "fetch_mode": "fallback_cache",
-    "fallback_reason": "PressPlay login page never rendered a single <input> element within 20s. Page state: {'url': 'https://www.pressplay.cc/member/login', 'title': '操作太頻繁了 - PressPlay', 'inputCount': 0, 'inputs': [], 'bodySnippet': 'PressPlay\\n\\n429\\n\\n操作太頻繁了\\n\\n偵測到短時間內有大量請求，為了保護服務穩定，請稍等一下再試一次。\\n\\n需要協助嗎？來信 cs@pressplay.",
-    "collected_at": "2026-08-26T00:22:28.735381+08:00"
+    "fetch_mode": "live_browser",
+    "collected_at": "2026-08-26T00:36:21.650979+08:00"
   },
   "chengwaye_date": null,
   "not_found_group": {

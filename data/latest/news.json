@@ -1,8 +1,8 @@
 [
   {
     "title": "〈美股早盤〉晶片股反彈推升主要指數開高 輝達財報成AI行情關鍵考驗",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE95LWtLTTdQbVBwOWtXdkplbDVWbXE0clpwdjlyOVNvbS1xdm5aSFBZZ0JYYVhTUjNybXA4dFA4bzZWdmRkNGZFb1JuMW9OSDQ?oc=5",
-    "source": "news.cnyes.com",
+    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE55d3BDSl9SZng0a1NTc0ZEbWthTm5lRGllOU1XcDFrc2hudkxWR0lybTJGdXVKRDhDdDMyWWFaNVR5dzhJRGJnUUZvUQ?oc=5",
+    "source": "鉅亨網",
     "time": "08/25 21:40",
     "timestamp": 1787665254.0,
     "score": 18,
@@ -25,6 +25,33 @@
     "named_entities": [
       "nvidia",
       "us_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "台股大漲407點！ 外資竟賣超7億 「這檔」昨天大買今天砍最兇",
+    "link": "https://news.google.com/rss/articles/CBMi7AJBVV95cUxNcXBRbGVMT2w3cmZDZjBHckhtTlAzWF9sb1E2MUNoSGFHTEw2eG9Uel9tcDA0NUFyMl8wUDdWU2c3YzBIQS0wbTV3VXpXTUV1Y3p4SkNwelpxSm1XbkdKb21scVIzZ3dkZHVhekxBYjQ1SDlZV2lzdVJQeUJPQnlnSFRfT2R1MS1CdHMxT0JGNnhremNvNDJTR3RoUDdaSUpMRXFEQVEzRmhlcjRFdjdIR09RVGJYQ1lMNkhvclVKNW1lR2tmc3Y3NXY5YThWOUZ4WkVYcS1RTWx6Zmg5MzVoWFNaWXVaMWl5U0xuX2hTb0FoZDhMbjNiaS1sWHRyQjduTER4aFJKYUd2TVo2cVhHUWxoeDc0OEFwSFFlZlRzblllMW1pdnV3VXhyMThDVFdTeG1uZ2pIWVhOZlpqeUZxMmg5c3hzdkFic1dzNW5YT3ZuRXZINmNWNlc4dV91MFhYeTI1QTNUVXpkZUct?oc=5",
+    "source": "Yahoo股市",
+    "time": "08/25 17:25",
+    "timestamp": 1787649900.0,
+    "score": 11,
+    "quality_score": 3,
+    "impact_score": 8,
+    "matched_groups": [
+      "market_benchmark",
+      "market_move",
+      "market_structure"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "market_structure"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "taiwan_market"
     ],
     "quality_pass": true,
     "impact_pass": true,
@@ -111,32 +138,6 @@
     "qualified": true
   },
   {
-    "title": "台股近千點V轉收紅！航運股攜手金融軍團、矽光子護盤奪回季線｜Yahoo財經掃描",
-    "link": "https://news.google.com/rss/articles/CBMi7wNBVV95cUxPc2RhTU90ZlMtWHBaejlFa2NHb0pOOW9md2M1Z3dNckdkb2lmWFpTemFYWUZaemlHX0xHZW8yTlhIYmZvcUVFR3JmSWxpckYyd1FMY2I0MmRVZjV2T3F6WUpuXzdwSnI2SlNDZGtBUVV0azg5MnNDOU9jeGRqdWxxcGNGLW5rQ2VzTG1rWHRrTTZJNENEdi1KOFRwcXFqSXJKVlJmZmViZUhkWE10aEl6V2w5aGVPTXFJN2ltUnVmWXVRblZhamVBWDU5UjVHb1lGcWZ2WUsxWFNKVFZtaU1QNk1hb0Fpd1dZNGVTN2hPQTExN3FOemFCNzBxTzJYM05IUHExTURXUUxweXdXR2hVMzFZZVBXRUVGbElRand6ZFRhSE5RYVhvVmFQT3g4QUNJb2ZOSVRzRVNFbm5lTkQyVGVtZUVaUlVGZ21YUlpzTUFteXFiamhrdUU3c2Jja0hGdWdxX21RZjN4M0EzRTJNUVZ1VWdZaDF4V3E0aW80aFV5cXJydGdmMjM3OEtWZXVZc1dRRm9NZ3NrdjMyeEx6M18yb2JjR2dJVXRKa2VXN2tDR0sxSUlQQXNyV3hCYTJNbkNtcTBhY0JieGVDNThMSkVSU05GUjRuSk9QV2lFMkVrcGo3NnQ1b0F0ektrOVE?oc=5",
-    "source": "Yahoo股市",
-    "time": "08/25 17:12",
-    "timestamp": 1787649132.0,
-    "score": 8,
-    "quality_score": 3,
-    "impact_score": 5,
-    "matched_groups": [
-      "market_benchmark",
-      "sector_supply_chain"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "taiwan_market",
-      "sector_technology"
-    ],
-    "primary_topic": "taiwan_market",
-    "named_entities": [
-      "taiwan_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
     "title": "〈貴金屬盤後〉美回購長債效應 金價突破4600美元 聚焦CPI和傑克森洞年會",
     "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE11dVc0WXd0b1k3SjVMRENPT19xNm51WVU5YkZFY25OMTY0cEJfQllybUpvRWh5M3JfckNPaU1qMnc5UXJ3YlVoTkREcC1KSjQ?oc=5",
     "source": "news.cnyes.com",
@@ -177,6 +178,32 @@
     ],
     "primary_topic": "company_earnings",
     "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "台股近千點V轉收紅！航運股攜手金融軍團、矽光子護盤奪回季線｜Yahoo財經掃描",
+    "link": "https://news.google.com/rss/articles/CBMi7wNBVV95cUxPc2RhTU90ZlMtWHBaejlFa2NHb0pOOW9md2M1Z3dNckdkb2lmWFpTemFYWUZaemlHX0xHZW8yTlhIYmZvcUVFR3JmSWxpckYyd1FMY2I0MmRVZjV2T3F6WUpuXzdwSnI2SlNDZGtBUVV0azg5MnNDOU9jeGRqdWxxcGNGLW5rQ2VzTG1rWHRrTTZJNENEdi1KOFRwcXFqSXJKVlJmZmViZUhkWE10aEl6V2w5aGVPTXFJN2ltUnVmWXVRblZhamVBWDU5UjVHb1lGcWZ2WUsxWFNKVFZtaU1QNk1hb0Fpd1dZNGVTN2hPQTExN3FOemFCNzBxTzJYM05IUHExTURXUUxweXdXR2hVMzFZZVBXRUVGbElRand6ZFRhSE5RYVhvVmFQT3g4QUNJb2ZOSVRzRVNFbm5lTkQyVGVtZUVaUlVGZ21YUlpzTUFteXFiamhrdUU3c2Jja0hGdWdxX21RZjN4M0EzRTJNUVZ1VWdZaDF4V3E0aW80aFV5cXJydGdmMjM3OEtWZXVZc1dRRm9NZ3NrdjMyeEx6M18yb2JjR2dJVXRKa2VXN2tDR0sxSUlQQXNyV3hCYTJNbkNtcTBhY0JieGVDNThMSkVSU05GUjRuSk9QV2lFMkVrcGo3NnQ1b0F0ektrOVE?oc=5",
+    "source": "Yahoo股市",
+    "time": "08/25 17:12",
+    "timestamp": 1787649132.0,
+    "score": 8,
+    "quality_score": 3,
+    "impact_score": 5,
+    "matched_groups": [
+      "market_benchmark",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "sector_technology"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "taiwan_market"
+    ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
