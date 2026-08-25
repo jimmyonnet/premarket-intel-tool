@@ -2997,6 +2997,29 @@
     .ai-briefing-headline { font-size: 13px; }
   }
 
+  .ai-inline-panel {
+    margin-top: 12px;
+    padding: 10px 12px;
+    border-top: 1px solid var(--border-light);
+    background: var(--bg-sub);
+  }
+  .ai-market-inline-panel { margin-bottom: 2px; }
+  .ai-news-inline-panel { margin: 12px 0 0; }
+  .ai-quality-inline {
+    margin-top: 10px;
+    padding: 10px;
+    border-top: 1px solid var(--border-light);
+    background: var(--bg-sub);
+  }
+  .ai-quality-inline-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 7px;
+  }
+  .ai-quality-inline-head .ai-briefing-kicker { margin-bottom: 0; }
+
   /* ACCESSIBILITY: REDUCED MOTION */
   @media (prefers-reduced-motion: reduce) {
     *, ::before, ::after {
@@ -3009,6 +3032,12 @@
 </style>
 </head>
 <body>
+
+  {% set ai = ai_summary if ai_summary is defined and ai_summary else {} %}
+  {% set ai_news = ai.news_summary if ai.news_summary is defined and ai.news_summary else {} %}
+  {% set ai_market = ai.market_summary if ai.market_summary is defined and ai.market_summary else {} %}
+  {% set ai_quality = ai.data_quality if ai.data_quality is defined and ai.data_quality else {} %}
+  {% set ai_quality_checks = ai_quality.checks if ai_quality.checks is defined and ai_quality.checks else [] %}
 
   <!-- HEADER -->
   <header class="page-header">
@@ -3119,6 +3148,26 @@
             {% endif %}
           </div>
         </div>
+      </div>
+      <div class="ai-quality-inline">
+        <div class="ai-quality-inline-head">
+          <span class="ai-briefing-kicker">🛡️ 資料品質檢查</span>
+          <span class="status-badge {{ 'is-ok' if ai_quality.status == 'ok' else 'is-warning' }}">{{ ai_quality.label or '待檢查' }}</span>
+        </div>
+        <div class="ai-quality-list">
+          {% for check in ai_quality_checks[:6] %}
+          <div class="ai-quality-row">
+            <span>{{ check.name }}</span>
+            <span class="status-badge {{ 'is-ok' if check.status == 'ok' else 'is-warning' }}">{{ check.detail or check.status }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% if ai_quality.issues %}
+        <div class="ai-briefing-risk"><strong>提醒：</strong>{{ ai_quality.issues[0].message }}</div>
+        {% else %}
+        <p class="ai-briefing-empty">目前未發現明顯資料品質警告。</p>
+        {% endif %}
+        <div class="ai-briefing-footnote">{{ ai.quality_note or 'AI 摘要僅根據本頁快照生成；價格、時間與來源以原始資料為準，不構成投資建議。' }}{% if ai.generated_at %} · {{ ai.generated_at[:16] }}{% endif %}</div>
       </div>
             </details>
           </div>
@@ -3824,6 +3873,22 @@
             </div>
             {% endfor %}
           </div>
+          <div class="ai-inline-panel ai-market-inline-panel">
+            <div class="ai-briefing-kicker">🌙 隔夜市場總結</div>
+            <h4 class="ai-briefing-headline">{{ ai_market.headline or '目前尚未產生隔夜市場總結。' }}</h4>
+            {% if ai_market.bullets %}
+            <ul class="ai-briefing-list">
+              {% for bullet in ai_market.bullets[:4] %}
+              <li>{{ bullet }}</li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p class="ai-briefing-empty">目前沒有足夠行情資料可供整理。</p>
+            {% endif %}
+            {% if ai_market.risks %}
+            <div class="ai-briefing-risk"><strong>風險：</strong>{{ ai_market.risks[0] }}</div>
+            {% endif %}
+          </div>
         </div>
       </div>
 
@@ -3891,87 +3956,31 @@
             ℹ️ 今日新聞來源暫時無法取得 · 系統將於下次排程自動重試
           </div>
         </div>
-      </div>
-
-      {% set ai = ai_summary if ai_summary is defined and ai_summary else {} %}
-      {% set ai_news = ai.news_summary if ai.news_summary is defined and ai.news_summary else {} %}
-      {% set ai_market = ai.market_summary if ai.market_summary is defined and ai.market_summary else {} %}
-      {% set ai_quality = ai.data_quality if ai.data_quality is defined and ai.data_quality else {} %}
-      {% set ai_quality_checks = ai_quality.checks if ai_quality.checks is defined and ai_quality.checks else [] %}
-      {% set ai_status_ok = ai.status == 'ok' %}
-
-      <!-- AI 盤前整理 -->
-      <div class="card ai-briefing-card-wrap" id="ai-briefing">
-        <div class="card-head">
-          <div class="card-title-group">
-            <h3 class="card-title">🧠 AI 盤前整理</h3>
-            <span class="count-badge">{{ ai.provider or '確定性整理' }}</span>
+        <div class="ai-inline-panel ai-news-inline-panel">
+          <div class="ai-briefing-kicker">📰 新聞多樣性與摘要</div>
+          <h4 class="ai-briefing-headline">{{ ai_news.headline or '目前尚未產生新聞摘要。' }}</h4>
+          <div class="ai-news-stats">
+            <span>新聞 {{ (ai.news_stats.count if ai.news_stats is defined and ai.news_stats else (news|length if news else 0)) }} 則</span>
+            <span>主題 {{ (ai.news_stats.unique_topics if ai.news_stats is defined and ai.news_stats else 0) }} 類</span>
+            <span>輝達 {{ (ai.news_stats.nvidia_count if ai.news_stats is defined and ai.news_stats else 0) }} 則</span>
           </div>
-          <span class="card-tip">原始數據優先</span>
+          {% if ai_news.key_points %}
+          <ul class="ai-briefing-list">
+            {% for point in ai_news.key_points[:4] %}
+            <li>{{ point }}</li>
+            {% endfor %}
+          </ul>
+          {% else %}
+          <p class="ai-briefing-empty">目前沒有可用新聞重點。</p>
+          {% endif %}
+          {% if ai_news.topic_summary %}
+          <div class="ai-topic-list">
+            {% for topic in ai_news.topic_summary[:5] %}
+            <span class="ai-topic-chip">{{ topic.topic }} · {{ topic.count }}</span>
+            {% endfor %}
+          </div>
+          {% endif %}
         </div>
-        <div class="ai-briefing-grid">
-          <article class="ai-briefing-panel">
-            <div class="ai-briefing-kicker">🌙 隔夜市場總結</div>
-            <h4 class="ai-briefing-headline">{{ ai_market.headline or '目前尚未產生隔夜市場總結。' }}</h4>
-            {% if ai_market.bullets %}
-            <ul class="ai-briefing-list">
-              {% for bullet in ai_market.bullets[:4] %}
-              <li>{{ bullet }}</li>
-              {% endfor %}
-            </ul>
-            {% else %}
-            <p class="ai-briefing-empty">目前沒有足夠行情資料可供整理。</p>
-            {% endif %}
-            {% if ai_market.risks %}
-            <div class="ai-briefing-risk"><strong>風險：</strong>{{ ai_market.risks[0] }}</div>
-            {% endif %}
-          </article>
-
-          <article class="ai-briefing-panel">
-            <div class="ai-briefing-kicker">📰 新聞多樣性與摘要</div>
-            <h4 class="ai-briefing-headline">{{ ai_news.headline or '目前尚未產生新聞摘要。' }}</h4>
-            <div class="ai-news-stats">
-              <span>新聞 {{ (ai.news_stats.count if ai.news_stats is defined and ai.news_stats else (news|length if news else 0)) }} 則</span>
-              <span>主題 {{ (ai.news_stats.unique_topics if ai.news_stats is defined and ai.news_stats else 0) }} 類</span>
-              <span>輝達 {{ (ai.news_stats.nvidia_count if ai.news_stats is defined and ai.news_stats else 0) }} 則</span>
-            </div>
-            {% if ai_news.key_points %}
-            <ul class="ai-briefing-list">
-              {% for point in ai_news.key_points[:4] %}
-              <li>{{ point }}</li>
-              {% endfor %}
-            </ul>
-            {% else %}
-            <p class="ai-briefing-empty">目前沒有可用新聞重點。</p>
-            {% endif %}
-            {% if ai_news.topic_summary %}
-            <div class="ai-topic-list">
-              {% for topic in ai_news.topic_summary[:5] %}
-              <span class="ai-topic-chip">{{ topic.topic }} · {{ topic.count }}</span>
-              {% endfor %}
-            </div>
-            {% endif %}
-          </article>
-
-          <article class="ai-briefing-panel">
-            <div class="ai-briefing-kicker">🛡️ 資料品質檢查</div>
-            <h4 class="ai-briefing-headline"><span class="status-badge {{ 'is-ok' if ai_quality.status == 'ok' else 'is-warning' }}">{{ ai_quality.label or '待檢查' }}</span></h4>
-            <div class="ai-quality-list">
-              {% for check in ai_quality_checks[:6] %}
-              <div class="ai-quality-row">
-                <span>{{ check.name }}</span>
-                <span class="status-badge {{ 'is-ok' if check.status == 'ok' else 'is-warning' }}">{{ check.detail or check.status }}</span>
-              </div>
-              {% endfor %}
-            </div>
-            {% if ai_quality.issues %}
-            <div class="ai-briefing-risk"><strong>提醒：</strong>{{ ai_quality.issues[0].message }}</div>
-            {% else %}
-            <p class="ai-briefing-empty">目前未發現明顯資料品質警告。</p>
-            {% endif %}
-          </article>
-        </div>
-        <div class="ai-briefing-footnote">{{ ai.quality_note or 'AI 摘要僅根據本頁快照生成；價格、時間與來源以原始資料為準，不構成投資建議。' }}{% if ai.generated_at %} · {{ ai.generated_at[:16] }}{% endif %}</div>
       </div>
 
       <!-- 財經行事曆 (時間軸儀表板) -->

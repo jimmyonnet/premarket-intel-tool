@@ -64,3 +64,19 @@ def test_generate_summary_normalizes_gemini_response(monkeypatch):
     assert result["model"] == "gemini-test"
     assert result["news_summary"]["headline"] == "新聞涵蓋台股、海外市場與債券題材。"
     assert result["quality_note"] == "PressPlay 使用備援資料。"
+
+
+def test_ai_panels_are_embedded_in_requested_parent_sections():
+    template = open("scripts/templates/premarket.html.j2", encoding="utf-8").read()
+
+    market_start = template.index("美股四大指數與跨海連動標的")
+    market_end = template.index("<!-- 台股摘要與夜盤 -->")
+    news_start = template.index("隔夜重大新聞 Top 10")
+    news_end = template.index("<!-- 財經行事曆 (時間軸儀表板) -->")
+    availability_start = template.index("id=\"today-briefing-block\"")
+    availability_end = template.index("</details>", availability_start)
+
+    assert "ai-market-inline-panel" in template[market_start:market_end]
+    assert "ai-news-inline-panel" in template[news_start:news_end]
+    assert "ai-quality-inline" in template[availability_start:availability_end]
+    assert "ai-briefing-card-wrap" not in template
