@@ -1,7 +1,7 @@
-const CACHE_NAME = 'pmit-20260825_1312-data-147e11d9301440fa';
+const CACHE_NAME = 'pmit-20260825_1345-data-147e11d9301440fa';
 const DATA_REVISION = '147e11d9301440fa';
 const SHELL_ASSETS = [
-  './', './index.html', './manifest.json', './embed/att.html', './embed/fin.html', './embed/rev.html',
+  './', './index.html', './manifest.json',
   './icon-180.png', './icon-192.png', './icon-512.png', './data_meta.json', './data/tw_holidays.json'
 ];
 
@@ -17,7 +17,8 @@ self.addEventListener('install', event => {
       } catch (err) {
         console.warn('SW core cache warning:', err);
       }
-      await Promise.allSettled(SHELL_ASSETS.slice(3).map(url => cache.add(url)));
+        await Promise.allSettled(SHELL_ASSETS.slice(3).map(url => cache.add(url)));
+
     }).then(() => self.skipWaiting())
   );
 });
@@ -36,7 +37,7 @@ async function networkFirst(request, fallbackRequest, cacheResponse) {
     const networkResponse = await fetch(request, { cache: 'no-store' });
     if (networkResponse && networkResponse.ok && cacheResponse) {
       // A response is cached only under the current revision's cache. The
-      // query hash from app.js/data_meta provides an additional revalidation key.
+      // data_meta revision provides an additional revalidation key.
       const cache = await caches.open(CACHE_NAME);
       await cache.put(request, networkResponse.clone());
     }

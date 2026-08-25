@@ -4,6 +4,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 WORKFLOW = ROOT / ".github" / "workflows" / "build-premarket-page.yml"
 RUNNER = ROOT / "scripts" / "run_fetchers.py"
+NIGHT_WORKFLOW = ROOT / ".github" / "workflows" / "collect-night-session.yml"
+REQUIREMENTS = ROOT / "requirements.txt"
 
 
 def test_scheduled_section_modes_and_manual_full_refresh_are_explicit():
@@ -64,3 +66,31 @@ def test_workflow_splits_full_quality_from_scheduled_smoke_and_caches_dependenci
     assert "trading_calendar.py update" in workflow
     assert "--respect-ttl" in workflow
     assert "git pull --rebase origin main && git push" in workflow
+    assert "timeout-minutes: 20" in workflow
+    assert "needs: [full-quality]" in workflow
+    assert "always()" in workflow
+    assert "needs.full-quality.result == 'success'" in workflow
+    assert "needs.full-quality.result == 'skipped'" in workflow
+    assert "notify-failure:" in workflow
+    assert "needs: [full-quality, build]" in workflow
+    assert "needs.full-quality.result == 'failure'" in workflow
+    assert "needs.build.result == 'failure'" in workflow
+    assert "npx --yes terser" not in workflow
+    assert "cancel-in-progress: false" in workflow
+
+
+def test_requirements_are_exactly_pinned():
+    lines = [line.strip() for line in REQUIREMENTS.read_text(encoding="utf-8").splitlines() if line.strip() and not line.startswith("#")]
+    assert lines
+    assert all("==" in line and ">=" not in line and "<" not in line for line in lines)
+
+
+def test_night_session_workflow_has_timeout_cache_and_push_retry():
+    workflow = NIGHT_WORKFLOW.read_text(encoding="utf-8")
+    assert "timeout-minutes: 5" in workflow
+    assert "actions/checkout@v7" in workflow
+    assert "actions/setup-python@v7" in workflow
+    assert "cache: pip" in workflow
+    assert "cache-dependency-path: requirements.txt" in workflow
+    assert "git pull --rebase origin main && git push" in workflow
+    assert "after 3 attempts" in workflow

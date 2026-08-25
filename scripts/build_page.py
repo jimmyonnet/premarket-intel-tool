@@ -1,63 +1,10 @@
+#!/usr/bin/env python3
+"""Build the server-rendered premarket GitHub Pages document and data packages."""
+
 from __future__ import annotations
+
 import math
 
-def fmt_num(v, decimals=2, fallback="—"):
-    if v is None or v == "" or str(v).lower() in ("nan", "null", "none"):
-        return fallback
-    try:
-        f = float(v)
-        if math.isnan(f):
-            return fallback
-        if decimals == 0:
-            return f"{int(round(f)):,}"
-        return f"{f:,.{decimals}f}"
-    except Exception:
-        return str(v)
-
-def fmt_pct(v, decimals=2, fallback="—"):
-    if v is None or v == "" or str(v).lower() in ("nan", "null", "none"):
-        return fallback
-    try:
-        f = float(v)
-        if math.isnan(f):
-            return fallback
-        return f"{f:+.{decimals}f}%"
-    except Exception:
-        return str(v)
-
-#!/usr/bin/env python3
-"""
-Assembles the final morning page (docs/index.html) from the three data
-sources' JSON output:
-  - indices.json    (fetch_indices.py)
-  - night_session.json (tx_night_session.py assemble)
-  - disposal.json   (fetch_disposal.py)
-
-Design language reused verbatim from the existing 覆盤準備台.html tool:
-Taiwan convention colors (red = 漲/rise, green = 跌/fall -- opposite of US),
-dark panel UI, monospace for numbers. See CSS in the template for the token
-list.
-
-Usage:
-    python build_page.py \
-        --indices indices.json \
-        --night-session night_session.json \
-        --disposal disposal.json \
-        --pressplay pressplay.json \
-        --out ../docs/index.html
-
-Note on --pressplay (Part 3): unlike the other three sources, this arg is
-OPTIONAL and defaults to None. fetch_pressplay_groups.py's login step can
-fail for real reasons outside our control (see that script's KNOWN RISK
-docstring) -- when it does, the workflow writes an empty {} instead of
-aborting, and this script must render a clean empty state rather than
-crashing the whole page build over a missing Part 3 section. See
-_empty_pressplay_section() / the pressplay dict built in main() below: the
-template is only ever handed a fully-populated structure, never a bare {}
-or missing key, specifically to avoid a Jinja2 Undefined chained-attribute
-crash (confirmed locally: `{{ data.missing_key.sub_key }}` raises
-UndefinedError even though `{{ data.missing_key }}` alone does not).
-"""
 import argparse
 import json
 from datetime import date, datetime, timezone, timedelta
@@ -75,6 +22,33 @@ from trading_calendar import (
 )
 from source_status import evaluate_source_health, SOURCES_METADATA
 from build_packages import write_packages
+
+
+def fmt_num(v, decimals=2, fallback="—"):
+    if v is None or v == "" or str(v).lower() in ("nan", "null", "none"):
+        return fallback
+    try:
+        f = float(v)
+        if math.isnan(f):
+            return fallback
+        if decimals == 0:
+            return f"{int(round(f)):,}"
+        return f"{f:,.{decimals}f}"
+    except Exception:
+        return str(v)
+
+
+def fmt_pct(v, decimals=2, fallback="—"):
+    if v is None or v == "" or str(v).lower() in ("nan", "null", "none"):
+        return fallback
+    try:
+        f = float(v)
+        if math.isnan(f):
+            return fallback
+        return f"{f:+.{decimals}f}%"
+    except Exception:
+        return str(v)
+
 
 TAIPEI = timezone(timedelta(hours=8))
 NEW_YORK = ZoneInfo("America/New_York")

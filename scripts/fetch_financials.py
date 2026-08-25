@@ -18,6 +18,11 @@ from typing import Any
 
 import requests
 
+try:
+    from trading_calendar import is_twse_trading_day
+except ImportError:  # imports from the repository root during pytest
+    from scripts.trading_calendar import is_twse_trading_day
+
 TAIPEI = timezone(timedelta(hours=8))
 DATA_FILE = Path("data/latest/financials.json")
 FETCH_TIMEOUT = (10, 120)
@@ -29,14 +34,9 @@ URLS = {
 
 
 def is_trading_day(date_obj):
-    if date_obj.weekday() >= 5:
-        return False
-    holidays_2026 = {
-        "2026-01-01", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19",
-        "2026-02-20", "2026-02-27", "2026-04-03", "2026-04-06", "2026-05-01",
-        "2026-06-19", "2026-09-25", "2026-10-09",
-    }
-    return date_obj.strftime("%Y-%m-%d") not in holidays_2026
+    """Use the trusted TWSE snapshot; never infer a missing year silently."""
+    target = date_obj.date() if isinstance(date_obj, datetime) else date_obj
+    return is_twse_trading_day(target)
 
 
 def get_cutoff(now: datetime | None = None) -> datetime:

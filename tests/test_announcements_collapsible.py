@@ -41,9 +41,9 @@ def test_announcement_template_distinguishes_fetch_failure_and_cached_data_from_
     block = template[macro_start:macro_end]
 
     assert "financial_source_status" in block
-    assert "資料抓取失敗，無法確認市場未反映筆數" in block
-    assert "沿用前次" in block
-    assert "沿用快取" in block
+    assert "資料抓取失敗，無法確認市場未反映公告" in template
+    assert "stale_cached" in block
+    assert "沿用快取" in template
 
 
 def test_realtime_announcement_summary_keeps_count_but_omits_redundant_time_tip():

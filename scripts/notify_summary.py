@@ -2,7 +2,7 @@
 """
 Premarket Intel Tool - Notification Dispatcher
 Supports Webhook notifications for both Success (Summary) and Failure (Error) events.
-Compatible with LINE Notify, Discord Webhooks, Slack, and Generic JSON Webhooks.
+Compatible with LINE Messaging API push, Discord Webhooks, Slack, and Generic JSON Webhooks.
 Zero external dependencies (uses standard library urllib only).
 """
 import os
@@ -37,8 +37,36 @@ def send_http_post(url: str, data: dict = None, form_data: dict = None, headers:
             print(f"[Notify] Webhook response: {resp.status}")
             return resp.status in (200, 204)
     except Exception as e:
-        print(f"[Notify] Failed to send webhook to {url}: {e}", file=sys.stderr)
+        try:
+            parsed = urllib.parse.urlsplit(url)
+            safe_target = f"{parsed.scheme}://{parsed.netloc}" if parsed.netloc else "<invalid-url>"
+        except Exception:
+            safe_target = "<invalid-url>"
+        print(f"[Notify] Failed to send webhook to {safe_target}: {e}", file=sys.stderr)
         return False
+
+
+def send_line_message(text: str) -> bool:
+    """Optionally send a text message through LINE Messaging API.
+
+    LINE Notify was discontinued on 2025-03-31.  The replacement requires a
+    channel access token and a recipient user/group ID, so it remains opt-in.
+    """
+    token = os.getenv("LINE_CHANNEL_ACCESS_TOKEN")
+    recipient = os.getenv("LINE_USER_ID")
+    if not token and not recipient:
+        if os.getenv("LINE_NOTIFY_TOKEN"):
+            print("[Notify] LINE_NOTIFY_TOKEN ignored: LINE Notify is discontinued; configure LINE_CHANNEL_ACCESS_TOKEN and LINE_USER_ID instead.", file=sys.stderr)
+        return False
+    if not token or not recipient:
+        print("[Notify] LINE Messaging API skipped: both LINE_CHANNEL_ACCESS_TOKEN and LINE_USER_ID are required.", file=sys.stderr)
+        return False
+    return send_http_post(
+        "https://api.line.me/v2/bot/message/push",
+        data={"to": recipient, "messages": [{"type": "text", "text": text[:4900]}]},
+        headers={"Authorization": f"Bearer {token}"},
+    )
+
 
 def build_summary_content() -> dict:
     """Extracts summary information from latest data files."""
@@ -120,15 +148,9 @@ def notify_success():
     print("=== SUMMARY MESSAGE ===")
     print(text)
     
-    # 1. LINE Notify
-    line_token = os.getenv("LINE_NOTIFY_TOKEN")
-    if line_token:
-        send_http_post(
-            "https://notify-api.line.me/api/notify",
-            form_data={"message": "\n" + text},
-            headers={"Authorization": f"Bearer {line_token}"}
-        )
-        
+    # 1. LINE Messaging API (optional replacement for discontinued LINE Notify)
+    send_line_message(text)
+
     # 2. Discord Webhook
     discord_url = os.getenv("DISCORD_WEBHOOK_URL")
     if discord_url:
@@ -150,19 +172,19 @@ def notify_failure():
     server_url = os.getenv("GITHUB_SERVER_URL", "https://github.com")
     run_url = f"{server_url}/{repo}/actions/runs/{run_id}" if run_id else ""
     now_str = datetime.now(TAIPEI).strftime("%Y-%m-%d %H:%M:%S")
+    failed_jobs = os.getenv("FAILED_JOBS") or os.getenv("GITHUB_JOB", "unknown")
+    event_name = os.getenv("GITHUB_EVENT_NAME", "unknown")
 
-    text = f"❌【PMIT 警報】GitHub Actions 盤前資料建置失敗！\n時間：{now_str} (台北)\n專案：{repo}\n紀錄：{run_url}\n請盡速至 GitHub Actions 檢查 Logs。"
+    text = (
+        f"❌【PMIT 警報】GitHub Actions 盤前資料建置失敗！\n"
+        f"時間：{now_str} (台北)\n專案：{repo}\n事件：{event_name}\n"
+        f"失敗 job：{failed_jobs}\n紀錄：{run_url}\n請盡速至 GitHub Actions 檢查 Logs。"
+    )
     print("=== FAILURE MESSAGE ===")
     print(text)
 
-    # 1. LINE Notify
-    line_token = os.getenv("LINE_NOTIFY_TOKEN")
-    if line_token:
-        send_http_post(
-            "https://notify-api.line.me/api/notify",
-            form_data={"message": "\n" + text},
-            headers={"Authorization": f"Bearer {line_token}"}
-        )
+    # 1. LINE Messaging API (optional replacement for discontinued LINE Notify)
+    send_line_message(text)
 
     # 2. Discord Webhook
     discord_url = os.getenv("DISCORD_WEBHOOK_URL") or os.getenv("ERROR_WEBHOOK_URL")

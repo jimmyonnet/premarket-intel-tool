@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "docs" / "index.html"
-APP = ROOT / "scripts" / "assets" / "app.js"
+TEMPLATE = ROOT / "scripts" / "templates" / "premarket.html.j2"
 TARGET = "https://www.cmoney.tw/forum/futures/TXF1?s=p"
 
 
@@ -26,13 +26,14 @@ def test_night_session_card_links_to_cmoney_in_new_tab():
     assert "基準：vs 期貨日盤收盤" in block
 
 
-def test_modern_market_renderer_links_night_session_to_cmoney():
-    app = APP.read_text(encoding="utf-8")
+def test_live_template_links_night_session_to_cmoney():
+    template = TEMPLATE.read_text(encoding="utf-8")
 
-    assert f'href="{TARGET}"' in app
-    assert 'target="_blank" rel="noopener noreferrer"' in app
-    assert 'class="market-item"' in app
-    assert "夜盤" in app
+    assert f'href="{TARGET}"' in template
+    assert 'target="_blank" rel="noopener noreferrer"' in template
+    assert 'class="summary-card"' in template
+    assert 'class="card-label">台指期夜盤 (05:00)</div>' in template
+    assert "夜盤" in template
 
 
 def test_market_context_stays_first_in_summary_after_utility_panel():

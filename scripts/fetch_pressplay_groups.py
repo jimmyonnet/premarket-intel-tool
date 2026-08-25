@@ -502,13 +502,15 @@ def parse_daily_rows(html: str):
 
 
 def load_stock_dict():
-    for p in [Path("data/tw_stock_names.json"), Path("docs/data/tw_stock_names.json")]:
-        if p.exists():
-            try:
-                return json.loads(p.read_text(encoding="utf-8"))
-            except Exception:
-                pass
-    return {}
+    """Load the single canonical Taiwan stock-name dictionary."""
+    path = Path("data/tw_stock_names.json")
+    if not path.exists():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+    return payload if isinstance(payload, dict) else {}
 
 
 def match_token(token: str, rows, stock_dict=None):

@@ -1,9 +1,24 @@
-from datetime import datetime, timezone, timedelta
+from datetime import date, datetime, timezone, timedelta
 
+from scripts import fetch_financials
 from scripts.fetch_financials import select_unreflected
 
 
 TAIPEI = timezone(timedelta(hours=8))
+
+
+def test_is_trading_day_delegates_datetime_to_authoritative_calendar(monkeypatch):
+    seen = []
+
+    def fake_calendar(day):
+        seen.append(day)
+        return False
+
+    monkeypatch.setattr(fetch_financials, "is_twse_trading_day", fake_calendar)
+    value = fetch_financials.is_trading_day(datetime(2026, 8, 25, 13, 30, tzinfo=TAIPEI))
+
+    assert value is False
+    assert seen == [date(2026, 8, 25)]
 
 
 def test_att_and_fin_use_roc_timestamp_after_cutoff():

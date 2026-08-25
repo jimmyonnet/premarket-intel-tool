@@ -1,10 +1,8 @@
-requests>=2.31
-beautifulsoup4>=4.12
-jinja2>=3.1
+requests==2.34.2
+beautifulsoup4==4.15.0
+jinja2==3.1.6
 playwright==1.62.0
-icalendar>=6.0
-recurring-ical-events>=2.2
-pytest>=8.0
-yfinance>=0.2.0
-
-
+icalendar==7.3.0
+recurring-ical-events==3.8.2
+pytest==9.1.1
+yfinance==1.6.0

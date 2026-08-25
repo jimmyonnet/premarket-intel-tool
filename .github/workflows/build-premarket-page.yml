@@ -35,7 +35,9 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  # Never cancel an in-flight data build; it may already have published a
+  # consistent Pages snapshot and is protected by the push/rebase retry below.
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -45,6 +47,7 @@ jobs:
   # The generated bot commit is intentionally excluded to prevent an endless
   # workflow loop; it is validated by the originating build job before push.
   full-quality:
+    timeout-minutes: 20
     if: >-
       github.event_name == 'pull_request' ||
       (github.event_name == 'push' && github.actor != 'premarket-intel-bot') ||
@@ -77,7 +80,12 @@ jobs:
         run: playwright install --with-deps chromium
 
   build:
-    if: github.event_name != 'pull_request' && github.actor != 'premarket-intel-bot'
+    needs: [full-quality]
+    timeout-minutes: 20
+    if: >-
+      always() &&
+      (needs.full-quality.result == 'success' || needs.full-quality.result == 'skipped') &&
+      github.event_name != 'pull_request' && github.actor != 'premarket-intel-bot'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -185,10 +193,6 @@ jobs:
         if: steps.trading_day.outputs.is_trading_day == 'true'
         run: python scripts/validate_data.py --data-dir data/latest --normalize
 
-      - name: Minify frontend module
-        run: |
-          npx --yes terser scripts/assets/app.js -c passes=3,unsafe=true -m --comments false -o docs/assets/app.js
-
       - name: Build page
         if: steps.trading_day.outputs.is_trading_day == 'true'
         run: |
@@ -210,7 +214,7 @@ jobs:
 
       - name: Archive daily data to history
         if: steps.trading_day.outputs.is_trading_day == 'true'
-        run: python scripts/archive_history.py
+        run: python scripts/archive_history.py --retain-days 60
 
       - name: Commit page, history, calendar + raw data snapshot
         if: steps.trading_day.outputs.is_trading_day == 'true'
@@ -218,20 +222,12 @@ jobs:
           git config user.name "premarket-intel-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
-          # Python imports may rewrite tracked bytecode; generated pycache is
-          # not a deploy artifact and must never enter the bot commit.
-          git reset -- scripts/__pycache__ tests/__pycache__ 2>/dev/null || true
-          git restore --source=HEAD --worktree -- scripts/__pycache__ 2>/dev/null || true
-          git clean -fd -- scripts/__pycache__ tests/__pycache__
           git diff --cached --quiet && echo "no change" && exit 0
           git commit -m "build premarket page for ${{ steps.date.outputs.today }}"
-          # Some generators can finish an atomic replace immediately after the
-          # first add. Fold any such last-millisecond changes into the build
-          # commit before rebasing, so pull never sees a dirty worktree.
+          # Fold any last-millisecond generated changes into the build commit
+          # before rebasing, so pull never sees a dirty worktree. .gitignore
+          # keeps Python caches out of both stages.
           git add -A
-          git reset -- scripts/__pycache__ tests/__pycache__ 2>/dev/null || true
-          git restore --source=HEAD --worktree -- scripts/__pycache__ 2>/dev/null || true
-          git clean -fd -- scripts/__pycache__ tests/__pycache__
           git diff --cached --quiet || git commit --amend --no-edit
           for attempt in 1 2 3; do
             if git pull --rebase origin main && git push; then
@@ -239,9 +235,6 @@ jobs:
             fi
             git rebase --abort || true
             git add -A
-            git reset -- scripts/__pycache__ tests/__pycache__ 2>/dev/null || true
-            git restore --source=HEAD --worktree -- scripts/__pycache__ 2>/dev/null || true
-            git clean -fd -- scripts/__pycache__ tests/__pycache__
             git diff --cached --quiet || git commit --amend --no-edit
             echo "push attempt ${attempt} failed; retrying" >&2
             sleep $((attempt * 5))
@@ -252,17 +245,34 @@ jobs:
       - name: Send Premarket Summary Webhook
         if: success() && steps.trading_day.outputs.is_trading_day == 'true'
         env:
-          LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SUMMARY_WEBHOOK_URL: ${{ secrets.SUMMARY_WEBHOOK_URL }}
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
         run: python scripts/notify_summary.py --mode success || true
 
+
+  notify-failure:
+    needs: [full-quality, build]
+    if: >-
+      always() &&
+      (needs.full-quality.result == 'failure' || needs.build.result == 'failure')
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
       - name: Send Failure Notification Webhook
-        if: failure() && steps.trading_day.outputs.is_trading_day == 'true'
         env:
-          LINE_NOTIFY_TOKEN: ${{ secrets.LINE_NOTIFY_TOKEN }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           ERROR_WEBHOOK_URL: ${{ secrets.ERROR_WEBHOOK_URL }}
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+          FAILED_JOBS: full-quality=${{ needs.full-quality.result }},build=${{ needs.build.result }}
         run: python scripts/notify_summary.py --mode failure || true

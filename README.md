@@ -18,10 +18,10 @@
   外資／投信／自營、AI理由等欄位；比對不到的（可能是打錯字或非台股代號）會
   另外列出來，不會悄悄漏掉
 
-跑在 GitHub Actions 上，全部免費，不需要 DeepSeek／Groq／Gemini 的 API key ——
-第一、二部分的資料來源都是純文字網頁，不需要 OCR 或摘要；第三部分要登入
-PressPlay 讀文章內容，所以多了兩個帳密 Secrets（見下方部署步驟），但一樣不需要
-任何 AI API key。等做到第四部分（統一期貨的圖片型報告）才會用到 Gemini。
+跑在 GitHub Actions 上，資料抓取與頁面建置採可降級的排程流程。第一、二部分的
+資料來源是公開網頁；第三部分若要取得 PressPlay 族群清單，需要設定帳密 Secrets。
+Gemini AI 摘要是選配功能：設定 `GEMINI_API_KEY` 才會啟用，失敗或未設定時會保留
+確定性的 fallback，不會阻擋主要頁面建置。
 
 ## 部署步驟（你要做的事）
 
@@ -30,30 +30,40 @@ PressPlay 讀文章內容，所以多了兩個帳密 Secrets（見下方部署�
    `main` 、資料夾選 `/docs`，存檔。
 3. 到 **Settings → Actions → General**，確認 "Workflow permissions" 是
    "Read and write permissions"（兩個 workflow 都需要 push 回 repo，預設有時是唯讀）。
-4. 到 **Settings → Secrets and variables → Actions**，新增兩個 Repository
-   secrets（第三部分要登入 PressPlay 才抓得到族群清單；這兩個值只有你自己
-   輸入，我不會看到也不會寫進程式碼）：
-   - `PRESSPLAY_EMAIL`：你的 PressPlay 登入帳號（email）
-   - `PRESSPLAY_PASSWORD`：你的 PressPlay 登入密碼
+4. 到 **Settings → Secrets and variables → Actions**，依需要新增 Repository
+   secrets（所有值都由你自行輸入，程式只在 workflow 執行時讀取，不會寫入 repository）：
+   - `PRESSPLAY_EMAIL`：PressPlay 登入帳號（email）
+   - `PRESSPLAY_PASSWORD`：PressPlay 登入密碼
+   - `GEMINI_API_KEY`：選配；啟用 Gemini 新聞/隔夜摘要與資料品質敘述
+   - `DISCORD_WEBHOOK_URL`、`SUMMARY_WEBHOOK_URL`、`ERROR_WEBHOOK_URL` 或 `WEBHOOK_URL`：選配通知
+   - `LINE_CHANNEL_ACCESS_TOKEN` 與 `LINE_USER_ID`：選配 LINE Messaging API push；兩者需同時設定
 
-   沒設定這兩個 Secrets 也不會壞——第三部分會自動顯示「尚無資料」，第一、
-   二部分照常運作（細節見下方「已知需制」第 5 點）。
+   沒設定 PressPlay 或 Gemini secrets 也不會阻斷主要頁面；相關區塊會顯示尚無資料或
+   deterministic fallback。此專案不再呼叫已終止的 LINE Notify endpoint。
 5. 完成。兩個 workflow 會照排程自動跑；也可以到 Actions 頁籤手動點
    "Run workflow" 立刻測試，不用等排程時間到。
 6. 跑過一次 build-premarket-page 之後，頁面網址會是
    `https://<你的帳號>.github.io/<repo名稱>/`。
 
-## 前端優化架構
+## 前端現況與資料包架構
 
-目前頁面採用輕量 shell + JSON 分包架構：`docs/index.html` 只保留首屏契約與必要的無障礙骨架，處置倒數與市場資料由 `data/disposition.json`、`data/macro.json` 優先載入；候選股、公告、行事曆與新聞則分別從 `data/candidates.json`、`data/announcements.json`、`data/calendar.json`、`data/news.json` 在閒置或進入視窗後載入。`assets/app.js` 是原生 ES module，`assets/tokens.css` 集中 L0 漲跌色、L1 風險狀態色與 L2 中性色，`assets/layout.css` 負責首屏 Action Deck、響應式表格與 `content-visibility`。
+目前頁面是由 Jinja 在建置時產生的單檔 server-rendered HTML，樣式與互動 JavaScript
+仍內嵌在 `scripts/templates/premarket.html.j2`；建置後另外輸出 `docs/data/*.json`、
+`docs/data_meta.json` 與 `docs/sw.js`。頁面不載入 `assets/app.js`，也不存在
+`assets/tokens.css` 或 `assets/layout.css`，因此 workflow 不再下載或執行未鎖定的 Terser
+bundle。公告區塊直接使用 `financials.json`／`announcements.json` 原生渲染，目前沒有
+iframe；Service Worker 對 JSON 採 network-first revalidation。
 
-首屏現在以三欄 Action Deck 呈現「處置倒數」、「今日出關」與「自選命中」，處置表另提供最短路徑條與觸發價靶心，候選股表提供量能背景長條，財報公告則改為原生 7 欄 Δ 優先表格。舊有 `docs/embed/` 檔案暫予保留作為相容資產，但目前頁面 iframe 數量為 0，公告已由 `financials.json` 轉成原生資料包。
+首屏以三欄 Action Deck 呈現「處置倒數」、「今日出關」與「自選命中」，處置表提供最短
+路徑條與觸發價靶心，候選股表提供量能背景長條，財報公告則是可折疊的原生資料表格。
+所有外部來源資料都經過 `validate_data.py` 契約檢查，抓取失敗時會在頁面狀態中標示
+warning 或 fallback，而不是把空資料假裝成正常資料。
 
 本機可用以下指令驗證：
 
 ```bash
-PYTHONPATH=. pytest -q
-PYTHONPATH=scripts python scripts/build_page.py --indices data/latest/indices.json --night-session data/latest/night_session.json --disposal data/latest/disposal.json --pressplay data/latest/pressplay.json --chengwaye-daily data/latest/chengwaye_daily.json --calendar data/latest/calendar.json --financials data/latest/financials.json --news data/latest/news.json --twse-summary data/latest/twse_summary.json --source-status data/latest/source_status.json --out docs/index.html
+python -m pytest -q
+python scripts/build_page.py --indices data/latest/indices.json --night-session data/latest/night_session.json --disposal data/latest/disposal.json --pressplay data/latest/pressplay.json --chengwaye-daily data/latest/chengwaye_daily.json --stock-history data/latest/stock_history.json --calendar data/latest/calendar.json --financials data/latest/financials.json --news data/latest/news.json --ai-summary data/latest/ai_summary.json --twse-summary data/latest/twse_summary.json --source-status data/latest/source_status.json --out docs/index.html
 ```
 
 ## 如何觸發手動 Rebuild（即時更新頁面）
@@ -63,16 +73,16 @@ PYTHONPATH=scripts python scripts/build_page.py --indices data/latest/indices.js
 2. 左側點選 **Build premarket page** 工作流程。
 3. 右側點擊 **Run workflow** ➔ 選擇 `Branch: main` ➔ 點擊綠色 **Run workflow** 按鈕。
 4. 預計 2 分鐘內執行完畢並自動推送到 `main` 分支，GitHub Pages 頁面將自動更新。
-5. 在盤前工作台頁面點擊頂部 **「🔄 建置 HH:MM」** 按鈕即可取得最新版面！
+5. 在盤前工作台頁面點擊頂部 **「🔄 手動更新資料」** 按鈕即可開啟上述 workflow。
 
 ## 兩個 workflow 在做什麼
 
 - **collect-night-session.yml**：平日 15:00–05:00（台北時間）每 30 分鐘跑一次，
   抓一次台指期夜盤即時報價，累加寫進 `data/night_session/<日期>.jsonl`。
-- **build-premarket-page.yml**：平日早上 07:35（台北時間）跑一次，抓美股/日韓
-  指數、組合當晚累積的夜盤數據、抓處置股清單，登入 PressPlay 讀最新一篇盤前
-  文章的族群清單並比對 chengwaye.com 當天成交，組出 `docs/index.html` 並
-  commit。
+- **build-premarket-page.yml**：依排程在台北時間晚間與早上更新資料；抓美股/日韓
+  指數、組合當晚累積的夜盤數據、處置股清單、PressPlay 族群清單、chengwaye
+  成交資料、金融公告與新聞，驗證契約後組出 `docs/index.html` 並 commit。PR、Push
+  與手動執行會先通過完整品質檢查；Scheduled build 則執行 smoke/data-contract 檢查。
 
 ## 已知限制（老實跟你說）
 
@@ -197,13 +207,14 @@ PYTHONPATH=scripts python scripts/build_page.py --indices data/latest/indices.js
 
 ## 本機測試（離線，不連網）
 
-`fixtures/` 資料夾存了每個來源的樣本內容，可以離線測試抓取腳本：
+`fixtures/` 目前存有可重播的 disposal、PressPlay 文章與 Chengwaye daily 樣本，
+可以離線測試不需登入的抓取腳本：
 
 ```bash
 pip install -r requirements.txt
 
 python scripts/fetch_indices.py --fixture-dir fixtures
-python scripts/tx_night_session.py collect --fixture fixtures/wantgoo_wtxp.txt --date 2026-08-21 --data-dir /tmp/night_test
+# 目前沒有可重播的 Wantgoo fixture；夜盤來源仍依 README 已知限制處理。
 python scripts/fetch_disposal.py --fixture fixtures/chengwaye_disposal.html --today 2026-08-20
 python scripts/fetch_pressplay_groups.py --fixture-article fixtures/pressplay_article.txt --fixture-daily fixtures/chengwaye_daily.html
 ```

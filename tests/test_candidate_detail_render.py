@@ -6,7 +6,6 @@ from jinja2 import Environment, FileSystemLoader
 
 ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE = ROOT / "scripts" / "templates" / "premarket.html.j2"
-LEGACY_APP = ROOT / "scripts" / "assets" / "app.js"
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from build_page import build_institutional_section
@@ -143,7 +142,3 @@ def test_candidate_rows_keep_sort_and_open_detail_contracts_without_search_box()
     assert "window.pm.openCandidateInsight" not in source
     assert 'id="candidate-search"' not in source
     assert "window.pm.filterCandidateTable" not in source
-
-    legacy_app = LEGACY_APP.read_text(encoding="utf-8")
-    assert 'id="candidate-filter"' not in legacy_app
-    assert "filterCandidateRows" not in legacy_app

@@ -116,7 +116,8 @@ def test_template_rendering_filters_and_hidden_comment():
     assert "<!-- 隱藏 1 筆（資料缺欄位，請回報） -->" in rendered_html
     # Verify stock (b) 3293 is rendered under exiting
     assert "3293" in rendered_html
-    assert "即時營收（資料抓取失敗，無法確認市場未反映筆數）" in rendered_html
+    assert "即時營收（市場未反映 0 筆）" in rendered_html
+    assert "即時營收資料抓取失敗，無法確認市場未反映公告" in rendered_html
     assert "抓取失敗" in rendered_html
-    assert "即時季報（沿用前次 1 筆）" in rendered_html
+    assert "即時季報（市場未反映 1 筆）" in rendered_html
     assert "沿用快取" in rendered_html

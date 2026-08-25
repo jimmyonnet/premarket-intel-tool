@@ -1177,7 +1177,7 @@
   .badge-green { background: var(--green-bg); color: var(--green-fg); border: 1px solid var(--green-border); }
   .badge-blue { background: var(--blue-bg); color: var(--blue-fg); border: 1px solid var(--blue-border); }
 
-  /* IFRAME EMBEDS */
+  /* ANNOUNCEMENT ACCORDIONS */
   .unref-accordion {
     border-bottom: 1px solid var(--border);
   }
@@ -1203,16 +1203,6 @@
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
-  .embed-frame, .unref-frame {
-    width: 100%;
-    border: none;
-    border-radius: 6px;
-    background: transparent;
-    display: block;
-    overflow: hidden;
-    transition: height 0.15s ease-out;
-  }
-
   /* TILES GRID */
   .tiles-grid {
     display: grid;
@@ -1690,56 +1680,6 @@
       background: var(--bg-sub);
       z-index: 4;
     }
-  }
-
-  /* EMBED FRAME WRAPPER & RETRY */
-  .embed-frame-wrapper {
-    position: relative;
-    width: 100%;
-    min-height: 120px;
-    transition: min-height 0.2s ease;
-  }
-  .embed-frame-wrapper.is-loading::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(90deg, var(--bg-sub) 25%, var(--bg-hover) 50%, var(--bg-sub) 75%);
-    background-size: 200% 100%;
-    animation: skeleton-pulse 1.5s infinite;
-    border-radius: 8px;
-    z-index: 1;
-    pointer-events: none;
-  }
-  @keyframes skeleton-pulse {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-  }
-  .embed-fallback-notice {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 14px;
-    font-size: 12.5px;
-    color: var(--text-muted);
-    background: var(--bg-sub);
-    border-radius: 6px;
-    margin: 8px 0;
-  }
-  .btn-retry {
-    background: var(--bg-card);
-    border: 1px solid var(--border-strong);
-    color: var(--blue);
-    border-radius: 4px;
-    padding: 4px 10px;
-    font-size: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-  .btn-retry:hover {
-    background: var(--bg-hover);
-    border-color: var(--blue);
   }
 
   /* FOOTER */
@@ -3729,8 +3669,55 @@
       <!-- 隱藏 {{ hidden_disposal|length }} 筆（資料缺欄位，請回報） -->
       {% endif %}
 
+      {% macro render_announcement_rows(rows, state, block_label) %}
+      {% if state == 'fetch_failed' and not rows %}
+      <div class="empty-state">⚠️ {{ block_label }}資料抓取失敗，無法確認市場未反映公告。</div>
+      {% elif rows %}
+      <div class="table-scroll">
+        <table class="data-table announcement-table">
+          <caption class="sr-only">{{ block_label }}公告列表</caption>
+          <thead>
+            <tr>
+              <th scope="col">代號／名稱</th>
+              <th scope="col">公告時間</th>
+              <th scope="col">公告主旨</th>
+              <th scope="col">EPS</th>
+              <th scope="col">AI 判讀</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in rows[:100] %}
+            {% set parsed = row.get('parsed') or {} %}
+            <tr>
+              <td data-label="代號／名稱" class="code font-mono">{{ row.get('code') or '—' }} {{ row.get('name') or '' }}</td>
+              <td data-label="公告時間" class="font-mono">{{ row.get('date') or '—' }} {{ row.get('time') or '' }}</td>
+              <td data-label="公告主旨" class="announcement-subject">{{ row.get('subject') or '—' }}
+                {% if row.get('raw') %}
+                <details class="announcement-raw-details">
+                  <summary>查看原文</summary>
+                  <pre class="raw-text">{{ row.get('raw') }}</pre>
+                </details>
+                {% endif %}
+              </td>
+              <td data-label="EPS" class="num">{{ parsed.get('EPS') if parsed.get('EPS') is not none else (parsed.get('全年EPS') if parsed.get('全年EPS') is not none else '—') }}</td>
+              <td data-label="AI 判讀">{% if row.get('ai_reason') %}{{ row.get('ai_reason') }}{% else %}—{% endif %}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if rows|length > 100 %}
+      <div class="empty-state">僅顯示前 100 筆未反映公告；完整資料仍保留在 announcements.json。</div>
+      {% endif %}
+      {% elif state == 'stale_cached' %}
+      <div class="empty-state">⚠️ {{ block_label }}目前沿用快取，但沒有可顯示的未反映項目。</div>
+      {% else %}
+      <div class="empty-state">目前沒有{{ block_label }}未反映公告。</div>
+      {% endif %}
+      {% endmacro %}
+
       {% macro render_announcements(financials, unref_count, build_version, generated_at) %}
-      <!-- 市場未反映財務公告 (Iframes) -->
+      <!-- 市場未反映財務公告：直接使用 financials.json，避免凍結 iframe -->
       {% set financial_source_status = financials.source_status or {} %}
       {% set att_state = (financial_source_status.get('att') or {}).get('state', 'fresh') %}
       {% set fin_state = (financial_source_status.get('fin') or {}).get('state', 'fresh') %}
@@ -3746,74 +3733,26 @@
         <div class="data-block" style="padding:0;">
           <details class="unref-accordion">
             <summary class="unref-summary">
-              {% if att_state == 'fetch_failed' %}
-              <span>即時自結（資料抓取失敗，無法確認市場未反映筆數）</span>
-              <span class="badge badge-amber">抓取失敗</span>
-              {% elif att_state == 'stale_cached' %}
-              <span>即時自結（沿用前次 {{ financials.att|length if financials.att else 0 }} 筆）</span>
-              <span class="badge badge-amber">沿用快取</span>
-              {% else %}
               <span>即時自結（市場未反映 {{ financials.att|length if financials.att else 0 }} 筆）</span>
-              <span class="badge badge-blue">{{ financials.att|length if financials.att else 0 }} 筆</span>
-              {% endif %}
+              {% if att_state == 'fetch_failed' %}<span class="badge badge-amber">抓取失敗</span>{% elif att_state == 'stale_cached' %}<span class="badge badge-amber">沿用快取</span>{% else %}<span class="badge badge-blue">{{ financials.att|length if financials.att else 0 }} 筆</span>{% endif %}
             </summary>
-            <div class="unref-content">
-              <div class="embed-frame-wrapper is-loading" id="wrapper-att">
-                <iframe src="embed/att.html?v={{ build_version or (generated_at | replace(' ','_') | replace('/','') | replace(':','')) }}" id="embed-att" class="embed-frame unref-frame" onload="window.pm.onIframeLoad('att')" loading="lazy" referrerpolicy="no-referrer" style="min-height:120px; height:auto;" scrolling="no" title="市場未反映自結公告"></iframe>
-                <div class="embed-fallback-notice" id="fallback-att" style="display:none;">
-                  <span>⚠️ 嵌入資料載入逾時</span>
-                  <button type="button" class="btn-retry" onclick="window.pm.retryEmbed('att')" aria-label="重新載入自結公告區塊">🔄 重新載入此區塊</button>
-                </div>
-              </div>
-            </div>
+            <div class="unref-content">{{ render_announcement_rows(financials.att or [], att_state, '即時自結') }}</div>
           </details>
 
           <details class="unref-accordion">
             <summary class="unref-summary">
-              {% if fin_state == 'fetch_failed' %}
-              <span>即時季報（資料抓取失敗，無法確認市場未反映筆數）</span>
-              <span class="badge badge-amber">抓取失敗</span>
-              {% elif fin_state == 'stale_cached' %}
-              <span>即時季報（沿用前次 {{ financials.fin|length if financials.fin else 0 }} 筆）</span>
-              <span class="badge badge-amber">沿用快取</span>
-              {% else %}
               <span>即時季報（市場未反映 {{ financials.fin|length if financials.fin else 0 }} 筆）</span>
-              <span class="badge">{{ financials.fin|length if financials.fin else 0 }} 筆</span>
-              {% endif %}
+              {% if fin_state == 'fetch_failed' %}<span class="badge badge-amber">抓取失敗</span>{% elif fin_state == 'stale_cached' %}<span class="badge badge-amber">沿用快取</span>{% else %}<span class="badge">{{ financials.fin|length if financials.fin else 0 }} 筆</span>{% endif %}
             </summary>
-            <div class="unref-content">
-              <div class="embed-frame-wrapper is-loading" id="wrapper-fin">
-                <iframe src="embed/fin.html?v={{ build_version or (generated_at | replace(' ','_') | replace('/','') | replace(':','')) }}" id="embed-fin" class="embed-frame unref-frame" onload="window.pm.onIframeLoad('fin')" loading="lazy" referrerpolicy="no-referrer" style="min-height:120px; height:auto;" scrolling="no" title="市場未反映季報公告"></iframe>
-                <div class="embed-fallback-notice" id="fallback-fin" style="display:none;">
-                  <span>⚠️ 嵌入資料載入逾時</span>
-                  <button type="button" class="btn-retry" onclick="window.pm.retryEmbed('fin')" aria-label="重新載入季報公告區塊">🔄 重新載入此區塊</button>
-                </div>
-              </div>
-            </div>
+            <div class="unref-content">{{ render_announcement_rows(financials.fin or [], fin_state, '即時季報') }}</div>
           </details>
 
           <details class="unref-accordion">
             <summary class="unref-summary">
-              {% if rev_state == 'fetch_failed' %}
-              <span>即時營收（資料抓取失敗，無法確認市場未反映筆數）</span>
-              <span class="badge badge-amber">抓取失敗</span>
-              {% elif rev_state == 'stale_cached' %}
-              <span>即時營收（沿用前次 {{ financials.rev|length if financials.rev else 0 }} 筆）</span>
-              <span class="badge badge-amber">沿用快取</span>
-              {% else %}
               <span>即時營收（市場未反映 {{ financials.rev|length if financials.rev else 0 }} 筆）</span>
-              <span class="badge">{{ financials.rev|length if financials.rev else 0 }} 筆</span>
-              {% endif %}
+              {% if rev_state == 'fetch_failed' %}<span class="badge badge-amber">抓取失敗</span>{% elif rev_state == 'stale_cached' %}<span class="badge badge-amber">沿用快取</span>{% else %}<span class="badge">{{ financials.rev|length if financials.rev else 0 }} 筆</span>{% endif %}
             </summary>
-            <div class="unref-content">
-              <div class="embed-frame-wrapper is-loading" id="wrapper-rev">
-                <iframe src="embed/rev.html?v={{ build_version or (generated_at | replace(' ','_') | replace('/','') | replace(':','')) }}" id="embed-rev" class="embed-frame unref-frame" onload="window.pm.onIframeLoad('rev')" loading="lazy" referrerpolicy="no-referrer" style="min-height:120px; height:auto;" scrolling="no" title="市場未反映營收公告"></iframe>
-                <div class="embed-fallback-notice" id="fallback-rev" style="display:none;">
-                  <span>⚠️ 嵌入資料載入逾時</span>
-                  <button type="button" class="btn-retry" onclick="window.pm.retryEmbed('rev')" aria-label="重新載入營收公告區塊">🔄 重新載入此區塊</button>
-                </div>
-              </div>
-            </div>
+            <div class="unref-content">{{ render_announcement_rows(financials.rev or [], rev_state, '即時營收') }}</div>
           </details>
         </div>
       </details>
@@ -6000,41 +5939,7 @@
     if (metaTheme) metaTheme.content = nextTheme === 'dark' ? '#171411' : '#F5EFE7';
     var b = document.getElementById('theme-toggle');
     if (b) b.textContent = nextTheme === 'dark' ? '☀️ 淺色' : '🌙 深色';
-    window.pm.syncIframeTheme(nextTheme);
     if (window.pm.syncHash) window.pm.syncHash();
-  };
-
-  window.pm.syncIframeTheme = function(theme) {
-    var cur = theme || document.documentElement.getAttribute('data-theme') || localStorage.getItem('pmit_theme') || localStorage.getItem('premarket.theme') || 'light';
-    if (cur !== 'dark') cur = 'light';
-
-    document.querySelectorAll('iframe.unref-frame, iframe.embed-frame, iframe').forEach(function(iframe) {
-      try {
-        if (iframe.contentWindow) {
-          iframe.contentWindow.postMessage({type: 'theme-change', theme: cur}, '*');
-        }
-      } catch(e){}
-      try {
-        if (iframe.contentDocument && iframe.contentDocument.documentElement) {
-          iframe.contentDocument.documentElement.setAttribute('data-theme', cur);
-          if (cur === 'dark') {
-            iframe.contentDocument.documentElement.classList.add('dark');
-            iframe.contentDocument.documentElement.classList.remove('light');
-            if (iframe.contentDocument.body) {
-              iframe.contentDocument.body.classList.add('dark');
-              iframe.contentDocument.body.classList.remove('light');
-            }
-          } else {
-            iframe.contentDocument.documentElement.classList.add('light');
-            iframe.contentDocument.documentElement.classList.remove('dark');
-            if (iframe.contentDocument.body) {
-              iframe.contentDocument.body.classList.add('light');
-              iframe.contentDocument.body.classList.remove('dark');
-            }
-          }
-        }
-      } catch(e){}
-    });
   };
 
   window.pm.syncHash = function() {
@@ -6053,30 +5958,6 @@
       });
     } else {
       window.pm.showToast('🔗 ' + cleanUrl);
-    }
-  };
-
-  window.pm.onIframeLoad = function(id) {
-    var wrapper = document.getElementById('wrapper-' + id);
-    if (wrapper) wrapper.classList.remove('is-loading');
-    var fb = document.getElementById('fallback-' + id);
-    if (fb) fb.style.display = 'none';
-    var f = document.getElementById('embed-' + id);
-    if (f && f.contentWindow) {
-      f.contentWindow.postMessage({type: 'request-height'}, '*');
-    }
-    window.pm.syncIframeTheme();
-  };
-
-  window.pm.retryEmbed = function(id) {
-    var f = document.getElementById('embed-' + id);
-    if (f) {
-      var wrapper = document.getElementById('wrapper-' + id);
-      if (wrapper) wrapper.classList.add('is-loading');
-      var fb = document.getElementById('fallback-' + id);
-      if (fb) fb.style.display = 'none';
-      var base = f.src.split('?')[0];
-      f.src = base + '?v=' + Date.now();
     }
   };
 
@@ -6263,25 +6144,6 @@
   // ==========================================
   // 10. Global Event Listeners & Init
   // ==========================================
-  window.addEventListener('message', function(e) {
-    if (!e.data) return;
-    if (window.location.origin && window.location.origin !== 'null' && e.origin && e.origin !== 'null' && e.origin !== window.location.origin) {
-      return;
-    }
-    if (e.data.type === 'embed-height' && e.data.id) {
-      var f = document.getElementById('embed-' + e.data.id);
-      if (f && e.data.height) {
-        var h = Math.min(1200, e.data.height + 8);
-        f.style.height = h + 'px';
-        f.style.overflowY = (e.data.height > 1200) ? 'auto' : 'hidden';
-        var wrapper = document.getElementById('wrapper-' + e.data.id);
-        if (wrapper) wrapper.classList.remove('is-loading');
-        var fb = document.getElementById('fallback-' + e.data.id);
-        if (fb) fb.style.display = 'none';
-      }
-    }
-  });
-
   var pendingGoShortcut = false;
   document.addEventListener('keydown', function(e) {
     var openModal = document.querySelector('.modal-overlay.is-open');
@@ -6603,7 +6465,8 @@
           list.innerHTML = '';
           items.forEach(function(item) {
             var link = document.createElement('a');
-            link.href = item.link || '#';
+            var candidateUrl = String(item.link || '').trim();
+            link.href = /^https?:\/\//i.test(candidateUrl) ? candidateUrl : '#';
             link.target = '_blank';
             link.rel = 'noopener noreferrer';
             link.className = 'news-item';
@@ -6976,22 +6839,6 @@
     }
     document.body.classList.remove('snapshot-mode');
 
-    // 3-second timeout fallback check for embeds
-    setTimeout(function() {
-      ['att', 'fin', 'rev'].forEach(function(id) {
-        var f = document.getElementById('embed-' + id);
-        if (f) {
-          var curH = parseInt(f.style.height || '0');
-          if (curH <= 60) {
-            var wrapper = document.getElementById('wrapper-' + id);
-            if (wrapper) wrapper.classList.remove('is-loading');
-            var fb = document.getElementById('fallback-' + id);
-            if (fb) fb.style.display = 'flex';
-          }
-        }
-      });
-    }, 3000);
-
     if (window.pm.calState && window.pm.calState.search) {
       var sinp = document.getElementById('cal-search-input');
       if (sinp) sinp.value = window.pm.calState.search;
@@ -7063,12 +6910,6 @@
       det.addEventListener('toggle', function() {
         window.pm.uiState.details[stateKey] = det.open;
         window.pm.saveUiState();
-        if (det.open) {
-          var iframe = det.querySelector('iframe');
-          if (iframe && iframe.contentWindow) {
-            iframe.contentWindow.postMessage({type: 'request-height'}, '*');
-          }
-        }
       });
     });
     document.querySelectorAll('.cond-collapsible').forEach(function(box, index) {
@@ -7088,12 +6929,10 @@
           document.documentElement.setAttribute('data-theme', newTheme);
           var b = document.getElementById('theme-toggle');
           if (b) b.textContent = newTheme === 'dark' ? '☀️ 淺色' : '🌙 深色';
-          window.pm.syncIframeTheme(newTheme);
         }
       });
     }
 
-    window.pm.syncIframeTheme();
     startTimers();
   });
 </script>

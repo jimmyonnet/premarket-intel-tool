@@ -10,17 +10,24 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   collect:
+    timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
 
-      - run: pip install -r requirements.txt
+      - run: python -m pip install -r requirements.txt
 
       - name: Take one snapshot
         run: python scripts/tx_night_session.py collect --data-dir data/night_session
@@ -32,4 +39,13 @@ jobs:
           git add data/night_session/
           git diff --cached --quiet && echo "no change" && exit 0
           git commit -m "night session snapshot $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-          git push
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push; then
+              exit 0
+            fi
+            git rebase --abort || true
+            echo "push attempt ${attempt} failed; retrying" >&2
+            sleep $((attempt * 5))
+          done
+          echo "Unable to push night-session snapshot after 3 attempts" >&2
+          exit 1

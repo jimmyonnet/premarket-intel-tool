@@ -2072,13 +2072,10 @@ if __name__ == "__main__":
     result = parse_stocks(RAW_DATA)
     print(f"Total parsed stocks: {result['count']}")
     
-    # Save to data/tw_stock_names.json and docs/data/tw_stock_names.json
-    p1 = Path("data/tw_stock_names.json")
-    p1.parent.mkdir(parents=True, exist_ok=True)
-    p1.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
-    
-    p2 = Path("docs/data/tw_stock_names.json")
-    p2.parent.mkdir(parents=True, exist_ok=True)
-    p2.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
-    
-    print(f"Saved to {p1} and {p2}")
+    # Keep one canonical source under data/. The Pages output is generated from
+    # this file when a consumer actually needs the mapping; do not duplicate it
+    # under docs/data/ and let the two copies drift.
+    output = Path("data/tw_stock_names.json")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    output.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"Saved to {output}")

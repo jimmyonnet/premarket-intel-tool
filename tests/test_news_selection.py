@@ -17,7 +17,7 @@ from scripts.fetch_news import (
 
 
 ROOT = Path(__file__).resolve().parents[1]
-APP = ROOT / "scripts" / "assets" / "app.js"
+TEMPLATE = ROOT / "scripts" / "templates" / "premarket.html.j2"
 TAIPEI = timezone(timedelta(hours=8))
 
 
@@ -214,11 +214,11 @@ def test_parse_feed_preserves_scoring_metadata_and_filters_time_window():
 
 def test_deployed_news_section_uses_top_ten_cap():
     page = (ROOT / "docs" / "index.html").read_text(encoding="utf-8")
-    app = APP.read_text(encoding="utf-8")
+    template = TEMPLATE.read_text(encoding="utf-8")
 
     assert "隔夜重大新聞 Top 10" in page
     assert "隔夜重大新聞 Top 5" not in page
-    assert "items.slice(0, 10)" in app
+    assert "items.slice(0, 10)" in template
 
 
 def test_all_rss_failures_retain_previous_news_snapshot(tmp_path, monkeypatch):

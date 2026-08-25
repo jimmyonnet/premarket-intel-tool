@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-08-25 13:12",
-  "build_version": "20260825_1312",
+  "build_time": "2026-08-25 13:45",
+  "build_version": "20260825_1345",
   "data_date": "08/25",
-  "stale_hours": 0.0,
-  "hours_since_us_close": 9.2,
+  "stale_hours": 0.6,
+  "hours_since_us_close": 9.8,
   "us_market_context": {
     "session_key": "closed",
     "label": "最新收盤快照",
@@ -11,7 +11,7 @@
     "badge_short": "收盤",
     "pill_class": "pill-fresh",
     "updated_label": "08/25 05:15",
-    "detail": "Yahoo Finance · 來源更新 08/25 05:15（7.9 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
+    "detail": "Yahoo Finance · 來源更新 08/25 05:15（8.5 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
     "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
   },
   "overall_status": "ready",
@@ -279,7 +279,7 @@
   ],
   "schema_version": 1,
   "data_revision": "147e11d9301440fa",
-  "built_at": "2026-08-25T05:12:26.555703+00:00",
+  "built_at": "2026-08-25T05:45:10.948901+00:00",
   "hash": {
     "disposition": "e0e54deced16",
     "candidates": "890d7fdb9822",

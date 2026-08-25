@@ -54,8 +54,6 @@ def test_manual_update_link_has_no_client_credentials_or_old_gateway_reference()
         ROOT / "scripts" / "templates" / "premarket.html.j2",
         ROOT / "templates" / "premarket.html.j2",
         ROOT / "docs" / "index.html",
-        ROOT / "scripts" / "assets" / "app.js",
-        ROOT / "docs" / "assets" / "app.js",
     ]
     combined = "\n".join(path.read_text(encoding="utf-8") for path in source_files)
     assert "GITHUB_TOKEN" not in combined
