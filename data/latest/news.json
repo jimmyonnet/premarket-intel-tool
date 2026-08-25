@@ -1,5 +1,30 @@
 [
   {
+    "title": "30年期美債殖利率衝近20年高點！長天期利率上升是否開始衝擊AI投資熱潮？",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE50NHE0QWFJbDhoSFFmOEJlaS1rNE41UkpqdEdEMTVoTlFxWWpTSGs1OUgySEhIUFY3OVVabVgyYkVJcUtiWlVrRWl2ZDBHbDQ?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/25 18:00",
+    "timestamp": 1787652006.0,
+    "score": 10,
+    "quality_score": 4,
+    "impact_score": 6,
+    "matched_groups": [
+      "macro_policy",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "macro_policy",
+      "sector_technology"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "大奇蹟日！ 台積電、大立光尾盤狂拉 台股翻紅收漲407點",
     "link": "https://news.google.com/rss/articles/CBMi3wJBVV95cUxNUlU4UzFva1lqUFozd2lMZ0hQZFRDbFhsV200aGt1U0xvME82YlhacV92WE5LaXU3UlFabUNvb1dMT0dhT3UwZVBORkFuY0hNQVZ1TG9pWEJ1b3dWV3dwaHhwWGdTMlNzVldPQW5qMVRsdzZEbURVNmJqWmpBM1RPTjJLMjlDOXd2aUp6R2VsSHU2VnRMUHVmZ0NtRXhKZ2I4YVJVRG5vazRYN3kxdTJQOFVCZUtldkZuMXVEN3c4ZTJkTjVES0RQdUx2WVN3eG9MWkdOVDBGdHRoYzBsZk12ZXNTbHhUb001NlVSdWJFSUFkV3pYaFhaYWxQX3JIYmRYUy1PcXdNUXVrZFJZR1I5RFRra2FGQTNLRC1jT3k5eUctVlpIOThVNjRERG1IQUwtYzl3WDlyVkhXbXlSVUxqNG9jUjAyTmJZLVNCNUwxRTBDb0p4alAzclJ4VWwtVHc?oc=5",
     "source": "Yahoo股市",
