@@ -290,7 +290,7 @@ def fetch_official_calendar(
     getter = get_fn or requests.get
     response = getter(
         endpoint,
-        params={"yy": str(year)},
+        params={"response": "json", "yy": str(year)},
         headers={"User-Agent": "premarket-intel-tool trading-calendar updater"},
         timeout=timeout,
     )

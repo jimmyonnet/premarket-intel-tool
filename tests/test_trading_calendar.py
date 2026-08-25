@@ -113,7 +113,7 @@ def test_update_calendar_atomically_merges_year_and_preserves_manual_overrides(t
             return _official_payload()
 
     def fake_get(*args, **kwargs):
-        assert kwargs["params"] == {"yy": "2026"}
+        assert kwargs["params"] == {"response": "json", "yy": "2026"}
         return FakeResponse()
 
     update_calendar(2026, output_path=output, get_fn=fake_get)
