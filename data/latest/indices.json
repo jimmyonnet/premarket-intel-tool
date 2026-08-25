@@ -11,54 +11,54 @@
     "tsmc": {
       "name": "台積電 ADR",
       "ticker": "TSM",
-      "value": 415.42,
+      "value": 415.27,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:25+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 5.3,
-      "change_pct": 1.29
+      "updated_at": "2026-08-26T02:08:38+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 5.15,
+      "change_pct": 1.26
     },
     "nvda": {
       "name": "輝達 (NVDA)",
       "ticker": "NVDA",
-      "value": 212.21,
+      "value": 212.11,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:24+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 3.73,
-      "change_pct": 1.79
+      "updated_at": "2026-08-26T02:08:40+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 3.63,
+      "change_pct": 1.74
     },
     "aapl": {
       "name": "蘋果 (AAPL)",
       "ticker": "AAPL",
-      "value": 309.11,
+      "value": 309.01,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:25+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": -1.23,
-      "change_pct": -0.4
+      "updated_at": "2026-08-26T02:08:39+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": -1.33,
+      "change_pct": -0.43
     },
     "micron": {
       "name": "美光",
       "ticker": "MU",
-      "value": 922.91,
+      "value": 921.79,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": "https://tw.stock.yahoo.com/quote/MU",
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:24+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 12.48,
-      "change_pct": 1.37
+      "updated_at": "2026-08-26T02:08:39+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 11.36,
+      "change_pct": 1.25
     },
     "umc": {
       "name": "聯電 ADR",
@@ -68,77 +68,77 @@
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:25+08:00",
-      "updated_taipei": "2026-08-26 02:01",
+      "updated_at": "2026-08-26T02:08:33+08:00",
+      "updated_taipei": "2026-08-26 02:08",
       "change": 0.5,
-      "change_pct": 2.65
+      "change_pct": 2.6
     },
     "ase": {
       "name": "日月光 ADR",
       "ticker": "ASX",
-      "value": 36.87,
+      "value": 36.85,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:22+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 0.63,
-      "change_pct": 1.74
+      "updated_at": "2026-08-26T02:08:38+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 0.61,
+      "change_pct": 1.7
     }
   },
   "key_stocks": {
     "tsmc": {
       "name": "台積電 ADR",
       "ticker": "TSM",
-      "value": 415.42,
+      "value": 415.27,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:25+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 5.3,
-      "change_pct": 1.29
+      "updated_at": "2026-08-26T02:08:38+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 5.15,
+      "change_pct": 1.26
     },
     "nvda": {
       "name": "輝達 (NVDA)",
       "ticker": "NVDA",
-      "value": 212.21,
+      "value": 212.11,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:24+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 3.73,
-      "change_pct": 1.79
+      "updated_at": "2026-08-26T02:08:40+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 3.63,
+      "change_pct": 1.74
     },
     "aapl": {
       "name": "蘋果 (AAPL)",
       "ticker": "AAPL",
-      "value": 309.11,
+      "value": 309.01,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:25+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": -1.23,
-      "change_pct": -0.4
+      "updated_at": "2026-08-26T02:08:39+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": -1.33,
+      "change_pct": -0.43
     },
     "micron": {
       "name": "美光",
       "ticker": "MU",
-      "value": 922.91,
+      "value": 921.79,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": "https://tw.stock.yahoo.com/quote/MU",
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:24+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 12.48,
-      "change_pct": 1.37
+      "updated_at": "2026-08-26T02:08:39+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 11.36,
+      "change_pct": 1.25
     },
     "umc": {
       "name": "聯電 ADR",
@@ -148,77 +148,77 @@
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:25+08:00",
-      "updated_taipei": "2026-08-26 02:01",
+      "updated_at": "2026-08-26T02:08:33+08:00",
+      "updated_taipei": "2026-08-26 02:08",
       "change": 0.5,
-      "change_pct": 2.65
+      "change_pct": 2.6
     },
     "ase": {
       "name": "日月光 ADR",
       "ticker": "ASX",
-      "value": 36.87,
+      "value": 36.85,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:22+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 0.63,
-      "change_pct": 1.74
+      "updated_at": "2026-08-26T02:08:38+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 0.61,
+      "change_pct": 1.7
     }
   },
   "us_indices": {
     "dow": {
       "name": "道瓊工業指數",
       "ticker": "^DJI",
-      "value": 53508.94,
+      "value": 53521.33,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:23+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 91.78,
-      "change_pct": 0.17
+      "updated_at": "2026-08-26T02:08:38+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 104.17,
+      "change_pct": 0.2
     },
     "sp500": {
       "name": "S&P 500指數",
       "ticker": "^GSPC",
-      "value": 7666.84,
+      "value": 7666.15,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:23+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 13.98,
-      "change_pct": 0.18
+      "updated_at": "2026-08-26T02:08:38+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 13.29,
+      "change_pct": 0.17
     },
     "nasdaq": {
       "name": "NASDAQ指數",
       "ticker": "^IXIC",
-      "value": 26098.63,
+      "value": 26089.52,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:20+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 118.44,
-      "change_pct": 0.46
+      "updated_at": "2026-08-26T02:08:37+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 109.33,
+      "change_pct": 0.42
     },
     "sox": {
       "name": "費城半導體指數",
       "ticker": "^SOX",
-      "value": 11541.62,
+      "value": 11538.22,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-26T02:01:23+08:00",
-      "updated_taipei": "2026-08-26 02:01",
-      "change": 118.45,
-      "change_pct": 1.04
+      "updated_at": "2026-08-26T02:08:36+08:00",
+      "updated_taipei": "2026-08-26 02:08",
+      "change": 115.05,
+      "change_pct": 1.01
     }
   },
   "asia_open": {
