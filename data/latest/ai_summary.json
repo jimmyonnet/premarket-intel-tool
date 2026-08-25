@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-25T13:00:28.118451+08:00",
+  "generated_at": "2026-08-25T13:12:22.145918+08:00",
   "status": "fallback",
   "provider": "確定性降級整理",
   "model": null,
-  "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+  "fallback_reason": "Gemini 摘要暫時失敗：Gemini JSON parse failed: Expecting ',' delimiter line 29 column 8",
   "news_stats": {
     "count": 10,
     "unique_topics": 6,
@@ -107,7 +107,7 @@
     "headline": "隔夜市場風險情緒偏弱，但仍有部分非科技標的相對抗跌。",
     "observations": [
       "市場廣度：下跌標的多於上漲標的，整體不是所有市場同步同幅度變動。",
-      "相對強弱：亞股 相對有支撐，ADR／跨海標的 相對承壓，市場表現呈現分化。",
+      "相對強弱：台指期夜盤 相對有支撐，ADR／跨海標的 相對承壓，市場表現呈現分化。",
       "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
     ],
     "drivers": [
