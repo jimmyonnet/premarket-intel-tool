@@ -166,6 +166,28 @@
     "qualified": true
   },
   {
+    "title": "鉅亨雙週報》通膨趨緩但長端利率承壓，投資該怎麼看？",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1XbXVJdFJkRngxalFzR3FyQ05XemhSQUplbHVXaGVpcXp3SzNNSE5vb29HdmJQV3FJeXRMSlp1QlZqN182NDdqNVZ1VGhhWHM?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/25 10:22",
+    "timestamp": 1787624566.0,
+    "score": 8,
+    "quality_score": 4,
+    "impact_score": 4,
+    "matched_groups": [
+      "macro_policy"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "macro_policy"
+    ],
+    "primary_topic": "macro_policy",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "〈貴金屬盤後〉美回購長債效應 金價突破4600美元 聚焦CPI和傑克森洞年會",
     "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE11dVc0WXd0b1k3SjVMRENPT19xNm51WVU5YkZFY25OMTY0cEJfQllybUpvRWh5M3JfckNPaU1qMnc5UXJ3YlVoTkREcC1KSjQ?oc=5",
     "source": "news.cnyes.com",
@@ -213,10 +235,10 @@
   },
   {
     "title": "美債拋售壓力沉重 全球央行年會聯準會主席華許面臨穩市考驗",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA0MkZvVXRGT2gtVE9yRUU0T3p4YmlhN2RrU3JOWjR5ZzFQMkpCVmZETmV1MUY2eVZiZjR6cUM4RTY5RGFEOHpmb3llTVhfRG8?oc=5",
+    "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQYUp6ellET1FjeXlIcWxleTNSYmlsV2tPb2ZiQkNyVXlaVUQwbktKaU9fZkJtNkJYLVN2OFhLTWpCZUtTbklic2hTNURkZ1VSUFZkVnFfM2JBRWp1alhPdmZ6ZTZtTEFpWmZfS1pmZ0lTY1RudURtbGFwMmZGaC1UaEhDMEhXbzBSQ19VNXo0X0NhZm9mVld1SFNQb1NsVnNlM1RkWl9R?oc=5",
     "source": "news.cnyes.com",
-    "time": "08/24 14:10",
-    "timestamp": 1787551804.0,
+    "time": "08/24 15:03",
+    "timestamp": 1787555022.0,
     "score": 8,
     "quality_score": 4,
     "impact_score": 4,
@@ -230,30 +252,6 @@
     ],
     "primary_topic": "currency_commodities",
     "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "〈台股開盤〉開低一度跌逾500點退守月線 靠航運、金融股奮力撐盤",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9xYjlqaWJGeXF4ZXNnQmgxZk1uelVzWWFqNjNYVUtVS3MzLXRvU1NRbGR4RlJfNzlKOXpMeGFhVlRzRDIwZm13MVBfT0hxVWc?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/25 10:20",
-    "timestamp": 1787624433.0,
-    "score": 7,
-    "quality_score": 4,
-    "impact_score": 3,
-    "matched_groups": [
-      "market_benchmark"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "taiwan_market"
-    ],
-    "primary_topic": "taiwan_market",
-    "named_entities": [
-      "taiwan_market"
-    ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true

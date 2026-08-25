@@ -189,8 +189,8 @@
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-25T04:00:00+08:00",
-      "updated_taipei": "2026-08-25 04:00",
+      "updated_at": "2026-08-25T04:36:32+08:00",
+      "updated_taipei": "2026-08-25 04:36",
       "change": -21.51,
       "change_pct": -0.28
     },
@@ -224,19 +224,19 @@
   "asia_open": {
     "nikkei225": {
       "name": "日經225指數",
-      "value": 65598.68,
-      "change": -70.59,
-      "change_pct": -0.11,
-      "updated_cst": "08/25 10:35",
+      "value": 65608.52,
+      "change": -80.43,
+      "change_pct": -0.12,
+      "updated_cst": "08/25 11:49",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
       "source_label": "Yahoo 個別指數頁"
     },
     "kospi": {
       "name": "韓國綜合指數",
-      "value": 6533.38,
-      "change": -163.58,
-      "change_pct": -2.44,
-      "updated_cst": "08/25 10:51",
+      "value": 6611.23,
+      "change": -85.73,
+      "change_pct": -1.28,
+      "updated_cst": "08/25 11:44",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
       "source_label": "Yahoo 個別指數頁"
     }

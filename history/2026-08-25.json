@@ -1,5 +1,5 @@
 {
-  "archived_at": "2026-08-25 11:12:22",
+  "archived_at": "2026-08-25 12:05:19",
   "data_date": "2026-08-25",
   "sources": {
     "pressplay": {
@@ -7,7 +7,7 @@
         "title": "0825盤前",
         "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/4E31534915A6183C3E187B7B528B3AD0",
         "fetch_mode": "live_browser",
-        "collected_at": "2026-08-25T11:11:38.989588+08:00"
+        "collected_at": "2026-08-25T12:04:36.599048+08:00"
       },
       "chengwaye_date": null,
       "not_found_group": {
@@ -72,7 +72,7 @@
     },
     "stock_history": {
       "source": "https://chengwaye.com/stock/",
-      "fetched_at": "2026-08-25T11:12:04.237203+08:00",
+      "fetched_at": "2026-08-25T12:05:00.838243+08:00",
       "requested_codes": [
         "2301",
         "6226",
@@ -692,6 +692,28 @@
         "qualified": true
       },
       {
+        "title": "鉅亨雙週報》通膨趨緩但長端利率承壓，投資該怎麼看？",
+        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1XbXVJdFJkRngxalFzR3FyQ05XemhSQUplbHVXaGVpcXp3SzNNSE5vb29HdmJQV3FJeXRMSlp1QlZqN182NDdqNVZ1VGhhWHM?oc=5",
+        "source": "news.cnyes.com",
+        "time": "08/25 10:22",
+        "timestamp": 1787624566.0,
+        "score": 8,
+        "quality_score": 4,
+        "impact_score": 4,
+        "matched_groups": [
+          "macro_policy"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "macro_policy"
+        ],
+        "primary_topic": "macro_policy",
+        "named_entities": [],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
         "title": "〈貴金屬盤後〉美回購長債效應 金價突破4600美元 聚焦CPI和傑克森洞年會",
         "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE11dVc0WXd0b1k3SjVMRENPT19xNm51WVU5YkZFY25OMTY0cEJfQllybUpvRWh5M3JfckNPaU1qMnc5UXJ3YlVoTkREcC1KSjQ?oc=5",
         "source": "news.cnyes.com",
@@ -739,10 +761,10 @@
       },
       {
         "title": "美債拋售壓力沉重 全球央行年會聯準會主席華許面臨穩市考驗",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA0MkZvVXRGT2gtVE9yRUU0T3p4YmlhN2RrU3JOWjR5ZzFQMkpCVmZETmV1MUY2eVZiZjR6cUM4RTY5RGFEOHpmb3llTVhfRG8?oc=5",
+        "link": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQYUp6ellET1FjeXlIcWxleTNSYmlsV2tPb2ZiQkNyVXlaVUQwbktKaU9fZkJtNkJYLVN2OFhLTWpCZUtTbklic2hTNURkZ1VSUFZkVnFfM2JBRWp1alhPdmZ6ZTZtTEFpWmZfS1pmZ0lTY1RudURtbGFwMmZGaC1UaEhDMEhXbzBSQ19VNXo0X0NhZm9mVld1SFNQb1NsVnNlM1RkWl9R?oc=5",
         "source": "news.cnyes.com",
-        "time": "08/24 14:10",
-        "timestamp": 1787551804.0,
+        "time": "08/24 15:03",
+        "timestamp": 1787555022.0,
         "score": 8,
         "quality_score": 4,
         "impact_score": 4,
@@ -759,37 +781,13 @@
         "quality_pass": true,
         "impact_pass": true,
         "qualified": true
-      },
-      {
-        "title": "〈台股開盤〉開低一度跌逾500點退守月線 靠航運、金融股奮力撐盤",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9xYjlqaWJGeXF4ZXNnQmgxZk1uelVzWWFqNjNYVUtVS3MzLXRvU1NRbGR4RlJfNzlKOXpMeGFhVlRzRDIwZm13MVBfT0hxVWc?oc=5",
-        "source": "news.cnyes.com",
-        "time": "08/25 10:20",
-        "timestamp": 1787624433.0,
-        "score": 7,
-        "quality_score": 4,
-        "impact_score": 3,
-        "matched_groups": [
-          "market_benchmark"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "taiwan_market"
-        ],
-        "primary_topic": "taiwan_market",
-        "named_entities": [
-          "taiwan_market"
-        ],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
       }
     ],
     "twse_summary": {
       "twii": {
-        "price": 44261.76,
-        "change": -962.54,
-        "change_pct": -2.13,
+        "price": 44497.27,
+        "change": -727.03,
+        "change_pct": -1.61,
         "volume": 0
       },
       "inst": {
@@ -989,8 +987,8 @@
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T04:00:00+08:00",
-          "updated_taipei": "2026-08-25 04:00",
+          "updated_at": "2026-08-25T04:36:32+08:00",
+          "updated_taipei": "2026-08-25 04:36",
           "change": -21.51,
           "change_pct": -0.28
         },
@@ -1024,19 +1022,19 @@
       "asia_open": {
         "nikkei225": {
           "name": "日經225指數",
-          "value": 65598.68,
-          "change": -70.59,
-          "change_pct": -0.11,
-          "updated_cst": "08/25 10:35",
+          "value": 65608.52,
+          "change": -80.43,
+          "change_pct": -0.12,
+          "updated_cst": "08/25 11:49",
           "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
           "source_label": "Yahoo 個別指數頁"
         },
         "kospi": {
           "name": "韓國綜合指數",
-          "value": 6533.38,
-          "change": -163.58,
-          "change_pct": -2.44,
-          "updated_cst": "08/25 10:51",
+          "value": 6611.23,
+          "change": -85.73,
+          "change_pct": -1.28,
+          "updated_cst": "08/25 11:44",
           "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
           "source_label": "Yahoo 個別指數頁"
         }
@@ -1049,7 +1047,7 @@
       "range_end": "2026-09-08",
       "events": [
         {
-          "id": "ev-2026-08-26-5",
+          "id": "ev-2026-08-26-6",
           "date": "2026-08-26",
           "time": "20:30",
           "all_day": false,
@@ -1075,7 +1073,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-26-20",
+          "id": "ev-2026-08-26-18",
           "date": "2026-08-26",
           "time": "20:30",
           "all_day": false,
@@ -1101,7 +1099,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-26-6",
+          "id": "ev-2026-08-26-13",
           "date": "2026-08-26",
           "time": "22:30",
           "all_day": false,
@@ -1127,7 +1125,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-27-3",
+          "id": "ev-2026-08-27-16",
           "date": "2026-08-27",
           "time": "09:30",
           "all_day": false,
@@ -1153,7 +1151,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-27-14",
+          "id": "ev-2026-08-27-8",
           "date": "2026-08-27",
           "time": "16:00",
           "all_day": false,
@@ -1179,7 +1177,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-27-19",
+          "id": "ev-2026-08-27-20",
           "date": "2026-08-27",
           "time": "20:30",
           "all_day": false,
@@ -1231,7 +1229,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-31-7",
+          "id": "ev-2026-08-31-5",
           "date": "2026-08-31",
           "time": "09:30",
           "all_day": false,
@@ -1257,7 +1255,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-31-8",
+          "id": "ev-2026-08-31-11",
           "date": "2026-08-31",
           "time": "09:30",
           "all_day": false,
@@ -1283,7 +1281,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-01-10",
+          "id": "ev-2026-09-01-17",
           "date": "2026-09-01",
           "time": "16:00",
           "all_day": false,
@@ -1309,7 +1307,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-01-11",
+          "id": "ev-2026-09-01-9",
           "date": "2026-09-01",
           "time": "22:00",
           "all_day": false,
@@ -1335,7 +1333,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-02-17",
+          "id": "ev-2026-09-02-10",
           "date": "2026-09-02",
           "time": "20:15",
           "all_day": false,
@@ -1361,7 +1359,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-02-13",
+          "id": "ev-2026-09-02-15",
           "date": "2026-09-02",
           "time": "21:45",
           "all_day": false,
@@ -1387,7 +1385,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-02-9",
+          "id": "ev-2026-09-02-3",
           "date": "2026-09-02",
           "time": "22:30",
           "all_day": false,
@@ -1413,7 +1411,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-03-2",
+          "id": "ev-2026-09-03-1",
           "date": "2026-09-03",
           "time": "02:00",
           "all_day": false,
@@ -1439,7 +1437,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-03-1",
+          "id": "ev-2026-09-03-2",
           "date": "2026-09-03",
           "time": "20:30",
           "all_day": false,
@@ -1465,7 +1463,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-03-18",
+          "id": "ev-2026-09-03-12",
           "date": "2026-09-03",
           "time": "22:00",
           "all_day": false,
@@ -1491,33 +1489,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-04-12",
-          "date": "2026-09-04",
-          "time": "20:30",
-          "all_day": false,
-          "title": "美國-非农就业人數(月变动)",
-          "summary": "美國-非农就业人數(月变动)",
-          "description": "前值: -23.0k",
-          "note": "前值: -23.0k",
-          "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
-          "source_url": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
-          "category": "other",
-          "category_name": "其他",
-          "country": "US",
-          "flag": "🇺🇸",
-          "timezone_origin": "America/New_York",
-          "timezone_label": "ET",
-          "time_origin_str": "08:30 ET",
-          "time_tpe_str": "20:30 TPE",
-          "datetime_utc": "2026-09-04T12:30:00Z",
-          "importance": 1,
-          "forecast": null,
-          "previous": "-23.0k",
-          "actual": null,
-          "comparison": "pending"
-        },
-        {
-          "id": "ev-2026-09-04-16",
+          "id": "ev-2026-09-04-7",
           "date": "2026-09-04",
           "time": "20:30",
           "all_day": false,
@@ -1543,7 +1515,33 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-07-15",
+          "id": "ev-2026-09-04-19",
+          "date": "2026-09-04",
+          "time": "20:30",
+          "all_day": false,
+          "title": "美國-非农就业人數(月变动)",
+          "summary": "美國-非农就业人數(月变动)",
+          "description": "前值: -23.0k",
+          "note": "前值: -23.0k",
+          "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+          "source_url": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+          "category": "other",
+          "category_name": "其他",
+          "country": "US",
+          "flag": "🇺🇸",
+          "timezone_origin": "America/New_York",
+          "timezone_label": "ET",
+          "time_origin_str": "08:30 ET",
+          "time_tpe_str": "20:30 TPE",
+          "datetime_utc": "2026-09-04T12:30:00Z",
+          "importance": 1,
+          "forecast": null,
+          "previous": "-23.0k",
+          "actual": null,
+          "comparison": "pending"
+        },
+        {
+          "id": "ev-2026-09-07-14",
           "date": "2026-09-07",
           "time": "17:00",
           "all_day": false,
@@ -1646,6 +1644,34 @@
           "time_origin_str": "全天",
           "time_tpe_str": "全天",
           "datetime_utc": "2026-09-25T00:00:00Z",
+          "importance": 1,
+          "forecast": null,
+          "previous": null,
+          "actual": null,
+          "comparison": "pending"
+        },
+        {
+          "id": "local-rule-market_holiday-2026-09-28-2026-09-28",
+          "date": "2026-09-28",
+          "time": null,
+          "all_day": true,
+          "title": "台股休市",
+          "summary": "台股休市",
+          "description": "依 TWSE 開（休）市日期與人工停市覆蓋資料載入（09/28）。",
+          "note": "依 TWSE 開（休）市日期與人工停市覆蓋資料載入（09/28）。",
+          "mm_link": null,
+          "source_url": null,
+          "source": "local-rule",
+          "semantic_type": "market_holiday",
+          "category": "holiday",
+          "category_name": "假期",
+          "country": "TW",
+          "flag": "🇹🇼",
+          "timezone_origin": "Asia/Taipei",
+          "timezone_label": "TPE",
+          "time_origin_str": "全天",
+          "time_tpe_str": "全天",
+          "datetime_utc": "2026-09-28T00:00:00Z",
           "importance": 1,
           "forecast": null,
           "previous": null,
@@ -2110,7 +2136,7 @@
       "latest": {
         "provider": "wantgoo",
         "provider_name": "Wantgoo / TAIFEX",
-        "collected_at": "2026-08-25T11:11:27.837918+08:00",
+        "collected_at": "2026-08-25T12:04:35.915359+08:00",
         "symbol": "臺指期096",
         "price": 44532.0,
         "change": -208.0,
@@ -2123,150 +2149,249 @@
       }
     },
     "source_status": {
-      "updated_at": "2026-08-25T11:12:05.906943+08:00",
+      "schema_version": "source-status.v2",
+      "updated_at": "2026-08-25T12:05:00.864560+08:00",
+      "reliability_tiers": {
+        "core_stable": {
+          "label": "核心穩定",
+          "default_ttl_minutes": 720,
+          "default_hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "critical"
+        },
+        "important_short_stale": {
+          "label": "重要但可短暫過期",
+          "default_ttl_minutes": 360,
+          "default_hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "warning"
+        },
+        "high_risk": {
+          "label": "高風險來源",
+          "default_ttl_minutes": 180,
+          "default_hard_expiry_minutes": 720,
+          "fallback_policy": "fixture_or_previous_snapshot_with_warning",
+          "notification_level": "notice"
+        }
+      },
       "sources": {
         "indices": {
           "source_id": "indices",
           "name": "指數行情 (美股/亞股/ADR)",
           "is_required": true,
+          "reliability_tier": "core_stable",
+          "ttl_minutes": 720,
+          "hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "critical",
+          "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T11:11:33.959041+08:00",
+          "fetched_at": "2026-08-25T12:04:34.153756+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
-          "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向"
+          "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向",
+          "notification": null
         },
         "twse_summary": {
           "source_id": "twse_summary",
           "name": "大盤昨收與三大法人",
           "is_required": false,
+          "reliability_tier": "core_stable",
+          "ttl_minutes": 720,
+          "hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "warning",
+          "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T11:11:26.246635+08:00",
+          "fetched_at": "2026-08-25T12:04:36.539683+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
-          "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整"
+          "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整",
+          "notification": null
         },
         "night_session": {
           "source_id": "night_session",
           "name": "台指期夜盤走勢",
           "is_required": false,
+          "reliability_tier": "important_short_stale",
+          "ttl_minutes": 180,
+          "hard_expiry_minutes": 720,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "warning",
+          "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T11:11:27.716814+08:00",
+          "fetched_at": "2026-08-25T12:04:35.795644+08:00",
           "data_date": "2026-08-25",
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
-          "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數"
+          "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數",
+          "notification": null
         },
         "disposal": {
           "source_id": "disposal",
           "name": "處置股與出關預警",
           "is_required": true,
+          "reliability_tier": "core_stable",
+          "ttl_minutes": 720,
+          "hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "critical",
+          "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T11:11:38.366405+08:00",
+          "fetched_at": "2026-08-25T12:04:34.152021+08:00",
           "data_date": "08/25",
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
-          "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險"
+          "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險",
+          "notification": null
         },
         "pressplay": {
           "source_id": "pressplay",
           "name": "PressPlay 盤前族群與標的",
           "is_required": false,
+          "reliability_tier": "high_risk",
+          "ttl_minutes": 360,
+          "hard_expiry_minutes": 720,
+          "fallback_policy": "fixture_or_previous_snapshot_with_warning",
+          "notification_level": "notice",
+          "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T11:11:38.787780+08:00",
+          "fetched_at": "2026-08-25T12:04:36.321602+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
-          "impact_desc": "缺少每日專欄族群整理，候選股清單將呈現空白"
+          "impact_desc": "缺少每日專欄族群整理，候選股清單將呈現空白",
+          "notification": null
         },
         "chengwaye_daily": {
           "source_id": "chengwaye_daily",
           "name": "主力券商與當沖籌碼明細",
           "is_required": false,
+          "reliability_tier": "high_risk",
+          "ttl_minutes": 360,
+          "hard_expiry_minutes": 720,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "notice",
+          "dependencies": [
+            "pressplay"
+          ],
           "status": "ok",
-          "fetched_at": "2026-08-25T11:12:03.574060+08:00",
+          "fetched_at": "2026-08-25T12:05:00.222578+08:00",
           "data_date": "2026/08/24",
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
-          "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行"
+          "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行",
+          "notification": null
         },
         "calendar": {
           "source_id": "calendar",
           "name": "總經財經行事曆",
           "is_required": false,
+          "reliability_tier": "important_short_stale",
+          "ttl_minutes": 720,
+          "hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "warning",
+          "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T11:11:30.003512+08:00",
+          "fetched_at": "2026-08-25T12:04:34.151739+08:00",
           "data_date": "2026-08-25",
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
-          "impact_desc": "缺少今日重磅總經數據與事件日程倒數"
+          "impact_desc": "缺少今日重磅總經數據與事件日程倒數",
+          "notification": null
         },
         "financials": {
           "source_id": "financials",
           "name": "市場未反映重大公告 (財報/營收/處分)",
           "is_required": false,
+          "reliability_tier": "important_short_stale",
+          "ttl_minutes": 720,
+          "hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "warning",
+          "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T11:12:04.263692+08:00",
+          "fetched_at": "2026-08-25T12:04:34.152283+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
-          "impact_desc": "缺少昨日盤後自結損益與營收公告統計"
+          "impact_desc": "缺少昨日盤後自結損益與營收公告統計",
+          "notification": null
         },
         "news": {
           "source_id": "news",
           "name": "盤前即時新聞聚合",
           "is_required": false,
+          "reliability_tier": "high_risk",
+          "ttl_minutes": 180,
+          "hard_expiry_minutes": 720,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "notice",
+          "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T11:11:32.206174+08:00",
+          "fetched_at": "2026-08-25T12:04:34.630467+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
-          "impact_desc": "缺少隔夜美股與產業焦點新聞快訊"
+          "impact_desc": "缺少隔夜美股與產業焦點新聞快訊",
+          "notification": null
         },
         "chengwaye_stock_history": {
           "source_id": "chengwaye_stock_history",
           "name": "Chengwaye 個股漲停履歷",
           "is_required": false,
+          "reliability_tier": "high_risk",
+          "ttl_minutes": 1440,
+          "hard_expiry_minutes": 2880,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "notice",
+          "dependencies": [
+            "pressplay",
+            "chengwaye_daily"
+          ],
           "status": "ok",
-          "fetched_at": "2026-08-25T11:12:03.893845+08:00",
-          "data_date": "2026-08-25T11:12:04.237203+08:00",
+          "fetched_at": "2026-08-25T12:05:00.538346+08:00",
+          "data_date": "2026-08-25T12:05:00.838243+08:00",
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
-          "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷"
+          "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
+          "notification": null
         }
       }
     },
     "ai_summary": {
       "schema_version": 1,
-      "generated_at": "2026-08-25T11:12:18.897577+08:00",
+      "generated_at": "2026-08-25T12:05:13.485612+08:00",
       "status": "ok",
       "provider": "Gemini API",
       "model": "gemini-2.5-flash",
       "fallback_reason": null,
       "news_stats": {
         "count": 10,
-        "unique_topics": 5,
+        "unique_topics": 6,
         "unique_sources": 4,
         "nvidia_count": 3
       },
@@ -2282,7 +2407,7 @@
           {
             "name": "主題分布",
             "status": "ok",
-            "detail": "5 類"
+            "detail": "6 類"
           },
           {
             "name": "公司／事件集中度",
@@ -2302,14 +2427,15 @@
         ],
         "issues": [],
         "news_count": 10,
-        "unique_topics": 5,
+        "unique_topics": 6,
         "unique_sources": 4,
         "nvidia_count": 3,
         "topic_counts": {
           "geopolitics_trade": 1,
           "global_market": 2,
-          "taiwan_market": 3,
+          "taiwan_market": 2,
           "sector_technology": 1,
+          "macro_policy": 1,
           "currency_commodities": 3
         },
         "source_counts": {
@@ -2320,63 +2446,68 @@
         }
       },
       "news_summary": {
-        "headline": "美股市場靜待輝達財報、伊朗制裁與通膨數據，主要指數開低，科技股降溫。",
+        "headline": "市場靜待輝達財報與宏觀數據，美股漲跌互見，科技股承壓，台積電ADR下跌",
         "topic_summary": [
           {
             "topic": "地緣政治／貿易",
             "count": 1,
-            "summary": "市場靜待伊朗制裁。"
+            "summary": "新聞提及市場靜待伊朗制裁。"
           },
           {
             "topic": "美股／全球市場",
             "count": 2,
-            "summary": "美股主要指數開低，市場關注輝達財報、伊朗制裁與通膨數據，AI股降溫。"
+            "summary": "新聞指出輝達財報前AI股降溫，美股漲跌互見，台積電ADR下跌。"
           },
           {
             "topic": "台股市場",
-            "count": 3,
-            "summary": "台股開低下跌，金融與航運股撐盤，成交量縮。"
+            "count": 2,
+            "summary": "新聞報導台股下跌337點，量縮至6311億。"
           },
           {
             "topic": "科技／產業",
             "count": 1,
-            "summary": "AI半導體需求強勁，泓格科技營收成長。"
+            "summary": "新聞提及AI半導體需求強勁，泓格科技營收成長。"
+          },
+          {
+            "topic": "總經／央行政策",
+            "count": 1,
+            "summary": "新聞討論通膨趨緩但長端利率承壓。"
           },
           {
             "topic": "美元／債券／商品",
             "count": 3,
-            "summary": "美債殖利率回落，金價突破4600美元，市場聚焦CPI與傑克森洞年會。"
+            "summary": "新聞關注美債殖利率回落、財政部買債計畫及美債拋售壓力。"
           }
         ],
         "key_points": [
-          "美股市場開低，主要指數漲跌互見，等待伊朗制裁、輝達財報與通膨數據。",
-          "輝達財報前AI股降溫，記憶體、光通訊領跌，台積電ADR下跌2.11%。",
-          "台股開盤下跌，金融與航運股奮力撐盤，成交量縮。",
-          "美債殖利率回落，金價上漲，市場關注聯準會主席華許演說。"
+          "市場靜待伊朗制裁、輝達財報與通膨數據，主要指數開低。",
+          "輝達財報前AI股降溫，記憶體、光通訊領跌，鋼鐵股逆勢走強。",
+          "美股漲跌互見，台積電ADR下跌2.11%。",
+          "台股下跌337點，量縮至6311億，4萬5關卡未能守住。"
         ]
       },
       "market_summary": {
-        "headline": "美股指數漲跌互見，科技股普遍承壓，台股夜盤與亞股同步走弱。",
+        "headline": "美股主要指數漲跌互見，科技股普遍承壓，台指期夜盤下跌",
         "observations": [
-          "美股主要指數表現分歧，道瓊工業指數小幅上漲，而S&P 500、NASDAQ及費城半導體指數則呈現下跌。",
-          "科技與半導體相關ADR普遍走弱，台積電ADR、輝達及美光跌幅顯著，但蘋果與聯電ADR逆勢上漲。",
-          "費城半導體指數跌幅最深，顯示半導體板塊壓力較大。",
-          "亞洲股市日經225與韓國綜合指數均下跌，台指期夜盤亦收黑，顯示市場普遍偏弱。"
+          "美股主要指數表現分歧，道瓊工業指數上漲，而S&P 500、NASDAQ及費城半導體指數則下跌。",
+          "科技相關ADR普遍走弱，台積電ADR、輝達、美光均呈現下跌，其中費城半導體指數跌幅最深。",
+          "台指期夜盤下跌0.46%，顯示市場對開盤可能持謹慎態度。",
+          "亞洲股市方面，日經225指數小幅下跌，韓國綜合指數跌幅較大。"
         ],
         "drivers": [
-          "市場高度關注輝達財報發布，可能影響AI相關類股走勢。",
-          "美股市場靜待伊朗制裁消息與通膨數據，影響投資人情緒。",
-          "美債殖利率回落與財政部動向，以及全球央行年會聯準會主席的演說，可能影響資金流向。",
-          "AI股在輝達財報前出現降溫，記憶體與光通訊類股領跌。"
+          "市場在輝達財報公布前表現謹慎，可能導致AI相關類股降溫。",
+          "伊朗制裁、通膨數據及傑克森洞年會等宏觀事件，可能影響市場情緒。",
+          "美債殖利率回落及財政部擬動用1兆美元TGA買債，可能影響資金流向。",
+          "AI半導體需求強勁的報導，可能對相關產業帶來潛在支撐。"
         ],
         "risks": [
-          "地緣政治風險，如伊朗制裁可能對全球市場造成不確定性。",
-          "通膨數據若高於預期，可能引發聯準會更鷹派的貨幣政策擔憂。",
-          "科技與半導體類股持續承壓，可能拖累整體市場表現。",
-          "台股成交量縮減，顯示市場觀望氣氛濃厚，可能增加波動性。"
+          "輝達財報結果可能對科技股及整體市場產生顯著影響。",
+          "通膨數據與聯準會主席在傑克森洞年會的演說，可能引發市場波動。",
+          "美債拋售壓力沉重，可能導致長端利率持續承壓。",
+          "地緣政治事件如伊朗制裁，可能增加市場不確定性。"
         ]
       },
-      "quality_note": "所有必要資料來源均已成功取得。"
+      "quality_note": "資料皆來自使用者提供之 INPUT JSON。"
     },
     "financials": {
       "cutoff_str": "08/24 13:30",
@@ -10362,11 +10493,11 @@
     }
   },
   "meta": {
-    "build_time": "2026-08-25 11:12",
-    "build_version": "20260825_1112",
+    "build_time": "2026-08-25 12:05",
+    "build_version": "20260825_1205",
     "data_date": "08/25",
     "stale_hours": 0.0,
-    "hours_since_us_close": 7.2,
+    "hours_since_us_close": 8.1,
     "us_market_context": {
       "session_key": "closed",
       "label": "最新收盤快照",
@@ -10374,7 +10505,7 @@
       "badge_short": "收盤",
       "pill_class": "pill-fresh",
       "updated_label": "08/25 05:15",
-      "detail": "Yahoo Finance · 來源更新 08/25 05:15（5.9 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
+      "detail": "Yahoo Finance · 來源更新 08/25 05:15（6.8 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "ready",
@@ -10389,7 +10520,7 @@
         "name": "指數行情 (美股/亞股/ADR)",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-08-25T11:11:33.959041+08:00",
+        "fetched_at": "2026-08-25T12:04:34.153756+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -10399,14 +10530,22 @@
         "fetch_status": "ok",
         "freshness": "fresh",
         "combined_status_label": "抓取正常・資料新鮮",
-        "status_badge_class": "is-ok"
+        "status_badge_class": "is-ok",
+        "reliability_tier": "core_stable",
+        "reliability_label": "核心穩定",
+        "ttl_minutes": 720,
+        "hard_expiry_minutes": 1440,
+        "fallback_policy": "previous_snapshot_with_warning",
+        "notification_level": "critical",
+        "dependencies": [],
+        "notification": null
       },
       {
         "source_id": "disposal",
         "name": "處置股與出關預警",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-08-25T11:11:38.366405+08:00",
+        "fetched_at": "2026-08-25T12:04:34.152021+08:00",
         "data_date": "08/25",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -10416,14 +10555,22 @@
         "fetch_status": "ok",
         "freshness": "fresh",
         "combined_status_label": "抓取正常・資料新鮮",
-        "status_badge_class": "is-ok"
+        "status_badge_class": "is-ok",
+        "reliability_tier": "core_stable",
+        "reliability_label": "核心穩定",
+        "ttl_minutes": 720,
+        "hard_expiry_minutes": 1440,
+        "fallback_policy": "previous_snapshot_with_warning",
+        "notification_level": "critical",
+        "dependencies": [],
+        "notification": null
       },
       {
         "source_id": "twse_summary",
         "name": "大盤昨收與三大法人",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T11:11:26.246635+08:00",
+        "fetched_at": "2026-08-25T12:04:36.539683+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -10433,14 +10580,22 @@
         "fetch_status": "ok",
         "freshness": "fresh",
         "combined_status_label": "抓取正常・資料新鮮",
-        "status_badge_class": "is-ok"
+        "status_badge_class": "is-ok",
+        "reliability_tier": "core_stable",
+        "reliability_label": "核心穩定",
+        "ttl_minutes": 720,
+        "hard_expiry_minutes": 1440,
+        "fallback_policy": "previous_snapshot_with_warning",
+        "notification_level": "warning",
+        "dependencies": [],
+        "notification": null
       },
       {
         "source_id": "night_session",
         "name": "台指期夜盤走勢",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T11:11:27.716814+08:00",
+        "fetched_at": "2026-08-25T12:04:35.795644+08:00",
         "data_date": "2026-08-25",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -10450,14 +10605,22 @@
         "fetch_status": "ok",
         "freshness": "fresh",
         "combined_status_label": "抓取正常・資料新鮮",
-        "status_badge_class": "is-ok"
+        "status_badge_class": "is-ok",
+        "reliability_tier": "important_short_stale",
+        "reliability_label": "重要但可短暫過期",
+        "ttl_minutes": 180,
+        "hard_expiry_minutes": 720,
+        "fallback_policy": "previous_snapshot_with_warning",
+        "notification_level": "warning",
+        "dependencies": [],
+        "notification": null
       },
       {
         "source_id": "pressplay",
         "name": "PressPlay 盤前族群與標的",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T11:11:38.787780+08:00",
+        "fetched_at": "2026-08-25T12:04:36.321602+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -10467,14 +10630,22 @@
         "fetch_status": "ok",
         "freshness": "fresh",
         "combined_status_label": "抓取正常・資料新鮮",
-        "status_badge_class": "is-ok"
+        "status_badge_class": "is-ok",
+        "reliability_tier": "high_risk",
+        "reliability_label": "高風險來源",
+        "ttl_minutes": 360,
+        "hard_expiry_minutes": 720,
+        "fallback_policy": "fixture_or_previous_snapshot_with_warning",
+        "notification_level": "notice",
+        "dependencies": [],
+        "notification": null
       },
       {
         "source_id": "chengwaye_daily",
         "name": "主力券商與當沖籌碼明細",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T11:12:03.574060+08:00",
+        "fetched_at": "2026-08-25T12:05:00.222578+08:00",
         "data_date": "2026/08/24",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -10484,15 +10655,25 @@
         "fetch_status": "ok",
         "freshness": "fresh",
         "combined_status_label": "抓取正常・資料新鮮",
-        "status_badge_class": "is-ok"
+        "status_badge_class": "is-ok",
+        "reliability_tier": "high_risk",
+        "reliability_label": "高風險來源",
+        "ttl_minutes": 360,
+        "hard_expiry_minutes": 720,
+        "fallback_policy": "previous_snapshot_with_warning",
+        "notification_level": "notice",
+        "dependencies": [
+          "pressplay"
+        ],
+        "notification": null
       },
       {
         "source_id": "chengwaye_stock_history",
         "name": "Chengwaye 個股漲停履歷",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T11:12:03.893845+08:00",
-        "data_date": "2026-08-25T11:12:04.237203+08:00",
+        "fetched_at": "2026-08-25T12:05:00.538346+08:00",
+        "data_date": "2026-08-25T12:05:00.838243+08:00",
         "age_minutes": 0.0,
         "error_summary": null,
         "fallback_used": false,
@@ -10501,14 +10682,25 @@
         "fetch_status": "ok",
         "freshness": "fresh",
         "combined_status_label": "抓取正常・資料新鮮",
-        "status_badge_class": "is-ok"
+        "status_badge_class": "is-ok",
+        "reliability_tier": "high_risk",
+        "reliability_label": "高風險來源",
+        "ttl_minutes": 1440,
+        "hard_expiry_minutes": 2880,
+        "fallback_policy": "previous_snapshot_with_warning",
+        "notification_level": "notice",
+        "dependencies": [
+          "pressplay",
+          "chengwaye_daily"
+        ],
+        "notification": null
       },
       {
         "source_id": "calendar",
         "name": "總經財經行事曆",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T11:11:30.003512+08:00",
+        "fetched_at": "2026-08-25T12:04:34.151739+08:00",
         "data_date": "2026-08-25",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -10518,14 +10710,22 @@
         "fetch_status": "ok",
         "freshness": "fresh",
         "combined_status_label": "抓取正常・資料新鮮",
-        "status_badge_class": "is-ok"
+        "status_badge_class": "is-ok",
+        "reliability_tier": "important_short_stale",
+        "reliability_label": "重要但可短暫過期",
+        "ttl_minutes": 720,
+        "hard_expiry_minutes": 1440,
+        "fallback_policy": "previous_snapshot_with_warning",
+        "notification_level": "warning",
+        "dependencies": [],
+        "notification": null
       },
       {
         "source_id": "financials",
         "name": "市場未反映重大公告 (財報/營收/處分)",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T11:12:04.263692+08:00",
+        "fetched_at": "2026-08-25T12:04:34.152283+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -10535,14 +10735,22 @@
         "fetch_status": "ok",
         "freshness": "fresh",
         "combined_status_label": "抓取正常・資料新鮮",
-        "status_badge_class": "is-ok"
+        "status_badge_class": "is-ok",
+        "reliability_tier": "important_short_stale",
+        "reliability_label": "重要但可短暫過期",
+        "ttl_minutes": 720,
+        "hard_expiry_minutes": 1440,
+        "fallback_policy": "previous_snapshot_with_warning",
+        "notification_level": "warning",
+        "dependencies": [],
+        "notification": null
       },
       {
         "source_id": "news",
         "name": "盤前即時新聞聚合",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T11:11:32.206174+08:00",
+        "fetched_at": "2026-08-25T12:04:34.630467+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -10552,20 +10760,29 @@
         "fetch_status": "ok",
         "freshness": "fresh",
         "combined_status_label": "抓取正常・資料新鮮",
-        "status_badge_class": "is-ok"
+        "status_badge_class": "is-ok",
+        "reliability_tier": "high_risk",
+        "reliability_label": "高風險來源",
+        "ttl_minutes": 180,
+        "hard_expiry_minutes": 720,
+        "fallback_policy": "previous_snapshot_with_warning",
+        "notification_level": "notice",
+        "dependencies": [],
+        "notification": null
       }
     ],
     "schema_version": 1,
-    "built_at": "2026-08-25T03:12:22.116150+00:00",
+    "data_revision": "0e65c911d283f30b",
+    "built_at": "2026-08-25T04:05:19.195617+00:00",
     "hash": {
       "disposition": "e0e54deced16",
-      "candidates": "04fef8f189e9",
-      "stock_history": "b2bf92bb425d",
+      "candidates": "d1169e3fc058",
+      "stock_history": "bc31649e841b",
       "announcements": "0c9119368f25",
-      "macro": "1b926ee2d1ee",
-      "calendar": "c4492ea06efa",
-      "news": "9058cff117b0",
-      "ai_summary": "2cfeef7084c5"
+      "macro": "1dadaa8b5dbb",
+      "calendar": "066d7136646d",
+      "news": "4a6cd92ac40d",
+      "ai_summary": "7c4818609c49"
     },
     "packages": {
       "disposition": "data/disposition.json",
