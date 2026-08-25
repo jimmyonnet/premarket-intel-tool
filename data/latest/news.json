@@ -142,6 +142,32 @@
     "qualified": true
   },
   {
+    "title": "三大法人聯手擴大賣超708億元 台股續跌589點、退守44,700點",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBpeWpybUxpck91NjV6eHVQcFRiUExIekllLUR5WWE0VmlsV0dXaExqVlUySUhyTDRDLVZ2QmJRU3dRdlZ6dXFNS204d0VHWmRpSzFrTUVyeUdsUdIBX0FVX3lxTFBpYXdURHVJcUFKZkNfT2VOWkNiTnZpcXJFNV9nMzJ6U1JRRDdYYVhKWFBYeVU1TjNMWDhuOHR6RHVCcTN0VEhpcG5ZaG5OM0cydUU4RXl5U1drRGJ4YXln?oc=5",
+    "source": "經濟日報",
+    "time": "08/24 17:00",
+    "timestamp": 1787562000.0,
+    "score": 9,
+    "quality_score": 4,
+    "impact_score": 5,
+    "matched_groups": [
+      "market_benchmark",
+      "market_structure"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "market_structure"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "taiwan_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "AI半導體需求強勁 泓格科技營收成長逾三成、下半年續看旺 | 自動化產業 | 商情",
     "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1jQUgyU1hpMGg4SWhzcGlZbVA1SEUxMU56aTJlWXdkbElqbDVXckNCZU5SUmdNcHdlZ3JLZF9YbEJWVXFNMzlyLTVxcC1Ma19oYW5lejVoal9HZw?oc=5",
     "source": "經濟日報",
@@ -216,29 +242,6 @@
     "source": "news.cnyes.com",
     "time": "08/25 08:02",
     "timestamp": 1787616171.0,
-    "score": 8,
-    "quality_score": 4,
-    "impact_score": 4,
-    "matched_groups": [
-      "macro_policy"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "currency_commodities",
-      "macro_policy"
-    ],
-    "primary_topic": "currency_commodities",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "美債拋售壓力沉重 全球央行年會聯準會主席華許面臨穩市考驗",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA0MkZvVXRGT2gtVE9yRUU0T3p4YmlhN2RrU3JOWjR5ZzFQMkpCVmZETmV1MUY2eVZiZjR6cUM4RTY5RGFEOHpmb3llTVhfRG8?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/24 14:10",
-    "timestamp": 1787551804.0,
     "score": 8,
     "quality_score": 4,
     "impact_score": 4,
