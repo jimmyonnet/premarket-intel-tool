@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-25T10:29:09.958183+08:00",
+  "generated_at": "2026-08-25T10:33:28.877950+08:00",
   "status": "fallback",
   "provider": "確定性降級整理",
   "model": null,
-  "fallback_reason": "Gemini 摘要暫時失敗：HTTP Error 400: Bad Request",
+  "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 400: Invalid JSON payload received. Unknown name \"additionalProperties\" at 'generation_config.response_schema.properties[0].value.properties[1].valu",
   "news_stats": {
     "count": 10,
     "unique_topics": 5,
@@ -48,8 +48,8 @@
     "nvidia_count": 3,
     "topic_counts": {
       "geopolitics_trade": 1,
-      "global_market": 3,
-      "taiwan_market": 2,
+      "global_market": 2,
+      "taiwan_market": 3,
       "sector_technology": 1,
       "currency_commodities": 3
     },
@@ -69,14 +69,14 @@
         "summary": "美元／債券／商品"
       },
       {
-        "topic": "美股／全球市場",
+        "topic": "台股市場",
         "count": 3,
-        "summary": "美股／全球市場"
+        "summary": "台股市場"
       },
       {
-        "topic": "台股市場",
+        "topic": "美股／全球市場",
         "count": 2,
-        "summary": "台股市場"
+        "summary": "美股／全球市場"
       },
       {
         "topic": "地緣政治／貿易",

@@ -235,26 +235,24 @@
     "qualified": true
   },
   {
-    "title": "美銀警告美股恐回檔逾10%！民主黨若奪參院「AI」與「金融股」將成避險焦點",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA2S3lVbVpRVy01S25wQ3FsMkpINVhJNlk3d0MyenZuMnFJVmNiSWtESnRZU3p4Z3l3dWp1cy0wWTMyd3Q5RmhYVkxDZUgtd2c?oc=5",
+    "title": "〈台股開盤〉開低一度跌逾500點退守月線 靠航運、金融股奮力撐盤",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9xYjlqaWJGeXF4ZXNnQmgxZk1uelVzWWFqNjNYVUtVS3MzLXRvU1NRbGR4RlJfNzlKOXpMeGFhVlRzRDIwZm13MVBfT0hxVWc?oc=5",
     "source": "news.cnyes.com",
-    "time": "08/25 07:14",
-    "timestamp": 1787613249.0,
-    "score": 9,
+    "time": "08/25 10:20",
+    "timestamp": 1787624433.0,
+    "score": 7,
     "quality_score": 4,
-    "impact_score": 5,
+    "impact_score": 3,
     "matched_groups": [
-      "market_benchmark",
-      "sector_supply_chain"
+      "market_benchmark"
     ],
     "low_signal_hits": [],
     "topic_groups": [
-      "global_market",
-      "sector_technology"
+      "taiwan_market"
     ],
-    "primary_topic": "global_market",
+    "primary_topic": "taiwan_market",
     "named_entities": [
-      "us_market"
+      "taiwan_market"
     ],
     "quality_pass": true,
     "impact_pass": true,
