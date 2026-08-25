@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-25T10:37:08.409064+08:00",
+  "generated_at": "2026-08-25T10:40:22.093914+08:00",
   "status": "fallback",
   "provider": "確定性降級整理",
   "model": null,
-  "fallback_reason": "Gemini 摘要暫時失敗：Expecting value: line 8 column 19 (char 180)",
+  "fallback_reason": "Gemini 摘要暫時失敗：Gemini JSON parse failed: Unterminated string starting at line 8 column 9",
   "news_stats": {
     "count": 10,
     "unique_topics": 5,
