@@ -1,5 +1,5 @@
 {
-  "archived_at": "2026-08-25 22:11:35",
+  "archived_at": "2026-08-25 23:13:52",
   "data_date": "2026-08-25",
   "retention_days": 60,
   "sources": {
@@ -29,209 +29,302 @@
     },
     "pressplay": {
       "source_article": {
-        "title": "0825盤前",
-        "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/4E31534915A6183C3E187B7B528B3AD0",
+        "title": "0826盤前",
+        "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/694E4F4E7828B8D31EB2556EC04B3915",
         "fetch_mode": "live_browser",
-        "collected_at": "2026-08-25T22:10:52.349413+08:00"
+        "collected_at": "2026-08-25T23:13:15.539961+08:00"
       },
       "chengwaye_date": null,
       "not_found_group": {
         "raw_tokens": [
-          "2301",
-          "6226"
+          "8039",
+          "2489",
+          "6213",
+          "7750",
+          "希華"
         ],
         "matched": [
           {
             "market": "市",
-            "code": "2301",
-            "name": "光寶科",
-            "close": "—",
-            "volume": "—",
-            "foreign": "—",
-            "trust": "—",
-            "dealer": "—",
-            "ai_reason": "PressPlay 專欄標的",
-            "group": "📌 專欄標的",
-            "match_type": "dict_code",
-            "raw_token": "2301"
+            "code": "8039",
+            "name": "台虹",
+            "close": "291.5",
+            "volume": "60,294",
+            "foreign": "+4,539",
+            "trust": "0",
+            "dealer": "+82",
+            "ai_reason": "軟板材料與高階電子材料需求延續，電子材料族群走強。",
+            "group": "🔬 電子材料",
+            "match_type": "code",
+            "raw_token": "8039"
           },
           {
             "market": "市",
-            "code": "6226",
-            "name": "光鼎",
-            "close": "25.6",
-            "volume": "74,889",
-            "foreign": "-178",
+            "code": "2489",
+            "name": "瑞軒",
+            "close": "40.55",
+            "volume": "70,188",
+            "foreign": "+3,801",
             "trust": "0",
-            "dealer": "+1",
-            "ai_reason": "LED與光電元件題材延續，面板光電族群輪動走強。",
+            "dealer": "+42",
+            "ai_reason": "平面電視與顯示器代工題材輪動，面板光電族群買盤集中。",
             "group": "📺 面板光電",
             "match_type": "code",
-            "raw_token": "6226"
+            "raw_token": "2489"
+          },
+          {
+            "market": "市",
+            "code": "6213",
+            "name": "聯茂",
+            "close": "530",
+            "volume": "26,110",
+            "foreign": "+906",
+            "trust": "0",
+            "dealer": "-310",
+            "ai_reason": "高階銅箔基板與高速傳輸應用題材輪動，PCB族群買盤集中。",
+            "group": "📟 PCB",
+            "match_type": "code",
+            "raw_token": "6213"
+          },
+          {
+            "market": "市",
+            "code": "7750",
+            "name": "新代",
+            "close": "2350",
+            "volume": "376",
+            "foreign": "-63",
+            "trust": "0",
+            "dealer": "+24",
+            "ai_reason": "精密運動控制與智慧製造題材發酵，機器人族群買盤集中。",
+            "group": "🦾 機器人",
+            "match_type": "code",
+            "raw_token": "7750"
+          },
+          {
+            "market": "市",
+            "code": "2484",
+            "name": "希華",
+            "close": "79.3",
+            "volume": "18,160",
+            "foreign": "+3,854",
+            "trust": "0",
+            "dealer": "+54",
+            "ai_reason": "電子零組件族群輪動，被動元件題材獲買盤關注。",
+            "group": "🔌 被動元件",
+            "match_type": "name",
+            "raw_token": "希華"
           }
         ],
         "unmatched": []
       },
       "found_group": {
-        "raw_tokens": [
-          "晶豪科"
-        ],
-        "matched": [
-          {
-            "market": "市",
-            "code": "3006",
-            "name": "晶豪科",
-            "close": "—",
-            "volume": "—",
-            "foreign": "—",
-            "trust": "—",
-            "dealer": "—",
-            "ai_reason": "PressPlay 專欄族群標的",
-            "group": "📌 專欄標的",
-            "match_type": "dict_name",
-            "raw_token": "晶豪科"
-          }
-        ],
+        "raw_tokens": [],
+        "matched": [],
         "unmatched": []
       }
     },
     "stock_history": {
       "source": "https://chengwaye.com/stock/",
-      "fetched_at": "2026-08-25T22:11:18.067209+08:00",
+      "fetched_at": "2026-08-25T23:13:41.211120+08:00",
       "requested_codes": [
-        "2301",
-        "6226",
-        "3006"
+        "8039",
+        "2489",
+        "6213",
+        "7750",
+        "2484"
       ],
       "codes": {
-        "2301": {
-          "code": "2301",
-          "name": "光寶科",
-          "source_url": "https://chengwaye.com/stock/2301",
+        "8039": {
+          "code": "8039",
+          "name": "台虹",
+          "source_url": "https://chengwaye.com/stock/8039",
           "summary": {
-            "limit_up_count": "11 次",
-            "latest_limit_up": "2026/08/24",
-            "avg_next_open": "+2.71%",
-            "avg_next_close": "+2.33%"
-          },
-          "records": [
-            {
-              "date": "2026/08/24",
-              "close": "287",
-              "group": "電源模組",
-              "next_open": "-0.35%",
-              "next_avg": "+0.12%",
-              "next_close": "+3.14%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/08/10",
-              "close": "271.5",
-              "group": "電源模組",
-              "next_open": "+0.92%",
-              "next_avg": "-0.91%",
-              "next_close": "-1.10%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/08/04",
-              "close": "252",
-              "group": "電源模組",
-              "next_open": "+3.17%",
-              "next_avg": "+2.28%",
-              "next_close": "-1.19%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/08/03",
-              "close": "229.5",
-              "group": "電源模組",
-              "next_open": "+1.74%",
-              "next_avg": "+7.54%",
-              "next_close": "+9.80%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/07/31",
-              "close": "209",
-              "group": "電源模組",
-              "next_open": "+9.81%",
-              "next_avg": "+9.81%",
-              "next_close": "+9.81%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/22",
-              "close": "231.5",
-              "group": "電源模組",
-              "next_open": "+1.30%",
-              "next_avg": "+0.11%",
-              "next_close": "-3.46%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/06/03",
-              "close": "250",
-              "group": "電源模組",
-              "next_open": "-1.20%",
-              "next_avg": "-0.04%",
-              "next_close": "-0.60%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/05/25",
-              "close": "227.5",
-              "group": "電源模組",
-              "next_open": "+2.86%",
-              "next_avg": "+3.08%",
-              "next_close": "+5.27%",
-              "next_trend": "強續漲"
-            },
-            {
-              "date": "2026/05/11",
-              "close": "224",
-              "group": "AI伺服器",
-              "next_open": "+9.38%",
-              "next_avg": "+7.13%",
-              "next_close": "+4.69%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/05/07",
-              "close": "203.5",
-              "group": "AI伺服器",
-              "next_open": "+2.21%",
-              "next_avg": "+1.81%",
-              "next_close": "+0.25%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/04/08",
-              "close": "156.5",
-              "group": "AI伺服器",
-              "next_open": "0.00%",
-              "next_avg": "-1.00%",
-              "next_close": "-0.96%",
-              "next_trend": "直接跌"
-            }
-          ],
-          "period_note": "上市｜族群：電源模組、AI伺服器｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 11
-        },
-        "6226": {
-          "code": "6226",
-          "name": "光鼎",
-          "source_url": "https://chengwaye.com/stock/6226",
-          "summary": {
-            "limit_up_count": "21 次",
+            "limit_up_count": "18 次",
             "latest_limit_up": "2026/08/25",
-            "avg_next_open": "+5.75%",
-            "avg_next_close": "+5.35%"
+            "avg_next_open": "+2.73%",
+            "avg_next_close": "+2.52%"
           },
           "records": [
             {
               "date": "2026/08/25",
-              "close": "25.6",
+              "close": "291.5",
+              "group": "電子材料",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
+            },
+            {
+              "date": "2026/08/13",
+              "close": "249.5",
+              "group": "電子材料",
+              "next_open": "+4.01%",
+              "next_avg": "+6.70%",
+              "next_close": "+9.22%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/08/07",
+              "close": "237.5",
+              "group": "電子材料",
+              "next_open": "+5.26%",
+              "next_avg": "+0.64%",
+              "next_close": "-4.84%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/08/05",
+              "close": "220",
+              "group": "電子材料",
+              "next_open": "+1.14%",
+              "next_avg": "+0.92%",
+              "next_close": "-1.82%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/08/03",
+              "close": "190.5",
+              "group": "電子材料",
+              "next_open": "+0.52%",
+              "next_avg": "+3.90%",
+              "next_close": "+4.99%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/07/31",
+              "close": "173.5",
+              "group": "電子材料",
+              "next_open": "-1.73%",
+              "next_avg": "+5.65%",
+              "next_close": "+9.80%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/07/23",
+              "close": "256",
+              "group": "電子材料",
+              "next_open": "-1.76%",
+              "next_avg": "-3.66%",
+              "next_close": "-6.25%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/07/22",
+              "close": "233",
+              "group": "電子材料",
+              "next_open": "+3.86%",
+              "next_avg": "+5.01%",
+              "next_close": "+9.87%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/07/21",
+              "close": "212",
+              "group": "電子材料",
+              "next_open": "+6.84%",
+              "next_avg": "+6.54%",
+              "next_close": "+9.91%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/07/16",
+              "close": "199.5",
+              "group": "電子材料",
+              "next_open": "-2.76%",
+              "next_avg": "-2.23%",
+              "next_close": "-3.51%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/07/14",
+              "close": "185.5",
+              "group": "電子材料",
+              "next_open": "+0.27%",
+              "next_avg": "+1.23%",
+              "next_close": "-2.16%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/07/13",
+              "close": "169",
+              "group": "電子材料",
+              "next_open": "+2.37%",
+              "next_avg": "+8.24%",
+              "next_close": "+9.76%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/07/09",
+              "close": "154",
+              "group": "電子材料",
+              "next_open": "+9.74%",
+              "next_avg": "+9.74%",
+              "next_close": "+9.74%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/12",
+              "close": "149.5",
+              "group": "電子材料",
+              "next_open": "+2.34%",
+              "next_avg": "+0.01%",
+              "next_close": "-1.34%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/05/21",
+              "close": "139",
+              "group": "軟板FPC",
+              "next_open": "+1.44%",
+              "next_avg": "+6.79%",
+              "next_close": "+8.63%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/04/22",
+              "close": "161",
+              "group": "PCB",
+              "next_open": "+5.90%",
+              "next_avg": "-5.86%",
+              "next_close": "-9.94%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/04/09",
+              "close": "136",
+              "group": "PCB",
+              "next_open": "+4.41%",
+              "next_avg": "+2.66%",
+              "next_close": "+0.74%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/04/02",
+              "close": "122",
+              "group": "PCB",
+              "next_open": "+4.51%",
+              "next_avg": "+0.27%",
+              "next_close": "0.00%",
+              "next_trend": "開高走低"
+            }
+          ],
+          "period_note": "上市｜族群：電子材料、軟板FPC、PCB｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 18
+        },
+        "2489": {
+          "code": "2489",
+          "name": "瑞軒",
+          "source_url": "https://chengwaye.com/stock/2489",
+          "summary": {
+            "limit_up_count": "13 次",
+            "latest_limit_up": "2026/08/25",
+            "avg_next_open": "+4.85%",
+            "avg_next_close": "+1.33%"
+          },
+          "records": [
+            {
+              "date": "2026/08/25",
+              "close": "40.55",
               "group": "面板光電",
               "next_open": "—",
               "next_avg": "—",
@@ -239,320 +332,593 @@
               "next_trend": "—"
             },
             {
-              "date": "2026/08/24",
-              "close": "23.3",
+              "date": "2026/08/21",
+              "close": "35.65",
               "group": "面板光電",
-              "next_open": "+0.21%",
-              "next_avg": "+5.38%",
-              "next_close": "+9.87%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/08/18",
-              "close": "21.1",
-              "group": "面板光電",
-              "next_open": "0.00%",
-              "next_avg": "+4.81%",
-              "next_close": "+0.95%",
+              "next_open": "+5.61%",
+              "next_avg": "+6.79%",
+              "next_close": "+3.51%",
               "next_trend": "弱續漲"
             },
             {
-              "date": "2026/08/06",
-              "close": "22.85",
+              "date": "2026/08/05",
+              "close": "33.1",
               "group": "面板光電",
-              "next_open": "-0.44%",
-              "next_avg": "-1.89%",
-              "next_close": "-3.50%",
+              "next_open": "-0.15%",
+              "next_avg": "-4.85%",
+              "next_close": "-4.23%",
               "next_trend": "直接跌"
             },
             {
-              "date": "2026/08/03",
-              "close": "21.55",
+              "date": "2026/05/25",
+              "close": "56.5",
               "group": "面板光電",
-              "next_open": "+3.02%",
-              "next_avg": "+2.35%",
-              "next_close": "+2.09%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/07/29",
-              "close": "22.55",
-              "group": "面板光電",
-              "next_open": "+5.10%",
-              "next_avg": "-1.74%",
-              "next_close": "-9.98%",
+              "next_open": "+1.77%",
+              "next_avg": "-6.48%",
+              "next_close": "-8.50%",
               "next_trend": "開高走低"
             },
             {
-              "date": "2026/07/28",
-              "close": "20.5",
+              "date": "2026/05/22",
+              "close": "51.4",
               "group": "面板光電",
-              "next_open": "+5.12%",
-              "next_avg": "+9.33%",
-              "next_close": "+10.00%",
+              "next_open": "+9.92%",
+              "next_avg": "+9.92%",
+              "next_close": "+9.92%",
               "next_trend": "續漲停"
             },
             {
-              "date": "2026/07/02",
-              "close": "26.65",
+              "date": "2026/05/21",
+              "close": "46.8",
               "group": "面板光電",
-              "next_open": "+8.63%",
-              "next_avg": "-5.84%",
-              "next_close": "-9.94%",
+              "next_open": "+8.33%",
+              "next_avg": "+9.52%",
+              "next_close": "+9.83%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/05/05",
+              "close": "46.2",
+              "group": "面板光電",
+              "next_open": "+3.68%",
+              "next_avg": "-0.41%",
+              "next_close": "-3.90%",
               "next_trend": "開高走低"
             },
             {
-              "date": "2026/07/01",
-              "close": "24.25",
+              "date": "2026/04/29",
+              "close": "42",
               "group": "面板光電",
-              "next_open": "+9.90%",
-              "next_avg": "+9.90%",
+              "next_open": "0.00%",
+              "next_avg": "+2.95%",
+              "next_close": "+0.24%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/04/09",
+              "close": "42.75",
+              "group": "面板光電",
+              "next_open": "+4.33%",
+              "next_avg": "+2.97%",
+              "next_close": "+5.96%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/04/08",
+              "close": "38.9",
+              "group": "光通訊",
+              "next_open": "+6.17%",
+              "next_avg": "+8.38%",
               "next_close": "+9.90%",
               "next_trend": "續漲停"
             },
             {
-              "date": "2026/06/30",
-              "close": "22.05",
+              "date": "2026/04/07",
+              "close": "35.4",
               "group": "面板光電",
-              "next_open": "+9.98%",
-              "next_avg": "+9.98%",
-              "next_close": "+9.98%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/29",
-              "close": "20.05",
-              "group": "面板光電",
-              "next_open": "+9.73%",
-              "next_avg": "+9.82%",
-              "next_close": "+9.98%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/26",
-              "close": "18.25",
-              "group": "面板光電",
-              "next_open": "+6.03%",
-              "next_avg": "+7.31%",
-              "next_close": "+9.86%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/25",
-              "close": "16.6",
-              "group": "面板光電",
-              "next_open": "+2.41%",
-              "next_avg": "+7.81%",
-              "next_close": "+9.94%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/24",
-              "close": "15.1",
-              "group": "面板光電",
-              "next_open": "+9.93%",
-              "next_avg": "+9.93%",
-              "next_close": "+9.93%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/23",
-              "close": "13.75",
-              "group": "面板光電",
-              "next_open": "+6.91%",
-              "next_avg": "+8.94%",
-              "next_close": "+9.82%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/04/17",
-              "close": "14.6",
-              "group": "面板光電",
-              "next_open": "+6.16%",
-              "next_avg": "+8.34%",
-              "next_close": "+9.59%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/04/09",
-              "close": "13.5",
-              "group": "光通訊",
-              "next_open": "+9.63%",
-              "next_avg": "+2.51%",
-              "next_close": "-2.22%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/04/08",
-              "close": "12.3",
-              "group": "面板光電",
-              "next_open": "+6.91%",
-              "next_avg": "+7.67%",
-              "next_close": "+9.76%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/03/19",
-              "close": "14.65",
-              "group": "面板光電",
-              "next_open": "+1.71%",
-              "next_avg": "+3.21%",
-              "next_close": "+1.37%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/03/18",
-              "close": "13.35",
-              "group": "光通訊",
-              "next_open": "+4.12%",
-              "next_avg": "+6.98%",
-              "next_close": "+9.74%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/03/17",
-              "close": "12.15",
-              "group": "面板光電",
-              "next_open": "+9.88%",
-              "next_avg": "+9.88%",
-              "next_close": "+9.88%",
-              "next_trend": "續漲停"
-            }
-          ],
-          "period_note": "上市｜族群：面板光電、光通訊｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 21
-        },
-        "3006": {
-          "code": "3006",
-          "name": "晶豪科",
-          "source_url": "https://chengwaye.com/stock/3006",
-          "summary": {
-            "limit_up_count": "13 次",
-            "latest_limit_up": "2026/08/24",
-            "avg_next_open": "+1.28%",
-            "avg_next_close": "+2.37%"
-          },
-          "records": [
-            {
-              "date": "2026/08/24",
-              "close": "282",
-              "group": "記憶體",
-              "next_open": "-2.30%",
-              "next_avg": "-4.92%",
-              "next_close": "-4.26%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/08/05",
-              "close": "239",
-              "group": "記憶體",
-              "next_open": "+0.42%",
-              "next_avg": "+4.97%",
-              "next_close": "+7.95%",
-              "next_trend": "強續漲"
-            },
-            {
-              "date": "2026/08/04",
-              "close": "217.5",
-              "group": "記憶體",
-              "next_open": "+9.20%",
-              "next_avg": "+9.67%",
+              "next_open": "+8.62%",
+              "next_avg": "+9.54%",
               "next_close": "+9.89%",
               "next_trend": "續漲停"
             },
             {
-              "date": "2026/08/03",
-              "close": "198",
-              "group": "記憶體",
-              "next_open": "+4.80%",
-              "next_avg": "+8.49%",
-              "next_close": "+9.85%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/07/31",
-              "close": "180",
-              "group": "記憶體",
-              "next_open": "+4.72%",
-              "next_avg": "+7.65%",
-              "next_close": "+10.00%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/07/15",
-              "close": "239",
-              "group": "記憶體",
-              "next_open": "-2.30%",
-              "next_avg": "-5.16%",
-              "next_close": "-7.95%",
+              "date": "2026/03/27",
+              "close": "35.05",
+              "group": "光通訊",
+              "next_open": "0.00%",
+              "next_avg": "-4.33%",
+              "next_close": "-6.70%",
               "next_trend": "直接跌"
             },
             {
-              "date": "2026/07/09",
-              "close": "237",
-              "group": "記憶體",
-              "next_open": "+0.42%",
-              "next_avg": "-1.41%",
-              "next_close": "-3.80%",
+              "date": "2026/03/19",
+              "close": "42.9",
+              "group": "光通訊",
+              "next_open": "+9.91%",
+              "next_avg": "-5.28%",
+              "next_close": "-9.91%",
               "next_trend": "開高走低"
+            }
+          ],
+          "period_note": "上市｜族群：面板光電、光通訊｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 13
+        },
+        "6213": {
+          "code": "6213",
+          "name": "聯茂",
+          "source_url": "https://chengwaye.com/stock/6213",
+          "summary": {
+            "limit_up_count": "20 次",
+            "latest_limit_up": "2026/08/25",
+            "avg_next_open": "+2.37%",
+            "avg_next_close": "+2.47%"
+          },
+          "records": [
+            {
+              "date": "2026/08/25",
+              "close": "530",
+              "group": "PCB",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
             },
             {
-              "date": "2026/05/14",
-              "close": "238",
-              "group": "記憶體",
+              "date": "2026/08/10",
+              "close": "427.5",
+              "group": "PCB",
               "next_open": "0.00%",
-              "next_avg": "+4.87%",
-              "next_close": "+5.46%",
+              "next_avg": "-0.67%",
+              "next_close": "+5.73%",
               "next_trend": "強續漲"
             },
             {
-              "date": "2026/05/11",
-              "close": "222",
-              "group": "記憶體",
-              "next_open": "+2.25%",
-              "next_avg": "-1.57%",
-              "next_close": "-0.90%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/05/06",
-              "close": "200",
-              "group": "記憶體",
-              "next_open": "+2.50%",
-              "next_avg": "-0.04%",
-              "next_close": "-1.75%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/04/28",
-              "close": "184.5",
-              "group": "記憶體",
-              "next_open": "-1.63%",
-              "next_avg": "-2.55%",
-              "next_close": "-5.15%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/03/18",
-              "close": "213.5",
-              "group": "記憶體",
-              "next_open": "-6.09%",
-              "next_avg": "-2.19%",
-              "next_close": "+1.64%",
+              "date": "2026/08/06",
+              "close": "375",
+              "group": "PCB",
+              "next_open": "+2.53%",
+              "next_avg": "+3.31%",
+              "next_close": "+3.73%",
               "next_trend": "弱續漲"
             },
             {
-              "date": "2026/03/17",
-              "close": "194.5",
-              "group": "記憶體",
-              "next_open": "+4.63%",
-              "next_avg": "+6.81%",
-              "next_close": "+9.77%",
+              "date": "2026/08/05",
+              "close": "341",
+              "group": "PCB",
+              "next_open": "0.00%",
+              "next_avg": "+4.90%",
+              "next_close": "+9.97%",
               "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/08/03",
+              "close": "289",
+              "group": "PCB",
+              "next_open": "+0.35%",
+              "next_avg": "+5.66%",
+              "next_close": "+7.27%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/07/31",
+              "close": "263",
+              "group": "PCB",
+              "next_open": "+9.89%",
+              "next_avg": "+9.86%",
+              "next_close": "+9.89%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/07/21",
+              "close": "354.5",
+              "group": "PCB",
+              "next_open": "+5.22%",
+              "next_avg": "+6.13%",
+              "next_close": "+3.53%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/07/03",
+              "close": "394",
+              "group": "PCB",
+              "next_open": "+3.93%",
+              "next_avg": "-0.18%",
+              "next_close": "+0.51%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/06/25",
+              "close": "339.5",
+              "group": "PCB",
+              "next_open": "+3.98%",
+              "next_avg": "+6.51%",
+              "next_close": "+2.06%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/06/24",
+              "close": "309",
+              "group": "PCB",
+              "next_open": "+6.47%",
+              "next_avg": "+9.43%",
+              "next_close": "+9.87%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/22",
+              "close": "308",
+              "group": "PCB",
+              "next_open": "-1.30%",
+              "next_avg": "-4.48%",
+              "next_close": "-8.77%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/06/01",
+              "close": "295",
+              "group": "PCB",
+              "next_open": "-0.68%",
+              "next_avg": "-4.90%",
+              "next_close": "-7.46%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/04/16",
+              "close": "252",
+              "group": "PCB",
+              "next_open": "+0.40%",
+              "next_avg": "+4.72%",
+              "next_close": "+7.34%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/04/14",
+              "close": "224",
+              "group": "PCB",
+              "next_open": "+1.79%",
+              "next_avg": "+2.31%",
+              "next_close": "+2.46%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/04/09",
+              "close": "216.5",
+              "group": "PCB",
+              "next_open": "+3.93%",
+              "next_avg": "-1.25%",
+              "next_close": "-1.15%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/04/07",
+              "close": "187",
+              "group": "PCB",
+              "next_open": "+3.74%",
+              "next_avg": "+3.95%",
+              "next_close": "+5.35%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/04/01",
+              "close": "163",
+              "group": "PCB",
+              "next_open": "+2.76%",
+              "next_avg": "+5.06%",
+              "next_close": "+4.29%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/03/27",
+              "close": "158",
+              "group": "PCB",
+              "next_open": "-1.27%",
+              "next_avg": "-4.38%",
+              "next_close": "-4.43%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/03/25",
+              "close": "145.5",
+              "group": "PCB",
+              "next_open": "0.00%",
+              "next_avg": "+1.11%",
+              "next_close": "-1.03%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/03/17",
+              "close": "154",
+              "group": "PCB",
+              "next_open": "+3.25%",
+              "next_avg": "-1.59%",
+              "next_close": "-2.27%",
+              "next_trend": "開高走低"
             }
           ],
-          "period_note": "上市｜族群：記憶體｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 13
+          "period_note": "上市｜族群：PCB｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 20
+        },
+        "7750": {
+          "code": "7750",
+          "name": "新代",
+          "source_url": "https://chengwaye.com/stock/7750",
+          "summary": {
+            "limit_up_count": "7 次",
+            "latest_limit_up": "2026/08/25",
+            "avg_next_open": "+1.69%",
+            "avg_next_close": "+1.44%"
+          },
+          "records": [
+            {
+              "date": "2026/08/25",
+              "close": "2350",
+              "group": "機器人",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
+            },
+            {
+              "date": "2026/08/03",
+              "close": "2235",
+              "group": "機械",
+              "next_open": "0.00%",
+              "next_avg": "+4.56%",
+              "next_close": "+4.25%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/07/31",
+              "close": "2035",
+              "group": "機械",
+              "next_open": "+2.95%",
+              "next_avg": "+7.44%",
+              "next_close": "+9.83%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/05/12",
+              "close": "3070",
+              "group": "機器人",
+              "next_open": "-3.91%",
+              "next_avg": "-7.04%",
+              "next_close": "-9.93%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/05/11",
+              "close": "2795",
+              "group": "機器人",
+              "next_open": "+9.48%",
+              "next_avg": "+9.65%",
+              "next_close": "+9.84%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/04/28",
+              "close": "2400",
+              "group": "機器人",
+              "next_open": "-1.04%",
+              "next_avg": "+0.10%",
+              "next_close": "0.00%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/04/23",
+              "close": "2240",
+              "group": "機械",
+              "next_open": "+2.68%",
+              "next_avg": "-1.76%",
+              "next_close": "-5.36%",
+              "next_trend": "開高走低"
+            }
+          ],
+          "period_note": "上市｜族群：機器人、機械｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 7
+        },
+        "2484": {
+          "code": "2484",
+          "name": "希華",
+          "source_url": "https://chengwaye.com/stock/2484",
+          "summary": {
+            "limit_up_count": "21 次",
+            "latest_limit_up": "2026/08/25",
+            "avg_next_open": "+2.14%",
+            "avg_next_close": "+0.41%"
+          },
+          "records": [
+            {
+              "date": "2026/08/25",
+              "close": "79.3",
+              "group": "被動元件",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
+            },
+            {
+              "date": "2026/08/04",
+              "close": "69.9",
+              "group": "被動元件",
+              "next_open": "+2.58%",
+              "next_avg": "+2.70%",
+              "next_close": "+0.86%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/07/16",
+              "close": "89.6",
+              "group": "被動元件",
+              "next_open": "-3.46%",
+              "next_avg": "-7.92%",
+              "next_close": "-9.93%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/07/03",
+              "close": "96.4",
+              "group": "被動元件",
+              "next_open": "+1.76%",
+              "next_avg": "-0.14%",
+              "next_close": "-0.62%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/07/02",
+              "close": "87.7",
+              "group": "被動元件",
+              "next_open": "+7.07%",
+              "next_avg": "+5.09%",
+              "next_close": "+9.92%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/07/01",
+              "close": "79.8",
+              "group": "被動元件",
+              "next_open": "+0.88%",
+              "next_avg": "+5.20%",
+              "next_close": "+9.90%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/26",
+              "close": "76.8",
+              "group": "被動元件",
+              "next_open": "0.00%",
+              "next_avg": "-4.77%",
+              "next_close": "-9.90%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/06/24",
+              "close": "69.3",
+              "group": "被動元件",
+              "next_open": "+1.01%",
+              "next_avg": "-0.85%",
+              "next_close": "+0.87%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/06/15",
+              "close": "73.3",
+              "group": "被動元件",
+              "next_open": "+0.95%",
+              "next_avg": "-0.18%",
+              "next_close": "-3.96%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/06/12",
+              "close": "66.7",
+              "group": "被動元件",
+              "next_open": "+2.10%",
+              "next_avg": "+6.47%",
+              "next_close": "+9.90%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/09",
+              "close": "60.8",
+              "group": "被動元件",
+              "next_open": "-0.33%",
+              "next_avg": "+0.60%",
+              "next_close": "-4.44%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/05/25",
+              "close": "54.2",
+              "group": "被動元件",
+              "next_open": "+0.92%",
+              "next_avg": "-0.21%",
+              "next_close": "+3.32%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/05/22",
+              "close": "49.3",
+              "group": "被動元件",
+              "next_open": "+6.29%",
+              "next_avg": "+8.83%",
+              "next_close": "+9.94%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/05/20",
+              "close": "44.3",
+              "group": "被動元件",
+              "next_open": "+1.58%",
+              "next_avg": "+2.07%",
+              "next_close": "+1.24%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/05/18",
+              "close": "41",
+              "group": "被動元件",
+              "next_open": "+1.22%",
+              "next_avg": "+0.52%",
+              "next_close": "-1.71%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/05/07",
+              "close": "44.85",
+              "group": "被動元件",
+              "next_open": "-1.00%",
+              "next_avg": "-1.56%",
+              "next_close": "-6.80%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/04/20",
+              "close": "46.6",
+              "group": "被動元件",
+              "next_open": "+4.83%",
+              "next_avg": "+7.68%",
+              "next_close": "+5.69%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/04/16",
+              "close": "40.3",
+              "group": "被動元件",
+              "next_open": "+8.56%",
+              "next_avg": "+4.95%",
+              "next_close": "+5.21%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/04/13",
+              "close": "34.9",
+              "group": "被動元件",
+              "next_open": "+6.88%",
+              "next_avg": "+5.82%",
+              "next_close": "-1.29%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/03/27",
+              "close": "30.9",
+              "group": "被動元件",
+              "next_open": "-0.32%",
+              "next_avg": "-3.95%",
+              "next_close": "-8.90%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/03/24",
+              "close": "29.4",
+              "group": "被動元件/頻率控制",
+              "next_open": "+1.36%",
+              "next_avg": "+0.60%",
+              "next_close": "-1.02%",
+              "next_trend": "開高走低"
+            }
+          ],
+          "period_note": "上市｜族群：被動元件、被動元件/頻率控制｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 21
         }
       },
       "failed_codes": [],
@@ -626,6 +992,33 @@
         ],
         "primary_topic": "currency_commodities",
         "named_entities": [],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "美股開盤四大指數走高！晶片股強勢反彈 台指期夜盤漲238點",
+        "link": "https://news.google.com/rss/articles/CBMi-wJBVV95cUxNUlVpVWIwekJLN3dXcldTRlV3X1p0SllsV1cwMHhyVXhOYUxEYVBsUTRYRkJUZ1RIMGtjaFRackxNdzhCSVpYNklRSFJzTktSdUtrVVhWYS14RXZ1MU9BWVlPWGF2VlFNb05wUEpoYV9VYTk1WS1kWjdrZXRoMFRkMExUQzBXcjNhaUk5RnhvU0Q3NHd0S2p1OWJta3ZXUmdKNkxOcVJ0VGNZR3lvUnpsRXo2cU1FdGIyMU1hSmMyMzVrYkM3WkhZbVRSeHFCZ1Y0c1FyUXJKTjZfQmNOajFGZHJvYkhrZDdBUU9mdHZqUDM0OFg4Rm90Wk5uSGZJeUJEdVRnbDB3ci1NMDhsaC1ZbWlQV1c5ekRXdTZGeGdzMDRCbnlHbTJHcDktdEp1SlJES0FoMUlpLTNYWlA3bVBTaG5vYTFfYUwxaWdhekUyelBzOWpEZ2thbmh5LTE3WC1YaUZoU3hTOWJoSkU4SDR5V0tmVk54YVJROWRZ?oc=5",
+        "source": "Yahoo股市",
+        "time": "08/25 22:54",
+        "timestamp": 1787669652.0,
+        "score": 9,
+        "quality_score": 3,
+        "impact_score": 6,
+        "matched_groups": [
+          "market_benchmark",
+          "market_move"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "global_market",
+          "taiwan_market"
+        ],
+        "primary_topic": "global_market",
+        "named_entities": [
+          "taiwan_market",
+          "us_market"
+        ],
         "quality_pass": true,
         "impact_pass": true,
         "qualified": true
@@ -755,6 +1148,28 @@
         "qualified": true
       },
       {
+        "title": "上市櫃上半年營收、稅前盈餘雙創十年新高 凌巨補交財報27日恢復交易",
+        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1oOTBkRTlXeE5ZaFdzZlNLNDNNcl83SmNHRGxmTDIyd292T2poOHVwWGpXS1VKN0w5aDRzLVRCS05TWnlvVkk3UW5VM3ZNZVE?oc=5",
+        "source": "news.cnyes.com",
+        "time": "08/25 20:05",
+        "timestamp": 1787659502.0,
+        "score": 7,
+        "quality_score": 4,
+        "impact_score": 3,
+        "matched_groups": [
+          "earnings_financial"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "company_earnings"
+        ],
+        "primary_topic": "company_earnings",
+        "named_entities": [],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
         "title": "台股V轉漲407點 45K失而復得金融、航運、生技亮晶晶- 證券",
         "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE82a0xqaU5EOEVvZW45ZGN6SWprMmpkQVFRRnZRRnFGdzZkRjZtZlNkbjZhcXEzdFFFVFFPWHpIckRDWU9OZnE5d0tiY29GWm8wSUdtS29TUWRiZ0g2YVhN?oc=5",
         "source": "工商時報",
@@ -777,35 +1192,13 @@
         "quality_pass": true,
         "impact_pass": true,
         "qualified": true
-      },
-      {
-        "title": "上市櫃上半年營收、稅前盈餘雙創十年新高 凌巨補交財報27日恢復交易",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1oOTBkRTlXeE5ZaFdzZlNLNDNNcl83SmNHRGxmTDIyd292T2poOHVwWGpXS1VKN0w5aDRzLVRCS05TWnlvVkk3UW5VM3ZNZVE?oc=5",
-        "source": "news.cnyes.com",
-        "time": "08/25 20:05",
-        "timestamp": 1787659502.0,
-        "score": 7,
-        "quality_score": 4,
-        "impact_score": 3,
-        "matched_groups": [
-          "earnings_financial"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "company_earnings"
-        ],
-        "primary_topic": "company_earnings",
-        "named_entities": [],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
       }
     ],
     "twse_summary": {
       "twii": {
-        "price": 45169.46,
-        "change": -54.84,
-        "change_pct": -0.12,
+        "price": 44762.3,
+        "change": -462.0,
+        "change_pct": -1.02,
         "volume": 0
       },
       "inst": {
@@ -827,214 +1220,214 @@
         "tsmc": {
           "name": "台積電 ADR",
           "ticker": "TSM",
-          "value": 417.65,
+          "value": 415.11,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 7.53,
-          "change_pct": 1.84
+          "updated_at": "2026-08-25T23:13:14+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 4.99,
+          "change_pct": 1.22
         },
         "nvda": {
           "name": "輝達 (NVDA)",
           "ticker": "NVDA",
-          "value": 213.56,
+          "value": 210.41,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 5.08,
-          "change_pct": 2.44
+          "updated_at": "2026-08-25T23:13:16+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 1.94,
+          "change_pct": 0.93
         },
         "aapl": {
           "name": "蘋果 (AAPL)",
           "ticker": "AAPL",
-          "value": 310.18,
+          "value": 309.08,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": -0.16,
-          "change_pct": -0.05
+          "updated_at": "2026-08-25T23:13:15+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": -1.25,
+          "change_pct": -0.4
         },
         "micron": {
           "name": "美光",
           "ticker": "MU",
-          "value": 927.88,
+          "value": 929.28,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": "https://tw.stock.yahoo.com/quote/MU",
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 17.45,
-          "change_pct": 1.92
+          "updated_at": "2026-08-25T23:13:16+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 18.85,
+          "change_pct": 2.07
         },
         "umc": {
           "name": "聯電 ADR",
           "ticker": "UMC",
-          "value": 19.89,
+          "value": 19.61,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 0.84,
-          "change_pct": 4.41
+          "updated_at": "2026-08-25T23:13:11+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 0.56,
+          "change_pct": 2.94
         },
         "ase": {
           "name": "日月光 ADR",
           "ticker": "ASX",
-          "value": 37.05,
+          "value": 36.88,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 0.81,
-          "change_pct": 2.23
+          "updated_at": "2026-08-25T23:13:12+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 0.64,
+          "change_pct": 1.78
         }
       },
       "key_stocks": {
         "tsmc": {
           "name": "台積電 ADR",
           "ticker": "TSM",
-          "value": 417.65,
+          "value": 415.11,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 7.53,
-          "change_pct": 1.84
+          "updated_at": "2026-08-25T23:13:14+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 4.99,
+          "change_pct": 1.22
         },
         "nvda": {
           "name": "輝達 (NVDA)",
           "ticker": "NVDA",
-          "value": 213.56,
+          "value": 210.41,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 5.08,
-          "change_pct": 2.44
+          "updated_at": "2026-08-25T23:13:16+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 1.94,
+          "change_pct": 0.93
         },
         "aapl": {
           "name": "蘋果 (AAPL)",
           "ticker": "AAPL",
-          "value": 310.18,
+          "value": 309.08,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": -0.16,
-          "change_pct": -0.05
+          "updated_at": "2026-08-25T23:13:15+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": -1.25,
+          "change_pct": -0.4
         },
         "micron": {
           "name": "美光",
           "ticker": "MU",
-          "value": 927.88,
+          "value": 929.28,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": "https://tw.stock.yahoo.com/quote/MU",
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 17.45,
-          "change_pct": 1.92
+          "updated_at": "2026-08-25T23:13:16+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 18.85,
+          "change_pct": 2.07
         },
         "umc": {
           "name": "聯電 ADR",
           "ticker": "UMC",
-          "value": 19.89,
+          "value": 19.61,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 0.84,
-          "change_pct": 4.41
+          "updated_at": "2026-08-25T23:13:11+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 0.56,
+          "change_pct": 2.94
         },
         "ase": {
           "name": "日月光 ADR",
           "ticker": "ASX",
-          "value": 37.05,
+          "value": 36.88,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:52+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 0.81,
-          "change_pct": 2.23
+          "updated_at": "2026-08-25T23:13:12+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 0.64,
+          "change_pct": 1.78
         }
       },
       "us_indices": {
         "dow": {
           "name": "道瓊工業指數",
           "ticker": "^DJI",
-          "value": 53446.75,
+          "value": 53463.51,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:51+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 29.59,
-          "change_pct": 0.06
+          "updated_at": "2026-08-25T23:13:13+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 46.35,
+          "change_pct": 0.09
         },
         "sp500": {
           "name": "S&P 500指數",
           "ticker": "^GSPC",
-          "value": 7673.21,
+          "value": 7663.46,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:50+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 20.35,
-          "change_pct": 0.27
+          "updated_at": "2026-08-25T23:13:13+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 10.6,
+          "change_pct": 0.14
         },
         "nasdaq": {
           "name": "NASDAQ指數",
           "ticker": "^IXIC",
-          "value": 26136.66,
+          "value": 26077.06,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:51+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 156.47,
-          "change_pct": 0.6
+          "updated_at": "2026-08-25T23:13:12+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 96.87,
+          "change_pct": 0.37
         },
         "sox": {
           "name": "費城半導體指數",
           "ticker": "^SOX",
-          "value": 11617.58,
+          "value": 11554.2,
           "is_missing": false,
           "source_label": "Yahoo Finance Chart",
           "source_url": null,
           "market_state": null,
-          "updated_at": "2026-08-25T22:10:47+08:00",
-          "updated_taipei": "2026-08-25 22:10",
-          "change": 194.41,
-          "change_pct": 1.7
+          "updated_at": "2026-08-25T23:13:11+08:00",
+          "updated_taipei": "2026-08-25 23:13",
+          "change": 131.03,
+          "change_pct": 1.15
         }
       },
       "asia_open": {
@@ -1065,7 +1458,7 @@
       "range_end": "2026-09-08",
       "events": [
         {
-          "id": "ev-2026-08-26-4",
+          "id": "ev-2026-08-26-16",
           "date": "2026-08-26",
           "time": "20:30",
           "all_day": false,
@@ -1091,7 +1484,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-26-5",
+          "id": "ev-2026-08-26-18",
           "date": "2026-08-26",
           "time": "20:30",
           "all_day": false,
@@ -1117,7 +1510,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-26-15",
+          "id": "ev-2026-08-26-12",
           "date": "2026-08-26",
           "time": "22:30",
           "all_day": false,
@@ -1143,7 +1536,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-27-10",
+          "id": "ev-2026-08-27-4",
           "date": "2026-08-27",
           "time": "09:30",
           "all_day": false,
@@ -1169,7 +1562,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-27-6",
+          "id": "ev-2026-08-27-7",
           "date": "2026-08-27",
           "time": "16:00",
           "all_day": false,
@@ -1195,7 +1588,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-27-16",
+          "id": "ev-2026-08-27-15",
           "date": "2026-08-27",
           "time": "20:30",
           "all_day": false,
@@ -1221,7 +1614,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-28-12",
+          "id": "ev-2026-08-28-8",
           "date": "2026-08-28",
           "time": "17:00",
           "all_day": false,
@@ -1247,33 +1640,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-31-3",
-          "date": "2026-08-31",
-          "time": "09:30",
-          "all_day": false,
-          "title": "中國-官方非製造業採購經理人指數[NMI]",
-          "summary": "中國-官方非製造業採購經理人指數[NMI]",
-          "description": "前值:  49.0",
-          "note": "前值:  49.0",
-          "mm_link": "https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar",
-          "source_url": "https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar",
-          "category": "other",
-          "category_name": "其他",
-          "country": "CN",
-          "flag": "🇨🇳",
-          "timezone_origin": "Asia/Shanghai",
-          "timezone_label": "CST",
-          "time_origin_str": "09:30 TPE",
-          "time_tpe_str": "09:30 TPE",
-          "datetime_utc": "2026-08-31T01:30:00Z",
-          "importance": 1,
-          "forecast": null,
-          "previous": "49.0",
-          "actual": null,
-          "comparison": "pending"
-        },
-        {
-          "id": "ev-2026-08-31-9",
+          "id": "ev-2026-08-31-5",
           "date": "2026-08-31",
           "time": "09:30",
           "all_day": false,
@@ -1299,7 +1666,33 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-01-7",
+          "id": "ev-2026-08-31-10",
+          "date": "2026-08-31",
+          "time": "09:30",
+          "all_day": false,
+          "title": "中國-官方非製造業採購經理人指數[NMI]",
+          "summary": "中國-官方非製造業採購經理人指數[NMI]",
+          "description": "前值:  49.0",
+          "note": "前值:  49.0",
+          "mm_link": "https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar",
+          "source_url": "https://sc.macromicro.me/collections/25/cn-industry-relative/233/cn-nmi-caixin?utm_medium=calendar",
+          "category": "other",
+          "category_name": "其他",
+          "country": "CN",
+          "flag": "🇨🇳",
+          "timezone_origin": "Asia/Shanghai",
+          "timezone_label": "CST",
+          "time_origin_str": "09:30 TPE",
+          "time_tpe_str": "09:30 TPE",
+          "datetime_utc": "2026-08-31T01:30:00Z",
+          "importance": 1,
+          "forecast": null,
+          "previous": "49.0",
+          "actual": null,
+          "comparison": "pending"
+        },
+        {
+          "id": "ev-2026-09-01-14",
           "date": "2026-09-01",
           "time": "16:00",
           "all_day": false,
@@ -1325,7 +1718,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-01-14",
+          "id": "ev-2026-09-01-6",
           "date": "2026-09-01",
           "time": "22:00",
           "all_day": false,
@@ -1351,7 +1744,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-02-18",
+          "id": "ev-2026-09-02-9",
           "date": "2026-09-02",
           "time": "20:15",
           "all_day": false,
@@ -1377,7 +1770,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-02-19",
+          "id": "ev-2026-09-02-3",
           "date": "2026-09-02",
           "time": "21:45",
           "all_day": false,
@@ -1403,7 +1796,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-02-11",
+          "id": "ev-2026-09-02-19",
           "date": "2026-09-02",
           "time": "22:30",
           "all_day": false,
@@ -1481,7 +1874,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-03-13",
+          "id": "ev-2026-09-03-17",
           "date": "2026-09-03",
           "time": "22:00",
           "all_day": false,
@@ -1507,33 +1900,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-04-8",
-          "date": "2026-09-04",
-          "time": "20:30",
-          "all_day": false,
-          "title": "美國-失業率",
-          "summary": "美國-失業率",
-          "description": "前值:  4.10%",
-          "note": "前值:  4.10%",
-          "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
-          "source_url": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
-          "category": "macro",
-          "category_name": "總經",
-          "country": "US",
-          "flag": "🇺🇸",
-          "timezone_origin": "America/New_York",
-          "timezone_label": "ET",
-          "time_origin_str": "08:30 ET",
-          "time_tpe_str": "20:30 TPE",
-          "datetime_utc": "2026-09-04T12:30:00Z",
-          "importance": 3,
-          "forecast": null,
-          "previous": "4.10%",
-          "actual": null,
-          "comparison": "pending"
-        },
-        {
-          "id": "ev-2026-09-04-20",
+          "id": "ev-2026-09-04-13",
           "date": "2026-09-04",
           "time": "20:30",
           "all_day": false,
@@ -1559,7 +1926,33 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-07-17",
+          "id": "ev-2026-09-04-20",
+          "date": "2026-09-04",
+          "time": "20:30",
+          "all_day": false,
+          "title": "美國-失業率",
+          "summary": "美國-失業率",
+          "description": "前值:  4.10%",
+          "note": "前值:  4.10%",
+          "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+          "source_url": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+          "category": "macro",
+          "category_name": "總經",
+          "country": "US",
+          "flag": "🇺🇸",
+          "timezone_origin": "America/New_York",
+          "timezone_label": "ET",
+          "time_origin_str": "08:30 ET",
+          "time_tpe_str": "20:30 TPE",
+          "datetime_utc": "2026-09-04T12:30:00Z",
+          "importance": 3,
+          "forecast": null,
+          "previous": "4.10%",
+          "actual": null,
+          "comparison": "pending"
+        },
+        {
+          "id": "ev-2026-09-07-11",
           "date": "2026-09-07",
           "time": "17:00",
           "all_day": false,
@@ -2206,16 +2599,16 @@
       "latest": {
         "provider": "wantgoo",
         "provider_name": "Wantgoo / TAIFEX",
-        "collected_at": "2026-08-25T22:10:52.070570+08:00",
+        "collected_at": "2026-08-25T23:13:15.093382+08:00",
         "symbol": "臺指期096",
-        "price": 45302.0,
-        "change": 270.0,
-        "change_pct": 0.6,
+        "price": 45266.0,
+        "change": 234.0,
+        "change_pct": 0.52,
         "open": 45093.0,
         "prev_close": 45032.0,
         "high": 45417.0,
         "low": 45020.0,
-        "volume": 18128
+        "volume": 22124
       }
     },
     "learning_status": {
@@ -2233,7 +2626,7 @@
     },
     "source_status": {
       "schema_version": "source-status.v2",
-      "updated_at": "2026-08-25T22:11:18.094350+08:00",
+      "updated_at": "2026-08-25T23:13:41.238447+08:00",
       "reliability_tiers": {
         "core_stable": {
           "label": "核心穩定",
@@ -2269,7 +2662,7 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T22:10:49.671354+08:00",
+          "fetched_at": "2026-08-25T23:13:12.671492+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2289,7 +2682,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T22:10:52.752560+08:00",
+          "fetched_at": "2026-08-25T23:13:15.979948+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2309,7 +2702,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T22:10:51.945579+08:00",
+          "fetched_at": "2026-08-25T23:13:14.969927+08:00",
           "data_date": "2026-08-25",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2329,7 +2722,7 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T22:10:49.670064+08:00",
+          "fetched_at": "2026-08-25T23:13:12.670067+08:00",
           "data_date": "08/26",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2349,7 +2742,7 @@
           "notification_level": "notice",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T22:10:52.030120+08:00",
+          "fetched_at": "2026-08-25T23:13:15.159633+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2371,7 +2764,7 @@
             "pressplay"
           ],
           "status": "ok",
-          "fetched_at": "2026-08-25T22:11:17.236521+08:00",
+          "fetched_at": "2026-08-25T23:13:39.992539+08:00",
           "data_date": "2026/08/25",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2391,7 +2784,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T22:10:49.669800+08:00",
+          "fetched_at": "2026-08-25T23:13:12.669777+08:00",
           "data_date": "2026-08-25",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2411,7 +2804,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T22:10:49.670347+08:00",
+          "fetched_at": "2026-08-25T23:13:12.670371+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2431,7 +2824,7 @@
           "notification_level": "notice",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-25T22:10:50.432297+08:00",
+          "fetched_at": "2026-08-25T23:13:13.370063+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2454,8 +2847,8 @@
             "chengwaye_daily"
           ],
           "status": "ok",
-          "fetched_at": "2026-08-25T22:11:17.681298+08:00",
-          "data_date": "2026-08-25T22:11:18.067209+08:00",
+          "fetched_at": "2026-08-25T23:13:40.405650+08:00",
+          "data_date": "2026-08-25T23:13:41.211120+08:00",
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
@@ -2467,13 +2860,13 @@
     },
     "ai_summary": {
       "schema_version": 1,
-      "generated_at": "2026-08-25T22:11:34.923667+08:00",
+      "generated_at": "2026-08-25T23:13:51.919371+08:00",
       "status": "ok",
       "provider": "Gemini API",
       "model": "gemini-2.5-flash",
       "fallback_reason": null,
       "news_stats": {
-        "count": 9,
+        "count": 10,
         "unique_topics": 4,
         "unique_sources": 4,
         "nvidia_count": 1
@@ -2485,7 +2878,7 @@
           {
             "name": "新聞數量",
             "status": "ok",
-            "detail": "9 則"
+            "detail": "10 則"
           },
           {
             "name": "主題分布",
@@ -2509,76 +2902,75 @@
           }
         ],
         "issues": [],
-        "news_count": 9,
+        "news_count": 10,
         "unique_topics": 4,
         "unique_sources": 4,
         "nvidia_count": 1,
         "topic_counts": {
-          "global_market": 2,
+          "global_market": 3,
           "currency_commodities": 2,
           "taiwan_market": 3,
           "company_earnings": 2
         },
         "source_counts": {
           "news.cnyes.com": 5,
-          "Yahoo股市": 2,
+          "Yahoo股市": 3,
           "經濟日報": 1,
           "工商時報": 1
         }
       },
       "news_summary": {
-        "headline": "晶片股反彈推升美股開高，輝達財報成AI行情關鍵，台股V轉收紅。",
+        "headline": "美股晶片股反彈推升主要指數開高，輝達財報與美債殖利率成市場焦點。",
         "topic_summary": [
           {
             "topic": "美股／全球市場",
-            "count": 2,
-            "summary": "美股早盤晶片股反彈推升主要指數開高，但有警告指出美股恐回檔逾10%，若民主黨奪參院，AI與金融股可能成為避險焦點。"
+            "count": 3,
+            "summary": "美股晶片股反彈推升主要指數開高，輝達財報成AI行情關鍵考驗，美銀警告美股恐回檔逾10%。"
           },
           {
             "topic": "美元／債券／商品",
             "count": 2,
-            "summary": "30年期美債殖利率衝近20年高點，引發長天期利率上升是否衝擊AI投資熱潮的討論；貴金屬方面，金價突破4600美元，市場聚焦CPI和傑克森洞年會。"
+            "summary": "30年期美債殖利率衝近20年高點，長天期利率上升是否開始衝擊AI投資熱潮，金價突破4600美元。"
           },
           {
             "topic": "台股市場",
             "count": 3,
-            "summary": "台股尾盤急拉近千點V轉收紅，上漲407點，台積電收2400元，航運、金融與矽光子等類股表現亮眼。"
+            "summary": "台股尾盤急拉近千點翻紅，上漲407點作收，台指期夜盤漲238點，航運、金融、矽光子護盤奪回季線。"
           },
           {
             "topic": "公司／財報",
             "count": 2,
-            "summary": "輝達財報被視為AI行情的關鍵考驗；漢測前七月營收超越去年全年，展現強勁成長動能；上市櫃公司上半年營收與稅前盈餘雙創十年新高，凌巨補交財報後將恢復交易。"
+            "summary": "漢測前七月營收超越去年全年，上市櫃上半年營收、稅前盈餘雙創十年新高。"
           }
         ],
         "key_points": [
-          "美股晶片股反彈，推升主要指數開高，輝達財報受市場關注。",
-          "30年期美債殖利率逼近20年高點，長天期利率走勢引發對AI投資熱潮的潛在衝擊討論。",
-          "台股尾盤V轉急拉近千點，終場上漲407點，台積電收2400元。",
-          "美銀警告美股可能回檔逾10%，並指出特定政治情勢下AI與金融股可能成為避險標的。"
+          "美股晶片股反彈，推升主要指數開高。",
+          "輝達財報將是AI行情關鍵考驗。",
+          "30年期美債殖利率衝近20年高點，引發對AI投資熱潮的潛在衝擊。",
+          "台股昨日尾盤急拉近千點翻紅，上漲407點作收。"
         ]
       },
       "market_summary": {
-        "headline": "美股主要指數普遍上揚，費半與科技ADR表現強勁，台指期夜盤同步走高。",
+        "headline": "美股指數普遍上揚，半導體類股表現強勁，台指期夜盤同步走高。",
         "observations": [
-          "美股主要指數普遍收漲，其中科技股表現尤為突出，NASDAQ與費城半導體指數漲幅領先。",
-          "台灣相關ADR如台積電、聯電、日月光及輝達、美光等半導體類股漲勢顯著，顯示市場對科技產業的樂觀情緒。",
-          "台指期夜盤呈現上漲，與美股科技股的積極表現保持一致。",
-          "亞洲主要股市（日經、韓國綜合指數）呈現下跌，與美股及台指期夜盤走勢形成分歧。"
+          "美股主要指數全面上漲，其中費城半導體指數漲幅顯著，顯示半導體類股表現強勁。",
+          "台灣相關ADR多數走揚，特別是台積電、聯電、日月光及美光等半導體相關標的漲幅亮眼。",
+          "亞洲股市表現分歧，日經225指數與韓國綜合指數均呈現下跌。",
+          "台指期夜盤跟隨美股走勢，呈現上漲。"
         ],
         "drivers": [
-          "晶片股反彈是推升美股主要指數開高的可能因素。",
-          "輝達財報即將公布，市場預期其表現可能成為AI投資熱潮的關鍵考驗。",
-          "台股在盤中出現V轉急拉，可能反映市場有強勁的買盤支撐。",
-          "上市櫃公司上半年營收與稅前盈餘創十年新高，可能提振市場信心。"
+          "晶片股反彈可能推升美股主要指數開高。",
+          "市場關注輝達財報，視為AI行情關鍵考驗。",
+          "台股昨日尾盤急拉近千點翻紅，可能激勵市場情緒。",
+          "航運、金融與矽光子等族群在台股中扮演護盤角色。"
         ],
         "risks": [
-          "30年期美債殖利率衝上近20年高點，長天期利率上升可能對AI投資熱潮造成衝擊。",
-          "美銀警告美股恐有逾10%的回檔風險。",
-          "全球市場可能因宏觀經濟數據（如CPI）及央行政策（傑克森洞年會）而波動。",
-          "政治因素（如民主黨若奪參院）可能影響特定產業的市場表現。"
+          "30年期美債殖利率衝近20年高點，可能衝擊AI投資熱潮。",
+          "美銀警告美股恐回檔逾10%。",
+          "長天期利率上升對科技股估值的潛在影響。"
         ]
       },
-      "quality_note": "此份報告是根據最新市場資訊自動生成，所有數據和新聞均來自提供的資料，不含任何推測或額外資訊。"
+      "quality_note": "資料整理自使用者提供的 INPUT JSON，未增補任何額外資訊。"
     },
     "financials": {
       "cutoff_str": "08/25 13:30",
@@ -14465,19 +14857,19 @@
     }
   },
   "meta": {
-    "build_time": "2026-08-25 22:11",
-    "build_version": "20260825_2211",
+    "build_time": "2026-08-25 23:13",
+    "build_version": "20260825_2313",
     "data_date": "08/26",
     "stale_hours": 0.0,
-    "hours_since_us_close": 18.2,
+    "hours_since_us_close": 19.2,
     "us_market_context": {
       "session_key": "regular",
       "label": "美股盤中快照",
       "badge": "盤中",
       "badge_short": "盤中",
       "pill_class": "pill-live",
-      "updated_label": "08/25 22:10",
-      "detail": "Yahoo Finance · 來源更新 08/25 22:10（1 分鐘前）· 延遲分鐘數未提供 · 美國正常交易時段",
+      "updated_label": "08/25 23:13",
+      "detail": "Yahoo Finance · 來源更新 08/25 23:13（1 分鐘前）· 延遲分鐘數未提供 · 美國正常交易時段",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "ready",
@@ -14492,7 +14884,7 @@
         "name": "指數行情 (美股/亞股/ADR)",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-08-25T22:10:49.671354+08:00",
+        "fetched_at": "2026-08-25T23:13:12.671492+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -14517,7 +14909,7 @@
         "name": "處置股與出關預警",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-08-25T22:10:49.670064+08:00",
+        "fetched_at": "2026-08-25T23:13:12.670067+08:00",
         "data_date": "08/26",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -14542,7 +14934,7 @@
         "name": "大盤昨收與三大法人",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T22:10:52.752560+08:00",
+        "fetched_at": "2026-08-25T23:13:15.979948+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -14567,7 +14959,7 @@
         "name": "台指期夜盤走勢",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T22:10:51.945579+08:00",
+        "fetched_at": "2026-08-25T23:13:14.969927+08:00",
         "data_date": "2026-08-25",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -14592,7 +14984,7 @@
         "name": "PressPlay 盤前族群與標的",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T22:10:52.030120+08:00",
+        "fetched_at": "2026-08-25T23:13:15.159633+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -14617,7 +15009,7 @@
         "name": "主力券商與當沖籌碼明細",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T22:11:17.236521+08:00",
+        "fetched_at": "2026-08-25T23:13:39.992539+08:00",
         "data_date": "2026/08/25",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -14644,8 +15036,8 @@
         "name": "Chengwaye 個股漲停履歷",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T22:11:17.681298+08:00",
-        "data_date": "2026-08-25T22:11:18.067209+08:00",
+        "fetched_at": "2026-08-25T23:13:40.405650+08:00",
+        "data_date": "2026-08-25T23:13:41.211120+08:00",
         "age_minutes": 0.0,
         "error_summary": null,
         "fallback_used": false,
@@ -14672,7 +15064,7 @@
         "name": "總經財經行事曆",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T22:10:49.669800+08:00",
+        "fetched_at": "2026-08-25T23:13:12.669777+08:00",
         "data_date": "2026-08-25",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -14697,7 +15089,7 @@
         "name": "市場未反映重大公告 (財報/營收/處分)",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T22:10:49.670347+08:00",
+        "fetched_at": "2026-08-25T23:13:12.670371+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -14722,7 +15114,7 @@
         "name": "盤前即時新聞聚合",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-25T22:10:50.432297+08:00",
+        "fetched_at": "2026-08-25T23:13:13.370063+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -14744,17 +15136,17 @@
       }
     ],
     "schema_version": 1,
-    "data_revision": "633af9b0e16cf6e0",
-    "built_at": "2026-08-25T14:11:35.298383+00:00",
+    "data_revision": "27bc40ad89cd6665",
+    "built_at": "2026-08-25T15:13:52.292819+00:00",
     "hash": {
       "disposition": "08cbadd4573a",
-      "candidates": "1ca814a6d4c1",
-      "stock_history": "ae7d9702918c",
+      "candidates": "5e40c908c2da",
+      "stock_history": "cc5165c6f686",
       "announcements": "b05d18d60f30",
-      "macro": "9b4d14c83927",
-      "calendar": "b5d91c21532d",
-      "news": "e8163ac7195d",
-      "ai_summary": "acdd142b75b4",
+      "macro": "ecb211dc5685",
+      "calendar": "c84597340a59",
+      "news": "e349ebdb25ee",
+      "ai_summary": "b1127e69f66d",
       "opening_forecast": "2b39a809cc49",
       "opening_result": "304d49ae289d",
       "learning_status": "58703cc60851"

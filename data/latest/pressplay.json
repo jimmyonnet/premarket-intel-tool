@@ -1,68 +1,96 @@
 {
   "source_article": {
-    "title": "0825盤前",
-    "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/4E31534915A6183C3E187B7B528B3AD0",
+    "title": "0826盤前",
+    "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/694E4F4E7828B8D31EB2556EC04B3915",
     "fetch_mode": "live_browser",
-    "collected_at": "2026-08-25T22:10:52.349413+08:00"
+    "collected_at": "2026-08-25T23:13:15.539961+08:00"
   },
   "chengwaye_date": null,
   "not_found_group": {
     "raw_tokens": [
-      "2301",
-      "6226"
+      "8039",
+      "2489",
+      "6213",
+      "7750",
+      "希華"
     ],
     "matched": [
       {
         "market": "市",
-        "code": "2301",
-        "name": "光寶科",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_code",
-        "raw_token": "2301"
+        "code": "8039",
+        "name": "台虹",
+        "close": "291.5",
+        "volume": "60,294",
+        "foreign": "+4,539",
+        "trust": "0",
+        "dealer": "+82",
+        "ai_reason": "軟板材料與高階電子材料需求延續，電子材料族群走強。",
+        "group": "🔬 電子材料",
+        "match_type": "code",
+        "raw_token": "8039"
       },
       {
         "market": "市",
-        "code": "6226",
-        "name": "光鼎",
-        "close": "25.6",
-        "volume": "74,889",
-        "foreign": "-178",
+        "code": "2489",
+        "name": "瑞軒",
+        "close": "40.55",
+        "volume": "70,188",
+        "foreign": "+3,801",
         "trust": "0",
-        "dealer": "+1",
-        "ai_reason": "LED與光電元件題材延續，面板光電族群輪動走強。",
+        "dealer": "+42",
+        "ai_reason": "平面電視與顯示器代工題材輪動，面板光電族群買盤集中。",
         "group": "📺 面板光電",
         "match_type": "code",
-        "raw_token": "6226"
+        "raw_token": "2489"
+      },
+      {
+        "market": "市",
+        "code": "6213",
+        "name": "聯茂",
+        "close": "530",
+        "volume": "26,110",
+        "foreign": "+906",
+        "trust": "0",
+        "dealer": "-310",
+        "ai_reason": "高階銅箔基板與高速傳輸應用題材輪動，PCB族群買盤集中。",
+        "group": "📟 PCB",
+        "match_type": "code",
+        "raw_token": "6213"
+      },
+      {
+        "market": "市",
+        "code": "7750",
+        "name": "新代",
+        "close": "2350",
+        "volume": "376",
+        "foreign": "-63",
+        "trust": "0",
+        "dealer": "+24",
+        "ai_reason": "精密運動控制與智慧製造題材發酵，機器人族群買盤集中。",
+        "group": "🦾 機器人",
+        "match_type": "code",
+        "raw_token": "7750"
+      },
+      {
+        "market": "市",
+        "code": "2484",
+        "name": "希華",
+        "close": "79.3",
+        "volume": "18,160",
+        "foreign": "+3,854",
+        "trust": "0",
+        "dealer": "+54",
+        "ai_reason": "電子零組件族群輪動，被動元件題材獲買盤關注。",
+        "group": "🔌 被動元件",
+        "match_type": "name",
+        "raw_token": "希華"
       }
     ],
     "unmatched": []
   },
   "found_group": {
-    "raw_tokens": [
-      "晶豪科"
-    ],
-    "matched": [
-      {
-        "market": "市",
-        "code": "3006",
-        "name": "晶豪科",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄族群標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_name",
-        "raw_token": "晶豪科"
-      }
-    ],
+    "raw_tokens": [],
+    "matched": [],
     "unmatched": []
   }
 }
