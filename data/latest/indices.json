@@ -171,14 +171,14 @@
     "dow": {
       "name": "道瓊工業指數",
       "ticker": "^DJI",
-      "value": 53417.16,
+      "value": 53417.2,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-25T04:37:38+08:00",
-      "updated_taipei": "2026-08-25 04:37",
-      "change": 140.16,
+      "updated_at": "2026-08-25T04:00:00+08:00",
+      "updated_taipei": "2026-08-25 04:00",
+      "change": 140.2,
       "change_pct": 0.26
     },
     "sp500": {
@@ -189,8 +189,8 @@
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-08-25T04:36:32+08:00",
-      "updated_taipei": "2026-08-25 04:36",
+      "updated_at": "2026-08-25T04:00:00+08:00",
+      "updated_taipei": "2026-08-25 04:00",
       "change": -21.51,
       "change_pct": -0.28
     },
