@@ -54,7 +54,8 @@ def test_night_session_template_provider_rendering():
         news=[],
         twse={},
     )
-    assert "來源：Wantgoo / TAIFEX" in html_live
+    assert "台指期夜盤 (05:00)" in html_live
+    assert "來源：Wantgoo / TAIFEX" not in html_live
     assert "⚠️ 抓取失敗" not in html_live
 
     # Case 2: All 4 failed, fallback fixture

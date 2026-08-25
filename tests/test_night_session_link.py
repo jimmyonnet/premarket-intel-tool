@@ -19,7 +19,8 @@ def test_night_session_card_links_to_cmoney_in_new_tab():
     assert f'href="{TARGET}"' in block
     assert 'target="_blank"' in block
     assert 'rel="noopener noreferrer"' in block
-    assert "台指期夜盤 (05:00) · 來源：Wantgoo / TAIFEX" in block
+    assert "台指期夜盤 (05:00)" in block
+    assert "來源：Wantgoo / TAIFEX" not in block
     assert 'class="summary-card"' in block
     assert 'class="card-val font-mono' in block
     assert "基準：vs 期貨日盤收盤" in block

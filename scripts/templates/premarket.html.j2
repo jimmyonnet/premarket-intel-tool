@@ -3127,7 +3127,7 @@
         <!-- 台指期夜盤 -->
         {% if night and night.latest %}
         <a class="summary-card" href="https://www.cmoney.tw/forum/futures/TXF1?s=p" target="_blank" rel="noopener noreferrer" aria-label="開啟 CMoney 台指期主連續期貨頁面" style="color:inherit; text-decoration:none; cursor:pointer;">
-          <div class="card-label">台指期夜盤 (05:00){% if night and night.latest and (night.latest.provider_name or night.provider_name) %} · 來源：{{ night.latest.provider_name or night.provider_name }}{% endif %}</div>
+          <div class="card-label">台指期夜盤 (05:00)</div>
           {% if night.latest.is_fallback %}
           <div class="card-sub amber font-bold" style="font-size:10px; margin-bottom:2px;">⚠️ 抓取失敗，使用最近一次 fixtures/{{ night.date }}</div>
           {% endif %}
