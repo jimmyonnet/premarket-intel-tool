@@ -232,8 +232,59 @@ def fallback_news_summary(news: list[dict[str, Any]], quality: dict[str, Any]) -
     return {"headline": headline, "topic_summary": topic_summary, "key_points": key_points}
 
 
-def fallback_market_summary(quotes: list[dict[str, Any]], news: list[dict[str, Any]]) -> dict[str, Any]:
-    valid = [row for row in quotes if finite_number(row.get("change_pct")) is not None]
+def asia_session_context(now: datetime | None = None) -> dict[str, str]:
+    """Return a conservative Taipei-time session label for the two Asia quotes."""
+    current = (now or datetime.now(TAIPEI)).astimezone(TAIPEI)
+    minutes = current.hour * 60 + current.minute
+    if current.weekday() >= 5:
+        return {
+            "key": "closed",
+            "label": "亞股已休市",
+            "note": "亞股資料僅作最近交易時段收盤參考，非當下盤中行情。",
+        }
+    japan_open = (8 * 60 <= minutes < 10 * 60 + 30) or (11 * 60 + 30 <= minutes < 14 * 60 + 30)
+    korea_open = 8 * 60 <= minutes < 14 * 60 + 30
+    if japan_open or korea_open:
+        return {
+            "key": "regular",
+            "label": "亞股部分市場盤中",
+            "note": "亞股卡片仍依各市場交易時段與來源時間標示；不得視為零延遲。",
+        }
+    if minutes < 8 * 60:
+        return {
+            "key": "preopen",
+            "label": "亞股尚未開盤",
+            "note": "亞股尚未進入主要交易時段；若有舊行情，僅作最近交易時段參考。",
+        }
+    return {
+        "key": "closed",
+        "label": "亞股已收盤",
+        "note": "亞股資料僅作前一交易時段收盤結果，非當下盤中行情。",
+    }
+
+
+def annotate_asia_session(text: str, session: dict[str, str]) -> str:
+    """Prevent a closed Asia quote from reading like a live market statement."""
+    if session.get("key") != "closed" or "亞股" not in text:
+        return text
+    if any(marker in text for marker in ("已收盤", "已休市", "前一交易時段", "收盤結果", "非當下盤中")):
+        return text
+    return f"{text}（亞股已收盤，以上為前一交易時段收盤結果，非當下盤中）"
+
+
+def fallback_market_summary(
+    quotes: list[dict[str, Any]],
+    news: list[dict[str, Any]],
+    session: dict[str, str] | None = None,
+) -> dict[str, Any]:
+    session = session or asia_session_context()
+    # Once the Asian session is over, do not let its closed quote determine an
+    # "overnight" breadth headline. Its close remains visible in the Asia card.
+    effective_quotes = [
+        row for row in quotes
+        if not (session.get("key") == "closed" and row.get("group") == "亞股")
+    ]
+    valid = [row for row in effective_quotes if finite_number(row.get("change_pct")) is not None]
     down = [row for row in valid if finite_number(row.get("change_pct")) < 0]
     up = [row for row in valid if finite_number(row.get("change_pct")) > 0]
     if down and len(down) > len(up):
@@ -274,11 +325,13 @@ def fallback_market_summary(quotes: list[dict[str, Any]], news: list[dict[str, A
         f"新聞題材主要集中在：{'、'.join(topic_names)}；這是資訊分布，不代表已確認的因果關係。"
         if topic_names else "目前沒有可用新聞題材可供交叉比對。"
     ]
+    if session.get("key") == "closed":
+        observations.append(session["note"])
     return {
         "headline": headline,
-        "observations": observations[:4],
-        "drivers": drivers[:4],
-        "risks": ["行情時間與資料延遲請以各卡片標示為準。", "以上為快照關係整理，不代表價格方向預測。"],
+        "observations": [annotate_asia_session(item, session) for item in observations[:4]],
+        "drivers": [annotate_asia_session(item, session) for item in drivers[:4]],
+        "risks": [session["note"] if session.get("key") == "closed" else "行情時間與資料延遲請以各卡片標示為準。", "以上為快照關係整理，不代表價格方向預測。"],
     }
 
 
@@ -357,7 +410,9 @@ def normalize_ai_response(
     fallback_news: dict[str, Any],
     fallback_market: dict[str, Any],
     quality: dict[str, Any],
+    session: dict[str, str] | None = None,
 ) -> dict[str, Any]:
+    session = session or asia_session_context()
     news = raw.get("news_summary") if isinstance(raw.get("news_summary"), dict) else {}
     market = raw.get("market_summary") if isinstance(raw.get("market_summary"), dict) else {}
     topic_summary = news.get("topic_summary") if isinstance(news.get("topic_summary"), list) else []
@@ -383,10 +438,10 @@ def normalize_ai_response(
             "key_points": [clean_text(item) for item in (news.get("key_points") or []) if clean_text(item)][:5] or fallback_news["key_points"],
         },
         "market_summary": {
-            "headline": clean_text(market.get("headline"), fallback_market["headline"]),
-            "observations": [clean_text(item) for item in (market.get("observations") or []) if clean_text(item)][:4] or fallback_market["observations"],
-            "drivers": [clean_text(item) for item in (market.get("drivers") or []) if clean_text(item)][:4] or fallback_market["drivers"],
-            "risks": [clean_text(item) for item in (market.get("risks") or []) if clean_text(item)][:4] or fallback_market["risks"],
+            "headline": annotate_asia_session(clean_text(market.get("headline"), fallback_market["headline"]), session),
+            "observations": [annotate_asia_session(clean_text(item), session) for item in (market.get("observations") or []) if clean_text(item)][:4] or fallback_market["observations"],
+            "drivers": [annotate_asia_session(clean_text(item), session) for item in (market.get("drivers") or []) if clean_text(item)][:4] or fallback_market["drivers"],
+            "risks": [annotate_asia_session(clean_text(item), session) for item in (market.get("risks") or []) if clean_text(item)][:4] or fallback_market["risks"],
         },
         "quality_note": clean_text(raw.get("quality_note"), "資料品質請以右側檢查結果與各來源時間為準。"),
     }
@@ -394,12 +449,14 @@ def normalize_ai_response(
 
 
 def generate_summary(indices: Any, night: Any, news: Any, source_status: Any, api_key: str | None = None, model: str | None = None) -> dict[str, Any]:
+    session = asia_session_context()
     payload = build_input(indices, night, news, source_status)
+    payload["session_context"] = {"generated_at_taipei": now_iso(), "asia": session}
     news_items = payload["news"]
     quotes = payload["market_quotes"]
     quality = deterministic_quality(news_items, quotes, source_status)
     fallback_news = fallback_news_summary(news_items, quality)
-    fallback_market = fallback_market_summary(quotes, news_items)
+    fallback_market = fallback_market_summary(quotes, news_items, session)
     key = (api_key or os.getenv("GEMINI_API_KEY", "")).strip()
     selected_model = (model or os.getenv("GEMINI_MODEL", DEFAULT_MODEL)).strip() or DEFAULT_MODEL
     status = "fallback"
@@ -411,7 +468,7 @@ def generate_summary(indices: Any, night: Any, news: Any, source_status: Any, ap
     }
     if key:
         try:
-            narrative = normalize_ai_response(call_gemini(key, selected_model, payload), fallback_news, fallback_market, quality)
+            narrative = normalize_ai_response(call_gemini(key, selected_model, payload), fallback_news, fallback_market, quality, session)
             status = "ok"
             fallback_reason = None
         except (OSError, urllib.error.URLError, urllib.error.HTTPError, TimeoutError, ValueError, json.JSONDecodeError) as exc:

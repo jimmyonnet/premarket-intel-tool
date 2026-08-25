@@ -3008,6 +3008,15 @@
     background: var(--bg-sub);
   }
   .ai-market-inline-panel { margin-bottom: 2px; }
+  .ai-briefing-context-note {
+    margin: 0 0 8px;
+    padding: 6px 8px;
+    border-left: 3px solid var(--blue);
+    background: var(--blue-bg);
+    color: var(--blue-fg);
+    font-size: 11.5px;
+    line-height: 1.5;
+  }
   .ai-news-inline-panel { margin: 12px 0 0; }
   .ai-quality-inline {
     margin-top: 10px;
@@ -3901,9 +3910,12 @@
 
     <!-- 5. 市場背景 (Market Context) -->
     <section id="market-context" class="content-section">
+      {% set asia_n225_session = asia_market_context.get('^N225', {}).get('session_key') if asia_market_context is defined else '' %}
+      {% set asia_kospi_session = asia_market_context.get('^KS11', {}).get('session_key') if asia_market_context is defined else '' %}
+      {% set asia_is_live = asia_n225_session == 'regular' or asia_kospi_session == 'regular' %}
       <div class="section-header">
         <h2 class="section-title"><span class="title-icon">🌐</span> 市場背景</h2>
-        <span class="section-desc">美股／ADR 行情與亞股早盤概況</span>
+        <span class="section-desc">{% if asia_is_live %}美股／ADR 行情與亞股盤中概況{% else %}美股／ADR 行情與亞股最近交易時段收盤概況{% endif %}</span>
       </div>
 
       <!-- 美股四大指數 & 跨海連動 -->
@@ -3955,6 +3967,9 @@
             {% endfor %}
           </div>
           <div class="ai-inline-panel ai-market-inline-panel">
+            {% if not asia_is_live %}
+            <p class="ai-briefing-context-note">亞股目前非盤中；本區若提及亞股，均指最近交易時段收盤結果，不代表現在仍在交易。</p>
+            {% endif %}
             <div class="ai-briefing-kicker">🌙 隔夜市場總結</div>
             <h4 class="ai-briefing-headline">{{ ai_market.headline or '目前尚未產生隔夜市場總結。' }}</h4>
             {% set market_observations = ai_market.observations if ai_market.observations is defined else (ai_market.bullets if ai_market.bullets is defined else []) %}
@@ -3990,9 +4005,9 @@
       <div class="card">
         <div class="card-head">
           <div class="card-title-group">
-            <h3 class="card-title">亞股開盤即時概況</h3>
+            <h3 class="card-title">{% if asia_is_live %}亞股開盤即時概況{% else %}亞股最近收盤概況{% endif %}</h3>
           </div>
-          <span class="card-tip">日韓早盤 · Yahoo 股市延遲 20 分鐘</span>
+          <span class="card-tip">{% if asia_is_live %}日韓盤中 · Yahoo 股市延遲 20 分鐘{% else %}日韓已收盤 · 最近交易時段結果 · Yahoo 股市延遲 20 分鐘{% endif %}</span>
         </div>
 
         <div class="data-block">
