@@ -279,6 +279,7 @@ def build_forecast(
     predicted_open = round(previous_close + predicted_change, 2) if previous_close is not None and predicted_change is not None else None
 
     signal_directions = {feature.supports for feature in features if feature.supports in {"up", "down"}}
+    conflict_directions = sorted(signal_directions)
     conflicts = ["market-signal:up_vs_down"] if len(signal_directions) > 1 else []
     cache_used = any(feature.cache_used for feature in features)
     if missing or conflicts or cache_used:
@@ -340,6 +341,7 @@ def build_forecast(
         "data_quality": {
             "missing_factors": missing,
             "conflicts": conflicts,
+            "conflict_directions": conflict_directions,
             "cache_used": cache_used,
         },
         "formula": {

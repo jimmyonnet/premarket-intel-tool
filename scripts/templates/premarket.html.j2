@@ -3220,7 +3220,7 @@
             <strong>判斷原因：</strong>{% for reason in forecast.get('confidence_reasons') or [] %}{{ reason }}{% if not loop.last %}；{% endif %}{% endfor %}
           </div>
           {% if quality.get('missing_factors') or quality.get('conflicts') or quality.get('cache_used') %}
-          <div class="opening-forecast-note"><strong>資料品質：</strong>{% if quality.get('missing_factors') %}缺少 {{ quality.get('missing_factors')|join('、') }}。{% endif %}{% if quality.get('conflicts') %}{{ quality.get('conflicts')|join('；') }}。{% endif %}{% if quality.get('cache_used') %}部分資料沿用快取。{% endif %}</div>
+          <div class="opening-forecast-note"><strong>資料品質：</strong>{% if quality.get('missing_factors') %}缺少 {{ quality.get('missing_factors')|join('、') }}。{% endif %}{% if quality.get('conflicts') %}{{ quality.get('conflicts')|join('；') }}。{% endif %}{% if quality.get('conflict_directions') %}主判斷為 {{ direction_label }}；替代方向訊號為 {% for conflict_direction in quality.get('conflict_directions') %}{{ {'up': '偏開高', 'down': '偏開低'}[conflict_direction] }}{% if not loop.last %}、{% endif %}{% endfor %}。{% endif %}{% if quality.get('cache_used') %}部分資料沿用快取。{% endif %}</div>
           {% endif %}
           {% if result_status == 'verified' %}
           <div class="opening-forecast-result" aria-label="今日預測與實際開盤結果">

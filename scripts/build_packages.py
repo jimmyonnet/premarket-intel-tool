@@ -233,7 +233,7 @@ def _opening_forecast_package(forecast: Any) -> dict[str, Any]:
         "confidence": "unknown",
         "confidence_reasons": ["今日尚未產生預測"],
         "evidence": [],
-        "data_quality": {"missing_factors": [], "conflicts": [], "cache_used": False},
+        "data_quality": {"missing_factors": [], "conflicts": [], "conflict_directions": [], "cache_used": False},
         "formula": {"threshold_points": 100.0, "available_weight": 0.0, "features": []},
     }
 

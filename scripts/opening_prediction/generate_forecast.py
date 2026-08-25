@@ -45,7 +45,7 @@ def _not_generated(market_date: str, model_version: str, reason: str) -> dict[st
         "confidence": "unknown",
         "confidence_reasons": [reason],
         "evidence": [],
-        "data_quality": {"missing_factors": [], "conflicts": [], "cache_used": False},
+        "data_quality": {"missing_factors": [], "conflicts": [], "conflict_directions": [], "cache_used": False},
         "formula": {"threshold_points": 100.0, "available_weight": 0.0, "features": []},
     }
 
@@ -66,7 +66,7 @@ def _closed_forecast(market_date: str, model_version: str) -> dict[str, Any]:
         "confidence": "unknown",
         "confidence_reasons": ["今日台股休市，沒有正式開盤判斷"],
         "evidence": [],
-        "data_quality": {"missing_factors": [], "conflicts": [], "cache_used": False},
+        "data_quality": {"missing_factors": [], "conflicts": [], "conflict_directions": [], "cache_used": False},
         "formula": {"threshold_points": 100.0, "available_weight": 0.0, "features": []},
     }
 

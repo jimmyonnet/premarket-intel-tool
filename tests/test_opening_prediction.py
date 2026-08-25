@@ -103,6 +103,7 @@ def test_conflicting_signals_are_disclosed_and_lower_confidence():
     )
     assert forecast["confidence"] == "low"
     assert forecast["data_quality"]["conflicts"] == ["market-signal:up_vs_down"]
+    assert forecast["data_quality"]["conflict_directions"] == ["down", "up"]
     assert any("矛盾" in reason for reason in forecast["confidence_reasons"])
 
 

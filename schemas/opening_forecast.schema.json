@@ -68,10 +68,11 @@
     "data_quality": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["missing_factors", "conflicts", "cache_used"],
+      "required": ["missing_factors", "conflicts", "conflict_directions", "cache_used"],
       "properties": {
         "missing_factors": {"type": "array", "items": {"type": "string"}},
         "conflicts": {"type": "array", "items": {"type": "string"}},
+        "conflict_directions": {"type": "array", "items": {"enum": ["up", "down"]}},
         "cache_used": {"type": "boolean"}
       }
     }
