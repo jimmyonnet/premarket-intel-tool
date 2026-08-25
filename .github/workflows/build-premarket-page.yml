@@ -218,12 +218,20 @@ jobs:
           git config user.name "premarket-intel-bot"
           git config user.email "actions@users.noreply.github.com"
           git add -A
+          # Python imports may rewrite tracked bytecode; generated pycache is
+          # not a deploy artifact and must never enter the bot commit.
+          git reset -- scripts/__pycache__ tests/__pycache__ 2>/dev/null || true
+          git restore --source=HEAD --worktree -- scripts/__pycache__ 2>/dev/null || true
+          git clean -fd -- scripts/__pycache__ tests/__pycache__
           git diff --cached --quiet && echo "no change" && exit 0
           git commit -m "build premarket page for ${{ steps.date.outputs.today }}"
           # Some generators can finish an atomic replace immediately after the
           # first add. Fold any such last-millisecond changes into the build
           # commit before rebasing, so pull never sees a dirty worktree.
           git add -A
+          git reset -- scripts/__pycache__ tests/__pycache__ 2>/dev/null || true
+          git restore --source=HEAD --worktree -- scripts/__pycache__ 2>/dev/null || true
+          git clean -fd -- scripts/__pycache__ tests/__pycache__
           git diff --cached --quiet || git commit --amend --no-edit
           for attempt in 1 2 3; do
             if git pull --rebase origin main && git push; then
@@ -231,6 +239,9 @@ jobs:
             fi
             git rebase --abort || true
             git add -A
+            git reset -- scripts/__pycache__ tests/__pycache__ 2>/dev/null || true
+            git restore --source=HEAD --worktree -- scripts/__pycache__ 2>/dev/null || true
+            git clean -fd -- scripts/__pycache__ tests/__pycache__
             git diff --cached --quiet || git commit --amend --no-edit
             echo "push attempt ${attempt} failed; retrying" >&2
             sleep $((attempt * 5))
