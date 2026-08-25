@@ -1,7 +1,9 @@
 from pathlib import Path
 
 
-TEMPLATE = Path(__file__).resolve().parents[1] / "scripts" / "templates" / "premarket.html.j2"
+ROOT = Path(__file__).resolve().parents[1]
+TEMPLATE = ROOT / "scripts" / "templates" / "premarket.html.j2"
+DEPLOYED = ROOT / "docs" / "index.html"
 
 
 def test_news_section_uses_existing_package_for_lazy_hydration():
@@ -14,3 +16,16 @@ def test_news_section_uses_existing_package_for_lazy_hydration():
     assert "IntersectionObserver" in source
     assert "{% for a in news %}" not in source
     assert "隔夜重大新聞 Top 10" in source
+    assert '<details class="unref-accordion news-items-collapsible" id="news-items-disclosure">' in source
+    assert '<summary class="unref-summary">展開新聞 10 則</summary>' in source
+    assert '📰 新聞要' in source
+    assert 'newsDisclosure.addEventListener(\'toggle\'' in source
+    assert '<details class="unref-accordion news-items-collapsible" id="news-items-disclosure" open>' not in source
+
+
+def test_deployed_news_list_is_collapsed_and_renamed():
+    source = DEPLOYED.read_text(encoding="utf-8")
+    assert '<div class="ai-briefing-kicker">📰 新聞要</div>' in source
+    assert '<details class="unref-accordion news-items-collapsible" id="news-items-disclosure">' in source
+    assert '<summary class="unref-summary">展開新聞 10 則</summary>' in source
+    assert '<details class="unref-accordion news-items-collapsible" id="news-items-disclosure" open>' not in source

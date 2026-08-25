@@ -3972,7 +3972,7 @@
           </div>
         </div>
         <div class="ai-inline-panel ai-news-inline-panel">
-          <div class="ai-briefing-kicker">📰 新聞多樣性與摘要</div>
+          <div class="ai-briefing-kicker">📰 新聞要</div>
           <h4 class="ai-briefing-headline">{{ ai_news.headline or '目前尚未產生新聞摘要。' }}</h4>
           <div class="ai-news-stats">
             <span>新聞 {{ (ai.news_stats.count if ai.news_stats is defined and ai.news_stats else (news|length if news else 0)) }} 則</span>
@@ -3996,12 +3996,15 @@
           </div>
           {% endif %}
         </div>
-        <div class="data-block" id="news-lazy-block" data-news-src="data/news.json">
-          <div class="news-list" id="news-list" style="display:flex; flex-direction:column; gap:8px;" hidden></div>
-          <div class="empty" id="news-empty" data-package="news" style="padding:16px; text-align:center; color:var(--text-muted); font-size:12.5px;"{% if news and news|length > 0 %} hidden{% endif %}>
-            ℹ️ 今日新聞來源暫時無法取得 · 系統將於下次排程自動重試
+        <details class="unref-accordion news-items-collapsible" id="news-items-disclosure">
+          <summary class="unref-summary">展開新聞 10 則</summary>
+          <div class="data-block" id="news-lazy-block" data-news-src="data/news.json">
+            <div class="news-list" id="news-list" style="display:flex; flex-direction:column; gap:8px;" hidden></div>
+            <div class="empty" id="news-empty" data-package="news" style="padding:16px; text-align:center; color:var(--text-muted); font-size:12.5px;"{% if news and news|length > 0 %} hidden{% endif %}>
+              ℹ️ 今日新聞來源暫時無法取得 · 系統將於下次排程自動重試
+            </div>
           </div>
-        </div>
+        </details>
       </div>
 
       <!-- 財經行事曆 (時間軸儀表板) -->
@@ -6994,6 +6997,13 @@
       if (sinp) sinp.value = window.pm.calState.search;
     }
     if (window.pm.applyCalendarFilters) window.pm.applyCalendarFilters();
+
+    var newsDisclosure = document.getElementById('news-items-disclosure');
+    if (newsDisclosure) {
+      newsDisclosure.addEventListener('toggle', function() {
+        if (newsDisclosure.open && window.pm.hydrateNews) window.pm.hydrateNews();
+      });
+    }
 
     var newsBlock = document.getElementById('news-lazy-block');
     if (newsBlock) {

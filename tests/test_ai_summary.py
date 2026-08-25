@@ -83,5 +83,6 @@ def test_ai_panels_are_embedded_in_requested_parent_sections():
 
     assert "ai-market-inline-panel" in template[market_start:market_end]
     assert "ai-news-inline-panel" in template[news_start:news_end]
+    assert "📰 新聞要" in template[news_start:news_end]
     assert "ai-quality-inline" in template[availability_start:availability_end]
     assert "ai-briefing-card-wrap" not in template
