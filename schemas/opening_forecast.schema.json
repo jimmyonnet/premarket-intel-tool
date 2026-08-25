@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jimmyonnet.github.io/premarket-intel-tool/schemas/opening_forecast.schema.json",
+  "title": "Premarket opening forecast",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "prediction_id",
+    "market_date",
+    "status",
+    "locked_at",
+    "model_version",
+    "previous_close",
+    "predicted_change_points",
+    "predicted_open",
+    "direction",
+    "gap_label",
+    "confidence",
+    "confidence_reasons",
+    "evidence"
+  ],
+  "properties": {
+    "schema_version": {"const": "opening-forecast.v1"},
+    "prediction_id": {"type": ["string", "null"], "minLength": 10},
+    "market_date": {"type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "status": {"enum": ["generated", "not_generated", "market_closed", "input_incomplete"]},
+    "locked_at": {"type": ["string", "null"], "format": "date-time"},
+    "model_version": {"type": ["string", "null"], "minLength": 1},
+    "previous_close": {"type": ["number", "null"]},
+    "predicted_change_points": {"type": ["number", "null"]},
+    "predicted_open": {"type": ["number", "null"]},
+    "direction": {"enum": ["up", "down", "flat", "unknown"]},
+    "gap_label": {"enum": ["gap_up", "gap_down", "flat", "unknown"]},
+    "confidence": {"enum": ["high", "medium", "low", "unknown"]},
+    "confidence_reasons": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "evidence": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/evidence"}
+    },
+    "formula": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["threshold_points", "available_weight", "features"],
+      "properties": {
+        "threshold_points": {"type": "number"},
+        "available_weight": {"type": "number", "minimum": 0},
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["key", "weight", "conversion", "input", "contribution"],
+            "properties": {
+              "key": {"type": "string"},
+              "weight": {"type": "number", "exclusiveMinimum": 0},
+              "conversion": {"type": "number"},
+              "input": {"type": "number"},
+              "contribution": {"type": "number"}
+            }
+          }
+        }
+      }
+    },
+    "data_quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["missing_factors", "conflicts", "cache_used"],
+      "properties": {
+        "missing_factors": {"type": "array", "items": {"type": "string"}},
+        "conflicts": {"type": "array", "items": {"type": "string"}},
+        "cache_used": {"type": "boolean"}
+      }
+    }
+  },
+  "$defs": {
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "kind",
+        "label",
+        "value",
+        "unit",
+        "observed_at",
+        "fetched_at",
+        "source_name",
+        "source_url",
+        "cache_used",
+        "conflict_group"
+      ],
+      "properties": {
+        "evidence_id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["market_data", "news", "calendar", "quality"]},
+        "label": {"type": "string", "minLength": 1},
+        "value": {},
+        "unit": {"type": "string", "minLength": 1},
+        "observed_at": {"type": ["string", "null"], "format": "date-time"},
+        "fetched_at": {"type": ["string", "null"], "format": "date-time"},
+        "source_name": {"type": "string", "minLength": 1},
+        "source_url": {"type": ["string", "null"], "format": "uri"},
+        "cache_used": {"type": "boolean"},
+        "conflict_group": {"type": ["string", "null"]},
+        "supports": {"enum": ["up", "down", "flat", "neutral", "unknown"]}
+      }
+    }
+  }
+}

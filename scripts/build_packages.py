@@ -214,6 +214,71 @@ def _news_package(news: Any) -> dict[str, Any]:
     return {"items": news or []}
 
 
+def _opening_forecast_package(forecast: Any) -> dict[str, Any]:
+    """Keep the new forecast optional so legacy builds remain publishable."""
+    if isinstance(forecast, dict) and forecast.get("status"):
+        return forecast
+    return {
+        "schema_version": "opening-forecast.v1",
+        "prediction_id": None,
+        "market_date": None,
+        "status": "not_generated",
+        "locked_at": None,
+        "model_version": None,
+        "previous_close": None,
+        "predicted_change_points": None,
+        "predicted_open": None,
+        "direction": "unknown",
+        "gap_label": "unknown",
+        "confidence": "unknown",
+        "confidence_reasons": ["今日尚未產生預測"],
+        "evidence": [],
+        "data_quality": {"missing_factors": [], "conflicts": [], "cache_used": False},
+        "formula": {"threshold_points": 100.0, "available_weight": 0.0, "features": []},
+    }
+
+
+def _opening_result_package(result: Any) -> dict[str, Any]:
+    if isinstance(result, dict) and result.get("status"):
+        return result
+    return {
+        "schema_version": "opening-result.v1",
+        "prediction_id": None,
+        "market_date": None,
+        "status": "not_applicable",
+        "target_time": "09:00:00+08:00",
+        "verified_at": None,
+        "attempts": 0,
+        "attempt_log": [],
+        "actual_open": None,
+        "actual_change_points": None,
+        "actual_direction": "unknown",
+        "direction_correct": None,
+        "signed_error_points": None,
+        "absolute_error_points": None,
+        "source": {"name": "TWSE MIS TAIEX", "url": "https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_t00.tw&json=1&delay=0", "observed_at": None, "fetched_at": None, "official": True},
+        "error": "今日尚未完成實際開盤驗證",
+    }
+
+
+def _learning_status_package(status: Any, forecast: dict[str, Any]) -> dict[str, Any]:
+    if isinstance(status, dict) and status.get("schema_version"):
+        return status
+    return {
+        "schema_version": "learning-status.v1",
+        "status": "warmup",
+        "model_version": forecast.get("model_version"),
+        "verified_days": 0,
+        "required_days": 20,
+        "stats": None,
+        "confidence_breakdown": {},
+        "pending_proposal": None,
+        "manual_pause_remaining_days": 0,
+        "last_change": None,
+        "message": "學習資料累積中，滿 20 個已驗證交易日後才顯示正式統計",
+    }
+
+
 def _write_json(path: Path, payload: Any) -> bytes:
     encoded = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
     path.write_bytes(encoded)
@@ -235,6 +300,9 @@ def write_packages(
     twse: dict[str, Any],
     meta: dict[str, Any],
     stock_history: dict[str, Any] | None = None,
+    opening_forecast: dict[str, Any] | None = None,
+    opening_result: dict[str, Any] | None = None,
+    learning_status: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Write the package files and return the final meta payload."""
     docs_path = Path(docs_dir)
@@ -249,6 +317,9 @@ def write_packages(
         "calendar": {"today": calendar.get("today"), "range_end": calendar.get("range_end"), "events": calendar.get("events") or []},
         "news": _news_package(news),
         "ai_summary": ai_summary or {"status": "fallback", "provider": "deterministic fallback"},
+        "opening_forecast": _opening_forecast_package(opening_forecast),
+        "opening_result": _opening_result_package(opening_result),
+        "learning_status": _learning_status_package(learning_status, _opening_forecast_package(opening_forecast)),
     }
     hashes = {}
     for key, payload in packages.items():

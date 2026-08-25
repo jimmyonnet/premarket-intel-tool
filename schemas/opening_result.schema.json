@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jimmyonnet.github.io/premarket-intel-tool/schemas/opening_result.schema.json",
+  "title": "Premarket opening verification result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "prediction_id",
+    "market_date",
+    "status",
+    "target_time",
+    "attempts",
+    "actual_open",
+    "actual_change_points",
+    "actual_direction",
+    "direction_correct",
+    "signed_error_points",
+    "absolute_error_points",
+    "source"
+  ],
+  "properties": {
+    "schema_version": {"const": "opening-result.v1"},
+    "prediction_id": {"type": ["string", "null"], "minLength": 10},
+    "market_date": {"type": ["string", "null"], "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "status": {"enum": ["pending", "verified", "unverified", "not_applicable"]},
+    "target_time": {"const": "09:00:00+08:00"},
+    "verified_at": {"type": ["string", "null"], "format": "date-time"},
+    "attempts": {"type": "integer", "minimum": 0},
+    "attempt_log": {"type": "array", "items": {"$ref": "#/$defs/attempt"}},
+    "actual_open": {"type": ["number", "null"]},
+    "actual_change_points": {"type": ["number", "null"]},
+    "actual_direction": {"enum": ["up", "down", "flat", "unknown"]},
+    "direction_correct": {"type": ["boolean", "null"]},
+    "signed_error_points": {"type": ["number", "null"]},
+    "absolute_error_points": {"type": ["number", "null"]},
+    "source": {"$ref": "#/$defs/source"},
+    "error": {"type": ["string", "null"]}
+  },
+  "$defs": {
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attempted_at", "status"],
+      "properties": {
+        "attempted_at": {"type": "string", "format": "date-time"},
+        "status": {"enum": ["verified", "not_available", "error"]},
+        "observed_open": {"type": ["number", "null"]},
+        "message": {"type": ["string", "null"]}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "url", "observed_at", "fetched_at", "official"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "url": {"type": "string", "format": "uri"},
+        "observed_at": {"type": ["string", "null"], "format": "date-time"},
+        "fetched_at": {"type": ["string", "null"], "format": "date-time"},
+        "official": {"type": "boolean"}
+      }
+    }
+  }
+}

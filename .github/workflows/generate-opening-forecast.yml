@@ -1,0 +1,136 @@
+name: Generate opening forecast
+
+on:
+  # 08:30 Asia/Taipei = 00:30 UTC. GitHub may delay scheduled jobs; the
+  # generator has its own 08:25-08:40 lock window and refuses later data.
+  schedule:
+    - cron: "30 0 * * 1-5"
+  workflow_dispatch:
+    inputs:
+      market_date:
+        description: "Optional Taipei market date (YYYY-MM-DD)"
+        required: false
+        default: ""
+      locked_at:
+        description: "Optional Taipei lock timestamp for controlled testing"
+        required: false
+        default: ""
+
+concurrency:
+  group: opening-forecast-main
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Python dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Resolve Taipei market date and lock timestamp
+        id: clock
+        env:
+          INPUT_MARKET_DATE: ${{ inputs.market_date }}
+          INPUT_LOCKED_AT: ${{ inputs.locked_at }}
+        run: |
+          market_date="${INPUT_MARKET_DATE}"
+          [ -n "$market_date" ] || market_date="$(TZ=Asia/Taipei date +%F)"
+          locked_at="${INPUT_LOCKED_AT}"
+          [ -n "$locked_at" ] || locked_at="$(TZ=Asia/Taipei date --iso-8601=seconds)"
+          echo "market_date=${market_date}" >> "$GITHUB_OUTPUT"
+          echo "locked_at=${locked_at}" >> "$GITHUB_OUTPUT"
+          echo "Forecast target: ${market_date}; lock timestamp: ${locked_at}"
+
+      - name: Refresh and validate authoritative TWSE calendar
+        run: |
+          year="${{ steps.clock.outputs.market_date }}"
+          year="${year%%-*}"
+          python scripts/trading_calendar.py update --year "$year"
+          python scripts/trading_calendar.py validate --year "$year"
+
+      - name: Fetch official TAIEX previous close
+        continue-on-error: true
+        run: |
+          python scripts/opening_prediction/fetch_taiex_reference.py \
+            --market-date "${{ steps.clock.outputs.market_date }}" \
+            --calendar data/trading_calendar/twse_holidays.json \
+            --out data/latest/taiex_reference.json || echo "WARNING: official previous close unavailable; forecast will disclose fallback"
+
+      - name: Generate locked forecast
+        run: |
+          python scripts/opening_prediction/generate_forecast.py \
+            --market-date "${{ steps.clock.outputs.market_date }}" \
+            --locked-at "${{ steps.clock.outputs.locked_at }}" \
+            --indices data/latest/indices.json \
+            --night-session data/latest/night_session.json \
+            --twse-summary data/latest/twse_summary.json \
+            --taiex-reference data/latest/taiex_reference.json \
+            --calendar data/trading_calendar/twse_holidays.json \
+            --config config/opening_model_v1.json \
+            --out data/latest/opening_forecast.json
+
+      - name: Initialize official opening verification state
+        run: |
+          python scripts/opening_prediction/verify_opening.py \
+            --forecast data/latest/opening_forecast.json \
+            --out data/latest/opening_result.json \
+            --initialize
+
+      - name: Rebuild public packages and server-rendered page
+        run: |
+          python scripts/learning/build_status.py \
+            --directory data/opening_history \
+            --model-version opening-v1 \
+            --out data/latest/learning_status.json
+          python scripts/build_page.py \
+            --indices data/latest/indices.json \
+            --night-session data/latest/night_session.json \
+            --disposal data/latest/disposal.json \
+            --pressplay data/latest/pressplay.json \
+            --chengwaye-daily data/latest/chengwaye_daily.json \
+            --stock-history data/latest/stock_history.json \
+            --calendar data/latest/calendar.json \
+            --financials data/latest/financials.json \
+            --news data/latest/news.json \
+            --ai-summary data/latest/ai_summary.json \
+            --twse-summary data/latest/twse_summary.json \
+            --opening-forecast data/latest/opening_forecast.json \
+            --opening-result data/latest/opening_result.json \
+            --learning-status data/latest/learning_status.json \
+            --source-status data/latest/source_status.json \
+            --out docs/index.html
+
+      - name: Validate public opening artifacts
+        run: python scripts/validate_data.py --data-dir data/latest
+
+      - name: Commit and push opening forecast snapshot
+        run: |
+          git config user.name "premarket-intel-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/trading_calendar/twse_holidays.json data/latest/taiex_reference.json data/latest/opening_forecast.json data/latest/opening_result.json data/latest/learning_status.json data/opening_history docs/index.html docs/data docs/data_meta.json docs/sw.js
+          git diff --cached --quiet && echo "no opening forecast changes" && exit 0
+          git commit -m "build opening forecast for ${{ steps.clock.outputs.market_date }} [skip ci]"
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push; then
+              exit 0
+            fi
+            git rebase --abort || true
+            echo "opening forecast push attempt ${attempt} failed; retrying" >&2
+            sleep $((attempt * 5))
+          done
+          echo "Unable to push opening forecast after 3 attempts" >&2
+          exit 1

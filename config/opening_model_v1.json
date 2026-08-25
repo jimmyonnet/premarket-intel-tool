@@ -1,0 +1,44 @@
+{
+  "schema_version": "opening-model-config.v1",
+  "model_version": "opening-v1",
+  "description": "冷啟動用的透明保守基準；滿 20 個已驗證交易日後才允許提出校正建議。",
+  "direction_threshold_points": 100,
+  "max_abs_prediction_points": 800,
+  "features": {
+    "night_session_points": {
+      "weight": 0.60,
+      "conversion": 1.0,
+      "unit": "points",
+      "label": "台指期夜盤點數變化"
+    },
+    "nasdaq_pct": {
+      "weight": 0.20,
+      "conversion": 100.0,
+      "unit": "points_per_percent",
+      "label": "NASDAQ 漲跌幅"
+    },
+    "sp500_pct": {
+      "weight": 0.15,
+      "conversion": 80.0,
+      "unit": "points_per_percent",
+      "label": "S&P 500 漲跌幅"
+    },
+    "dow_pct": {
+      "weight": 0.05,
+      "conversion": 40.0,
+      "unit": "points_per_percent",
+      "label": "道瓊漲跌幅"
+    }
+  },
+  "confidence_policy": {
+    "high_requires": "all_key_features_present_and_agree",
+    "medium_requires": "no_key_missing_but_signal_is_mixed_or_neutral",
+    "low_requires": "key_feature_missing_or_cached_or_conflicting"
+  },
+  "calibration_policy": {
+    "minimum_verified_days": 20,
+    "review_window_days": 20,
+    "rollback_consecutive_degraded_days": 3,
+    "manual_switch_pause_days": 5
+  }
+}

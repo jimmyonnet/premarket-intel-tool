@@ -29,7 +29,7 @@ Gemini AI 摘要是選配功能：設定 `GEMINI_API_KEY` 才會啟用，失敗�
 2. 到 repo 的 **Settings → Pages**，Source 選 "Deploy from a branch"，Branch 選
    `main` 、資料夾選 `/docs`，存檔。
 3. 到 **Settings → Actions → General**，確認 "Workflow permissions" 是
-   "Read and write permissions"（兩個 workflow 都需要 push 回 repo，預設有時是唯讀）。
+   "Read and write permissions"（會回寫 repo 的 workflow 都需要，預設有時是唯讀）。
 4. 到 **Settings → Secrets and variables → Actions**，依需要新增 Repository
    secrets（所有值都由你自行輸入，程式只在 workflow 執行時讀取，不會寫入 repository）：
    - `PRESSPLAY_EMAIL`：PressPlay 登入帳號（email）
@@ -40,7 +40,7 @@ Gemini AI 摘要是選配功能：設定 `GEMINI_API_KEY` 才會啟用，失敗�
 
    沒設定 PressPlay 或 Gemini secrets 也不會阻斷主要頁面；相關區塊會顯示尚無資料或
    deterministic fallback。此專案不再呼叫已終止的 LINE Notify endpoint。
-5. 完成。兩個 workflow 會照排程自動跑；也可以到 Actions 頁籤手動點
+5. 完成。四個 workflow 會照排程自動跑；也可以到 Actions 頁籤手動點
    "Run workflow" 立刻測試，不用等排程時間到。
 6. 跑過一次 build-premarket-page 之後，頁面網址會是
    `https://<你的帳號>.github.io/<repo名稱>/`。
@@ -83,7 +83,7 @@ render 後的 DOM 測試，避免為了整理而進行大規模重構。
 4. 預計 2 分鐘內執行完畢並自動推送到 `main` 分支，GitHub Pages 頁面將自動更新。
 5. 在盤前工作台頁面點擊頂部 **「🔄 手動更新資料」** 按鈕即可開啟上述 workflow。
 
-## 兩個 workflow 在做什麼
+## 四個 workflow 在做什麼
 
 - **collect-night-session.yml**：平日 15:00–05:00（台北時間）每 30 分鐘跑一次，
   抓一次台指期夜盤即時報價，累加寫進 `data/night_session/<日期>.jsonl`。
@@ -91,6 +91,18 @@ render 後的 DOM 測試，避免為了整理而進行大規模重構。
   指數、組合當晚累積的夜盤數據、處置股清單、PressPlay 族群清單、chengwaye
   成交資料、金融公告與新聞，驗證契約後組出 `docs/index.html` 並 commit。PR、Push
   與手動執行會先通過完整品質檢查；Scheduled build 則執行 smoke/data-contract 檢查。
+- **generate-opening-forecast.yml**：在 08:30 更新 TWSE 官方前收參考、鎖定 baseline 預測、建立 pending 驗證狀態，並重建公開頁面；缺少前收時仍以低可信度 fallback 揭露，不會讓舊網站崩潰。
+- **verify-opening-result.yml**：在 09:05、09:10、09:15 使用官方 MIS `o` 欄位重試，將 verified/unverified 結果與學習進度寫入公開 package；已 verified 的結果保持 immutable。
+
+## 台股大盤開盤預測 MVP
+
+頁面最上方的「今日開盤判斷」是可回溯的 deterministic baseline，不是買賣建議，也不是保證。每個台股交易日由 `generate-opening-forecast.yml` 在台北時間 08:30（UTC 00:30）鎖定；程式只接受台北時間 08:25–08:40 的排程延遲窗口，超出窗口會顯示「今日尚未產生預測」，不會把盤中資料倒填成盤前預測。台股休市日會顯示休市，不產生方向或學習紀錄。
+
+目前模型公開使用台指期夜盤點數變化、NASDAQ、S&P 500 與 Dow 的固定權重和換算係數，規則寫在 [`config/opening_model_v1.json`](config/opening_model_v1.json)。與前收差在 ±100 點（含）時為「偏開平」，超過 ±100 點才分別標示「偏開高／偏開低」。資料缺少、沿用快取或訊號互相矛盾時，仍可給出結果，但會降低可信度並在展開內容中列出缺項、公式、觀測時間與來源連結。
+
+前收優先取自 [TWSE TAIEX 官方歷史資料](https://www.twse.com.tw/indicesReport/MI_5MINS_HIST)；若官方前收端點暫時不可用，頁面會明確標示既有快照 compatibility fallback 並降低可信度。09:00 真正開盤驗證則由 `verify-opening-result.yml` 在台北時間 09:05、09:10、09:15 重試，僅使用 [TWSE MIS TAIEX](https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_t00.tw&json=1&delay=0) 的 `o` 欄位；拿不到真正第一筆開盤價時標示 `unverified`，不會用 09:05 即時價冒充，也不納入統計或學習。
+
+公開頁面資料包包含 `docs/data/opening_forecast.json`、`docs/data/opening_result.json` 與 `docs/data/learning_status.json`。前 20 個已驗證交易日只顯示累積進度，不公開整體準確率；第 20 日結果後才顯示正式統計。這個 MVP 尚未假造自動改權重、人工回饋或模型切版；符合需求的自動調整與手動互動，後續必須由安全的 server-side API/SQL 實作，GitHub Pages 不保存 token 或可寫入憑證。
 
 ## 已知限制（老實跟你說）
 

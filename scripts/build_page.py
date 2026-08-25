@@ -612,6 +612,9 @@ def main():
     ap.add_argument("--news", required=False, help="Path to news.json")
     ap.add_argument("--ai-summary", required=False, help="Optional path to ai_summary.json")
     ap.add_argument("--twse-summary", required=False, help="Path to twse_summary.json")
+    ap.add_argument("--opening-forecast", required=False, help="Optional locked opening forecast JSON")
+    ap.add_argument("--opening-result", required=False, help="Optional official opening verification JSON")
+    ap.add_argument("--learning-status", required=False, help="Optional opening-model learning status JSON")
     ap.add_argument("--source-status", required=False, default=None, help="Path to source_status.json")
     ap.add_argument("--data-date", required=False, default=None, help="Optional data date override (e.g. 08/24)")
     ap.add_argument("--out", required=True)
@@ -661,6 +664,9 @@ def main():
     news_data = load_json(args.news) if args.news else []
     ai_summary_data = load_json(args.ai_summary) if args.ai_summary else {}
     twse_data = load_json(args.twse_summary) if args.twse_summary else {} or {}
+    opening_forecast_data = load_json(args.opening_forecast) if args.opening_forecast else {}
+    opening_result_data = load_json(args.opening_result) if args.opening_result else {}
+    learning_status_data = load_json(args.learning_status) if args.learning_status else {}
     cal_events = calendar_raw.get("events") or []
     cal_today = calendar_raw.get("today") or now.strftime("%Y-%m-%d")
     calendar_section = {
@@ -753,6 +759,9 @@ def main():
         twse=twse_data,
         meta=meta_data,
         stock_history=stock_history,
+        opening_forecast=opening_forecast_data if isinstance(opening_forecast_data, dict) else None,
+        opening_result=opening_result_data if isinstance(opening_result_data, dict) else None,
+        learning_status=learning_status_data if isinstance(learning_status_data, dict) else None,
     )
     meta_path.write_text(json.dumps(meta_data, ensure_ascii=False, indent=2), encoding="utf-8")
 
@@ -804,6 +813,9 @@ def main():
         news=news_data,
         ai_summary=ai_summary_data or {},
         twse=twse_data,
+        opening_forecast=opening_forecast_data if isinstance(opening_forecast_data, dict) else {},
+        opening_result=opening_result_data if isinstance(opening_result_data, dict) else {},
+        learning_status=learning_status_data if isinstance(learning_status_data, dict) else {},
         twse_holidays_list=sorted(list(load_twse_holidays())),
     )
 

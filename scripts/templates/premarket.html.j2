@@ -104,6 +104,59 @@
     --safe-right: env(safe-area-inset-right, 0px);
   }
 
+  .opening-forecast-card {
+    margin: 0 0 18px;
+    border: 1px solid var(--border-strong);
+    border-radius: 14px;
+    background: var(--bg-card);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .opening-forecast-card.confidence-low { border-color: var(--amber-border); }
+  .opening-forecast-card.confidence-high { border-color: var(--green-border); }
+  .opening-forecast-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 18px 12px;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .opening-forecast-title { margin: 0; color: var(--text-main); font-size: 17px; font-weight: 850; letter-spacing: .01em; }
+  .opening-forecast-subtitle { margin-top: 4px; color: var(--text-muted); font-size: 12px; line-height: 1.55; }
+  .opening-forecast-badge { display: inline-flex; align-items: center; border: 1px solid var(--border); border-radius: 999px; padding: 4px 9px; color: var(--text-muted); background: var(--bg-sub); font-size: 12px; font-weight: 800; white-space: nowrap; }
+  .opening-forecast-badge.high { color: var(--green-fg); border-color: var(--green-border); background: var(--green-bg); }
+  .opening-forecast-badge.medium { color: var(--amber-fg); border-color: var(--amber-border); background: var(--amber-bg); }
+  .opening-forecast-badge.low { color: var(--danger-fg); border-color: var(--danger-border); background: var(--danger-bg); }
+  .opening-forecast-body { padding: 16px 18px 18px; }
+  .opening-forecast-hero { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 18px; }
+  .opening-forecast-direction { color: var(--text-main); font-size: clamp(24px, 4vw, 34px); font-weight: 900; letter-spacing: .01em; }
+  .opening-forecast-points { color: var(--blue); font-size: clamp(20px, 3vw, 28px); font-weight: 850; }
+  .opening-forecast-points.is-up { color: var(--rise); }
+  .opening-forecast-points.is-down { color: var(--fall); }
+  .opening-forecast-meta { display: flex; flex-wrap: wrap; gap: 7px 14px; margin-top: 8px; color: var(--text-muted); font-size: 12px; line-height: 1.6; }
+  .opening-forecast-note { margin-top: 12px; padding: 10px 12px; border-radius: 9px; background: var(--bg-sub); color: var(--text-muted); font-size: 12px; line-height: 1.65; }
+  .opening-forecast-note strong { color: var(--text-main); }
+  .opening-forecast-result { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+  .opening-forecast-result-item { min-width: 0; padding: 10px 12px; border: 1px solid var(--border-light); border-radius: 9px; background: var(--bg-sub); }
+  .opening-forecast-result-label { color: var(--text-muted); font-size: 11px; }
+  .opening-forecast-result-value { margin-top: 3px; color: var(--text-main); font-size: 15px; font-weight: 850; }
+  .opening-forecast-details { margin-top: 14px; border-top: 1px solid var(--border-light); padding-top: 10px; }
+  .opening-forecast-details summary { cursor: pointer; color: var(--blue); font-size: 12px; font-weight: 800; }
+  .opening-forecast-evidence { display: grid; gap: 8px; margin-top: 10px; }
+  .opening-forecast-evidence-item { padding: 9px 10px; border-left: 3px solid var(--border-strong); background: var(--bg-sub); color: var(--text-muted); font-size: 12px; line-height: 1.6; }
+  .opening-forecast-evidence-item strong { color: var(--text-main); }
+  .opening-forecast-evidence-item a { color: var(--blue); }
+  .opening-forecast-formula { margin: 10px 0 0; overflow-x: auto; color: var(--text-muted); font-size: 11px; line-height: 1.65; }
+  .opening-forecast-learning { margin-top: 14px; padding: 10px 12px; border: 1px solid var(--border-light); border-radius: 9px; color: var(--text-muted); font-size: 12px; line-height: 1.6; }
+  .opening-forecast-learning strong { color: var(--text-main); }
+  @media (max-width: 680px) {
+    .opening-forecast-head { padding: 14px 14px 11px; }
+    .opening-forecast-body { padding: 14px; }
+    .opening-forecast-result { grid-template-columns: 1fr; }
+    .opening-forecast-badge { font-size: 11px; }
+  }
+
   :root[data-theme="dark"] {
     /* warm charcoal companion theme; the same cobalt and semantic accents remain */
     --bg-page: #171411;
@@ -3127,7 +3180,85 @@
     </div>
   </nav>
 
+  {% macro render_opening_forecast(forecast, result, learning, page_data_date) -%}
+    {% set forecast_date = forecast.get('market_date') or '' %}
+    {% set forecast_day = forecast_date[5:]|replace('-', '/') if forecast_date else '' %}
+    {% set page_day = page_data_date[5:]|replace('-', '/') if page_data_date and page_data_date|length == 10 and page_data_date[4] == '-' else page_data_date %}
+    {% set is_current_forecast = not forecast_date or not page_day or forecast_day == page_day %}
+    {% set fstatus = (forecast.get('status') or 'not_generated') if is_current_forecast else 'not_generated' %}
+    {% set confidence = forecast.get('confidence') or 'unknown' %}
+    {% set direction = forecast.get('direction') or 'unknown' %}
+    {% set direction_label = {'up': '偏開高', 'down': '偏開低', 'flat': '偏開平', 'unknown': '尚無方向'}[direction] %}
+    {% set quality = forecast.get('data_quality') or {} %}
+    {% set result_status = result.get('status') or 'not_applicable' %}
+    {% set learning_status = learning.get('status') or 'warmup' %}
+    <section id="opening-forecast" class="opening-forecast-card confidence-{{ confidence }}" aria-labelledby="opening-forecast-title">
+      <div class="opening-forecast-head">
+        <div>
+          <h2 id="opening-forecast-title" class="opening-forecast-title">今日開盤判斷</h2>
+          <div class="opening-forecast-subtitle">
+            {% if fstatus == 'market_closed' %}今日台股休市，沒有開盤判斷。{% elif fstatus == 'generated' %}依 08:30 已鎖定資料產生；此結論不是保證。{% else %}今日尚未產生預測，不使用前一天內容冒充今日判斷。{% endif %}
+          </div>
+        </div>
+        {% if fstatus == 'generated' %}<span class="opening-forecast-badge {{ confidence }}">{{ {'high': '高可信度', 'medium': '中可信度', 'low': '低可信度', 'unknown': '可信度未知'}[confidence] }}</span>{% endif %}
+      </div>
+      <div class="opening-forecast-body">
+        {% if fstatus == 'generated' %}
+          <div class="opening-forecast-hero">
+            <span class="opening-forecast-direction">{{ direction_label }}</span>
+            <span class="opening-forecast-points {% if direction == 'up' %}is-up{% elif direction == 'down' %}is-down{% endif %} font-mono">
+              預估 {% if forecast.get('predicted_change_points') is not none %}{{ '%+.0f'|format(forecast.get('predicted_change_points')) }} 點{% else %}—{% endif %}
+            </span>
+          </div>
+          <div class="opening-forecast-meta">
+            <span>預估開盤：{% if forecast.get('predicted_open') is not none %}{{ '{:,.2f}'.format(forecast.get('predicted_open')) }}{% else %}—{% endif %}</span>
+            <span>前一收：{% if forecast.get('previous_close') is not none %}{{ '{:,.2f}'.format(forecast.get('previous_close')) }}{% else %}—{% endif %}</span>
+            <span>鎖定時間：{{ forecast.get('locked_at') or '—' }}</span>
+            <span>模型：{{ forecast.get('model_version') or '—' }}</span>
+          </div>
+          <div class="opening-forecast-note">
+            <strong>判斷原因：</strong>{% for reason in forecast.get('confidence_reasons') or [] %}{{ reason }}{% if not loop.last %}；{% endif %}{% endfor %}
+          </div>
+          {% if quality.get('missing_factors') or quality.get('conflicts') or quality.get('cache_used') %}
+          <div class="opening-forecast-note"><strong>資料品質：</strong>{% if quality.get('missing_factors') %}缺少 {{ quality.get('missing_factors')|join('、') }}。{% endif %}{% if quality.get('conflicts') %}{{ quality.get('conflicts')|join('；') }}。{% endif %}{% if quality.get('cache_used') %}部分資料沿用快取。{% endif %}</div>
+          {% endif %}
+          {% if result_status == 'verified' %}
+          <div class="opening-forecast-result" aria-label="今日預測與實際開盤結果">
+            <div class="opening-forecast-result-item"><div class="opening-forecast-result-label">實際開盤</div><div class="opening-forecast-result-value font-mono">{{ '{:,.2f}'.format(result.get('actual_open')) }}</div></div>
+            <div class="opening-forecast-result-item"><div class="opening-forecast-result-label">方向結果</div><div class="opening-forecast-result-value">{% if result.get('direction_correct') %}方向命中{% else %}方向未命中{% endif %}</div></div>
+            <div class="opening-forecast-result-item"><div class="opening-forecast-result-label">點數誤差</div><div class="opening-forecast-result-value font-mono">{{ '{:,.2f}'.format(result.get('absolute_error_points')) }} 點</div></div>
+          </div>
+          {% elif result_status == 'unverified' %}
+          <div class="opening-forecast-note"><strong>實際開盤：尚未驗證。</strong>{{ result.get('error') or '09:15 前沒有取得真正的 09:00 第一筆開盤價。' }} 這一天不納入學習。</div>
+          {% elif result_status == 'pending' %}
+          <div class="opening-forecast-note"><strong>實際開盤：等待驗證。</strong>系統只會使用台股官方 09:00 第一筆正式開盤價。</div>
+          {% endif %}
+          <details class="opening-forecast-details">
+            <summary>查看完整證據、來源與計算公式</summary>
+            <div class="opening-forecast-evidence">
+              {% for item in forecast.get('evidence') or [] %}
+              <div class="opening-forecast-evidence-item">
+                <strong>{{ item.get('label') or '資料' }}</strong>：{{ item.get('value') }} {{ item.get('unit') or '' }}；資料時間 {{ item.get('observed_at') or '—' }}；抓取 {{ item.get('fetched_at') or '—' }}{% if item.get('cache_used') %}；沿用快取{% endif %}{% if item.get('supports') and item.get('supports') != 'neutral' %}；支持 {{ {'up': '偏高', 'down': '偏低', 'flat': '偏平', 'unknown': '未知'}[item.get('supports')] }}{% endif %}。{% if item.get('source_url') %}<a href="{{ item.get('source_url') }}" target="_blank" rel="noopener noreferrer">來源 {{ item.get('source_name') or '' }} ↗</a>{% endif %}
+              </div>
+              {% else %}<div class="opening-forecast-evidence-item">目前沒有可展示的 evidence。</div>{% endfor %}
+            </div>
+            <div class="opening-forecast-formula font-mono">
+              <strong>公式：</strong>可用權重 {{ forecast.get('formula', {}).get('available_weight', 0) }}；方向門檻 ±{{ forecast.get('formula', {}).get('threshold_points', 100) }} 點。{% for item in forecast.get('formula', {}).get('features', []) %}<br>{{ item.get('key') }}：輸入 {{ item.get('input') }} × 權重 {{ item.get('weight') }} × 換算 {{ item.get('conversion') }} = {{ item.get('contribution') }}{% endfor %}
+            </div>
+          </details>
+        {% elif fstatus == 'market_closed' %}
+          <div class="opening-forecast-note"><strong>今日台股休市。</strong>不產生預測，也不納入學習；美股與全球市場資料仍可作下一個台股交易日的參考。</div>
+        {% else %}
+          <div class="opening-forecast-note"><strong>今日尚未產生預測。</strong>頁面不使用前一天預測冒充今日內容。{{ forecast.get('confidence_reasons', ['請等待 08:30 預測工作完成。'])|join('；') }}</div>
+        {% endif %}
+        <div class="opening-forecast-learning"><strong>自我學習：</strong>{% if learning_status == 'warmup' %}資料累積中 {{ learning.get('verified_days', 0) }}/{{ learning.get('required_days', 20) }} 個已驗證交易日；未滿 20 日不公開整體準確率。{% elif learning_status == 'paused' %}暫停自動調整，剩餘 {{ learning.get('manual_pause_remaining_days', 0) }} 個交易日。{% else %}已完成 {{ learning.get('verified_days', 0) }} 個已驗證交易日，可查看正式統計。{% endif %}</div>
+      </div>
+    </section>
+  {%- endmacro %}
+
   <main class="page-main">
+
+    {{ render_opening_forecast(opening_forecast|default({}, true), opening_result|default({}, true), learning_status|default({}, true), data_date|default('', true)) }}
 
     <!-- Executive Briefing Mode Active Banner -->
     <div class="briefing-banner" id="briefing-banner">

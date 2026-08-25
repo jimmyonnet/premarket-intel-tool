@@ -57,7 +57,13 @@ def test_write_packages_creates_schema_and_files(tmp_path: Path):
     assert meta["schema_version"] == 1
     assert len(meta["data_revision"]) == 16
     assert json.loads((tmp_path / "data_meta.json").read_text())["data_revision"] == meta["data_revision"]
-    assert set(meta["hash"]) == {"disposition", "candidates", "stock_history", "announcements", "macro", "calendar", "news", "ai_summary"}
+    assert set(meta["hash"]) == {"disposition", "candidates", "stock_history", "announcements", "macro", "calendar", "news", "ai_summary", "opening_forecast", "opening_result", "learning_status"}
+    opening_forecast = json.loads((tmp_path / "data" / "opening_forecast.json").read_text())
+    opening_result = json.loads((tmp_path / "data" / "opening_result.json").read_text())
+    learning_status = json.loads((tmp_path / "data" / "learning_status.json").read_text())
+    assert opening_forecast["status"] == "not_generated"
+    assert opening_result["status"] == "not_applicable"
+    assert learning_status["status"] == "warmup"
     assert json.loads((tmp_path / "data" / "stock_history.json").read_text())["codes"]["5314"]["records"] == []
     assert json.loads((tmp_path / "data" / "meta.json").read_text())["schema_version"] == 1
     candidates_raw = (tmp_path / "data" / "candidates.json").read_text(encoding="utf-8")

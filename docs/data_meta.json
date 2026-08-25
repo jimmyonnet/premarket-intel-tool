@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-08-25 16:43",
-  "build_version": "20260825_1643",
+  "build_time": "2026-08-25 18:48",
+  "build_version": "20260825_1848",
   "data_date": "08/25",
-  "stale_hours": 0.0,
-  "hours_since_us_close": 12.7,
+  "stale_hours": 2.1,
+  "hours_since_us_close": 14.8,
   "us_market_context": {
     "session_key": "pre",
     "label": "美股盤前",
@@ -11,7 +11,7 @@
     "badge_short": "盤前",
     "pill_class": "pill-amber",
     "updated_label": "08/25 05:15",
-    "detail": "Yahoo Finance · 來源更新 08/25 05:15（11.5 小時前）· 延遲分鐘數未提供 · 尚未進入美股正常交易時段",
+    "detail": "Yahoo Finance · 來源更新 08/25 05:15（13.6 小時前）· 延遲分鐘數未提供 · 尚未進入美股正常交易時段",
     "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
   },
   "overall_status": "ready",
@@ -278,8 +278,8 @@
     }
   ],
   "schema_version": 1,
-  "data_revision": "3c27e155b6b0ba8a",
-  "built_at": "2026-08-25T08:43:35.640593+00:00",
+  "data_revision": "b331ad873ac2224e",
+  "built_at": "2026-08-25T10:48:30.367967+00:00",
   "hash": {
     "disposition": "e0e54deced16",
     "candidates": "51caeafd1af2",
@@ -288,7 +288,10 @@
     "macro": "ed1178d4bdee",
     "calendar": "04ac407c232c",
     "news": "c62dc9e78dc3",
-    "ai_summary": "1b019ac88b84"
+    "ai_summary": "1b019ac88b84",
+    "opening_forecast": "bdcbf01feda5",
+    "opening_result": "ae2ff7bdc4a5",
+    "learning_status": "e4e98866873b"
   },
   "packages": {
     "disposition": "data/disposition.json",
@@ -298,7 +301,10 @@
     "macro": "data/macro.json",
     "calendar": "data/calendar.json",
     "news": "data/news.json",
-    "ai_summary": "data/ai_summary.json"
+    "ai_summary": "data/ai_summary.json",
+    "opening_forecast": "data/opening_forecast.json",
+    "opening_result": "data/opening_result.json",
+    "learning_status": "data/learning_status.json"
   },
   "show_banner": false
 }

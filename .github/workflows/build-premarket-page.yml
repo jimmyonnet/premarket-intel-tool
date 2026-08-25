@@ -208,6 +208,9 @@ jobs:
             --news data/latest/news.json \
             --ai-summary data/latest/ai_summary.json \
             --twse-summary data/latest/twse_summary.json \
+            --opening-forecast data/latest/opening_forecast.json \
+            --opening-result data/latest/opening_result.json \
+            --learning-status data/latest/learning_status.json \
             --source-status data/latest/source_status.json \
             --data-date "${{ inputs.data_date }}" \
             --out docs/index.html

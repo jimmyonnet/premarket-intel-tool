@@ -50,6 +50,17 @@ DATA_CONTRACT_SCHEMAS: dict[str, dict[str, Any]] = {
     "ai_summary": {"type": "object"},
     "twse_summary": {"type": "object"},
     "source_status": {"type": "object", "required": ["sources"]},
+    # These three artifacts are optional for legacy builds; when present they
+    # are validated by validate_opening_artifacts below.
+    "opening_forecast": {"type": "object", "required": ["schema_version", "status", "prediction_id", "market_date", "direction", "confidence", "evidence"]},
+    "opening_result": {"type": "object", "required": ["schema_version", "status", "prediction_id", "market_date", "actual_direction", "direction_correct", "absolute_error_points"]},
+    "learning_status": {"type": "object", "required": ["schema_version", "status", "verified_days", "required_days", "stats"]},
+}
+
+OPTIONAL_OPENING_FILES = {
+    "opening_forecast": (dict,),
+    "opening_result": (dict,),
+    "learning_status": (dict,),
 }
 
 REQUIRED_OBJECT_KEYS = {
@@ -389,6 +400,80 @@ def _validate_announcement_duplicates(payload: Any, errors: list[str]) -> None:
             errors.append(f"financials announcement 重複 {count} 次：{code}/{kind}/{title[:80]}")
 
 
+def validate_opening_artifacts(
+    root: Path,
+    payloads: dict[str, Any],
+    files: dict[str, dict[str, Any]],
+    errors: list[str],
+    warnings: list[str],
+) -> None:
+    """Validate optional opening artifacts without changing legacy semantics."""
+    for name, expected_types in OPTIONAL_OPENING_FILES.items():
+        path = root / f"{name}.json"
+        if not path.exists():
+            continue
+        if path.stat().st_size == 0:
+            errors.append(f"empty file: {path}")
+            continue
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+            errors.append(f"invalid JSON in {path}: {exc}")
+            continue
+        if not isinstance(payload, expected_types):
+            errors.append(f"wrong top-level type in {path}: expected object, got {type(payload).__name__}")
+            continue
+        payloads[name] = payload
+        if _is_empty(payload):
+            warnings.append(f"empty fallback payload: {path}")
+        validate_explicit_schema(name, payload, errors)
+        files[name] = {"path": str(path), "bytes": path.stat().st_size, "top_level_type": type(payload).__name__, "empty": _is_empty(payload)}
+
+    forecast = payloads.get("opening_forecast") if isinstance(payloads.get("opening_forecast"), dict) else None
+    result = payloads.get("opening_result") if isinstance(payloads.get("opening_result"), dict) else None
+    learning = payloads.get("learning_status") if isinstance(payloads.get("learning_status"), dict) else None
+    if forecast:
+        if forecast.get("status") not in {"generated", "not_generated", "market_closed", "input_incomplete"}:
+            errors.append("opening_forecast.status is not a supported state")
+        if forecast.get("status") == "generated" and (not forecast.get("prediction_id") or not forecast.get("market_date")):
+            errors.append("opening_forecast generated state requires prediction_id and market_date")
+        if forecast.get("direction") not in {"up", "down", "flat", "unknown"}:
+            errors.append("opening_forecast.direction is invalid")
+        if forecast.get("confidence") not in {"high", "medium", "low", "unknown"}:
+            errors.append("opening_forecast.confidence is invalid")
+    if result:
+        if result.get("status") not in {"pending", "verified", "unverified", "not_applicable"}:
+            errors.append("opening_result.status is not a supported state")
+        if result.get("status") == "verified" and (result.get("actual_open") is None or result.get("absolute_error_points") is None or result.get("direction_correct") is None):
+            errors.append("opening_result verified state requires actual metrics")
+        if result.get("status") in {"pending", "unverified", "not_applicable"} and (result.get("direction_correct") is not None or result.get("absolute_error_points") is not None):
+            errors.append("opening_result non-verified state must not contain learning metrics")
+        if result.get("actual_direction") not in {"up", "down", "flat", "unknown"}:
+            errors.append("opening_result.actual_direction is invalid")
+    if forecast and result:
+        forecast_date, result_date = forecast.get("market_date"), result.get("market_date")
+        if forecast_date and result_date and forecast_date != result_date:
+            errors.append("opening forecast/result market_date mismatch")
+        forecast_id, result_id = forecast.get("prediction_id"), result.get("prediction_id")
+        if forecast_id and result_id and forecast_id != result_id:
+            errors.append("opening forecast/result prediction_id mismatch")
+        if forecast.get("status") == "market_closed" and result.get("status") not in {"not_applicable", "pending"}:
+            errors.append("market_closed forecast requires not_applicable opening result")
+    if learning:
+        if learning.get("status") not in {"warmup", "ready", "paused"}:
+            errors.append("learning_status.status is invalid")
+        verified_days = learning.get("verified_days")
+        required_days = learning.get("required_days")
+        if not isinstance(verified_days, int) or isinstance(verified_days, bool) or verified_days < 0:
+            errors.append("learning_status.verified_days must be a non-negative integer")
+        if not isinstance(required_days, int) or isinstance(required_days, bool) or required_days < 1:
+            errors.append("learning_status.required_days must be a positive integer")
+        if learning.get("status") == "warmup" and learning.get("stats") is not None:
+            errors.append("learning_status warmup must not expose aggregate stats")
+        if isinstance(verified_days, int) and isinstance(required_days, int) and verified_days < required_days and learning.get("stats") is not None:
+            errors.append("learning_status stats require the verified-day warmup threshold")
+
+
 def validate_data_dir(data_dir: str | Path, normalize: bool = False) -> dict[str, Any]:
     """Return a structured contract and semantic validation report."""
     root = Path(data_dir)
@@ -430,6 +515,7 @@ def validate_data_dir(data_dir: str | Path, normalize: bool = False) -> dict[str
     _validate_duplicate_codes(payloads, errors)
     _validate_news_duplicates(payloads.get("news"), errors)
     _validate_announcement_duplicates(payloads.get("financials"), errors)
+    validate_opening_artifacts(root, payloads, files, errors, warnings)
 
     if files.get("source_status", {}).get("empty"):
         warnings.append("source_status is empty; page health will remain in caution state")
@@ -447,6 +533,7 @@ def validate_data_dir(data_dir: str | Path, normalize: bool = False) -> dict[str
             "duplicate_codes": "checked",
             "news_title_link_duplicates": "checked",
             "announcement_duplicates": "checked",
+            "opening_artifacts": "checked when present; absent is compatible with legacy builds",
         },
         "schema_version": "premarket-data-contract.v2",
     }
