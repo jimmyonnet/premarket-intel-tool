@@ -1,6 +1,6 @@
 {
-  "build_time": "2026-08-26 10:40",
-  "build_version": "20260826_1040",
+  "build_time": "2026-08-26 10:41",
+  "build_version": "20260826_1041",
   "data_date": "08/26",
   "stale_hours": 0.0,
   "hours_since_us_close": 6.7,
@@ -278,8 +278,8 @@
     }
   ],
   "schema_version": 1,
-  "data_revision": "284b542f5825e2ab",
-  "built_at": "2026-08-26T02:40:37.895722+00:00",
+  "data_revision": "8e1bbbddfc318d89",
+  "built_at": "2026-08-26T02:41:28.938435+00:00",
   "hash": {
     "disposition": "08cbadd4573a",
     "candidates": "07490b1c6a6c",
@@ -289,8 +289,8 @@
     "calendar": "96334ed2ce41",
     "news": "fe5c4d7fbc34",
     "ai_summary": "87c54f2945fa",
-    "opening_forecast": "df3733778ffb",
-    "opening_result": "69851b4aeac3",
+    "opening_forecast": "a6b8ca8f0e29",
+    "opening_result": "eb3632b5ecb5",
     "learning_status": "58703cc60851"
   },
   "packages": {
