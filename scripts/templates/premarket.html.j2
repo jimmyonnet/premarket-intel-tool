@@ -3256,6 +3256,7 @@
     {% set forecast_day = forecast_date[5:]|replace('-', '/') if forecast_date else '' %}
     {% set page_day = page_data_date[5:]|replace('-', '/') if page_data_date and page_data_date|length == 10 and page_data_date[4] == '-' else page_data_date %}
     {% set is_current_forecast = not forecast_date or not page_day or forecast_day == page_day %}
+    {% set forecast_is_stale = forecast_date and page_day and forecast_day != page_day %}
     {% set fstatus = (forecast.get('status') or 'not_generated') if is_current_forecast else 'not_generated' %}
     {% set confidence = forecast.get('confidence') or 'unknown' %}
     {% set direction = forecast.get('direction') or 'unknown' %}
@@ -3320,7 +3321,7 @@
         {% elif fstatus == 'market_closed' %}
           <div class="opening-forecast-note"><strong>今日台股休市。</strong>不產生預測，也不納入學習；美股與全球市場資料仍可作下一個台股交易日的參考。</div>
         {% else %}
-          <div class="opening-forecast-note"><strong>今日尚未產生預測。</strong>頁面不使用前一天預測冒充今日內容。{{ forecast.get('confidence_reasons', ['請等待 08:30 預測工作完成。'])|join('；') }}</div>
+          <div class="opening-forecast-note"><strong>今日尚未產生預測。</strong>頁面不使用前一天預測冒充今日內容。{% if forecast_is_stale %}目前保存的預測屬於前一交易日；請等待今日 08:30 預測工作完成。{% else %}{{ forecast.get('confidence_reasons', ['請等待 08:30 預測工作完成。'])|join('；') }}{% endif %}</div>
         {% endif %}
         <div class="opening-forecast-learning"><strong>自我學習：</strong>{% if learning_status == 'warmup' %}資料累積中 {{ learning.get('verified_days', 0) }}/{{ learning.get('required_days', 20) }} 個已驗證交易日；未滿 20 日不公開整體準確率。{% elif learning_status == 'paused' %}暫停自動調整，剩餘 {{ learning.get('manual_pause_remaining_days', 0) }} 個交易日。{% else %}已完成 {{ learning.get('verified_days', 0) }} 個已驗證交易日，可查看正式統計。{% endif %}</div>
       </div>

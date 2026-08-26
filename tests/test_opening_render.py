@@ -80,6 +80,9 @@ def test_opening_card_hides_stale_forecast_from_another_market_date():
     soup = BeautifulSoup(_render(forecast=forecast, result={"status": "verified"}, learning={"status": "warmup", "verified_days": 0, "required_days": 20}), "html.parser")
     card = soup.find("section", id="opening-forecast")
     assert card is not None
-    assert "今日尚未產生預測" in card.get_text()
-    assert "偏開低" not in card.get_text()
-    assert "-300" not in card.get_text()
+    text = card.get_text(" ", strip=True)
+    assert "今日尚未產生預測" in text
+    assert "偏開低" not in text
+    assert "-300" not in text
+    assert "目前保存的預測屬於前一交易日；請等待今日 08:30 預測工作完成。" in text
+    assert "鎖定窗口已錯過" not in text
