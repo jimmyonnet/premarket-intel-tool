@@ -225,8 +225,8 @@
     "nikkei225": {
       "name": "日經225指數",
       "value": 65856.43,
-      "change": -328.33,
-      "change_pct": -0.5,
+      "change": -0.0,
+      "change_pct": -0.0,
       "updated_cst": "08/25 14:45",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
       "source_label": "Yahoo 個別指數頁"
