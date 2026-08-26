@@ -1,5 +1,34 @@
 [
   {
+    "title": "台股逐洞賽│輝達財報萬眾矚目台股科技股有望延續反彈氣勢- 證券",
+    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE8wU3NZcVZqUkR6TkpjRHdUdU1lYkNtenFnZFVnSHZLNzFrOWdOUXVfZ0FITEpOU09NZXNKZ0daeUJTeHZjX1R6c3FHVVEzMDE4Ykx0NDBQb3c0Y05zajlj?oc=5",
+    "source": "工商時報",
+    "time": "08/26 16:52",
+    "timestamp": 1787734320.0,
+    "score": 16,
+    "quality_score": 4,
+    "impact_score": 12,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial",
+      "market_move"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "company_earnings"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "nvidia",
+      "taiwan_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "就是要3倍！輝達財報倒數「SOXL買超爆量」 韓國散戶湧入半導體股",
     "link": "https://news.google.com/rss/articles/CBMihgNBVV95cUxQekp1UWdMS1RkeVNtYXk3MFF3WGVVTFNtMEROdlptbmgybm11cVhzZE4ySk1YaUdWV1hqR3c3d1VtdW45QTBZRE5jdS1PaTR6dzNqbjhvVGMtdEhqX2EtQnlMOHFFLV9zZTZvWTJBNjlxTGVkN2IwZDY3NWtYYVYzNF9TMy1YbDJHbjhNTGs3V2NYMXdmcl9GRlNEbEJYY0dNWHJDTVRlS1B0QmRZc19RelZjNXpoWkltejRHd2xTbFJ5TElNc24zQnVfRG1BYVZxOTVxa0xmOTVxV181U2JMSDltWFlpak1zSXVkNmkzNFZiZmJCcFhLeEhOZEU1dV9ZajExbW5ZdjU5UmdQakJsc3RIa2xYU2p4dENQMWNsM3NONG91endFcnM1dXY0QWxlQlUxY016My1ieUU3M1BSTlVsTHMwcmRZNVhXSWFDbGVxY25oR0FTYzR4S3p3SEpNQ2x4U0xTVTY5dUhRNjVKdlI5bjBZREF6Z2dSYXhJOTBhc1pIV1E?oc=5",
     "source": "Yahoo股市",
@@ -54,13 +83,13 @@
     "qualified": true
   },
   {
-    "title": "輝達財報公布時間8/27！三喜臨門成常態，黃仁勳如何驚艷市場？「全村希望」有4個觀察重點｜全球瞭望",
-    "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQLTZadDhCQVdtYkdvMjRWbVhVcl9GUTFKbl9GRU9HdUVWLUh5am5KYTBJNV9IWFhqenZnazlKV2RnREF2VFFhQWszZDhPUDJQZm5KdUpjT1NHcXpxeUIwTnYxaEpQb0lkYVZEN3VUMmdvRmlUOEdoU1loUkFmS3hFVA?oc=5",
-    "source": "今周刊",
-    "time": "08/26 18:03",
-    "timestamp": 1787738589.0,
-    "score": 9,
-    "quality_score": 3,
+    "title": "輝達財報倒數！選擇權市場卻創五年來「最冷」預期 押注波動僅",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1ud3Y0RVY3dkRfclZIVmVPeGYtYXo3SVB5VFE2c2tDb2pvUWZEcGRETEdXc3hDT2FMVkNqaDRXMlpLMjVaaDZNdnBPdUMzdjQ?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/26 15:46",
+    "timestamp": 1787730362.0,
+    "score": 10,
+    "quality_score": 4,
     "impact_score": 6,
     "matched_groups": [
       "systemic_company",
@@ -149,6 +178,29 @@
     "named_entities": [
       "taiwan_market"
     ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "美債已替Fed升息？投資人等華許在傑克森霍爾說清楚",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFAtVkNXajZ2VGpZVnlOUTZ5cl96QlpDS3g0Y09URVpzbWpSVmh6N244c0oxUC1qSlVkWHZnZkYxZ05XTHJDUHJGeENMOWpWSm8?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/26 23:30",
+    "timestamp": 1787758221.0,
+    "score": 8,
+    "quality_score": 4,
+    "impact_score": 4,
+    "matched_groups": [
+      "macro_policy"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "macro_policy"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
