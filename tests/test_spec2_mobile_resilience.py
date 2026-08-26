@@ -57,17 +57,17 @@ def test_mobile_navigation_toast_and_spacing_rules_are_scoped_in_template():
     assert 'style="background:var(--blue)' not in source
 
 
-def test_today_exit_empty_state_uses_compact_layout():
+def test_today_exit_zero_state_has_no_empty_body_or_retry_hook():
     source = TEMPLATE.read_text(encoding="utf-8")
+    start = source.index("<!-- 今日出關 -->")
+    end = source.index("{% if hidden_disposal|length > 0 %}", start)
+    today_exit_block = source[start:end]
 
-    assert 'class="empty-state empty-state-compact" data-package="disposition">今日無處置期滿出關的標的' in source
-    assert ".empty-state-compact {" in source
-    assert "display: flex;" in source
-    assert "padding: 10px 14px;" in source
-    assert ".empty-state-compact .package-inline-retry {" in source
-    assert "min-height: 32px;" in source
-    assert ".empty-state-compact { min-height: 44px; padding: 6px 10px; gap: 6px; font-size: 12px; }" in source
-    assert ".empty-state-compact .package-inline-retry { min-height: 44px; padding: 6px 10px; }" in source
+    assert "今日無處置期滿出關的標的" not in today_exit_block
+    assert 'class="empty-state empty-state-compact"' not in today_exit_block
+    assert "重新載入" not in today_exit_block
+    assert "package-inline-retry" not in today_exit_block
+    assert "package-inline-retry" in source
 
 
 def test_snapshot_mode_is_session_only():
