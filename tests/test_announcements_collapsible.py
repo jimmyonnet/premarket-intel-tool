@@ -59,9 +59,22 @@ def test_announcement_table_uses_readable_semantic_cells_and_responsive_layout()
     assert 'class="announcement-time font-mono"' in macro
     assert 'class="announcement-subject"' in macro
     assert 'class="announcement-ai"' in macro
-    assert '.announcement-table {\n    table-layout: fixed;' in template
+    assert 'class="announcement-eps num font-mono"' in macro
+    assert '.announcement-table {\n    width: 100%;\n    table-layout: fixed;' in template
+    assert '.announcement-table th:nth-child(1),\n  .announcement-table td:nth-child(1) { width: 12%; }' in template
+    assert '.announcement-table th:nth-child(2),\n  .announcement-table td:nth-child(2) { width: 18%; }' in template
+    assert '.announcement-table th:nth-child(3),\n  .announcement-table td:nth-child(3) { width: 50%; }' in template
+    assert '.announcement-table th:nth-child(4),\n  .announcement-table td:nth-child(4) { width: 8%; }' in template
+    assert '.announcement-table th:nth-child(5),\n  .announcement-table td:nth-child(5) { width: 12%; }' in template
     assert '.data-table.announcement-table td {' in template
     assert 'grid-template-columns: 88px minmax(0, 1fr);' in template
+    assert '.data-table.announcement-table td {\n      width: 100% !important;\n      box-sizing: border-box;' in template
+    assert '.announcement-raw-details {\n    display: block;' in template
+    assert '.announcement-raw-details > summary {\n    display: inline-block;' in template
+    assert '.announcement-raw-details[open] > summary {\n    margin-bottom: 8px;' in template
+    assert '.announcement-stock {\n    min-width: 0;' in template
+    assert '.announcement-stock {\n    display: flex;' not in template
+    assert '.announcement-stock .announcement-code,\n  .announcement-stock .announcement-name {\n    display: block;' in template
 
 
 def test_realtime_announcement_summary_keeps_count_but_omits_redundant_time_tip():

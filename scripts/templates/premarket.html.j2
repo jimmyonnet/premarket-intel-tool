@@ -1131,27 +1131,35 @@
   .pause-icon { display: inline-block; margin-right: 4px; color: var(--amber); font-weight: 700; }
   .data-table td.num, .data-table th.num { text-align: right; }
 
-  /* ANNOUNCEMENT TABLE: readable fixed columns instead of browser-dependent squeezing. */
+  /* ANNOUNCEMENT TABLE: fixed proportions keep hidden raw text from distorting columns. */
   .announcement-table {
+    width: 100%;
     table-layout: fixed;
   }
   .announcement-table th,
   .announcement-table td {
     vertical-align: top;
+    min-width: 0;
   }
   .announcement-table th:nth-child(1),
-  .announcement-table td:nth-child(1) { width: 132px; }
+  .announcement-table td:nth-child(1) { width: 12%; }
   .announcement-table th:nth-child(2),
-  .announcement-table td:nth-child(2) { width: 148px; }
+  .announcement-table td:nth-child(2) { width: 18%; }
+  .announcement-table th:nth-child(3),
+  .announcement-table td:nth-child(3) { width: 50%; }
   .announcement-table th:nth-child(4),
-  .announcement-table td:nth-child(4) { width: 72px; }
+  .announcement-table td:nth-child(4) { width: 8%; }
   .announcement-table th:nth-child(5),
-  .announcement-table td:nth-child(5) { width: 168px; }
+  .announcement-table td:nth-child(5) { width: 12%; }
   .announcement-stock {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
     min-width: 0;
+  }
+  .announcement-stock .announcement-code,
+  .announcement-stock .announcement-name {
+    display: block;
+  }
+  .announcement-stock .announcement-name {
+    margin-top: 2px;
   }
   .announcement-code {
     color: var(--blue);
@@ -1175,6 +1183,39 @@
   .announcement-ai {
     line-height: 1.55;
     overflow-wrap: anywhere;
+  }
+  .announcement-time {
+    font-size: 11.5px;
+    letter-spacing: -0.02em;
+  }
+  .announcement-raw-details {
+    display: block;
+    max-width: 100%;
+    margin-top: 8px;
+  }
+  .announcement-raw-details > summary {
+    display: inline-block;
+    margin-top: 0;
+    color: var(--blue);
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .announcement-raw-details[open] > summary {
+    margin-bottom: 8px;
+  }
+  .announcement-raw-details .raw-text {
+    box-sizing: border-box;
+    max-width: 100%;
+    margin: 0;
+    padding: 8px;
+    border-radius: 6px;
+    background: var(--bg-sub);
+    color: var(--text-muted);
+    font: 11px/1.55 var(--font-mono);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    overflow-x: auto;
   }
   .announcement-ai {
     font-weight: 600;
@@ -1564,6 +1605,8 @@
     .data-table td.num { text-align: left; }
     .data-table td.badge-col { text-align: left; }
     .data-table.announcement-table td {
+      width: 100% !important;
+      box-sizing: border-box;
       grid-template-columns: 88px minmax(0, 1fr);
       align-items: start;
     }
@@ -3907,7 +3950,7 @@
                 </details>
                 {% endif %}
               </td>
-              <td data-label="EPS" class="num">{{ parsed.get('EPS') if parsed.get('EPS') is not none else (parsed.get('全年EPS') if parsed.get('全年EPS') is not none else '—') }}</td>
+              <td data-label="EPS" class="announcement-eps num font-mono">{{ parsed.get('EPS') if parsed.get('EPS') is not none else (parsed.get('全年EPS') if parsed.get('全年EPS') is not none else '—') }}</td>
               <td data-label="AI 判讀" class="announcement-ai">{% if row.get('ai_reason') %}{{ row.get('ai_reason') }}{% else %}—{% endif %}</td>
             </tr>
             {% endfor %}
