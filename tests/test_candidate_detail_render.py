@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 
+from bs4 import BeautifulSoup
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -126,6 +127,17 @@ def test_candidate_template_renders_expandable_chengwaye_details():
     assert "2,179" in rendered
     assert "個股漲停履歷" in rendered
     assert "漲停次數" in rendered
+    soup = BeautifulSoup(rendered, "html.parser")
+    detail_cards = soup.select("#candidate-detail-2489 .candidate-detail-grid > details.candidate-detail-card")
+    assert len(detail_cards) == 4
+    assert [card.select_one("summary").get_text(" ", strip=True) for card in detail_cards] == [
+        "法人買賣 · 買超 Top15",
+        "法人買賣 · 賣超 Top15",
+        "當沖 Top10",
+        "個股漲停履歷 Chengwaye 個股頁 ↗",
+    ]
+    assert all(not card.has_attr("open") for card in detail_cards)
+    assert all(card.select_one("summary") is not None for card in detail_cards)
     assert "+2.00%" in rendered
     assert 'href="https://chengwaye.com/stock/2489"' in rendered
     assert "window.pm.toggleCandidateDetail(row)" in rendered

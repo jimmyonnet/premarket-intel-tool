@@ -2957,6 +2957,12 @@
   .candidate-detail-meta { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
   .candidate-detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
   .candidate-detail-card { min-width: 0; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); }
+  .candidate-detail-card > summary { cursor: pointer; list-style: none; }
+  .candidate-detail-card > summary::-webkit-details-marker { display: none; }
+  .candidate-detail-summary { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .candidate-detail-summary::after { content: '▾'; flex: 0 0 auto; color: var(--text-muted); font-size: 12px; }
+  .candidate-detail-card[open] > .candidate-detail-summary::after { transform: rotate(180deg); }
+  .candidate-detail-card[open] > .candidate-detail-summary { border-bottom-color: var(--border); }
   .candidate-detail-table-scroll {
     margin: 0 10px;
     border: 1px solid var(--border-light);
@@ -2965,6 +2971,7 @@
   .candidate-detail-table-scroll .candidate-detail-table { min-width: 640px; }
   .candidate-detail-card.is-wide { grid-column: 1 / -1; }
   .candidate-detail-card h5 { margin: 0; padding: 8px 10px; border-bottom: 1px solid var(--border); background: var(--bg-sub); color: var(--text-main); font-size: 11.5px; }
+  .candidate-detail-summary h5 { flex: 1 1 auto; }
   .limit-up-history-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-right: 10px; border-bottom: 1px solid var(--border); background: var(--bg-sub); }
   .limit-up-history-head h5 { border-bottom: 0; }
   .limit-up-history-head a { color: var(--blue-fg); font-size: 11px; white-space: nowrap; }
@@ -3718,36 +3725,36 @@
               <span class="candidate-detail-meta">資料日 {{ institutional.page_date or '—' }} · <a href="https://chengwaye.com/daily" target="_blank" rel="noopener noreferrer">Chengwaye ↗</a></span>
             </div>
             <div class="candidate-detail-grid">
-              <div class="candidate-detail-card">
-                <h5>法人買賣 · 買超 Top15</h5>
+              <details class="candidate-detail-card">
+                <summary class="candidate-detail-summary"><h5>法人買賣 · 買超 Top15</h5></summary>
                 <div class="table-scroll candidate-detail-table-scroll">
                   <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
                   {% for item in detail.buyers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
                   </tbody></table>
                 </div>
-              </div>
-              <div class="candidate-detail-card">
-                <h5>法人買賣 · 賣超 Top15</h5>
+              </details>
+              <details class="candidate-detail-card">
+                <summary class="candidate-detail-summary"><h5>法人買賣 · 賣超 Top15</h5></summary>
                 <div class="table-scroll candidate-detail-table-scroll">
                   <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
                   {% for item in detail.sellers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
                   </tbody></table>
                 </div>
-              </div>
-              <div class="candidate-detail-card is-wide">
-                <h5>當沖 Top10</h5>
+              </details>
+              <details class="candidate-detail-card is-wide">
+                <summary class="candidate-detail-summary"><h5>當沖 Top10</h5></summary>
                 <div class="table-scroll candidate-detail-table-scroll">
                   <table class="candidate-detail-table"><thead><tr><th>券商</th><th>交易張數</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
                   {% for item in detail.daytraders %}<tr><td>{{ item.name }}</td><td>{{ item.total }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
                   </tbody></table>
                 </div>
-              </div>
+              </details>
               {% set history = detail.limit_up_history %}
-              <div class="candidate-detail-card is-wide limit-up-history-card">
-                <div class="limit-up-history-head">
+              <details class="candidate-detail-card is-wide limit-up-history-card">
+                <summary class="candidate-detail-summary limit-up-history-head">
                   <h5>個股漲停履歷</h5>
                   <a href="https://chengwaye.com/stock/{{ code }}" target="_blank" rel="noopener noreferrer">Chengwaye 個股頁 ↗</a>
-                </div>
+                </summary>
                 {% if history %}
                 <div class="limit-up-history-metrics">
                   <div><span>漲停次數</span><strong>{{ history.summary.limit_up_count }}</strong></div>
@@ -3770,7 +3777,7 @@
                 {% else %}
                 <div class="limit-up-history-empty">目前無法取得此標的漲停履歷；其他法人與當沖明細仍可正常查看。<a href="https://chengwaye.com/stock/{{ code }}" target="_blank" rel="noopener noreferrer">前往 Chengwaye 個股頁 ↗</a></div>
                 {% endif %}
-              </div>
+              </details>
             </div>
           </div>
         </td>
