@@ -1130,6 +1130,55 @@
   .data-table tr.row-paused td { background: var(--row-paused-bg); }
   .pause-icon { display: inline-block; margin-right: 4px; color: var(--amber); font-weight: 700; }
   .data-table td.num, .data-table th.num { text-align: right; }
+
+  /* ANNOUNCEMENT TABLE: readable fixed columns instead of browser-dependent squeezing. */
+  .announcement-table {
+    table-layout: fixed;
+  }
+  .announcement-table th,
+  .announcement-table td {
+    vertical-align: top;
+  }
+  .announcement-table th:nth-child(1),
+  .announcement-table td:nth-child(1) { width: 132px; }
+  .announcement-table th:nth-child(2),
+  .announcement-table td:nth-child(2) { width: 148px; }
+  .announcement-table th:nth-child(4),
+  .announcement-table td:nth-child(4) { width: 72px; }
+  .announcement-table th:nth-child(5),
+  .announcement-table td:nth-child(5) { width: 168px; }
+  .announcement-stock {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+  .announcement-code {
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .02em;
+    white-space: nowrap;
+  }
+  .announcement-name {
+    color: var(--text-main);
+    font-family: var(--font-sans);
+    font-weight: 700;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+  .announcement-time {
+    white-space: nowrap;
+    line-height: 1.5;
+  }
+  .announcement-subject,
+  .announcement-ai {
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+  }
+  .announcement-ai {
+    font-weight: 600;
+  }
   .empty-state {
     padding: 24px;
     text-align: center;
@@ -1514,6 +1563,19 @@
     }
     .data-table td.num { text-align: left; }
     .data-table td.badge-col { text-align: left; }
+    .data-table.announcement-table td {
+      grid-template-columns: 88px minmax(0, 1fr);
+      align-items: start;
+    }
+    .announcement-table .announcement-stock,
+    .announcement-table .announcement-time {
+      min-width: 0;
+      white-space: normal;
+    }
+    .announcement-table .announcement-code { font-size: 13px; }
+    .announcement-table .announcement-subject,
+    .announcement-table .announcement-ai { min-width: 0; }
+    .announcement-table .announcement-raw-details { margin-top: 6px; }
   }
 
   /* MOBILE OPTIMIZATIONS: preserve desktop rendering, improve phone/tablet use. */
@@ -3829,8 +3891,13 @@
             {% for row in rows[:100] %}
             {% set parsed = row.get('parsed') or {} %}
             <tr>
-              <td data-label="代號／名稱" class="code font-mono">{{ row.get('code') or '—' }} {{ row.get('name') or '' }}</td>
-              <td data-label="公告時間" class="font-mono">{{ row.get('date') or '—' }} {{ row.get('time') or '' }}</td>
+              <td data-label="代號／名稱" class="announcement-stock">
+                <span class="announcement-code font-mono">{{ row.get('code') or '—' }}</span>
+                {% if row.get('name') %}<span class="announcement-name">{{ row.get('name') }}</span>{% endif %}
+              </td>
+              <td data-label="公告時間" class="announcement-time font-mono">
+                <span>{{ row.get('date') or '—' }}</span>{% if row.get('time') %} <span>{{ row.get('time') }}</span>{% endif %}
+              </td>
               <td data-label="公告主旨" class="announcement-subject">{{ row.get('subject') or '—' }}
                 {% if row.get('raw') %}
                 <details class="announcement-raw-details">
@@ -3840,7 +3907,7 @@
                 {% endif %}
               </td>
               <td data-label="EPS" class="num">{{ parsed.get('EPS') if parsed.get('EPS') is not none else (parsed.get('全年EPS') if parsed.get('全年EPS') is not none else '—') }}</td>
-              <td data-label="AI 判讀">{% if row.get('ai_reason') %}{{ row.get('ai_reason') }}{% else %}—{% endif %}</td>
+              <td data-label="AI 判讀" class="announcement-ai">{% if row.get('ai_reason') %}{{ row.get('ai_reason') }}{% else %}—{% endif %}</td>
             </tr>
             {% endfor %}
           </tbody>

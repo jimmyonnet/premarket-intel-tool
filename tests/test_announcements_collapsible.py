@@ -46,6 +46,24 @@ def test_announcement_template_distinguishes_fetch_failure_and_cached_data_from_
     assert "沿用快取" in template
 
 
+def test_announcement_table_uses_readable_semantic_cells_and_responsive_layout():
+    template = TEMPLATE.read_text(encoding="utf-8")
+    macro_start = template.index('{% macro render_announcement_rows')
+    macro_end = template.index('{% endmacro %}', macro_start)
+    macro = template[macro_start:macro_end]
+
+    assert '<table class="data-table announcement-table">' in macro
+    assert 'class="announcement-stock"' in macro
+    assert 'class="announcement-code font-mono"' in macro
+    assert 'class="announcement-name"' in macro
+    assert 'class="announcement-time font-mono"' in macro
+    assert 'class="announcement-subject"' in macro
+    assert 'class="announcement-ai"' in macro
+    assert '.announcement-table {\n    table-layout: fixed;' in template
+    assert '.data-table.announcement-table td {' in template
+    assert 'grid-template-columns: 88px minmax(0, 1fr);' in template
+
+
 def test_realtime_announcement_summary_keeps_count_but_omits_redundant_time_tip():
     template = TEMPLATE.read_text(encoding="utf-8")
     macro_start = template.index('{% macro render_announcements')
