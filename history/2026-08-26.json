@@ -1,5 +1,5 @@
 {
-  "archived_at": "2026-08-26 19:41:57",
+  "archived_at": "2026-08-26 19:57:37",
   "data_date": "2026-08-26",
   "retention_days": 60,
   "sources": {
@@ -2558,7 +2558,7 @@
     },
     "source_status": {
       "schema_version": "source-status.v2",
-      "updated_at": "2026-08-26T19:41:46.266412+08:00",
+      "updated_at": "2026-08-26T19:57:27.030715+08:00",
       "reliability_tiers": {
         "core_stable": {
           "label": "核心穩定",
@@ -2596,7 +2596,7 @@
           "status": "ok",
           "fetched_at": "2026-08-26T19:41:16.992237+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2616,7 +2616,7 @@
           "status": "ok",
           "fetched_at": "2026-08-26T19:41:19.618758+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2636,7 +2636,7 @@
           "status": "ok",
           "fetched_at": "2026-08-26T19:41:18.760158+08:00",
           "data_date": "2026-08-26",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2654,14 +2654,16 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-26T19:41:16.991235+08:00",
+          "fetched_at": "2026-08-26T19:57:03.937833+08:00",
           "data_date": "08/27",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
         },
         "pressplay": {
           "source_id": "pressplay",
@@ -2698,7 +2700,7 @@
           "status": "ok",
           "fetched_at": "2026-08-26T19:41:45.281760+08:00",
           "data_date": "2026/08/26",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2718,7 +2720,7 @@
           "status": "ok",
           "fetched_at": "2026-08-26T19:41:16.990797+08:00",
           "data_date": "2026-08-26",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2738,7 +2740,7 @@
           "status": "ok",
           "fetched_at": "2026-08-26T19:41:16.991900+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2758,7 +2760,7 @@
           "status": "ok",
           "fetched_at": "2026-08-26T19:41:17.733722+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2781,7 +2783,7 @@
           "status": "ok",
           "fetched_at": "2026-08-26T19:41:45.737096+08:00",
           "data_date": "2026-08-26T19:41:46.238485+08:00",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2792,7 +2794,7 @@
     },
     "ai_summary": {
       "schema_version": 1,
-      "generated_at": "2026-08-26T19:41:56.789485+08:00",
+      "generated_at": "2026-08-26T19:57:37.100564+08:00",
       "status": "ok",
       "provider": "Gemini API",
       "model": "gemini-2.5-flash",
@@ -2855,51 +2857,51 @@
         }
       },
       "news_summary": {
-        "headline": "輝達財報受市場高度關注，台股科技股有望延續反彈氣勢，同時需留意美債發債規模。",
+        "headline": "輝達財報受市場高度關注，可能牽動台股科技股走勢。",
         "topic_summary": [
           {
             "topic": "台股市場",
             "count": 2,
-            "summary": "新聞指出輝達財報萬眾矚目，台股科技股有望延續反彈氣勢；另有報導提及台股大跌重傷券商，7月稅後少賺156億元。"
+            "summary": "探討台股科技股在輝達財報後的反彈氣勢，以及台股大跌對券商獲利的影響。"
           },
           {
             "topic": "公司／財報",
             "count": 1,
-            "summary": "輝達財報將於8/27公布，市場關注其如何驚艷，並提出四個觀察重點。"
+            "summary": "聚焦輝達即將公布的財報，市場關注其表現及對產業的影響。"
           },
           {
             "topic": "美元／債券／商品",
             "count": 1,
-            "summary": "報導提醒留意九月發債規模，將殖利率5.3%視為關鍵指標，並指出美債面臨三道逆風考驗。"
+            "summary": "提及九月發債規模與殖利率作為關鍵指標，以及美債面臨的逆風。"
           }
         ],
         "key_points": [
-          "輝達財報即將公布，市場高度關注其表現。",
+          "輝達財報將於8/27公布，市場高度期待。",
           "台股科技股有望延續反彈氣勢。",
-          "台股大跌導致券商7月稅後獲利減少。",
-          "九月美債發債規模與殖利率為市場關注焦點。"
+          "台股大跌導致券商7月稅後獲利減少156億元。",
+          "九月發債規模與5.3%殖利率為美債市場關鍵指標。"
         ]
       },
       "market_summary": {
-        "headline": "美股主要指數全面上漲，科技與半導體類股表現尤為突出，台指期夜盤小幅走高。",
+        "headline": "美股主要指數普遍上漲，半導體類股表現強勁，亞股則普遍下跌。（亞股已收盤，以上為前一交易時段收盤結果，非當下盤中）",
         "observations": [
-          "美股四大指數全面收紅，道瓊、S&P 500、NASDAQ及費城半導體指數均呈現上漲。",
-          "科技與半導體相關ADR表現強勁，台積電、輝達、美光、聯電及日月光ADR漲幅顯著。",
-          "費城半導體指數漲幅領先其他美股指數，顯示半導體板塊相對強勢。",
-          "台指期夜盤小幅上漲，與美股正面走勢一致。"
+          "美股主要指數全面收紅，道瓊、S&P 500、NASDAQ均呈現上漲。",
+          "費城半導體指數漲幅領先，顯示半導體類股表現強勢。",
+          "多數台灣相關ADR，特別是半導體相關個股如台積電、輝達、美光、聯電、日月光ADR均有顯著漲幅，而蘋果ADR則逆勢小幅下跌。",
+          "亞股市場如日經225指數與韓國綜合指數則呈現下跌，台指期夜盤小幅上漲。（亞股已收盤，以上為前一交易時段收盤結果，非當下盤中）"
         ],
         "drivers": [
-          "市場對輝達財報的樂觀預期，可能帶動科技股表現。",
-          "美股整體上漲氣氛，有利於全球股市情緒。",
-          "半導體相關ADR的強勁表現，可能對台股相關類股產生正面影響。"
+          "市場對輝達即將公布的財報抱持高度期待，可能推動科技股表現。",
+          "美股半導體類股的強勁表現，可能帶動台股科技股的反彈。",
+          "九月發債規模與殖利率變化，可能影響全球債市與資金流向。"
         ],
         "risks": [
-          "亞洲股市（日經、韓國綜合指數）前一交易日收盤下跌，顯示區域市場存在分歧。",
-          "新聞提及台股大跌重傷券商獲利，可能反映市場潛在壓力。",
-          "九月美債發債規模與殖利率走勢，可能對全球資金流向造成影響。"
+          "輝達財報結果若不如預期，可能對科技股造成壓力。",
+          "美債市場的逆風與殖利率變化，可能引發市場波動。",
+          "台股券商獲利受市場下跌影響，顯示市場仍存在不確定性。"
         ]
       },
-      "quality_note": "所有必要資料來源運作正常。"
+      "quality_note": "所有資料來源皆正常運作。"
     },
     "financials": {
       "cutoff_str": "08/26 13:30",
@@ -30109,11 +30111,11 @@
     }
   },
   "meta": {
-    "build_time": "2026-08-26 19:41",
-    "build_version": "20260826_1941",
+    "build_time": "2026-08-26 19:57",
+    "build_version": "20260826_1957",
     "data_date": "08/27",
-    "stale_hours": 0.0,
-    "hours_since_us_close": 15.7,
+    "stale_hours": 0.3,
+    "hours_since_us_close": 16.0,
     "us_market_context": {
       "session_key": "pre",
       "label": "美股盤前",
@@ -30121,7 +30123,7 @@
       "badge_short": "盤前",
       "pill_class": "pill-amber",
       "updated_label": "08/26 05:43",
-      "detail": "Yahoo Finance · 來源更新 08/26 05:43（14.0 小時前）· 延遲分鐘數未提供 · 尚未進入美股正常交易時段",
+      "detail": "Yahoo Finance · 來源更新 08/26 05:43（14.2 小時前）· 延遲分鐘數未提供 · 尚未進入美股正常交易時段",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "ready",
@@ -30138,7 +30140,7 @@
         "status": "ok",
         "fetched_at": "2026-08-26T19:41:16.992237+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向",
@@ -30161,9 +30163,9 @@
         "name": "處置股與出關預警",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-08-26T19:41:16.991235+08:00",
+        "fetched_at": "2026-08-26T19:57:03.937833+08:00",
         "data_date": "08/27",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險",
@@ -30188,7 +30190,7 @@
         "status": "ok",
         "fetched_at": "2026-08-26T19:41:19.618758+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整",
@@ -30213,7 +30215,7 @@
         "status": "ok",
         "fetched_at": "2026-08-26T19:41:18.760158+08:00",
         "data_date": "2026-08-26",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數",
@@ -30263,7 +30265,7 @@
         "status": "ok",
         "fetched_at": "2026-08-26T19:41:45.281760+08:00",
         "data_date": "2026/08/26",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行",
@@ -30290,7 +30292,7 @@
         "status": "ok",
         "fetched_at": "2026-08-26T19:41:45.737096+08:00",
         "data_date": "2026-08-26T19:41:46.238485+08:00",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
@@ -30318,7 +30320,7 @@
         "status": "ok",
         "fetched_at": "2026-08-26T19:41:16.990797+08:00",
         "data_date": "2026-08-26",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少今日重磅總經數據與事件日程倒數",
@@ -30343,7 +30345,7 @@
         "status": "ok",
         "fetched_at": "2026-08-26T19:41:16.991900+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少昨日盤後自結損益與營收公告統計",
@@ -30368,7 +30370,7 @@
         "status": "ok",
         "fetched_at": "2026-08-26T19:41:17.733722+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少隔夜美股與產業焦點新聞快訊",
@@ -30388,8 +30390,8 @@
       }
     ],
     "schema_version": 1,
-    "data_revision": "3b2059cfff857091",
-    "built_at": "2026-08-26T11:41:57.170234+00:00",
+    "data_revision": "22fc01d5acf40dcf",
+    "built_at": "2026-08-26T11:57:37.603651+00:00",
     "hash": {
       "disposition": "cf7f810c9c86",
       "candidates": "e99a93d6bf77",
@@ -30398,7 +30400,7 @@
       "macro": "82e5815c98f5",
       "calendar": "092cd0dfecab",
       "news": "550c7643da6b",
-      "ai_summary": "6516e5fa7863",
+      "ai_summary": "980610901144",
       "opening_forecast": "a6b8ca8f0e29",
       "opening_result": "0111d65af8d5",
       "learning_status": "a75b0b54d02c"
