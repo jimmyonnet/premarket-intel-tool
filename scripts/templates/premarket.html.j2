@@ -1340,6 +1340,19 @@
     color: var(--text-muted);
     font-size: 13px;
   }
+  .empty-state-compact {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 0;
+    padding: 10px 14px;
+    line-height: 1.4;
+  }
+  .empty-state-compact .package-inline-retry {
+    margin-left: 0;
+    min-height: 32px;
+  }
 
   /* 2-LINE CONDITION LAYOUT */
   .cond-box {
@@ -1766,6 +1779,8 @@
     .card { border-radius: 12px; margin-bottom: 10px; }
     .card-head { padding: 10px 12px; gap: 6px; }
     .data-block { padding: 10px 12px; }
+    .empty-state-compact { min-height: 44px; padding: 6px 10px; gap: 6px; font-size: 12px; }
+    .empty-state-compact .package-inline-retry { min-height: 44px; padding: 6px 10px; }
     .back-to-top {
       bottom: calc(24px + var(--safe-bottom));
       right: calc(24px + var(--safe-right));
@@ -4122,7 +4137,7 @@
             </table>
           </div>
           {% else %}
-          <div class="empty-state" data-package="disposition">今日無處置期滿出關的標的</div>
+          <div class="empty-state empty-state-compact" data-package="disposition">今日無處置期滿出關的標的</div>
           {% endif %}
         </div>
       </div>
