@@ -1,5 +1,33 @@
 [
   {
+    "title": "就是要3倍！輝達財報倒數「SOXL買超爆量」 韓國散戶湧入半導體股",
+    "link": "https://news.google.com/rss/articles/CBMihgNBVV95cUxQekp1UWdMS1RkeVNtYXk3MFF3WGVVTFNtMEROdlptbmgybm11cVhzZE4ySk1YaUdWV1hqR3c3d1VtdW45QTBZRE5jdS1PaTR6dzNqbjhvVGMtdEhqX2EtQnlMOHFFLV9zZTZvWTJBNjlxTGVkN2IwZDY3NWtYYVYzNF9TMy1YbDJHbjhNTGs3V2NYMXdmcl9GRlNEbEJYY0dNWHJDTVRlS1B0QmRZc19RelZjNXpoWkltejRHd2xTbFJ5TElNc24zQnVfRG1BYVZxOTVxa0xmOTVxV181U2JMSDltWFlpak1zSXVkNmkzNFZiZmJCcFhLeEhOZEU1dV9ZajExbW5ZdjU5UmdQakJsc3RIa2xYU2p4dENQMWNsM3NONG91endFcnM1dXY0QWxlQlUxY016My1ieUU3M1BSTlVsTHMwcmRZNVhXSWFDbGVxY25oR0FTYzR4S3p3SEpNQ2x4U0xTVTY5dUhRNjVKdlI5bjBZREF6Z2dSYXhJOTBhc1pIV1E?oc=5",
+    "source": "Yahoo股市",
+    "time": "08/26 22:15",
+    "timestamp": 1787753700.0,
+    "score": 14,
+    "quality_score": 3,
+    "impact_score": 11,
+    "matched_groups": [
+      "systemic_company",
+      "earnings_financial",
+      "market_move",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "sector_technology",
+      "company_earnings"
+    ],
+    "primary_topic": "sector_technology",
+    "named_entities": [
+      "nvidia"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "〈美股早盤〉通膨還在燒！主要指數開低 市場押注Fed年底前升息1碼",
     "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE04eGpKSkRXOHNaWWJJTVJxTThtdG1zbVZXTWFtWVh3bTQ3VTdBbkg3TmlfS2RSMHJwU1NOeU1ianRtRFMtVWtNbnpqam1adjA?oc=5",
     "source": "news.cnyes.com",
