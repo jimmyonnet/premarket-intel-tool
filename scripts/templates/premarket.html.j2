@@ -4196,7 +4196,7 @@
       {% set att_state = (financial_source_status.get('att') or {}).get('state', 'fresh') %}
       {% set fin_state = (financial_source_status.get('fin') or {}).get('state', 'fresh') %}
       {% set rev_state = (financial_source_status.get('rev') or {}).get('state', 'fresh') %}
-      <details class="card announcements-collapsible" open>
+      <details class="card announcements-collapsible">
         <summary class="card-head" style="cursor:pointer; list-style:none;">
           <div class="card-title-group">
             <h3 class="card-title">即時公告明細</h3>

@@ -23,12 +23,13 @@ def test_source_template_places_announcements_after_watchlist_before_market_cont
     assert template.index('<section id="announcements"') < template.index('<section id="market-context"')
 
 
-def test_deployed_announcement_card_follows_watchlist_and_keeps_collapsed_rows():
+def test_deployed_announcement_card_is_collapsed_by_default_and_keeps_collapsed_rows():
     page = DEPLOYED.read_text(encoding="utf-8")
     block = _announcement_block(page)
 
     assert page.index('<section id="watchlist"') < page.index('<section id="announcements"') < page.index('<section id="market-context"')
-    assert '<details class="card announcements-collapsible" open>' in block
+    assert '<details class="card announcements-collapsible">' in block
+    assert '<details class="card announcements-collapsible" open>' not in block
     assert '<summary class="card-head"' in block
     assert block.count('class="unref-accordion"') == 3
     assert 'class="unref-accordion" open' not in block
