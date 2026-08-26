@@ -42,6 +42,21 @@ def test_spec2_resilience_contract_is_present_in_template_and_deployed_page():
         assert "g + 1~6" in source
 
 
+def test_mobile_navigation_toast_and_spacing_rules_are_scoped_in_template():
+    source = TEMPLATE.read_text(encoding="utf-8")
+
+    assert "overscroll-behavior-x: contain;" in source
+    assert ".nav-sections::-webkit-scrollbar { display: none; }" in source
+    assert ".content-section { margin-bottom: 24px; }" in source
+    assert ".card { border-radius: 12px; margin-bottom: 10px; }" in source
+    assert "left: calc(50% - 28px);" in source
+    assert "max-width: calc(100vw - 104px);" in source
+    assert "border-radius: 999px;" in source
+    assert ".sw-update-button" in source
+    assert "pointer-events: auto;" in source
+    assert 'style="background:var(--blue)' not in source
+
+
 def test_snapshot_mode_is_session_only():
     source = TEMPLATE.read_text(encoding="utf-8")
     assert "if (window.pm.uiState.snapshotMode) document.body.classList.add('snapshot-mode')" not in source

@@ -43,7 +43,7 @@
       if (event.data && event.data.type === 'sw-updated') {
         var toast = document.getElementById('toast');
         if (toast) {
-          toast.innerHTML = '🔄 盤前資料已有新版本 <button onclick="location.reload(true)" style="background:var(--blue); color:#fff; border:none; border-radius:4px; padding:3px 8px; margin-left:6px; cursor:pointer; font-weight:700;">點此更新</button>';
+          toast.innerHTML = '🔄 盤前資料已有新版本 <button class="sw-update-button" onclick="location.reload(true)">點此更新</button>';
           toast.classList.add('show');
         }
       }
@@ -523,7 +523,10 @@
       flex-wrap: nowrap;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
     }
+    .nav-sections::-webkit-scrollbar { display: none; }
     .nav-link {
       flex: 0 0 auto;
       padding: 0 12px;
@@ -1543,6 +1546,20 @@
     opacity: 1;
     transform: translateY(0);
   }
+  .sw-update-button {
+    margin-left: 6px;
+    padding: 3px 8px;
+    border: 0;
+    border-radius: 999px;
+    background: var(--blue);
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+    white-space: nowrap;
+    pointer-events: auto;
+  }
+  .sw-update-button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
   /* SHORTCUTS MODAL */
   .modal-overlay {
@@ -1664,15 +1681,29 @@
     .page-nav { padding-top: calc(6px + var(--safe-top)); }
     .page-main { padding-bottom: calc(60px + var(--safe-bottom)); }
     .page-footer { padding-bottom: calc(16px + var(--safe-bottom)); }
+    .content-section { margin-bottom: 24px; }
+    .section-header { margin-bottom: 8px; padding-bottom: 4px; }
+    .card { border-radius: 12px; margin-bottom: 10px; }
+    .card-head { padding: 10px 12px; gap: 6px; }
+    .data-block { padding: 10px 12px; }
     .back-to-top {
       bottom: calc(24px + var(--safe-bottom));
       right: calc(24px + var(--safe-right));
     }
     .toast {
-      bottom: calc(24px + var(--safe-bottom));
-      left: calc(24px + var(--safe-left));
+      left: calc(50% - 28px);
+      right: auto;
+      bottom: calc(16px + var(--safe-bottom));
+      max-width: calc(100vw - 104px);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      line-height: 1.35;
+      text-align: center;
+      transform: translate(-50%, 10px);
     }
-
+    .toast.show { transform: translate(-50%, 0); }
+    .sw-update-button { padding: 5px 9px; }
     .cal-chip { min-height: 36px; padding: 6px 12px; }
     .watch-input-modern,
     .cal-search-input,
@@ -2885,8 +2916,9 @@
     .candidate-detail-card.is-wide { grid-column: auto; }
     .candidate-detail-row > td::before { content: none; }
     .candidate-detail-row > td { display: block; }
-    .candidate-detail-panel { padding: 10px; }
+    .candidate-detail-panel { padding: 8px; }
     .candidate-detail-card { overflow: hidden; }
+    .candidate-detail-card h5 { padding: 7px 8px; }
     .candidate-detail-table-scroll { margin: 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
     .candidate-detail-table-scroll .candidate-detail-table {
       display: table;
