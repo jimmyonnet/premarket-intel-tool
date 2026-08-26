@@ -105,6 +105,33 @@ def test_closed_asia_quotes_are_explicitly_historical_in_fallback_and_ai_text():
     assert "前一交易時段" in normalized["market_summary"]["observations"][0]
 
 
+def test_preopen_asia_quotes_are_explicitly_historical_in_fallback_and_ai_text():
+    session = ai.asia_session_context(datetime(2026, 8, 26, 7, 30, tzinfo=ai.TAIPEI))
+    assert session["key"] == "preopen"
+    quotes = [
+        {"group": "美股指數", "name": "NASDAQ", "change_pct": 0.8},
+        {"group": "亞股", "name": "日經225", "change_pct": -2.5},
+        {"group": "台指期夜盤", "name": "台指期夜盤", "change_pct": 0.2},
+    ]
+    fallback = ai.fallback_market_summary(quotes, [], session)
+    assert "亞股尚未開盤" in fallback["risks"][0]
+    assert "前一交易時段收盤結果" in fallback["observations"][-1]
+    assert all("亞股" not in item or "尚未開盤" in item for item in fallback["observations"])
+
+    raw = {
+        "news_summary": {"headline": "", "topic_summary": [], "key_points": []},
+        "market_summary": {
+            "headline": "美股主要指數普遍上漲，亞股則呈現下跌。",
+            "observations": ["亞股呈現下跌。"],
+            "drivers": [],
+            "risks": [],
+        },
+    }
+    normalized = ai.normalize_ai_response(raw, {"headline": "", "topic_summary": [], "key_points": []}, fallback, {"topic_counts": {}}, session)
+    assert "亞股尚未開盤" in normalized["market_summary"]["headline"]
+    assert "前一交易時段" in normalized["market_summary"]["observations"][0]
+
+
 def test_template_renders_closed_asia_context_and_renames_quote_card():
     template_dir = Path(__file__).parent.parent / "scripts" / "templates"
     tmpl = Environment(loader=FileSystemLoader(str(template_dir)), autoescape=True).get_template("premarket.html.j2")

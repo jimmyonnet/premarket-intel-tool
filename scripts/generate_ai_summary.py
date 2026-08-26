@@ -254,7 +254,7 @@ def asia_session_context(now: datetime | None = None) -> dict[str, str]:
         return {
             "key": "preopen",
             "label": "亞股尚未開盤",
-            "note": "亞股尚未進入主要交易時段；若有舊行情，僅作最近交易時段參考。",
+            "note": "亞股尚未開盤；若有舊行情，僅作前一交易時段收盤結果參考，非當下盤中。",
         }
     return {
         "key": "closed",
@@ -264,11 +264,14 @@ def asia_session_context(now: datetime | None = None) -> dict[str, str]:
 
 
 def annotate_asia_session(text: str, session: dict[str, str]) -> str:
-    """Prevent a closed Asia quote from reading like a live market statement."""
-    if session.get("key") != "closed" or "亞股" not in text:
+    """Prevent non-live Asia quotes from reading like a current market statement."""
+    session_key = session.get("key")
+    if session_key not in ("closed", "preopen") or "亞股" not in text:
         return text
-    if any(marker in text for marker in ("已收盤", "已休市", "前一交易時段", "收盤結果", "非當下盤中")):
+    if any(marker in text for marker in ("尚未開盤", "已收盤", "已休市", "前一交易時段", "收盤結果", "非當下盤中")):
         return text
+    if session_key == "preopen":
+        return f"{text}（亞股尚未開盤，以上為前一交易時段收盤結果，非當下盤中）"
     return f"{text}（亞股已收盤，以上為前一交易時段收盤結果，非當下盤中）"
 
 
@@ -278,11 +281,12 @@ def fallback_market_summary(
     session: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     session = session or asia_session_context()
-    # Once the Asian session is over, do not let its closed quote determine an
-    # "overnight" breadth headline. Its close remains visible in the Asia card.
+    # Before or after the Asian session, do not let a non-live quote determine
+    # an "overnight" breadth headline. Its latest close remains visible in the
+    # Asia card with an explicit session label.
     effective_quotes = [
         row for row in quotes
-        if not (session.get("key") == "closed" and row.get("group") == "亞股")
+        if not (session.get("key") in ("closed", "preopen") and row.get("group") == "亞股")
     ]
     valid = [row for row in effective_quotes if finite_number(row.get("change_pct")) is not None]
     down = [row for row in valid if finite_number(row.get("change_pct")) < 0]
@@ -325,13 +329,13 @@ def fallback_market_summary(
         f"新聞題材主要集中在：{'、'.join(topic_names)}；這是資訊分布，不代表已確認的因果關係。"
         if topic_names else "目前沒有可用新聞題材可供交叉比對。"
     ]
-    if session.get("key") == "closed":
+    if session.get("key") in ("closed", "preopen"):
         observations.append(session["note"])
     return {
         "headline": headline,
         "observations": [annotate_asia_session(item, session) for item in observations[:4]],
         "drivers": [annotate_asia_session(item, session) for item in drivers[:4]],
-        "risks": [session["note"] if session.get("key") == "closed" else "行情時間與資料延遲請以各卡片標示為準。", "以上為快照關係整理，不代表價格方向預測。"],
+        "risks": [session["note"] if session.get("key") in ("closed", "preopen") else "行情時間與資料延遲請以各卡片標示為準。", "以上為快照關係整理，不代表價格方向預測。"],
     }
 
 
