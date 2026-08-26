@@ -23,6 +23,7 @@ from pathlib import Path
 import requests
 import icalendar
 import recurring_ical_events
+from opencc import OpenCC
 
 try:
     from trading_calendar import (
@@ -47,6 +48,7 @@ DEFAULT_ICS_URL = (
 TAIPEI = datetime.timezone(datetime.timedelta(hours=8))
 DEFAULT_DAYS_AHEAD = 14
 HEADERS = {"User-Agent": "premarket-intel-tool (+github actions calendar sync)"}
+S2TW_CONVERTER = OpenCC("s2twp")
 
 S2TW_MAP = {
     "MM图表连结": "MM圖表連結",
@@ -97,7 +99,7 @@ def s2tw(text: str) -> str:
         return text
     for s, tw in S2TW_MAP.items():
         text = text.replace(s, tw)
-    return text
+    return S2TW_CONVERTER.convert(text)
 
 
 def fetch_ics_bytes(url: str, fixture: Path = None) -> bytes:
@@ -513,6 +515,16 @@ def extract_events(ics_bytes: bytes, start_date, end_date):
     return events
 
 
+def filter_events_to_range(events: list[dict], start_date: datetime.date, end_date: datetime.date) -> list[dict]:
+    """Keep only events in the published inclusive date window."""
+    start_iso = start_date.isoformat()
+    end_iso = end_date.isoformat()
+    return [
+        event for event in events
+        if event.get("date") and start_iso <= event["date"] <= end_iso
+    ]
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ics-url", default=DEFAULT_ICS_URL)
@@ -535,6 +547,10 @@ def main():
     external_events = extract_events(ics_bytes, today, end_date)
     local_events = generate_tw_market_rule_events(today, local_rule_range_end)
     events = merge_tw_market_rule_events(external_events, local_events)
+    # Local rules may be generated through the next complete month so that
+    # month-end trading-day calculations are correct. The published calendar,
+    # however, must honour the requested [today, today + days_ahead] window.
+    events = filter_events_to_range(events, today, end_date)
 
     result = {
         "source": args.ics_url,

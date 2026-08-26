@@ -1,10 +1,32 @@
 from datetime import date
 
 from scripts.fetch_calendar import (
+    filter_events_to_range,
+    s2tw,
     generate_tw_market_rule_events,
     get_local_rule_range_end,
     merge_tw_market_rule_events,
 )
+
+
+def test_calendar_text_is_normalized_to_taiwan_traditional_chinese():
+    text = "美國-實際国内生產總值；个人消费支出物价指數；非农就业人口；美國美联储褐皮书"
+
+    assert s2tw(text) == "美國-實際國內生產總值；個人消費支出物價指數；非農就業人口；美國美聯儲褐皮書"
+
+
+def test_filter_events_to_range_keeps_only_requested_two_week_window():
+    events = [
+        {"id": "before", "date": "2026-08-25"},
+        {"id": "start", "date": "2026-08-26"},
+        {"id": "end", "date": "2026-09-09"},
+        {"id": "after", "date": "2026-09-10"},
+        {"id": "missing-date"},
+    ]
+
+    filtered = filter_events_to_range(events, date(2026, 8, 26), date(2026, 9, 9))
+
+    assert [event["id"] for event in filtered] == ["start", "end"]
 
 
 def _event_by_type(events, semantic_type):
