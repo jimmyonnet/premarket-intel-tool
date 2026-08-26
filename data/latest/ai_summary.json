@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-26T08:12:38.501775+08:00",
-  "status": "ok",
-  "provider": "Gemini API",
-  "model": "gemini-2.5-flash",
-  "fallback_reason": null,
+  "generated_at": "2026-08-26T08:20:02.729694+08:00",
+  "status": "fallback",
+  "provider": "確定性降級整理",
+  "model": null,
+  "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev",
   "news_stats": {
     "count": 10,
     "unique_topics": 4,
-    "unique_sources": 4,
-    "nvidia_count": 2
+    "unique_sources": 6,
+    "nvidia_count": 3
   },
   "data_quality": {
     "status": "ok",
@@ -28,7 +28,7 @@
       {
         "name": "公司／事件集中度",
         "status": "ok",
-        "detail": "輝達 2 則"
+        "detail": "輝達 3 則"
       },
       {
         "name": "行情可用性",
@@ -44,72 +44,69 @@
     "issues": [],
     "news_count": 10,
     "unique_topics": 4,
-    "unique_sources": 4,
-    "nvidia_count": 2,
+    "unique_sources": 6,
+    "nvidia_count": 3,
     "topic_counts": {
-      "global_market": 2,
+      "global_market": 1,
       "currency_commodities": 4,
-      "taiwan_market": 3,
-      "company_earnings": 1
+      "company_earnings": 2,
+      "taiwan_market": 3
     },
     "source_counts": {
-      "news.cnyes.com": 6,
+      "news.cnyes.com": 4,
+      "鉅亨網": 1,
+      "今周刊": 1,
       "Yahoo股市": 2,
       "經濟日報": 1,
       "工商時報": 1
     }
   },
   "news_summary": {
-    "headline": "美股主要指數與晶片股反彈，台股V轉收紅，市場關注輝達財報與聯準會動向",
+    "headline": "目前整理 10 則新聞，涵蓋 4 類主題；同一公司或事件不應主導全部清單。",
     "topic_summary": [
-      {
-        "topic": "美股／全球市場",
-        "count": 2,
-        "summary": "全球市場方面，美股主要指數開高後收紅，晶片股反彈推升市場，輝達財報將是AI行情關鍵考驗，但有分析師警告美股恐回檔逾10%。"
-      },
       {
         "topic": "美元／債券／商品",
         "count": 4,
-        "summary": "貨幣與商品方面，美債殖利率飆升引發關注，專家看好Jackson Hole會議可能釋放訊號，金價突破4600美元，且選擇權市場大舉押注長債反彈。"
+        "summary": "美元／債券／商品"
       },
       {
         "topic": "台股市場",
         "count": 3,
-        "summary": "台灣市場方面，台股尾盤急拉近千點V轉收紅，上漲407點，台積電收2400元，航運、金融與矽光子類股表現亮眼。"
+        "summary": "台股市場"
       },
       {
         "topic": "公司／財報",
+        "count": 2,
+        "summary": "公司／財報"
+      },
+      {
+        "topic": "美股／全球市場",
         "count": 1,
-        "summary": "公司財報方面，漢測前七月營收超越去年全年，展現強勁成長動能。"
+        "summary": "美股／全球市場"
       }
     ],
     "key_points": [
-      "美股主要指數全面收紅，晶片股強勁反彈，輝達終止連七跌。",
-      "輝達財報被視為AI行情能否延續的關鍵考驗。",
-      "台股昨日尾盤急拉近千點，V轉上漲407點作收。",
-      "市場關注Jackson Hole會議與美債殖利率走勢，美債買氣回籠。"
+      "〈美股早盤〉晶片股反彈推升主要指數開高 輝達財報成AI行情關鍵考驗（news.cnyes.com，08/25 21:40）",
+      "美債殖利率飆升不用慌？專家看好Jackson Hole：Fed華許若釋放訊號美股或大漲（鉅亨網，08/26 06:41）",
+      "〈美股盤後〉輝達終止連七跌 美債買氣回籠 四大指數收紅（news.cnyes.com，08/26 05:41）",
+      "輝達財報公布時間8/27！三喜臨門成常態，黃仁勳如何驚艷市場？「全村希望」有4個觀察重點｜全球瞭望（今周刊，08/26 08:05）",
+      "尾盤急拉近千點翻紅！台股上漲407點作收 台積電收2400元（Yahoo股市，08/25 14:05）"
     ]
   },
   "market_summary": {
-    "headline": "美股主要指數全面上漲，費半與ADR表現強勁，台指期夜盤同步走高",
+    "headline": "隔夜市場風險情緒偏強，但不同市場與產業之間仍有分化。",
     "observations": [
-      "美股主要指數全面收紅，道瓊、S&P 500、NASDAQ及費城半導體指數均呈現上漲。",
-      "費城半導體指數漲幅達1.44%領先，半導體相關ADR如輝達、台積電、美光、聯電、日月光亦表現強勁，顯示科技與半導體類股相對強勢。",
-      "台指期夜盤跟隨美股走勢上漲0.9%，與美股表現一致。",
-      "亞洲股市表現分歧，日經225指數持平，韓國綜合指數下跌0.68%，與美股走勢不同步。"
+      "市場廣度：上漲標的多於下跌標的，整體不是所有市場同步同幅度變動。",
+      "相對強弱：ADR／跨海標的 相對有支撐，亞股 相對承壓，市場表現呈現分化。",
+      "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
     ],
     "drivers": [
-      "晶片股反彈推升美股主要指數開高並收紅。",
-      "市場對Jackson Hole會議聯準會可能釋放訊號抱持期待。",
-      "美債買氣回籠，選擇權市場大舉押注長債反彈。",
-      "台股昨日尾盤急拉近千點，顯示市場買盤積極。"
+      "新聞題材主要集中在：美元／債券／商品、台股市場、公司／財報；這是資訊分布，不代表已確認的因果關係。"
     ],
     "risks": [
-      "輝達財報結果將是AI行情能否延續的關鍵考驗。",
-      "美銀警告美股恐有逾10%的回檔風險。",
-      "美債殖利率飆升可能對市場造成壓力。",
-      "民主黨若奪參院，可能影響AI與金融股的避險焦點。"
+      "行情時間與資料延遲請以各卡片標示為準。",
+      "以上為快照關係整理，不代表價格方向預測。"
     ]
   },
-  "quality_note": "本報告內容僅根據使用者提供的INPUT JSON撰寫整理，未補造任何不存在的價格、漲跌幅、時間、公司、政策或新聞事實。"
+  "quality_note": "目前使用確定性整理；完成 AI 服務設定後，會補上語意摘要。"
 }
