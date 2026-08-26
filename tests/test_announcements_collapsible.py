@@ -23,16 +23,21 @@ def test_source_template_places_announcements_after_watchlist_before_market_cont
     assert template.index('<section id="announcements"') < template.index('<section id="market-context"')
 
 
-def test_deployed_announcement_card_is_collapsed_by_default_and_keeps_collapsed_rows():
+def test_announcement_template_is_collapsed_by_default_and_deployed_page_keeps_collapsed_rows():
+    template = TEMPLATE.read_text(encoding="utf-8")
+    macro_start = template.index('{% macro render_announcements')
+    macro_end = template.index('{% endmacro %}', macro_start)
+    template_macro = template[macro_start:macro_end]
     page = DEPLOYED.read_text(encoding="utf-8")
-    block = _announcement_block(page)
+    deployed_block = _announcement_block(page)
 
+    assert '<details class="card announcements-collapsible">' in template_macro
+    assert '<details class="card announcements-collapsible" open>' not in template_macro
     assert page.index('<section id="watchlist"') < page.index('<section id="announcements"') < page.index('<section id="market-context"')
-    assert '<details class="card announcements-collapsible">' in block
-    assert '<details class="card announcements-collapsible" open>' not in block
-    assert '<summary class="card-head"' in block
-    assert block.count('class="unref-accordion"') == 3
-    assert 'class="unref-accordion" open' not in block
+    assert 'announcements-collapsible' in deployed_block
+    assert '<summary class="card-head"' in deployed_block
+    assert deployed_block.count('class="unref-accordion"') == 3
+    assert 'class="unref-accordion" open' not in deployed_block
 
 
 def test_announcement_template_distinguishes_fetch_failure_and_cached_data_from_zero_rows():
