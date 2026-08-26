@@ -4,166 +4,18 @@
     "today": "2026-08-26",
     "effective_market_day": "2026-08-26",
     "expected_previous_trading_day": "2026-08-25",
-    "page_says_applies_to": "08/26",
+    "page_says_applies_to": "08/27",
     "page_dropdown_selected": null,
-    "applies_to_matches_today": true
+    "applies_to_matches_today": false
   },
   "one_flag_from_disposal": [
     {
-      "market": "市",
-      "code": "2486",
-      "name": "一詮",
-      "close": "258.0",
-      "condition": "① 08-26不符合③④⑤⑦ 08-26不符合⑥ 量≥11,698張",
-      "earliest_disposal": "08-27 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 0/3",
-          "current": 0,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 4/5",
-          "current": 4,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 4/6",
-          "current": 4,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 6/12",
-          "current": 6,
-          "threshold": 12
-        }
-      ],
-      "condition_segments": [
-        {
-          "text": "① 08-26不符合",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "③④⑤⑦ 08-26不符合",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "⑥ 量≥11,698張",
-          "color": "var(--amber)",
-          "bold": false
-        }
-      ]
-    },
-    {
       "market": "櫃",
-      "code": "3362",
-      "name": "先進光",
-      "close": "195.0",
-      "condition": "①② 08-26不符合③④⑤⑦ 08-26不符合⑥ 量≥7,372張",
-      "earliest_disposal": "08-27 第2次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 0/3",
-          "current": 0,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 4/5",
-          "current": 4,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 5/6",
-          "current": 5,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 5/12",
-          "current": 5,
-          "threshold": 12
-        }
-      ],
-      "condition_segments": [
-        {
-          "text": "①② 08-26不符合",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "③④⑤⑦ 08-26不符合",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "⑥ 量≥7,372張",
-          "color": "var(--amber)",
-          "bold": false
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "4416",
-      "name": "三圓",
-      "close": "15.25",
-      "condition": "①16.35↑(+7.2%)",
-      "earliest_disposal": "08-27 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 2/3",
-          "current": 2,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 3/5",
-          "current": 3,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 3/6",
-          "current": 3,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 3/12",
-          "current": 3,
-          "threshold": 12
-        }
-      ],
-      "condition_segments": [
-        {
-          "text": "①",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "16.35↑(+7.2%)",
-          "color": "var(--rise)",
-          "bold": false
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "⏸5314",
-      "name": "世紀*",
-      "close": "31.45",
-      "condition": "①符合（即使跌停仍符合）",
-      "earliest_disposal": "08-27 第2次2分",
+      "code": "⏸4304",
+      "name": "勝昱",
+      "close": "26.30",
+      "condition": "①28.35↑(+7.8%)",
+      "earliest_disposal": "08-28 第2次2分",
       "badges": [
         {
           "short": "3①",
@@ -197,21 +49,169 @@
           "bold": false
         },
         {
-          "text": "符合（即使跌停仍符合）",
-          "color": "var(--text)",
-          "bold": true
+          "text": "28.35↑(+7.8%)",
+          "color": "var(--rise)",
+          "bold": false
+        }
+      ]
+    },
+    {
+      "market": "櫃",
+      "code": "4979",
+      "name": "華星光",
+      "close": "598",
+      "condition": "①657↑(+9.9%)③④⑤⑦ 08-27不符合⑥ 收盤≥623元(+4.18%)且量≥7,118張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
+      "earliest_disposal": "08-28 第2次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 0/3",
+          "current": 0,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 4/5",
+          "current": 4,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 4/6",
+          "current": 4,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 4/12",
+          "current": 4,
+          "threshold": 12
+        }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "657↑(+9.9%)",
+          "color": "var(--rise)",
+          "bold": false
+        },
+        {
+          "text": "③④⑤⑦ 08-27不符合",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "⑥ 收盤≥623元(+4.18%)且量≥7,118張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
+          "color": "var(--amber)",
+          "bold": false
+        }
+      ]
+    },
+    {
+      "market": "市",
+      "code": "⏸6225",
+      "name": "天瀚",
+      "close": "68.5",
+      "condition": "①72.5↑(+5.8%)",
+      "earliest_disposal": "08-28 第2次25分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 2/3",
+          "current": 2,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 2/5",
+          "current": 2,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 2/6",
+          "current": 2,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 2/12",
+          "current": 2,
+          "threshold": 12
+        }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "72.5↑(+5.8%)",
+          "color": "var(--rise)",
+          "bold": false
+        }
+      ]
+    },
+    {
+      "market": "市",
+      "code": "6949",
+      "name": "沛爾生醫-創",
+      "close": "1490",
+      "condition": "①1375↑(-7.7%)",
+      "earliest_disposal": "08-28 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 2/3",
+          "current": 2,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 2/5",
+          "current": 2,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 2/6",
+          "current": 2,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 2/12",
+          "current": 2,
+          "threshold": 12
+        }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "1375↑(-7.7%)",
+          "color": "var(--fall)",
+          "bold": false
         }
       ]
     }
   ],
   "two_flags_from_disposal": [
     {
-      "market": "櫃",
-      "code": "⏸4304",
-      "name": "勝昱",
-      "close": "25.15",
-      "condition": "①25.80↑(+2.6%)②不符合③④⑤⑦25.05↑(-0.4%)需量≥197張+但書⑥ 不符合（PB明日不可達，量未達）",
-      "earliest_disposal": "08-28 第2次2分",
+      "market": "市",
+      "code": "2426",
+      "name": "鼎元",
+      "close": "99.8",
+      "condition": "①91.7↑(-8.1%)②不符合③④⑤⑦跌停仍過價格條件，需量≥30,063張 +量差幅/週轉差幅/分點/券資比⑥ 量≥15,031張",
+      "earliest_disposal": "08-31 第1次2分",
       "badges": [
         {
           "short": "3①",
@@ -233,19 +233,19 @@
         },
         {
           "short": "12",
-          "title": "30日內12次（第1~7款） 1/12",
-          "current": 1,
+          "title": "30日內12次（第1~7款） 2/12",
+          "current": 2,
           "threshold": 12
         }
       ]
     },
     {
       "market": "櫃",
-      "code": "4979",
-      "name": "華星光",
-      "close": "601",
-      "condition": "①657↑(+9.3%)③④⑤⑦ 08-26不符合⑥ 收盤≥591元(-1.66%)且量≥7,118張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
-      "earliest_disposal": "08-28 第2次2分",
+      "code": "3163",
+      "name": "波若威",
+      "close": "777",
+      "condition": "①② 08-27不符合③④⑤⑦ 08-27不符合⑥ 量≥4,732張",
+      "earliest_disposal": "08-31 第2次2分",
       "badges": [
         {
           "short": "3①",
@@ -274,12 +274,12 @@
       ]
     },
     {
-      "market": "市",
-      "code": "⏸6225",
-      "name": "天瀚",
-      "close": "66.1",
-      "condition": "①65.9↑(-0.3%)②66.2↑(+0.2%)③④⑤⑦61.3↑(-7.3%)需量≥349張+但書⑥ 量≥3,000張",
-      "earliest_disposal": "08-28 第2次25分",
+      "market": "櫃",
+      "code": "3441",
+      "name": "聯一光",
+      "close": "125.0",
+      "condition": "①117.5↑(-6.0%)②125.5↑(+0.4%)③④⑤⑦114.0↑(-8.8%)需量≥2,002張+但書⑥ 不符合（PE明日不可達，量已達標）",
+      "earliest_disposal": "08-31 第1次2分",
       "badges": [
         {
           "short": "3①",
@@ -289,31 +289,99 @@
         },
         {
           "short": "5",
-          "title": "連續5日（第1~7款） 1/5",
-          "current": 1,
+          "title": "連續5日（第1~7款） 3/5",
+          "current": 3,
           "threshold": 5
         },
         {
           "short": "6",
-          "title": "10日內6次（第1~7款） 1/6",
-          "current": 1,
+          "title": "10日內6次（第1~7款） 3/6",
+          "current": 3,
           "threshold": 6
         },
         {
           "short": "12",
-          "title": "30日內12次（第1~7款） 1/12",
-          "current": 1,
+          "title": "30日內12次（第1~7款） 5/12",
+          "current": 5,
           "threshold": 12
         }
       ]
     },
     {
-      "market": "市",
-      "code": "6949",
-      "name": "沛爾生醫-創",
-      "close": "1355",
-      "condition": "①1345↑(-0.7%)②1455↑(+7.4%)③④⑤⑦1345↑(-0.7%)需量≥1,364張+但書⑥ 收盤≥1415元(+4.43%)且量≥65,580張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
-      "earliest_disposal": "08-28 第1次2分",
+      "market": "櫃",
+      "code": "4188",
+      "name": "安克",
+      "close": "14.60",
+      "condition": "①13.35↑(-8.6%)②不符合③④⑤⑦跌停仍過價格條件，需量≥325張 +量差幅/週轉差幅/分點/券資比⑥ 不符合（PB明日不可達，量未達）",
+      "earliest_disposal": "08-31 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 1/3",
+          "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 2/5",
+          "current": 2,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 2/6",
+          "current": 2,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 2/12",
+          "current": 2,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "櫃",
+      "code": "⏸5321",
+      "name": "美而快",
+      "close": "81.1",
+      "condition": "②81.2↑(+0.1%)①不符合③④⑤⑦ 08-27不符合⑥ 收盤≥88.4元(+9.00%)且量≥2,977張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
+      "earliest_disposal": "08-31 第2次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 0/3",
+          "current": 0,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 3/5",
+          "current": 3,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 3/6",
+          "current": 3,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 3/12",
+          "current": 3,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "櫃",
+      "code": "6103",
+      "name": "合邦",
+      "close": "38.90",
+      "condition": "①35.20↑(-9.5%)②不符合③④⑤⑦跌停仍過價格條件，需量≥19張 +量差幅/週轉差幅/分點/券資比⑥ 不符合（PB明日不可達，量未達）",
+      "earliest_disposal": "08-31 第1次2分",
       "badges": [
         {
           "short": "3①",
@@ -351,7 +419,7 @@
       "start_date": "08-20",
       "end_date": "08-26",
       "exit_date": "08-27",
-      "trading_days_left": 1,
+      "trading_days_left": "出關",
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -362,7 +430,7 @@
       "start_date": "08-20",
       "end_date": "08-26",
       "exit_date": "08-27",
-      "trading_days_left": 1,
+      "trading_days_left": "出關",
       "reason": "連續3日第一款｜第2次處置"
     },
     {
@@ -373,7 +441,7 @@
       "start_date": "08-24",
       "end_date": "08-28",
       "exit_date": "08-31",
-      "trading_days_left": 3,
+      "trading_days_left": 2,
       "reason": "連續5日（第1~7款）｜第2次處置"
     },
     {
@@ -384,19 +452,8 @@
       "start_date": "08-24",
       "end_date": "08-28",
       "exit_date": "08-31",
-      "trading_days_left": 3,
+      "trading_days_left": 2,
       "reason": "連續3日第一款｜第2次處置"
-    },
-    {
-      "market": "櫃",
-      "code": "5314",
-      "name": "世紀*",
-      "matching": "2分",
-      "start_date": "08-24",
-      "end_date": "08-28",
-      "exit_date": "08-31",
-      "trading_days_left": 3,
-      "reason": "連續3日第一款｜第1次處置"
     },
     {
       "market": "櫃",
@@ -406,7 +463,7 @@
       "start_date": "08-24",
       "end_date": "08-28",
       "exit_date": "08-31",
-      "trading_days_left": 3,
+      "trading_days_left": 2,
       "reason": "10日內6次｜第1次處置"
     },
     {
@@ -417,7 +474,7 @@
       "start_date": "08-25",
       "end_date": "08-31",
       "exit_date": "09-01",
-      "trading_days_left": 4,
+      "trading_days_left": 3,
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -428,7 +485,7 @@
       "start_date": "08-25",
       "end_date": "08-31",
       "exit_date": "09-01",
-      "trading_days_left": 4,
+      "trading_days_left": 3,
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -439,7 +496,7 @@
       "start_date": "08-25",
       "end_date": "08-31",
       "exit_date": "09-01",
-      "trading_days_left": 4,
+      "trading_days_left": 3,
       "reason": "連續5日｜第2次處置"
     },
     {
@@ -450,7 +507,7 @@
       "start_date": "08-25",
       "end_date": "08-31",
       "exit_date": "09-01",
-      "trading_days_left": 4,
+      "trading_days_left": 3,
       "reason": "連續3日第1款｜變更交易方法｜第2次處置"
     },
     {
@@ -461,8 +518,41 @@
       "start_date": "08-26",
       "end_date": "09-01",
       "exit_date": "09-02",
-      "trading_days_left": 5,
+      "trading_days_left": 4,
       "reason": "10日內6次｜第1次處置"
+    },
+    {
+      "market": "市",
+      "code": "2486",
+      "name": "一詮",
+      "matching": "2分",
+      "start_date": "08-27",
+      "end_date": "09-02",
+      "exit_date": "09-03",
+      "trading_days_left": 5,
+      "reason": "已達處置標準：連續5日（第1~7款）｜第1次處置"
+    },
+    {
+      "market": "櫃",
+      "code": "5314",
+      "name": "世紀*",
+      "matching": "2分",
+      "start_date": "08-27",
+      "end_date": "09-02",
+      "exit_date": "09-03",
+      "trading_days_left": 5,
+      "reason": "連續3日第一款｜第2次處置"
+    },
+    {
+      "market": "櫃",
+      "code": "3362",
+      "name": "先進光",
+      "matching": "2分",
+      "start_date": "08-27",
+      "end_date": "09-04",
+      "exit_date": "09-07",
+      "trading_days_left": 7,
+      "reason": "連續5日及沖銷標準｜第2次處置"
     }
   ]
 }

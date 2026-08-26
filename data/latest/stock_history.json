@@ -1,11 +1,10 @@
 {
   "source": "https://chengwaye.com/stock/",
-  "fetched_at": "2026-08-26T16:09:11.677869+08:00",
+  "fetched_at": "2026-08-26T19:41:46.238485+08:00",
   "requested_codes": [
     "8039",
     "2489",
     "6213",
-    "7750",
     "2484"
   ],
   "codes": {
@@ -14,20 +13,29 @@
       "name": "台虹",
       "source_url": "https://chengwaye.com/stock/8039",
       "summary": {
-        "limit_up_count": "18 次",
-        "latest_limit_up": "2026/08/25",
-        "avg_next_open": "+2.73%",
-        "avg_next_close": "+2.52%"
+        "limit_up_count": "19 次",
+        "latest_limit_up": "2026/08/26",
+        "avg_next_open": "+2.78%",
+        "avg_next_close": "+2.93%"
       },
       "records": [
         {
-          "date": "2026/08/25",
-          "close": "291.5",
+          "date": "2026/08/26",
+          "close": "320.5",
           "group": "電子材料",
           "next_open": "—",
           "next_avg": "—",
           "next_close": "—",
           "next_trend": "—"
+        },
+        {
+          "date": "2026/08/25",
+          "close": "291.5",
+          "group": "電子材料",
+          "next_open": "+3.60%",
+          "next_avg": "+7.04%",
+          "next_close": "+9.95%",
+          "next_trend": "續漲停"
         },
         {
           "date": "2026/08/13",
@@ -184,7 +192,7 @@
         }
       ],
       "period_note": "上市｜族群：電子材料、軟板FPC、PCB｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 18
+      "record_count": 19
     },
     "2489": {
       "code": "2489",
@@ -193,18 +201,18 @@
       "summary": {
         "limit_up_count": "13 次",
         "latest_limit_up": "2026/08/25",
-        "avg_next_open": "+4.85%",
-        "avg_next_close": "+1.33%"
+        "avg_next_open": "+4.54%",
+        "avg_next_close": "+1.41%"
       },
       "records": [
         {
           "date": "2026/08/25",
           "close": "40.55",
           "group": "面板光電",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "+0.86%",
+          "next_avg": "+4.08%",
+          "next_close": "+2.34%",
+          "next_trend": "弱續漲"
         },
         {
           "date": "2026/08/21",
@@ -323,20 +331,29 @@
       "name": "聯茂",
       "source_url": "https://chengwaye.com/stock/6213",
       "summary": {
-        "limit_up_count": "20 次",
-        "latest_limit_up": "2026/08/25",
-        "avg_next_open": "+2.37%",
-        "avg_next_close": "+2.47%"
+        "limit_up_count": "21 次",
+        "latest_limit_up": "2026/08/26",
+        "avg_next_open": "+2.25%",
+        "avg_next_close": "+2.84%"
       },
       "records": [
         {
-          "date": "2026/08/25",
-          "close": "530",
+          "date": "2026/08/26",
+          "close": "583",
           "group": "PCB",
           "next_open": "—",
           "next_avg": "—",
           "next_close": "—",
           "next_trend": "—"
+        },
+        {
+          "date": "2026/08/25",
+          "close": "530",
+          "group": "PCB",
+          "next_open": "0.00%",
+          "next_avg": "+5.75%",
+          "next_close": "+10.00%",
+          "next_trend": "續漲停"
         },
         {
           "date": "2026/08/10",
@@ -511,85 +528,7 @@
         }
       ],
       "period_note": "上市｜族群：PCB｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 20
-    },
-    "7750": {
-      "code": "7750",
-      "name": "新代",
-      "source_url": "https://chengwaye.com/stock/7750",
-      "summary": {
-        "limit_up_count": "7 次",
-        "latest_limit_up": "2026/08/25",
-        "avg_next_open": "+1.69%",
-        "avg_next_close": "+1.44%"
-      },
-      "records": [
-        {
-          "date": "2026/08/25",
-          "close": "2350",
-          "group": "機器人",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
-        },
-        {
-          "date": "2026/08/03",
-          "close": "2235",
-          "group": "機械",
-          "next_open": "0.00%",
-          "next_avg": "+4.56%",
-          "next_close": "+4.25%",
-          "next_trend": "弱續漲"
-        },
-        {
-          "date": "2026/07/31",
-          "close": "2035",
-          "group": "機械",
-          "next_open": "+2.95%",
-          "next_avg": "+7.44%",
-          "next_close": "+9.83%",
-          "next_trend": "續漲停"
-        },
-        {
-          "date": "2026/05/12",
-          "close": "3070",
-          "group": "機器人",
-          "next_open": "-3.91%",
-          "next_avg": "-7.04%",
-          "next_close": "-9.93%",
-          "next_trend": "直接跌"
-        },
-        {
-          "date": "2026/05/11",
-          "close": "2795",
-          "group": "機器人",
-          "next_open": "+9.48%",
-          "next_avg": "+9.65%",
-          "next_close": "+9.84%",
-          "next_trend": "續漲停"
-        },
-        {
-          "date": "2026/04/28",
-          "close": "2400",
-          "group": "機器人",
-          "next_open": "-1.04%",
-          "next_avg": "+0.10%",
-          "next_close": "0.00%",
-          "next_trend": "直接跌"
-        },
-        {
-          "date": "2026/04/23",
-          "close": "2240",
-          "group": "機械",
-          "next_open": "+2.68%",
-          "next_avg": "-1.76%",
-          "next_close": "-5.36%",
-          "next_trend": "開高走低"
-        }
-      ],
-      "period_note": "上市｜族群：機器人、機械｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 7
+      "record_count": 21
     },
     "2484": {
       "code": "2484",
@@ -598,18 +537,18 @@
       "summary": {
         "limit_up_count": "21 次",
         "latest_limit_up": "2026/08/25",
-        "avg_next_open": "+2.14%",
-        "avg_next_close": "+0.41%"
+        "avg_next_open": "+2.04%",
+        "avg_next_close": "+0.24%"
       },
       "records": [
         {
           "date": "2026/08/25",
           "close": "79.3",
           "group": "被動元件",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "0.00%",
+          "next_avg": "-1.99%",
+          "next_close": "-3.28%",
+          "next_trend": "直接跌"
         },
         {
           "date": "2026/08/04",
