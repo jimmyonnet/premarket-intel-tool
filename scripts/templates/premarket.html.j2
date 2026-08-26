@@ -1021,6 +1021,29 @@
     gap: 6px;
     flex-wrap: wrap;
   }
+  .watch-more-actions {
+    position: relative;
+    flex: 0 0 auto;
+    min-width: 352px;
+  }
+  .watch-more-actions > summary { display: none; list-style: none; }
+  .watch-more-actions > summary::-webkit-details-marker { display: none; }
+  .watch-more-menu {
+    position: static;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    width: max-content;
+    flex: 0 0 auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .watch-more-menu .watch-btn-modern { justify-content: center; width: auto; }
+  .watch-more-menu input[type="file"] { display: none; }
   .watch-btn-modern {
     background: var(--bg-sub);
     border: 1px solid var(--border);
@@ -1059,6 +1082,7 @@
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 10px;
+    box-sizing: border-box;
     padding: 4px 10px;
     font-size: 12px;
     font-family: var(--font-mono);
@@ -1099,9 +1123,52 @@
   @media (max-width: 768px) {
     .watchlist-summary { align-items: flex-start; }
     .watch-summary-hits { order: 3; width: 100%; margin: 0; }
+    .watchlist-card { overflow: visible; }
+    .watch-main-bar { align-items: stretch; padding: 8px; }
+    .watch-actions-group { width: 100%; gap: 6px; }
+    .watch-actions-group > #watch-edit-toggle-btn { flex: 1 1 auto; min-width: 0; }
+    .watch-more-actions {
+      position: relative;
+      z-index: 20;
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+    .watch-more-actions > summary { display: inline-flex; }
+    .watch-more-toggle { min-width: 88px; justify-content: center; }
+    .watch-more-menu {
+      position: absolute;
+      width: auto;
+      max-width: calc(100vw - 40px);
+      top: calc(100% + 6px);
+      right: 0;
+      display: none;
+      min-width: min(210px, calc(100vw - 40px));
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg-card);
+      box-shadow: var(--shadow-md);
+    }
+    .watch-more-actions[open] .watch-more-menu { display: grid; }
+    .watch-more-menu .watch-btn-modern { justify-content: flex-start; width: 100%; }
+    .watch-btn-modern,
+    .watch-btn-inline,
+    .watch-toggle-btn,
+    .manual-candidate-remove { min-height: 44px; }
+    .watch-btn-modern { padding: 6px 10px; }
+    .watch-chip { min-height: 44px; padding: 4px 9px; }
+    .watch-chip .wc-del {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      min-width: 44px;
+      height: 44px;
+      margin: -1px -5px -1px 0;
+    }
     .manual-candidate-input-row { align-items: stretch; flex-direction: column; }
-    .manual-candidate-input { width: 100%; height: 40px; box-sizing: border-box; }
-    .manual-candidate-input-row .watch-btn-inline { min-height: 40px; }
+    .manual-candidate-input { width: 100%; height: 44px; box-sizing: border-box; }
+    .manual-candidate-input-row .watch-btn-inline { min-height: 44px; }
   }
 
   /* WATCHLIST ROW HIGHLIGHT */
@@ -1487,11 +1554,14 @@
     font-weight: 800;
   }
   #market-context .card-title { font-size: 16px; font-weight: 800; }
+  #market-context .asia-quotes-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   #market-context .tile-card:not(.asia-quote-card) { min-height: 104px; }
   #market-context .tile-card:not(.asia-quote-card) .tile-name { font-size: 14px; }
   #market-context .tile-card:not(.asia-quote-card) .tile-val { font-size: 22px; }
   #market-context .tile-card:not(.asia-quote-card) .tile-chg { font-size: 13px; }
   @media (max-width: 768px) {
+    #market-context .asia-quotes-grid { grid-template-columns: 1fr; }
+    #market-context .asia-quote-card { min-height: 104px; padding: 11px 12px; }
     #market-context .tile-card:not(.asia-quote-card) { min-height: 96px; padding: 11px 12px; }
     #market-context .tile-card:not(.asia-quote-card) .tile-name { font-size: 13px; }
     #market-context .tile-card:not(.asia-quote-card) .tile-val { font-size: 19px; }
@@ -1528,6 +1598,10 @@
     position: fixed;
     bottom: 24px;
     left: 24px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-sizing: border-box;
     background: var(--bg-card);
     color: var(--text-main);
     border: 1px solid var(--border-strong);
@@ -3605,15 +3679,20 @@
               <button class="watch-btn-modern primary" id="watch-edit-toggle-btn" onclick="window.pm.toggleWatchEdit()" type="button" title="展開 / 收合代號編輯輸入框">
                 ✏️ 編輯清單
               </button>
-              <button class="watch-btn-modern" onclick="window.pm.openBatchModal()" type="button" title="開啟 Excel / CSV 批次匯入與 JSON 備份視窗">
-                📋 批次匯入 / 備份
-              </button>
-              <button class="watch-btn-modern" onclick="window.pm.exportSettings()" type="button" title="匯出自選股、顯示密度與主題設定">匯出設定</button>
-              <input type="file" id="settings-backup-input" accept=".json,application/json" hidden aria-label="選擇設定備份 JSON 檔案" onchange="window.pm.importSettings(event)">
-              <button class="watch-btn-modern" onclick="window.pm.chooseSettingsImport()" type="button" title="匯入自選股、顯示密度與主題設定">匯入設定</button>
-              <button class="watch-btn-modern danger-hover" onclick="window.clearWatch()" type="button" title="清空全部自選股">
-                🗑️ 清空
-              </button>
+              <details class="watch-more-actions">
+                <summary class="watch-btn-modern watch-more-toggle" title="開啟更多自選股工具">⋯ 更多</summary>
+                <div class="watch-more-menu">
+                  <button class="watch-btn-modern" onclick="window.pm.openBatchModal()" type="button" title="開啟 Excel / CSV 批次匯入與 JSON 備份視窗">
+                    📋 批次匯入 / 備份
+                  </button>
+                  <button class="watch-btn-modern" onclick="window.pm.exportSettings()" type="button" title="匯出自選股、顯示密度與主題設定">匯出設定</button>
+                  <input type="file" id="settings-backup-input" accept=".json,application/json" hidden aria-label="選擇設定備份 JSON 檔案" onchange="window.pm.importSettings(event)">
+                  <button class="watch-btn-modern" onclick="window.pm.chooseSettingsImport()" type="button" title="匯入自選股、顯示密度與主題設定">匯入設定</button>
+                  <button class="watch-btn-modern danger-hover" onclick="window.clearWatch()" type="button" title="清空全部自選股">
+                    🗑️ 清空
+                  </button>
+                </div>
+              </details>
             </div>
           </div>
 
@@ -4233,7 +4312,7 @@
         </div>
 
         <div class="data-block">
-          <div class="tiles-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom:0;">
+          <div class="tiles-grid asia-quotes-grid">
             {% for symbol, label, yahoo_url in [('^N225', '日經 225', 'https://tw.stock.yahoo.com/quote/%5EN225'), ('^KS11', '韓國 KOSPI', 'https://tw.stock.yahoo.com/quote/%5EKS11')] %}
             {% set q = asia_open[symbol] if (asia_open and symbol in asia_open) else indices.get(symbol) %}
             {% set asia_status = asia_market_context.get(symbol, {}) if asia_market_context is defined else {} %}

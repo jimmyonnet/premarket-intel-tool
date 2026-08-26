@@ -42,6 +42,21 @@ def test_watchlist_uses_collapsed_summary_with_hit_placeholder():
     assert "data-delete-watch=\"' + escapeHtml(c) + '\"" in source
     assert "chip.setAttribute('data-focus-watch', c);" in source
     assert "hit.type === 'blue' || hit.type === 'normal'" in source
+    assert '<details class="watch-more-actions">' in block
+    assert '⋯ 更多' in block
+    assert 'window.pm.openBatchModal()' in block
+    assert 'window.pm.exportSettings()' in block
+    assert 'window.pm.chooseSettingsImport()' in block
+    assert 'window.clearWatch()' in block
+    assert ".watch-more-actions > summary { display: none;" in source
+    assert ".watch-more-actions > summary { display: inline-flex; }" in source
+    assert ".watch-btn-modern," in source
+    assert ".manual-candidate-remove { min-height: 44px; }" in source
+    assert ".watch-chip .wc-del {" in source
+    assert "width: 44px;" in source
+    assert ".watchlist-card { overflow: visible; }" in source
+    assert "z-index: 20;" in source
+    assert "min-width: 352px;" in source
 
 
 def test_deployed_watchlist_is_collapsed_by_default_and_keeps_management_controls():

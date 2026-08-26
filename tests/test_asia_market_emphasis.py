@@ -17,6 +17,9 @@ def test_asia_cards_prioritize_index_name_price_and_change_over_source_details()
     assert "font-size: 13px;" in source
     assert ".asia-quote-card .tile-source-row {" in source
     assert "order: 3;" in source
+    assert '<div class="tiles-grid asia-quotes-grid">' in source
+    assert "#market-context .asia-quotes-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }" in source
+    assert "#market-context .asia-quotes-grid { grid-template-columns: 1fr; }" in source
 
 
 def test_deployed_asia_cards_keep_the_core_quote_class():
