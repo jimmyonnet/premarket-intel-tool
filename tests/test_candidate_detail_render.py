@@ -162,6 +162,13 @@ def test_candidate_template_renders_expandable_chengwaye_details():
     assert ".candidate-detail-table-scroll .candidate-detail-table td::before," in rendered
 
 
+def test_empty_candidate_group_uses_short_summary():
+    source = TEMPLATE.read_text(encoding="utf-8")
+
+    assert "🎯 族群標的（今日無族群標的" in source
+    assert "🎯 族群聚焦標的（今日無共同聚焦族群標的；下方列出" not in source
+
+
 def test_candidate_rows_keep_sort_and_open_detail_contracts_without_search_box():
     source = TEMPLATE.read_text(encoding="utf-8")
 
