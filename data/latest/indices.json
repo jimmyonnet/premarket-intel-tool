@@ -227,16 +227,16 @@
       "value": 66227.55,
       "change": -371.12,
       "change_pct": -0.56,
-      "updated_cst": "08/26 10:30",
+      "updated_cst": "08/26 10:35",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
       "source_label": "Yahoo 個別指數頁"
     },
     "kospi": {
       "name": "韓國綜合指數",
-      "value": 6816.82,
-      "change": -74.08,
-      "change_pct": -1.1,
-      "updated_cst": "08/26 10:29",
+      "value": 6845.62,
+      "change": -102.88,
+      "change_pct": -1.53,
+      "updated_cst": "08/26 10:39",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
       "source_label": "Yahoo 個別指數頁"
     }
