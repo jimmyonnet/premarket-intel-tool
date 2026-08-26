@@ -22,6 +22,21 @@ def test_asia_cards_prioritize_index_name_price_and_change_over_source_details()
     assert "#market-context .asia-quotes-grid { grid-template-columns: 1fr; }" in source
 
 
+def test_candidate_groups_are_collapsed_and_show_names_in_summary():
+    source = TEMPLATE.read_text(encoding="utf-8")
+
+    assert source.count('<details class="card candidate-group-disclosure">') == 2
+    assert source.count('<summary class="card-head candidate-group-summary">') == 2
+    assert '<details class="card candidate-group-disclosure" open>' not in source
+    assert "pressplay.found_group.matched|map(attribute='name')|join('、')" in source
+    assert "pressplay.not_found_group.matched|map(attribute='name')|join('、')" in source
+    assert 'class="candidate-group-symbols"' in source
+    assert ".candidate-group-summary::after" in source
+    assert ".candidate-group-disclosure[open] > .candidate-group-summary::after" in source
+    assert "var openAllDetails = opening && window.innerWidth >= 769;" in source
+    assert "panel.open = openAllDetails;" in source
+
+
 def test_deployed_asia_cards_keep_the_core_quote_class():
     page = DEPLOYED.read_text(encoding="utf-8")
 

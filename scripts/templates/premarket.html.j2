@@ -634,6 +634,12 @@
     font-size: 12px;
     color: var(--text-muted);
   }
+  .candidate-group-summary { cursor: pointer; list-style: none; }
+  .candidate-group-summary::-webkit-details-marker { display: none; }
+  .candidate-group-summary::after { content: '▾'; flex: 0 0 auto; color: var(--text-muted); font-size: 12px; }
+  .candidate-group-disclosure[open] > .candidate-group-summary::after { transform: rotate(180deg); }
+  .candidate-group-summary .card-title-group { min-width: 0; flex: 1 1 auto; flex-wrap: wrap; }
+  .candidate-group-symbols { min-width: 0; color: var(--text-muted); font-size: 12px; font-weight: 650; line-height: 1.45; overflow-wrap: anywhere; }
   .data-block { padding: 14px 16px; }
 
   /* 1. SUMMARY GRID (COMPACT DASHBOARD) */
@@ -3833,14 +3839,15 @@
 
       <!-- 族群聚焦標的 -->
       {% if pressplay.found_group.matched and pressplay.found_group.matched|length > 0 %}
-      <div class="card">
-        <div class="card-head">
+      <details class="card candidate-group-disclosure">
+        <summary class="card-head candidate-group-summary">
           <div class="card-title-group">
             <h3 class="card-title">族群聚焦標的</h3>
+            <span class="candidate-group-symbols">{{ pressplay.found_group.matched|map(attribute='name')|join('、') }}</span>
             <span class="count-badge">{{ pressplay.found_group.matched|length }} 檔</span>
           </div>
           <span class="card-tip">已比對 {{ pressplay.found_group.raw_tokens|length }} 檔，共 {{ pressplay.found_group.matched|length }} 檔具明確族群連動</span>
-        </div>
+        </summary>
         <div class="data-block">
           <div class="table-scroll">
             <table class="data-table">
@@ -3877,7 +3884,7 @@
             </table>
           </div>
         </div>
-      </div>
+      </details>
       {% else %}
       <details class="unref-accordion" style="margin-bottom:12px;">
         <summary class="unref-summary">
@@ -3892,14 +3899,15 @@
 
       <!-- 無明確族群標的 -->
       {% if pressplay.not_found_group.matched and pressplay.not_found_group.matched|length > 0 %}
-      <div class="card">
-        <div class="card-head">
+      <details class="card candidate-group-disclosure">
+        <summary class="card-head candidate-group-summary">
           <div class="card-title-group">
             <h3 class="card-title">無明確族群標的</h3>
+            <span class="candidate-group-symbols">{{ pressplay.not_found_group.matched|map(attribute='name')|join('、') }}</span>
             <span class="count-badge">{{ pressplay.not_found_group.matched|length }} 檔</span>
           </div>
           <span class="card-tip">獨立題材或個股動能</span>
-        </div>
+        </summary>
 
         <div class="data-block">
           <div class="table-scroll">
@@ -3937,7 +3945,7 @@
             </table>
           </div>
         </div>
-      </div>
+      </details>
       {% else %}
       <details class="unref-accordion" style="margin-bottom:12px;">
         <summary class="unref-summary">
@@ -5549,6 +5557,10 @@
     }
     var opening = detailRow.hidden;
     detailRow.hidden = !opening;
+    var openAllDetails = opening && window.innerWidth >= 769;
+    detailRow.querySelectorAll('.candidate-detail-grid > details.candidate-detail-card').forEach(function(panel) {
+      panel.open = openAllDetails;
+    });
     row.setAttribute('aria-expanded', opening ? 'true' : 'false');
     row.classList.toggle('is-expanded', opening);
     window.pm.uiState.candidateDetails[detailId] = opening;
