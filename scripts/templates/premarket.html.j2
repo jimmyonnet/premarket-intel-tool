@@ -3001,14 +3001,18 @@
     .candidate-detail-card { overflow: hidden; }
     .candidate-detail-card h5 { padding: 7px 8px; }
     .candidate-detail-table-scroll { margin: 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .candidate-detail-table-scroll .candidate-detail-table {
+    .candidate-detail-table-scroll .candidate-detail-table,
+    .limit-up-history-table-wrap .limit-up-history-table {
       display: table;
-      min-width: 640px;
       width: 100%;
+      table-layout: auto;
     }
-    .candidate-detail-table-scroll .candidate-detail-table thead { display: table-header-group; }
-    .candidate-detail-table-scroll .candidate-detail-table tbody { display: table-row-group; }
-    .candidate-detail-table-scroll .candidate-detail-table tr {
+    .candidate-detail-table-scroll .candidate-detail-table thead,
+    .limit-up-history-table-wrap .limit-up-history-table thead { display: table-header-group; }
+    .candidate-detail-table-scroll .candidate-detail-table tbody,
+    .limit-up-history-table-wrap .limit-up-history-table tbody { display: table-row-group; }
+    .candidate-detail-table-scroll .candidate-detail-table tr,
+    .limit-up-history-table-wrap .limit-up-history-table tr {
       display: table-row;
       padding: 0;
       margin: 0;
@@ -3017,17 +3021,24 @@
       background: transparent;
     }
     .candidate-detail-table-scroll .candidate-detail-table th,
-    .candidate-detail-table-scroll .candidate-detail-table td {
+    .candidate-detail-table-scroll .candidate-detail-table td,
+    .limit-up-history-table-wrap .limit-up-history-table th,
+    .limit-up-history-table-wrap .limit-up-history-table td {
       display: table-cell;
       padding: 7px 8px;
       border-bottom: 1px solid var(--border);
       white-space: nowrap;
     }
-    .candidate-detail-table-scroll .candidate-detail-table td::before { display: none; content: none; }
-    .candidate-detail-table-scroll .candidate-detail-table tr:last-child td { border-bottom: 0; }
-    .limit-up-history-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .candidate-detail-table-scroll .candidate-detail-table td::before,
+    .limit-up-history-table-wrap .limit-up-history-table td::before { display: none; content: none; }
+    .candidate-detail-table-scroll .candidate-detail-table tr:last-child td,
+    .limit-up-history-table-wrap .limit-up-history-table tr:last-child td { border-bottom: 0; }
+    .limit-up-history-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 8px; gap: 6px; }
+    .limit-up-history-metrics > div { padding: 8px 10px; }
+    .limit-up-history-metrics span { font-size: 9.5px; margin-bottom: 2px; }
     .limit-up-history-head { padding-right: 8px; }
     .limit-up-history-table-wrap { margin: 0 8px; }
+    .limit-up-history-table-wrap.is-overflowing::before { padding: 3px 6px; margin-bottom: 2px; font-size: 10px; opacity: .92; }
   }
   .wc-code { font-weight: 700; }
   .wc-name { font-weight: 600; }

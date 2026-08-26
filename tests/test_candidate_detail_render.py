@@ -146,8 +146,20 @@ def test_candidate_template_renders_expandable_chengwaye_details():
     assert "candidate-institutional-details" not in rendered
     assert 'href="https://chengwaye.com/daily"' in rendered
     assert ".candidate-detail-table-scroll .candidate-detail-table { min-width: 640px; }" in rendered
-    assert ".candidate-detail-table-scroll .candidate-detail-table {\n      display: table;\n      min-width: 640px;" in rendered
-    assert ".candidate-detail-table-scroll .candidate-detail-table td::before { display: none; content: none; }" in rendered
+    assert ".candidate-detail-table-scroll .candidate-detail-table,\n    .limit-up-history-table-wrap .limit-up-history-table {" in rendered
+    assert "display: table;\n      width: 100%;\n      table-layout: auto;" in rendered
+    assert ".limit-up-history-table-wrap .limit-up-history-table td::before { display: none; content: none; }" in rendered
+    assert ".limit-up-history-table-wrap .limit-up-history-table thead { display: table-header-group; }" in rendered
+    assert ".limit-up-history-table-wrap .limit-up-history-table tbody { display: table-row-group; }" in rendered
+    assert ".limit-up-history-table-wrap .limit-up-history-table tr {" in rendered
+    assert ".limit-up-history-table-wrap .limit-up-history-table th," in rendered
+    assert "white-space: nowrap;" in rendered
+    history_table = soup.select_one(".limit-up-history-table-wrap .limit-up-history-table")
+    assert history_table is not None
+    assert history_table.select_one("thead tr") is not None
+    assert history_table.select_one("tbody td") is not None
+    assert "2026/08/21" in history_table.get_text(" ", strip=True)
+    assert ".candidate-detail-table-scroll .candidate-detail-table td::before," in rendered
 
 
 def test_candidate_rows_keep_sort_and_open_detail_contracts_without_search_box():
