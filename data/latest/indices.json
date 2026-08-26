@@ -233,10 +233,10 @@
     },
     "kospi": {
       "name": "韓國綜合指數",
-      "value": 6845.62,
-      "change": -102.88,
-      "change_pct": -1.53,
-      "updated_cst": "08/26 10:39",
+      "value": 6867.05,
+      "change": -124.31,
+      "change_pct": -1.84,
+      "updated_cst": "08/26 10:49",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
       "source_label": "Yahoo 個別指數頁"
     }
