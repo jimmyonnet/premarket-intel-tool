@@ -2,22 +2,29 @@
   "schema_version": "opening-result.v1",
   "prediction_id": "2026-08-26T08:30+08:00-opening-v1",
   "market_date": "2026-08-26",
-  "status": "pending",
+  "status": "verified",
   "target_time": "09:00:00+08:00",
-  "verified_at": null,
-  "attempts": 0,
-  "attempt_log": [],
-  "actual_open": null,
-  "actual_change_points": null,
-  "actual_direction": "unknown",
-  "direction_correct": null,
-  "signed_error_points": null,
-  "absolute_error_points": null,
+  "verified_at": "2026-08-26T10:45:08.941930+08:00",
+  "attempts": 1,
+  "attempt_log": [
+    {
+      "attempted_at": "2026-08-26T10:45:07+08:00",
+      "status": "verified",
+      "observed_open": 45157.64,
+      "message": null
+    }
+  ],
+  "actual_open": 45157.64,
+  "actual_change_points": -11.82,
+  "actual_direction": "flat",
+  "direction_correct": false,
+  "signed_error_points": 272.46,
+  "absolute_error_points": 272.46,
   "source": {
     "name": "TWSE MIS TAIEX",
     "url": "https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_t00.tw&json=1&delay=0",
-    "observed_at": null,
-    "fetched_at": null,
+    "observed_at": "2026-08-26T09:00:00+08:00",
+    "fetched_at": "2026-08-26T10:45:08.941930+08:00",
     "official": true
   },
   "error": null

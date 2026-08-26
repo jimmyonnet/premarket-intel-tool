@@ -2,10 +2,17 @@
   "schema_version": "learning-status.v1",
   "status": "warmup",
   "model_version": "opening-v1",
-  "verified_days": 0,
+  "verified_days": 1,
   "required_days": 20,
   "stats": null,
-  "confidence_breakdown": {},
+  "confidence_breakdown": {
+    "high": {
+      "sample_days": 1,
+      "direction_correct": 0,
+      "direction_accuracy": 0.0,
+      "mean_absolute_error_points": 272.46
+    }
+  },
   "pending_proposal": null,
   "manual_pause_remaining_days": 0,
   "last_change": null,

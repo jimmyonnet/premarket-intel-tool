@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-08-26 10:43",
-  "build_version": "20260826_1043",
+  "build_time": "2026-08-26 10:45",
+  "build_version": "20260826_1045",
   "data_date": "08/26",
   "stale_hours": 0.0,
-  "hours_since_us_close": 6.7,
+  "hours_since_us_close": 6.8,
   "us_market_context": {
     "session_key": "closed",
     "label": "最新收盤快照",
@@ -278,8 +278,8 @@
     }
   ],
   "schema_version": 1,
-  "data_revision": "04bab389d7ef87fb",
-  "built_at": "2026-08-26T02:43:55.289670+00:00",
+  "data_revision": "5063174a65724508",
+  "built_at": "2026-08-26T02:45:09.266364+00:00",
   "hash": {
     "disposition": "08cbadd4573a",
     "candidates": "0ba4ed9189c3",
@@ -290,8 +290,8 @@
     "news": "cbd2bd87cac1",
     "ai_summary": "6989bc7db95b",
     "opening_forecast": "a6b8ca8f0e29",
-    "opening_result": "eb3632b5ecb5",
-    "learning_status": "58703cc60851"
+    "opening_result": "0111d65af8d5",
+    "learning_status": "a75b0b54d02c"
   },
   "packages": {
     "disposition": "data/disposition.json",
