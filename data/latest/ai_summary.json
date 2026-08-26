@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-26T10:43:54.967376+08:00",
-  "status": "ok",
-  "provider": "Gemini API",
-  "model": "gemini-2.5-flash",
-  "fallback_reason": null,
+  "generated_at": "2026-08-26T10:49:35.412303+08:00",
+  "status": "fallback",
+  "provider": "確定性降級整理",
+  "model": null,
+  "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev",
   "news_stats": {
     "count": 10,
     "unique_topics": 4,
-    "unique_sources": 5,
+    "unique_sources": 6,
     "nvidia_count": 3
   },
   "data_quality": {
@@ -44,7 +44,7 @@
     "issues": [],
     "news_count": 10,
     "unique_topics": 4,
-    "unique_sources": 5,
+    "unique_sources": 6,
     "nvidia_count": 3,
     "topic_counts": {
       "global_market": 1,
@@ -53,7 +53,8 @@
       "company_earnings": 2
     },
     "source_counts": {
-      "news.cnyes.com": 5,
+      "news.cnyes.com": 4,
+      "鉅亨網": 1,
       "Yahoo新聞": 1,
       "今周刊": 1,
       "Yahoo股市": 2,
@@ -61,56 +62,51 @@
     }
   },
   "news_summary": {
-    "headline": "晶片股反彈帶動美股主要指數收紅，市場關注輝達財報與聯準會動向。",
+    "headline": "目前整理 10 則新聞，涵蓋 4 類主題；同一公司或事件不應主導全部清單。",
     "topic_summary": [
-      {
-        "topic": "美股／全球市場",
-        "count": 1,
-        "summary": "美股主要指數在晶片股反彈下開高並收紅，市場關注輝達財報對AI行情的影響，以及聯準會官員在Jackson Hole會議可能釋放的訊號。"
-      },
       {
         "topic": "美元／債券／商品",
         "count": 4,
-        "summary": "美債殖利率飆升後買氣回籠，市場押注長債反彈；金價突破4600美元，聚焦CPI與傑克森洞年會。"
+        "summary": "美元／債券／商品"
       },
       {
         "topic": "台股市場",
         "count": 3,
-        "summary": "台股昨日尾盤急拉近千點翻紅，金控股與航運股表現強勁，台積電收高。台指期夜盤亦上漲。"
+        "summary": "台股市場"
       },
       {
         "topic": "公司／財報",
         "count": 2,
-        "summary": "輝達終止連七跌，其財報將是AI行情關鍵考驗；漢測前七月營收超越去年全年。"
+        "summary": "公司／財報"
+      },
+      {
+        "topic": "美股／全球市場",
+        "count": 1,
+        "summary": "美股／全球市場"
       }
     ],
     "key_points": [
-      "晶片股反彈推升美股主要指數收紅。",
-      "輝達財報成為AI行情關鍵考驗。",
-      "美債殖利率飆升後買氣回籠，市場關注Jackson Hole會議。",
-      "台股昨日尾盤急拉近千點翻紅，金融與航運股表現強勁。"
+      "〈美股早盤〉晶片股反彈推升主要指數開高 輝達財報成AI行情關鍵考驗（news.cnyes.com，08/25 21:40）",
+      "美債殖利率飆升不用慌？專家看好Jackson Hole：Fed華許若釋放訊號美股或大漲（鉅亨網，08/26 06:41）",
+      "金控股大漲、金融指數狂飆 含金量高的台股ETF 00919超閃亮（Yahoo新聞，08/26 10:04）",
+      "〈美股盤後〉輝達終止連七跌 美債買氣回籠 四大指數收紅（news.cnyes.com，08/26 05:41）",
+      "輝達財報公布時間8/27！三喜臨門成常態，黃仁勳如何驚艷市場？「全村希望」有4個觀察重點｜全球瞭望（今周刊，08/26 08:05）"
     ]
   },
   "market_summary": {
-    "headline": "美股主要指數全面收紅，費半與科技股領漲，台指期夜盤同步走高。",
+    "headline": "隔夜市場風險情緒偏強，但不同市場與產業之間仍有分化。",
     "observations": [
-      "美股四大主要指數全面上漲，其中費城半導體指數漲幅最為顯著，顯示科技與半導體板塊表現強勢。",
-      "主要ADR普遍走揚，尤其台積電、輝達、美光、聯電及日月光等半導體相關個股漲幅亮眼，僅蘋果小幅下跌。",
-      "亞洲市場表現分歧，日經225指數與韓國綜合指數呈現下跌。",
-      "台指期夜盤大幅上漲，顯示市場對今日台股開盤抱持樂觀態度。"
+      "市場廣度：上漲標的多於下跌標的，整體不是所有市場同步同幅度變動。",
+      "相對強弱：ADR／跨海標的 相對有支撐，亞股 相對承壓，市場表現呈現分化。",
+      "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
     ],
     "drivers": [
-      "晶片股反彈可能帶動美股科技板塊走高。",
-      "市場對輝達財報的期待可能推升相關個股表現。",
-      "美債買氣回籠的預期可能支撐市場情緒。",
-      "台股昨日尾盤強勁拉升，金融與航運股表現亮眼，可能延續正面動能。"
+      "新聞題材主要集中在：美元／債券／商品、台股市場、公司／財報；這是資訊分布，不代表已確認的因果關係。"
     ],
     "risks": [
-      "輝達財報結果可能不如預期，影響AI相關板塊走勢。",
-      "Jackson Hole年會上聯準會官員的發言可能影響市場對利率政策的預期。",
-      "美債殖利率走勢仍需密切關注。",
-      "亞洲市場的普遍下跌可能對台股造成壓力。"
+      "行情時間與資料延遲請以各卡片標示為準。",
+      "以上為快照關係整理，不代表價格方向預測。"
     ]
   },
-  "quality_note": "所有資料來源狀態正常。"
+  "quality_note": "目前使用確定性整理；完成 AI 服務設定後，會補上語意摘要。"
 }
