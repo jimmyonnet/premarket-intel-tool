@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-26T12:46:48.549692+08:00",
+  "generated_at": "2026-08-26T13:01:06.245264+08:00",
   "status": "fallback",
   "provider": "確定性降級整理",
   "model": null,
-  "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev",
+  "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
   "news_stats": {
     "count": 10,
     "unique_topics": 5,
-    "unique_sources": 5,
+    "unique_sources": 4,
     "nvidia_count": 2
   },
   "data_quality": {
@@ -44,19 +44,18 @@
     "issues": [],
     "news_count": 10,
     "unique_topics": 5,
-    "unique_sources": 5,
+    "unique_sources": 4,
     "nvidia_count": 2,
     "topic_counts": {
       "global_market": 1,
-      "currency_commodities": 3,
-      "company_earnings": 2,
+      "currency_commodities": 4,
+      "company_earnings": 1,
       "taiwan_market": 3,
       "market_structure": 1
     },
     "source_counts": {
-      "news.cnyes.com": 2,
-      "鉅亨網": 2,
-      "Yahoo股市": 4,
+      "news.cnyes.com": 5,
+      "Yahoo股市": 3,
       "今周刊": 1,
       "經濟日報": 1
     }
@@ -66,7 +65,7 @@
     "topic_summary": [
       {
         "topic": "美元／債券／商品",
-        "count": 3,
+        "count": 4,
         "summary": "美元／債券／商品"
       },
       {
@@ -76,7 +75,7 @@
       },
       {
         "topic": "公司／財報",
-        "count": 2,
+        "count": 1,
         "summary": "公司／財報"
       },
       {
@@ -92,7 +91,7 @@
     ],
     "key_points": [
       "〈美股早盤〉晶片股反彈推升主要指數開高 輝達財報成AI行情關鍵考驗（news.cnyes.com，08/25 21:40）",
-      "美債殖利率飆升不用慌？專家看好Jackson Hole：Fed華許若釋放訊號美股或大漲（鉅亨網，08/26 06:41）",
+      "美債殖利率飆升不用慌？專家看好Jackson Hole：Fed華許若釋放訊號美股或大漲（news.cnyes.com，08/26 07:14）",
       "美債殖利率回落美股齊揚 聯準會鷹派立場仍存挑戰（Yahoo股市，08/26 10:34）",
       "輝達財報公布時間8/27！三喜臨門成常態，黃仁勳如何驚艷市場？「全村希望」有4個觀察重點｜全球瞭望（今周刊，08/26 12:00）",
       "【Hot台股】富喬漲逾9%逼近漲停！網嗨「目標300」分析師示警：漲逾8成別急追（Yahoo股市，08/26 11:24）"
@@ -106,7 +105,7 @@
       "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
     ],
     "drivers": [
-      "新聞題材主要集中在：美元／債券／商品、台股市場、公司／財報；這是資訊分布，不代表已確認的因果關係。"
+      "新聞題材主要集中在：美元／債券／商品、台股市場、美股／全球市場；這是資訊分布，不代表已確認的因果關係。"
     ],
     "risks": [
       "行情時間與資料延遲請以各卡片標示為準。",
