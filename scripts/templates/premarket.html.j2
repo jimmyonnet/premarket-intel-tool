@@ -3336,7 +3336,16 @@
     font-size: 11.5px;
     line-height: 1.5;
   }
-  .ai-news-inline-panel { margin: 12px 0 0; }
+  .ai-news-inline-panel {
+    margin: 12px 0 0;
+    background: var(--bg-card);
+  }
+  #news-calendar .news-card .news-items-collapsible,
+  #news-calendar .news-card .news-items-collapsible > .unref-summary,
+  #news-calendar .news-card .news-items-collapsible > .data-block {
+    background: var(--bg-card);
+  }
+  #news-calendar .news-card .news-items-collapsible > .unref-summary:hover { background: var(--bg-hover); }
   .ai-quality-inline {
     margin-top: 10px;
     padding: 10px;
@@ -4391,7 +4400,7 @@
       </div>
 
       <!-- 隔夜重大新聞 -->
-      <div class="card">
+      <div class="card news-card">
         <div class="card-head">
           <div class="card-title-group">
             <h3 class="card-title">隔夜重大新聞 Top 10</h3>
@@ -4399,7 +4408,7 @@
           </div>
         </div>
         <div class="ai-inline-panel ai-news-inline-panel">
-          <div class="ai-briefing-kicker">📰 新聞要</div>
+          <div class="ai-briefing-kicker">📰 新聞摘要</div>
           <h4 class="ai-briefing-headline">{{ ai_news.headline or '目前尚未產生新聞摘要。' }}</h4>
           <div class="ai-news-stats">
             <span>新聞 {{ (ai.news_stats.count if ai.news_stats is defined and ai.news_stats else (news|length if news else 0)) }} 則</span>

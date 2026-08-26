@@ -18,14 +18,15 @@ def test_news_section_uses_existing_package_for_lazy_hydration():
     assert "隔夜重大新聞 Top 10" in source
     assert '<details class="unref-accordion news-items-collapsible" id="news-items-disclosure">' in source
     assert '<summary class="unref-summary">展開新聞 10 則</summary>' in source
-    assert '📰 新聞要' in source
+    assert '📰 新聞摘要' in source
+    assert '<div class="card news-card">' in source
+    assert '#news-calendar .news-card .news-items-collapsible' in source
     assert 'newsDisclosure.addEventListener(\'toggle\'' in source
     assert '<details class="unref-accordion news-items-collapsible" id="news-items-disclosure" open>' not in source
 
 
-def test_deployed_news_list_is_collapsed_and_renamed():
+def test_deployed_news_list_stays_collapsed():
     source = DEPLOYED.read_text(encoding="utf-8")
-    assert '<div class="ai-briefing-kicker">📰 新聞要</div>' in source
     assert '<details class="unref-accordion news-items-collapsible" id="news-items-disclosure">' in source
     assert '<summary class="unref-summary">展開新聞 10 則</summary>' in source
     assert '<details class="unref-accordion news-items-collapsible" id="news-items-disclosure" open>' not in source
