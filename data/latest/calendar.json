@@ -4,33 +4,7 @@
   "range_end": "2026-09-09",
   "events": [
     {
-      "id": "ev-2026-08-26-3",
-      "date": "2026-08-26",
-      "time": "20:30",
-      "all_day": false,
-      "title": "美國-實際国内生產總值[GDP]-(SAAR, 季增年化季月增率(MoM))",
-      "summary": "美國-實際国内生產總值[GDP]-(SAAR, 季增年化季月增率(MoM))",
-      "description": "市場預期: 1.50%\n前值:  1.50%",
-      "note": "市場預期: 1.50%\n前值:  1.50%",
-      "mm_link": "https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar",
-      "source_url": "https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar",
-      "category": "macro",
-      "category_name": "總經",
-      "country": "US",
-      "flag": "🇺🇸",
-      "timezone_origin": "America/New_York",
-      "timezone_label": "ET",
-      "time_origin_str": "08:30 ET",
-      "time_tpe_str": "20:30 TPE",
-      "datetime_utc": "2026-08-26T12:30:00Z",
-      "importance": 3,
-      "forecast": "1.50%",
-      "previous": "1.50%",
-      "actual": null,
-      "comparison": "pending"
-    },
-    {
-      "id": "ev-2026-08-26-15",
+      "id": "ev-2026-08-26-4",
       "date": "2026-08-26",
       "time": "20:30",
       "all_day": false,
@@ -56,7 +30,33 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-08-26-6",
+      "id": "ev-2026-08-26-18",
+      "date": "2026-08-26",
+      "time": "20:30",
+      "all_day": false,
+      "title": "美國-實際国内生產總值[GDP]-(SAAR, 季增年化季月增率(MoM))",
+      "summary": "美國-實際国内生產總值[GDP]-(SAAR, 季增年化季月增率(MoM))",
+      "description": "市場預期: 1.50%\n前值:  1.50%",
+      "note": "市場預期: 1.50%\n前值:  1.50%",
+      "mm_link": "https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar",
+      "source_url": "https://sc.macromicro.me/collections/2/us-gdp-relative/12/real-gdp-growth?utm_medium=calendar",
+      "category": "macro",
+      "category_name": "總經",
+      "country": "US",
+      "flag": "🇺🇸",
+      "timezone_origin": "America/New_York",
+      "timezone_label": "ET",
+      "time_origin_str": "08:30 ET",
+      "time_tpe_str": "20:30 TPE",
+      "datetime_utc": "2026-08-26T12:30:00Z",
+      "importance": 3,
+      "forecast": "1.50%",
+      "previous": "1.50%",
+      "actual": null,
+      "comparison": "pending"
+    },
+    {
+      "id": "ev-2026-08-26-8",
       "date": "2026-08-26",
       "time": "22:30",
       "all_day": false,
@@ -108,7 +108,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-08-27-9",
+      "id": "ev-2026-08-27-7",
       "date": "2026-08-27",
       "time": "16:00",
       "all_day": false,
@@ -134,7 +134,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-08-27-16",
+      "id": "ev-2026-08-27-10",
       "date": "2026-08-27",
       "time": "20:30",
       "all_day": false,
@@ -160,7 +160,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-08-28-4",
+      "id": "ev-2026-08-28-11",
       "date": "2026-08-28",
       "time": "17:00",
       "all_day": false,
@@ -186,7 +186,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-08-31-14",
+      "id": "ev-2026-08-31-12",
       "date": "2026-08-31",
       "time": "09:30",
       "all_day": false,
@@ -212,7 +212,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-08-31-17",
+      "id": "ev-2026-08-31-15",
       "date": "2026-08-31",
       "time": "09:30",
       "all_day": false,
@@ -238,7 +238,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-01-12",
+      "id": "ev-2026-09-01-3",
       "date": "2026-09-01",
       "time": "16:00",
       "all_day": false,
@@ -264,7 +264,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-01-11",
+      "id": "ev-2026-09-01-16",
       "date": "2026-09-01",
       "time": "22:00",
       "all_day": false,
@@ -290,7 +290,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-02-7",
+      "id": "ev-2026-09-02-17",
       "date": "2026-09-02",
       "time": "20:15",
       "all_day": false,
@@ -316,7 +316,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-02-5",
+      "id": "ev-2026-09-02-19",
       "date": "2026-09-02",
       "time": "21:45",
       "all_day": false,
@@ -342,7 +342,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-02-18",
+      "id": "ev-2026-09-02-20",
       "date": "2026-09-02",
       "time": "22:30",
       "all_day": false,
@@ -420,7 +420,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-03-10",
+      "id": "ev-2026-09-03-5",
       "date": "2026-09-03",
       "time": "22:00",
       "all_day": false,
@@ -446,33 +446,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-04-8",
-      "date": "2026-09-04",
-      "time": "20:30",
-      "all_day": false,
-      "title": "美國-非农就业人數(月变动)",
-      "summary": "美國-非农就业人數(月变动)",
-      "description": "前值: -23.0k",
-      "note": "前值: -23.0k",
-      "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
-      "source_url": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
-      "category": "other",
-      "category_name": "其他",
-      "country": "US",
-      "flag": "🇺🇸",
-      "timezone_origin": "America/New_York",
-      "timezone_label": "ET",
-      "time_origin_str": "08:30 ET",
-      "time_tpe_str": "20:30 TPE",
-      "datetime_utc": "2026-09-04T12:30:00Z",
-      "importance": 1,
-      "forecast": null,
-      "previous": "-23.0k",
-      "actual": null,
-      "comparison": "pending"
-    },
-    {
-      "id": "ev-2026-09-04-22",
+      "id": "ev-2026-09-04-6",
       "date": "2026-09-04",
       "time": "20:30",
       "all_day": false,
@@ -498,7 +472,33 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-07-19",
+      "id": "ev-2026-09-04-14",
+      "date": "2026-09-04",
+      "time": "20:30",
+      "all_day": false,
+      "title": "美國-非农就业人數(月变动)",
+      "summary": "美國-非农就业人數(月变动)",
+      "description": "前值: -23.0k",
+      "note": "前值: -23.0k",
+      "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+      "source_url": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+      "category": "other",
+      "category_name": "其他",
+      "country": "US",
+      "flag": "🇺🇸",
+      "timezone_origin": "America/New_York",
+      "timezone_label": "ET",
+      "time_origin_str": "08:30 ET",
+      "time_tpe_str": "20:30 TPE",
+      "datetime_utc": "2026-09-04T12:30:00Z",
+      "importance": 1,
+      "forecast": null,
+      "previous": "-23.0k",
+      "actual": null,
+      "comparison": "pending"
+    },
+    {
+      "id": "ev-2026-09-07-9",
       "date": "2026-09-07",
       "time": "17:00",
       "all_day": false,
@@ -524,7 +524,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-08-13",
+      "id": "ev-2026-09-08-22",
       "date": "2026-09-08",
       "time": "07:50",
       "all_day": false,
@@ -550,7 +550,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-08-20",
+      "id": "ev-2026-09-08-13",
       "date": "2026-09-08",
       "time": "11:00",
       "all_day": false,

@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-26T13:41:49.254488+08:00",
+  "generated_at": "2026-08-26T16:09:21.058665+08:00",
   "status": "ok",
   "provider": "Gemini API",
   "model": "gemini-2.5-flash",
   "fallback_reason": null,
   "news_stats": {
-    "count": 0,
-    "unique_topics": 0,
-    "unique_sources": 0,
-    "nvidia_count": 0
+    "count": 1,
+    "unique_topics": 1,
+    "unique_sources": 1,
+    "nvidia_count": 1
   },
   "data_quality": {
     "status": "attention",
@@ -18,17 +18,17 @@
       {
         "name": "新聞數量",
         "status": "attention",
-        "detail": "0 則"
+        "detail": "1 則"
       },
       {
         "name": "主題分布",
         "status": "attention",
-        "detail": "0 類"
+        "detail": "1 類"
       },
       {
         "name": "公司／事件集中度",
         "status": "ok",
-        "detail": "輝達 0 則"
+        "detail": "輝達 1 則"
       },
       {
         "name": "行情可用性",
@@ -38,42 +38,67 @@
       {
         "name": "來源健康度",
         "status": "ok",
-        "detail": "1 項提醒"
+        "detail": "3 項提醒"
       }
     ],
     "issues": [
       {
         "severity": "warning",
-        "message": "合格新聞僅 0 則，摘要覆蓋面有限"
+        "message": "合格新聞僅 1 則，摘要覆蓋面有限"
+      },
+      {
+        "severity": "warning",
+        "message": "新聞主題只有 1 類，需留意題材集中"
+      },
+      {
+        "severity": "warning",
+        "message": "新聞來源只有 1 家，需留意單一來源偏誤"
       }
     ],
-    "news_count": 0,
-    "unique_topics": 0,
-    "unique_sources": 0,
-    "nvidia_count": 0,
-    "topic_counts": {},
-    "source_counts": {}
+    "news_count": 1,
+    "unique_topics": 1,
+    "unique_sources": 1,
+    "nvidia_count": 1,
+    "topic_counts": {
+      "company_earnings": 1
+    },
+    "source_counts": {
+      "今周刊": 1
+    }
   },
   "news_summary": {
-    "headline": "新聞資料未提供",
-    "topic_summary": [],
-    "key_points": []
-  },
-  "market_summary": {
-    "headline": "美股主要指數普遍上漲，費半與科技股表現強勁，台指期夜盤同步走高",
-    "observations": [
-      "美股主要指數全面收紅，其中費城半導體指數與NASDAQ指數漲幅領先。",
-      "多數台灣相關ADR表現強勁，半導體類股如台積電ADR、輝達、美光、聯電ADR及日月光ADR均顯著上漲。",
-      "亞洲股市呈現下跌，日經225指數與韓國綜合指數均收黑。",
-      "台指期夜盤表現積極，收盤上漲0.9%。"
+    "headline": "輝達財報即將公布，市場關注其表現與未來展望。",
+    "topic_summary": [
+      {
+        "topic": "公司／財報",
+        "count": 1,
+        "summary": "輝達（NVIDIA）將於8月27日公布財報，市場正密切關注其能否再次帶來驚喜，並提出四個觀察重點。"
+      }
     ],
-    "drivers": [
-      "新聞資料未提供，市場上漲的可能關聯因素不明。"
-    ],
-    "risks": [
-      "新聞資料未提供，潛在風險因素不明。",
-      "亞洲主要股市下跌，可能對今日台股開盤情緒造成壓力。"
+    "key_points": [
+      "輝達財報公布時間為8月27日。",
+      "市場關注輝達財報能否延續「三喜臨門」的常態。",
+      "新聞提出四個觀察重點，以評估輝達如何驚艷市場。"
     ]
   },
-  "quality_note": "新聞資料未提供。"
+  "market_summary": {
+    "headline": "美股主要指數普遍上漲，費城半導體指數領漲，台指期夜盤小幅走高。",
+    "observations": [
+      "美股主要指數全面收漲，其中道瓊、S&P 500與NASDAQ指數均呈現溫和上揚。",
+      "費城半導體指數表現強勁，漲幅顯著優於其他美股指數，顯示半導體板塊相對強勢。",
+      "多數台灣相關ADR如台積電、輝達、美光、聯電及日月光均有不錯漲幅，但蘋果ADR則小幅下跌。",
+      "日經225指數與韓國綜合指數顯示前一交易時段下跌，但當前交易時段資料未提供。"
+    ],
+    "drivers": [
+      "輝達即將公布財報，可能帶動市場對半導體產業的樂觀預期，推升相關類股表現。",
+      "美股主要指數的普遍上漲，可能反映市場整體情緒偏向積極。",
+      "台指期夜盤小幅上漲，可能受到美股走勢的正面影響。"
+    ],
+    "risks": [
+      "輝達財報結果可能不如市場預期，進而影響半導體板塊及整體科技股走勢。",
+      "亞洲股市（日經、韓國綜合指數）的最新行情資料未提供，可能存在與美股不同步的風險。",
+      "蘋果ADR逆勢下跌，可能暗示部分大型科技股面臨個別壓力。"
+    ]
+  },
+  "quality_note": "本報告內容僅根據使用者提供的INPUT JSON撰寫整理，未補造任何不存在的價格、漲跌幅、時間、公司、政策或新聞事實。"
 }
