@@ -32,14 +32,21 @@ def _render(**opening):
     return env.get_template("premarket.html.j2").render(**context)
 
 
-def test_opening_card_fallback_is_safe_and_before_existing_summary():
+def test_opening_card_fallback_is_safe_and_at_page_main_end():
     soup = BeautifulSoup(_render(), "html.parser")
     main = soup.find("main", class_="page-main")
     card = soup.find("section", id="opening-forecast")
     summary = soup.find("section", id="summary")
-    assert main is not None and card is not None and summary is not None
-    assert main.get_text().find("今日尚未產生預測") < main.get_text().find("加權指數 昨收")
-    assert list(main.find_all("section", recursive=False)).index(card) < list(main.find_all("section", recursive=False)).index(summary)
+    news_calendar = soup.find("section", id="news-calendar")
+    assert main is not None and card is not None and summary is not None and news_calendar is not None
+    sections = main.find_all("section", recursive=False)
+    assert sections[-1] is card
+    assert sections.index(card) > sections.index(summary)
+    assert sections.index(card) > sections.index(news_calendar)
+    disclosure = card.find("details", class_="opening-forecast-disclosure")
+    assert disclosure is not None and disclosure.has_attr("open") is False
+    assert disclosure.find("summary", class_="opening-forecast-head") is not None
+    assert disclosure.find(class_="opening-forecast-toggle") is not None
     assert "不使用前一天預測冒充今日內容" in card.get_text()
 
 
@@ -64,7 +71,9 @@ def test_opening_card_renders_single_conclusion_and_traceable_details():
     assert "中可信度" in card.get_text()
     assert "等待驗證" in card.get_text()
     assert "3/20" in card.get_text()
-    details = card.find("details")
+    disclosure = card.find("details", class_="opening-forecast-disclosure")
+    assert disclosure is not None and disclosure.has_attr("open") is False
+    details = card.find("details", class_="opening-forecast-details")
     assert details is not None and details.has_attr("open") is False
     source = card.find("a", href="https://www.twse.com.tw/indicesReport/MI_5MINS_HIST")
     assert source is not None

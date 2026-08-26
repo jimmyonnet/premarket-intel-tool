@@ -112,6 +112,37 @@
     box-shadow: var(--shadow);
     overflow: hidden;
   }
+  .opening-forecast-disclosure > summary {
+    list-style: none;
+    cursor: pointer;
+  }
+  .opening-forecast-disclosure > summary::-webkit-details-marker { display: none; }
+  .opening-forecast-disclosure > summary:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: -2px;
+  }
+  .opening-forecast-summary-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .opening-forecast-toggle {
+    display: inline-flex;
+    align-items: center;
+    min-height: 26px;
+    padding: 4px 8px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--blue);
+    background: var(--bg-sub);
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .opening-forecast-toggle::before { content: '展開'; }
+  .opening-forecast-disclosure[open] .opening-forecast-toggle::before { content: '收合'; }
   .opening-forecast-card.confidence-low { border-color: var(--amber-border); }
   .opening-forecast-card.confidence-high { border-color: var(--green-border); }
   .opening-forecast-head {
@@ -3308,15 +3339,19 @@
     {% set result_status = result.get('status') or 'not_applicable' %}
     {% set learning_status = learning.get('status') or 'warmup' %}
     <section id="opening-forecast" class="opening-forecast-card confidence-{{ confidence }}" aria-labelledby="opening-forecast-title">
-      <div class="opening-forecast-head">
+      <details class="opening-forecast-disclosure">
+      <summary class="opening-forecast-head">
         <div>
           <h2 id="opening-forecast-title" class="opening-forecast-title">今日開盤判斷</h2>
           <div class="opening-forecast-subtitle">
             {% if fstatus == 'market_closed' %}今日台股休市，沒有開盤判斷。{% elif fstatus == 'generated' %}依 08:30 已鎖定資料產生；此結論不是保證。{% else %}今日尚未產生預測，不使用前一天內容冒充今日判斷。{% endif %}
           </div>
         </div>
-        {% if fstatus == 'generated' %}<span class="opening-forecast-badge {{ confidence }}">{{ {'high': '高可信度', 'medium': '中可信度', 'low': '低可信度', 'unknown': '可信度未知'}[confidence] }}</span>{% endif %}
-      </div>
+        <div class="opening-forecast-summary-actions">
+          {% if fstatus == 'generated' %}<span class="opening-forecast-badge {{ confidence }}">{{ {'high': '高可信度', 'medium': '中可信度', 'low': '低可信度', 'unknown': '可信度未知'}[confidence] }}</span>{% endif %}
+          <span class="opening-forecast-toggle" aria-hidden="true"></span>
+        </div>
+      </summary>
       <div class="opening-forecast-body">
         {% if fstatus == 'generated' %}
           <div class="opening-forecast-hero">
@@ -3368,12 +3403,11 @@
         {% endif %}
         <div class="opening-forecast-learning"><strong>自我學習：</strong>{% if learning_status == 'warmup' %}資料累積中 {{ learning.get('verified_days', 0) }}/{{ learning.get('required_days', 20) }} 個已驗證交易日；未滿 20 日不公開整體準確率。{% elif learning_status == 'paused' %}暫停自動調整，剩餘 {{ learning.get('manual_pause_remaining_days', 0) }} 個交易日。{% else %}已完成 {{ learning.get('verified_days', 0) }} 個已驗證交易日，可查看正式統計。{% endif %}</div>
       </div>
+      </details>
     </section>
   {%- endmacro %}
 
   <main class="page-main">
-
-    {{ render_opening_forecast(opening_forecast|default({}, true), opening_result|default({}, true), learning_status|default({}, true), data_date|default('', true)) }}
 
     <!-- Executive Briefing Mode Active Banner -->
     <div class="briefing-banner" id="briefing-banner">
@@ -4370,6 +4404,9 @@
         </div>
       </div>
     </section>
+
+    <!-- 6. 今日開盤判斷（預設收合，置於頁面底端） -->
+    {{ render_opening_forecast(opening_forecast|default({}, true), opening_result|default({}, true), learning_status|default({}, true), data_date|default('', true)) }}
 
   </main>
 
