@@ -71,6 +71,19 @@ def _closed_forecast(market_date: str, model_version: str) -> dict[str, Any]:
     }
 
 
+def _preserve_existing_generated(candidate: dict[str, Any], existing: Any, market_date: str) -> dict[str, Any]:
+    """Never let a late retry erase a valid forecast for the same market date."""
+    if candidate.get("status") != "not_generated" or not isinstance(existing, dict):
+        return candidate
+    if (
+        existing.get("status") == "generated"
+        and existing.get("market_date") == market_date
+        and existing.get("prediction_id")
+    ):
+        return existing
+    return candidate
+
+
 def generate(
     *,
     market_date: str,
@@ -163,6 +176,15 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     output = Path(args.out)
+    if output.exists():
+        try:
+            existing = json.loads(output.read_text(encoding="utf-8"))
+        except (OSError, ValueError, TypeError):
+            existing = None
+        preserved = _preserve_existing_generated(payload, existing, market_date)
+        if preserved is not payload:
+            print("INFO: preserving existing generated forecast for the same market date", file=sys.stderr)
+            payload = preserved
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(payload, ensure_ascii=False, indent=2))

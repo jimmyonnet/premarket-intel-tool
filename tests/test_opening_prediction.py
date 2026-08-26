@@ -2,7 +2,7 @@ from datetime import date
 import json
 from pathlib import Path
 
-from scripts.opening_prediction.generate_forecast import generate
+from scripts.opening_prediction.generate_forecast import generate, main
 from scripts.opening_prediction.model import build_forecast, direction_for_change, gap_label, load_model_config
 
 
@@ -139,6 +139,37 @@ def test_generator_rejects_late_lock_without_using_intraday_data(tmp_path: Path)
     assert forecast["status"] == "not_generated"
     assert forecast["prediction_id"] is None
     assert "錯過" in forecast["confidence_reasons"][0]
+
+
+def test_late_generator_retry_preserves_existing_generated_forecast(tmp_path: Path):
+    paths, indices, night, twse, reference = _inputs(tmp_path)
+    existing = build_forecast(
+        market_date="2026-08-25",
+        locked_at="2026-08-25T08:30:00+08:00",
+        indices=indices,
+        night=night,
+        twse=twse,
+        taiex_reference=reference,
+        config=load_model_config(CONFIG),
+    )
+    output = tmp_path / "opening_forecast.json"
+    output.write_text(json.dumps(existing), encoding="utf-8")
+
+    assert main([
+        "--market-date", "2026-08-25",
+        "--locked-at", "2026-08-25T08:45:00+08:00",
+        "--indices", str(paths["indices"]),
+        "--night-session", str(paths["night"]),
+        "--twse-summary", str(paths["twse"]),
+        "--taiex-reference", str(paths["reference"]),
+        "--calendar", str(CALENDAR),
+        "--config", str(CONFIG),
+        "--out", str(output),
+    ]) == 0
+    persisted = json.loads(output.read_text(encoding="utf-8"))
+    assert persisted["status"] == "generated"
+    assert persisted["prediction_id"] == existing["prediction_id"]
+    assert persisted["predicted_change_points"] == existing["predicted_change_points"]
 
 
 def test_generator_returns_market_closed_without_reading_inputs(tmp_path: Path):
