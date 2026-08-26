@@ -1,8 +1,8 @@
 {
   "schema_version": "opening-result.v1",
-  "prediction_id": null,
-  "market_date": "2026-08-25",
-  "status": "not_applicable",
+  "prediction_id": "2026-08-26T08:30+08:00-opening-v1",
+  "market_date": "2026-08-26",
+  "status": "pending",
   "target_time": "09:00:00+08:00",
   "verified_at": null,
   "attempts": 0,
@@ -20,5 +20,5 @@
     "fetched_at": null,
     "official": true
   },
-  "error": "forecast was not generated within the 08:30 lock window"
+  "error": null
 }
