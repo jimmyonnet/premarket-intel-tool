@@ -1207,8 +1207,15 @@
     overflow-wrap: anywhere;
   }
   .announcement-time {
-    white-space: nowrap;
-    line-height: 1.5;
+    white-space: normal;
+    line-height: 1.45;
+  }
+  .announcement-date,
+  .announcement-clock {
+    display: block;
+  }
+  .announcement-clock {
+    margin-top: 2px;
   }
   .announcement-subject,
   .announcement-ai {
@@ -3974,7 +3981,8 @@
                 {% if row.get('name') %}<span class="announcement-name">{{ row.get('name') }}</span>{% endif %}
               </td>
               <td data-label="公告時間" class="announcement-time font-mono">
-                <span>{{ row.get('date') or '—' }}</span>{% if row.get('time') %} <span>{{ row.get('time') }}</span>{% endif %}
+                <span class="announcement-date">{{ row.get('date') or '—' }}</span>
+                {% if row.get('time') %}<span class="announcement-clock">{{ row.get('time') }}</span>{% endif %}
               </td>
               <td data-label="公告主旨" class="announcement-subject">{{ row.get('subject') or '—' }}
                 {% if row.get('raw') %}

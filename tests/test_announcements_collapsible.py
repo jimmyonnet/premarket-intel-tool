@@ -57,6 +57,8 @@ def test_announcement_table_uses_readable_semantic_cells_and_responsive_layout()
     assert 'class="announcement-code font-mono"' in macro
     assert 'class="announcement-name"' in macro
     assert 'class="announcement-time font-mono"' in macro
+    assert 'class="announcement-date">{{ row.get(\'date\') or \'—\' }}</span>' in macro
+    assert 'class="announcement-clock">{{ row.get(\'time\') }}</span>' in macro
     assert 'class="announcement-subject"' in macro
     assert 'class="announcement-ai"' in macro
     assert 'class="announcement-eps num font-mono"' in macro
@@ -69,6 +71,9 @@ def test_announcement_table_uses_readable_semantic_cells_and_responsive_layout()
     assert '.data-table.announcement-table td {' in template
     assert 'grid-template-columns: 88px minmax(0, 1fr);' in template
     assert '.data-table.announcement-table td {\n      width: 100% !important;\n      box-sizing: border-box;' in template
+    assert '.announcement-time {\n    white-space: normal;\n    line-height: 1.45;' in template
+    assert '.announcement-date,\n  .announcement-clock {\n    display: block;' in template
+    assert '.announcement-clock {\n    margin-top: 2px;' in template
     assert '.announcement-raw-details {\n    display: block;' in template
     assert '.announcement-raw-details > summary {\n    display: inline-block;' in template
     assert '.announcement-raw-details[open] > summary {\n    margin-bottom: 8px;' in template
