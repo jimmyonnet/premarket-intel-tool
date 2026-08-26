@@ -224,19 +224,19 @@
   "asia_open": {
     "nikkei225": {
       "name": "日經225指數",
-      "value": 66107.47,
-      "change": -251.04,
-      "change_pct": -0.38,
-      "updated_cst": "08/26 10:24",
+      "value": 66220.65,
+      "change": -364.22,
+      "change_pct": -0.55,
+      "updated_cst": "08/26 10:28",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
       "source_label": "Yahoo 個別指數頁"
     },
     "kospi": {
       "name": "韓國綜合指數",
-      "value": 6792.08,
-      "change": -49.34,
-      "change_pct": -0.73,
-      "updated_cst": "08/26 10:19",
+      "value": 6803.22,
+      "change": -60.48,
+      "change_pct": -0.9,
+      "updated_cst": "08/26 10:23",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
       "source_label": "Yahoo 個別指數頁"
     }
