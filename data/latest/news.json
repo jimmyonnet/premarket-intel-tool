@@ -32,10 +32,10 @@
   },
   {
     "title": "美債殖利率飆升不用慌？專家看好Jackson Hole：Fed華許若釋放訊號美股或大漲",
-    "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTE9hb255QmE4NVRpWmtpelN3dW1qNXcxdEUwUjgzWlBJLVc0cFM2TDdmQ0MzU05Vd1BfR3VBd1gtMUpBQjhMM2c5RnZEU1FYV2tUMHln?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/26 07:14",
-    "timestamp": 1787699656.0,
+    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE1iTDVUeEJ3aXlOSjdEdWdEM3NEZG9YUmlLcEU4T1FzZWczcVNfYWJuNGJ6LUpXT1Q1dlplWmxDWS1BUXRHRW1Tak1nZw?oc=5",
+    "source": "鉅亨網",
+    "time": "08/26 06:41",
+    "timestamp": 1787697663.0,
     "score": 14,
     "quality_score": 4,
     "impact_score": 10,
@@ -80,6 +80,31 @@
     "primary_topic": "currency_commodities",
     "named_entities": [
       "us_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "等待「三變數」台股跌多漲少 千金股剩這檔股價再創新高",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE16OGJoTU11a1FYbVl3ZUN6eUthbWp3XzAwS1NUS0NCSzNhX01sWGljSjJNZ1VKcXFMMkVfRUhFb09MdU1HRl9FY0s5c1kySnFKLTE3MmxuWVJpd9IBX0FVX3lxTFB3SDlnRkNOZlpwY19uMnZzMEc0M18tSnZBeGtLRnhIdGJIWHctU0FDNGdqS0hfNVdqcEJRdkRqenpOQnlRNlR0dU8tOGRNR25sTXZoYkNHSmdJWWVkUUdZ?oc=5",
+    "source": "經濟日報",
+    "time": "08/25 17:00",
+    "timestamp": 1787648400.0,
+    "score": 10,
+    "quality_score": 4,
+    "impact_score": 6,
+    "matched_groups": [
+      "market_benchmark",
+      "market_move"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "taiwan_market"
     ],
     "quality_pass": true,
     "impact_pass": true,
@@ -181,32 +206,6 @@
     ],
     "primary_topic": "market_structure",
     "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "誰在買？台股由低點一路拉抬逾900點 三大法人卻賣超53億元",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5jQ1dxWDU0cF9jOFd5M01JdzdMZnpFVWs0b0pDWXVNbDVScDZ0TkJCMHp2Rm5oZ1l5dUI2aXgxNVF3VnpQYUhtOHRBT1lMUG40Ul82eGFqR1lzUdIBX0FVX3lxTE55bGc0dG9UNXducmNsanY5eHU4X3FDTjd3VHBWcDVXYUFMRDJqVGtRVkc5YzFtdHM5Qm9FZXpram9ULVNLUUl4aXp2MWpyM1lxXzQya2VnOEtfWWtOeGdF?oc=5",
-    "source": "經濟日報",
-    "time": "08/25 17:00",
-    "timestamp": 1787648400.0,
-    "score": 9,
-    "quality_score": 4,
-    "impact_score": 5,
-    "matched_groups": [
-      "market_benchmark",
-      "market_structure"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "taiwan_market",
-      "market_structure"
-    ],
-    "primary_topic": "taiwan_market",
-    "named_entities": [
-      "taiwan_market"
-    ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
