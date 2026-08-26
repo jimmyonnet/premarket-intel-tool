@@ -5501,28 +5501,29 @@
     th.classList.add('sorted', isAsc ? 'sort-asc' : 'sort-desc', isAsc ? 'asc' : 'desc');
     th.setAttribute('aria-sort', isAsc ? 'ascending' : 'descending');
 
+    function parseSortNumber(value) {
+      var normalized = String(value == null ? '' : value)
+        .trim()
+        .replace(/,/g, '')
+        .replace(/[％%]/g, '');
+      if (!/^[+-]?(?:\d+\.?\d*|\.\d+)$/.test(normalized)) return null;
+      var numeric = Number(normalized);
+      return Number.isFinite(numeric) ? numeric : null;
+    }
     function getVal(row) {
       var cell = row.children[colIdx];
       if (!cell) return '';
-      if (cell.hasAttribute('data-sort')) {
-        var sv1 = parseFloat(cell.getAttribute('data-sort'));
-        return isNaN(sv1) ? cell.getAttribute('data-sort') : sv1;
-      }
-      if (cell.hasAttribute('data-sort-value')) {
-        var sv2 = parseFloat(cell.getAttribute('data-sort-value'));
-        return isNaN(sv2) ? cell.getAttribute('data-sort-value') : sv2;
-      }
-      var text = cell.textContent.trim();
-      var dateMatch = text.match(/\b(?:\d{4}[-/])?(\d{2})[-/](\d{2})\b/);
+      var raw = cell.hasAttribute('data-sort')
+        ? cell.getAttribute('data-sort')
+        : cell.hasAttribute('data-sort-value')
+          ? cell.getAttribute('data-sort-value')
+          : cell.textContent.trim();
+      var dateMatch = String(raw).match(/^\s*(?:\d{4}[-/])?(\d{2})[-/](\d{2})\s*$/);
       if (dateMatch) {
         return parseInt(dateMatch[1] + dateMatch[2], 10);
       }
-      var numMatch = text.replace(/,/g, '').match(/[-+]?\d*\.?\d+/);
-      if (numMatch) {
-        var num = parseFloat(numMatch[0]);
-        if (!isNaN(num)) return num;
-      }
-      return text.toLowerCase();
+      var numeric = parseSortNumber(raw);
+      return numeric === null ? String(raw).trim().toLowerCase() : numeric;
     }
 
     rows.sort(function(a, b) {

@@ -47,3 +47,7 @@ def test_sortable_headers_use_aria_sort_and_delegated_keyboard_actions():
     assert "th.setAttribute('aria-sort', isAsc ? 'ascending' : 'descending');" in TEMPLATE
     assert "tbody.querySelectorAll(':scope > tr:not(.candidate-detail-row)')" in TEMPLATE
     assert "tbody.querySelectorAll('tr:not(.candidate-detail-row)')" not in TEMPLATE
+    assert "function parseSortNumber(value)" in TEMPLATE
+    assert ".replace(/,/g, '')" in TEMPLATE
+    assert "Number.isFinite(numeric) ? numeric : null" in TEMPLATE
+    assert "var numeric = parseSortNumber(raw);" in TEMPLATE
