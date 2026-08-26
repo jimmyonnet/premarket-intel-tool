@@ -8,7 +8,7 @@
     "name": "TWSE TAIEX historical index",
     "url": "https://www.twse.com.tw/indicesReport/MI_5MINS_HIST?response=json&date=20260825",
     "observed_at": "2026-08-25T13:30:00+08:00",
-    "fetched_at": "2026-08-26T08:33:34.743777+08:00",
+    "fetched_at": "2026-08-26T10:09:37.624764+08:00",
     "official": true
   },
   "error": null
