@@ -120,6 +120,10 @@ def test_candidate_template_renders_expandable_chengwaye_details():
     assert "法人買賣 · 買超 Top15" in rendered
     assert "法人買賣 · 賣超 Top15" in rendered
     assert "當沖 Top10" in rendered
+    assert rendered.count('class="table-scroll candidate-detail-table-scroll"') == 3
+    assert rendered.count("{{ item.sellV }}") == 0
+    assert "-916" in rendered
+    assert "2,179" in rendered
     assert "個股漲停履歷" in rendered
     assert "漲停次數" in rendered
     assert "+2.00%" in rendered
@@ -129,6 +133,9 @@ def test_candidate_template_renders_expandable_chengwaye_details():
     assert "candidate-insight-" not in rendered
     assert "candidate-institutional-details" not in rendered
     assert 'href="https://chengwaye.com/daily"' in rendered
+    assert ".candidate-detail-table-scroll .candidate-detail-table { min-width: 640px; }" in rendered
+    assert ".candidate-detail-table-scroll .candidate-detail-table {\n      display: table;\n      min-width: 640px;" in rendered
+    assert ".candidate-detail-table-scroll .candidate-detail-table td::before { display: none; content: none; }" in rendered
 
 
 def test_candidate_rows_keep_sort_and_open_detail_contracts_without_search_box():

@@ -2852,6 +2852,12 @@
   .candidate-detail-meta { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
   .candidate-detail-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
   .candidate-detail-card { min-width: 0; overflow: hidden; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-card); }
+  .candidate-detail-table-scroll {
+    margin: 0 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+  }
+  .candidate-detail-table-scroll .candidate-detail-table { min-width: 640px; }
   .candidate-detail-card.is-wide { grid-column: 1 / -1; }
   .candidate-detail-card h5 { margin: 0; padding: 8px 10px; border-bottom: 1px solid var(--border); background: var(--bg-sub); color: var(--text-main); font-size: 11.5px; }
   .limit-up-history-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding-right: 10px; border-bottom: 1px solid var(--border); background: var(--bg-sub); }
@@ -2880,7 +2886,32 @@
     .candidate-detail-row > td::before { content: none; }
     .candidate-detail-row > td { display: block; }
     .candidate-detail-panel { padding: 10px; }
-    .candidate-detail-card { overflow-x: auto; }
+    .candidate-detail-card { overflow: hidden; }
+    .candidate-detail-table-scroll { margin: 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .candidate-detail-table-scroll .candidate-detail-table {
+      display: table;
+      min-width: 640px;
+      width: 100%;
+    }
+    .candidate-detail-table-scroll .candidate-detail-table thead { display: table-header-group; }
+    .candidate-detail-table-scroll .candidate-detail-table tbody { display: table-row-group; }
+    .candidate-detail-table-scroll .candidate-detail-table tr {
+      display: table-row;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+    .candidate-detail-table-scroll .candidate-detail-table th,
+    .candidate-detail-table-scroll .candidate-detail-table td {
+      display: table-cell;
+      padding: 7px 8px;
+      border-bottom: 1px solid var(--border);
+      white-space: nowrap;
+    }
+    .candidate-detail-table-scroll .candidate-detail-table td::before { display: none; content: none; }
+    .candidate-detail-table-scroll .candidate-detail-table tr:last-child td { border-bottom: 0; }
     .limit-up-history-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .limit-up-history-head { padding-right: 8px; }
     .limit-up-history-table-wrap { margin: 0 8px; }
@@ -3578,21 +3609,27 @@
             <div class="candidate-detail-grid">
               <div class="candidate-detail-card">
                 <h5>法人買賣 · 買超 Top15</h5>
-                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                {% for item in detail.buyers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                </tbody></table>
+                <div class="table-scroll candidate-detail-table-scroll">
+                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                  {% for item in detail.buyers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                  </tbody></table>
+                </div>
               </div>
               <div class="candidate-detail-card">
                 <h5>法人買賣 · 賣超 Top15</h5>
-                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                {% for item in detail.sellers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                </tbody></table>
+                <div class="table-scroll candidate-detail-table-scroll">
+                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>淨額(張)</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                  {% for item in detail.sellers %}<tr><td>{{ item.name }}</td><td class="{{ 'rise' if item.net and item.net[0] == '+' else 'fall' }}">{{ item.net }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                  </tbody></table>
+                </div>
               </div>
               <div class="candidate-detail-card is-wide">
                 <h5>當沖 Top10</h5>
-                <table class="candidate-detail-table"><thead><tr><th>券商</th><th>交易張數</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
-                {% for item in detail.daytraders %}<tr><td>{{ item.name }}</td><td>{{ item.total }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
-                </tbody></table>
+                <div class="table-scroll candidate-detail-table-scroll">
+                  <table class="candidate-detail-table"><thead><tr><th>券商</th><th>交易張數</th><th>買張</th><th>買均價</th><th>賣張</th><th>賣均價</th></tr></thead><tbody>
+                  {% for item in detail.daytraders %}<tr><td>{{ item.name }}</td><td>{{ item.total }}</td><td>{{ item.buyV }}</td><td>{{ item.buyP }}</td><td>{{ item.sellV }}</td><td>{{ item.sellP }}</td></tr>{% endfor %}
+                  </tbody></table>
+                </div>
               </div>
               {% set history = detail.limit_up_history %}
               <div class="candidate-detail-card is-wide limit-up-history-card">
