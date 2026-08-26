@@ -86,27 +86,26 @@
     "qualified": true
   },
   {
-    "title": "〈美股盤後〉輝達終止連七跌 美債買氣回籠 四大指數收紅",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBfMjJaVERPbjBMbGRtMkduYUg0cUx4MlN4SjZIaV9sNFhlQ2pBOGVUYW9VWDlneWo4VEVuQ2lUdXU4Q3NFZU5pakNEbFlLQ1k?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/26 05:41",
-    "timestamp": 1787694101.0,
+    "title": "美債殖利率回落美股齊揚 聯準會鷹派立場仍存挑戰",
+    "link": "https://news.google.com/rss/articles/CBMi5AJBVV95cUxNdTdYZDBHdTlJV0pnS0dyWHlPTFA5c01mUDgzSlZsNzJMM1VXMWxVM3JyOHlsb3E3Sm9nZ1NkNk4zc3I5ZlNzNlVaRlVxdjd5OFFocUo5Tzg2ZEVIZDNPOUtFSV9CbFNMbTNFTS11Zm9QcXQ1UDJTVkVuZkdBc3B3TFRHV05KamJHU3NJZUJkeXc3dEpHbVAzSGRRRmZka0hwUHQ3MUJfRS14NlBTSlhoTU5MMHdBblZnam9UeUJHZW5peUQyQVp2T1ZEU0M4eFBSUXRVTzN1UkdNcm1iSE9iZjJQOTZJX1g2ZnZUUF9ZVk1YOHFvRE12UllZZXFEdXZnN0dnc0dlTE1aTVloNjh0MWtKYkUzVEJhRXlkTDhuYi1Hbk1HMUlaZkc5ekV4QXFLOUVtNUNYcGZybW1PNUVJTlRlVkRWSDJnS2VuMmRJeVhzc21FMndvNHNlYXdwbWRjcEJ5Rw?oc=5",
+    "source": "Yahoo股市",
+    "time": "08/26 10:34",
+    "timestamp": 1787711699.0,
     "score": 10,
-    "quality_score": 4,
-    "impact_score": 6,
+    "quality_score": 3,
+    "impact_score": 7,
     "matched_groups": [
-      "market_benchmark",
-      "systemic_company"
+      "macro_policy",
+      "market_benchmark"
     ],
     "low_signal_hits": [],
     "topic_groups": [
       "currency_commodities",
-      "global_market",
-      "company_earnings"
+      "macro_policy",
+      "global_market"
     ],
     "primary_topic": "currency_commodities",
     "named_entities": [
-      "nvidia",
       "us_market"
     ],
     "quality_pass": true,
@@ -117,8 +116,8 @@
     "title": "輝達財報公布時間8/27！三喜臨門成常態，黃仁勳如何驚艷市場？「全村希望」有4個觀察重點｜全球瞭望",
     "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQLTZadDhCQVdtYkdvMjRWbVhVcl9GUTFKbl9GRU9HdUVWLUh5am5KYTBJNV9IWFhqenZnazlKV2RnREF2VFFhQWszZDhPUDJQZm5KdUpjT1NHcXpxeUIwTnYxaEpQb0lkYVZEN3VUMmdvRmlUOEdoU1loUkFmS3hFVA?oc=5",
     "source": "今周刊",
-    "time": "08/26 08:05",
-    "timestamp": 1787702739.0,
+    "time": "08/26 12:00",
+    "timestamp": 1787716806.0,
     "score": 9,
     "quality_score": 3,
     "impact_score": 6,
@@ -161,6 +160,29 @@
       "tsmc",
       "taiwan_market"
     ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "統一主動股債ETF雙雄首日報喜！00411A跑贏大盤 00987D同類漲幅之冠",
+    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE5YejRia01FUEc2QlEtMVAtdmU1U0xlaXp0R2ItOGxVMXVYX2kxUVZwaVJieDR5eWJJV0hrY3dNaGdQNUktZXlYYzg4NA?oc=5",
+    "source": "鉅亨網",
+    "time": "08/26 12:11",
+    "timestamp": 1787717494.0,
+    "score": 9,
+    "quality_score": 4,
+    "impact_score": 5,
+    "matched_groups": [
+      "market_benchmark",
+      "market_structure"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "market_structure"
+    ],
+    "primary_topic": "market_structure",
+    "named_entities": [],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
@@ -231,28 +253,6 @@
       "company_earnings"
     ],
     "primary_topic": "company_earnings",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "美債拋售潮將落幕？選擇權市場大舉押注長債反彈",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9pUFlTTmh0VVhSZ0pHcnVTYVlYZV9HOEdLczZnMTN0X21YUDdOVXpEOUhaWVJmU09OQVNvaFJ0b1o4YVdESVpMeHFOa1N2dUE?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/26 07:30",
-    "timestamp": 1787700636.0,
-    "score": 7,
-    "quality_score": 4,
-    "impact_score": 3,
-    "matched_groups": [
-      "market_move"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "currency_commodities"
-    ],
-    "primary_topic": "currency_commodities",
     "named_entities": [],
     "quality_pass": true,
     "impact_pass": true,

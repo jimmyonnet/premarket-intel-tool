@@ -1,5 +1,5 @@
 {
-  "archived_at": "2026-08-26 11:44:35",
+  "archived_at": "2026-08-26 12:24:15",
   "data_date": "2026-08-26",
   "retention_days": 60,
   "sources": {
@@ -39,7 +39,7 @@
         "title": "0826盤前",
         "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/694E4F4E7828B8D31EB2556EC04B3915",
         "fetch_mode": "live_browser",
-        "collected_at": "2026-08-26T11:43:55.507687+08:00"
+        "collected_at": "2026-08-26T12:23:38.141637+08:00"
       },
       "chengwaye_date": null,
       "not_found_group": {
@@ -132,7 +132,7 @@
     },
     "stock_history": {
       "source": "https://chengwaye.com/stock/",
-      "fetched_at": "2026-08-26T11:44:18.230553+08:00",
+      "fetched_at": "2026-08-26T12:24:03.285917+08:00",
       "requested_codes": [
         "8039",
         "2489",
@@ -1034,27 +1034,26 @@
         "qualified": true
       },
       {
-        "title": "〈美股盤後〉輝達終止連七跌 美債買氣回籠 四大指數收紅",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBfMjJaVERPbjBMbGRtMkduYUg0cUx4MlN4SjZIaV9sNFhlQ2pBOGVUYW9VWDlneWo4VEVuQ2lUdXU4Q3NFZU5pakNEbFlLQ1k?oc=5",
-        "source": "news.cnyes.com",
-        "time": "08/26 05:41",
-        "timestamp": 1787694101.0,
+        "title": "美債殖利率回落美股齊揚 聯準會鷹派立場仍存挑戰",
+        "link": "https://news.google.com/rss/articles/CBMi5AJBVV95cUxNdTdYZDBHdTlJV0pnS0dyWHlPTFA5c01mUDgzSlZsNzJMM1VXMWxVM3JyOHlsb3E3Sm9nZ1NkNk4zc3I5ZlNzNlVaRlVxdjd5OFFocUo5Tzg2ZEVIZDNPOUtFSV9CbFNMbTNFTS11Zm9QcXQ1UDJTVkVuZkdBc3B3TFRHV05KamJHU3NJZUJkeXc3dEpHbVAzSGRRRmZka0hwUHQ3MUJfRS14NlBTSlhoTU5MMHdBblZnam9UeUJHZW5peUQyQVp2T1ZEU0M4eFBSUXRVTzN1UkdNcm1iSE9iZjJQOTZJX1g2ZnZUUF9ZVk1YOHFvRE12UllZZXFEdXZnN0dnc0dlTE1aTVloNjh0MWtKYkUzVEJhRXlkTDhuYi1Hbk1HMUlaZkc5ekV4QXFLOUVtNUNYcGZybW1PNUVJTlRlVkRWSDJnS2VuMmRJeVhzc21FMndvNHNlYXdwbWRjcEJ5Rw?oc=5",
+        "source": "Yahoo股市",
+        "time": "08/26 10:34",
+        "timestamp": 1787711699.0,
         "score": 10,
-        "quality_score": 4,
-        "impact_score": 6,
+        "quality_score": 3,
+        "impact_score": 7,
         "matched_groups": [
-          "market_benchmark",
-          "systemic_company"
+          "macro_policy",
+          "market_benchmark"
         ],
         "low_signal_hits": [],
         "topic_groups": [
           "currency_commodities",
-          "global_market",
-          "company_earnings"
+          "macro_policy",
+          "global_market"
         ],
         "primary_topic": "currency_commodities",
         "named_entities": [
-          "nvidia",
           "us_market"
         ],
         "quality_pass": true,
@@ -1065,8 +1064,8 @@
         "title": "輝達財報公布時間8/27！三喜臨門成常態，黃仁勳如何驚艷市場？「全村希望」有4個觀察重點｜全球瞭望",
         "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQLTZadDhCQVdtYkdvMjRWbVhVcl9GUTFKbl9GRU9HdUVWLUh5am5KYTBJNV9IWFhqenZnazlKV2RnREF2VFFhQWszZDhPUDJQZm5KdUpjT1NHcXpxeUIwTnYxaEpQb0lkYVZEN3VUMmdvRmlUOEdoU1loUkFmS3hFVA?oc=5",
         "source": "今周刊",
-        "time": "08/26 08:05",
-        "timestamp": 1787702739.0,
+        "time": "08/26 12:00",
+        "timestamp": 1787716806.0,
         "score": 9,
         "quality_score": 3,
         "impact_score": 6,
@@ -1109,6 +1108,29 @@
           "tsmc",
           "taiwan_market"
         ],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "統一主動股債ETF雙雄首日報喜！00411A跑贏大盤 00987D同類漲幅之冠",
+        "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE5YejRia01FUEc2QlEtMVAtdmU1U0xlaXp0R2ItOGxVMXVYX2kxUVZwaVJieDR5eWJJV0hrY3dNaGdQNUktZXlYYzg4NA?oc=5",
+        "source": "鉅亨網",
+        "time": "08/26 12:11",
+        "timestamp": 1787717494.0,
+        "score": 9,
+        "quality_score": 4,
+        "impact_score": 5,
+        "matched_groups": [
+          "market_benchmark",
+          "market_structure"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "market_structure"
+        ],
+        "primary_topic": "market_structure",
+        "named_entities": [],
         "quality_pass": true,
         "impact_pass": true,
         "qualified": true
@@ -1183,35 +1205,13 @@
         "quality_pass": true,
         "impact_pass": true,
         "qualified": true
-      },
-      {
-        "title": "美債拋售潮將落幕？選擇權市場大舉押注長債反彈",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9pUFlTTmh0VVhSZ0pHcnVTYVlYZV9HOEdLczZnMTN0X21YUDdOVXpEOUhaWVJmU09OQVNvaFJ0b1o4YVdESVpMeHFOa1N2dUE?oc=5",
-        "source": "news.cnyes.com",
-        "time": "08/26 07:30",
-        "timestamp": 1787700636.0,
-        "score": 7,
-        "quality_score": 4,
-        "impact_score": 3,
-        "matched_groups": [
-          "market_move"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "currency_commodities"
-        ],
-        "primary_topic": "currency_commodities",
-        "named_entities": [],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
       }
     ],
     "twse_summary": {
       "twii": {
-        "price": 45742.75,
-        "change": 573.29,
-        "change_pct": 1.27,
+        "price": 45793.9,
+        "change": 624.44,
+        "change_pct": 1.38,
         "volume": 0
       },
       "inst": {
@@ -1446,19 +1446,19 @@
       "asia_open": {
         "nikkei225": {
           "name": "日經225指數",
-          "value": 66227.55,
-          "change": -371.12,
-          "change_pct": -0.56,
-          "updated_cst": "08/26 10:35",
+          "value": 66231.65,
+          "change": -375.22,
+          "change_pct": -0.57,
+          "updated_cst": "08/26 12:08",
           "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
           "source_label": "Yahoo 個別指數頁"
         },
         "kospi": {
           "name": "韓國綜合指數",
-          "value": 6863.11,
-          "change": -120.37,
-          "change_pct": -1.79,
-          "updated_cst": "08/26 11:23",
+          "value": 6877.45,
+          "change": -134.71,
+          "change_pct": -2.0,
+          "updated_cst": "08/26 12:03",
           "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
           "source_label": "Yahoo 個別指數頁"
         }
@@ -1471,33 +1471,7 @@
       "range_end": "2026-09-09",
       "events": [
         {
-          "id": "ev-2026-08-26-13",
-          "date": "2026-08-26",
-          "time": "20:30",
-          "all_day": false,
-          "title": "美國-个人消费支出物价指數[PCE]-(年增率(YoY))",
-          "summary": "美國-个人消费支出物价指數[PCE]-(年增率(YoY))",
-          "description": "前值:  3.67%",
-          "note": "前值:  3.67%",
-          "mm_link": "https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar",
-          "source_url": "https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar",
-          "category": "macro",
-          "category_name": "總經",
-          "country": "US",
-          "flag": "🇺🇸",
-          "timezone_origin": "America/New_York",
-          "timezone_label": "ET",
-          "time_origin_str": "08:30 ET",
-          "time_tpe_str": "20:30 TPE",
-          "datetime_utc": "2026-08-26T12:30:00Z",
-          "importance": 3,
-          "forecast": null,
-          "previous": "3.67%",
-          "actual": null,
-          "comparison": "pending"
-        },
-        {
-          "id": "ev-2026-08-26-20",
+          "id": "ev-2026-08-26-4",
           "date": "2026-08-26",
           "time": "20:30",
           "all_day": false,
@@ -1523,7 +1497,33 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-26-3",
+          "id": "ev-2026-08-26-14",
+          "date": "2026-08-26",
+          "time": "20:30",
+          "all_day": false,
+          "title": "美國-个人消费支出物价指數[PCE]-(年增率(YoY))",
+          "summary": "美國-个人消费支出物价指數[PCE]-(年增率(YoY))",
+          "description": "前值:  3.67%",
+          "note": "前值:  3.67%",
+          "mm_link": "https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar",
+          "source_url": "https://sc.macromicro.me/collections/5/us-price-relative/25/pce-price?utm_medium=calendar",
+          "category": "macro",
+          "category_name": "總經",
+          "country": "US",
+          "flag": "🇺🇸",
+          "timezone_origin": "America/New_York",
+          "timezone_label": "ET",
+          "time_origin_str": "08:30 ET",
+          "time_tpe_str": "20:30 TPE",
+          "datetime_utc": "2026-08-26T12:30:00Z",
+          "importance": 3,
+          "forecast": null,
+          "previous": "3.67%",
+          "actual": null,
+          "comparison": "pending"
+        },
+        {
+          "id": "ev-2026-08-26-10",
           "date": "2026-08-26",
           "time": "22:30",
           "all_day": false,
@@ -1549,7 +1549,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-27-22",
+          "id": "ev-2026-08-27-6",
           "date": "2026-08-27",
           "time": "09:30",
           "all_day": false,
@@ -1575,7 +1575,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-27-6",
+          "id": "ev-2026-08-27-11",
           "date": "2026-08-27",
           "time": "16:00",
           "all_day": false,
@@ -1601,7 +1601,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-27-8",
+          "id": "ev-2026-08-27-15",
           "date": "2026-08-27",
           "time": "20:30",
           "all_day": false,
@@ -1627,7 +1627,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-28-16",
+          "id": "ev-2026-08-28-22",
           "date": "2026-08-28",
           "time": "17:00",
           "all_day": false,
@@ -1653,7 +1653,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-31-5",
+          "id": "ev-2026-08-31-3",
           "date": "2026-08-31",
           "time": "09:30",
           "all_day": false,
@@ -1679,7 +1679,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-08-31-18",
+          "id": "ev-2026-08-31-13",
           "date": "2026-08-31",
           "time": "09:30",
           "all_day": false,
@@ -1705,7 +1705,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-01-17",
+          "id": "ev-2026-09-01-21",
           "date": "2026-09-01",
           "time": "16:00",
           "all_day": false,
@@ -1731,7 +1731,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-01-14",
+          "id": "ev-2026-09-01-17",
           "date": "2026-09-01",
           "time": "22:00",
           "all_day": false,
@@ -1757,7 +1757,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-02-10",
+          "id": "ev-2026-09-02-20",
           "date": "2026-09-02",
           "time": "20:15",
           "all_day": false,
@@ -1783,7 +1783,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-02-4",
+          "id": "ev-2026-09-02-16",
           "date": "2026-09-02",
           "time": "21:45",
           "all_day": false,
@@ -1809,7 +1809,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-02-15",
+          "id": "ev-2026-09-02-12",
           "date": "2026-09-02",
           "time": "22:30",
           "all_day": false,
@@ -1887,7 +1887,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-03-11",
+          "id": "ev-2026-09-03-18",
           "date": "2026-09-03",
           "time": "22:00",
           "all_day": false,
@@ -1913,33 +1913,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-04-12",
-          "date": "2026-09-04",
-          "time": "20:30",
-          "all_day": false,
-          "title": "美國-非农就业人數(月变动)",
-          "summary": "美國-非农就业人數(月变动)",
-          "description": "前值: -23.0k",
-          "note": "前值: -23.0k",
-          "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
-          "source_url": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
-          "category": "other",
-          "category_name": "其他",
-          "country": "US",
-          "flag": "🇺🇸",
-          "timezone_origin": "America/New_York",
-          "timezone_label": "ET",
-          "time_origin_str": "08:30 ET",
-          "time_tpe_str": "20:30 TPE",
-          "datetime_utc": "2026-09-04T12:30:00Z",
-          "importance": 1,
-          "forecast": null,
-          "previous": "-23.0k",
-          "actual": null,
-          "comparison": "pending"
-        },
-        {
-          "id": "ev-2026-09-04-21",
+          "id": "ev-2026-09-04-5",
           "date": "2026-09-04",
           "time": "20:30",
           "all_day": false,
@@ -1965,7 +1939,33 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-07-9",
+          "id": "ev-2026-09-04-9",
+          "date": "2026-09-04",
+          "time": "20:30",
+          "all_day": false,
+          "title": "美國-非农就业人數(月变动)",
+          "summary": "美國-非农就业人數(月变动)",
+          "description": "前值: -23.0k",
+          "note": "前值: -23.0k",
+          "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+          "source_url": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+          "category": "other",
+          "category_name": "其他",
+          "country": "US",
+          "flag": "🇺🇸",
+          "timezone_origin": "America/New_York",
+          "timezone_label": "ET",
+          "time_origin_str": "08:30 ET",
+          "time_tpe_str": "20:30 TPE",
+          "datetime_utc": "2026-09-04T12:30:00Z",
+          "importance": 1,
+          "forecast": null,
+          "previous": "-23.0k",
+          "actual": null,
+          "comparison": "pending"
+        },
+        {
+          "id": "ev-2026-09-07-19",
           "date": "2026-09-07",
           "time": "17:00",
           "all_day": false,
@@ -2017,7 +2017,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-08-19",
+          "id": "ev-2026-09-08-8",
           "date": "2026-09-08",
           "time": "11:00",
           "all_day": false,
@@ -2664,7 +2664,7 @@
       "latest": {
         "provider": "wantgoo",
         "provider_name": "Wantgoo / TAIFEX",
-        "collected_at": "2026-08-26T11:43:55.088715+08:00",
+        "collected_at": "2026-08-26T12:23:37.087895+08:00",
         "symbol": "臺指期096",
         "price": 45437.0,
         "change": 405.0,
@@ -2698,7 +2698,7 @@
     },
     "source_status": {
       "schema_version": "source-status.v2",
-      "updated_at": "2026-08-26T11:44:18.256546+08:00",
+      "updated_at": "2026-08-26T12:24:03.308347+08:00",
       "reliability_tiers": {
         "core_stable": {
           "label": "核心穩定",
@@ -2734,7 +2734,7 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-26T11:43:52.988077+08:00",
+          "fetched_at": "2026-08-26T12:23:35.098806+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2754,7 +2754,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-26T11:43:55.910581+08:00",
+          "fetched_at": "2026-08-26T12:23:38.228682+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2774,7 +2774,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-26T11:43:54.997748+08:00",
+          "fetched_at": "2026-08-26T12:23:36.988905+08:00",
           "data_date": "2026-08-26",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2794,7 +2794,7 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-26T11:43:52.986193+08:00",
+          "fetched_at": "2026-08-26T12:23:35.098198+08:00",
           "data_date": "08/26",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2814,7 +2814,7 @@
           "notification_level": "notice",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-26T11:43:55.227440+08:00",
+          "fetched_at": "2026-08-26T12:23:37.201318+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2836,7 +2836,7 @@
             "pressplay"
           ],
           "status": "ok",
-          "fetched_at": "2026-08-26T11:44:17.332368+08:00",
+          "fetched_at": "2026-08-26T12:24:02.477049+08:00",
           "data_date": "2026/08/25",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2856,7 +2856,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-26T11:43:52.985514+08:00",
+          "fetched_at": "2026-08-26T12:23:35.097898+08:00",
           "data_date": "2026-08-26",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2876,7 +2876,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-26T11:43:52.987097+08:00",
+          "fetched_at": "2026-08-26T12:23:35.098299+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2896,7 +2896,7 @@
           "notification_level": "notice",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-26T11:43:53.464579+08:00",
+          "fetched_at": "2026-08-26T12:23:35.612538+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2919,8 +2919,8 @@
             "chengwaye_daily"
           ],
           "status": "ok",
-          "fetched_at": "2026-08-26T11:44:17.704380+08:00",
-          "data_date": "2026-08-26T11:44:18.230553+08:00",
+          "fetched_at": "2026-08-26T12:24:02.885503+08:00",
+          "data_date": "2026-08-26T12:24:03.285917+08:00",
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
@@ -2932,16 +2932,16 @@
     },
     "ai_summary": {
       "schema_version": 1,
-      "generated_at": "2026-08-26T11:44:34.496407+08:00",
+      "generated_at": "2026-08-26T12:24:14.913675+08:00",
       "status": "ok",
       "provider": "Gemini API",
       "model": "gemini-2.5-flash",
       "fallback_reason": null,
       "news_stats": {
         "count": 10,
-        "unique_topics": 4,
+        "unique_topics": 5,
         "unique_sources": 6,
-        "nvidia_count": 3
+        "nvidia_count": 2
       },
       "data_quality": {
         "status": "ok",
@@ -2955,12 +2955,12 @@
           {
             "name": "主題分布",
             "status": "ok",
-            "detail": "4 類"
+            "detail": "5 類"
           },
           {
             "name": "公司／事件集中度",
             "status": "ok",
-            "detail": "輝達 3 則"
+            "detail": "輝達 2 則"
           },
           {
             "name": "行情可用性",
@@ -2975,77 +2975,82 @@
         ],
         "issues": [],
         "news_count": 10,
-        "unique_topics": 4,
+        "unique_topics": 5,
         "unique_sources": 6,
-        "nvidia_count": 3,
+        "nvidia_count": 2,
         "topic_counts": {
           "global_market": 1,
-          "currency_commodities": 4,
+          "currency_commodities": 3,
           "taiwan_market": 3,
-          "company_earnings": 2
+          "company_earnings": 2,
+          "market_structure": 1
         },
         "source_counts": {
-          "news.cnyes.com": 4,
-          "鉅亨網": 1,
+          "news.cnyes.com": 2,
+          "鉅亨網": 2,
           "Yahoo新聞": 1,
+          "Yahoo股市": 3,
           "今周刊": 1,
-          "Yahoo股市": 2,
           "經濟日報": 1
         }
       },
       "news_summary": {
-        "headline": "美股晶片股反彈帶動主要指數收紅，輝達財報與美債動向成市場焦點。",
+        "headline": "美股晶片股反彈帶動主要指數上漲，輝達財報成市場焦點，台股夜盤同步走高。",
         "topic_summary": [
           {
             "topic": "美股／全球市場",
             "count": 1,
-            "summary": "美股早盤晶片股反彈推升主要指數開高，輝達財報成AI行情關鍵考驗。"
+            "summary": "美股主要指數受晶片股反彈推升開高，市場關注美債殖利率回落與聯準會立場。"
           },
           {
             "topic": "美元／債券／商品",
-            "count": 4,
-            "summary": "美債殖利率飆升後買氣回籠，選擇權市場大舉押注長債反彈，市場聚焦Jackson Hole年會與CPI數據。"
+            "count": 3,
+            "summary": "美債殖利率飆升與回落引發市場關注，金價突破4600美元，聚焦CPI與傑克森洞年會。"
           },
           {
             "topic": "台股市場",
             "count": 3,
-            "summary": "台股尾盤急拉近千點翻紅，金控股與航運股表現強勁，台積電收紅。"
+            "summary": "台股昨日尾盤急拉近千點翻紅，金控股與航運股表現強勁，台股ETF受關注。"
           },
           {
             "topic": "公司／財報",
             "count": 2,
-            "summary": "輝達財報公布在即，市場關注其對AI行情的影響；漢測前七月營收超越去年全年。"
+            "summary": "輝達財報將公布，成為AI行情關鍵考驗，漢測前七月營收超越去年全年。"
+          },
+          {
+            "topic": "市場結構／資金",
+            "count": 1,
+            "summary": "金融指數狂飆帶動含金量高的台股ETF表現，統一主動股債ETF雙雄首日報喜。"
           }
         ],
         "key_points": [
-          "美股晶片股反彈，帶動主要指數開高收紅。",
-          "輝達財報將公布，被視為AI行情關鍵考驗。",
-          "美債買氣回籠，市場關注Jackson Hole年會與CPI數據。",
-          "台股尾盤急拉近千點翻紅，金融與航運股表現亮眼。"
+          "美股晶片股反彈推升主要指數開高，輝達財報將成AI行情關鍵考驗。",
+          "美債殖利率回落有助美股齊揚，但聯準會鷹派立場仍存挑戰。",
+          "台股昨日尾盤急拉近千點翻紅，航運股與金融軍團攜手護盤。",
+          "市場聚焦傑克森洞年會，專家看好若聯準會釋放訊號美股或大漲。"
         ]
       },
       "market_summary": {
-        "headline": "美股主要指數全面收紅，費半與科技股表現強勁，台指期夜盤同步上漲。",
+        "headline": "美股主要指數普遍上揚，費城半導體指數領漲，台指期夜盤同步走高，亞股則普遍下跌。",
         "observations": [
-          "美股四大指數全面上漲，其中費城半導體指數漲幅領先，顯示科技股表現強勢。",
-          "美股ADR中，半導體相關標的如台積電、輝達、美光、聯電及日月光均呈現顯著漲幅。",
-          "台指期夜盤表現與美股主要指數及半導體ADR走勢一致，呈現上漲。",
-          "亞洲市場（日經、韓國綜合指數）數據未提供更新時間，但顯示下跌，與美股走勢分歧。"
+          "美股主要指數普遍收漲，其中科技股與半導體類股表現尤為強勁，費城半導體指數漲幅居冠。",
+          "多數台灣及國際半導體相關ADR（如台積電、輝達、美光、聯電、日月光）呈現顯著上漲。",
+          "亞洲股市表現分歧，日經225指數與韓國綜合指數均呈現下跌。",
+          "台指期夜盤大幅上漲，顯示市場對台灣股市開盤抱持樂觀態度，與美股科技類股走勢一致。"
         ],
         "drivers": [
-          "晶片股反彈可能推升美股主要指數開高收紅。",
-          "輝達財報公布在即，市場預期可能影響AI行情。",
-          "美債買氣回籠，可能緩解市場對殖利率飆升的擔憂。",
-          "Jackson Hole年會與CPI數據將是市場關注的宏觀政策焦點。"
+          "晶片股反彈可能推升美股主要指數開高。",
+          "市場高度關注輝達財報，視其為AI行情關鍵考驗。",
+          "美債殖利率回落可能提振市場情緒。",
+          "聯準會官員在Jackson Hole會議的發言預期可能影響市場走向。"
         ],
         "risks": [
-          "輝達財報結果可能不如市場預期，影響AI相關類股表現。",
-          "Jackson Hole年會上聯準會官員的發言可能引發市場波動。",
-          "美債殖利率若再次飆升，可能對股市造成壓力。",
-          "亞洲市場的下跌趨勢可能對全球市場情緒產生影響。"
+          "輝達財報結果可能影響AI相關類股走勢。",
+          "聯準會鷹派立場仍存挑戰，可能影響市場預期。",
+          "美債殖利率的未來走勢仍是市場焦點。"
         ]
       },
-      "quality_note": "此份盤前研究報告的資訊均來自於使用者提供的資料，不包含任何推測或額外資訊。"
+      "quality_note": "本摘要僅根據使用者提供的INPUT JSON撰寫整理，未補造不存在的價格、漲跌幅、時間、公司、政策或新聞事實。"
     },
     "financials": {
       "cutoff_str": "08/25 13:30",
@@ -15083,11 +15088,11 @@
     }
   },
   "meta": {
-    "build_time": "2026-08-26 11:44",
-    "build_version": "20260826_1144",
+    "build_time": "2026-08-26 12:24",
+    "build_version": "20260826_1224",
     "data_date": "08/26",
     "stale_hours": 0.0,
-    "hours_since_us_close": 7.7,
+    "hours_since_us_close": 8.4,
     "us_market_context": {
       "session_key": "closed",
       "label": "最新收盤快照",
@@ -15095,7 +15100,7 @@
       "badge_short": "收盤",
       "pill_class": "pill-fresh",
       "updated_label": "08/26 05:43",
-      "detail": "Yahoo Finance · 來源更新 08/26 05:43（6.0 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
+      "detail": "Yahoo Finance · 來源更新 08/26 05:43（6.7 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "ready",
@@ -15110,7 +15115,7 @@
         "name": "指數行情 (美股/亞股/ADR)",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-08-26T11:43:52.988077+08:00",
+        "fetched_at": "2026-08-26T12:23:35.098806+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -15135,7 +15140,7 @@
         "name": "處置股與出關預警",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-08-26T11:43:52.986193+08:00",
+        "fetched_at": "2026-08-26T12:23:35.098198+08:00",
         "data_date": "08/26",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -15160,7 +15165,7 @@
         "name": "大盤昨收與三大法人",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-26T11:43:55.910581+08:00",
+        "fetched_at": "2026-08-26T12:23:38.228682+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -15185,7 +15190,7 @@
         "name": "台指期夜盤走勢",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-26T11:43:54.997748+08:00",
+        "fetched_at": "2026-08-26T12:23:36.988905+08:00",
         "data_date": "2026-08-26",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -15210,7 +15215,7 @@
         "name": "PressPlay 盤前族群與標的",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-26T11:43:55.227440+08:00",
+        "fetched_at": "2026-08-26T12:23:37.201318+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -15235,7 +15240,7 @@
         "name": "主力券商與當沖籌碼明細",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-26T11:44:17.332368+08:00",
+        "fetched_at": "2026-08-26T12:24:02.477049+08:00",
         "data_date": "2026/08/25",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -15262,8 +15267,8 @@
         "name": "Chengwaye 個股漲停履歷",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-26T11:44:17.704380+08:00",
-        "data_date": "2026-08-26T11:44:18.230553+08:00",
+        "fetched_at": "2026-08-26T12:24:02.885503+08:00",
+        "data_date": "2026-08-26T12:24:03.285917+08:00",
         "age_minutes": 0.0,
         "error_summary": null,
         "fallback_used": false,
@@ -15290,7 +15295,7 @@
         "name": "總經財經行事曆",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-26T11:43:52.985514+08:00",
+        "fetched_at": "2026-08-26T12:23:35.097898+08:00",
         "data_date": "2026-08-26",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -15315,7 +15320,7 @@
         "name": "市場未反映重大公告 (財報/營收/處分)",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-26T11:43:52.987097+08:00",
+        "fetched_at": "2026-08-26T12:23:35.098299+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -15340,7 +15345,7 @@
         "name": "盤前即時新聞聚合",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-26T11:43:53.464579+08:00",
+        "fetched_at": "2026-08-26T12:23:35.612538+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -15362,17 +15367,17 @@
       }
     ],
     "schema_version": 1,
-    "data_revision": "6445188c0c4ca45f",
-    "built_at": "2026-08-26T03:44:34.774887+00:00",
+    "data_revision": "27f6870bb64c9edb",
+    "built_at": "2026-08-26T04:24:15.202052+00:00",
     "hash": {
       "disposition": "08cbadd4573a",
-      "candidates": "6842f723de85",
-      "stock_history": "d908a60d7165",
+      "candidates": "e204d5a0e90a",
+      "stock_history": "a634862cd189",
       "announcements": "dd3120f9570a",
-      "macro": "ba2a1d2b058c",
-      "calendar": "531c1b446238",
-      "news": "a986ad2f48a5",
-      "ai_summary": "15680c82e7b3",
+      "macro": "b7d685845917",
+      "calendar": "20774f622062",
+      "news": "38ded555080c",
+      "ai_summary": "522fe72d28d9",
       "opening_forecast": "a6b8ca8f0e29",
       "opening_result": "0111d65af8d5",
       "learning_status": "a75b0b54d02c"
