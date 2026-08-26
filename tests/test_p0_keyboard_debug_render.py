@@ -45,3 +45,5 @@ def test_sortable_headers_use_aria_sort_and_delegated_keyboard_actions():
     assert "thead.addEventListener('keydown'" in TEMPLATE
     assert "event.key !== 'Enter' && event.key !== ' '" in TEMPLATE
     assert "th.setAttribute('aria-sort', isAsc ? 'ascending' : 'descending');" in TEMPLATE
+    assert "tbody.querySelectorAll(':scope > tr:not(.candidate-detail-row)')" in TEMPLATE
+    assert "tbody.querySelectorAll('tr:not(.candidate-detail-row)')" not in TEMPLATE

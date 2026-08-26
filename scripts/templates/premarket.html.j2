@@ -5485,7 +5485,10 @@
     if (!table) return;
     var tbody = table.querySelector('tbody');
     if (!tbody) return;
-    var rows = Array.from(tbody.querySelectorAll('tr:not(.candidate-detail-row)'));
+    // Only sort the current table's direct rows. Candidate detail panels
+    // contain nested tables; a descendant selector would pull their rows into
+    // the outer table and corrupt the layout when a header is clicked.
+    var rows = Array.from(tbody.querySelectorAll(':scope > tr:not(.candidate-detail-row)'));
     if (!rows.length) return;
 
     var curAsc = th.classList.contains('sort-asc') || th.classList.contains('asc');
