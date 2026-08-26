@@ -57,6 +57,9 @@ def test_watchlist_uses_collapsed_summary_with_hit_placeholder():
     assert ".watchlist-card { overflow: visible; }" in source
     assert "z-index: 20;" in source
     assert "min-width: 352px;" in source
+    assert ".watch-more-actions[open] { flex-basis: 100%; }" in source
+    assert "position: static;" in source
+    assert "width: 100%;" in source
 
 
 def test_deployed_watchlist_is_collapsed_by_default_and_keeps_management_controls():

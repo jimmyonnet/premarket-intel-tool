@@ -1133,16 +1133,16 @@
       flex: 0 0 auto;
       min-width: 0;
     }
+    .watch-more-actions[open] { flex-basis: 100%; }
     .watch-more-actions > summary { display: inline-flex; }
     .watch-more-toggle { min-width: 88px; justify-content: center; }
     .watch-more-menu {
-      position: absolute;
-      width: auto;
-      max-width: calc(100vw - 40px);
-      top: calc(100% + 6px);
-      right: 0;
+      position: static;
+      width: 100%;
+      max-width: none;
+      margin-top: 6px;
       display: none;
-      min-width: min(210px, calc(100vw - 40px));
+      min-width: 0;
       padding: 8px;
       border: 1px solid var(--border);
       border-radius: 10px;
