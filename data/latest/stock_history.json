@@ -1,6 +1,6 @@
 {
   "source": "https://chengwaye.com/stock/",
-  "fetched_at": "2026-08-27T11:23:24.100720+08:00",
+  "fetched_at": "2026-08-27T17:34:10.168078+08:00",
   "requested_codes": [
     "6213",
     "6226",
@@ -229,12 +229,21 @@
       "name": "光鼎",
       "source_url": "https://chengwaye.com/stock/6226",
       "summary": {
-        "limit_up_count": "22 次",
-        "latest_limit_up": "2026/08/26",
+        "limit_up_count": "23 次",
+        "latest_limit_up": "2026/08/27",
         "avg_next_open": "+5.88%",
         "avg_next_close": "+5.57%"
       },
       "records": [
+        {
+          "date": "2026/08/27",
+          "close": "30.95",
+          "group": "面板光電",
+          "next_open": "—",
+          "next_avg": "—",
+          "next_close": "—",
+          "next_trend": "—"
+        },
         {
           "date": "2026/08/26",
           "close": "28.15",
@@ -435,7 +444,7 @@
         }
       ],
       "period_note": "上市｜族群：面板光電、光通訊｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 22
+      "record_count": 23
     },
     "1709": {
       "code": "1709",
@@ -1156,12 +1165,21 @@
       "name": "南亞",
       "source_url": "https://chengwaye.com/stock/1303",
       "summary": {
-        "limit_up_count": "12 次",
-        "latest_limit_up": "2026/08/26",
+        "limit_up_count": "13 次",
+        "latest_limit_up": "2026/08/27",
         "avg_next_open": "+3.68%",
         "avg_next_close": "+5.15%"
       },
       "records": [
+        {
+          "date": "2026/08/27",
+          "close": "227.5",
+          "group": "塑化化工",
+          "next_open": "—",
+          "next_avg": "—",
+          "next_close": "—",
+          "next_trend": "—"
+        },
         {
           "date": "2026/08/26",
           "close": "207",
@@ -1272,7 +1290,7 @@
         }
       ],
       "period_note": "上市｜族群：塑化化工｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 12
+      "record_count": 13
     },
     "2351": {
       "code": "2351",
@@ -1375,12 +1393,21 @@
       "name": "國喬",
       "source_url": "https://chengwaye.com/stock/1312",
       "summary": {
-        "limit_up_count": "5 次",
-        "latest_limit_up": "2026/08/26",
+        "limit_up_count": "6 次",
+        "latest_limit_up": "2026/08/27",
         "avg_next_open": "+3.84%",
         "avg_next_close": "+2.09%"
       },
       "records": [
+        {
+          "date": "2026/08/27",
+          "close": "14.3",
+          "group": "塑化化工",
+          "next_open": "—",
+          "next_avg": "—",
+          "next_close": "—",
+          "next_trend": "—"
+        },
         {
           "date": "2026/08/26",
           "close": "13",
@@ -1428,7 +1455,7 @@
         }
       ],
       "period_note": "上市｜族群：塑化化工｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 5
+      "record_count": 6
     },
     "8103": {
       "code": "8103",
@@ -1672,12 +1699,21 @@
       "name": "亞電",
       "source_url": "https://chengwaye.com/stock/4939",
       "summary": {
-        "limit_up_count": "16 次",
-        "latest_limit_up": "2026/08/26",
+        "limit_up_count": "17 次",
+        "latest_limit_up": "2026/08/27",
         "avg_next_open": "+2.76%",
         "avg_next_close": "+4.09%"
       },
       "records": [
+        {
+          "date": "2026/08/27",
+          "close": "86.6",
+          "group": "PCB",
+          "next_open": "—",
+          "next_avg": "—",
+          "next_close": "—",
+          "next_trend": "—"
+        },
         {
           "date": "2026/08/26",
           "close": "78.8",
@@ -1824,7 +1860,7 @@
         }
       ],
       "period_note": "上櫃｜族群：PCB、面板光電、電源模組｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 16
+      "record_count": 17
     },
     "6147": {
       "code": "6147",
@@ -2062,12 +2098,21 @@
       "name": "大立光",
       "source_url": "https://chengwaye.com/stock/3008",
       "summary": {
-        "limit_up_count": "11 次",
-        "latest_limit_up": "2026/08/26",
+        "limit_up_count": "12 次",
+        "latest_limit_up": "2026/08/27",
         "avg_next_open": "+3.25%",
         "avg_next_close": "+4.26%"
       },
       "records": [
+        {
+          "date": "2026/08/27",
+          "close": "6915",
+          "group": "光學鏡頭",
+          "next_open": "—",
+          "next_avg": "—",
+          "next_close": "—",
+          "next_trend": "—"
+        },
         {
           "date": "2026/08/26",
           "close": "6290",
@@ -2169,19 +2214,28 @@
         }
       ],
       "period_note": "上市｜族群：光學鏡頭｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 11
+      "record_count": 12
     },
     "3441": {
       "code": "3441",
       "name": "聯一光",
       "source_url": "https://chengwaye.com/stock/3441",
       "summary": {
-        "limit_up_count": "18 次",
-        "latest_limit_up": "2026/08/26",
+        "limit_up_count": "19 次",
+        "latest_limit_up": "2026/08/27",
         "avg_next_open": "+0.62%",
         "avg_next_close": "+2.58%"
       },
       "records": [
+        {
+          "date": "2026/08/27",
+          "close": "137.5",
+          "group": "光學鏡頭",
+          "next_open": "—",
+          "next_avg": "—",
+          "next_close": "—",
+          "next_trend": "—"
+        },
         {
           "date": "2026/08/26",
           "close": "125",
@@ -2346,7 +2400,7 @@
         }
       ],
       "period_note": "上櫃｜族群：光學鏡頭、面板光電｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 18
+      "record_count": 19
     }
   },
   "failed_codes": [],
