@@ -1,5 +1,5 @@
 {
-  "archived_at": "2026-08-28 05:05:51",
+  "archived_at": "2026-08-28 06:44:11",
   "data_date": "2026-08-28",
   "retention_days": 60,
   "sources": {
@@ -5062,7 +5062,7 @@
     },
     "source_status": {
       "schema_version": "source-status.v2",
-      "updated_at": "2026-08-28T05:05:36.227874+08:00",
+      "updated_at": "2026-08-28T06:43:58.664140+08:00",
       "reliability_tiers": {
         "core_stable": {
           "label": "核心穩定",
@@ -5180,14 +5180,16 @@
           "notification_level": "notice",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-27T23:52:28.528768+08:00",
+          "fetched_at": "2026-08-28T06:43:58.361306+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "缺少每日專欄族群整理，候選股清單將呈現空白",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 360 分鐘內"
         },
         "chengwaye_daily": {
           "source_id": "chengwaye_daily",
@@ -5202,14 +5204,16 @@
             "pressplay"
           ],
           "status": "ok",
-          "fetched_at": "2026-08-27T23:52:54.730363+08:00",
+          "fetched_at": "2026-08-28T06:43:37.016780+08:00",
           "data_date": "2026/08/27",
           "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 360 分鐘內"
         },
         "calendar": {
           "source_id": "calendar",
@@ -5285,20 +5289,22 @@
             "chengwaye_daily"
           ],
           "status": "ok",
-          "fetched_at": "2026-08-27T23:52:55.209913+08:00",
-          "data_date": "2026-08-27T23:52:57.268142+08:00",
+          "fetched_at": "2026-08-28T06:43:37.017428+08:00",
+          "data_date": null,
           "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 1440 分鐘內"
         }
       }
     },
     "ai_summary": {
       "schema_version": 1,
-      "generated_at": "2026-08-28T05:05:50.549945+08:00",
+      "generated_at": "2026-08-28T06:44:10.510530+08:00",
       "status": "ok",
       "provider": "Gemini API",
       "model": "gemini-2.5-flash",
@@ -5365,58 +5371,58 @@
         }
       },
       "news_summary": {
-        "headline": "輝達財報激勵AI股全面走揚，台股ETF創新高，全球債券殖利率飆升引發關注。",
+        "headline": "輝達財報激勵AI股全面走揚，全球市場關注其對科技產業的影響。",
         "topic_summary": [
           {
             "topic": "美元／債券／商品",
             "count": 3,
-            "summary": "輝達財報激勵那斯達克期貨走高，日圓靜待央行升息前景；美國國債破40兆美元，長債殖利率創20年新高，歐美日公債殖利率普遍飆升。"
+            "summary": "新聞提及輝達財報激勵AI股走揚，日圓靜待央行升息前景，以及美國國債破40兆美元、歐美日公債殖利率飆升的原因與影響。"
           },
           {
             "topic": "台股市場",
             "count": 3,
-            "summary": "輝達財報點火台股衝高，一度站上46000點，多檔個股與ETF收盤創新高。"
+            "summary": "報導輝達財報點火台股衝高，一度站上46000點，大立光、南亞科領軍飆漲停，以及00919等7檔台股ETF收盤創新高。"
           },
           {
             "topic": "科技／產業",
             "count": 3,
-            "summary": "輝達財報顯示AI增長加速，AI超級周期進入多線並行階段，打臉AI空頭部隊。"
+            "summary": "聚焦輝達財報顯示AI增長仍在加速，AI超級周期進入多線並行階段，並討論AI熱潮下半場不再只仰賴雲端巨人，以及專家認為AI泡沫言之過早。"
           },
           {
             "topic": "總經／央行政策",
             "count": 1,
-            "summary": "兆豐金法說預期Fed年底可能升息，下半年經濟「前高後低」，台幣區間震盪。"
+            "summary": "兆豐金法說會提及不排除Fed年底升息，並預期下半年經濟「前高後低」，台幣將在31至33元區間震盪。"
           }
         ],
         "key_points": [
           "輝達財報表現強勁，激勵AI相關類股全面走揚。",
-          "台股受輝達財報利多帶動，指數衝高並有多檔ETF創新高。",
-          "美國國債突破40兆美元，長債殖利率創20年新高。",
-          "市場關注聯準會年底升息可能性及下半年經濟前景。"
+          "台股受輝達財報利多影響，指數衝高並有多檔個股及ETF創新高。",
+          "全球公債殖利率飆升，美國國債突破40兆美元引發關注。",
+          "市場對Fed年底升息前景及台幣匯率區間震盪保持關注。"
         ]
       },
       "market_summary": {
-        "headline": "美股主要指數全面上漲，科技與半導體類股表現強勁，亞股則普遍承壓。（亞股尚未開盤，以上為前一交易時段收盤結果，非當下盤中）",
+        "headline": "美股主要指數全面上漲，科技與半導體類股表現尤為強勁，台指期夜盤同步走高。",
         "observations": [
-          "美股主要指數全面收紅，其中科技股與半導體指數漲幅顯著領先。",
-          "費城半導體指數與NASDAQ指數漲幅居前，顯示科技類股表現強勁。",
-          "台積電ADR與輝達ADR表現突出，但部分半導體相關ADR如美光則下跌。",
-          "亞洲股市表現分歧，日經225指數與韓國綜合指數均呈現下跌。"
+          "美股四大指數全面收紅，其中NASDAQ指數與費城半導體指數漲幅領先。",
+          "ADR表現分歧，輝達、台積電與日月光ADR顯著上漲，而美光與聯電ADR則下跌。",
+          "亞洲股市日經225指數與韓國綜合指數呈現下跌，但更新時間未提供，僅供參考。",
+          "台指期夜盤表現強勁，漲幅超過0.5%，顯示市場對台股開盤持樂觀態度。"
         ],
         "drivers": [
-          "輝達財報表現優於預期，激勵AI相關概念股與半導體類股走揚。",
-          "市場對AI超級週期的樂觀預期，可能推動科技股持續表現。",
-          "日圓靜待央行升息前景，可能影響外匯市場波動。",
-          "美國國債殖利率飆升，可能對部分市場情緒造成影響。"
+          "輝達強勁的財報表現，可能激勵AI相關概念股與半導體板塊上漲。",
+          "市場對AI超級週期的樂觀預期，可能推動科技股表現。",
+          "美國國債殖利率飆升，可能對市場情緒產生影響。",
+          "對聯準會未來升息路徑的預期，可能影響匯率與資金流向。"
         ],
         "risks": [
-          "美國國債規模持續擴大，長債殖利率創20年新高，可能引發市場對債務可持續性的擔憂。",
-          "聯準會年底升息的可能性，可能對資金流向及市場估值造成壓力。",
-          "下半年經濟「前高後低」的預期，可能影響企業盈利前景。",
-          "全球公債殖利率普遍飆升，可能增加企業融資成本並抑制經濟活動。"
+          "全球公債殖利率持續飆升，可能增加企業融資成本並影響估值。",
+          "聯準會年底升息的可能性，可能對市場流動性造成壓力。",
+          "日圓靜待央行升息前景，可能引發匯率波動。",
+          "部分ADR個股表現疲軟，顯示市場對特定產業或公司仍有疑慮。"
         ]
       },
-      "quality_note": "此份報告是根據您提供的資料所撰寫，不包含任何推測之詞。"
+      "quality_note": "所有資料來源狀態正常。"
     },
     "financials": {
       "cutoff_str": "08/27 13:30",
@@ -26119,11 +26125,11 @@
     }
   },
   "meta": {
-    "build_time": "2026-08-28 05:05",
-    "build_version": "20260828_0505",
+    "build_time": "2026-08-28 06:44",
+    "build_version": "20260828_0644",
     "data_date": "08/28",
-    "stale_hours": 5.2,
-    "hours_since_us_close": 1.1,
+    "stale_hours": 6.9,
+    "hours_since_us_close": 2.7,
     "us_market_context": {
       "session_key": "after",
       "label": "美股盤後",
@@ -26131,7 +26137,7 @@
       "badge_short": "盤後",
       "pill_class": "pill-amber",
       "updated_label": "08/27 23:52",
-      "detail": "Yahoo Finance · 來源更新 08/27 23:52（5.2 小時前）· 延遲分鐘數未提供 · 正常交易時段已結束",
+      "detail": "Yahoo Finance · 來源更新 08/27 23:52（6.9 小時前）· 延遲分鐘數未提供 · 正常交易時段已結束",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "ready",
@@ -26246,7 +26252,7 @@
         "name": "PressPlay 盤前族群與標的",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-27T23:52:28.528768+08:00",
+        "fetched_at": "2026-08-28T06:43:58.361306+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -26271,7 +26277,7 @@
         "name": "主力券商與當沖籌碼明細",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-27T23:52:54.730363+08:00",
+        "fetched_at": "2026-08-28T06:43:37.016780+08:00",
         "data_date": "2026/08/27",
         "age_minutes": 0.4,
         "error_summary": null,
@@ -26298,8 +26304,8 @@
         "name": "Chengwaye 個股漲停履歷",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-27T23:52:55.209913+08:00",
-        "data_date": "2026-08-27T23:52:57.268142+08:00",
+        "fetched_at": "2026-08-28T06:43:37.017428+08:00",
+        "data_date": null,
         "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
@@ -26398,8 +26404,8 @@
       }
     ],
     "schema_version": 1,
-    "data_revision": "47da4f65849c20bd",
-    "built_at": "2026-08-27T21:05:50.921934+00:00",
+    "data_revision": "8403e56f691a4e1a",
+    "built_at": "2026-08-27T22:44:10.902063+00:00",
     "hash": {
       "disposition": "0635c9603591",
       "candidates": "0619985aa931",
@@ -26408,7 +26414,7 @@
       "macro": "f1ad027012b6",
       "calendar": "a23b7e10a0d0",
       "news": "368e33329b7b",
-      "ai_summary": "b3da9503cc22",
+      "ai_summary": "e93fc6d92f29",
       "opening_forecast": "a6b8ca8f0e29",
       "opening_result": "0111d65af8d5",
       "learning_status": "a75b0b54d02c"
