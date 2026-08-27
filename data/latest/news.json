@@ -26,6 +26,36 @@
     "qualified": true
   },
   {
+    "title": "輝達財報點火台股衝高！一度站上46000點 大立光、南亞科領軍飆漲停",
+    "link": "https://news.google.com/rss/articles/CBMiswNBVV95cUxNdEg0Z2dRNjB0QlRWV2g5cTgyV0dTNXdUbmFuRFVuMzFCUHZrMjN0QjBFMGxoV0lRdkZ6SVpvT1V6cnFkVnAyVGIyYnhOT1hCQnFCazlTcWg2QWs5RmVVZFB0U0hfc2FVeGlqelJLcHlRMV9ibGppYWVmV0pqVWQxUkRXNnNwbWhkYy1XLS05MXJlbGhIMDNfdWxUMngxT1dPMzVyLVVPQ0VWTElnOF9uVjNMazJfcG9tRzBtS2lqZ2VxenlScGVOaGhMS0FjYnY5cGZONnVIODhxcUR3bWZYZjQwcEhwREtXU0lZQVRMWlp6c3dfaUtoUnlGY1prNXJEWnV3aW1uMWRHNnhoUVAxeFpsVnFlVVowd2VSVDZDMXBBakNGdzVpeER3el8tbFZ2Z3F2cWF5X3p5OHJQWG5Rc19ZY19lRldrU1VqVzBpRDB1aGVVaXdkNG5ESUU2UFZyMDEwNmdjRUJBWEdYMXhKTTFKazZ0eUs5cmFhQ1lOVkdsaVJSMjFRdnBCVE5yTlkycGlod3NBVzZIZlFpZ2RSQUE3bkl0Y0VHUFk3SVdScXhuekU?oc=5",
+    "source": "Yahoo股市",
+    "time": "08/27 17:35",
+    "timestamp": 1787823348.0,
+    "score": 15,
+    "quality_score": 3,
+    "impact_score": 12,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial",
+      "market_move"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "company_earnings"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "nvidia",
+      "taiwan_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "台積電尾盤被偷襲！台股收漲142點 PCB「7檔」收漲停",
     "link": "https://news.google.com/rss/articles/CBMitgJBVV95cUxNaXpVZ2h6cjllelZJYWF5Wkk3VzBKRHdTTEpxVUE0RGpHT2pkQm9SRDlwMnNNSkk2ODNzVndudDEzZW5Ec0ZxY0Vhc1kzZ2I5eTM4dXpUT2lWTXVQMzdTTXFyMjY1Wlk2LUJXMm5sc0lpR1VCcWJtWENoLTNXeTJFUkxEdGd0NE0yRUFQYkZuWTZobHk5TFRNZXBQR2QyZlR6VE05SHZJV01Ba0NseTRLeG5ac1VwbGdNTVJ1YTdEdldqaXZ4bjlCYm5lYVNmYWlxRFlYNXluRHJlUlVVeUpSMUxzdU1wT1J0TGFlbnVQS1htdEpHMDhqTFZxbUFMWUJrekE3aGlUTFZMSEFRR1doMk5oQTNsa0dKUlJtZzVFampqNUJuMzhlWkJUTkZxcVBDRUkyanFR?oc=5",
     "source": "Yahoo股市",
@@ -83,32 +113,6 @@
     "qualified": true
   },
   {
-    "title": "輝達財報報喜 新宣佈合作廠商",
-    "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxPY3AyZXIyeWVZYnU2VFRjcjRrejd5aGp1eG9PTXB5WXVBaVVzTmQxNjlhdXh6VnAzMDhydk1Da09scXFpV3ZDWnFNN2hmQmFTVmNwRVZhSThpUGxreU4xRUhpeldOSkJ6UnduZ2V0YkFoWnhGaFlyNTA4anVBcnRLUUJSWVNIYUgyZWNyZXBGamFJVzg3SmtXWXRJZExIVjlJeEUxYWpCY2pRZzdWazBUX1Z4SG13bUpvMnEtRHdMWU9rWkdhOXctZDcyaEdJZWdHaEgydFlfZE80ZnFvb1RsOVpxcS11bXlKN1hsa0JLNF8?oc=5",
-    "source": "Yahoo新聞",
-    "time": "08/27 15:59",
-    "timestamp": 1787817540.0,
-    "score": 9,
-    "quality_score": 3,
-    "impact_score": 6,
-    "release_bonus": 0,
-    "matched_groups": [
-      "systemic_company",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "company_earnings"
-    ],
-    "primary_topic": "company_earnings",
-    "named_entities": [
-      "nvidia"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
     "title": "三大法人買超台股643.07億元 國巨走強卻遭外資、投信聯手調節",
     "link": "https://news.google.com/rss/articles/CBMi_wJBVV95cUxQQmltZkRaQXptTkxiMGRvQ0pDRWdnV3VUYlpFMHZxSnYtUHVMQTVuVktGS09nMDhaTFFtcXRqNzNGTjhLTjY3U3ZCelJJMDBfU1dpa0JyWFlqZGw2RVR3OVFNdWlkUkZtU1c3MWlEUG9TUnlscThGcVBNUVdsbUdvbFlUbGUxU2R0ZnRnU1JWdkhIZ19HeGtVQktVNzlyMG1DR1hiVE1EZnhlXzh3aXVjVGVLVjZKMWprdFFvYWpGVGQ1eEpjUWh2VmExSWVDSFpybDM2WDlSaVJfVW9ZYWFMeU5FWjZmOGh3R0R2YUlqYVdEdE14ekR3ZzhCUjUzY0x0N3Nad2Y0d2ZCenVaUjlnQ0tyVVNpOXZ5VmlqNHV6LWhIVzAxdXpCNzQ1VVFKMTdLTkZZQlVNVng0X1BlNk80T3NPYkp3azNzSHA0NFJrdWZ0elRQVjljWVE1T3pHUUlVR0Y3RDBXaE5DQzhJYzdaZkRXNzI2V2xtc1QwaTNrTQ?oc=5",
     "source": "Yahoo股市",
@@ -131,6 +135,29 @@
     "named_entities": [
       "taiwan_market"
     ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "〈兆豐金法說〉不排除Fed年底升息！看下半年經濟「前高後低」台幣31至33元區間震盪",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBBSkJyMV9BQzJhUUVVQm9EalRETERqZ1BZdERzQnA0YlFOdXhvTlRndGZhcWxBakxjTll5NFRjV2ljMTdHZGRSS2l5cDNPS28?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/27 18:57",
+    "timestamp": 1787828256.0,
+    "score": 8,
+    "quality_score": 4,
+    "impact_score": 4,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "macro_policy"
+    ],
+    "primary_topic": "macro_policy",
+    "named_entities": [],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
@@ -179,6 +206,58 @@
     ],
     "primary_topic": "currency_commodities",
     "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "輝達財報救全村？ 大立光⊕、上詮⊕、精材、國巨、華新科、日電貿",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1ITVA2QTc3a1VSWjlaWnFPNHkzOTdmbWpMaThFYnY1ZkJlbjNWMEdya244Y055RE1rdE1BSkstTWtMUnozUWtNVmVIaHpyMms?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/27 17:32",
+    "timestamp": 1787823149.0,
+    "score": 10,
+    "quality_score": 4,
+    "impact_score": 6,
+    "release_bonus": 0,
+    "matched_groups": [
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "company_earnings"
+    ],
+    "primary_topic": "company_earnings",
+    "named_entities": [
+      "nvidia"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "輝達財報報喜 新宣佈合作廠商",
+    "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxPY3AyZXIyeWVZYnU2VFRjcjRrejd5aGp1eG9PTXB5WXVBaVVzTmQxNjlhdXh6VnAzMDhydk1Da09scXFpV3ZDWnFNN2hmQmFTVmNwRVZhSThpUGxreU4xRUhpeldOSkJ6UnduZ2V0YkFoWnhGaFlyNTA4anVBcnRLUUJSWVNIYUgyZWNyZXBGamFJVzg3SmtXWXRJZExIVjlJeEUxYWpCY2pRZzdWazBUX1Z4SG13bUpvMnEtRHdMWU9rWkdhOXctZDcyaEdJZWdHaEgydFlfZE80ZnFvb1RsOVpxcS11bXlKN1hsa0JLNF8?oc=5",
+    "source": "Yahoo新聞",
+    "time": "08/27 15:59",
+    "timestamp": 1787817540.0,
+    "score": 9,
+    "quality_score": 3,
+    "impact_score": 6,
+    "release_bonus": 0,
+    "matched_groups": [
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "company_earnings"
+    ],
+    "primary_topic": "company_earnings",
+    "named_entities": [
+      "nvidia"
+    ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
