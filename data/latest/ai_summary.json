@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-27T08:18:06.055777+08:00",
-  "status": "fallback",
-  "provider": "確定性降級整理",
-  "model": null,
-  "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
+  "generated_at": "2026-08-27T11:23:39.449647+08:00",
+  "status": "ok",
+  "provider": "Gemini API",
+  "model": "gemini-2.5-flash",
+  "fallback_reason": null,
   "news_stats": {
     "count": 10,
-    "unique_topics": 5,
-    "unique_sources": 7,
+    "unique_topics": 6,
+    "unique_sources": 6,
     "nvidia_count": 3
   },
   "data_quality": {
@@ -23,7 +23,7 @@
       {
         "name": "主題分布",
         "status": "ok",
-        "detail": "5 類"
+        "detail": "6 類"
       },
       {
         "name": "公司／事件集中度",
@@ -43,77 +43,87 @@
     ],
     "issues": [],
     "news_count": 10,
-    "unique_topics": 5,
-    "unique_sources": 7,
+    "unique_topics": 6,
+    "unique_sources": 6,
     "nvidia_count": 3,
     "topic_counts": {
       "company_earnings": 2,
-      "currency_commodities": 2,
-      "macro_policy": 2,
+      "currency_commodities": 3,
+      "macro_policy": 1,
+      "sector_technology": 1,
       "taiwan_market": 2,
-      "sector_technology": 2
+      "geopolitics_trade": 1
     },
     "source_counts": {
-      "cna.com.tw": 1,
-      "Yahoo股市": 2,
+      "經濟日報": 3,
+      "Yahoo股市": 1,
       "今周刊": 1,
-      "news.cnyes.com": 3,
-      "經濟日報": 1,
-      "Yahoo新聞": 1,
-      "工商時報": 1
+      "news.cnyes.com": 2,
+      "Yahoo新聞": 2,
+      "鉅亨網": 1
     }
   },
   "news_summary": {
-    "headline": "目前整理 10 則新聞，涵蓋 5 類主題；同一公司或事件不應主導全部清單。",
+    "headline": "輝達財報超預期，AI供應鏈受關注，然通膨與升息預期仍存",
     "topic_summary": [
       {
         "topic": "公司／財報",
         "count": 2,
-        "summary": "公司／財報"
+        "summary": "輝達第二季財報超預期，營收倍增，第三季展望樂觀，市場關注其AI供應鏈。"
       },
       {
         "topic": "美元／債券／商品",
-        "count": 2,
-        "summary": "美元／債券／商品"
+        "count": 3,
+        "summary": "通膨壓力持續，市場預期聯準會可能升息，導致金價下跌。"
       },
       {
         "topic": "總經／央行政策",
-        "count": 2,
-        "summary": "總經／央行政策"
+        "count": 1,
+        "summary": "美國通膨持續，聯準會升息預期升高，IMF總裁呼籲央行穩定物價。"
       },
       {
         "topic": "科技／產業",
-        "count": 2,
-        "summary": "科技／產業"
+        "count": 1,
+        "summary": "AI伺服器與光電應用營收成長，台股AI供應鏈受市場關注。"
       },
       {
         "topic": "台股市場",
         "count": 2,
-        "summary": "台股市場"
+        "summary": "台股開盤將驗收AI指標，金融指數表現亮眼。"
+      },
+      {
+        "topic": "地緣政治／貿易",
+        "count": 1,
+        "summary": "IMF總裁警告戰爭引發的能源衝擊未結束，央行應專注穩定物價。"
       }
     ],
     "key_points": [
-      "輝達Q2財報超預期季度營收倍增| 國際（cna.com.tw，08/27 05:04）",
-      "輝達財報超預期！單季營收年增106％ Q3上看1080億美元（Yahoo股市，08/27 07:29）",
-      "輝達(NVDA)財報出爐、股價盤後漲5%！黃仁勳上菜重點必看...台灣13家Vera Rubin供應鏈等開獎（今周刊，08/27 06:18）",
-      "〈美股早盤〉通膨還在燒！主要指數開低 市場押注Fed年底前升息1碼（news.cnyes.com，08/26 21:41）",
-      "台股大跌重傷券商！7月稅後少賺156億元（Yahoo股市，08/26 17:54）"
+      "輝達Q2財報超預期，季度營收倍增，Q3營收上看1080億美元。",
+      "市場對聯準會年底前升息一碼的預期升高，通膨壓力持續。",
+      "「債券義勇軍」發明人建議此刻不買AI股但可抱黃金。",
+      "IMF總裁提醒戰爭引發的能源衝擊尚未結束。"
     ]
   },
   "market_summary": {
-    "headline": "隔夜市場風險情緒偏弱，但仍有部分非科技標的相對抗跌。",
+    "headline": "美股主要指數普遍收跌，費半逆勢小漲，亞股開盤走弱",
     "observations": [
-      "市場廣度：下跌標的多於上漲標的，整體不是所有市場同步同幅度變動。",
-      "相對強弱：台指期夜盤 相對有支撐，亞股 相對承壓，市場表現呈現分化。",
-      "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
+      "美股主要指數道瓊、S&P 500及NASDAQ普遍小幅下跌。",
+      "費城半導體指數逆勢上漲0.2%，顯示半導體板塊相對有撐。",
+      "ADR表現分歧，台積電ADR小漲，輝達ADR下跌，聯電ADR跌幅較大。",
+      "亞股日經225指數與韓國綜合指數開盤走低，台指期夜盤亦小幅收跌。"
     ],
     "drivers": [
-      "新聞題材主要集中在：公司／財報、美元／債券／商品、總經／央行政策；這是資訊分布，不代表已確認的因果關係。"
+      "輝達財報超預期，可能提振AI相關供應鏈的市場情緒。",
+      "美國通膨壓力持續，市場對聯準會升息的預期影響整體市場走向。",
+      "AI伺服器與光電應用營收成長，可能帶動相關科技股表現。",
+      "全球地緣政治與能源衝擊的擔憂，可能影響市場穩定性。"
     ],
     "risks": [
-      "行情時間與資料延遲請以各卡片標示為準。",
-      "以上為快照關係整理，不代表價格方向預測。"
+      "通膨壓力若持續，可能導致聯準會進一步升息，影響市場流動性。",
+      "地緣政治衝突及其引發的能源衝擊，可能對全球經濟造成不確定性。",
+      "市場對AI產業未來發展的看法分歧，可能導致相關股票波動加劇。",
+      "亞洲主要股市開盤走弱，可能對台股造成壓力。"
     ]
   },
-  "quality_note": "目前使用確定性整理；完成 AI 服務設定後，會補上語意摘要。"
+  "quality_note": "所有資料來源狀態正常，資訊完整。"
 }
