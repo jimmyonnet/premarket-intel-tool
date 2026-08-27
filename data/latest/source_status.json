@@ -1,6 +1,6 @@
 {
   "schema_version": "source-status.v2",
-  "updated_at": "2026-08-27T11:23:24.130178+08:00",
+  "updated_at": "2026-08-27T12:36:08.760616+08:00",
   "reliability_tiers": {
     "core_stable": {
       "label": "核心穩定",
@@ -36,14 +36,16 @@
       "notification_level": "critical",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-08-27T11:22:55.472689+08:00",
+      "fetched_at": "2026-08-27T12:35:46.805907+08:00",
       "data_date": null,
-      "age_minutes": 0.0,
+      "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 720 分鐘內"
     },
     "twse_summary": {
       "source_id": "twse_summary",
@@ -56,14 +58,16 @@
       "notification_level": "warning",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-08-27T11:22:58.169329+08:00",
+      "fetched_at": "2026-08-27T12:35:46.806907+08:00",
       "data_date": null,
-      "age_minutes": 0.0,
+      "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 720 分鐘內"
     },
     "night_session": {
       "source_id": "night_session",
@@ -76,14 +80,16 @@
       "notification_level": "warning",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-08-27T11:22:57.201982+08:00",
+      "fetched_at": "2026-08-27T12:35:46.805907+08:00",
       "data_date": "2026-08-27",
-      "age_minutes": 0.0,
+      "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 180 分鐘內"
     },
     "disposal": {
       "source_id": "disposal",
@@ -98,7 +104,7 @@
       "status": "ok",
       "fetched_at": "2026-08-27T11:22:55.471315+08:00",
       "data_date": "08/27",
-      "age_minutes": 0.0,
+      "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
@@ -116,14 +122,16 @@
       "notification_level": "notice",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-08-27T11:22:57.571947+08:00",
+      "fetched_at": "2026-08-27T12:35:46.805907+08:00",
       "data_date": null,
-      "age_minutes": 0.0,
+      "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "缺少每日專欄族群整理，候選股清單將呈現空白",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 360 分鐘內"
     },
     "chengwaye_daily": {
       "source_id": "chengwaye_daily",
@@ -138,14 +146,16 @@
         "pressplay"
       ],
       "status": "ok",
-      "fetched_at": "2026-08-27T11:23:22.872000+08:00",
+      "fetched_at": "2026-08-27T12:35:46.804907+08:00",
       "data_date": "2026/08/26",
-      "age_minutes": 0.0,
+      "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 360 分鐘內"
     },
     "calendar": {
       "source_id": "calendar",
@@ -158,14 +168,16 @@
       "notification_level": "warning",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-08-27T11:22:55.471139+08:00",
+      "fetched_at": "2026-08-27T12:35:46.804594+08:00",
       "data_date": "2026-08-27",
-      "age_minutes": 0.0,
+      "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "缺少今日重磅總經數據與事件日程倒數",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 720 分鐘內"
     },
     "financials": {
       "source_id": "financials",
@@ -180,7 +192,7 @@
       "status": "ok",
       "fetched_at": "2026-08-27T11:22:55.471518+08:00",
       "data_date": null,
-      "age_minutes": 0.0,
+      "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
@@ -198,14 +210,16 @@
       "notification_level": "notice",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-08-27T11:22:55.938360+08:00",
+      "fetched_at": "2026-08-27T12:35:46.805907+08:00",
       "data_date": null,
-      "age_minutes": 0.0,
+      "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "缺少隔夜美股與產業焦點新聞快訊",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 180 分鐘內"
     },
     "chengwaye_stock_history": {
       "source_id": "chengwaye_stock_history",
@@ -221,14 +235,16 @@
         "chengwaye_daily"
       ],
       "status": "ok",
-      "fetched_at": "2026-08-27T11:23:23.296556+08:00",
-      "data_date": "2026-08-27T11:23:24.100720+08:00",
-      "age_minutes": 0.0,
+      "fetched_at": "2026-08-27T12:35:46.805907+08:00",
+      "data_date": null,
+      "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 1440 分鐘內"
     }
   }
 }

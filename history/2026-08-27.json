@@ -1,5 +1,5 @@
 {
-  "archived_at": "2026-08-27 11:23:40",
+  "archived_at": "2026-08-27 12:36:25",
   "data_date": "2026-08-27",
   "retention_days": 60,
   "sources": {
@@ -4375,7 +4375,7 @@
     },
     "source_status": {
       "schema_version": "source-status.v2",
-      "updated_at": "2026-08-27T11:23:24.130178+08:00",
+      "updated_at": "2026-08-27T12:36:08.760616+08:00",
       "reliability_tiers": {
         "core_stable": {
           "label": "核心穩定",
@@ -4411,14 +4411,16 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-27T11:22:55.472689+08:00",
+          "fetched_at": "2026-08-27T12:35:46.805907+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
         },
         "twse_summary": {
           "source_id": "twse_summary",
@@ -4431,14 +4433,16 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-27T11:22:58.169329+08:00",
+          "fetched_at": "2026-08-27T12:35:46.806907+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
         },
         "night_session": {
           "source_id": "night_session",
@@ -4451,14 +4455,16 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-27T11:22:57.201982+08:00",
+          "fetched_at": "2026-08-27T12:35:46.805907+08:00",
           "data_date": "2026-08-27",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 180 分鐘內"
         },
         "disposal": {
           "source_id": "disposal",
@@ -4473,7 +4479,7 @@
           "status": "ok",
           "fetched_at": "2026-08-27T11:22:55.471315+08:00",
           "data_date": "08/27",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -4491,14 +4497,16 @@
           "notification_level": "notice",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-27T11:22:57.571947+08:00",
+          "fetched_at": "2026-08-27T12:35:46.805907+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "缺少每日專欄族群整理，候選股清單將呈現空白",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 360 分鐘內"
         },
         "chengwaye_daily": {
           "source_id": "chengwaye_daily",
@@ -4513,14 +4521,16 @@
             "pressplay"
           ],
           "status": "ok",
-          "fetched_at": "2026-08-27T11:23:22.872000+08:00",
+          "fetched_at": "2026-08-27T12:35:46.804907+08:00",
           "data_date": "2026/08/26",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 360 分鐘內"
         },
         "calendar": {
           "source_id": "calendar",
@@ -4533,14 +4543,16 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-27T11:22:55.471139+08:00",
+          "fetched_at": "2026-08-27T12:35:46.804594+08:00",
           "data_date": "2026-08-27",
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "缺少今日重磅總經數據與事件日程倒數",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
         },
         "financials": {
           "source_id": "financials",
@@ -4555,7 +4567,7 @@
           "status": "ok",
           "fetched_at": "2026-08-27T11:22:55.471518+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -4573,14 +4585,16 @@
           "notification_level": "notice",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-08-27T11:22:55.938360+08:00",
+          "fetched_at": "2026-08-27T12:35:46.805907+08:00",
           "data_date": null,
-          "age_minutes": 0.0,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "缺少隔夜美股與產業焦點新聞快訊",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 180 分鐘內"
         },
         "chengwaye_stock_history": {
           "source_id": "chengwaye_stock_history",
@@ -4596,20 +4610,22 @@
             "chengwaye_daily"
           ],
           "status": "ok",
-          "fetched_at": "2026-08-27T11:23:23.296556+08:00",
-          "data_date": "2026-08-27T11:23:24.100720+08:00",
-          "age_minutes": 0.0,
+          "fetched_at": "2026-08-27T12:35:46.805907+08:00",
+          "data_date": null,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
           "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
-          "notification": null
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 1440 分鐘內"
         }
       }
     },
     "ai_summary": {
       "schema_version": 1,
-      "generated_at": "2026-08-27T11:23:39.449647+08:00",
+      "generated_at": "2026-08-27T12:36:25.258052+08:00",
       "status": "ok",
       "provider": "Gemini API",
       "model": "gemini-2.5-flash",
@@ -4673,68 +4689,68 @@
         }
       },
       "news_summary": {
-        "headline": "輝達財報超預期，AI供應鏈受關注，然通膨與升息預期仍存",
+        "headline": "輝達財報超預期，市場關注通膨與升息前景",
         "topic_summary": [
           {
             "topic": "公司／財報",
             "count": 2,
-            "summary": "輝達第二季財報超預期，營收倍增，第三季展望樂觀，市場關注其AI供應鏈。"
+            "summary": "輝達第二季財報表現超乎預期，季度營收倍增，並預期第三季營收將持續成長，市場對其AI供應鏈抱持樂觀態度。"
           },
           {
             "topic": "美元／債券／商品",
             "count": 3,
-            "summary": "通膨壓力持續，市場預期聯準會可能升息，導致金價下跌。"
+            "summary": "通膨壓力加劇聯準會升息預期，導致現貨金價下跌，有專家建議此刻可抱黃金而非AI股。"
           },
           {
             "topic": "總經／央行政策",
             "count": 1,
-            "summary": "美國通膨持續，聯準會升息預期升高，IMF總裁呼籲央行穩定物價。"
+            "summary": "通膨持續燃燒，市場預期聯準會可能在年底前升息，國際貨幣基金組織（IMF）總裁亦強調央行應專注穩定物價。"
           },
           {
             "topic": "科技／產業",
             "count": 1,
-            "summary": "AI伺服器與光電應用營收成長，台股AI供應鏈受市場關注。"
+            "summary": "AI伺服器與光電應用營收放大，被視為第二成長曲線，輝達在AI領域的領導地位持續受到關注，但也有專家不建議此刻買入AI股。"
           },
           {
             "topic": "台股市場",
             "count": 2,
-            "summary": "台股開盤將驗收AI指標，金融指數表現亮眼。"
+            "summary": "台灣市場關注輝達財報對台股開盤的影響，以及金融指數與高含金量台股ETF的表現。"
           },
           {
             "topic": "地緣政治／貿易",
             "count": 1,
-            "summary": "IMF總裁警告戰爭引發的能源衝擊未結束，央行應專注穩定物價。"
+            "summary": "IMF總裁指出戰爭引發的能源衝擊尚未結束，各國央行應專注於穩定物價。"
           }
         ],
         "key_points": [
-          "輝達Q2財報超預期，季度營收倍增，Q3營收上看1080億美元。",
-          "市場對聯準會年底前升息一碼的預期升高，通膨壓力持續。",
-          "「債券義勇軍」發明人建議此刻不買AI股但可抱黃金。",
-          "IMF總裁提醒戰爭引發的能源衝擊尚未結束。"
+          "輝達Q2財報超預期，季度營收年增106%，Q3營收上看1080億美元。",
+          "美股早盤因通膨壓力開低，市場押注聯準會年底前升息1碼。",
+          "「債券義勇軍」發明人建議此刻可抱黃金，不建議買AI股。",
+          "IMF總裁警告戰爭引發的能源衝擊未結束，央行應專注穩定物價。"
         ]
       },
       "market_summary": {
-        "headline": "美股主要指數普遍收跌，費半逆勢小漲，亞股開盤走弱",
+        "headline": "美股主要指數漲跌互見，費半指數逆勢上揚，亞洲股市普遍走弱",
         "observations": [
-          "美股主要指數道瓊、S&P 500及NASDAQ普遍小幅下跌。",
-          "費城半導體指數逆勢上漲0.2%，顯示半導體板塊相對有撐。",
-          "ADR表現分歧，台積電ADR小漲，輝達ADR下跌，聯電ADR跌幅較大。",
-          "亞股日經225指數與韓國綜合指數開盤走低，台指期夜盤亦小幅收跌。"
+          "美股主要指數多數呈現小幅下跌，其中道瓊工業指數跌幅較大，而S&P 500與NASDAQ指數跌幅有限。",
+          "費城半導體指數逆勢上漲0.20%，顯示半導體板塊表現相對強勢。",
+          "主要ADR標的表現分歧，台積電、蘋果、美光及日月光ADR上漲，而輝達與聯電ADR則呈現下跌。",
+          "亞洲股市如日經225指數與韓國綜合指數均下跌，其中韓國綜合指數跌幅較為顯著，台指期夜盤亦小幅收黑。"
         ],
         "drivers": [
-          "輝達財報超預期，可能提振AI相關供應鏈的市場情緒。",
-          "美國通膨壓力持續，市場對聯準會升息的預期影響整體市場走向。",
-          "AI伺服器與光電應用營收成長，可能帶動相關科技股表現。",
-          "全球地緣政治與能源衝擊的擔憂，可能影響市場穩定性。"
+          "輝達公布優於預期的季度財報，可能提振市場對AI相關產業的信心。",
+          "市場對通膨持續及聯準會可能升息的預期，影響整體市場情緒。",
+          "AI伺服器與光電應用等技術領域的發展，可能為相關個股帶來動能。",
+          "國際貨幣基金組織對戰爭引發的能源衝擊尚未結束的警告，可能影響全球經濟展望。"
         ],
         "risks": [
-          "通膨壓力若持續，可能導致聯準會進一步升息，影響市場流動性。",
-          "地緣政治衝突及其引發的能源衝擊，可能對全球經濟造成不確定性。",
-          "市場對AI產業未來發展的看法分歧，可能導致相關股票波動加劇。",
-          "亞洲主要股市開盤走弱，可能對台股造成壓力。"
+          "通膨壓力持續存在，可能導致聯準會進一步升息，進而影響市場流動性。",
+          "地緣政治衝突引發的能源衝擊，可能對全球物價穩定構成挑戰。",
+          "部分專家建議此刻不宜買入AI股，顯示市場對AI板塊前景存在分歧看法。",
+          "亞洲主要股市普遍下跌，可能對台灣市場開盤情緒造成壓力。"
         ]
       },
-      "quality_note": "所有資料來源狀態正常，資訊完整。"
+      "quality_note": "此份報告僅根據使用者提供的INPUT JSON撰寫整理，未補造任何不存在的價格、漲跌幅、時間、公司、政策或新聞事實。"
     },
     "financials": {
       "cutoff_str": "08/26 13:30",
@@ -31944,11 +31960,11 @@
     }
   },
   "meta": {
-    "build_time": "2026-08-27 11:23",
-    "build_version": "20260827_1123",
+    "build_time": "2026-08-27 12:36",
+    "build_version": "20260827_1236",
     "data_date": "08/27",
-    "stale_hours": 0.0,
-    "hours_since_us_close": 7.4,
+    "stale_hours": 1.2,
+    "hours_since_us_close": 8.6,
     "us_market_context": {
       "session_key": "closed",
       "label": "最新收盤快照",
@@ -31956,7 +31972,7 @@
       "badge_short": "收盤",
       "pill_class": "pill-fresh",
       "updated_label": "08/27 05:15",
-      "detail": "Yahoo Finance · 來源更新 08/27 05:15（6.1 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
+      "detail": "Yahoo Finance · 來源更新 08/27 05:15（7.3 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "ready",
@@ -31971,9 +31987,9 @@
         "name": "指數行情 (美股/亞股/ADR)",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-08-27T11:22:55.472689+08:00",
+        "fetched_at": "2026-08-27T12:35:46.805907+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向",
@@ -31998,7 +32014,7 @@
         "status": "ok",
         "fetched_at": "2026-08-27T11:22:55.471315+08:00",
         "data_date": "08/27",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險",
@@ -32021,9 +32037,9 @@
         "name": "大盤昨收與三大法人",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-27T11:22:58.169329+08:00",
+        "fetched_at": "2026-08-27T12:35:46.806907+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整",
@@ -32046,9 +32062,9 @@
         "name": "台指期夜盤走勢",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-27T11:22:57.201982+08:00",
+        "fetched_at": "2026-08-27T12:35:46.805907+08:00",
         "data_date": "2026-08-27",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數",
@@ -32071,9 +32087,9 @@
         "name": "PressPlay 盤前族群與標的",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-27T11:22:57.571947+08:00",
+        "fetched_at": "2026-08-27T12:35:46.805907+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少每日專欄族群整理，候選股清單將呈現空白",
@@ -32096,9 +32112,9 @@
         "name": "主力券商與當沖籌碼明細",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-27T11:23:22.872000+08:00",
+        "fetched_at": "2026-08-27T12:35:46.804907+08:00",
         "data_date": "2026/08/26",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行",
@@ -32123,9 +32139,9 @@
         "name": "Chengwaye 個股漲停履歷",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-27T11:23:23.296556+08:00",
-        "data_date": "2026-08-27T11:23:24.100720+08:00",
-        "age_minutes": 0.0,
+        "fetched_at": "2026-08-27T12:35:46.805907+08:00",
+        "data_date": null,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
@@ -32151,9 +32167,9 @@
         "name": "總經財經行事曆",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-27T11:22:55.471139+08:00",
+        "fetched_at": "2026-08-27T12:35:46.804594+08:00",
         "data_date": "2026-08-27",
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少今日重磅總經數據與事件日程倒數",
@@ -32178,7 +32194,7 @@
         "status": "ok",
         "fetched_at": "2026-08-27T11:22:55.471518+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少昨日盤後自結損益與營收公告統計",
@@ -32201,9 +32217,9 @@
         "name": "盤前即時新聞聚合",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-08-27T11:22:55.938360+08:00",
+        "fetched_at": "2026-08-27T12:35:46.805907+08:00",
         "data_date": null,
-        "age_minutes": 0.0,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少隔夜美股與產業焦點新聞快訊",
@@ -32223,8 +32239,8 @@
       }
     ],
     "schema_version": 1,
-    "data_revision": "43d91b755ae95022",
-    "built_at": "2026-08-27T03:23:39.760370+00:00",
+    "data_revision": "a62259b61e5d786a",
+    "built_at": "2026-08-27T04:36:25.655377+00:00",
     "hash": {
       "disposition": "cf7f810c9c86",
       "candidates": "9a9527baa995",
@@ -32233,7 +32249,7 @@
       "macro": "ef82d4afe0cc",
       "calendar": "4c031df1811e",
       "news": "edc92de9cd2c",
-      "ai_summary": "51438a528437",
+      "ai_summary": "6aa820fcad3b",
       "opening_forecast": "a6b8ca8f0e29",
       "opening_result": "0111d65af8d5",
       "learning_status": "a75b0b54d02c"
