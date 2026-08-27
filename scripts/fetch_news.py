@@ -24,6 +24,8 @@ HOLIDAYS_2026 = {
 # The RSS feed is an aggregator; this score reflects the publisher named in each item.
 SOURCE_QUALITY = {
     "reuters": 5,
+    "nvidia newsroom": 5,
+    "nvidia": 5,
     "路透社": 5,
     "bloomberg": 5,
     "彭博": 5,
@@ -36,6 +38,8 @@ SOURCE_QUALITY = {
     "cnbc": 4,
     "bbc": 4,
     "中央社": 4,
+    "cna.com.tw": 4,
+    "cna": 4,
     "經濟日報": 4,
     "工商時報": 4,
     "鉅亨網": 4,
@@ -60,6 +64,22 @@ IMPACT_GROUPS = {
 }
 
 LOW_SIGNAL_TERMS = ["投資人必看", "懶人包", "這檔會", "老師", "飆股密碼", "買點", "賣點", "報明牌"]
+EARNINGS_RELEASE_TERMS = (
+    "財報出爐",
+    "財報揭曉",
+    "財報公布",
+    "財報發布",
+    "公布財報",
+    "發布財報",
+    "業績超預期",
+    "財報超預期",
+    "營收創新高",
+    "營收翻倍",
+    "earnings results",
+    "financial results",
+)
+PRE_RELEASE_TERMS = ("即將", "將於", "倒數", "前夕", "之前", "靜待", "觀望", "公布前", "發布前", "揭曉前", "出爐前")
+EARNINGS_RELEASE_BONUS = 5
 
 # These are editorial buckets, not extra quality gates. They keep the Top 10 from
 # becoming ten rewrites of the same company or event when the feed is crowded.
@@ -102,6 +122,7 @@ QUERIES = [
     "中國 日本 韓國 歐洲 股市",
     "原油 黃金 美元 匯率 關稅 地緣政治",
     "半導體 AI 科技 財報",
+    "NVIDIA 財報",
 ]
 
 
@@ -190,17 +211,26 @@ def diversity_dimensions(title):
     }
 
 
+def earnings_release_bonus(title):
+    title_upper = title.upper()
+    has_release_signal = any(term.upper() in title_upper for term in EARNINGS_RELEASE_TERMS)
+    has_pre_release_signal = any(term.upper() in title_upper for term in PRE_RELEASE_TERMS)
+    return EARNINGS_RELEASE_BONUS if has_release_signal and not has_pre_release_signal else 0
+
+
 def score_breakdown(title, source=""):
     quality = source_quality(source)
     impact, groups = impact_score(title)
     dimensions = diversity_dimensions(title)
     low_signal_hits = [term for term in LOW_SIGNAL_TERMS if term.upper() in title.upper()]
     penalty = len(low_signal_hits)
-    total = quality + impact - (penalty * 2)
+    release_bonus = earnings_release_bonus(title)
+    total = quality + impact + release_bonus - (penalty * 2)
     return {
         "score": total,
         "quality_score": quality,
         "impact_score": impact,
+        "release_bonus": release_bonus,
         "matched_groups": groups,
         "low_signal_hits": low_signal_hits,
         **dimensions,
@@ -320,9 +350,17 @@ def _fits_entity_caps(article, entity_counts):
 
 
 def select_top_news(articles, limit=MAX_NEWS):
+    # Released earnings results outrank stale pre-release coverage before the
+    # diversity caps are applied. This preserves diversity while ensuring a
+    # material result is not displaced by three higher-scoring previews.
     ranked = sorted(
         (article for article in dedupe_articles(articles) if article["qualified"]),
-        key=lambda article: (article["score"], article["impact_score"], article["timestamp"]),
+        key=lambda article: (
+            article.get("release_bonus", 0),
+            article["score"],
+            article["impact_score"],
+            article["timestamp"],
+        ),
         reverse=True,
     )
     selected = []

@@ -13,6 +13,7 @@ from scripts.fetch_news import (
     select_top_news,
     score_breakdown,
     score_news,
+    earnings_release_bonus,
 )
 
 
@@ -62,6 +63,39 @@ def test_recognized_yahoo_stock_source_can_pass_with_material_market_impact():
     assert item["quality_score"] == 3
     assert item["impact_score"] >= 3
     assert item["qualified"] is True
+
+
+def test_nvidia_post_release_article_receives_release_priority():
+    item = article("輝達Q2財報超預期 單季營收創新高 Q3財測上看1080億美元", "Yahoo股市")
+
+    assert earnings_release_bonus(item["title"]) == 5
+    assert item["release_bonus"] == 5
+    assert item["qualified"] is True
+
+
+def test_nvidia_pre_release_article_does_not_receive_release_priority():
+    item = article("輝達財報即將公布，市場靜待最新展望", "Yahoo股市")
+
+    assert earnings_release_bonus(item["title"]) == 0
+    assert item["release_bonus"] == 0
+
+
+def test_nvidia_announcement_before_release_does_not_receive_release_priority():
+    item = article("輝達財報公布前，市場觀望最新展望", "Yahoo股市")
+
+    assert earnings_release_bonus(item["title"]) == 0
+    assert item["release_bonus"] == 0
+
+
+def test_cna_domain_keeps_central_news_quality():
+    item = article("輝達第二季財報超預期，營收創新高", "cna.com.tw")
+
+    assert item["quality_score"] == 4
+    assert item["qualified"] is True
+
+
+def test_nvidia_specialized_query_is_part_of_news_fetch():
+    assert "NVIDIA 財報" in fetch_news.QUERIES
 
 
 def test_credible_single_topic_market_news_can_pass_relaxed_total_threshold():
@@ -119,6 +153,34 @@ def test_select_top_news_limits_repetitive_entity_when_other_topics_are_availabl
     assert sum("nvidia" in item["named_entities"] for item in result) == 3
     assert len({item["primary_topic"] for item in result}) >= 5
     assert all("primary_topic" in item and "named_entities" in item for item in result)
+
+
+def test_released_earnings_result_precedes_higher_scoring_previews_before_entity_cap():
+    previews = [
+        article(f"輝達財報公布前市場觀望最新展望第 {i}", "路透社", score=30 - i, timestamp=1_700_000_000 + i)
+        for i in range(5)
+    ]
+    actual_result = article(
+        "輝達Q2財報超預期，營收創新高",
+        "cna.com.tw",
+        score=7,
+        timestamp=1_700_001_000,
+    )
+    alternatives = [
+        article("聯準會利率決策牽動美元與美股行情", "中央社", score=15, timestamp=1_700_002_000),
+        article("原油大漲牽動美股與台股風險偏好", "彭博", score=14, timestamp=1_700_002_001),
+        article("日經與 KOSPI 股市大跌拖累亞股情緒", "工商時報", score=13, timestamp=1_700_002_002),
+        article("蘋果營收展望與消費電子需求受關注", "Yahoo股市", score=12, timestamp=1_700_002_003),
+    ]
+
+    result = select_top_news(previews + [actual_result] + alternatives, limit=7)
+
+    assert actual_result in result
+    assert result.index(actual_result) == 0
+    assert actual_result["score"] < previews[0]["score"]
+    assert actual_result["release_bonus"] == 5
+    assert sum("nvidia" in item["named_entities"] for item in result) <= 3
+    assert len({item["primary_topic"] for item in result}) >= 3
 
 
 def test_select_top_news_caps_at_ten_without_padding():
