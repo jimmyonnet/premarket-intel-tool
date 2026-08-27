@@ -6,19 +6,19 @@
   "open": 46132.0,
   "prev_close": 46064.0,
   "high": 46377.0,
-  "low": 46071.0,
+  "low": 46036.0,
   "latest": {
     "provider": "wantgoo",
     "provider_name": "Wantgoo / TAIFEX",
-    "collected_at": "2026-08-27T20:56:43.227607+08:00",
+    "collected_at": "2026-08-27T22:25:55.297087+08:00",
     "symbol": "臺指期096",
-    "price": 46222.0,
-    "change": 158.0,
-    "change_pct": 0.34,
+    "price": 46230.0,
+    "change": 166.0,
+    "change_pct": 0.36,
     "open": 46132.0,
     "prev_close": 46064.0,
     "high": 46377.0,
-    "low": 46071.0,
-    "volume": 10027
+    "low": 46036.0,
+    "volume": 16894
   }
 }

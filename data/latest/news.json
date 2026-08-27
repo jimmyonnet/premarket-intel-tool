@@ -1,5 +1,39 @@
 [
   {
+    "title": "輝達財報激勵AI股全面走揚 那斯達克期貨走高、日圓靜待央行升息前景",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE92YjlzaTNJcE9FWHlibzIyUVd3bHZ4NEtzdmRqY0JESzRyM0lMLXZlTEsyYlNyZl9ZZGdrRWZlcWVCZE5IeWxHNWJ3ME9oWHc?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/27 21:30",
+    "timestamp": 1787837435.0,
+    "score": 19,
+    "quality_score": 4,
+    "impact_score": 15,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy",
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "macro_policy",
+      "global_market",
+      "sector_technology",
+      "company_earnings"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [
+      "nvidia",
+      "us_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "輝達財報點火台股衝高！一度站上46000點 大立光、南亞科領軍飆漲停",
     "link": "https://news.google.com/rss/articles/CBMiswNBVV95cUxNdEg0Z2dRNjB0QlRWV2g5cTgyV0dTNXdUbmFuRFVuMzFCUHZrMjN0QjBFMGxoV0lRdkZ6SVpvT1V6cnFkVnAyVGIyYnhOT1hCQnFCazlTcWg2QWs5RmVVZFB0U0hfc2FVeGlqelJLcHlRMV9ibGppYWVmV0pqVWQxUkRXNnNwbWhkYy1XLS05MXJlbGhIMDNfdWxUMngxT1dPMzVyLVVPQ0VWTElnOF9uVjNMazJfcG9tRzBtS2lqZ2VxenlScGVOaGhMS0FjYnY5cGZONnVIODhxcUR3bWZYZjQwcEhwREtXU0lZQVRMWlp6c3dfaUtoUnlGY1prNXJEWnV3aW1uMWRHNnhoUVAxeFpsVnFlVVowd2VSVDZDMXBBakNGdzVpeER3el8tbFZ2Z3F2cWF5X3p5OHJQWG5Rc19ZY19lRldrU1VqVzBpRDB1aGVVaXdkNG5ESUU2UFZyMDEwNmdjRUJBWEdYMXhKTTFKazZ0eUs5cmFhQ1lOVkdsaVJSMjFRdnBCVE5yTlkycGlod3NBVzZIZlFpZ2RSQUE3bkl0Y0VHUFk3SVdScXhuekU?oc=5",
     "source": "Yahoo股市",
@@ -24,6 +58,37 @@
     "named_entities": [
       "nvidia",
       "taiwan_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "〈美股早盤〉輝達強勁財測提振AI信心 主要指數走高",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBXMV9QTFp5Z0o2cmgwZEN2QldKaENVSWc4cGlvT0F5c1V4TmxxYXVtUDVHVEZWcGc0VVVvSnotejlEbllMMWFFRld1eTJoUkU?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/27 21:43",
+    "timestamp": 1787838196.0,
+    "score": 15,
+    "quality_score": 4,
+    "impact_score": 11,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "global_market",
+      "sector_technology",
+      "company_earnings"
+    ],
+    "primary_topic": "global_market",
+    "named_entities": [
+      "nvidia",
+      "us_market"
     ],
     "quality_pass": true,
     "impact_pass": true,
@@ -59,73 +124,18 @@
     "qualified": true
   },
   {
-    "title": "AI資本中心？NVIDIA FY 2027 Q2財報：增長仍在加速，AI超級周期進入多線並行階段",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9zNk9ZU0FPUFdteUhJWk84bVd3WlJzaXpJT0ZCdFU2Yl9HUjZVQjNXWGlCUWtHdkItWnNkLTdjcjlKdEFxWTFjMGRHUVF5VTg?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/27 20:00",
-    "timestamp": 1787832032.0,
-    "score": 12,
-    "quality_score": 4,
-    "impact_score": 8,
-    "release_bonus": 0,
-    "matched_groups": [
-      "systemic_company",
-      "earnings_financial",
-      "sector_supply_chain"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "sector_technology",
-      "company_earnings"
-    ],
-    "primary_topic": "sector_technology",
-    "named_entities": [
-      "nvidia"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "輝達財報揭 AI 熱潮下半場 不再只仰賴雲端巨人 循環融資仍將影響評價 | 外媒解析 | 國際",
-    "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1sM19IUWFCRnZ0YjlJQ0xIdVRBakVUUlR0RG5vejFTRGpacmpsdUVxemhqekVFSWhjWmczSjRqcmNOMlFHVE8xSHNYUHdiRTFWTXNVWnV6MUNhVW1s?oc=5",
+    "title": "00919等7檔台股 ETF 收盤創新高 160.6萬投資人笑呵呵",
+    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE82UkhQbzFzci16ZG5jVlFySy12cm9VVlQ2M0UydnduWktyb2szY0ZwbVVZMHh2T2xOTldZWS1wdVlrNkh5VEZYMllzUkh3RW5XcnlkRThuSE8waVo0aUpV0gFfQVVfeXFMTzZSSFBvMXNyLXpkbmNWUXJLLXZyb1VWVDYzRTJ2d25aS3JvazNjRnBtVVkweHZPbE5OV1lZLXB1WWs2SHlURlgyWXNSSHdFbldyeWRFOG5ITzBpWjRpSlU?oc=5",
     "source": "經濟日報",
-    "time": "08/27 13:32",
-    "timestamp": 1787808733.0,
+    "time": "08/27 15:29",
+    "timestamp": 1787815761.0,
     "score": 12,
     "quality_score": 4,
     "impact_score": 8,
-    "release_bonus": 0,
-    "matched_groups": [
-      "systemic_company",
-      "earnings_financial",
-      "sector_supply_chain"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "sector_technology",
-      "company_earnings"
-    ],
-    "primary_topic": "sector_technology",
-    "named_entities": [
-      "nvidia"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "三大法人買超台股643.07億元 國巨走強卻遭外資、投信聯手調節",
-    "link": "https://news.google.com/rss/articles/CBMi_wJBVV95cUxQQmltZkRaQXptTkxiMGRvQ0pDRWdnV3VUYlpFMHZxSnYtUHVMQTVuVktGS09nMDhaTFFtcXRqNzNGTjhLTjY3U3ZCelJJMDBfU1dpa0JyWFlqZGw2RVR3OVFNdWlkUkZtU1c3MWlEUG9TUnlscThGcVBNUVdsbUdvbFlUbGUxU2R0ZnRnU1JWdkhIZ19HeGtVQktVNzlyMG1DR1hiVE1EZnhlXzh3aXVjVGVLVjZKMWprdFFvYWpGVGQ1eEpjUWh2VmExSWVDSFpybDM2WDlSaVJfVW9ZYWFMeU5FWjZmOGh3R0R2YUlqYVdEdE14ekR3ZzhCUjUzY0x0N3Nad2Y0d2ZCenVaUjlnQ0tyVVNpOXZ5VmlqNHV6LWhIVzAxdXpCNzQ1VVFKMTdLTkZZQlVNVng0X1BlNk80T3NPYkp3azNzSHA0NFJrdWZ0elRQVjljWVE1T3pHUUlVR0Y3RDBXaE5DQzhJYzdaZkRXNzI2V2xtc1QwaTNrTQ?oc=5",
-    "source": "Yahoo股市",
-    "time": "08/27 16:42",
-    "timestamp": 1787820122.0,
-    "score": 8,
-    "quality_score": 3,
-    "impact_score": 5,
     "release_bonus": 0,
     "matched_groups": [
       "market_benchmark",
+      "market_move",
       "market_structure"
     ],
     "low_signal_hits": [],
@@ -213,24 +223,26 @@
     "qualified": true
   },
   {
-    "title": "輝達財報救全村？ 大立光⊕、上詮⊕、精材、國巨、華新科、日電貿",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1ITVA2QTc3a1VSWjlaWnFPNHkzOTdmbWpMaThFYnY1ZkJlbjNWMEdya244Y055RE1rdE1BSkstTWtMUnozUWtNVmVIaHpyMms?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/27 17:32",
-    "timestamp": 1787823149.0,
-    "score": 10,
+    "title": "AI資本中心？NVIDIA FY 2027 Q2財報：增長仍在加速，AI超級周期進入多線並行階段",
+    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE5DTjlyRnFFcmM5ZlVLcjBaNXA1TkVZQTdUY0thREFIRElEaXprbE44NnhtY01zaWwyUmdFcmFCTWNaZHQ1R1h2UDhPYw?oc=5",
+    "source": "鉅亨網",
+    "time": "08/27 20:00",
+    "timestamp": 1787832032.0,
+    "score": 12,
     "quality_score": 4,
-    "impact_score": 6,
+    "impact_score": 8,
     "release_bonus": 0,
     "matched_groups": [
       "systemic_company",
-      "earnings_financial"
+      "earnings_financial",
+      "sector_supply_chain"
     ],
     "low_signal_hits": [],
     "topic_groups": [
+      "sector_technology",
       "company_earnings"
     ],
-    "primary_topic": "company_earnings",
+    "primary_topic": "sector_technology",
     "named_entities": [
       "nvidia"
     ],
@@ -239,24 +251,26 @@
     "qualified": true
   },
   {
-    "title": "輝達財報報喜 新宣佈合作廠商",
-    "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxPY3AyZXIyeWVZYnU2VFRjcjRrejd5aGp1eG9PTXB5WXVBaVVzTmQxNjlhdXh6VnAzMDhydk1Da09scXFpV3ZDWnFNN2hmQmFTVmNwRVZhSThpUGxreU4xRUhpeldOSkJ6UnduZ2V0YkFoWnhGaFlyNTA4anVBcnRLUUJSWVNIYUgyZWNyZXBGamFJVzg3SmtXWXRJZExIVjlJeEUxYWpCY2pRZzdWazBUX1Z4SG13bUpvMnEtRHdMWU9rWkdhOXctZDcyaEdJZWdHaEgydFlfZE80ZnFvb1RsOVpxcS11bXlKN1hsa0JLNF8?oc=5",
-    "source": "Yahoo新聞",
-    "time": "08/27 15:59",
-    "timestamp": 1787817540.0,
-    "score": 9,
-    "quality_score": 3,
-    "impact_score": 6,
+    "title": "輝達財報揭 AI 熱潮下半場 不再只仰賴雲端巨人 循環融資仍將影響評價 | 外媒解析 | 國際",
+    "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE1sM19IUWFCRnZ0YjlJQ0xIdVRBakVUUlR0RG5vejFTRGpacmpsdUVxemhqekVFSWhjWmczSjRqcmNOMlFHVE8xSHNYUHdiRTFWTXNVWnV6MUNhVW1s?oc=5",
+    "source": "經濟日報",
+    "time": "08/27 13:32",
+    "timestamp": 1787808733.0,
+    "score": 12,
+    "quality_score": 4,
+    "impact_score": 8,
     "release_bonus": 0,
     "matched_groups": [
       "systemic_company",
-      "earnings_financial"
+      "earnings_financial",
+      "sector_supply_chain"
     ],
     "low_signal_hits": [],
     "topic_groups": [
+      "sector_technology",
       "company_earnings"
     ],
-    "primary_topic": "company_earnings",
+    "primary_topic": "sector_technology",
     "named_entities": [
       "nvidia"
     ],
