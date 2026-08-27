@@ -224,10 +224,10 @@
   "asia_open": {
     "nikkei225": {
       "name": "日經225指數",
-      "value": 66262.16,
-      "change": -405.73,
-      "change_pct": -0.62,
-      "updated_cst": "08/26 14:45",
+      "value": 66667.32,
+      "change": -405.16,
+      "change_pct": -0.61,
+      "updated_cst": "08/27 08:02",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
       "source_label": "Yahoo 個別指數頁"
     },

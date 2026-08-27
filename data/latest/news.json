@@ -1,54 +1,76 @@
 [
   {
-    "title": "台股逐洞賽│輝達財報萬眾矚目台股科技股有望延續反彈氣勢- 證券",
-    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE8wU3NZcVZqUkR6TkpjRHdUdU1lYkNtenFnZFVnSHZLNzFrOWdOUXVfZ0FITEpOU09NZXNKZ0daeUJTeHZjX1R6c3FHVVEzMDE4Ykx0NDBQb3c0Y05zajlj?oc=5",
-    "source": "工商時報",
-    "time": "08/26 16:52",
-    "timestamp": 1787734320.0,
-    "score": 16,
+    "title": "輝達Q2財報超預期季度營收倍增| 國際",
+    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE05dmRQTjJkaXF1MWk0OU52bzRvb0loX1ZJOEV3NXNSUV9TeW5adDJUeHBaVW55VW5vdjZNWURDQU1aNmhwNlY5LXVlY2ZjdERYbFBlTXVIc2U4ODZucEJn?oc=5",
+    "source": "cna.com.tw",
+    "time": "08/27 05:04",
+    "timestamp": 1787778240.0,
+    "score": 15,
     "quality_score": 4,
-    "impact_score": 12,
+    "impact_score": 6,
+    "release_bonus": 5,
     "matched_groups": [
-      "market_benchmark",
       "systemic_company",
-      "earnings_financial",
-      "market_move"
+      "earnings_financial"
     ],
     "low_signal_hits": [],
     "topic_groups": [
-      "taiwan_market",
       "company_earnings"
     ],
-    "primary_topic": "taiwan_market",
+    "primary_topic": "company_earnings",
     "named_entities": [
-      "nvidia",
-      "taiwan_market"
+      "nvidia"
     ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
   },
   {
-    "title": "就是要3倍！輝達財報倒數「SOXL買超爆量」 韓國散戶湧入半導體股",
-    "link": "https://news.google.com/rss/articles/CBMihgNBVV95cUxQekp1UWdMS1RkeVNtYXk3MFF3WGVVTFNtMEROdlptbmgybm11cVhzZE4ySk1YaUdWV1hqR3c3d1VtdW45QTBZRE5jdS1PaTR6dzNqbjhvVGMtdEhqX2EtQnlMOHFFLV9zZTZvWTJBNjlxTGVkN2IwZDY3NWtYYVYzNF9TMy1YbDJHbjhNTGs3V2NYMXdmcl9GRlNEbEJYY0dNWHJDTVRlS1B0QmRZc19RelZjNXpoWkltejRHd2xTbFJ5TElNc24zQnVfRG1BYVZxOTVxa0xmOTVxV181U2JMSDltWFlpak1zSXVkNmkzNFZiZmJCcFhLeEhOZEU1dV9ZajExbW5ZdjU5UmdQakJsc3RIa2xYU2p4dENQMWNsM3NONG91endFcnM1dXY0QWxlQlUxY016My1ieUU3M1BSTlVsTHMwcmRZNVhXSWFDbGVxY25oR0FTYzR4S3p3SEpNQ2x4U0xTVTY5dUhRNjVKdlI5bjBZREF6Z2dSYXhJOTBhc1pIV1E?oc=5",
+    "title": "輝達財報超預期！單季營收年增106％ Q3上看1080億美元",
+    "link": "https://news.google.com/rss/articles/CBMiwgJBVV95cUxPZFFvSGVHci13SGptNzVzTEtzRGtDdTJvUU5MdG9Gd0RLd3BMdjFBY3RCdWwwUDlENUtia2xVYkpWcm9iTjZpMG9vR29BX2pSR1h4QWtmQkRNZnlBNTY1YnNud1A3R3NmOENRTW5YNTB3WGRzQVRUZXAyZzI2ZkprWkZMVWs3TGlfUnNUUjZ4SjNjS0NUX3FnYTBhVkNYcDJVYS1hYmstYVBvSHowOTYxWWhKTjRrR2M2SDhXYlB5Z0RXNlVraGpBU053TV9BVUtUQkZ6WDFFSERDWWtlY1NkQ1VRNGlsZ1k4ZS1TYkFORWFLNkdJRjZaWDMwZ1dqUlhvdlI1V3NvOGE5YmFIcGgzeU83cXpkckdQdTJ1aGQyS0h6eUFhcThfWHJVdEs2WGVaTkEwSEJjMFZJc3FFVUVITHRn?oc=5",
     "source": "Yahoo股市",
-    "time": "08/26 22:15",
-    "timestamp": 1787753700.0,
+    "time": "08/27 07:29",
+    "timestamp": 1787786979.0,
     "score": 14,
     "quality_score": 3,
-    "impact_score": 11,
+    "impact_score": 6,
+    "release_bonus": 5,
     "matched_groups": [
       "systemic_company",
-      "earnings_financial",
-      "market_move",
-      "sector_supply_chain"
+      "earnings_financial"
     ],
     "low_signal_hits": [],
     "topic_groups": [
-      "sector_technology",
+      "currency_commodities",
       "company_earnings"
     ],
-    "primary_topic": "sector_technology",
+    "primary_topic": "currency_commodities",
+    "named_entities": [
+      "nvidia"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "輝達(NVDA)財報出爐、股價盤後漲5%！黃仁勳上菜重點必看...台灣13家Vera Rubin供應鏈等開獎",
+    "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQUDJNUFktSy1Pbnp5QWZ4THA0RnUtZzdxZ2o2eDBNOVl2cFFhTGlLVHF5Rmg1RnNTQ3diXzhTWU5pdkczVFAxUlZ3bDh0UllIam1rVU5aeWdWT09ISmNoM0t1UWxjZHdwcnI2Wno4TnktNWs1QklKaTUxcTZ5UUhPLQ?oc=5",
+    "source": "今周刊",
+    "time": "08/27 06:18",
+    "timestamp": 1787782691.0,
+    "score": 14,
+    "quality_score": 3,
+    "impact_score": 6,
+    "release_bonus": 5,
+    "matched_groups": [
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "company_earnings"
+    ],
+    "primary_topic": "company_earnings",
     "named_entities": [
       "nvidia"
     ],
@@ -65,6 +87,7 @@
     "score": 11,
     "quality_score": 4,
     "impact_score": 7,
+    "release_bonus": 0,
     "matched_groups": [
       "macro_policy",
       "market_benchmark"
@@ -91,6 +114,7 @@
     "score": 9,
     "quality_score": 3,
     "impact_score": 6,
+    "release_bonus": 0,
     "matched_groups": [
       "market_benchmark",
       "market_move"
@@ -116,6 +140,7 @@
     "score": 9,
     "quality_score": 4,
     "impact_score": 5,
+    "release_bonus": 0,
     "matched_groups": [
       "earnings_financial",
       "sector_supply_chain"
@@ -140,6 +165,7 @@
     "score": 8,
     "quality_score": 3,
     "impact_score": 5,
+    "release_bonus": 0,
     "matched_groups": [
       "market_benchmark",
       "market_structure"
@@ -158,29 +184,6 @@
     "qualified": true
   },
   {
-    "title": "〈貴金屬盤後〉PCE通膨加深Fed升息預期 現貨金價跌破4600美元",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5sUWlVazBhbXZtM1FCRGt6akF3NUo3Sk1RVnB4UF9kZjB3WGlSMmRkUlFGTm9aU0pwN0owNFBwc2VXQ0htV0VVOVhvN3pJZmM?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/27 06:59",
-    "timestamp": 1787785174.0,
-    "score": 8,
-    "quality_score": 4,
-    "impact_score": 4,
-    "matched_groups": [
-      "macro_policy"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "currency_commodities",
-      "macro_policy"
-    ],
-    "primary_topic": "currency_commodities",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
     "title": "AI紅利狂外溢 海外股ETF吸金",
     "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1NT3pKazRUUjlvOGU2MFNrRHM4LXZJa1pGVDd4TGhXM01uWDN3M2pqQ0JydDJJZ1ZPcGNPbXB2T1E2cG1KckdjX2R6eF9PNVh2MlBWd2NiNDVhN29iVVpj?oc=5",
     "source": "工商時報",
@@ -189,6 +192,7 @@
     "score": 8,
     "quality_score": 4,
     "impact_score": 4,
+    "release_bonus": 0,
     "matched_groups": [
       "sector_supply_chain",
       "market_structure"
@@ -213,6 +217,7 @@
     "score": 8,
     "quality_score": 4,
     "impact_score": 4,
+    "release_bonus": 0,
     "matched_groups": [
       "macro_policy"
     ],
@@ -236,6 +241,7 @@
     "score": 8,
     "quality_score": 4,
     "impact_score": 4,
+    "release_bonus": 0,
     "matched_groups": [
       "macro_policy"
     ],
