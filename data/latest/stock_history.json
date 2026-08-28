@@ -1,6 +1,6 @@
 {
   "source": "https://chengwaye.com/stock/",
-  "fetched_at": "2026-08-28T08:02:59.077031+08:00",
+  "fetched_at": "2026-08-28T10:17:18.526211+08:00",
   "requested_codes": [
     "1312",
     "3543",
@@ -20,6 +20,7 @@
     "3441",
     "2313",
     "8046",
+    "4991",
     "8033"
   ],
   "codes": {
@@ -2524,6 +2525,210 @@
       ],
       "period_note": "上市｜族群：PCB、ABF載板｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
       "record_count": 16
+    },
+    "4991": {
+      "code": "4991",
+      "name": "環宇-KY",
+      "source_url": "https://chengwaye.com/stock/4991",
+      "summary": {
+        "limit_up_count": "21 次",
+        "latest_limit_up": "2026/08/27",
+        "avg_next_open": "+2.55%",
+        "avg_next_close": "+2.74%"
+      },
+      "records": [
+        {
+          "date": "2026/08/27",
+          "close": "538",
+          "group": "半導體材料",
+          "next_open": "—",
+          "next_avg": "—",
+          "next_close": "—",
+          "next_trend": "—"
+        },
+        {
+          "date": "2026/08/26",
+          "close": "489.5",
+          "group": "半導體材料",
+          "next_open": "+3.78%",
+          "next_avg": "+7.11%",
+          "next_close": "+9.91%",
+          "next_trend": "續漲停"
+        },
+        {
+          "date": "2026/08/10",
+          "close": "511",
+          "group": "光通訊",
+          "next_open": "-3.91%",
+          "next_avg": "-4.49%",
+          "next_close": "-5.87%",
+          "next_trend": "直接跌"
+        },
+        {
+          "date": "2026/08/05",
+          "close": "469",
+          "group": "光通訊",
+          "next_open": "-9.91%",
+          "next_avg": "-6.68%",
+          "next_close": "-5.76%",
+          "next_trend": "直接跌"
+        },
+        {
+          "date": "2026/08/04",
+          "close": "426.5",
+          "group": "光通訊",
+          "next_open": "+9.96%",
+          "next_avg": "+9.32%",
+          "next_close": "+9.96%",
+          "next_trend": "續漲停"
+        },
+        {
+          "date": "2026/08/03",
+          "close": "388",
+          "group": "光通訊",
+          "next_open": "+8.25%",
+          "next_avg": "+9.54%",
+          "next_close": "+9.92%",
+          "next_trend": "續漲停"
+        },
+        {
+          "date": "2026/07/31",
+          "close": "353",
+          "group": "光通訊",
+          "next_open": "+4.25%",
+          "next_avg": "+8.72%",
+          "next_close": "+9.92%",
+          "next_trend": "續漲停"
+        },
+        {
+          "date": "2026/07/22",
+          "close": "420.5",
+          "group": "光通訊",
+          "next_open": "+3.45%",
+          "next_avg": "+4.39%",
+          "next_close": "+3.69%",
+          "next_trend": "弱續漲"
+        },
+        {
+          "date": "2026/07/21",
+          "close": "382.5",
+          "group": "光通訊",
+          "next_open": "+5.88%",
+          "next_avg": "+7.48%",
+          "next_close": "+9.93%",
+          "next_trend": "續漲停"
+        },
+        {
+          "date": "2026/07/03",
+          "close": "578",
+          "group": "半導體材料",
+          "next_open": "0.00%",
+          "next_avg": "-5.08%",
+          "next_close": "-9.86%",
+          "next_trend": "直接跌"
+        },
+        {
+          "date": "2026/06/30",
+          "close": "530",
+          "group": "半導體材料",
+          "next_open": "+0.38%",
+          "next_avg": "+1.64%",
+          "next_close": "+2.45%",
+          "next_trend": "弱續漲"
+        },
+        {
+          "date": "2026/05/22",
+          "close": "814",
+          "group": "光通訊",
+          "next_open": "+6.27%",
+          "next_avg": "+7.19%",
+          "next_close": "+3.19%",
+          "next_trend": "弱續漲"
+        },
+        {
+          "date": "2026/05/05",
+          "close": "744",
+          "group": "光通訊",
+          "next_open": "+1.08%",
+          "next_avg": "-2.22%",
+          "next_close": "-2.55%",
+          "next_trend": "開高走低"
+        },
+        {
+          "date": "2026/04/30",
+          "close": "676",
+          "group": "半導體材料",
+          "next_open": "+8.14%",
+          "next_avg": "+3.23%",
+          "next_close": "+0.15%",
+          "next_trend": "弱續漲"
+        },
+        {
+          "date": "2026/04/28",
+          "close": "627",
+          "group": "光通訊",
+          "next_open": "+0.64%",
+          "next_avg": "+2.38%",
+          "next_close": "-1.91%",
+          "next_trend": "開高走低"
+        },
+        {
+          "date": "2026/04/17",
+          "close": "660",
+          "group": "光通訊",
+          "next_open": "+2.73%",
+          "next_avg": "+8.36%",
+          "next_close": "+9.70%",
+          "next_trend": "續漲停"
+        },
+        {
+          "date": "2026/04/08",
+          "close": "517",
+          "group": "光通訊",
+          "next_open": "+3.68%",
+          "next_avg": "+4.12%",
+          "next_close": "+0.77%",
+          "next_trend": "弱續漲"
+        },
+        {
+          "date": "2026/03/25",
+          "close": "437",
+          "group": "光通訊",
+          "next_open": "+0.57%",
+          "next_avg": "+4.54%",
+          "next_close": "+1.14%",
+          "next_trend": "弱續漲"
+        },
+        {
+          "date": "2026/03/20",
+          "close": "427",
+          "group": "光通訊",
+          "next_open": "-3.40%",
+          "next_avg": "-2.62%",
+          "next_close": "-9.84%",
+          "next_trend": "直接跌"
+        },
+        {
+          "date": "2026/03/19",
+          "close": "388.5",
+          "group": "光通訊",
+          "next_open": "+6.95%",
+          "next_avg": "+7.41%",
+          "next_close": "+9.91%",
+          "next_trend": "續漲停"
+        },
+        {
+          "date": "2026/03/18",
+          "close": "353.5",
+          "group": "光通訊",
+          "next_open": "+2.12%",
+          "next_avg": "+7.50%",
+          "next_close": "+9.90%",
+          "next_trend": "續漲停"
+        }
+      ],
+      "period_note": "上櫃｜族群：半導體材料、光通訊｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+      "record_count": 21
     },
     "8033": {
       "code": "8033",

@@ -1,41 +1,33 @@
 [
   {
-    "title": "輝達財報激勵AI股全面走揚 那斯達克期貨走高、日圓靜待央行升息前景",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE92YjlzaTNJcE9FWHlibzIyUVd3bHZ4NEtzdmRqY0JESzRyM0lMLXZlTEsyYlNyZl9ZZGdrRWZlcWVCZE5IeWxHNWJ3ME9oWHc?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/27 21:30",
-    "timestamp": 1787837435.0,
-    "score": 19,
+    "title": "整理包／黃仁勳概念股笑了！輝達季度財報超預期 完整台廠供應鏈名單、潛在受惠股一次看",
+    "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTFBQUlViSHpPeDVlY29yaHFNNE5NcVlUQnE3ZThTcXRGNHgxYTVPOVVTRDlaTDV6Zml5WEwxVHNSeGFDcnVHUHhRSW15SzNpU0dYVDU3dThWNEVCbkZI?oc=5",
+    "source": "經濟日報",
+    "time": "08/27 17:00",
+    "timestamp": 1787821200.0,
+    "score": 15,
     "quality_score": 4,
-    "impact_score": 15,
-    "release_bonus": 0,
+    "impact_score": 6,
+    "release_bonus": 5,
     "matched_groups": [
-      "macro_policy",
-      "market_benchmark",
       "systemic_company",
-      "earnings_financial",
-      "sector_supply_chain"
+      "earnings_financial"
     ],
     "low_signal_hits": [],
     "topic_groups": [
-      "currency_commodities",
-      "macro_policy",
-      "global_market",
-      "sector_technology",
       "company_earnings"
     ],
-    "primary_topic": "currency_commodities",
+    "primary_topic": "company_earnings",
     "named_entities": [
-      "nvidia",
-      "us_market"
+      "nvidia"
     ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
   },
   {
-    "title": "美股收盤／四大指數收紅 費半勁揚逾2% 輝達財報後大漲8%帶旺科技股",
-    "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE41bGFTWXd5b1hEc201M3JQRmtRM3FjVWVwU19NTWMyZFpSOUpuSlh6TGctRVpEN3FFeFAyVkF0aW9yMnNScTdHdTdLOEtKWml5RmJEbExJQnFlSVBxaHZ6MXhHSnRyY3c3OGZjWTRYQ1dEWXRDN3BweFlIcThVd9IBYkFVX3lxTFBxc2ZOMzZxdU1YUkNPSnc2MDZMU3A2NnJ1dlRFQjFCVkI3SE1hcmJGaGxTNmRreU41c21KMHkzakxxNEltdmVZbVdVZHM1dTlDa3V0Q1lZSTBFemVGa2RoZW5n?oc=5",
+    "title": "美股收盤／四大指數收紅 費半勁揚逾2% 輝達財報後大漲8%帶旺科技股 | 美股動態 | 國際",
+    "link": "https://news.google.com/rss/articles/CBMieEFVX3lxTE14TUltQjItQllQUmJGZzVXdHhkSXd0UnBYbHJGdXhVb3dqUWxaVUlDeEJ1N2c1bG5vLWNXTGoyMEJya0VyTER0QzZFMUdUVmNpS0R5djZ0c2pJTFZESTM2UE1PdjE3NDk2X0d6MWNOTDdqUDhMbktHcg?oc=5",
     "source": "經濟日報",
     "time": "08/28 07:09",
     "timestamp": 1787872186.0,
@@ -151,6 +143,53 @@
     "qualified": true
   },
   {
+    "title": "〈兆豐金法說〉不排除Fed年底升息！看下半年經濟「前高後低」台幣31至33元區間震盪",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBBSkJyMV9BQzJhUUVVQm9EalRETERqZ1BZdERzQnA0YlFOdXhvTlRndGZhcWxBakxjTll5NFRjV2ljMTdHZGRSS2l5cDNPS28?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/27 18:57",
+    "timestamp": 1787828256.0,
+    "score": 8,
+    "quality_score": 4,
+    "impact_score": 4,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "macro_policy"
+    ],
+    "primary_topic": "macro_policy",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "美國國債破40兆美元！PIMCO點名長債殖利率創20年新高3大「禍首」",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE92MG84WmZzVFRNNDg4NEV3MHpwalVOSHluOEtrMjdIT3ZHQWMyRU95Wkp6TWZZa3dtdlRRTjRnWmcxZjZOMTQ1V2VpcDlNSjg?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/27 14:02",
+    "timestamp": 1787810533.0,
+    "score": 8,
+    "quality_score": 4,
+    "impact_score": 4,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "macro_policy"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "AI資本中心？NVIDIA FY 2027 Q2財報：增長仍在加速，AI超級周期進入多線並行階段",
     "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE5DTjlyRnFFcmM5ZlVLcjBaNXA1TkVZQTdUY0thREFIRElEaXprbE44NnhtY01zaWwyUmdFcmFCTWNaZHQ1R1h2UDhPYw?oc=5",
     "source": "鉅亨網",
@@ -227,58 +266,6 @@
       "company_earnings"
     ],
     "primary_topic": "sector_technology",
-    "named_entities": [
-      "nvidia"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "輝達財報救全村？ 大立光⊕、上詮⊕、精材、國巨、華新科、日電貿",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1ITVA2QTc3a1VSWjlaWnFPNHkzOTdmbWpMaThFYnY1ZkJlbjNWMEdya244Y055RE1rdE1BSkstTWtMUnozUWtNVmVIaHpyMms?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/27 17:32",
-    "timestamp": 1787823149.0,
-    "score": 10,
-    "quality_score": 4,
-    "impact_score": 6,
-    "release_bonus": 0,
-    "matched_groups": [
-      "systemic_company",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "company_earnings"
-    ],
-    "primary_topic": "company_earnings",
-    "named_entities": [
-      "nvidia"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "輝達財報報喜 新宣佈合作廠商",
-    "link": "https://news.google.com/rss/articles/CBMi8AFBVV95cUxPY3AyZXIyeWVZYnU2VFRjcjRrejd5aGp1eG9PTXB5WXVBaVVzTmQxNjlhdXh6VnAzMDhydk1Da09scXFpV3ZDWnFNN2hmQmFTVmNwRVZhSThpUGxreU4xRUhpeldOSkJ6UnduZ2V0YkFoWnhGaFlyNTA4anVBcnRLUUJSWVNIYUgyZWNyZXBGamFJVzg3SmtXWXRJZExIVjlJeEUxYWpCY2pRZzdWazBUX1Z4SG13bUpvMnEtRHdMWU9rWkdhOXctZDcyaEdJZWdHaEgydFlfZE80ZnFvb1RsOVpxcS11bXlKN1hsa0JLNF8?oc=5",
-    "source": "Yahoo新聞",
-    "time": "08/27 15:59",
-    "timestamp": 1787817540.0,
-    "score": 9,
-    "quality_score": 3,
-    "impact_score": 6,
-    "release_bonus": 0,
-    "matched_groups": [
-      "systemic_company",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "company_earnings"
-    ],
-    "primary_topic": "company_earnings",
     "named_entities": [
       "nvidia"
     ],

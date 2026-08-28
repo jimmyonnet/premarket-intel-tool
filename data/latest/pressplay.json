@@ -3,7 +3,7 @@
     "title": "0828盤前",
     "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/4F0C44B5BCBBA9D23844FAF09A0B0E0D",
     "fetch_mode": "live_browser",
-    "collected_at": "2026-08-28T08:02:35.514002+08:00"
+    "collected_at": "2026-08-28T10:16:53.450386+08:00"
   },
   "chengwaye_date": null,
   "not_found_group": {
@@ -290,6 +290,20 @@
         "raw_token": "南電"
       },
       {
+        "market": "櫃",
+        "code": "4991",
+        "name": "環宇-KY",
+        "close": "538",
+        "volume": "7,838",
+        "foreign": "+870",
+        "trust": "0",
+        "dealer": "+68",
+        "ai_reason": "化合物半導體與光電元件需求題材輪動，半導體材料族群走強。",
+        "group": "🧪 半導體材料",
+        "match_type": "ky_alias",
+        "raw_token": "環宇"
+      },
+      {
         "market": "市",
         "code": "8033",
         "name": "雷虎",
@@ -304,8 +318,6 @@
         "raw_token": "雷虎"
       }
     ],
-    "unmatched": [
-      "環宇"
-    ]
+    "unmatched": []
   }
 }
