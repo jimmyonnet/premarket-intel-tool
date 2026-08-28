@@ -1,5 +1,8 @@
+import json
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
+
+import pytest
 
 from scripts import fetch_pressplay_groups as pressplay
 
@@ -87,3 +90,70 @@ def test_live_failure_marks_same_day_cache_as_fallback(tmp_path, monkeypatch):
     assert source["fetch_mode"] == "fallback_cache"
     assert "login blocked" in source["fallback_reason"]
     assert text == "快取內容"
+
+
+@pytest.mark.parametrize(
+    ("short_name", "canonical_name", "code"),
+    [
+        ("環宇", "環宇-KY", "4991"),
+        ("聯德控股", "聯德控股-KY", "4912"),
+        ("中租", "中租-KY", "5871"),
+    ],
+)
+def test_ky_shorthand_matches_canonical_daily_name(short_name, canonical_name, code):
+    rows = [{"code": code, "name": canonical_name}]
+
+    result = pressplay.match_token(short_name, rows)
+
+    assert result is not None
+    assert result["code"] == code
+    assert result["name"] == canonical_name
+    assert result["match_type"] == "ky_alias"
+    assert result["raw_token"] == short_name
+
+
+def test_exact_name_remains_higher_priority_than_ky_alias():
+    rows = [
+        {"code": "2371", "name": "台南"},
+        {"code": "5906", "name": "台南-KY"},
+    ]
+
+    result = pressplay.match_token("台南", rows)
+
+    assert result["code"] == "2371"
+    assert result["match_type"] == "name"
+
+
+def test_every_unique_ky_stock_supports_shorthand_from_canonical_dictionary():
+    repo_root = Path(__file__).parents[1]
+    payload = json.loads((repo_root / "data/tw_stock_names.json").read_text(encoding="utf-8"))
+    pairs = [
+        (name, code)
+        for name, code in payload["name_to_code"].items()
+        if name.endswith("-KY")
+    ]
+
+    assert len(pairs) >= 100
+    for canonical_name, code in pairs:
+        result = pressplay.match_token(
+            canonical_name[:-3],
+            [{"code": code, "name": canonical_name}],
+        )
+        assert result is not None, canonical_name
+        assert result["code"] == code
+        assert result["name"] == canonical_name
+        assert result["match_type"] == "ky_alias"
+
+
+def test_ky_shorthand_uses_stock_dictionary_when_daily_row_is_missing():
+    stock_dict = {
+        "name_to_code": {"環宇-KY": "4991"},
+        "code_to_name": {"4991": "環宇-KY"},
+    }
+
+    result = pressplay.match_token("環宇", [], stock_dict=stock_dict)
+
+    assert result["code"] == "4991"
+    assert result["name"] == "環宇-KY"
+    assert result["match_type"] == "dict_ky_alias"
+    assert result["raw_token"] == "環宇"

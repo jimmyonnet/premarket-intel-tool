@@ -137,6 +137,32 @@ DAILY_HEADERS = {
 
 TAIPEI = datetime.timezone(datetime.timedelta(hours=8))
 
+_KY_SUFFIX_RE = re.compile(r"[-－–—]KY$", re.IGNORECASE)
+
+
+def _name_without_ky_suffix(name: str) -> str:
+    """Return a stock name's PRESSPLAY-friendly base without a trailing -KY."""
+    return _KY_SUFFIX_RE.sub("", str(name or "").strip())
+
+
+def _unique_ky_alias(token: str, names):
+    """Find one canonical -KY name whose base equals a shorthand token.
+
+    Exact names are intentionally handled before this helper. Returning an
+    alias only when it is unique prevents a shorthand collision from being
+    silently assigned to an arbitrary stock.
+    """
+    base = _name_without_ky_suffix(token)
+    if not base:
+        return None
+    candidates = sorted({
+        str(name).strip()
+        for name in names
+        if str(name or "").strip().upper().endswith("-KY")
+        and _name_without_ky_suffix(name) == base
+    })
+    return candidates[0] if len(candidates) == 1 else None
+
 
 # ---------------------------------------------------------------------------
 # PressPlay: login + find + read the latest premarket article
@@ -532,14 +558,22 @@ def match_token(token: str, rows, stock_dict=None):
         if row["name"] == token:
             return {**row, "match_type": "name", "raw_token": token}
 
-    # 3. Fuzzy match in daily rows by name
-    names = [r["name"] for r in rows]
+    # 3. Match PRESSPLAY shorthand against a unique canonical -KY name.
+    # Exact daily names above remain higher priority; ambiguous aliases do not
+    # match and will remain visible in the unmatched warning instead.
+    names = [r.get("name", "") for r in rows]
+    ky_alias = _unique_ky_alias(token, names)
+    if ky_alias:
+        matched_row = next(r for r in rows if r.get("name") == ky_alias)
+        return {**matched_row, "match_type": "ky_alias", "raw_token": token}
+
+    # 4. Fuzzy match in daily rows by name
     close = difflib.get_close_matches(token, names, n=1, cutoff=0.6)
     if close:
         matched_row = next(r for r in rows if r["name"] == close[0])
         return {**matched_row, "match_type": "fuzzy_name", "raw_token": token}
 
-    # 4. Stock dictionary lookup fallback
+    # 5. Stock dictionary lookup fallback
     if stock_dict:
         name_to_code = stock_dict.get("name_to_code", {})
         code_to_name = stock_dict.get("code_to_name", {})
@@ -585,6 +619,29 @@ def match_token(token: str, rows, stock_dict=None):
                 "ai_reason": "PressPlay 專欄標的",
                 "group": "📌 專欄標的",
                 "match_type": "dict_code",
+                "raw_token": token,
+            }
+
+        # Match a shorthand token against a unique canonical -KY name before
+        # fuzzy matching. This covers all XX-KY stocks, not just one symbol.
+        ky_dict_name = _unique_ky_alias(token, name_to_code.keys())
+        if ky_dict_name:
+            code = name_to_code[ky_dict_name]
+            for row in rows:
+                if row["code"] == code:
+                    return {**row, "match_type": "dict_ky_alias", "raw_token": token}
+            return {
+                "market": "市",
+                "code": code,
+                "name": ky_dict_name,
+                "close": "-",
+                "volume": "-",
+                "foreign": "-",
+                "trust": "-",
+                "dealer": "-",
+                "ai_reason": "PressPlay 專欄標的",
+                "group": "📌 專欄標的",
+                "match_type": "dict_ky_alias",
                 "raw_token": token,
             }
 
