@@ -1,321 +1,21 @@
 {
   "source": "https://chengwaye.com/disposal-forecast",
   "date_check": {
-    "today": "2026-08-28",
-    "effective_market_day": "2026-08-28",
-    "expected_previous_trading_day": "2026-08-27",
-    "page_says_applies_to": "08/28",
+    "today": "2026-08-29",
+    "effective_market_day": "2026-08-31",
+    "expected_previous_trading_day": "2026-08-28",
+    "page_says_applies_to": "08/31",
     "page_dropdown_selected": null,
     "applies_to_matches_today": true
   },
   "one_flag_from_disposal": [
     {
-      "market": "市",
-      "code": "2426",
-      "name": "鼎元",
-      "close": "96.6",
-      "condition": "①101.5↑(+5.1%)",
-      "earliest_disposal": "08-31 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 2/3",
-          "current": 2,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 2/5",
-          "current": 2,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 2/6",
-          "current": 2,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 3/12",
-          "current": 3,
-          "threshold": 12
-        }
-      ],
-      "condition_segments": [
-        {
-          "text": "①",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "101.5↑(+5.1%)",
-          "color": "var(--rise)",
-          "bold": false
-        }
-      ]
-    },
-    {
       "market": "櫃",
-      "code": "3163",
-      "name": "波若威",
-      "close": "776",
-      "condition": "①② 08-28不符合③④⑤⑦ 08-28不符合⑥ 量≥4,732張",
-      "earliest_disposal": "08-31 第2次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 0/3",
-          "current": 0,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 4/5",
-          "current": 4,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 4/6",
-          "current": 4,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 4/12",
-          "current": 4,
-          "threshold": 12
-        }
-      ],
-      "condition_segments": [
-        {
-          "text": "①② 08-28不符合",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "③④⑤⑦ 08-28不符合",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "⑥ 量≥4,732張",
-          "color": "var(--amber)",
-          "bold": false
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "3441",
-      "name": "聯一光",
-      "close": "137.5",
-      "condition": "①129.5↑(-5.8%)②138.0↑(+0.4%)③④⑤⑦125.5↑(-8.7%)需量≥2,002張+但書⑥ 不符合（PE明日不可達，量已達標）",
-      "earliest_disposal": "08-31 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 2/3",
-          "current": 2,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 4/5",
-          "current": 4,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 4/6",
-          "current": 4,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 6/12",
-          "current": 6,
-          "threshold": 12
-        }
-      ],
-      "condition_segments": [
-        {
-          "text": "①",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "129.5↑(-5.8%)",
-          "color": "var(--fall)",
-          "bold": false
-        },
-        {
-          "text": "②",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "138.0↑(+0.4%)",
-          "color": "var(--rise)",
-          "bold": false
-        },
-        {
-          "text": "③④⑤⑦",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "125.5↑(-8.7%)",
-          "color": "var(--fall)",
-          "bold": false
-        },
-        {
-          "text": "需量≥2,002張",
-          "color": "var(--amber)",
-          "bold": false
-        },
-        {
-          "text": "+但書",
-          "color": "var(--amber)",
-          "bold": false
-        },
-        {
-          "text": "⑥ 不符合（PE明日不可達，量已達標）",
-          "color": "var(--muted)",
-          "bold": false
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "4188",
-      "name": "安克",
-      "close": "16.05",
-      "condition": "①符合（即使跌停仍符合）",
-      "earliest_disposal": "08-31 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 2/3",
-          "current": 2,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 3/5",
-          "current": 3,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 3/6",
-          "current": 3,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 3/12",
-          "current": 3,
-          "threshold": 12
-        }
-      ],
-      "condition_segments": [
-        {
-          "text": "①",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "符合（即使跌停仍符合）",
-          "color": "var(--text)",
-          "bold": true
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "⏸5321",
-      "name": "美而快",
-      "close": "85.0",
-      "condition": "②85.1↑(+0.1%)①不符合③④⑤⑦93.4↑(+9.9%)需量≥2,978張+但書⑥ 收盤≥88.8元(+4.47%)且量≥2,977張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
-      "earliest_disposal": "08-31 第2次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 0/3",
-          "current": 0,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 4/5",
-          "current": 4,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 4/6",
-          "current": 4,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 4/12",
-          "current": 4,
-          "threshold": 12
-        }
-      ],
-      "condition_segments": [
-        {
-          "text": "②",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "85.1↑(+0.1%)",
-          "color": "var(--rise)",
-          "bold": false
-        },
-        {
-          "text": "①不符合",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "③④⑤⑦",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "93.4↑(+9.9%)",
-          "color": "var(--rise)",
-          "bold": false
-        },
-        {
-          "text": "需量≥2,978張",
-          "color": "var(--amber)",
-          "bold": false
-        },
-        {
-          "text": "+但書",
-          "color": "var(--amber)",
-          "bold": false
-        },
-        {
-          "text": "⑥ 收盤≥88.8元(+4.47%)且量≥2,977張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
-          "color": "var(--amber)",
-          "bold": false
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "6103",
-      "name": "合邦",
-      "close": "42.75",
-      "condition": "①符合（即使跌停仍符合）",
-      "earliest_disposal": "08-31 第1次2分",
+      "code": "2221",
+      "name": "大甲",
+      "close": "79.7",
+      "condition": "①76.9↑(-3.5%)",
+      "earliest_disposal": "09-01 第1次2分",
       "badges": [
         {
           "short": "3①",
@@ -349,45 +49,9 @@
           "bold": false
         },
         {
-          "text": "符合（即使跌停仍符合）",
-          "color": "var(--text)",
-          "bold": true
-        }
-      ]
-    }
-  ],
-  "two_flags_from_disposal": [
-    {
-      "market": "櫃",
-      "code": "2221",
-      "name": "大甲",
-      "close": "74.6",
-      "condition": "①72.5↑(-2.8%)②不符合③④⑤⑦70.3↑(-5.8%)需量≥2,117張+但書⑥ 不符合（PE/PB明日不可達，量未達）",
-      "earliest_disposal": "09-01 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 1/3",
-          "current": 1,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 1/5",
-          "current": 1,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 1/6",
-          "current": 1,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 1/12",
-          "current": 1,
-          "threshold": 12
+          "text": "76.9↑(-3.5%)",
+          "color": "var(--fall)",
+          "bold": false
         }
       ]
     },
@@ -395,9 +59,254 @@
       "market": "市",
       "code": "2351",
       "name": "順德",
-      "close": "240.0",
-      "condition": "①233.5↑(-2.7%)②不符合③④⑤⑦232.5↑(-3.1%)需量≥19,374張+但書⑥ 收盤≥253.5元(+5.62%)且量≥9,687張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
+      "close": "239.5",
+      "condition": "①249.0↑(+4.0%)",
       "earliest_disposal": "09-01 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 2/3",
+          "current": 2,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 2/5",
+          "current": 2,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 2/6",
+          "current": 2,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 2/12",
+          "current": 2,
+          "threshold": 12
+        }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "249.0↑(+4.0%)",
+          "color": "var(--rise)",
+          "bold": false
+        }
+      ]
+    },
+    {
+      "market": "櫃",
+      "code": "4939",
+      "name": "亞電",
+      "close": "92.8",
+      "condition": "①88.3↑(-4.8%)",
+      "earliest_disposal": "09-01 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 2/3",
+          "current": 2,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 3/5",
+          "current": 3,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 3/6",
+          "current": 3,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 7/12",
+          "current": 7,
+          "threshold": 12
+        }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "88.3↑(-4.8%)",
+          "color": "var(--fall)",
+          "bold": false
+        }
+      ]
+    },
+    {
+      "market": "櫃",
+      "code": "⏸5314",
+      "name": "世紀*",
+      "close": "34.20",
+      "condition": "①34.30↑(+0.3%)",
+      "earliest_disposal": "09-01 第2次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 2/3",
+          "current": 2,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 2/5",
+          "current": 2,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 2/6",
+          "current": 2,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 2/12",
+          "current": 2,
+          "threshold": 12
+        }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "34.30↑(+0.3%)",
+          "color": "var(--rise)",
+          "bold": false
+        }
+      ]
+    },
+    {
+      "market": "市",
+      "code": "6226",
+      "name": "光鼎",
+      "close": "34.00",
+      "condition": "①符合（即使跌停仍符合）②34.05↑(+0.1%)③④⑤⑦跌停仍過價格條件，需量≥11,554張 +量差幅/週轉差幅/分點/券資比⑥ 不符合（PB明日不可達，量已達標）",
+      "earliest_disposal": "09-01 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 2/3",
+          "current": 2,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 4/5",
+          "current": 4,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 4/6",
+          "current": 4,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 7/12",
+          "current": 7,
+          "threshold": 12
+        }
+      ],
+      "condition_segments": [
+        {
+          "text": "①",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "符合（即使跌停仍符合）",
+          "color": "var(--text)",
+          "bold": true
+        },
+        {
+          "text": "②",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "34.05↑(+0.1%)",
+          "color": "var(--rise)",
+          "bold": false
+        },
+        {
+          "text": "③④⑤⑦",
+          "color": "var(--muted)",
+          "bold": false
+        },
+        {
+          "text": "跌停仍過價格條件，需量≥11,554張 +量差幅/週轉差幅/分點/券資比",
+          "color": "var(--amber)",
+          "bold": false
+        },
+        {
+          "text": "⑥ 不符合（PB明日不可達，量已達標）",
+          "color": "var(--muted)",
+          "bold": false
+        }
+      ]
+    }
+  ],
+  "two_flags_from_disposal": [
+    {
+      "market": "市",
+      "code": "2426",
+      "name": "鼎元",
+      "close": "96.1",
+      "condition": "①② 08-31不符合③④⑤⑦104.5↑(+8.7%)需量≥30,063張+但書⑥ 量≥15,031張",
+      "earliest_disposal": "09-02 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 0/3",
+          "current": 0,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 3/5",
+          "current": 3,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 3/6",
+          "current": 3,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 4/12",
+          "current": 4,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "市",
+      "code": "2491",
+      "name": "吉祥全",
+      "close": "56.4",
+      "condition": "①52.7↑(-6.6%)②56.5↑(+0.2%)③④⑤⑦跌停仍過價格條件，需量≥4,814張 +量差幅/週轉差幅/分點/券資比⑥ 不符合（PE/PB明日不可達，量已達標）",
+      "earliest_disposal": "09-02 第2次2分",
       "badges": [
         {
           "short": "3①",
@@ -407,20 +316,20 @@
         },
         {
           "short": "5",
-          "title": "連續5日（第1~7款） 1/5",
-          "current": 1,
+          "title": "連續5日（第1~7款） 2/5",
+          "current": 2,
           "threshold": 5
         },
         {
           "short": "6",
-          "title": "10日內6次（第1~7款） 1/6",
-          "current": 1,
+          "title": "10日內6次（第1~7款） 2/6",
+          "current": 2,
           "threshold": 6
         },
         {
           "short": "12",
-          "title": "30日內12次（第1~7款） 1/12",
-          "current": 1,
+          "title": "30日內12次（第1~7款） 3/12",
+          "current": 3,
           "threshold": 12
         }
       ]
@@ -429,20 +338,20 @@
       "market": "櫃",
       "code": "3081",
       "name": "聯亞",
-      "close": "3370",
-      "condition": "①3465↑(+2.8%)②3600↑(+6.8%)③④⑤⑦3600↑(+6.8%)需量≥5,089張+但書⑥ 量≥5,088張",
-      "earliest_disposal": "09-01 第2次2分",
+      "close": "3305",
+      "condition": "① 08-31不符合③④⑤⑦ 08-31不符合⑥ 量≥5,088張",
+      "earliest_disposal": "09-02 第2次2分",
       "badges": [
         {
           "short": "3①",
-          "title": "連續3日第1款 1/3",
-          "current": 1,
+          "title": "連續3日第1款 0/3",
+          "current": 0,
           "threshold": 3
         },
         {
           "short": "5",
-          "title": "連續5日（第1~7款） 2/5",
-          "current": 2,
+          "title": "連續5日（第1~7款） 0/5",
+          "current": 0,
           "threshold": 5
         },
         {
@@ -461,249 +370,11 @@
     },
     {
       "market": "櫃",
-      "code": "4908",
-      "name": "前鼎",
-      "close": "195.5",
-      "condition": "①193.5↑(-1.0%)②不符合③④⑤⑦199.0↑(+1.8%)需量≥3,911張+但書⑥ 量≥3,911張",
-      "earliest_disposal": "09-01 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 1/3",
-          "current": 1,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 1/5",
-          "current": 1,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 1/6",
-          "current": 1,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 2/12",
-          "current": 2,
-          "threshold": 12
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "4939",
-      "name": "亞電",
-      "close": "86.6",
-      "condition": "①83.3↑(-3.8%)②不符合③④⑤⑦80.7↑(-6.8%)需量≥4,911張+但書⑥ 不符合（PB明日不可達，量已達標）",
-      "earliest_disposal": "09-01 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 1/3",
-          "current": 1,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 2/5",
-          "current": 2,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 2/6",
-          "current": 2,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 6/12",
-          "current": 6,
-          "threshold": 12
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "⏸5314",
-      "name": "世紀*",
-      "close": "38.00",
-      "condition": "①符合（即使跌停仍符合）②38.05↑(+0.1%)③④⑤⑦跌停仍過價格條件，需量≥14,600張 +量差幅/週轉差幅/分點/券資比⑥ 不符合（PE明日不可達，量未達）",
-      "earliest_disposal": "09-01 第2次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 1/3",
-          "current": 1,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 1/5",
-          "current": 1,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 1/6",
-          "current": 1,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 1/12",
-          "current": 1,
-          "threshold": 12
-        }
-      ]
-    },
-    {
-      "market": "市",
-      "code": "6226",
-      "name": "光鼎",
-      "close": "30.95",
-      "condition": "①29.70↑(-4.0%)②31.30↑(+1.1%)③④⑤⑦跌停仍過價格條件，需量≥11,554張 +量差幅/週轉差幅/分點/券資比⑥ 不符合（PB明日不可達，量已達標）",
-      "earliest_disposal": "09-01 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 1/3",
-          "current": 1,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 3/5",
-          "current": 3,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 3/6",
-          "current": 3,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 6/12",
-          "current": 6,
-          "threshold": 12
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "6617",
-      "name": "共信-KY",
-      "close": "128.5",
-      "condition": "①140.0↑(+8.9%)②不符合③④⑤⑦136.0↑(+5.8%)需量≥3,231張+但書⑥ 收盤≥127.5元(-0.78%)且量≥6,375張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
-      "earliest_disposal": "09-01 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 1/3",
-          "current": 1,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 1/5",
-          "current": 1,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 1/6",
-          "current": 1,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 2/12",
-          "current": 2,
-          "threshold": 12
-        }
-      ]
-    },
-    {
-      "market": "市",
-      "code": "6830",
-      "name": "汎銓",
-      "close": "530",
-      "condition": "①533↑(+0.6%)②不符合③④⑤⑦533↑(+0.6%)需量≥5,442張+但書⑥ 量≥3,000張",
-      "earliest_disposal": "09-01 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 1/3",
-          "current": 1,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 1/5",
-          "current": 1,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 1/6",
-          "current": 1,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 1/12",
-          "current": 1,
-          "threshold": 12
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "7751",
-      "name": "竑騰",
-      "close": "1985",
-      "condition": "①1960↑(-1.3%)②不符合③④⑤⑦2035↑(+2.5%)需量≥1,345張+但書⑥ 量≥2,000張",
-      "earliest_disposal": "09-01 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 1/3",
-          "current": 1,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 1/5",
-          "current": 1,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 2/6",
-          "current": 2,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 2/12",
-          "current": 2,
-          "threshold": 12
-        }
-      ]
-    },
-    {
-      "market": "市",
-      "code": "8039",
-      "name": "台虹",
-      "close": "352.5",
-      "condition": "①②358.0↑(+1.6%)③④⑤⑦358.0↑(+1.6%)需量≥26,367張+但書⑥ 量≥13,183張",
-      "earliest_disposal": "09-01 第1次2分",
+      "code": "3374",
+      "name": "精材",
+      "close": "386.0",
+      "condition": "①388.0↑(+0.5%)②不符合③④⑤⑦398.0↑(+3.1%)需量≥13,569張+但書⑥ 量≥13,568張",
+      "earliest_disposal": "09-02 第1次2分",
       "badges": [
         {
           "short": "3①",
@@ -733,16 +404,254 @@
     },
     {
       "market": "市",
-      "code": "8103",
-      "name": "瀚荃",
-      "close": "114.0",
-      "condition": "①② 08-28不符合③④⑤⑦117.5↑(+3.1%)需量≥7,844張+但書⑥ 不符合（PE/PB明日不可達，量已達標）",
-      "earliest_disposal": "09-01 第1次2分",
+      "code": "3406",
+      "name": "玉晶光",
+      "close": "917",
+      "condition": "①符合（即使跌停仍符合）②不符合③④⑤⑦跌停仍過價格條件，需量≥11,275張 +量差幅/週轉差幅/分點/券資比⑥ 不符合（PE/PB明日不可達，量已達標）",
+      "earliest_disposal": "09-02 第1次2分",
       "badges": [
         {
           "short": "3①",
           "title": "連續3日第1款 1/3",
           "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 1/5",
+          "current": 1,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 1/6",
+          "current": 1,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 1/12",
+          "current": 1,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "櫃",
+      "code": "3629",
+      "name": "地心引力",
+      "close": "19.65",
+      "condition": "①18.50↑(-5.9%)②不符合③④⑤⑦17.90↑(-8.9%)需量≥33張+但書⑥ 收盤≥19.35元(-1.53%)且量≥2,000張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
+      "earliest_disposal": "09-02 第1次10分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 1/3",
+          "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 1/5",
+          "current": 1,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 1/6",
+          "current": 1,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 1/12",
+          "current": 1,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "櫃",
+      "code": "⏸5321",
+      "name": "美而快",
+      "close": "85.0",
+      "condition": "②85.1↑(+0.1%)①不符合③④⑤⑦ 08-31不符合⑥ 收盤≥89.4元(+5.18%)且量≥2,977張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
+      "earliest_disposal": "09-02 第2次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 0/3",
+          "current": 0,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 0/5",
+          "current": 0,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 4/6",
+          "current": 4,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 4/12",
+          "current": 4,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "市",
+      "code": "6715",
+      "name": "嘉基",
+      "close": "353.5",
+      "condition": "①344.5↓(-2.5%)③④⑤⑦344.5↓(-2.5%)需量≥5,840張+但書⑥ 收盤≥325.0元(-8.06%)且量≥3,414張，或量達標且單一（券商/投資人）占比>10%且金額>1億",
+      "earliest_disposal": "09-02 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 1/3",
+          "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 1/5",
+          "current": 1,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 1/6",
+          "current": 1,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 2/12",
+          "current": 2,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "市",
+      "code": "6805",
+      "name": "富世達",
+      "close": "2345",
+      "condition": "①2235↑(-4.7%)②不符合③④⑤⑦2235↑(-4.7%)需量≥6,856張+但書⑥ 不符合（PE明日不可達，量已達標）",
+      "earliest_disposal": "09-02 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 1/3",
+          "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 1/5",
+          "current": 1,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 1/6",
+          "current": 1,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 2/12",
+          "current": 2,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "市",
+      "code": "6933",
+      "name": "AMAX-KY",
+      "close": "260.0",
+      "condition": "①245.0↑(-5.8%)②不符合③④⑤⑦跌停仍過價格條件，需量≥2,004張 +量差幅/週轉差幅/分點/券資比⑥ 不符合（PE/PB明日不可達，量未達）",
+      "earliest_disposal": "09-02 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 1/3",
+          "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 1/5",
+          "current": 1,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 1/6",
+          "current": 1,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 1/12",
+          "current": 1,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "市",
+      "code": "7788",
+      "name": "松川精密",
+      "close": "327.5",
+      "condition": "①316.0↑(-3.5%)②不符合③④⑤⑦316.0↑(-3.5%)需量≥7,975張+但書⑥ 不符合（PE/PB明日不可達，量未達）",
+      "earliest_disposal": "09-02 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 1/3",
+          "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 1/5",
+          "current": 1,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 1/6",
+          "current": 1,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 2/12",
+          "current": 2,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "市",
+      "code": "8033",
+      "name": "雷虎",
+      "close": "189.5",
+      "condition": "① 08-31不符合③④⑤⑦ 08-31不符合⑥ 量≥8,231張",
+      "earliest_disposal": "09-02 第2次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 0/3",
+          "current": 0,
           "threshold": 3
         },
         {
@@ -764,6 +673,40 @@
           "threshold": 12
         }
       ]
+    },
+    {
+      "market": "櫃",
+      "code": "8358",
+      "name": "金居",
+      "close": "543",
+      "condition": "①548↑(+0.9%)②不符合③④⑤⑦565↑(+4.1%)需量≥12,630張+但書⑥ 量≥12,629張",
+      "earliest_disposal": "09-02 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 1/3",
+          "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 3/5",
+          "current": 3,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 3/6",
+          "current": 3,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 6/12",
+          "current": 6,
+          "threshold": 12
+        }
+      ]
     }
   ],
   "currently_in_disposal": [
@@ -775,7 +718,7 @@
       "start_date": "08-24",
       "end_date": "08-28",
       "exit_date": "08-31",
-      "trading_days_left": 1,
+      "trading_days_left": "出關",
       "reason": "連續5日（第1~7款）｜第2次處置"
     },
     {
@@ -786,7 +729,7 @@
       "start_date": "08-24",
       "end_date": "08-28",
       "exit_date": "08-31",
-      "trading_days_left": 1,
+      "trading_days_left": "出關",
       "reason": "連續3日第一款｜第2次處置"
     },
     {
@@ -797,7 +740,7 @@
       "start_date": "08-24",
       "end_date": "08-28",
       "exit_date": "08-31",
-      "trading_days_left": 1,
+      "trading_days_left": "出關",
       "reason": "10日內6次｜第1次處置"
     },
     {
@@ -808,7 +751,7 @@
       "start_date": "08-25",
       "end_date": "08-31",
       "exit_date": "09-01",
-      "trading_days_left": 2,
+      "trading_days_left": 1,
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -819,7 +762,7 @@
       "start_date": "08-25",
       "end_date": "08-31",
       "exit_date": "09-01",
-      "trading_days_left": 2,
+      "trading_days_left": 1,
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -830,7 +773,7 @@
       "start_date": "08-25",
       "end_date": "08-31",
       "exit_date": "09-01",
-      "trading_days_left": 2,
+      "trading_days_left": 1,
       "reason": "連續5日｜第2次處置"
     },
     {
@@ -841,7 +784,7 @@
       "start_date": "08-25",
       "end_date": "08-31",
       "exit_date": "09-01",
-      "trading_days_left": 2,
+      "trading_days_left": 1,
       "reason": "連續3日第1款｜變更交易方法｜第2次處置"
     },
     {
@@ -852,7 +795,7 @@
       "start_date": "08-26",
       "end_date": "09-01",
       "exit_date": "09-02",
-      "trading_days_left": 3,
+      "trading_days_left": 2,
       "reason": "10日內6次｜第1次處置"
     },
     {
@@ -863,7 +806,7 @@
       "start_date": "08-27",
       "end_date": "09-02",
       "exit_date": "09-03",
-      "trading_days_left": 4,
+      "trading_days_left": 3,
       "reason": "連續5日（第1~7款）｜第1次處置"
     },
     {
@@ -874,7 +817,7 @@
       "start_date": "08-27",
       "end_date": "09-02",
       "exit_date": "09-03",
-      "trading_days_left": 4,
+      "trading_days_left": 3,
       "reason": "連續3日第一款｜第2次處置"
     },
     {
@@ -885,7 +828,7 @@
       "start_date": "08-28",
       "end_date": "09-03",
       "exit_date": "09-04",
-      "trading_days_left": 5,
+      "trading_days_left": 4,
       "reason": "連續5日｜第2次處置"
     },
     {
@@ -896,8 +839,52 @@
       "start_date": "08-27",
       "end_date": "09-04",
       "exit_date": "09-07",
-      "trading_days_left": 6,
+      "trading_days_left": 5,
       "reason": "連續5日及沖銷標準｜第2次處置"
+    },
+    {
+      "market": "櫃",
+      "code": "3163",
+      "name": "波若威",
+      "matching": "2分",
+      "start_date": "08-31",
+      "end_date": "09-04",
+      "exit_date": "09-07",
+      "trading_days_left": 5,
+      "reason": "連續5日｜第2次處置"
+    },
+    {
+      "market": "櫃",
+      "code": "3441",
+      "name": "聯一光",
+      "matching": "2分",
+      "start_date": "08-31",
+      "end_date": "09-04",
+      "exit_date": "09-07",
+      "trading_days_left": 5,
+      "reason": "連續3日第一款｜第1次處置"
+    },
+    {
+      "market": "櫃",
+      "code": "4188",
+      "name": "安克",
+      "matching": "2分",
+      "start_date": "08-31",
+      "end_date": "09-04",
+      "exit_date": "09-07",
+      "trading_days_left": 5,
+      "reason": "連續3日第一款｜第1次處置"
+    },
+    {
+      "market": "櫃",
+      "code": "6103",
+      "name": "合邦",
+      "matching": "2分",
+      "start_date": "08-31",
+      "end_date": "09-04",
+      "exit_date": "09-07",
+      "trading_days_left": 5,
+      "reason": "連續3日第一款｜第1次處置"
     }
   ]
 }
