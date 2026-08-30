@@ -204,7 +204,7 @@
       "market_state": null,
       "updated_at": "2026-08-29T05:15:59+08:00",
       "updated_taipei": "2026-08-29 05:15",
-      "change": -138.93,
+      "change": -138.98,
       "change_pct": -0.52
     },
     "sox": {
@@ -217,7 +217,7 @@
       "market_state": null,
       "updated_at": "2026-08-29T05:15:59+08:00",
       "updated_taipei": "2026-08-29 05:15",
-      "change": -412.51,
+      "change": -412.54,
       "change_pct": -3.47
     }
   },
@@ -225,7 +225,7 @@
     "nikkei225": {
       "name": "日經225指數",
       "value": 66405.56,
-      "change": -273.59,
+      "change": -273.56,
       "change_pct": -0.41,
       "updated_cst": "08/28 14:45",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",

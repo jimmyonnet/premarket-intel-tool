@@ -31,38 +31,6 @@
     "qualified": true
   },
   {
-    "title": "法人：華許言論偏中性 輝達財報蘋果新機有利台股",
-    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE82VjBEdFRWdzdfbVphY29pQzNjOEFUVllPY05rNUNlU3d4M1JDSnBKcHE2WlUwQ2ZyVzNNRlhkV0c1UWxyXzE2aU5Pc013VlRqbGZMYXFBN0hJWWloQ01n0gFfQVVfeXFMTzZWMER0VFZ3N19tWmFjb2lDM2M4QVRWWU9jTms1Q2VTd3gzUkNKcEpwcTZaVTBDZnJXM01GWGRXRzVRbHJfMTZpTk9zTXdWVGpsZkxhcUE3SElZaWhDTWc?oc=5",
-    "source": "經濟日報",
-    "time": "08/29 21:44",
-    "timestamp": 1788011090.0,
-    "score": 15,
-    "quality_score": 4,
-    "impact_score": 11,
-    "release_bonus": 0,
-    "matched_groups": [
-      "market_benchmark",
-      "systemic_company",
-      "earnings_financial",
-      "market_structure"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "taiwan_market",
-      "company_earnings",
-      "market_structure"
-    ],
-    "primary_topic": "taiwan_market",
-    "named_entities": [
-      "nvidia",
-      "apple",
-      "taiwan_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
     "title": "外匯存底、外資匯入匯出9月4日齊發！ 台股AI供應鏈黃金周全球AI晶片霸主博通Q3財報登場中東局勢不安卻油價凍漲｜投資早知道",
     "link": "https://news.google.com/rss/articles/CBMi7gVBVV95cUxOdjU0WE9jeEVoc2lpaVlkVkhxZmZiM2JBM0JldWJzeXZMSWhFZXBVQ0c5RWNza0ZhRjRQREVpRHdKZVk5X3RSelpBYXJYT21nUU5UcEgwbFBnWE50SFNCZXZwQnRIdlVwZ0dHaE1HUG9XRzNIb3ZqS3liWlRCZjVOLVRRQzlGUmQ4Nno5V1V5alp1cGxpRElUd2ZXQmdCd25wMFZ6MmUwOFR0R2Y4bkkydlhKS2N6TFR6QnNEdUlHMVBYSUZtNkQ1VWtLWDJJUWlfakhVRlAzQWc5TjRkQklKUHhVOXFUZHAzdzRpNzltOTRQVlhISXJ5alp1RnMzTjZMQmNDOEtIYmVkNEwyaGtIWGY0aTNnVHltTnFfVEVzWkhhdXB6OHBXbE16ZGd0dGtHMzY4MHB2c3hrX3RLa1pnaEdLanFrQ3ZCM3RnRXhzWDJDUDlKUFp6NUNfRzEwZDVrZTJlNVBva2NVVC1mYWlDYXFGSlVNV2RPTGF1Nzc1dmpHR2tNb1I1UVJ4eUtZUU44M1hTaEtFVFEzMHA4V1hMdVZWNWxZTzNMTUI5a19VT0VoOGdKMUxqZlBFeVdmNG1VRmJja1ZiRy02dF93V0FKczk4cVpHNnVtQWhfTi05VktZM0JRV0E1ZV9feUxGSnVxV3VEWEV1ZkZJZlc1Njk5WExXOVh5QkZFelZjOFhLMXViTUw0UDhzN3FuSzk1cXAwb2ZWVUxuLW9DS3BhX2tTRlp1QnlsTE40RWRLYlc2Y3ZYbkZpSEJqc1h2NXlnbk96TFBVRHNZUGZybGFlSmROekc5ZVdoZHNLaTMtVk5ra0ZxbTNFbzVBYklpX2FQdGxCU2JaRlVLZnUza3NHQlhqZDQ3UnNNZldzZmdQcmN5ajhhSm16X3cyUW85YVlQUXNkUklWZ2sxRHNzNEZCOUhJYWlSaUlOYV9RRUc0ME9TVEE4U2dJMkNPb250SUEzUnJvODBuUTlrM0l6YXBwTEE?oc=5",
     "source": "Yahoo股市",
@@ -96,11 +64,96 @@
     "qualified": true
   },
   {
-    "title": "華許放鷹美晶片股、台指期跌 法人：台股本週多空交戰",
-    "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxNOFNSLWFSWjJNVkFJOGlLQjFTM0xMME94ak1kV08wZmVsa1VnSGFiRDV6RTYzeXVFc1A3ZENDSnZ3djRIZi1uSzNoY2Z2U1prRkpJOW4yWXU2S1RoNHlXdG8tMnhHZXpSRmZZQlQ4OHBYMUFtcHNrRW02cGlyRTBoUtIBX0FVX3lxTFBiNVVZaU5tT1B3QTkzdjJzZmFoSHBrZ0loR2hZS2RtRG9yWGVLVkdhUWkyUnNrZnR3UzNtQmZmR1RmS3N0LWhVcjJxb0xSNWtYdUIzTE9YczZEbms5a2Zr?oc=5",
+    "title": "輝達AI行情續強Alphabet、Meta為何陷危機？美股七巨頭分化加劇",
+    "link": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE96aXlxUmtxdExUcjJPSmU2MGk5MzRVVFF1NjZFSWRTakVOV0ZUODhhMlV0d3NIWlFDVm9KR25GektmU3RTdEdGbjZPY3k3Rk43OFhEalF4bw?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/31 04:42",
+    "timestamp": 1788122548.0,
+    "score": 12,
+    "quality_score": 4,
+    "impact_score": 8,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "global_market",
+      "sector_technology",
+      "company_earnings"
+    ],
+    "primary_topic": "global_market",
+    "named_entities": [
+      "nvidia",
+      "meta",
+      "us_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "本週操盤筆記：博通財報、8月非農就業、利率路徑線索",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFB2anEwTS1PRzZfaDVEV3BJQTh6U1JkV0pKUm1QYmNTVXAyb1NwQU43NG1YS0xTdlBXcGxhZ1FlWXJHYUdxVHRPaWZ5cFZoZnc?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/30 21:50",
+    "timestamp": 1788097806.0,
+    "score": 11,
+    "quality_score": 4,
+    "impact_score": 7,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "macro_policy",
+      "company_earnings"
+    ],
+    "primary_topic": "macro_policy",
+    "named_entities": [
+      "broadcom"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "戴爾財報倒數 AI 訂單有望再上修？法人點名這幾檔台廠",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBrRnp0RWVpenBQSURiY0JDS0RFekZxSXA3bzNxLTVNLWJrVmIwdkw5Zy1welB2azBfNHo0dGpMZGtBaS0yRWFfYy1QUWZMeTVoVmpRaVhHcUo5UdIBX0FVX3lxTE5uR3VSYUdSdjY5V1p1Ums2TDhIcTBudGFjUTNrLXA3NmZ1ZXJJZEd5cmg0UHlwTVl6bjUtVWxrb2RBLTlyODAtS1lDb2huMFZFbWl6V0FfanRYMGQ5T0dB?oc=5",
     "source": "經濟日報",
-    "time": "08/30 17:12",
-    "timestamp": 1788081157.0,
+    "time": "08/30 11:00",
+    "timestamp": 1788058800.0,
+    "score": 11,
+    "quality_score": 4,
+    "impact_score": 7,
+    "release_bonus": 0,
+    "matched_groups": [
+      "earnings_financial",
+      "sector_supply_chain",
+      "market_structure"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "sector_technology",
+      "company_earnings",
+      "market_structure"
+    ],
+    "primary_topic": "sector_technology",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "台股震盪盤堅 法人看好三大題材各有亮點 廣達、台勝科等可逢低切入 | 市場焦點 | 證券",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5MbzFjZHFRT1cyc1R4Nk56LWVsS3ZUc0FYMGV0LVVYQk9VSUk1R2FjSm44bVp1dHhJVDRkaFlqLUF0Z3RabXFzSXdScXg4ZF9lMW9CR2VYcDNPQQ?oc=5",
+    "source": "經濟日報",
+    "time": "08/30 22:44",
+    "timestamp": 1788101071.0,
     "score": 9,
     "quality_score": 4,
     "impact_score": 5,
@@ -123,123 +176,99 @@
     "qualified": true
   },
   {
-    "title": "9月 Fed 升息機率將近60%？伊爾艾朗舉3理由：市場高估了",
-    "link": "https://news.google.com/rss/articles/CBMifkFVX3lxTE5MaFVWZnllYWJyejZTVXVBZ2ZkRGhvb0d2UENSd0ZBSlE0ZEk3bnZnMXhvQm9BUTdyVlhKMG4tUHMtQ01nbk5ZR09NRVJCb3dqXzNESFJvRFhjM0gtSDBIam9tVjZuX2F5TDQ5Z21mMndjZWhlZXhTTWtVdHgtZ9IBX0FVX3lxTE93c3o3WlZJVTdNR0RnQzZpR0RtaDVOWGRXNkhPNHRYemx1ckZxRnpUaE1RSi1ZSlFYMmZVdUNjRXFkTlZjVmFEQTVGV2RvelR1ZGtScW1vOXpPUjNMcEdZ?oc=5",
-    "source": "經濟日報",
-    "time": "08/29 22:33",
-    "timestamp": 1788014022.0,
-    "score": 8,
-    "quality_score": 4,
-    "impact_score": 4,
-    "release_bonus": 0,
-    "matched_groups": [
-      "macro_policy"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "macro_policy"
-    ],
-    "primary_topic": "macro_policy",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "Fed華許「放鷹」、9月升息機率飆破50%！高盛不信、摩根大通：關鍵還是8月非農與CPI",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9oYWNuakc0alc4djFTdklxN1Z0NmllRld1UFlNUU1GSzlwXzZXUEtQdjZMcVlzVm4tZ2pzTFV6LTI5cjNxZ21iUWdrYzdHd0E?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/29 22:20",
-    "timestamp": 1788013204.0,
-    "score": 8,
-    "quality_score": 4,
-    "impact_score": 4,
-    "release_bonus": 0,
-    "matched_groups": [
-      "macro_policy"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "macro_policy"
-    ],
-    "primary_topic": "macro_policy",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "美股狂歡恐在秋季煞車！美銀揭兩大潛在反轉變數",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBQUTRXWWdzRjhNNXpZQ2cxRm56RWhlNGZMTGs2OHp6SVFGZG8ySTBfVWhPV3ZVTFh1SFp5bmc1SDloTjlubWhGZnlpNTJDREE?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/30 10:30",
-    "timestamp": 1788057032.0,
-    "score": 7,
-    "quality_score": 4,
-    "impact_score": 3,
-    "release_bonus": 0,
-    "matched_groups": [
-      "market_benchmark"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "global_market"
-    ],
-    "primary_topic": "global_market",
-    "named_entities": [
-      "us_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "美股收低 科技股和晶片股跌勢較重 本周有兩大考驗",
-    "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9nX285VlRWWHVxN3RxeGRYZXhFel80UEtEbEZLNmJIUWVHQXpYc3U1UmFpRXk3T284WjBmbmhWbk9CSUU5d2xlRHNPMkhVb2FOcUJ0eE0yUlpLbXFS0gFiQVVfeXFMT0dpMlFwUjlWZl9WZE5fRDUwWWV3LUdrTFRwbGlKYzV1Smw1cDBOMG9JU0tpS3ZQdllzWjcweThKNUZLZ08wTW41ZHZYY1pCNmtlSGFrMzJaWkVxaE1BeVFiLUE?oc=5",
-    "source": "經濟日報",
-    "time": "08/30 01:21",
-    "timestamp": 1788024066.0,
-    "score": 7,
-    "quality_score": 4,
-    "impact_score": 3,
-    "release_bonus": 0,
-    "matched_groups": [
-      "market_benchmark"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "global_market"
-    ],
-    "primary_topic": "global_market",
-    "named_entities": [
-      "us_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "周末精選／台指期震盪轉守46K、台股後市怎麼走？法人曝六利多：有望直攻前高",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFA3d3U1N1YwT2hkeGpmUTd4dnZiQV9oTTk4TVhlZmFoQmJkTVNzWnRITXA4VFhRNGdVZF9wWnhSWUZQMERXSnZtUllTUWdxcWNFMzdGcGNad0JtUdIBX0FVX3lxTE9MVjdQbTlqdzd0S2JpdHRQbUtwZFFMb2FTT2JjUXNfMUlNNzV2dXdKZGZBc3VVb3c5VkxHbjFHUXlkb2JMRndLVkd1a3d5NEtWTkZ6SFJYc1hwS2tybjBV?oc=5",
-    "source": "經濟日報",
-    "time": "08/30 16:27",
-    "timestamp": 1788078474.0,
+    "title": "A記憶體價格超越一顆頂級SoC！Gartner上修2026年營收至8373億美元、占半導體市場54%",
+    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE5ZSkhnWjg0SDBSR0FDRVFUM1dxdnI0SjdRVEh2X2tkRkN2Z1dCU0o1Y1ZUdFlfNFNmX1Q5MTVhMW95czVsWXdkT1Jfcw?oc=5",
+    "source": "鉅亨網",
+    "time": "08/30 22:00",
+    "timestamp": 1788098404.0,
     "score": 9,
     "quality_score": 4,
     "impact_score": 5,
     "release_bonus": 0,
     "matched_groups": [
-      "market_benchmark",
+      "earnings_financial",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "sector_technology",
+      "company_earnings"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "AI 伺服器代工四強 外資挺",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5wQmpyQ191bTk1cHZTWXN6R0lXYm45eWNvUUtzN3R2MkVMSnRkUEcxUU9PenY1NlBud1BiMU5sNTZmTFM0bWZCal83bkJEQUxhU0o0MHJ6X3ctQdIBX0FVX3lxTFA3SjdNOU5LRVc0djAwa1VxNTdJckEzMGRjLXJZT3dTb3E0MzZhRW0yMUFPUzZZaFFYTXZWbFcyQ3dRaklJNkduX3BMY2l2M1czVGtSYzlIaXNqQkRfOW1v?oc=5",
+    "source": "經濟日報",
+    "time": "08/31 00:51",
+    "timestamp": 1788108686.0,
+    "score": 8,
+    "quality_score": 4,
+    "impact_score": 4,
+    "release_bonus": 0,
+    "matched_groups": [
+      "sector_supply_chain",
       "market_structure"
     ],
     "low_signal_hits": [],
     "topic_groups": [
-      "taiwan_market",
+      "sector_technology",
       "market_structure"
     ],
-    "primary_topic": "taiwan_market",
+    "primary_topic": "sector_technology",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "諾獎得主克魯曼解讀華許首秀「偏鷹」！降息訊號全缺席：意外是個「正常Fed主席」",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE4zREdwVm13bUxGRU56Sld5QVZvV0NJOHNROEt3VjQzaTROSDdGZGZQMHFQLWlNRFRZcktxVEhQTWFkS3pESHZtVXF1d0F3elU?oc=5",
+    "source": "news.cnyes.com",
+    "time": "08/30 19:10",
+    "timestamp": 1788088206.0,
+    "score": 8,
+    "quality_score": 4,
+    "impact_score": 4,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "macro_policy"
+    ],
+    "primary_topic": "macro_policy",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "美股逆向投資人準備轉向避險模式？美銀：他們正在等「兩大訊號」",
+    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFBuLWNqN2dPUnJjTGktV2hBUF9IellTbzRpU3hGdlJHMkhQTkEtYmhHYnVSVTJ2ZWV3S3pRa0RlVEF0MDQtYlVrMHZzRQ?oc=5",
+    "source": "鉅亨網",
+    "time": "08/30 18:10",
+    "timestamp": 1788084603.0,
+    "score": 7,
+    "quality_score": 4,
+    "impact_score": 3,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_benchmark"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "global_market"
+    ],
+    "primary_topic": "global_market",
     "named_entities": [
-      "taiwan_market"
+      "us_market"
     ],
     "quality_pass": true,
     "impact_pass": true,
