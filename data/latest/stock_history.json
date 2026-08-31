@@ -1,6 +1,6 @@
 {
   "source": "https://chengwaye.com/stock/",
-  "fetched_at": "2026-08-31T08:33:27.644704+08:00",
+  "fetched_at": "2026-08-31T19:58:24.364235+08:00",
   "requested_codes": [
     "3543",
     "2303",
@@ -20,18 +20,18 @@
       "summary": {
         "limit_up_count": "8 次",
         "latest_limit_up": "2026/08/28",
-        "avg_next_open": "+3.15%",
-        "avg_next_close": "+2.70%"
+        "avg_next_open": "+2.62%",
+        "avg_next_close": "+2.08%"
       },
       "records": [
         {
           "date": "2026/08/28",
           "close": "54.5",
           "group": "面板光電",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "-1.10%",
+          "next_avg": "-1.26%",
+          "next_close": "-2.20%",
+          "next_trend": "直接跌"
         },
         {
           "date": "2026/08/27",
@@ -107,18 +107,18 @@
       "summary": {
         "limit_up_count": "10 次",
         "latest_limit_up": "2026/08/28",
-        "avg_next_open": "+2.36%",
-        "avg_next_close": "+1.33%"
+        "avg_next_open": "+1.86%",
+        "avg_next_close": "+1.12%"
       },
       "records": [
         {
           "date": "2026/08/28",
           "close": "130",
           "group": "晶圓代工",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "-2.69%",
+          "next_avg": "-2.78%",
+          "next_close": "-0.77%",
+          "next_trend": "直接跌"
         },
         {
           "date": "2026/07/31",
@@ -212,18 +212,18 @@
       "summary": {
         "limit_up_count": "7 次",
         "latest_limit_up": "2026/08/28",
-        "avg_next_open": "+0.67%",
-        "avg_next_close": "+5.45%"
+        "avg_next_open": "+0.30%",
+        "avg_next_close": "+5.54%"
       },
       "records": [
         {
           "date": "2026/08/28",
           "close": "131",
           "group": "連接器",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "-1.91%",
+          "next_avg": "+3.89%",
+          "next_close": "+6.11%",
+          "next_trend": "強續漲"
         },
         {
           "date": "2026/08/13",
@@ -350,18 +350,18 @@
       "summary": {
         "limit_up_count": "2 次",
         "latest_limit_up": "2026/08/28",
-        "avg_next_open": "-1.04%",
-        "avg_next_close": "-2.26%"
+        "avg_next_open": "-0.52%",
+        "avg_next_close": "-0.96%"
       },
       "records": [
         {
           "date": "2026/08/28",
           "close": "30.4",
           "group": "綠能",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "0.00%",
+          "next_avg": "+1.99%",
+          "next_close": "+0.33%",
+          "next_trend": "弱續漲"
         },
         {
           "date": "2026/03/18",
@@ -383,18 +383,18 @@
       "summary": {
         "limit_up_count": "16 次",
         "latest_limit_up": "2026/08/28",
-        "avg_next_open": "+2.09%",
-        "avg_next_close": "+2.51%"
+        "avg_next_open": "+1.91%",
+        "avg_next_close": "+2.32%"
       },
       "records": [
         {
           "date": "2026/08/28",
           "close": "543",
           "group": "PCB",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "-0.92%",
+          "next_avg": "-1.60%",
+          "next_close": "-0.55%",
+          "next_trend": "直接跌"
         },
         {
           "date": "2026/08/27",
@@ -542,18 +542,18 @@
       "summary": {
         "limit_up_count": "21 次",
         "latest_limit_up": "2026/08/28",
-        "avg_next_open": "+1.36%",
-        "avg_next_close": "+3.25%"
+        "avg_next_open": "+1.21%",
+        "avg_next_close": "+2.82%"
       },
       "records": [
         {
           "date": "2026/08/28",
           "close": "313.5",
           "group": "被動元件",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "-1.75%",
+          "next_avg": "-4.98%",
+          "next_close": "-5.90%",
+          "next_trend": "直接跌"
         },
         {
           "date": "2026/08/13",
@@ -746,18 +746,18 @@
       "summary": {
         "limit_up_count": "26 次",
         "latest_limit_up": "2026/08/28",
-        "avg_next_open": "+4.26%",
-        "avg_next_close": "+5.48%"
+        "avg_next_open": "+4.10%",
+        "avg_next_close": "+5.27%"
       },
       "records": [
         {
           "date": "2026/08/28",
           "close": "742",
           "group": "電子通路",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "0.00%",
+          "next_avg": "-0.40%",
+          "next_close": "0.00%",
+          "next_trend": "直接跌"
         },
         {
           "date": "2026/08/27",
@@ -995,18 +995,18 @@
       "summary": {
         "limit_up_count": "16 次",
         "latest_limit_up": "2026/08/28",
-        "avg_next_open": "+0.32%",
-        "avg_next_close": "+0.57%"
+        "avg_next_open": "+0.23%",
+        "avg_next_close": "+0.64%"
       },
       "records": [
         {
           "date": "2026/08/28",
           "close": "635",
           "group": "光通訊",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "-1.26%",
+          "next_avg": "-1.87%",
+          "next_close": "+1.73%",
+          "next_trend": "弱續漲"
         },
         {
           "date": "2026/08/10",
