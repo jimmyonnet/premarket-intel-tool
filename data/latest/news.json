@@ -1,7 +1,7 @@
 [
   {
     "title": "輝達＋韓國央行上調 GDP 這 ETF 雙引擎 搶占 AI 算力與評價修復紅利",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5IMjQ4dzhHUEF4bGk5VUw5REZJNnhuUHF1WVR1dmlaQXYyZ0hCb1RTQzJGQ2hST25RenU2T3N2UXZDM3JfTHZiQk5QNXI1emFzOWFwdDMyV04xd9IBX0FVX3lxTE1oLWVpQ3ZFcTUyb3hHZnZlRko3bmRyV3JfZmhHbGtqNUF2WFZaVzhvV2tFMlpoQU9YdVY0WU5oQmVydGhnUlhJMndfZkpwckxNYU50LWxMM0VrbmZHSUVB?oc=5",
+    "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1oLWVpQ3ZFcTUyb3hHZnZlRko3bmRyV3JfZmhHbGtqNUF2WFZaVzhvV2tFMlpoQU9YdVY0WU5oQmVydGhnUlhJMndfZkpwckxNYU50LWxMM0VrbmZHSUVB0gFfQVVfeXFMTWgtZWlDdkVxNTJveEdmdmVGSjduZHJXcl9maEdsa2o1QXZYVlpXOG9Xa0UyWmhBT1h1VjRZTmhCZXJ0aGdSWEkyd19mSnByTE1hTnQtbEwzRWtuZkdJRUE?oc=5",
     "source": "經濟日報",
     "time": "08/30 17:16",
     "timestamp": 1788081404.0,
@@ -25,6 +25,37 @@
     "primary_topic": "macro_policy",
     "named_entities": [
       "nvidia"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "AI 財報點火台股！外資轉買、資金擴散中小型股「Risk-on」訊號浮現",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE1PVWlZNXh5UTdVeEtPcXM2ZGVCVnVKN19kREVvRnJuM2p0U2NLUG04anI3dVZ3QWVlcE9udE9kbHdVUlhLUV9xZ09FR2ZuUC12dG96bERBdG9Hd9IBX0FVX3lxTE1CUEdyWGlQTkdDS2Z1WE5EV2pIV3dCcDc1VFlHRzhxSnQzaGZkX2stbWY2dkMwUVBYZllwNFhrRnR5TVpBb09sbmZablYzWXpCTnM0RzR0SnVkZTR6NXVF?oc=5",
+    "source": "經濟日報",
+    "time": "08/30 18:39",
+    "timestamp": 1788086383.0,
+    "score": 14,
+    "quality_score": 4,
+    "impact_score": 10,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_benchmark",
+      "earnings_financial",
+      "sector_supply_chain",
+      "market_structure"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "sector_technology",
+      "company_earnings",
+      "market_structure"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "taiwan_market"
     ],
     "quality_pass": true,
     "impact_pass": true,
@@ -58,6 +89,35 @@
     "named_entities": [
       "broadcom",
       "taiwan_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "輝達強悍財報難救市！美股四大指數罕見背離 阮慕驊：答案9月將見分曉",
+    "link": "https://news.google.com/rss/articles/CBMivANBVV95cUxOX1oyYlROZDFlaUI5cUJmb0wyN3F5M01sV1kyOUtvV0pCNmtrUnZpQ0Z6cS1vXzB2UGdwZk15N0JtbWNvT3kwZktxV0taSy1hR2Z6QTJOUHBEaHBRbzFvUDFBbWUwSUtwOUF5aXFIX05nX1ZabXBodXdRNlVtVjBSaHdrNDJiOFFnMmJzT1VkWlRQTjJ1QUZFNEVseE5KUnY4eE5TOUhFOGtHdWpQUzZwb1JpVzRzaFFIVHI2ZjFybzYydmlteE5sS0VFamlIZTUtZDhLRW9IZklodVVsSWt5S3NqcXNSRUpzYUx6aFNsdzhRQklrMlZMUGZlV1FpUm9rZ2x3TUZBVENjUXp1MVhUeWVsNEhoZ21PODctcEJ1UnBaWi1DR1RQRlJoMm5weDFMZG1Nc0s2OFVfOG45NngyUmFiQ1p2TmhuaVR5VlJTeWk4UGVwVkNzcUJnRlhieENJRDhhTDdNTkNYOHA2LW1TRTBZUVZKODlQMVpBVFNxYVhyMlRvSFduRG5PanNvcm9UdVlZazJ5QUdveTd3MGlCRlVYb25pREdsSjVNY201SHpSLU0tM1hOdGJ0RkQ?oc=5",
+    "source": "Yahoo股市",
+    "time": "08/31 07:03",
+    "timestamp": 1788131015.0,
+    "score": 12,
+    "quality_score": 3,
+    "impact_score": 9,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "global_market",
+      "company_earnings"
+    ],
+    "primary_topic": "global_market",
+    "named_entities": [
+      "nvidia",
+      "us_market"
     ],
     "quality_pass": true,
     "impact_pass": true,
@@ -122,33 +182,6 @@
     "qualified": true
   },
   {
-    "title": "戴爾財報倒數 AI 訂單有望再上修？法人點名這幾檔台廠",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTFBrRnp0RWVpenBQSURiY0JDS0RFekZxSXA3bzNxLTVNLWJrVmIwdkw5Zy1welB2azBfNHo0dGpMZGtBaS0yRWFfYy1QUWZMeTVoVmpRaVhHcUo5UdIBX0FVX3lxTE5uR3VSYUdSdjY5V1p1Ums2TDhIcTBudGFjUTNrLXA3NmZ1ZXJJZEd5cmg0UHlwTVl6bjUtVWxrb2RBLTlyODAtS1lDb2huMFZFbWl6V0FfanRYMGQ5T0dB?oc=5",
-    "source": "經濟日報",
-    "time": "08/30 11:00",
-    "timestamp": 1788058800.0,
-    "score": 11,
-    "quality_score": 4,
-    "impact_score": 7,
-    "release_bonus": 0,
-    "matched_groups": [
-      "earnings_financial",
-      "sector_supply_chain",
-      "market_structure"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "sector_technology",
-      "company_earnings",
-      "market_structure"
-    ],
-    "primary_topic": "sector_technology",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
     "title": "台股震盪盤堅 法人看好三大題材各有亮點 廣達、台勝科等可逢低切入 | 市場焦點 | 證券",
     "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5MbzFjZHFRT1cyc1R4Nk56LWVsS3ZUc0FYMGV0LVVYQk9VSUk1R2FjSm44bVp1dHhJVDRkaFlqLUF0Z3RabXFzSXdScXg4ZF9lMW9CR2VYcDNPQQ?oc=5",
     "source": "經濟日報",
@@ -177,8 +210,8 @@
   },
   {
     "title": "A記憶體價格超越一顆頂級SoC！Gartner上修2026年營收至8373億美元、占半導體市場54%",
-    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE5ZSkhnWjg0SDBSR0FDRVFUM1dxdnI0SjdRVEh2X2tkRkN2Z1dCU0o1Y1ZUdFlfNFNmX1Q5MTVhMW95czVsWXdkT1Jfcw?oc=5",
-    "source": "鉅亨網",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1sTkkyeWZqTG85Q2NIM0hmVlRaWVJqbEs3OGJIUnhNdmpEOFJuQTgyLWJBYnRObDMybjJwWmZqUzFZWGNhQndPeWQ0VFJlTEk?oc=5",
+    "source": "news.cnyes.com",
     "time": "08/30 22:00",
     "timestamp": 1788098404.0,
     "score": 9,
@@ -245,31 +278,6 @@
     ],
     "primary_topic": "macro_policy",
     "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "美股逆向投資人準備轉向避險模式？美銀：他們正在等「兩大訊號」",
-    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFBuLWNqN2dPUnJjTGktV2hBUF9IellTbzRpU3hGdlJHMkhQTkEtYmhHYnVSVTJ2ZWV3S3pRa0RlVEF0MDQtYlVrMHZzRQ?oc=5",
-    "source": "鉅亨網",
-    "time": "08/30 18:10",
-    "timestamp": 1788084603.0,
-    "score": 7,
-    "quality_score": 4,
-    "impact_score": 3,
-    "release_bonus": 0,
-    "matched_groups": [
-      "market_benchmark"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "global_market"
-    ],
-    "primary_topic": "global_market",
-    "named_entities": [
-      "us_market"
-    ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
