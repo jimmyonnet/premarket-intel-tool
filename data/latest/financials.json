@@ -501,12 +501,14 @@
         "上季毛利率": -7.81,
         "上季營益率": -65.06,
         "上季業外佔比": -17.52,
-        "ai_summary": "中國子公司股權遭違法移轉致喪失控制力"
+        "ai_summary": "中國子公司股權遭違法移轉致喪失控制力",
+        "全年營收(千)": 30499
       },
       "fetched_at": "2026-08-31 17:00:03",
       "ai_score": -7,
       "ai_reason": "毛利營益惡化且喪失控制力",
-      "ai_score_version": 2
+      "ai_score_version": 2,
+      "report_kind": "QUARTERLY"
     }
   ],
   "rev": [],
@@ -515,13 +517,13 @@
       "state": "fresh",
       "total": 26,
       "unreflected": 7,
-      "fetched_at": "2026-08-31 19:27:05"
+      "fetched_at": "2026-08-31 20:22:41"
     },
     "fin": {
       "state": "fresh",
       "total": 1987,
       "unreflected": 4,
-      "fetched_at": "2026-08-31 19:27:05"
+      "fetched_at": "2026-08-31 20:22:41"
     },
     "rev": {
       "state": "fresh",

@@ -5,20 +5,20 @@
   "points": [],
   "open": 46126.0,
   "prev_close": 45977.0,
-  "high": 46135.0,
-  "low": 45956.0,
+  "high": 46186.0,
+  "low": 45905.0,
   "latest": {
     "provider": "wantgoo",
     "provider_name": "Wantgoo / TAIFEX",
-    "collected_at": "2026-08-31T19:57:57.868915+08:00",
+    "collected_at": "2026-08-31T21:56:58.612333+08:00",
     "symbol": "臺指期096",
-    "price": 45973.0,
-    "change": -4.0,
-    "change_pct": -0.01,
+    "price": 46150.0,
+    "change": 173.0,
+    "change_pct": 0.38,
     "open": 46126.0,
     "prev_close": 45977.0,
-    "high": 46135.0,
-    "low": 45956.0,
-    "volume": 5446
+    "high": 46186.0,
+    "low": 45905.0,
+    "volume": 12456
   }
 }
