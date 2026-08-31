@@ -1,12 +1,12 @@
 {
   "source": "https://chengwaye.com/disposal-forecast",
   "date_check": {
-    "today": "2026-08-31",
-    "effective_market_day": "2026-08-31",
-    "expected_previous_trading_day": "2026-08-28",
+    "today": "2026-09-01",
+    "effective_market_day": "2026-09-01",
+    "expected_previous_trading_day": "2026-08-31",
     "page_says_applies_to": "09/01",
     "page_dropdown_selected": null,
-    "applies_to_matches_today": false
+    "applies_to_matches_today": true
   },
   "one_flag_from_disposal": [
     {
