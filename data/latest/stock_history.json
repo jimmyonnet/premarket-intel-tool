@@ -1,6 +1,6 @@
 {
   "source": "https://chengwaye.com/stock/",
-  "fetched_at": "2026-09-01T08:57:29.423665+08:00",
+  "fetched_at": "2026-09-01T20:47:53.428339+08:00",
   "requested_codes": [
     "1303",
     "2455",
@@ -15,18 +15,18 @@
       "summary": {
         "limit_up_count": "14 次",
         "latest_limit_up": "2026/08/31",
-        "avg_next_open": "+3.36%",
-        "avg_next_close": "+4.88%"
+        "avg_next_open": "+3.34%",
+        "avg_next_close": "+4.29%"
       },
       "records": [
         {
           "date": "2026/08/31",
           "close": "242.5",
           "group": "塑化化工",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "+3.09%",
+          "next_avg": "-1.52%",
+          "next_close": "-3.30%",
+          "next_trend": "開高走低"
         },
         {
           "date": "2026/08/27",
@@ -154,20 +154,29 @@
       "name": "全新",
       "source_url": "https://chengwaye.com/stock/2455",
       "summary": {
-        "limit_up_count": "15 次",
-        "latest_limit_up": "2026/08/31",
-        "avg_next_open": "+2.99%",
-        "avg_next_close": "+3.24%"
+        "limit_up_count": "16 次",
+        "latest_limit_up": "2026/09/01",
+        "avg_next_open": "+2.97%",
+        "avg_next_close": "+3.68%"
       },
       "records": [
         {
-          "date": "2026/08/31",
-          "close": "477",
+          "date": "2026/09/01",
+          "close": "524",
           "group": "半導體材料",
           "next_open": "—",
           "next_avg": "—",
           "next_close": "—",
           "next_trend": "—"
+        },
+        {
+          "date": "2026/08/31",
+          "close": "477",
+          "group": "半導體材料",
+          "next_open": "+2.73%",
+          "next_avg": "+5.97%",
+          "next_close": "+9.85%",
+          "next_trend": "續漲停"
         },
         {
           "date": "2026/08/25",
@@ -297,7 +306,7 @@
         }
       ],
       "period_note": "上市｜族群：半導體材料、光通訊｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 15
+      "record_count": 16
     },
     "1312": {
       "code": "1312",
@@ -306,18 +315,18 @@
       "summary": {
         "limit_up_count": "7 次",
         "latest_limit_up": "2026/08/31",
-        "avg_next_open": "+5.86%",
-        "avg_next_close": "+2.88%"
+        "avg_next_open": "+5.25%",
+        "avg_next_close": "+2.56%"
       },
       "records": [
         {
           "date": "2026/08/31",
           "close": "15.55",
           "group": "塑化化工",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "+1.61%",
+          "next_avg": "+1.28%",
+          "next_close": "+0.64%",
+          "next_trend": "弱續漲"
         },
         {
           "date": "2026/08/27",
@@ -384,18 +393,18 @@
       "summary": {
         "limit_up_count": "6 次",
         "latest_limit_up": "2026/08/31",
-        "avg_next_open": "+1.52%",
-        "avg_next_close": "+2.33%"
+        "avg_next_open": "+1.48%",
+        "avg_next_close": "+2.99%"
       },
       "records": [
         {
           "date": "2026/08/31",
           "close": "119",
           "group": "連接器",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "+1.26%",
+          "next_avg": "+2.97%",
+          "next_close": "+6.30%",
+          "next_trend": "強續漲"
         },
         {
           "date": "2026/08/26",
