@@ -186,6 +186,29 @@
     "qualified": true
   },
   {
+    "title": "川普回應華許放鷹！稱「他會做該做的事」但仍喊美國利率太高",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9GYzZ4Y1F6WFlGYVE3MWtXdEtWR0NXRTVUdGpSQWpKeXRkMzY1ejZfYzhUWGdlaUx4cE1TRV9yTlpfa3BVbENuV2l1Q19ldzQ?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/01 07:51",
+    "timestamp": 1788220317.0,
+    "score": 8,
+    "quality_score": 4,
+    "impact_score": 4,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "macro_policy"
+    ],
+    "primary_topic": "macro_policy",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "10年期美債殖利率升破4.75% 市場開始「提高警覺」",
     "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE9JQnI5bDM4UjdEMTN2bV9qNjVJclk5NTl1UHgyMlVrRTg2YXE0Y1BadXd1UUt2U3hwa3l4Nmh4aXJOTHZpcWpYcVVuYw?oc=5",
     "source": "鉅亨網",
@@ -210,11 +233,11 @@
     "qualified": true
   },
   {
-    "title": "油價一漲Fed更難停手！10年期美債殖利率創逾一年半新高",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBpMUQ3aHFxRnFCSlBORWxPbzQyMGN6WVJOdlBCSWtfNVMtSnFPZmlQUzVKdW10TnM5eFpBT2FmUjNIZzVlUE5zd3hTaXpWRHc?oc=5",
-    "source": "news.cnyes.com",
-    "time": "08/31 22:00",
-    "timestamp": 1788184804.0,
+    "title": "華許放鷹9月升息機率衝56.9%！美債承壓「這類」債券今年逆勢漲2.72%",
+    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTFAzVF9XekJWR2FJaFFaeHp3ZGR2Nnp0VHVobExUcnQ3RTk1blN1bjlWZ29WVklWUUIzVVJ2WUtKZENaM2dQUGhCdEM1QQ?oc=5",
+    "source": "鉅亨網",
+    "time": "08/31 20:40",
+    "timestamp": 1788180055.0,
     "score": 8,
     "quality_score": 4,
     "impact_score": 4,
@@ -228,31 +251,6 @@
       "macro_policy"
     ],
     "primary_topic": "currency_commodities",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "SEMICON 9/2開展，鴻海劉揚偉、聯發科蔡力行護國群山同場！從雲端算力談到先進封裝、矽光子有多精彩｜今周重磅",
-    "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOVzBxZnZWUnN2YTZwMkMxcnV3cTZxS2tLVU4zVWFIZTJaTmJXZGM5RklnRmE4U3VPa0VNQmlab3hMV2t6LWg0d1ZfdGNvOWdJVXF1SXZtNzhhSDNNNTdrdkJCbmcwNkFmdHZBeEsxZmkxWHg4ZGxUSFlUUjM4eVhOdg?oc=5",
-    "source": "今周刊",
-    "time": "08/31 16:19",
-    "timestamp": 1788164340.0,
-    "score": 8,
-    "quality_score": 3,
-    "impact_score": 5,
-    "release_bonus": 0,
-    "matched_groups": [
-      "systemic_company",
-      "sector_supply_chain"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "sector_technology",
-      "company_earnings"
-    ],
-    "primary_topic": "sector_technology",
     "named_entities": [],
     "quality_pass": true,
     "impact_pass": true,

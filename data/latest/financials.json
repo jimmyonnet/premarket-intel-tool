@@ -527,9 +527,9 @@
     },
     "rev": {
       "state": "fresh",
-      "total": 1963,
+      "total": 0,
       "unreflected": 0,
-      "fetched_at": "2026-08-12 22:10:45"
+      "fetched_at": "2026-09-01 08:50:48"
     }
   }
 }
