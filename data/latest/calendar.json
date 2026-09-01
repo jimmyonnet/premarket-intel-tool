@@ -4,7 +4,7 @@
   "range_end": "2026-09-15",
   "events": [
     {
-      "id": "ev-2026-09-01-21",
+      "id": "ev-2026-09-01-10",
       "date": "2026-09-01",
       "time": "16:00",
       "all_day": false,
@@ -30,7 +30,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-01-9",
+      "id": "ev-2026-09-01-17",
       "date": "2026-09-01",
       "time": "22:00",
       "all_day": false,
@@ -82,7 +82,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-02-8",
+      "id": "ev-2026-09-02-20",
       "date": "2026-09-02",
       "time": "21:45",
       "all_day": false,
@@ -108,7 +108,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-02-19",
+      "id": "ev-2026-09-02-15",
       "date": "2026-09-02",
       "time": "22:30",
       "all_day": false,
@@ -134,7 +134,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-03-2",
+      "id": "ev-2026-09-03-7",
       "date": "2026-09-03",
       "time": "02:00",
       "all_day": false,
@@ -160,7 +160,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-03-15",
+      "id": "ev-2026-09-03-23",
       "date": "2026-09-03",
       "time": "20:30",
       "all_day": false,
@@ -186,7 +186,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-03-17",
+      "id": "ev-2026-09-03-18",
       "date": "2026-09-03",
       "time": "22:00",
       "all_day": false,
@@ -212,33 +212,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-04-18",
-      "date": "2026-09-04",
-      "time": "20:30",
-      "all_day": false,
-      "title": "美國-失業率",
-      "summary": "美國-失業率",
-      "description": "市場預期: 4.10%\n前值:  4.10%",
-      "note": "市場預期: 4.10%\n前值:  4.10%",
-      "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
-      "source_url": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
-      "category": "macro",
-      "category_name": "總經",
-      "country": "US",
-      "flag": "🇺🇸",
-      "timezone_origin": "America/New_York",
-      "timezone_label": "ET",
-      "time_origin_str": "08:30 ET",
-      "time_tpe_str": "20:30 TPE",
-      "datetime_utc": "2026-09-04T12:30:00Z",
-      "importance": 3,
-      "forecast": "4.10%",
-      "previous": "4.10%",
-      "actual": null,
-      "comparison": "pending"
-    },
-    {
-      "id": "ev-2026-09-04-23",
+      "id": "ev-2026-09-04-13",
       "date": "2026-09-04",
       "time": "20:30",
       "all_day": false,
@@ -264,7 +238,33 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-07-10",
+      "id": "ev-2026-09-04-21",
+      "date": "2026-09-04",
+      "time": "20:30",
+      "all_day": false,
+      "title": "美國-失業率",
+      "summary": "美國-失業率",
+      "description": "市場預期: 4.10%\n前值:  4.10%",
+      "note": "市場預期: 4.10%\n前值:  4.10%",
+      "mm_link": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+      "source_url": "https://sc.macromicro.me/collections/4/us-employ-relative/6/employment-condition?utm_medium=calendar",
+      "category": "macro",
+      "category_name": "總經",
+      "country": "US",
+      "flag": "🇺🇸",
+      "timezone_origin": "America/New_York",
+      "timezone_label": "ET",
+      "time_origin_str": "08:30 ET",
+      "time_tpe_str": "20:30 TPE",
+      "datetime_utc": "2026-09-04T12:30:00Z",
+      "importance": 3,
+      "forecast": "4.10%",
+      "previous": "4.10%",
+      "actual": null,
+      "comparison": "pending"
+    },
+    {
+      "id": "ev-2026-09-07-12",
       "date": "2026-09-07",
       "time": "17:00",
       "all_day": false,
@@ -290,7 +290,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-08-22",
+      "id": "ev-2026-09-08-9",
       "date": "2026-09-08",
       "time": "07:50",
       "all_day": false,
@@ -342,7 +342,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-09-24",
+      "id": "ev-2026-09-09-22",
       "date": "2026-09-09",
       "time": "09:30",
       "all_day": false,
@@ -368,7 +368,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-09-12",
+      "id": "ev-2026-09-09-24",
       "date": "2026-09-09",
       "time": "16:00",
       "all_day": false,
@@ -422,7 +422,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-10-6",
+      "id": "ev-2026-09-10-2",
       "date": "2026-09-10",
       "time": "00:00",
       "all_day": false,
@@ -448,7 +448,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-10-4",
+      "id": "ev-2026-09-10-6",
       "date": "2026-09-10",
       "time": "18:00",
       "all_day": false,
@@ -474,7 +474,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-10-13",
+      "id": "ev-2026-09-10-25",
       "date": "2026-09-10",
       "time": "20:15",
       "all_day": false,
@@ -500,7 +500,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-10-5",
+      "id": "ev-2026-09-10-4",
       "date": "2026-09-10",
       "time": "20:30",
       "all_day": false,
@@ -526,7 +526,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-10-11",
+      "id": "ev-2026-09-10-19",
       "date": "2026-09-10",
       "time": "20:30",
       "all_day": false,
@@ -552,7 +552,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-11-1",
+      "id": "ev-2026-09-11-5",
       "date": "2026-09-11",
       "time": "00:00",
       "all_day": false,
@@ -578,7 +578,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-11-7",
+      "id": "ev-2026-09-11-1",
       "date": "2026-09-11",
       "time": "17:00",
       "all_day": false,
@@ -604,7 +604,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-11-20",
+      "id": "ev-2026-09-11-11",
       "date": "2026-09-11",
       "time": "20:30",
       "all_day": false,
@@ -630,7 +630,7 @@
       "comparison": "pending"
     },
     {
-      "id": "ev-2026-09-11-25",
+      "id": "ev-2026-09-11-8",
       "date": "2026-09-11",
       "time": "22:00",
       "all_day": false,
