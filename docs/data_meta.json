@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-09-01 09:56",
-  "build_version": "20260901_0956",
+  "build_time": "2026-09-01 12:16",
+  "build_version": "20260901_1216",
   "data_date": "09/01",
-  "stale_hours": 1.0,
-  "hours_since_us_close": 5.9,
+  "stale_hours": 3.3,
+  "hours_since_us_close": 8.3,
   "us_market_context": {
     "session_key": "closed",
     "label": "最新收盤快照",
@@ -11,7 +11,7 @@
     "badge_short": "收盤",
     "pill_class": "pill-fresh",
     "updated_label": "09/01 05:15",
-    "detail": "Yahoo Finance · 來源更新 09/01 05:15（4.7 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
+    "detail": "Yahoo Finance · 來源更新 09/01 05:15（7.0 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
     "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
   },
   "overall_status": "ready",
@@ -26,7 +26,7 @@
       "name": "指數行情 (美股/亞股/ADR)",
       "is_required": true,
       "status": "ok",
-      "fetched_at": "2026-09-01T09:55:26.507289+08:00",
+      "fetched_at": "2026-09-01T12:16:15.897755+08:00",
       "data_date": null,
       "age_minutes": 0.4,
       "error_summary": null,
@@ -278,8 +278,8 @@
     }
   ],
   "schema_version": 1,
-  "data_revision": "9ea3530910c5aecc",
-  "built_at": "2026-09-01T01:56:01.801723+00:00",
+  "data_revision": "54a3c76b5afac8c5",
+  "built_at": "2026-09-01T04:16:59.396619+00:00",
   "hash": {
     "disposition": "496b97c7e1bd",
     "candidates": "768556164d3a",
@@ -288,7 +288,7 @@
     "macro": "beb304743ca5",
     "calendar": "83994b6fc721",
     "news": "a3dfb1b5fc10",
-    "ai_summary": "0c97de3d0385",
+    "ai_summary": "ee32db1d3941",
     "opening_forecast": "a6b8ca8f0e29",
     "opening_result": "0111d65af8d5",
     "learning_status": "a75b0b54d02c"
