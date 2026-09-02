@@ -1,96 +1,68 @@
 {
   "source_article": {
-    "title": "0902盤前",
-    "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/81514BF43885E1A564F8745F65AD7CC1",
+    "title": "0903盤前",
+    "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/C4ACAB8F80ED924E56A78CA4677A48E2",
     "fetch_mode": "live_browser",
-    "collected_at": "2026-09-02T22:00:23.787507+08:00"
+    "collected_at": "2026-09-03T06:57:53.985885+08:00"
   },
   "chengwaye_date": null,
   "not_found_group": {
     "raw_tokens": [
-      "3715",
-      "4971",
-      "6538",
-      "6182",
-      "3680"
+      "3141"
     ],
     "matched": [
       {
-        "market": "市",
-        "code": "3715",
-        "name": "定穎投控",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_code",
-        "raw_token": "3715"
-      },
-      {
-        "market": "市",
-        "code": "4971",
-        "name": "IET-KY",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_code",
-        "raw_token": "4971"
-      },
-      {
         "market": "櫃",
-        "code": "6538",
-        "name": "倉和",
-        "close": "248.5",
-        "volume": "545",
-        "foreign": "-36",
+        "code": "3141",
+        "name": "晶宏",
+        "close": "99.5",
+        "volume": "18,047",
+        "foreign": "+38",
         "trust": "0",
-        "dealer": "+25",
-        "ai_reason": "PCB製程設備與耗材需求題材輪動，相關供應鏈買盤集中。",
-        "group": "🧫 設備耗材",
+        "dealer": "-33",
+        "ai_reason": "晶片設計與顯示應用題材輪動，IC設計族群買盤集中。",
+        "group": "💡 IC設計",
         "match_type": "code",
-        "raw_token": "6538"
-      },
-      {
-        "market": "市",
-        "code": "6182",
-        "name": "合晶",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_code",
-        "raw_token": "6182"
-      },
-      {
-        "market": "市",
-        "code": "3680",
-        "name": "家登",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_code",
-        "raw_token": "3680"
+        "raw_token": "3141"
       }
     ],
     "unmatched": []
   },
   "found_group": {
-    "raw_tokens": [],
-    "matched": [],
+    "raw_tokens": [
+      "訊芯",
+      "光聖"
+    ],
+    "matched": [
+      {
+        "market": "市",
+        "code": "6451",
+        "name": "訊芯-KY",
+        "close": "500",
+        "volume": "10,313",
+        "foreign": "-174",
+        "trust": "0",
+        "dealer": "+100",
+        "ai_reason": "光收發模組與高速傳輸應用題材升溫，光通訊族群獲資金關注。",
+        "group": "🔗 光通訊",
+        "match_type": "ky_alias",
+        "raw_token": "訊芯"
+      },
+      {
+        "market": "市",
+        "code": "6442",
+        "name": "光聖",
+        "close": "1795",
+        "volume": "5,148",
+        "foreign": "+65",
+        "trust": "+101",
+        "dealer": "+214",
+        "ai_reason": "光纖連接與高速傳輸題材輪動，光通訊族群買盤集中。",
+        "group": "🔗 光通訊",
+        "match_type": "name",
+        "raw_token": "光聖"
+      }
+    ],
     "unmatched": []
   }
 }
