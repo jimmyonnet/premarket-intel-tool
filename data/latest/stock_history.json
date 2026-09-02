@@ -1,6 +1,6 @@
 {
   "source": "https://chengwaye.com/stock/",
-  "fetched_at": "2026-09-02T06:51:23.980613+08:00",
+  "fetched_at": "2026-09-02T22:00:51.284750+08:00",
   "requested_codes": [
     "3715",
     "4971",
@@ -16,18 +16,18 @@
       "summary": {
         "limit_up_count": "8 次",
         "latest_limit_up": "2026/09/01",
-        "avg_next_open": "+0.21%",
-        "avg_next_close": "-1.11%"
+        "avg_next_open": "+0.14%",
+        "avg_next_close": "-1.73%"
       },
       "records": [
         {
           "date": "2026/09/01",
           "close": "132.5",
           "group": "PCB",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "-0.38%",
+          "next_avg": "-4.29%",
+          "next_close": "-6.04%",
+          "next_trend": "直接跌"
         },
         {
           "date": "2026/08/10",
@@ -103,18 +103,18 @@
       "summary": {
         "limit_up_count": "17 次",
         "latest_limit_up": "2026/09/01",
-        "avg_next_open": "+3.52%",
-        "avg_next_close": "+4.45%"
+        "avg_next_open": "+3.26%",
+        "avg_next_close": "+4.27%"
       },
       "records": [
         {
           "date": "2026/09/01",
           "close": "660",
           "group": "半導體材料",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "-0.91%",
+          "next_avg": "+3.79%",
+          "next_close": "+1.36%",
+          "next_trend": "弱續漲"
         },
         {
           "date": "2026/08/20",
@@ -269,20 +269,29 @@
       "name": "倉和",
       "source_url": "https://chengwaye.com/stock/6538",
       "summary": {
-        "limit_up_count": "15 次",
-        "latest_limit_up": "2026/09/01",
-        "avg_next_open": "+4.09%",
-        "avg_next_close": "+5.18%"
+        "limit_up_count": "16 次",
+        "latest_limit_up": "2026/09/02",
+        "avg_next_open": "+4.49%",
+        "avg_next_close": "+5.50%"
       },
       "records": [
         {
-          "date": "2026/09/01",
-          "close": "226",
+          "date": "2026/09/02",
+          "close": "248.5",
           "group": "設備耗材",
           "next_open": "—",
           "next_avg": "—",
           "next_close": "—",
           "next_trend": "—"
+        },
+        {
+          "date": "2026/09/01",
+          "close": "226",
+          "group": "設備耗材",
+          "next_open": "+9.96%",
+          "next_avg": "+9.96%",
+          "next_close": "+9.96%",
+          "next_trend": "續漲停"
         },
         {
           "date": "2026/08/13",
@@ -412,7 +421,7 @@
         }
       ],
       "period_note": "上櫃｜族群：設備耗材、綠能｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 15
+      "record_count": 16
     },
     "6182": {
       "code": "6182",
@@ -421,18 +430,18 @@
       "summary": {
         "limit_up_count": "24 次",
         "latest_limit_up": "2026/09/01",
-        "avg_next_open": "+3.36%",
-        "avg_next_close": "+6.06%"
+        "avg_next_open": "+3.15%",
+        "avg_next_close": "+5.61%"
       },
       "records": [
         {
           "date": "2026/09/01",
           "close": "116",
           "group": "矽晶圓",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "-1.72%",
+          "next_avg": "-4.04%",
+          "next_close": "-4.74%",
+          "next_trend": "直接跌"
         },
         {
           "date": "2026/08/17",
@@ -652,18 +661,18 @@
       "summary": {
         "limit_up_count": "5 次",
         "latest_limit_up": "2026/09/01",
-        "avg_next_open": "+1.41%",
-        "avg_next_close": "+1.56%"
+        "avg_next_open": "+1.09%",
+        "avg_next_close": "+0.43%"
       },
       "records": [
         {
           "date": "2026/09/01",
           "close": "542",
           "group": "半導體設備",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "-0.18%",
+          "next_avg": "-2.40%",
+          "next_close": "-4.06%",
+          "next_trend": "直接跌"
         },
         {
           "date": "2026/07/21",
