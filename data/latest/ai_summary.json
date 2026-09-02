@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-02T06:52:09.179868+08:00",
+  "generated_at": "2026-09-02T09:10:07.968114+08:00",
   "status": "fallback",
   "provider": "確定性降級整理",
   "model": null,
-  "fallback_reason": "Gemini 摘要暫時失敗：The read operation timed out",
+  "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
   "news_stats": {
     "count": 10,
     "unique_topics": 5,
@@ -102,14 +102,13 @@
     "observations": [
       "市場廣度：下跌標的多於上漲標的，整體不是所有市場同步同幅度變動。",
       "相對強弱：ADR／跨海標的 相對有支撐，美股指數 相對承壓，市場表現呈現分化。",
-      "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。",
-      "亞股尚未開盤；若有舊行情，僅作前一交易時段收盤結果參考，非當下盤中。"
+      "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
     ],
     "drivers": [
       "新聞題材主要集中在：台股市場、美元／債券／商品、美股／全球市場；這是資訊分布，不代表已確認的因果關係。"
     ],
     "risks": [
-      "亞股尚未開盤；若有舊行情，僅作前一交易時段收盤結果參考，非當下盤中。",
+      "行情時間與資料延遲請以各卡片標示為準。",
       "以上為快照關係整理，不代表價格方向預測。"
     ]
   },
