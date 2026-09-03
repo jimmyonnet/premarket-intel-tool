@@ -51,20 +51,54 @@ def get_cutoff(now: datetime | None = None) -> datetime:
     return now.replace(hour=13, minute=30, second=0, microsecond=0)
 
 
-def is_unreflected_timestamp(item: dict[str, Any], cutoff: datetime) -> bool:
-    """Return whether a ROC-calendar announcement was made after the cutoff."""
+def parse_roc_timestamp(item: dict[str, Any]) -> datetime | None:
     date_str = str(item.get("date") or "").strip()
     time_str = str(item.get("time") or "").strip()
     if not date_str or not time_str:
-        return False
+        return None
     try:
         roc_year, month, day = (int(part) for part in date_str.split("/"))
         hh, mm, *rest = (int(part) for part in time_str.split(":"))
         ss = rest[0] if rest else 0
-        announced_at = datetime(roc_year + 1911, month, day, hh, mm, ss, tzinfo=TAIPEI)
+        return datetime(roc_year + 1911, month, day, hh, mm, ss, tzinfo=TAIPEI)
     except (TypeError, ValueError):
-        return False
-    return announced_at > cutoff
+        return None
+
+
+def is_unreflected_timestamp(item: dict[str, Any], cutoff: datetime) -> bool:
+    """Return whether a ROC-calendar announcement was made after the cutoff."""
+    announced_at = parse_roc_timestamp(item)
+    return announced_at is not None and announced_at > cutoff
+
+
+def announcement_identity(item: dict[str, Any], key: str) -> tuple[str, str] | None:
+    """Return the semantic identity used to remove repeated source observations."""
+    code = str(item.get("code") or "").strip()
+    subject = " ".join(str(item.get("subject") or item.get("title") or "").split()).casefold()
+    if not code or not subject:
+        return None
+    return code, subject
+
+
+def dedupe_announcements(key: str, entries: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Keep the latest row for each code/kind/subject announcement identity."""
+    if key not in {"att", "fin"}:
+        return entries
+    positions: dict[tuple[str, str], int] = {}
+    result: list[dict[str, Any]] = []
+    for entry in entries:
+        identity = announcement_identity(entry, key)
+        if identity is None or identity not in positions:
+            if identity is not None:
+                positions[identity] = len(result)
+            result.append(entry)
+            continue
+        position = positions[identity]
+        current_time = parse_roc_timestamp(entry)
+        previous_time = parse_roc_timestamp(result[position])
+        if current_time is not None and (previous_time is None or current_time > previous_time):
+            result[position] = entry
+    return result
 
 
 def is_unreflected_revenue(item: dict[str, Any], cutoff: datetime) -> bool:
@@ -90,8 +124,10 @@ def is_unreflected_revenue(item: dict[str, Any], cutoff: datetime) -> bool:
 
 def select_unreflected(key: str, entries: list[dict[str, Any]], cutoff: datetime) -> list[dict[str, Any]]:
     if key == "rev":
-        return [entry for entry in entries if is_unreflected_revenue(entry, cutoff)]
-    return [entry for entry in entries if is_unreflected_timestamp(entry, cutoff)]
+        selected = [entry for entry in entries if is_unreflected_revenue(entry, cutoff)]
+    else:
+        selected = [entry for entry in entries if is_unreflected_timestamp(entry, cutoff)]
+    return dedupe_announcements(key, selected)
 
 
 def load_previous(path: Path = DATA_FILE) -> dict[str, Any]:

@@ -32,6 +32,23 @@ def test_att_and_fin_use_roc_timestamp_after_cutoff():
     assert [row["code"] for row in select_unreflected("fin", entries, cutoff)] == ["2615"]
 
 
+def test_att_deduplicates_repeated_same_subject_and_keeps_latest_row():
+    cutoff = datetime(2026, 8, 21, 13, 30, tzinfo=TAIPEI)
+    entries = [
+        {"code": "3629", "date": "115/08/22", "time": "10:30:05", "subject": "同一公告"},
+        {"code": "3629", "date": "115/08/23", "time": "10:33:35", "subject": "同一公告"},
+        {"code": "3629", "date": "115/08/23", "time": "10:34:00", "subject": "另一公告"},
+    ]
+
+    rows = select_unreflected("att", entries, cutoff)
+
+    assert [(row["code"], row["subject"]) for row in rows] == [
+        ("3629", "同一公告"),
+        ("3629", "另一公告"),
+    ]
+    assert rows[0]["time"] == "10:33:35"
+
+
 def test_revenue_uses_first_seen_after_cutoff_as_source_contract():
     cutoff = datetime(2026, 8, 21, 13, 30, tzinfo=TAIPEI)
     entries = [
