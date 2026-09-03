@@ -1,113 +1,25 @@
 [
   {
-    "title": "輝達大漲點火美股市值型ETF！ 00924近月報酬2%居冠 「含輝量」13.4%最高 | 財富管理 | 商情",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5yR29LY2RZNnFaSnJvd2ZPQU9JTTB4UTdFczFRd3pZcHNHa2E5TjN2dkNzcXBEWlFiTzFHV1NFWUtqNkxkOUwzalBZLUhjQVpZUjNDaVZadTlIZw?oc=5",
-    "source": "經濟日報",
-    "time": "09/03 11:25",
-    "timestamp": 1788405905.0,
-    "score": 15,
-    "quality_score": 4,
-    "impact_score": 11,
-    "release_bonus": 0,
-    "matched_groups": [
-      "market_benchmark",
-      "systemic_company",
-      "market_move",
-      "market_structure"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "global_market",
-      "company_earnings",
-      "market_structure"
-    ],
-    "primary_topic": "global_market",
-    "named_entities": [
-      "nvidia",
-      "us_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "跌勢止不住！台股大跌784點 台積電遭下殺",
-    "link": "https://news.google.com/rss/articles/CBMiogJBVV95cUxNeXdaS1ZaY1BualdhUXdHZl9CMml3YTlXcWtNWEdmVk1LSkw4YlYtS3hGMi00UXBaOV9vSm9uNVd2NGFOS01tYl9GMURoVkQ1aVpvemF4SFF6MjRQeTJ3VVBFVFFTTl9NWDU3S1VwOGI4S2pOQWZ2c1JUZXZJU0JEQ3UxYU84UUNQa0xjUmtTN29JYmZldE9YTzFacHhwckRibHlPZEJyZFlJSG9GWXp4WVVOQm5iNDc3QmlCVFphUHgxcU9zWGZnZ3JrZkViVU9JaHJmZ1JvWVdBTm5XZzE0TGZzYVZST21DQW10aFJuRGFPM0NqZGpEelU4Y2dJd0xZVE8wZzZmZG1VX0JGelBGZkoxeFVMdFBmU05ycmg2MDFsQQ?oc=5",
-    "source": "Yahoo股市",
-    "time": "09/02 14:14",
-    "timestamp": 1788329645.0,
+    "title": "【美股快訊】ServiceNow股價大漲6%，企業AI平台價值獲市場重新評價",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBZUFdxRHFLVEVLbjBLck9vWmdBMnNfWmlqd3VXS1hVVHBiaGJGdUJid2tVem9ldG9MYjI3THAwakRPYmluTHdsdjF6VGZ6NzQ?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/04 00:32",
+    "timestamp": 1788453126.0,
     "score": 12,
-    "quality_score": 3,
-    "impact_score": 9,
-    "release_bonus": 0,
-    "matched_groups": [
-      "market_benchmark",
-      "systemic_company",
-      "market_move"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "taiwan_market",
-      "company_earnings"
-    ],
-    "primary_topic": "taiwan_market",
-    "named_entities": [
-      "tsmc",
-      "taiwan_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "SEMICON開展撲不滅美伊戰火！三大法人甩賣1150億 台股重挫784點｜Yahoo財經掃描",
-    "link": "https://news.google.com/rss/articles/CBMiugNBVV95cUxOQnBsS2Z4QVlMSHI3OHFmRGF4MVd2MHJQTko4WlVubDR1LWgxOVpqR1lPOXVLRDJENnVCeFM0SV9iR1VRRnV6c3ZQSFBkU3JGLU9mYnBob0s3WWlUVmMtOUZmV1IwTlZxNFRydXZwQWVkVmozYVVtbVFXSWYzeC1aLVBtS2JwZnpQSTgzb3hGWGZCdWhLcXpTeV8xTWJTV2lPX2kzNW4xM0NlUkYxbVBpM2JKZkU2V3NqaWdlTmZUWWxrLXVHUjZmR3RJWFNxWHJDakNRTHU3S2p6YzdscEplQ0NxcWRSWWtzSlF2YUVBNl9rNHVldUt6VE1EZzItVGFOM2hVZTV1WThna2xKbWVVaUxyd2FPaVJ1Zlc5UzAxaElKTTJQYVJpVTMyQ0hSZ015Y25uVGFIY1E3S0NWVkhBZkNyREpBU3dqaGNkTWFtOFZ1Z2xfMVp2OGx5cnpOeXpzOTdyeGFQMndBeWNwbHR4Y0ZCS0hJTHQ0eE9FaG5fMzcxNE55bmdFU0NmTkVZOEhlM1RDVUFrVHd1WU5nbTY3OHBpX2JqblJjLWZkaF9DVVNSWE52WGNtV2dn?oc=5",
-    "source": "Yahoo股市",
-    "time": "09/02 17:15",
-    "timestamp": 1788340526.0,
-    "score": 11,
-    "quality_score": 3,
+    "quality_score": 4,
     "impact_score": 8,
     "release_bonus": 0,
     "matched_groups": [
       "market_benchmark",
       "market_move",
-      "market_structure"
+      "sector_supply_chain"
     ],
     "low_signal_hits": [],
     "topic_groups": [
-      "taiwan_market",
-      "market_structure"
+      "global_market",
+      "sector_technology"
     ],
-    "primary_topic": "taiwan_market",
-    "named_entities": [
-      "taiwan_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "【美股開市】美小非農差、債息即縮 日圓突現干預軌跡（不斷更新）",
-    "link": "https://news.google.com/rss/articles/CBMi0gNBVV95cUxOTFRpT2VEOFUxZFYxRHFJajZBWjBwTWNiaktqZWFIZjdfaTlWVHlDTW1jTFFFZ2YyaXJQYmRqUVJOV0xXTGpDUkI3V3VPVlN4NXBXUjlSSE9EX1ZEbHp5RFFZczJqRFhVdmIxWnRuWndLazNIS1VTcmJHbnNjQU9wWE02YUs2RDh1S1hJWFp5TVllRHFQcGtnTVFpeUVrZ2FOckNIVnRobnFRTGoxSUZzUlNPaFp5ZWlXSFlzeE9rekNTdjZwcFctM0RIc1RMcE9jU3ludjF1ZHlCSEd2dXVfcG81UnF2aEtjWWF2cTEtWGYxNDFEWHdvVlZsWlZZRWFHaUdITDBIWE1NVHNCYTdqTlE3RTNESjRyOFpSY2NZNldFaHZOQjFZdm4xYnAtVVk3cHUyTnNwZDRuTFNJa2lZSlJQb1I3RnpRNFhoc0ZaTmpBTko2MUFBNDVuYmVYaHROV3NzY2xENXlpa2RFdkZydGxBUFhMV3JuQUkzQTVlR2JnYkYybC1iOGFsRjJOUmNtdU9seUZ2cWhlcXJIbkxhWWdWVEtTbl8tbS1GdGdHNjBqMVlNMVMtUXpmVFUzVUgtMzJjVGJJMzFCaWwwOFFscDNR?oc=5",
-    "source": "香港經濟日報HKET",
-    "time": "09/02 21:52",
-    "timestamp": 1788357148.0,
-    "score": 11,
-    "quality_score": 4,
-    "impact_score": 7,
-    "release_bonus": 0,
-    "matched_groups": [
-      "macro_policy",
-      "market_benchmark"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "currency_commodities",
-      "macro_policy",
-      "global_market"
-    ],
-    "primary_topic": "currency_commodities",
+    "primary_topic": "global_market",
     "named_entities": [
       "us_market"
     ],
@@ -116,142 +28,173 @@
     "qualified": true
   },
   {
-    "title": "〈美股早盤〉油價回落抵消美債殖利率壓力 主要指數變動不大",
-    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE8xR3lxdzFBeElieEVwaUdtWlB2RmtYZFlwYndLN2Faa2JLTFYyUkJiUmw1X1FFcEcxbGdSNjVzX1hpUkJNTE4tZ3dZVQ?oc=5",
-    "source": "鉅亨網",
-    "time": "09/02 21:42",
-    "timestamp": 1788356541.0,
-    "score": 11,
+    "title": "輝達AI工廠戰略升級：每1GW營收潛力從180億美元躍升至400億美元，客製化晶片反成新商機",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5hUjlPTnB4MXphQXVfRVcyMHpWVG5uSUZVNEFrVnZwMjFpc3EySndwNXhkdUc0S3lKOWhsU3Y0X1lFaUlMd1dJalhXb0Vva1U?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/03 14:00",
+    "timestamp": 1788415217.0,
+    "score": 12,
     "quality_score": 4,
-    "impact_score": 7,
+    "impact_score": 8,
     "release_bonus": 0,
     "matched_groups": [
-      "macro_policy",
-      "market_benchmark"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "currency_commodities",
-      "macro_policy",
-      "global_market"
-    ],
-    "primary_topic": "currency_commodities",
-    "named_entities": [
-      "us_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "博大8月營收續創新高 客戶需求及接單動能維持強勁",
-    "link": "https://news.google.com/rss/articles/CBMiS0FVX3lxTE1KWS1fZTdCVnpqSmpaUEM5LUZwUXNNTVRLazNuQjlnN1Y0TlU1cUhjLTM5Q2tObTMweGpyWmNxQWs4Z0FSdXIxYmMwdw?oc=5",
-    "source": "鉅亨網",
-    "time": "09/03 11:17",
-    "timestamp": 1788405422.0,
-    "score": 10,
-    "quality_score": 4,
-    "impact_score": 6,
-    "release_bonus": 0,
-    "matched_groups": [
+      "systemic_company",
       "earnings_financial",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "sector_technology",
+      "company_earnings"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [
+      "nvidia"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "〈美股盤後〉華勒釋暫緩升息訊號 美債殖利率回落 三大指數齊漲逾1%",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBEU25uNk0zeFlNRjRjQVRUWldtU0RjeWk3UDR3RlgxMHFPaTFTQjNXWWVxWGZvZXBuUjU2NUZNNEgxY0hvV3l1YmN3a2VRWmM?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/04 04:51",
+    "timestamp": 1788468664.0,
+    "score": 11,
+    "quality_score": 4,
+    "impact_score": 7,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy",
+      "market_benchmark"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "macro_policy",
+      "global_market"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [
+      "us_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "華勒一句話救美債！Fed升息押注降溫 2年期殖利率一度重挫7基點",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE54VVRPX3RtR0lBVXB2UGhzeVk2M29EUXBZQXNaRW1TR3lIM3hFMUpNQ2VydFRqMWJpZ1g3Z0hRNmdhZU40MkZQNmFJNUpORFk?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/03 22:02",
+    "timestamp": 1788444139.0,
+    "score": 11,
+    "quality_score": 4,
+    "impact_score": 7,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy",
       "market_move"
     ],
     "low_signal_hits": [],
     "topic_groups": [
-      "company_earnings"
+      "currency_commodities",
+      "macro_policy"
     ],
-    "primary_topic": "company_earnings",
+    "primary_topic": "currency_commodities",
     "named_entities": [],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
   },
   {
-    "title": "【Hot台股】南亞科營收飆5.6倍卻挫半根...網歎「牙科太賺錢台股不歡迎」 分析師這樣看",
-    "link": "https://news.google.com/rss/articles/CBMihwRBVV95cUxPM0JqcDhONDhkVmdZTDI5OENBUFRLSFJheVI3bDhjdGxHSHRQT3ZtNlY4bHVHV3I4MFZhUDdKTmc5anVvTzh0aVBrQmhuNXU5dXNGMDVUVkFFR2pXWHlqY1hmcVpROHZLSm13M29XRmFEMG53V21KYmpmTk5qRmhDRDVMTERuMGxOMUVDakVBeTBkbXZsZmxkVmhCRG9DekFBMGVPdHpST1VIR2E2WjJuaXI0YW9BRF93Qk81Z3E1U2gwcUl5emhQekxFZXNmVmRUcWFEOFVkNXNqLXI4RDR1SUpIUGo2NTZXelhNUzJVZ2dndTdiTklUM01RY0tKMkJnUUpCSkdrTE9uMzhRVWhUSWJqX3Z1QWl1TmJZMlFJY1B3QUh5ZlBVdzQ4bUcwdFRZenpmREpFT2U3SGVTSTI4b29qQVpqSzA0N2M0WFhTWlpxcUxEbC1kSmdCVXFiSTQtcXJjMS1KS3o0X1ZfVC1jS01JTWxET1lSVEk0R1FST2Uyc05pcjR2OThBWExScEdfVDlOeU51aHlZQ3dyWU1JNHB0cGIydzJNeWxUelpSX19hMnNMa3JLdTQwMTJEZHR6em1SOHVjLWx1RElob3hTSUZOQUhFdGg5NnZlYTVfZGZkclVsSkRYY3BacGdOUThfTjViSGZzQUUwVHJfcmtSVm9hMkZmWmM?oc=5",
-    "source": "Yahoo股市",
-    "time": "09/03 11:38",
-    "timestamp": 1788406682.0,
-    "score": 9,
-    "quality_score": 3,
-    "impact_score": 6,
-    "release_bonus": 0,
-    "matched_groups": [
-      "market_benchmark",
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "taiwan_market",
-      "company_earnings"
-    ],
-    "primary_topic": "taiwan_market",
-    "named_entities": [
-      "taiwan_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "韓國半導體8月出口暴增209%創新高 AI熱潮撐起近半出口「好得過頭」？",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5aMDdYeFk2NW1pRE1aMGExNE4yUnFpOFl6NEJ6TkV2aEJ4ZW9aWnQ1YmRlcXkyRHkwU1AyTlZTSE56aUJKVExZRXUtcUc3bXc?oc=5",
+    "title": "〈美股早盤〉Fed理事華勒釋出耐心訊號！主要指數開高、美債殖利率回落",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5xb3RkaDY0YXg2MHJGb2w2TWtETXdCWEF5Vk4wZjBGT0RxRVp1aXRZbm5yMGJkcDRzUzU4TG1vUHZZRG4waGpKWmVKdXJ1TEU?oc=5",
     "source": "news.cnyes.com",
-    "time": "09/03 11:06",
-    "timestamp": 1788404808.0,
-    "score": 9,
+    "time": "09/03 21:41",
+    "timestamp": 1788442866.0,
+    "score": 11,
     "quality_score": 4,
-    "impact_score": 5,
+    "impact_score": 7,
     "release_bonus": 0,
     "matched_groups": [
-      "market_move",
-      "sector_supply_chain"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "sector_technology"
-    ],
-    "primary_topic": "sector_technology",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "博通財報快評｜客製AI晶片需求爆發，2027財年AI半導體營收上看1,150億美元",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1VeWZfdGVtN0lCT01LeDIxcVBxZEl3Sm1KWEZSb2k4WHMySUQxLUJtUjBiVHEzNUdSR3RmV3ZwTVpnTE5aOG9rT3JWY0c4Vzg?oc=5",
-    "source": "news.cnyes.com",
-    "time": "09/03 09:00",
-    "timestamp": 1788397211.0,
-    "score": 9,
-    "quality_score": 4,
-    "impact_score": 5,
-    "release_bonus": 0,
-    "matched_groups": [
-      "earnings_financial",
-      "sector_supply_chain"
+      "macro_policy",
+      "market_benchmark"
     ],
     "low_signal_hits": [],
     "topic_groups": [
       "currency_commodities",
-      "sector_technology",
-      "company_earnings"
+      "macro_policy",
+      "global_market"
     ],
     "primary_topic": "currency_commodities",
     "named_entities": [
-      "broadcom"
+      "us_market"
     ],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
   },
   {
-    "title": "博通財測失色 但 CEO 喊 AI 晶片銷售明後年翻倍再翻倍",
-    "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE9FcDY4LXJlWjlPWHJVaHFWSGdoUm1qelBGX0tiVkNQbm54SWMyMldxME1YNWV4LXZfMUdBNmRuVnJRSU1MQlllQUZTWndhb08xb3RsRUptdXBNTl8w0gFiQVVfeXFMTzc4OVd2WURVSnZ3ZnBNQjNhWVl0eDZ6UTM0SW0wdXpkS3VTNHhFNmxsZHRST0FZODRDUlAzMXNrRU5qUHlGZTU5YXBrOExfaTgwcTd5aGYzcXNQVWJtU2pPYmc?oc=5",
-    "source": "經濟日報",
-    "time": "09/03 08:28",
-    "timestamp": 1788395327.0,
+    "title": "美債大跌另有元凶！「神祕利率」升高暗示高利率恐成新常態",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE52Ymkwczg0R0FWQmdtTEFwc2ZuYU1NUGwxNTViR0VlQ3NBSEhobkRJYl9CcVotcHNvdnBaVE1jNnR4d2d1eXNtU21FZm5xRk0?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/03 20:00",
+    "timestamp": 1788436810.0,
+    "score": 11,
+    "quality_score": 4,
+    "impact_score": 7,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy",
+      "market_move"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "macro_policy"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "輝達重掌AI交易主導權 科技巨頭股價逼近歷史新高",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1tMFhpT1VZdmFpY2ZxVXRFREVjOXV2dkRHV1p1enBjQ3BpWl82dzJ0bjNiQVhRcE01bTZJeHF0SzBqUVA2NldicUVLa1BZc0E?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/04 06:41",
+    "timestamp": 1788475279.0,
+    "score": 9,
+    "quality_score": 4,
+    "impact_score": 5,
+    "release_bonus": 0,
+    "matched_groups": [
+      "systemic_company",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "sector_technology",
+      "company_earnings"
+    ],
+    "primary_topic": "sector_technology",
+    "named_entities": [
+      "nvidia"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "佳世達8月營收年增12% 旗下羅昇衝刺半導體先進製程應用",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBIWnpYSG9JR2x2QVc4Y3I1a2Iwa0VsYmpqbUVXazBJRFQyNzd4WWdwd1BZUEh6WHJXbVo5RVZOYW5HWkxBbXQtOURTcWhiUEU?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/03 20:24",
+    "timestamp": 1788438297.0,
     "score": 9,
     "quality_score": 4,
     "impact_score": 5,
@@ -266,8 +209,58 @@
       "company_earnings"
     ],
     "primary_topic": "sector_technology",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "〈財報〉HPE上修今明兩年財測！AI需求爆發遭「記憶體缺貨」拖累 盤後挫逾5%",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBNeXpXcmNlaWp0ck5yTVZxRk83UnBZZUM4ZEtiaUtYaGhCNldFSjBCeHdjSUhvalIzZFF3QUxrQXFsaW1aRGdFVFJWcmtyU0U?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/03 14:03",
+    "timestamp": 1788415426.0,
+    "score": 9,
+    "quality_score": 4,
+    "impact_score": 5,
+    "release_bonus": 0,
+    "matched_groups": [
+      "earnings_financial",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "sector_technology",
+      "company_earnings"
+    ],
+    "primary_topic": "sector_technology",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "AMI下單9,000顆Nvidia Rubin GPU，印度30MW AI工廠2027年首季上線",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1qa211akxSYXZFM3gtZVZzclYzekhHTExhUElsYTNvYkRPc0FvVXhFU2pveFRPOXJfQ0RCZlZ4NHRiTmFWdmtVLUJubVFNQ2c?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/03 14:00",
+    "timestamp": 1788415216.0,
+    "score": 9,
+    "quality_score": 4,
+    "impact_score": 5,
+    "release_bonus": 0,
+    "matched_groups": [
+      "systemic_company",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "sector_technology",
+      "company_earnings"
+    ],
+    "primary_topic": "sector_technology",
     "named_entities": [
-      "broadcom"
+      "nvidia"
     ],
     "quality_pass": true,
     "impact_pass": true,
