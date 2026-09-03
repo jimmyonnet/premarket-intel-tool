@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-03T11:39:19.948903+08:00",
+  "generated_at": "2026-09-03T11:49:24.602773+08:00",
   "status": "fallback",
   "provider": "確定性降級整理",
   "model": null,
-  "fallback_reason": "Gemini 摘要暫時失敗：Gemini JSON parse failed: Expecting ',' delimiter line 32 column 4",
+  "fallback_reason": "Gemini 摘要暫時失敗：The read operation timed out",
   "news_stats": {
     "count": 10,
     "unique_topics": 5,
-    "unique_sources": 4,
-    "nvidia_count": 0
+    "unique_sources": 5,
+    "nvidia_count": 1
   },
   "data_quality": {
     "status": "ok",
@@ -28,7 +28,7 @@
       {
         "name": "公司／事件集中度",
         "status": "ok",
-        "detail": "輝達 0 則"
+        "detail": "輝達 1 則"
       },
       {
         "name": "行情可用性",
@@ -44,20 +44,21 @@
     "issues": [],
     "news_count": 10,
     "unique_topics": 5,
-    "unique_sources": 4,
-    "nvidia_count": 0,
+    "unique_sources": 5,
+    "nvidia_count": 1,
     "topic_counts": {
-      "currency_commodities": 3,
-      "taiwan_market": 2,
       "global_market": 1,
-      "sector_technology": 3,
-      "macro_policy": 1
+      "taiwan_market": 3,
+      "currency_commodities": 3,
+      "company_earnings": 1,
+      "sector_technology": 2
     },
     "source_counts": {
-      "鉅亨網": 1,
-      "news.cnyes.com": 4,
+      "經濟日報": 2,
       "Yahoo股市": 3,
-      "經濟日報": 2
+      "香港經濟日報HKET": 1,
+      "鉅亨網": 2,
+      "news.cnyes.com": 2
     }
   },
   "news_summary": {
@@ -69,32 +70,32 @@
         "summary": "美元／債券／商品"
       },
       {
-        "topic": "科技／產業",
+        "topic": "台股市場",
         "count": 3,
+        "summary": "台股市場"
+      },
+      {
+        "topic": "科技／產業",
+        "count": 2,
         "summary": "科技／產業"
       },
       {
-        "topic": "台股市場",
-        "count": 2,
-        "summary": "台股市場"
+        "topic": "公司／財報",
+        "count": 1,
+        "summary": "公司／財報"
       },
       {
         "topic": "美股／全球市場",
         "count": 1,
         "summary": "美股／全球市場"
-      },
-      {
-        "topic": "總經／央行政策",
-        "count": 1,
-        "summary": "總經／央行政策"
       }
     ],
     "key_points": [
-      "〈美股早盤〉油價回落抵消美債殖利率壓力 主要指數變動不大（鉅亨網，09/02 21:42）",
-      "美股警報響了？美債殖利率若破5% 恐掀5%至8%修正（news.cnyes.com，09/02 19:49）",
-      "【Yahoo早盤】台股反彈一度漲逾350點！分析師李永年估震盪盤：小量「低進高出」（Yahoo股市，09/03 09:46）",
-      "美股收高帶動！台股早盤漲逾300點 台積電開2385元平盤價（Yahoo股市，09/03 09:41）",
-      "71萬人爽翻！台股重挫784點 「這檔」逆勢飆天價（Yahoo股市，09/02 18:57）"
+      "輝達大漲點火美股市值型ETF！ 00924近月報酬2%居冠 「含輝量」13.4%最高 | 財富管理 | 商情（經濟日報，09/03 11:25）",
+      "跌勢止不住！台股大跌784點 台積電遭下殺（Yahoo股市，09/02 14:14）",
+      "SEMICON開展撲不滅美伊戰火！三大法人甩賣1150億 台股重挫784點｜Yahoo財經掃描（Yahoo股市，09/02 17:15）",
+      "【美股開市】美小非農差、債息即縮 日圓突現干預軌跡（不斷更新）（香港經濟日報HKET，09/02 21:52）",
+      "〈美股早盤〉油價回落抵消美債殖利率壓力 主要指數變動不大（鉅亨網，09/02 21:42）"
     ]
   },
   "market_summary": {
@@ -105,7 +106,7 @@
       "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
     ],
     "drivers": [
-      "新聞題材主要集中在：美元／債券／商品、科技／產業、台股市場；這是資訊分布，不代表已確認的因果關係。"
+      "新聞題材主要集中在：台股市場、美元／債券／商品、科技／產業；這是資訊分布，不代表已確認的因果關係。"
     ],
     "risks": [
       "行情時間與資料延遲請以各卡片標示為準。",

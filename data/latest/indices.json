@@ -171,14 +171,14 @@
     "dow": {
       "name": "道瓊工業指數",
       "ticker": "^DJI",
-      "value": 53061.95,
+      "value": 53061.9,
       "is_missing": false,
       "source_label": "Yahoo Finance Chart",
       "source_url": null,
       "market_state": null,
-      "updated_at": "2026-09-03T04:42:41+08:00",
-      "updated_taipei": "2026-09-03 04:42",
-      "change": 295.07,
+      "updated_at": "2026-09-03T04:00:00+08:00",
+      "updated_taipei": "2026-09-03 04:00",
+      "change": 295.0,
       "change_pct": 0.56
     },
     "sp500": {
@@ -224,19 +224,19 @@
   "asia_open": {
     "nikkei225": {
       "name": "日經225指數",
-      "value": 64336.6,
-      "change": -10.96,
-      "change_pct": -0.02,
-      "updated_cst": "09/03 09:47",
+      "value": 64516.92,
+      "change": -191.28,
+      "change_pct": -0.3,
+      "updated_cst": "09/03 11:33",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
       "source_label": "Yahoo 個別指數頁"
     },
     "kospi": {
       "name": "韓國綜合指數",
-      "value": 6659.96,
-      "change": -97.24,
-      "change_pct": -1.48,
-      "updated_cst": "09/03 09:42",
+      "value": 6664.12,
+      "change": -101.4,
+      "change_pct": -1.55,
+      "updated_cst": "09/03 11:28",
       "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
       "source_label": "Yahoo 個別指數頁"
     }
