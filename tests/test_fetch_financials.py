@@ -32,7 +32,19 @@ def test_att_and_fin_use_roc_timestamp_after_cutoff():
     assert [row["code"] for row in select_unreflected("fin", entries, cutoff)] == ["2615"]
 
 
-def test_revenue_uses_source_new_or_updated_flags_not_missing_timestamps():
+def test_revenue_uses_first_seen_after_cutoff_as_source_contract():
+    cutoff = datetime(2026, 8, 21, 13, 30, tzinfo=TAIPEI)
+    entries = [
+        {"code": "1101", "first_seen": "2026-08-21 13:30:00", "is_new": True},
+        {"code": "1102", "first_seen": "2026-08-21 13:30:01", "is_new": False, "is_updated": False},
+        {"code": "1103", "first_seen": "2026-08-22 09:00:00", "is_new": False, "is_updated": False},
+        {"code": "1104", "first_seen": "2026-08-20 18:00:00", "is_updated": True},
+    ]
+
+    assert [row["code"] for row in select_unreflected("rev", entries, cutoff)] == ["1102", "1103"]
+
+
+def test_revenue_legacy_rows_without_first_seen_use_new_or_updated_flags():
     cutoff = datetime(2026, 8, 21, 13, 30, tzinfo=TAIPEI)
     entries = [
         {"code": "1101", "is_new": False, "is_updated": False},

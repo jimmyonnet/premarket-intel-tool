@@ -2,10 +2,11 @@
 """Fetch Chengwaye market-unreflected announcements without treating fetch errors as zero.
 
 The self-reported earnings and quarterly-report feeds carry ROC-calendar
-``date`` / ``time`` fields.  The revenue feed instead marks only newly filed
-or revised rows through ``is_new`` and ``is_updated``.  These source-native
-signals must be kept distinct: applying the timestamp rule to revenue made
-every revenue announcement look reflected.
+``date`` / ``time`` fields.  The revenue feed exposes ``first_seen`` as the
+source-native detector timestamp used by realtime-rev to partition
+market-unreflected rows.  ``is_new`` and ``is_updated`` are retained as a
+compatibility fallback only when a legacy revenue row has no ``first_seen``;
+they must not replace the cutoff comparison when the timestamp is present.
 """
 from __future__ import annotations
 
@@ -66,14 +67,30 @@ def is_unreflected_timestamp(item: dict[str, Any], cutoff: datetime) -> bool:
     return announced_at > cutoff
 
 
-def is_unreflected_revenue(item: dict[str, Any]) -> bool:
-    """Revenue feed has no announcement timestamp; use its explicit flags."""
+def is_unreflected_revenue(item: dict[str, Any], cutoff: datetime) -> bool:
+    """Match realtime-rev: include rows first detected after the cutoff.
+
+    ``first_seen`` is a naive Taipei-local timestamp in the revenue feed. A
+    few legacy rows may not have it, so their explicit new/updated flags are
+    used only as a backwards-compatible fallback.
+    """
+    first_seen = str(item.get("first_seen") or "").strip()
+    if first_seen:
+        try:
+            detected_at = datetime.fromisoformat(first_seen.replace("Z", "+00:00"))
+            if detected_at.tzinfo is None:
+                detected_at = detected_at.replace(tzinfo=TAIPEI)
+            else:
+                detected_at = detected_at.astimezone(TAIPEI)
+            return detected_at > cutoff
+        except ValueError:
+            pass
     return bool(item.get("is_new")) or bool(item.get("is_updated"))
 
 
 def select_unreflected(key: str, entries: list[dict[str, Any]], cutoff: datetime) -> list[dict[str, Any]]:
     if key == "rev":
-        return [entry for entry in entries if is_unreflected_revenue(entry)]
+        return [entry for entry in entries if is_unreflected_revenue(entry, cutoff)]
     return [entry for entry in entries if is_unreflected_timestamp(entry, cutoff)]
 
 
