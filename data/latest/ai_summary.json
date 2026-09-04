@@ -1,19 +1,19 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-04T06:56:01.235098+08:00",
-  "status": "ok",
-  "provider": "Gemini API",
-  "model": "gemini-2.5-flash",
-  "fallback_reason": null,
+  "generated_at": "2026-09-04T08:59:54.012372+08:00",
+  "status": "fallback",
+  "provider": "確定性降級整理",
+  "model": null,
+  "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
   "news_stats": {
     "count": 10,
-    "unique_topics": 3,
-    "unique_sources": 1,
-    "nvidia_count": 3
+    "unique_topics": 4,
+    "unique_sources": 5,
+    "nvidia_count": 2
   },
   "data_quality": {
-    "status": "attention",
-    "label": "需要留意",
+    "status": "ok",
+    "label": "資料正常",
     "checks": [
       {
         "name": "新聞數量",
@@ -23,12 +23,12 @@
       {
         "name": "主題分布",
         "status": "ok",
-        "detail": "3 類"
+        "detail": "4 類"
       },
       {
         "name": "公司／事件集中度",
         "status": "ok",
-        "detail": "輝達 3 則"
+        "detail": "輝達 2 則"
       },
       {
         "name": "行情可用性",
@@ -38,73 +38,74 @@
       {
         "name": "來源健康度",
         "status": "ok",
-        "detail": "1 項提醒"
+        "detail": "0 項提醒"
       }
     ],
-    "issues": [
-      {
-        "severity": "warning",
-        "message": "新聞來源只有 1 家，需留意單一來源偏誤"
-      }
-    ],
+    "issues": [],
     "news_count": 10,
-    "unique_topics": 3,
-    "unique_sources": 1,
-    "nvidia_count": 3,
+    "unique_topics": 4,
+    "unique_sources": 5,
+    "nvidia_count": 2,
     "topic_counts": {
-      "global_market": 1,
-      "currency_commodities": 5,
-      "sector_technology": 4
+      "sector_technology": 3,
+      "currency_commodities": 4,
+      "taiwan_market": 2,
+      "geopolitics_trade": 1
     },
     "source_counts": {
-      "news.cnyes.com": 10
+      "經濟日報": 1,
+      "news.cnyes.com": 6,
+      "Yahoo新聞": 1,
+      "Yahoo股市": 1,
+      "工商時報": 1
     }
   },
   "news_summary": {
-    "headline": "聯準會官員釋出暫緩升息訊號提振美股，AI與科技股表現強勁，輝達AI戰略升級。",
+    "headline": "目前整理 10 則新聞，涵蓋 4 類主題；同一公司或事件不應主導全部清單。",
     "topic_summary": [
       {
-        "topic": "美股／全球市場",
-        "count": 1,
-        "summary": "市場重新評價企業AI平台價值，ServiceNow股價顯著上漲。"
-      },
-      {
         "topic": "美元／債券／商品",
-        "count": 5,
-        "summary": "聯準會理事華勒釋出暫緩升息訊號，促使美債殖利率回落，美股主要指數齊漲；然而，有分析指出「神祕利率」升高可能預示高利率將成新常態。"
+        "count": 4,
+        "summary": "美元／債券／商品"
       },
       {
         "topic": "科技／產業",
-        "count": 4,
-        "summary": "輝達AI工廠戰略升級，營收潛力大幅提升，並重掌AI交易主導權，帶動科技巨頭股價逼近新高；佳世達8月營收年增，旗下羅昇衝刺半導體應用；HPE雖上修財測，但受記憶體缺貨影響。"
+        "count": 3,
+        "summary": "科技／產業"
+      },
+      {
+        "topic": "台股市場",
+        "count": 2,
+        "summary": "台股市場"
+      },
+      {
+        "topic": "地緣政治／貿易",
+        "count": 1,
+        "summary": "地緣政治／貿易"
       }
     ],
     "key_points": [
-      "〈美股盤後〉華勒釋暫緩升息訊號 美債殖利率回落 三大指數齊漲逾1%",
-      "輝達AI工廠戰略升級：每1GW營收潛力從180億美元躍升至400億美元，客製化晶片反成新商機",
-      "輝達重掌AI交易主導權 科技巨頭股價逼近歷史新高",
-      "【美股快訊】ServiceNow股價大漲6%，企業AI平台價值獲市場重新評價"
+      "微軟調財報結構 凸顯 AI 影響（經濟日報，09/04 02:35）",
+      "輝達AI工廠戰略升級：每1GW營收潛力從180億美元躍升至400億美元，客製化晶片反成新商機（news.cnyes.com，09/03 14:00）",
+      "〈美股盤後〉華勒釋暫緩升息訊號 美債殖利率回落 三大指數齊漲逾1%（news.cnyes.com，09/04 04:51）",
+      "華勒一句話救美債！Fed升息押注降溫 2年期殖利率一度重挫7基點（news.cnyes.com，09/03 22:02）",
+      "輝達重掌AI交易主導權 科技巨頭股價逼近歷史新高（news.cnyes.com，09/04 06:41）"
     ]
   },
   "market_summary": {
-    "headline": "美股受聯準會官員言論提振全面上漲，科技股與AI概念表現尤為突出，台指期夜盤同步走高。",
+    "headline": "隔夜市場風險情緒偏強，但不同市場與產業之間仍有分化。",
     "observations": [
-      "美股主要指數全面走揚，道瓊、S&P 500及NASDAQ漲幅均超過1%，顯示市場廣泛樂觀。",
-      "科技股表現相對強勁，NASDAQ指數漲幅達1.4%，費城半導體指數亦收紅，但漲幅較小。",
-      "主要科技ADR如輝達、蘋果、台積電均呈現上漲，其中輝達漲幅達1.8%，顯示AI相關標的持續受關注。",
-      "亞洲股市日經225與韓國綜合指數則呈現小幅下跌，與美股走勢分歧；台指期夜盤則大幅上漲1.46%，與美股趨勢一致。"
+      "市場廣度：上漲標的多於下跌標的，整體不是所有市場同步同幅度變動。",
+      "相對強弱：台指期夜盤 相對有支撐，亞股 相對承壓，市場表現呈現分化。",
+      "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
     ],
     "drivers": [
-      "聯準會理事華勒釋出暫緩升息訊號，可能降低市場對未來升息的預期，提振股市信心。",
-      "輝達AI工廠戰略升級及重掌AI交易主導權，可能推動科技巨頭股價上漲。",
-      "企業AI平台價值獲市場重新評價，ServiceNow股價大漲，顯示AI應用前景樂觀。",
-      "美債殖利率回落，可能降低資金成本壓力，有利於風險資產表現。"
+      "新聞題材主要集中在：美元／債券／商品、科技／產業、台股市場；這是資訊分布，不代表已確認的因果關係。"
     ],
     "risks": [
-      "「神祕利率」升高暗示高利率恐成新常態，可能對未來市場流動性造成壓力。",
-      "HPE上修財測但受「記憶體缺貨」拖累，顯示供應鏈問題仍可能影響科技產業表現。",
-      "聯電ADR逆勢下跌，可能反映部分半導體次產業面臨特定挑戰。"
+      "行情時間與資料延遲請以各卡片標示為準。",
+      "以上為快照關係整理，不代表價格方向預測。"
     ]
   },
-  "quality_note": "此份報告是根據您提供的最新市場數據與新聞資訊所撰寫。"
+  "quality_note": "目前使用確定性整理；完成 AI 服務設定後，會補上語意摘要。"
 }

@@ -1,5 +1,5 @@
 {
-  "archived_at": "2026-09-04 06:56:01",
+  "archived_at": "2026-09-04 08:59:54",
   "data_date": "2026-09-04",
   "retention_days": 60,
   "sources": {
@@ -39,7 +39,7 @@
         "title": "0904盤前",
         "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/E85172AC8B179D528C33AA7A018891C8",
         "fetch_mode": "live_browser",
-        "collected_at": "2026-09-04T06:55:19.115318+08:00"
+        "collected_at": "2026-09-04T08:59:18.949640+08:00"
       },
       "chengwaye_date": null,
       "not_found_group": {
@@ -72,7 +72,7 @@
     },
     "stock_history": {
       "source": "https://chengwaye.com/stock/",
-      "fetched_at": "2026-09-04T06:55:46.008779+08:00",
+      "fetched_at": "2026-09-04T08:59:41.348929+08:00",
       "requested_codes": [
         "2464"
       ],
@@ -257,28 +257,28 @@
     },
     "news": [
       {
-        "title": "【美股快訊】ServiceNow股價大漲6%，企業AI平台價值獲市場重新評價",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBZUFdxRHFLVEVLbjBLck9vWmdBMnNfWmlqd3VXS1hVVHBiaGJGdUJid2tVem9ldG9MYjI3THAwakRPYmluTHdsdjF6VGZ6NzQ?oc=5",
-        "source": "news.cnyes.com",
-        "time": "09/04 00:32",
-        "timestamp": 1788453126.0,
+        "title": "微軟調財報結構 凸顯 AI 影響",
+        "link": "https://news.google.com/rss/articles/CBMif0FVX3lxTE55M1lfWnlfQ0Y2aUE1QVdacEJ0V0hKRG41MGhBeG5TTHBiU2JaMGJyRGVGa3NxS3lLQlg4bkVpLVg5elhVa0NBYURqajk2LWVIRU5HeU4xRk9EUUhuYVhKUzR6THlTdDJ4QWtnNWlha1g0ZHpTYy1pQ2YyZko0Z1nSAWJBVV95cUxONDlzQVEyeUZ1WUpaTHl0eTQ0Rkh5bHJNblhEUW44a1ZlUC12ZVdMb2pjbFRLVy14SHNpbXhpSzByVEQ1TmtpNVhWOXBzTVNvR2tXUEthaVFrQkhUalVjaXhHUQ?oc=5",
+        "source": "經濟日報",
+        "time": "09/04 02:35",
+        "timestamp": 1788460529.0,
         "score": 12,
         "quality_score": 4,
         "impact_score": 8,
         "release_bonus": 0,
         "matched_groups": [
-          "market_benchmark",
-          "market_move",
+          "systemic_company",
+          "earnings_financial",
           "sector_supply_chain"
         ],
         "low_signal_hits": [],
         "topic_groups": [
-          "global_market",
-          "sector_technology"
+          "sector_technology",
+          "company_earnings"
         ],
-        "primary_topic": "global_market",
+        "primary_topic": "sector_technology",
         "named_entities": [
-          "us_market"
+          "microsoft"
         ],
         "quality_pass": true,
         "impact_pass": true,
@@ -367,6 +367,110 @@
         "qualified": true
       },
       {
+        "title": "輝達重掌AI交易主導權 科技巨頭股價逼近歷史新高",
+        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1tMFhpT1VZdmFpY2ZxVXRFREVjOXV2dkRHV1p1enBjQ3BpWl82dzJ0bjNiQVhRcE01bTZJeHF0SzBqUVA2NldicUVLa1BZc0E?oc=5",
+        "source": "news.cnyes.com",
+        "time": "09/04 06:41",
+        "timestamp": 1788475279.0,
+        "score": 9,
+        "quality_score": 4,
+        "impact_score": 5,
+        "release_bonus": 0,
+        "matched_groups": [
+          "systemic_company",
+          "sector_supply_chain"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "sector_technology",
+          "company_earnings"
+        ],
+        "primary_topic": "sector_technology",
+        "named_entities": [
+          "nvidia"
+        ],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "大華銀投信：台股Q4續航 迎AI與金融「雙引擎」",
+        "link": "https://news.google.com/rss/articles/CBMinAJBVV95cUxPNzNMd0Zab1g2RFd5OUM2TDNrSUlXajRKZjNvcDRjOG05R3FrRVJSNVEtRWJNQkViZWZtYk4xU1Q1MXFueDVvSmc0cXRzWnk5QjQ5Snc3Qk5PQ2hIM0FJSVMySTdGa3NRUUtyWWtmZmJKRW11UjNITXplaVpKc3Fkd1R0dGhVNG93eWtXRExuVkw4MDVndlRuLVlDanFZQzB1cVVMSnVLVU0zOWlYUTN3dDltZkZOT05fMVNTZlcxek9IeW92blExWjMtYjRwQ2tTQ0MtTG5YWi1qc09sMF9iZW1MUkV3b2tXNXpIUGJUOTFCa1JCeFJ0MXY0b0xCQjFtYWZxS1gwcmVXT0JVdGZCN1c1U3VWNWN5WTBzdQ?oc=5",
+        "source": "Yahoo新聞",
+        "time": "09/03 20:26",
+        "timestamp": 1788438373.0,
+        "score": 8,
+        "quality_score": 3,
+        "impact_score": 5,
+        "release_bonus": 0,
+        "matched_groups": [
+          "market_benchmark",
+          "sector_supply_chain"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "taiwan_market",
+          "sector_technology"
+        ],
+        "primary_topic": "taiwan_market",
+        "named_entities": [
+          "taiwan_market"
+        ],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "地緣政治動盪加劇 荷蘭央行將百億美元黃金儲備運回歐洲",
+        "link": "https://news.google.com/rss/articles/CBMiiANBVV95cUxORUpaNFZYelZ4S0lqVVRIeVVncjQ2WFN2Mk56WFdVSDh5aGZOTkdzb2JsUGE5dEY4cVVtYkVYZFBzZkNhNk55bjU3OGtDbld4UEFHQnNGS2dmTFpCbTlBTnhISWRmSThvWUdjTVJoNzEwdGVtRXpFMTJoZ1ZPdDdkYUgwXzBWZzBqYUM1Nkhpd2tmWFFfUzF5R1MtVG1jbFd0SEx1TXNnTnMwQnE4RFEtNUh2Vld1ZC1CVUNBYnRsNmFVNFhXTHhEU1lmYjFTeTVQN2VHSmtkUHVuTnlKZmFkaVlDck45cDVoenZYNV9wX1FIVi1MUDM3d1lnbm1zWUptREYyMXl4b0hrQWxqWXRqOWFoLUJZMlFfckFpYUlkTmhTS0ZSSWNJN2VHWno5OERtQXNSRXl6M21TeU8tRDMwaENrRDlIZnViOGpSeXd4QjRiTFNId1BaTzZ4OHRWNWFDUy00ZVJTNG1GX1VKNFRZaWE1Smo1dzkwMkZ5WU9MVS1uUU54clQ0dg?oc=5",
+        "source": "Yahoo股市",
+        "time": "09/04 08:17",
+        "timestamp": 1788481036.0,
+        "score": 7,
+        "quality_score": 3,
+        "impact_score": 4,
+        "release_bonus": 0,
+        "matched_groups": [
+          "macro_policy"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "geopolitics_trade",
+          "currency_commodities",
+          "macro_policy"
+        ],
+        "primary_topic": "geopolitics_trade",
+        "named_entities": [],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "台股丟46K金融股突圍專家喊買黑賣紅持股水位這樣調整- 日報",
+        "link": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE1GcHpWdnppeXRHakNzeDBWal9kYk1tWnFUclNXNTUybkdSMHlFY1RCV2RRakxrMEZIcnhaS0F5a2dhNVB4dWQ3czN4azJ5SUtCS09ETVVLU1BpV0ZfSkhV?oc=5",
+        "source": "工商時報",
+        "time": "09/04 03:00",
+        "timestamp": 1788462000.0,
+        "score": 7,
+        "quality_score": 4,
+        "impact_score": 3,
+        "release_bonus": 0,
+        "matched_groups": [
+          "market_benchmark"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "taiwan_market"
+        ],
+        "primary_topic": "taiwan_market",
+        "named_entities": [
+          "taiwan_market"
+        ],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
         "title": "〈美股早盤〉Fed理事華勒釋出耐心訊號！主要指數開高、美債殖利率回落",
         "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5xb3RkaDY0YXg2MHJGb2w2TWtETXdCWEF5Vk4wZjBGT0RxRVp1aXRZbm5yMGJkcDRzUzU4TG1vUHZZRG4waGpKWmVKdXJ1TEU?oc=5",
         "source": "news.cnyes.com",
@@ -395,58 +499,6 @@
         "qualified": true
       },
       {
-        "title": "美債大跌另有元凶！「神祕利率」升高暗示高利率恐成新常態",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE52Ymkwczg0R0FWQmdtTEFwc2ZuYU1NUGwxNTViR0VlQ3NBSEhobkRJYl9CcVotcHNvdnBaVE1jNnR4d2d1eXNtU21FZm5xRk0?oc=5",
-        "source": "news.cnyes.com",
-        "time": "09/03 20:00",
-        "timestamp": 1788436810.0,
-        "score": 11,
-        "quality_score": 4,
-        "impact_score": 7,
-        "release_bonus": 0,
-        "matched_groups": [
-          "macro_policy",
-          "market_move"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "currency_commodities",
-          "macro_policy"
-        ],
-        "primary_topic": "currency_commodities",
-        "named_entities": [],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "輝達重掌AI交易主導權 科技巨頭股價逼近歷史新高",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1tMFhpT1VZdmFpY2ZxVXRFREVjOXV2dkRHV1p1enBjQ3BpWl82dzJ0bjNiQVhRcE01bTZJeHF0SzBqUVA2NldicUVLa1BZc0E?oc=5",
-        "source": "news.cnyes.com",
-        "time": "09/04 06:41",
-        "timestamp": 1788475279.0,
-        "score": 9,
-        "quality_score": 4,
-        "impact_score": 5,
-        "release_bonus": 0,
-        "matched_groups": [
-          "systemic_company",
-          "sector_supply_chain"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "sector_technology",
-          "company_earnings"
-        ],
-        "primary_topic": "sector_technology",
-        "named_entities": [
-          "nvidia"
-        ],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
         "title": "佳世達8月營收年增12% 旗下羅昇衝刺半導體先進製程應用",
         "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBIWnpYSG9JR2x2QVc4Y3I1a2Iwa0VsYmpqbUVXazBJRFQyNzd4WWdwd1BZUEh6WHJXbVo5RVZOYW5HWkxBbXQtOURTcWhiUEU?oc=5",
         "source": "news.cnyes.com",
@@ -467,58 +519,6 @@
         ],
         "primary_topic": "sector_technology",
         "named_entities": [],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "〈財報〉HPE上修今明兩年財測！AI需求爆發遭「記憶體缺貨」拖累 盤後挫逾5%",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBNeXpXcmNlaWp0ck5yTVZxRk83UnBZZUM4ZEtiaUtYaGhCNldFSjBCeHdjSUhvalIzZFF3QUxrQXFsaW1aRGdFVFJWcmtyU0U?oc=5",
-        "source": "news.cnyes.com",
-        "time": "09/03 14:03",
-        "timestamp": 1788415426.0,
-        "score": 9,
-        "quality_score": 4,
-        "impact_score": 5,
-        "release_bonus": 0,
-        "matched_groups": [
-          "earnings_financial",
-          "sector_supply_chain"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "sector_technology",
-          "company_earnings"
-        ],
-        "primary_topic": "sector_technology",
-        "named_entities": [],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "AMI下單9,000顆Nvidia Rubin GPU，印度30MW AI工廠2027年首季上線",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1qa211akxSYXZFM3gtZVZzclYzekhHTExhUElsYTNvYkRPc0FvVXhFU2pveFRPOXJfQ0RCZlZ4NHRiTmFWdmtVLUJubVFNQ2c?oc=5",
-        "source": "news.cnyes.com",
-        "time": "09/03 14:00",
-        "timestamp": 1788415216.0,
-        "score": 9,
-        "quality_score": 4,
-        "impact_score": 5,
-        "release_bonus": 0,
-        "matched_groups": [
-          "systemic_company",
-          "sector_supply_chain"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "sector_technology",
-          "company_earnings"
-        ],
-        "primary_topic": "sector_technology",
-        "named_entities": [
-          "nvidia"
-        ],
         "quality_pass": true,
         "impact_pass": true,
         "qualified": true
@@ -763,19 +763,19 @@
       "asia_open": {
         "nikkei225": {
           "name": "日經225指數",
-          "value": 64214.48,
-          "change": -111.16,
-          "change_pct": -0.17,
-          "updated_cst": "09/03 14:45",
+          "value": 64812.73,
+          "change": -598.25,
+          "change_pct": -0.93,
+          "updated_cst": "09/04 08:44",
           "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
           "source_label": "Yahoo 個別指數頁"
         },
         "kospi": {
           "name": "韓國綜合指數",
-          "value": 6579.48,
-          "change": -16.76,
-          "change_pct": -0.26,
-          "updated_cst": "09/03 17:05",
+          "value": 6665.46,
+          "change": -85.98,
+          "change_pct": -1.31,
+          "updated_cst": "09/04 08:39",
           "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
           "source_label": "Yahoo 個別指數頁"
         }
@@ -788,7 +788,7 @@
       "range_end": "2026-09-18",
       "events": [
         {
-          "id": "ev-2026-09-04-20",
+          "id": "ev-2026-09-04-9",
           "date": "2026-09-04",
           "time": "20:30",
           "all_day": false,
@@ -814,7 +814,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-04-24",
+          "id": "ev-2026-09-04-16",
           "date": "2026-09-04",
           "time": "20:30",
           "all_day": false,
@@ -840,7 +840,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-07-21",
+          "id": "ev-2026-09-07-11",
           "date": "2026-09-07",
           "time": "17:00",
           "all_day": false,
@@ -866,7 +866,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-08-12",
+          "id": "ev-2026-09-08-8",
           "date": "2026-09-08",
           "time": "07:00",
           "all_day": false,
@@ -892,7 +892,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-08-13",
+          "id": "ev-2026-09-08-26",
           "date": "2026-09-08",
           "time": "07:50",
           "all_day": false,
@@ -918,7 +918,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-08-23",
+          "id": "ev-2026-09-08-28",
           "date": "2026-09-08",
           "time": "11:00",
           "all_day": false,
@@ -944,7 +944,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-09-16",
+          "id": "ev-2026-09-09-12",
           "date": "2026-09-09",
           "time": "09:30",
           "all_day": false,
@@ -970,7 +970,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-09-17",
+          "id": "ev-2026-09-09-21",
           "date": "2026-09-09",
           "time": "16:00",
           "all_day": false,
@@ -1024,7 +1024,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-10-5",
+          "id": "ev-2026-09-10-4",
           "date": "2026-09-10",
           "time": "00:00",
           "all_day": false,
@@ -1076,7 +1076,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-10-9",
+          "id": "ev-2026-09-10-10",
           "date": "2026-09-10",
           "time": "20:15",
           "all_day": false,
@@ -1102,33 +1102,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-10-10",
-          "date": "2026-09-10",
-          "time": "20:30",
-          "all_day": false,
-          "title": "美國-生產者物價指數[PPI] (NSA,年增率(YoY))",
-          "summary": "美國-生產者物價指數[PPI] (NSA,年增率(YoY))",
-          "description": "前值:  4.69%",
-          "note": "前值:  4.69%",
-          "mm_link": "https://sc.macromicro.me/collections/5/us-price-relative/26/price-index?utm_medium=calendar",
-          "source_url": "https://sc.macromicro.me/collections/5/us-price-relative/26/price-index?utm_medium=calendar",
-          "category": "macro",
-          "category_name": "總經",
-          "country": "US",
-          "flag": "🇺🇸",
-          "timezone_origin": "America/New_York",
-          "timezone_label": "ET",
-          "time_origin_str": "08:30 ET",
-          "time_tpe_str": "20:30 TPE",
-          "datetime_utc": "2026-09-10T12:30:00Z",
-          "importance": 2,
-          "forecast": null,
-          "previous": "4.69%",
-          "actual": null,
-          "comparison": "pending"
-        },
-        {
-          "id": "ev-2026-09-10-11",
+          "id": "ev-2026-09-10-13",
           "date": "2026-09-10",
           "time": "20:30",
           "all_day": false,
@@ -1154,7 +1128,33 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-11-8",
+          "id": "ev-2026-09-10-24",
+          "date": "2026-09-10",
+          "time": "20:30",
+          "all_day": false,
+          "title": "美國-生產者物價指數[PPI] (NSA,年增率(YoY))",
+          "summary": "美國-生產者物價指數[PPI] (NSA,年增率(YoY))",
+          "description": "前值:  4.69%",
+          "note": "前值:  4.69%",
+          "mm_link": "https://sc.macromicro.me/collections/5/us-price-relative/26/price-index?utm_medium=calendar",
+          "source_url": "https://sc.macromicro.me/collections/5/us-price-relative/26/price-index?utm_medium=calendar",
+          "category": "macro",
+          "category_name": "總經",
+          "country": "US",
+          "flag": "🇺🇸",
+          "timezone_origin": "America/New_York",
+          "timezone_label": "ET",
+          "time_origin_str": "08:30 ET",
+          "time_tpe_str": "20:30 TPE",
+          "datetime_utc": "2026-09-10T12:30:00Z",
+          "importance": 2,
+          "forecast": null,
+          "previous": "4.69%",
+          "actual": null,
+          "comparison": "pending"
+        },
+        {
+          "id": "ev-2026-09-11-17",
           "date": "2026-09-11",
           "time": "00:00",
           "all_day": false,
@@ -1180,7 +1180,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-11-3",
+          "id": "ev-2026-09-11-7",
           "date": "2026-09-11",
           "time": "17:00",
           "all_day": false,
@@ -1206,7 +1206,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-11-15",
+          "id": "ev-2026-09-11-19",
           "date": "2026-09-11",
           "time": "20:30",
           "all_day": false,
@@ -1258,7 +1258,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-12-2",
+          "id": "ev-2026-09-12-5",
           "date": "2026-09-12",
           "time": "00:00",
           "all_day": false,
@@ -1284,7 +1284,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-15-14",
+          "id": "ev-2026-09-15-15",
           "date": "2026-09-15",
           "time": "10:00",
           "all_day": false,
@@ -1310,33 +1310,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-15-19",
-          "date": "2026-09-15",
-          "time": "10:00",
-          "all_day": false,
-          "title": "中國-房地產開發投資(累計年增率(YoY))",
-          "summary": "中國-房地產開發投資(累計年增率(YoY))",
-          "description": null,
-          "note": null,
-          "mm_link": "https://sc.macromicro.me/collections/26/cn-house-relative/237/cn-housing-investment-yoy?utm_medium=calendar",
-          "source_url": "https://sc.macromicro.me/collections/26/cn-house-relative/237/cn-housing-investment-yoy?utm_medium=calendar",
-          "category": "other",
-          "category_name": "其他",
-          "country": "CN",
-          "flag": "🇨🇳",
-          "timezone_origin": "Asia/Shanghai",
-          "timezone_label": "CST",
-          "time_origin_str": "10:00 TPE",
-          "time_tpe_str": "10:00 TPE",
-          "datetime_utc": "2026-09-15T02:00:00Z",
-          "importance": 1,
-          "forecast": null,
-          "previous": null,
-          "actual": null,
-          "comparison": "pending"
-        },
-        {
-          "id": "ev-2026-09-15-22",
+          "id": "ev-2026-09-15-18",
           "date": "2026-09-15",
           "time": "10:00",
           "all_day": false,
@@ -1362,7 +1336,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-15-25",
+          "id": "ev-2026-09-15-22",
           "date": "2026-09-15",
           "time": "10:00",
           "all_day": false,
@@ -1384,6 +1358,32 @@
           "importance": 2,
           "forecast": null,
           "previous": "0.60%",
+          "actual": null,
+          "comparison": "pending"
+        },
+        {
+          "id": "ev-2026-09-15-25",
+          "date": "2026-09-15",
+          "time": "10:00",
+          "all_day": false,
+          "title": "中國-房地產開發投資(累計年增率(YoY))",
+          "summary": "中國-房地產開發投資(累計年增率(YoY))",
+          "description": null,
+          "note": null,
+          "mm_link": "https://sc.macromicro.me/collections/26/cn-house-relative/237/cn-housing-investment-yoy?utm_medium=calendar",
+          "source_url": "https://sc.macromicro.me/collections/26/cn-house-relative/237/cn-housing-investment-yoy?utm_medium=calendar",
+          "category": "other",
+          "category_name": "其他",
+          "country": "CN",
+          "flag": "🇨🇳",
+          "timezone_origin": "Asia/Shanghai",
+          "timezone_label": "CST",
+          "time_origin_str": "10:00 TPE",
+          "time_tpe_str": "10:00 TPE",
+          "datetime_utc": "2026-09-15T02:00:00Z",
+          "importance": 1,
+          "forecast": null,
+          "previous": null,
           "actual": null,
           "comparison": "pending"
         },
@@ -1416,7 +1416,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-16-28",
+          "id": "ev-2026-09-16-23",
           "date": "2026-09-16",
           "time": "14:00",
           "all_day": false,
@@ -1442,7 +1442,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-16-18",
+          "id": "ev-2026-09-16-20",
           "date": "2026-09-16",
           "time": "20:30",
           "all_day": false,
@@ -1468,7 +1468,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-16-4",
+          "id": "ev-2026-09-16-3",
           "date": "2026-09-16",
           "time": "22:30",
           "all_day": false,
@@ -1494,7 +1494,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-17-7",
+          "id": "ev-2026-09-17-2",
           "date": "2026-09-17",
           "time": "02:00",
           "all_day": false,
@@ -1520,7 +1520,7 @@
           "comparison": "pending"
         },
         {
-          "id": "ev-2026-09-17-26",
+          "id": "ev-2026-09-17-14",
           "date": "2026-09-17",
           "time": "19:00",
           "all_day": false,
@@ -2414,7 +2414,7 @@
       "latest": {
         "provider": "wantgoo",
         "provider_name": "Wantgoo / TAIFEX",
-        "collected_at": "2026-09-04T06:55:17.615002+08:00",
+        "collected_at": "2026-09-04T08:59:16.985331+08:00",
         "symbol": "臺指期096",
         "price": 46487.0,
         "change": 668.0,
@@ -2448,7 +2448,7 @@
     },
     "source_status": {
       "schema_version": "source-status.v2",
-      "updated_at": "2026-09-04T06:55:46.030177+08:00",
+      "updated_at": "2026-09-04T08:59:41.386598+08:00",
       "reliability_tiers": {
         "core_stable": {
           "label": "核心穩定",
@@ -2484,7 +2484,7 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-09-04T06:55:16.342412+08:00",
+          "fetched_at": "2026-09-04T08:59:15.911662+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2504,7 +2504,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-09-04T06:55:19.330204+08:00",
+          "fetched_at": "2026-09-04T08:59:19.325730+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2524,7 +2524,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-09-04T06:55:17.496743+08:00",
+          "fetched_at": "2026-09-04T08:59:16.850538+08:00",
           "data_date": "2026-09-04",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2544,7 +2544,7 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-09-04T06:55:16.341853+08:00",
+          "fetched_at": "2026-09-04T08:59:15.910949+08:00",
           "data_date": "09/04",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2564,7 +2564,7 @@
           "notification_level": "notice",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-09-04T06:55:18.889555+08:00",
+          "fetched_at": "2026-09-04T08:59:18.599079+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2586,7 +2586,7 @@
             "pressplay"
           ],
           "status": "ok",
-          "fetched_at": "2026-09-04T06:55:45.155031+08:00",
+          "fetched_at": "2026-09-04T08:59:40.585630+08:00",
           "data_date": "2026/09/03",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2606,7 +2606,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-09-04T06:55:16.341409+08:00",
+          "fetched_at": "2026-09-04T08:59:15.910788+08:00",
           "data_date": "2026-09-04",
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2626,7 +2626,7 @@
           "notification_level": "warning",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-09-04T06:55:16.342128+08:00",
+          "fetched_at": "2026-09-04T08:59:15.911317+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2646,7 +2646,7 @@
           "notification_level": "notice",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-09-04T06:55:16.905588+08:00",
+          "fetched_at": "2026-09-04T08:59:16.538527+08:00",
           "data_date": null,
           "age_minutes": 0.0,
           "error_summary": null,
@@ -2669,8 +2669,8 @@
             "chengwaye_daily"
           ],
           "status": "ok",
-          "fetched_at": "2026-09-04T06:55:45.481068+08:00",
-          "data_date": "2026-09-04T06:55:46.008779+08:00",
+          "fetched_at": "2026-09-04T08:59:40.964224+08:00",
+          "data_date": "2026-09-04T08:59:41.348929+08:00",
           "age_minutes": 0.0,
           "error_summary": null,
           "fallback_used": false,
@@ -2682,20 +2682,20 @@
     },
     "ai_summary": {
       "schema_version": 1,
-      "generated_at": "2026-09-04T06:56:01.235098+08:00",
-      "status": "ok",
-      "provider": "Gemini API",
-      "model": "gemini-2.5-flash",
-      "fallback_reason": null,
+      "generated_at": "2026-09-04T08:59:54.012372+08:00",
+      "status": "fallback",
+      "provider": "確定性降級整理",
+      "model": null,
+      "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
       "news_stats": {
         "count": 10,
-        "unique_topics": 3,
-        "unique_sources": 1,
-        "nvidia_count": 3
+        "unique_topics": 4,
+        "unique_sources": 5,
+        "nvidia_count": 2
       },
       "data_quality": {
-        "status": "attention",
-        "label": "需要留意",
+        "status": "ok",
+        "label": "資料正常",
         "checks": [
           {
             "name": "新聞數量",
@@ -2705,12 +2705,12 @@
           {
             "name": "主題分布",
             "status": "ok",
-            "detail": "3 類"
+            "detail": "4 類"
           },
           {
             "name": "公司／事件集中度",
             "status": "ok",
-            "detail": "輝達 3 則"
+            "detail": "輝達 2 則"
           },
           {
             "name": "行情可用性",
@@ -2720,75 +2720,76 @@
           {
             "name": "來源健康度",
             "status": "ok",
-            "detail": "1 項提醒"
+            "detail": "0 項提醒"
           }
         ],
-        "issues": [
-          {
-            "severity": "warning",
-            "message": "新聞來源只有 1 家，需留意單一來源偏誤"
-          }
-        ],
+        "issues": [],
         "news_count": 10,
-        "unique_topics": 3,
-        "unique_sources": 1,
-        "nvidia_count": 3,
+        "unique_topics": 4,
+        "unique_sources": 5,
+        "nvidia_count": 2,
         "topic_counts": {
-          "global_market": 1,
-          "currency_commodities": 5,
-          "sector_technology": 4
+          "sector_technology": 3,
+          "currency_commodities": 4,
+          "taiwan_market": 2,
+          "geopolitics_trade": 1
         },
         "source_counts": {
-          "news.cnyes.com": 10
+          "經濟日報": 1,
+          "news.cnyes.com": 6,
+          "Yahoo新聞": 1,
+          "Yahoo股市": 1,
+          "工商時報": 1
         }
       },
       "news_summary": {
-        "headline": "聯準會官員釋出暫緩升息訊號提振美股，AI與科技股表現強勁，輝達AI戰略升級。",
+        "headline": "目前整理 10 則新聞，涵蓋 4 類主題；同一公司或事件不應主導全部清單。",
         "topic_summary": [
           {
-            "topic": "美股／全球市場",
-            "count": 1,
-            "summary": "市場重新評價企業AI平台價值，ServiceNow股價顯著上漲。"
-          },
-          {
             "topic": "美元／債券／商品",
-            "count": 5,
-            "summary": "聯準會理事華勒釋出暫緩升息訊號，促使美債殖利率回落，美股主要指數齊漲；然而，有分析指出「神祕利率」升高可能預示高利率將成新常態。"
+            "count": 4,
+            "summary": "美元／債券／商品"
           },
           {
             "topic": "科技／產業",
-            "count": 4,
-            "summary": "輝達AI工廠戰略升級，營收潛力大幅提升，並重掌AI交易主導權，帶動科技巨頭股價逼近新高；佳世達8月營收年增，旗下羅昇衝刺半導體應用；HPE雖上修財測，但受記憶體缺貨影響。"
+            "count": 3,
+            "summary": "科技／產業"
+          },
+          {
+            "topic": "台股市場",
+            "count": 2,
+            "summary": "台股市場"
+          },
+          {
+            "topic": "地緣政治／貿易",
+            "count": 1,
+            "summary": "地緣政治／貿易"
           }
         ],
         "key_points": [
-          "〈美股盤後〉華勒釋暫緩升息訊號 美債殖利率回落 三大指數齊漲逾1%",
-          "輝達AI工廠戰略升級：每1GW營收潛力從180億美元躍升至400億美元，客製化晶片反成新商機",
-          "輝達重掌AI交易主導權 科技巨頭股價逼近歷史新高",
-          "【美股快訊】ServiceNow股價大漲6%，企業AI平台價值獲市場重新評價"
+          "微軟調財報結構 凸顯 AI 影響（經濟日報，09/04 02:35）",
+          "輝達AI工廠戰略升級：每1GW營收潛力從180億美元躍升至400億美元，客製化晶片反成新商機（news.cnyes.com，09/03 14:00）",
+          "〈美股盤後〉華勒釋暫緩升息訊號 美債殖利率回落 三大指數齊漲逾1%（news.cnyes.com，09/04 04:51）",
+          "華勒一句話救美債！Fed升息押注降溫 2年期殖利率一度重挫7基點（news.cnyes.com，09/03 22:02）",
+          "輝達重掌AI交易主導權 科技巨頭股價逼近歷史新高（news.cnyes.com，09/04 06:41）"
         ]
       },
       "market_summary": {
-        "headline": "美股受聯準會官員言論提振全面上漲，科技股與AI概念表現尤為突出，台指期夜盤同步走高。",
+        "headline": "隔夜市場風險情緒偏強，但不同市場與產業之間仍有分化。",
         "observations": [
-          "美股主要指數全面走揚，道瓊、S&P 500及NASDAQ漲幅均超過1%，顯示市場廣泛樂觀。",
-          "科技股表現相對強勁，NASDAQ指數漲幅達1.4%，費城半導體指數亦收紅，但漲幅較小。",
-          "主要科技ADR如輝達、蘋果、台積電均呈現上漲，其中輝達漲幅達1.8%，顯示AI相關標的持續受關注。",
-          "亞洲股市日經225與韓國綜合指數則呈現小幅下跌，與美股走勢分歧；台指期夜盤則大幅上漲1.46%，與美股趨勢一致。"
+          "市場廣度：上漲標的多於下跌標的，整體不是所有市場同步同幅度變動。",
+          "相對強弱：台指期夜盤 相對有支撐，亞股 相對承壓，市場表現呈現分化。",
+          "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
         ],
         "drivers": [
-          "聯準會理事華勒釋出暫緩升息訊號，可能降低市場對未來升息的預期，提振股市信心。",
-          "輝達AI工廠戰略升級及重掌AI交易主導權，可能推動科技巨頭股價上漲。",
-          "企業AI平台價值獲市場重新評價，ServiceNow股價大漲，顯示AI應用前景樂觀。",
-          "美債殖利率回落，可能降低資金成本壓力，有利於風險資產表現。"
+          "新聞題材主要集中在：美元／債券／商品、科技／產業、台股市場；這是資訊分布，不代表已確認的因果關係。"
         ],
         "risks": [
-          "「神祕利率」升高暗示高利率恐成新常態，可能對未來市場流動性造成壓力。",
-          "HPE上修財測但受「記憶體缺貨」拖累，顯示供應鏈問題仍可能影響科技產業表現。",
-          "聯電ADR逆勢下跌，可能反映部分半導體次產業面臨特定挑戰。"
+          "行情時間與資料延遲請以各卡片標示為準。",
+          "以上為快照關係整理，不代表價格方向預測。"
         ]
       },
-      "quality_note": "此份報告是根據您提供的最新市場數據與新聞資訊所撰寫。"
+      "quality_note": "目前使用確定性整理；完成 AI 服務設定後，會補上語意摘要。"
     },
     "financials": {
       "cutoff_str": "09/03 13:30",
@@ -6370,6 +6371,490 @@
           "ai_reason": "量價齊升並創24月高",
           "ai_score_version": 2,
           "ai_score_input_hash": "0da0a1e6ead5d1b2cd273f0e1060d14ca64a3ade345b584271662318ce822283"
+        },
+        {
+          "code": "2049",
+          "name": "上銀",
+          "period": "2026/08",
+          "rev": 2708024,
+          "prev_rev": 2681646,
+          "yoy_rev": 1903026,
+          "mom_pct": 0.98,
+          "yoy_pct": 42.3,
+          "cum_rev": 19277366,
+          "cum_yoy_pct": 23.02,
+          "note": "",
+          "is_new": true,
+          "is_updated": false,
+          "first_seen": "2026-09-04 08:35:41",
+          "history": [
+            {
+              "year": 2018,
+              "month": 12,
+              "rev": 1751055
+            },
+            {
+              "year": 2019,
+              "month": 1,
+              "rev": 1667522
+            },
+            {
+              "year": 2019,
+              "month": 2,
+              "rev": 1501218
+            },
+            {
+              "year": 2019,
+              "month": 3,
+              "rev": 1880117
+            },
+            {
+              "year": 2019,
+              "month": 4,
+              "rev": 1957222
+            },
+            {
+              "year": 2019,
+              "month": 5,
+              "rev": 2044873
+            },
+            {
+              "year": 2019,
+              "month": 6,
+              "rev": 2083989
+            },
+            {
+              "year": 2019,
+              "month": 7,
+              "rev": 2116093
+            },
+            {
+              "year": 2019,
+              "month": 8,
+              "rev": 1572389
+            },
+            {
+              "year": 2019,
+              "month": 9,
+              "rev": 1374363
+            },
+            {
+              "year": 2019,
+              "month": 10,
+              "rev": 1407133
+            },
+            {
+              "year": 2019,
+              "month": 11,
+              "rev": 1278641
+            },
+            {
+              "year": 2019,
+              "month": 12,
+              "rev": 1323171
+            },
+            {
+              "year": 2020,
+              "month": 1,
+              "rev": 1039231
+            },
+            {
+              "year": 2020,
+              "month": 2,
+              "rev": 1217899
+            },
+            {
+              "year": 2020,
+              "month": 3,
+              "rev": 1364012
+            },
+            {
+              "year": 2020,
+              "month": 4,
+              "rev": 1746884
+            },
+            {
+              "year": 2020,
+              "month": 5,
+              "rev": 1861385
+            },
+            {
+              "year": 2020,
+              "month": 6,
+              "rev": 2011222
+            },
+            {
+              "year": 2020,
+              "month": 7,
+              "rev": 2041883
+            },
+            {
+              "year": 2020,
+              "month": 8,
+              "rev": 1819821
+            },
+            {
+              "year": 2020,
+              "month": 9,
+              "rev": 2007872
+            },
+            {
+              "year": 2020,
+              "month": 10,
+              "rev": 1977041
+            },
+            {
+              "year": 2020,
+              "month": 11,
+              "rev": 2044943
+            },
+            {
+              "year": 2020,
+              "month": 12,
+              "rev": 2124419
+            },
+            {
+              "year": 2021,
+              "month": 1,
+              "rev": 1965642
+            },
+            {
+              "year": 2021,
+              "month": 2,
+              "rev": 1865920
+            },
+            {
+              "year": 2021,
+              "month": 3,
+              "rev": 2160488
+            },
+            {
+              "year": 2021,
+              "month": 4,
+              "rev": 2236269
+            },
+            {
+              "year": 2021,
+              "month": 5,
+              "rev": 2369013
+            },
+            {
+              "year": 2021,
+              "month": 6,
+              "rev": 2443235
+            },
+            {
+              "year": 2021,
+              "month": 7,
+              "rev": 2500543
+            },
+            {
+              "year": 2021,
+              "month": 8,
+              "rev": 2529149
+            },
+            {
+              "year": 2021,
+              "month": 9,
+              "rev": 2500398
+            },
+            {
+              "year": 2021,
+              "month": 10,
+              "rev": 2410871
+            },
+            {
+              "year": 2021,
+              "month": 11,
+              "rev": 2262241
+            },
+            {
+              "year": 2021,
+              "month": 12,
+              "rev": 2022010
+            },
+            {
+              "year": 2022,
+              "month": 1,
+              "rev": 2401483
+            },
+            {
+              "year": 2022,
+              "month": 2,
+              "rev": 2453621
+            },
+            {
+              "year": 2022,
+              "month": 3,
+              "rev": 2711936
+            },
+            {
+              "year": 2022,
+              "month": 4,
+              "rev": 2742688
+            },
+            {
+              "year": 2022,
+              "month": 5,
+              "rev": 2745135
+            },
+            {
+              "year": 2022,
+              "month": 6,
+              "rev": 2751204
+            },
+            {
+              "year": 2022,
+              "month": 7,
+              "rev": 2781486
+            },
+            {
+              "year": 2022,
+              "month": 8,
+              "rev": 2627868
+            },
+            {
+              "year": 2022,
+              "month": 9,
+              "rev": 2511383
+            },
+            {
+              "year": 2022,
+              "month": 10,
+              "rev": 2110428
+            },
+            {
+              "year": 2022,
+              "month": 11,
+              "rev": 1802808
+            },
+            {
+              "year": 2022,
+              "month": 12,
+              "rev": 1680534
+            },
+            {
+              "year": 2023,
+              "month": 1,
+              "rev": 1447352
+            },
+            {
+              "year": 2023,
+              "month": 2,
+              "rev": 2006202
+            },
+            {
+              "year": 2023,
+              "month": 3,
+              "rev": 2280908
+            },
+            {
+              "year": 2023,
+              "month": 4,
+              "rev": 2150871
+            },
+            {
+              "year": 2023,
+              "month": 5,
+              "rev": 2215029
+            },
+            {
+              "year": 2023,
+              "month": 6,
+              "rev": 2217350
+            },
+            {
+              "year": 2023,
+              "month": 7,
+              "rev": 2246022
+            },
+            {
+              "year": 2023,
+              "month": 8,
+              "rev": 2150644
+            },
+            {
+              "year": 2023,
+              "month": 9,
+              "rev": 2161208
+            },
+            {
+              "year": 2023,
+              "month": 10,
+              "rev": 2000161
+            },
+            {
+              "year": 2023,
+              "month": 11,
+              "rev": 1912063
+            },
+            {
+              "year": 2023,
+              "month": 12,
+              "rev": 1846836
+            },
+            {
+              "year": 2024,
+              "month": 1,
+              "rev": 1800875
+            },
+            {
+              "year": 2024,
+              "month": 2,
+              "rev": 1704262
+            },
+            {
+              "year": 2024,
+              "month": 3,
+              "rev": 2001328
+            },
+            {
+              "year": 2024,
+              "month": 4,
+              "rev": 2020270
+            },
+            {
+              "year": 2024,
+              "month": 5,
+              "rev": 2060285
+            },
+            {
+              "year": 2024,
+              "month": 6,
+              "rev": 2102362
+            },
+            {
+              "year": 2024,
+              "month": 7,
+              "rev": 2121103
+            },
+            {
+              "year": 2024,
+              "month": 8,
+              "rev": 2041260
+            },
+            {
+              "year": 2024,
+              "month": 9,
+              "rev": 2164124
+            },
+            {
+              "year": 2024,
+              "month": 10,
+              "rev": 2173193
+            },
+            {
+              "year": 2024,
+              "month": 11,
+              "rev": 2140166
+            },
+            {
+              "year": 2024,
+              "month": 12,
+              "rev": 2063111
+            },
+            {
+              "year": 2025,
+              "month": 1,
+              "rev": 1900341
+            },
+            {
+              "year": 2025,
+              "month": 2,
+              "rev": 1930542
+            },
+            {
+              "year": 2025,
+              "month": 3,
+              "rev": 2008012
+            },
+            {
+              "year": 2025,
+              "month": 4,
+              "rev": 2050060
+            },
+            {
+              "year": 2025,
+              "month": 5,
+              "rev": 1935020
+            },
+            {
+              "year": 2025,
+              "month": 6,
+              "rev": 1940410
+            },
+            {
+              "year": 2025,
+              "month": 7,
+              "rev": 2002143
+            },
+            {
+              "year": 2025,
+              "month": 8,
+              "rev": 1903026
+            },
+            {
+              "year": 2025,
+              "month": 9,
+              "rev": 2090162
+            },
+            {
+              "year": 2025,
+              "month": 10,
+              "rev": 2101129
+            },
+            {
+              "year": 2025,
+              "month": 11,
+              "rev": 2182233
+            },
+            {
+              "year": 2025,
+              "month": 12,
+              "rev": 2219675
+            },
+            {
+              "year": 2026,
+              "month": 1,
+              "rev": 2150023
+            },
+            {
+              "year": 2026,
+              "month": 2,
+              "rev": 1872071
+            },
+            {
+              "year": 2026,
+              "month": 3,
+              "rev": 2357195
+            },
+            {
+              "year": 2026,
+              "month": 4,
+              "rev": 2474152
+            },
+            {
+              "year": 2026,
+              "month": 5,
+              "rev": 2480198
+            },
+            {
+              "year": 2026,
+              "month": 6,
+              "rev": 2554057
+            },
+            {
+              "year": 2026,
+              "month": 7,
+              "rev": 2681646
+            }
+          ],
+          "is_24m_high": true,
+          "prior_24m_max_yi": 26.82,
+          "ai_score": 5,
+          "ai_reason": "營收創24月高、年增42%",
+          "ai_score_version": 2,
+          "ai_score_input_hash": "447fc9bbf4f39f642ede4b02f81815ebef6dd7c5a17df30851234a3c7634cd48"
         },
         {
           "code": "2070",
@@ -24667,9 +25152,9 @@
         },
         "rev": {
           "state": "fresh",
-          "total": 100,
-          "unreflected": 47,
-          "fetched_at": "2026-09-03 22:06:15"
+          "total": 101,
+          "unreflected": 48,
+          "fetched_at": "2026-09-04 08:35:41"
         }
       }
     },
@@ -29116,19 +29601,19 @@
     }
   },
   "meta": {
-    "build_time": "2026-09-04 06:56",
-    "build_version": "20260904_0656",
+    "build_time": "2026-09-04 08:59",
+    "build_version": "20260904_0859",
     "data_date": "09/04",
     "stale_hours": 0.0,
-    "hours_since_us_close": 2.9,
+    "hours_since_us_close": 5.0,
     "us_market_context": {
-      "session_key": "after",
-      "label": "美股盤後",
-      "badge": "盤後",
-      "badge_short": "盤後",
-      "pill_class": "pill-amber",
+      "session_key": "closed",
+      "label": "最新收盤快照",
+      "badge": "收盤",
+      "badge_short": "收盤",
+      "pill_class": "pill-fresh",
       "updated_label": "09/04 05:15",
-      "detail": "Yahoo Finance · 來源更新 09/04 05:15（1.7 小時前）· 延遲分鐘數未提供 · 正常交易時段已結束",
+      "detail": "Yahoo Finance · 來源更新 09/04 05:15（3.7 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "ready",
@@ -29143,7 +29628,7 @@
         "name": "指數行情 (美股/亞股/ADR)",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-09-04T06:55:16.342412+08:00",
+        "fetched_at": "2026-09-04T08:59:15.911662+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -29168,7 +29653,7 @@
         "name": "處置股與出關預警",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-09-04T06:55:16.341853+08:00",
+        "fetched_at": "2026-09-04T08:59:15.910949+08:00",
         "data_date": "09/04",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -29193,7 +29678,7 @@
         "name": "大盤昨收與三大法人",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-09-04T06:55:19.330204+08:00",
+        "fetched_at": "2026-09-04T08:59:19.325730+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -29218,7 +29703,7 @@
         "name": "台指期夜盤走勢",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-09-04T06:55:17.496743+08:00",
+        "fetched_at": "2026-09-04T08:59:16.850538+08:00",
         "data_date": "2026-09-04",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -29243,7 +29728,7 @@
         "name": "PressPlay 盤前族群與標的",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-09-04T06:55:18.889555+08:00",
+        "fetched_at": "2026-09-04T08:59:18.599079+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -29268,7 +29753,7 @@
         "name": "主力券商與當沖籌碼明細",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-09-04T06:55:45.155031+08:00",
+        "fetched_at": "2026-09-04T08:59:40.585630+08:00",
         "data_date": "2026/09/03",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -29295,8 +29780,8 @@
         "name": "Chengwaye 個股漲停履歷",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-09-04T06:55:45.481068+08:00",
-        "data_date": "2026-09-04T06:55:46.008779+08:00",
+        "fetched_at": "2026-09-04T08:59:40.964224+08:00",
+        "data_date": "2026-09-04T08:59:41.348929+08:00",
         "age_minutes": 0.0,
         "error_summary": null,
         "fallback_used": false,
@@ -29323,7 +29808,7 @@
         "name": "總經財經行事曆",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-09-04T06:55:16.341409+08:00",
+        "fetched_at": "2026-09-04T08:59:15.910788+08:00",
         "data_date": "2026-09-04",
         "age_minutes": 0.0,
         "error_summary": null,
@@ -29348,7 +29833,7 @@
         "name": "市場未反映重大公告 (財報/營收/處分)",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-09-04T06:55:16.342128+08:00",
+        "fetched_at": "2026-09-04T08:59:15.911317+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -29373,7 +29858,7 @@
         "name": "盤前即時新聞聚合",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-09-04T06:55:16.905588+08:00",
+        "fetched_at": "2026-09-04T08:59:16.538527+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -29395,17 +29880,17 @@
       }
     ],
     "schema_version": 1,
-    "data_revision": "9a71aba5f798b46c",
-    "built_at": "2026-09-03T22:56:01.623166+00:00",
+    "data_revision": "d970f332dc536fb0",
+    "built_at": "2026-09-04T00:59:54.410720+00:00",
     "hash": {
       "disposition": "946b8e0f1fb7",
-      "candidates": "2fe0342984d6",
-      "stock_history": "2d67494e049b",
-      "announcements": "ce5244237d79",
-      "macro": "4d0fd5709f6a",
-      "calendar": "c2325fa0b944",
-      "news": "007a9c672dd9",
-      "ai_summary": "951443e7e432",
+      "candidates": "0335649b6a23",
+      "stock_history": "36141a651b46",
+      "announcements": "2fabf90bf5fd",
+      "macro": "0d91d8ee24d0",
+      "calendar": "d31beb9e0124",
+      "news": "debc15b435ef",
+      "ai_summary": "b30e30495bff",
       "opening_forecast": "a6b8ca8f0e29",
       "opening_result": "0111d65af8d5",
       "learning_status": "a75b0b54d02c"
