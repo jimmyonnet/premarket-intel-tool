@@ -1,24 +1,24 @@
 {
-  "date": "2026-09-04",
+  "date": "2026-09-06",
   "provider": "wantgoo",
   "provider_name": "Wantgoo / TAIFEX",
   "points": [],
-  "open": 45902.0,
-  "prev_close": 45819.0,
-  "high": 46559.0,
-  "low": 45726.0,
+  "open": 46622.0,
+  "prev_close": 46709.0,
+  "high": 47236.0,
+  "low": 46560.0,
   "latest": {
     "provider": "wantgoo",
     "provider_name": "Wantgoo / TAIFEX",
-    "collected_at": "2026-09-04T08:59:16.985331+08:00",
+    "collected_at": "2026-09-06T21:19:21.758650+08:00",
     "symbol": "臺指期096",
-    "price": 46487.0,
-    "change": 668.0,
-    "change_pct": 1.46,
-    "open": 45902.0,
-    "prev_close": 45819.0,
-    "high": 46559.0,
-    "low": 45726.0,
-    "volume": 38260
+    "price": 47182.0,
+    "change": 473.0,
+    "change_pct": 1.01,
+    "open": 46622.0,
+    "prev_close": 46709.0,
+    "high": 47236.0,
+    "low": 46560.0,
+    "volume": 33751
   }
 }

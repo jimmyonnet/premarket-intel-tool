@@ -1,5 +1,5 @@
-const CACHE_NAME = 'pmit-20260904_2303-data-588541bb7c1f0689';
-const DATA_REVISION = '588541bb7c1f0689';
+const CACHE_NAME = 'pmit-20260906_2120-data-dcbe8e42cdf8c0ce';
+const DATA_REVISION = 'dcbe8e42cdf8c0ce';
 const SHELL_ASSETS = [
   './', './index.html', './manifest.json',
   './icon-180.png', './icon-192.png', './icon-512.png', './data_meta.json', './data/tw_holidays.json'
