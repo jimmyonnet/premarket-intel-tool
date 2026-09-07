@@ -13721,7 +13721,7 @@
       "cum_rev": 544170,
       "cum_yoy_pct": 4.29,
       "note": "",
-      "is_new": true,
+      "is_new": false,
       "is_updated": false,
       "first_seen": "2026-09-07 19:26:52",
       "history": [
@@ -32057,7 +32057,7 @@
       "cum_rev": 23062765,
       "cum_yoy_pct": 9.47,
       "note": "",
-      "is_new": true,
+      "is_new": false,
       "is_updated": false,
       "first_seen": "2026-09-07 19:26:52",
       "history": [
@@ -54958,6 +54958,490 @@
       "ai_score_input_hash": "10bc7ce9d2503e719b4e1ca3e9ee0dce5c08f4102789bc9413b57749708831a9"
     },
     {
+      "code": "3558",
+      "name": "神準",
+      "period": "2026/08",
+      "rev": 1599436,
+      "prev_rev": 1292316,
+      "yoy_rev": 1169144,
+      "mom_pct": 23.76,
+      "yoy_pct": 36.8,
+      "cum_rev": 9519346,
+      "cum_yoy_pct": -8.32,
+      "note": "",
+      "is_new": false,
+      "is_updated": false,
+      "first_seen": "2026-09-07 22:28:31",
+      "history": [
+        {
+          "year": 2018,
+          "month": 12,
+          "rev": 665718
+        },
+        {
+          "year": 2019,
+          "month": 1,
+          "rev": 609860
+        },
+        {
+          "year": 2019,
+          "month": 2,
+          "rev": 566100
+        },
+        {
+          "year": 2019,
+          "month": 3,
+          "rev": 645262
+        },
+        {
+          "year": 2019,
+          "month": 4,
+          "rev": 696810
+        },
+        {
+          "year": 2019,
+          "month": 5,
+          "rev": 685359
+        },
+        {
+          "year": 2019,
+          "month": 6,
+          "rev": 722684
+        },
+        {
+          "year": 2019,
+          "month": 7,
+          "rev": 701483
+        },
+        {
+          "year": 2019,
+          "month": 8,
+          "rev": 639706
+        },
+        {
+          "year": 2019,
+          "month": 9,
+          "rev": 701488
+        },
+        {
+          "year": 2019,
+          "month": 10,
+          "rev": 668215
+        },
+        {
+          "year": 2019,
+          "month": 11,
+          "rev": 676676
+        },
+        {
+          "year": 2019,
+          "month": 12,
+          "rev": 626227
+        },
+        {
+          "year": 2020,
+          "month": 1,
+          "rev": 635673
+        },
+        {
+          "year": 2020,
+          "month": 2,
+          "rev": 529475
+        },
+        {
+          "year": 2020,
+          "month": 3,
+          "rev": 604898
+        },
+        {
+          "year": 2020,
+          "month": 4,
+          "rev": 589463
+        },
+        {
+          "year": 2020,
+          "month": 5,
+          "rev": 588459
+        },
+        {
+          "year": 2020,
+          "month": 6,
+          "rev": 626194
+        },
+        {
+          "year": 2020,
+          "month": 7,
+          "rev": 656586
+        },
+        {
+          "year": 2020,
+          "month": 8,
+          "rev": 616538
+        },
+        {
+          "year": 2020,
+          "month": 9,
+          "rev": 706773
+        },
+        {
+          "year": 2020,
+          "month": 10,
+          "rev": 669231
+        },
+        {
+          "year": 2020,
+          "month": 11,
+          "rev": 677769
+        },
+        {
+          "year": 2020,
+          "month": 12,
+          "rev": 865392
+        },
+        {
+          "year": 2021,
+          "month": 1,
+          "rev": 704551
+        },
+        {
+          "year": 2021,
+          "month": 2,
+          "rev": 559950
+        },
+        {
+          "year": 2021,
+          "month": 3,
+          "rev": 717269
+        },
+        {
+          "year": 2021,
+          "month": 4,
+          "rev": 707360
+        },
+        {
+          "year": 2021,
+          "month": 5,
+          "rev": 705140
+        },
+        {
+          "year": 2021,
+          "month": 6,
+          "rev": 801830
+        },
+        {
+          "year": 2021,
+          "month": 7,
+          "rev": 869137
+        },
+        {
+          "year": 2021,
+          "month": 8,
+          "rev": 873747
+        },
+        {
+          "year": 2021,
+          "month": 9,
+          "rev": 778321
+        },
+        {
+          "year": 2021,
+          "month": 10,
+          "rev": 753127
+        },
+        {
+          "year": 2021,
+          "month": 11,
+          "rev": 756627
+        },
+        {
+          "year": 2021,
+          "month": 12,
+          "rev": 952732
+        },
+        {
+          "year": 2022,
+          "month": 1,
+          "rev": 935780
+        },
+        {
+          "year": 2022,
+          "month": 2,
+          "rev": 747433
+        },
+        {
+          "year": 2022,
+          "month": 3,
+          "rev": 1178937
+        },
+        {
+          "year": 2022,
+          "month": 4,
+          "rev": 889301
+        },
+        {
+          "year": 2022,
+          "month": 5,
+          "rev": 1193038
+        },
+        {
+          "year": 2022,
+          "month": 6,
+          "rev": 1410177
+        },
+        {
+          "year": 2022,
+          "month": 7,
+          "rev": 1523790
+        },
+        {
+          "year": 2022,
+          "month": 8,
+          "rev": 1479508
+        },
+        {
+          "year": 2022,
+          "month": 9,
+          "rev": 1588934
+        },
+        {
+          "year": 2022,
+          "month": 10,
+          "rev": 1628743
+        },
+        {
+          "year": 2022,
+          "month": 11,
+          "rev": 1891504
+        },
+        {
+          "year": 2022,
+          "month": 12,
+          "rev": 1855137
+        },
+        {
+          "year": 2023,
+          "month": 1,
+          "rev": 1367125
+        },
+        {
+          "year": 2023,
+          "month": 2,
+          "rev": 1469026
+        },
+        {
+          "year": 2023,
+          "month": 3,
+          "rev": 1671786
+        },
+        {
+          "year": 2023,
+          "month": 4,
+          "rev": 1437668
+        },
+        {
+          "year": 2023,
+          "month": 5,
+          "rev": 1115460
+        },
+        {
+          "year": 2023,
+          "month": 6,
+          "rev": 1602566
+        },
+        {
+          "year": 2023,
+          "month": 7,
+          "rev": 1456740
+        },
+        {
+          "year": 2023,
+          "month": 8,
+          "rev": 1447181
+        },
+        {
+          "year": 2023,
+          "month": 9,
+          "rev": 1280637
+        },
+        {
+          "year": 2023,
+          "month": 10,
+          "rev": 1375175
+        },
+        {
+          "year": 2023,
+          "month": 11,
+          "rev": 1367991
+        },
+        {
+          "year": 2023,
+          "month": 12,
+          "rev": 1017816
+        },
+        {
+          "year": 2024,
+          "month": 1,
+          "rev": 1193078
+        },
+        {
+          "year": 2024,
+          "month": 2,
+          "rev": 826578
+        },
+        {
+          "year": 2024,
+          "month": 3,
+          "rev": 837553
+        },
+        {
+          "year": 2024,
+          "month": 4,
+          "rev": 874859
+        },
+        {
+          "year": 2024,
+          "month": 5,
+          "rev": 852379
+        },
+        {
+          "year": 2024,
+          "month": 6,
+          "rev": 791301
+        },
+        {
+          "year": 2024,
+          "month": 7,
+          "rev": 937460
+        },
+        {
+          "year": 2024,
+          "month": 8,
+          "rev": 1007766
+        },
+        {
+          "year": 2024,
+          "month": 9,
+          "rev": 1006537
+        },
+        {
+          "year": 2024,
+          "month": 10,
+          "rev": 1194359
+        },
+        {
+          "year": 2024,
+          "month": 11,
+          "rev": 1197162
+        },
+        {
+          "year": 2024,
+          "month": 12,
+          "rev": 1265770
+        },
+        {
+          "year": 2025,
+          "month": 1,
+          "rev": 1216765
+        },
+        {
+          "year": 2025,
+          "month": 2,
+          "rev": 1354114
+        },
+        {
+          "year": 2025,
+          "month": 3,
+          "rev": 1423247
+        },
+        {
+          "year": 2025,
+          "month": 4,
+          "rev": 1401308
+        },
+        {
+          "year": 2025,
+          "month": 5,
+          "rev": 1321253
+        },
+        {
+          "year": 2025,
+          "month": 6,
+          "rev": 1245266
+        },
+        {
+          "year": 2025,
+          "month": 7,
+          "rev": 1252619
+        },
+        {
+          "year": 2025,
+          "month": 8,
+          "rev": 1169144
+        },
+        {
+          "year": 2025,
+          "month": 9,
+          "rev": 1175302
+        },
+        {
+          "year": 2025,
+          "month": 10,
+          "rev": 1185566
+        },
+        {
+          "year": 2025,
+          "month": 11,
+          "rev": 1039695
+        },
+        {
+          "year": 2025,
+          "month": 12,
+          "rev": 1251389
+        },
+        {
+          "year": 2026,
+          "month": 1,
+          "rev": 989690
+        },
+        {
+          "year": 2026,
+          "month": 2,
+          "rev": 1042051
+        },
+        {
+          "year": 2026,
+          "month": 3,
+          "rev": 1026464
+        },
+        {
+          "year": 2026,
+          "month": 4,
+          "rev": 1056838
+        },
+        {
+          "year": 2026,
+          "month": 5,
+          "rev": 1195825
+        },
+        {
+          "year": 2026,
+          "month": 6,
+          "rev": 1316726
+        },
+        {
+          "year": 2026,
+          "month": 7,
+          "rev": 1292316
+        }
+      ],
+      "is_24m_high": true,
+      "prior_24m_max_yi": 14.23,
+      "ai_score": 5,
+      "ai_reason": "營收創高但累計仍減",
+      "ai_score_version": 2,
+      "ai_score_input_hash": "ef06d47afb1d9ab050f229a826ca398eadf60c0833a1855a7734bae5dcc4b8e3"
+    },
+    {
       "code": "3588",
       "name": "通嘉",
       "period": "2026/08",
@@ -67067,7 +67551,7 @@
       "cum_rev": 704771,
       "cum_yoy_pct": 14.7,
       "note": "",
-      "is_new": true,
+      "is_new": false,
       "is_updated": false,
       "first_seen": "2026-09-07 19:26:52",
       "history": [
@@ -78862,7 +79346,7 @@
       "cum_rev": 573893,
       "cum_yoy_pct": -37.46,
       "note": "",
-      "is_new": true,
+      "is_new": false,
       "is_updated": false,
       "first_seen": "2026-09-07 19:26:52",
       "history": [
@@ -92498,7 +92982,7 @@
       "cum_rev": 1594,
       "cum_yoy_pct": -32.94,
       "note": "",
-      "is_new": true,
+      "is_new": false,
       "is_updated": false,
       "first_seen": "2026-09-07 19:26:52",
       "history": [
@@ -92982,7 +93466,7 @@
       "cum_rev": 32744,
       "cum_yoy_pct": 42.96,
       "note": "本期營收增加，主要係本公司客戶端需求增加所致。",
-      "is_new": true,
+      "is_new": false,
       "is_updated": false,
       "first_seen": "2026-09-07 19:26:52",
       "history": [
@@ -96854,7 +97338,7 @@
       "cum_rev": 14889375,
       "cum_yoy_pct": 1.93,
       "note": "",
-      "is_new": true,
+      "is_new": false,
       "is_updated": false,
       "first_seen": "2026-09-07 19:26:52",
       "history": [
@@ -105042,7 +105526,7 @@
       "cum_rev": 261297,
       "cum_yoy_pct": 29.5,
       "note": "1.國內外客戶需求穩定、旺盛。2.新產品組合逐步提升高毛利品項出貨比重。3.因應未來訂單需求，規劃新廠，建置新產能",
-      "is_new": true,
+      "is_new": false,
       "is_updated": false,
       "first_seen": "2026-09-07 19:26:52",
       "history": [
@@ -108569,7 +109053,7 @@
       "cum_rev": 4660,
       "cum_yoy_pct": 14.02,
       "note": "主係試劑銷售及勞務收入皆成長",
-      "is_new": true,
+      "is_new": false,
       "is_updated": false,
       "first_seen": "2026-09-07 19:26:52",
       "history": [
@@ -118825,7 +119309,7 @@
       "cum_rev": 432334,
       "cum_yoy_pct": 50.69,
       "note": "主係新增合併個體-天良",
-      "is_new": true,
+      "is_new": false,
       "is_updated": false,
       "first_seen": "2026-09-07 19:26:52",
       "history": [
@@ -129428,7 +129912,7 @@
       "cum_rev": 4413086,
       "cum_yoy_pct": -1.98,
       "note": "",
-      "is_new": true,
+      "is_new": false,
       "is_updated": false,
       "first_seen": "2026-09-07 19:26:52",
       "history": [
@@ -133788,9 +134272,9 @@
     },
     "rev": {
       "state": "fresh",
-      "total": 540,
-      "unreflected": 294,
-      "fetched_at": "2026-09-07 19:26:52"
+      "total": 541,
+      "unreflected": 295,
+      "fetched_at": "2026-09-07 23:22:25"
     }
   }
 }

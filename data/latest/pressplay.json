@@ -1,18 +1,32 @@
 {
   "source_article": {
-    "title": "0907盤前",
-    "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/1C403D70F73C71402DD3BBD1F02C2D7B",
+    "title": "0908盤前",
+    "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/B13028B625BE61FEFD596DE95A99EFCE",
     "fetch_mode": "live_browser",
-    "collected_at": "2026-09-07T19:40:49.006428+08:00"
+    "collected_at": "2026-09-07T23:24:44.244239+08:00"
   },
   "chengwaye_date": null,
   "not_found_group": {
     "raw_tokens": [
-      "大量",
-      "6672",
-      "6290"
+      "聯電",
+      "3167",
+      "8039"
     ],
     "matched": [
+      {
+        "market": "市",
+        "code": "2303",
+        "name": "聯電",
+        "close": "143",
+        "volume": "337,408",
+        "foreign": "+38,568",
+        "trust": "+14,860",
+        "dealer": "-849",
+        "ai_reason": "成熟製程與晶圓製造需求題材輪動，晶圓代工族群資金聚焦。",
+        "group": "🏭 晶圓代工",
+        "match_type": "name",
+        "raw_token": "聯電"
+      },
       {
         "market": "市",
         "code": "3167",
@@ -24,76 +38,45 @@
         "dealer": "-24",
         "ai_reason": "PCB製程設備與先進製程檢測題材輪動，PCB設備族群買盤集中。",
         "group": "🛠️ PCB設備",
-        "match_type": "name",
-        "raw_token": "大量"
+        "match_type": "code",
+        "raw_token": "3167"
       },
       {
         "market": "市",
-        "code": "6672",
-        "name": "騰輝電子-KY",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_code",
-        "raw_token": "6672"
-      },
-      {
-        "market": "市",
-        "code": "6290",
-        "name": "良維",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_code",
-        "raw_token": "6290"
+        "code": "8039",
+        "name": "台虹",
+        "close": "327",
+        "volume": "22,299",
+        "foreign": "-115",
+        "trust": "0",
+        "dealer": "+48",
+        "ai_reason": "軟板材料與高階電子材料需求延續，電子材料族群走強。",
+        "group": "🔬 電子材料",
+        "match_type": "code",
+        "raw_token": "8039"
       }
     ],
     "unmatched": []
   },
   "found_group": {
     "raw_tokens": [
-      "國巨",
-      "華新科",
-      "禾伸堂",
-      "華星光",
-      "雙鴻"
+      "信昌電",
+      "禾伸堂"
     ],
     "matched": [
       {
-        "market": "市",
-        "code": "2327",
-        "name": "國巨",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄族群標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_name",
-        "raw_token": "國巨"
-      },
-      {
-        "market": "市",
-        "code": "2492",
-        "name": "華新科",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄族群標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_name",
-        "raw_token": "華新科"
+        "market": "櫃",
+        "code": "6173",
+        "name": "信昌電",
+        "close": "286.5",
+        "volume": "12,170",
+        "foreign": "+610",
+        "trust": "0",
+        "dealer": "+105",
+        "ai_reason": "電阻與被動元件需求題材延續，帶動被動元件族群買盤集中。",
+        "group": "🔌 被動元件",
+        "match_type": "name",
+        "raw_token": "信昌電"
       },
       {
         "market": "市",
@@ -108,34 +91,6 @@
         "group": "🏪 電子通路",
         "match_type": "name",
         "raw_token": "禾伸堂"
-      },
-      {
-        "market": "市",
-        "code": "4979",
-        "name": "華星光",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄族群標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_name",
-        "raw_token": "華星光"
-      },
-      {
-        "market": "市",
-        "code": "3324",
-        "name": "雙鴻",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄族群標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_name",
-        "raw_token": "雙鴻"
       }
     ],
     "unmatched": []
