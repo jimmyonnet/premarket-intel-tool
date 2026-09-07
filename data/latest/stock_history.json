@@ -1,6 +1,6 @@
 {
   "source": "https://chengwaye.com/stock/",
-  "fetched_at": "2026-09-06T21:19:48.215990+08:00",
+  "fetched_at": "2026-09-07T19:41:17.035093+08:00",
   "requested_codes": [
     "3167",
     "6672",
@@ -17,20 +17,29 @@
       "name": "大量",
       "source_url": "https://chengwaye.com/stock/3167",
       "summary": {
-        "limit_up_count": "20 次",
-        "latest_limit_up": "2026/09/04",
-        "avg_next_open": "+3.21%",
-        "avg_next_close": "+2.78%"
+        "limit_up_count": "21 次",
+        "latest_limit_up": "2026/09/07",
+        "avg_next_open": "+3.54%",
+        "avg_next_close": "+3.14%"
       },
       "records": [
         {
-          "date": "2026/09/04",
-          "close": "803",
+          "date": "2026/09/07",
+          "close": "883",
           "group": "PCB設備",
           "next_open": "—",
           "next_avg": "—",
           "next_close": "—",
           "next_trend": "—"
+        },
+        {
+          "date": "2026/09/04",
+          "close": "803",
+          "group": "PCB設備",
+          "next_open": "+9.96%",
+          "next_avg": "+9.96%",
+          "next_close": "+9.96%",
+          "next_trend": "續漲停"
         },
         {
           "date": "2026/08/20",
@@ -205,7 +214,7 @@
         }
       ],
       "period_note": "上市｜族群：PCB設備、半導體設備、PCB、機械｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 20
+      "record_count": 21
     },
     "6672": {
       "code": "6672",
@@ -214,18 +223,18 @@
       "summary": {
         "limit_up_count": "10 次",
         "latest_limit_up": "2026/09/04",
-        "avg_next_open": "+3.28%",
-        "avg_next_close": "+1.58%"
+        "avg_next_open": "+3.09%",
+        "avg_next_close": "+1.79%"
       },
       "records": [
         {
           "date": "2026/09/04",
           "close": "289",
           "group": "PCB",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "+1.38%",
+          "next_avg": "+2.44%",
+          "next_close": "+3.63%",
+          "next_trend": "弱續漲"
         },
         {
           "date": "2026/08/10",
@@ -319,18 +328,18 @@
       "summary": {
         "limit_up_count": "6 次",
         "latest_limit_up": "2026/09/04",
-        "avg_next_open": "+2.53%",
-        "avg_next_close": "+0.60%"
+        "avg_next_open": "+2.60%",
+        "avg_next_close": "+0.47%"
       },
       "records": [
         {
           "date": "2026/09/04",
           "close": "270",
           "group": "電線電纜",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "+2.96%",
+          "next_avg": "+1.25%",
+          "next_close": "-0.19%",
+          "next_trend": "開高走低"
         },
         {
           "date": "2026/07/31",
@@ -388,18 +397,18 @@
       "summary": {
         "limit_up_count": "15 次",
         "latest_limit_up": "2026/09/04",
-        "avg_next_open": "+3.37%",
-        "avg_next_close": "+1.53%"
+        "avg_next_open": "+3.30%",
+        "avg_next_close": "+1.74%"
       },
       "records": [
         {
           "date": "2026/09/04",
           "close": "562",
           "group": "被動元件",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "+2.31%",
+          "next_avg": "+4.80%",
+          "next_close": "+4.80%",
+          "next_trend": "弱續漲"
         },
         {
           "date": "2026/08/13",
@@ -538,18 +547,18 @@
       "summary": {
         "limit_up_count": "22 次",
         "latest_limit_up": "2026/09/04",
-        "avg_next_open": "+1.21%",
-        "avg_next_close": "+2.82%"
+        "avg_next_open": "+1.33%",
+        "avg_next_close": "+3.06%"
       },
       "records": [
         {
           "date": "2026/09/04",
           "close": "298.5",
           "group": "被動元件",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "+3.85%",
+          "next_avg": "+7.38%",
+          "next_close": "+8.21%",
+          "next_trend": "強續漲"
         },
         {
           "date": "2026/08/28",
@@ -749,20 +758,29 @@
       "name": "禾伸堂",
       "source_url": "https://chengwaye.com/stock/3026",
       "summary": {
-        "limit_up_count": "27 次",
-        "latest_limit_up": "2026/09/04",
-        "avg_next_open": "+4.10%",
-        "avg_next_close": "+5.27%"
+        "limit_up_count": "28 次",
+        "latest_limit_up": "2026/09/07",
+        "avg_next_open": "+4.31%",
+        "avg_next_close": "+5.44%"
       },
       "records": [
         {
-          "date": "2026/09/04",
-          "close": "701",
+          "date": "2026/09/07",
+          "close": "771",
           "group": "電子通路",
           "next_open": "—",
           "next_avg": "—",
           "next_close": "—",
           "next_trend": "—"
+        },
+        {
+          "date": "2026/09/04",
+          "close": "701",
+          "group": "電子通路",
+          "next_open": "+9.84%",
+          "next_avg": "+9.93%",
+          "next_close": "+9.99%",
+          "next_trend": "續漲停"
         },
         {
           "date": "2026/08/28",
@@ -1000,7 +1018,7 @@
         }
       ],
       "period_note": "上市｜族群：電子通路、被動元件、AI伺服器｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-      "record_count": 27
+      "record_count": 28
     },
     "4979": {
       "code": "4979",
@@ -1009,18 +1027,18 @@
       "summary": {
         "limit_up_count": "14 次",
         "latest_limit_up": "2026/09/04",
-        "avg_next_open": "+2.81%",
-        "avg_next_close": "+3.29%"
+        "avg_next_open": "+2.62%",
+        "avg_next_close": "+2.61%"
       },
       "records": [
         {
           "date": "2026/09/04",
           "close": "629",
           "group": "光通訊",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "+0.16%",
+          "next_avg": "-2.66%",
+          "next_close": "-6.20%",
+          "next_trend": "開高走低"
         },
         {
           "date": "2026/08/25",
@@ -1150,18 +1168,18 @@
       "summary": {
         "limit_up_count": "9 次",
         "latest_limit_up": "2026/09/04",
-        "avg_next_open": "+1.56%",
-        "avg_next_close": "-0.18%"
+        "avg_next_open": "+1.54%",
+        "avg_next_close": "-0.50%"
       },
       "records": [
         {
           "date": "2026/09/04",
           "close": "1485",
           "group": "AI散熱",
-          "next_open": "—",
-          "next_avg": "—",
-          "next_close": "—",
-          "next_trend": "—"
+          "next_open": "+1.35%",
+          "next_avg": "-2.12%",
+          "next_close": "-3.03%",
+          "next_trend": "開高走低"
         },
         {
           "date": "2026/09/01",
