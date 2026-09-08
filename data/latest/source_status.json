@@ -1,6 +1,6 @@
 {
   "schema_version": "source-status.v2",
-  "updated_at": "2026-09-08T02:59:03.722687+08:00",
+  "updated_at": "2026-09-08T09:16:14.561715+08:00",
   "reliability_tiers": {
     "core_stable": {
       "label": "核心穩定",
@@ -36,14 +36,16 @@
       "notification_level": "critical",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-09-07T23:24:41.422036+08:00",
+      "fetched_at": "2026-09-08T09:15:51.991967+08:00",
       "data_date": null,
       "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 720 分鐘內"
     },
     "twse_summary": {
       "source_id": "twse_summary",
@@ -56,14 +58,16 @@
       "notification_level": "warning",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-09-07T23:24:44.416432+08:00",
+      "fetched_at": "2026-09-08T09:15:51.991967+08:00",
       "data_date": null,
       "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 720 分鐘內"
     },
     "night_session": {
       "source_id": "night_session",
@@ -76,14 +80,16 @@
       "notification_level": "warning",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-09-07T23:24:43.271368+08:00",
+      "fetched_at": "2026-09-08T09:15:51.991967+08:00",
       "data_date": "2026-09-07",
       "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 180 分鐘內"
     },
     "disposal": {
       "source_id": "disposal",
@@ -118,7 +124,7 @@
       "notification_level": "notice",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-09-08T02:58:39.400133+08:00",
+      "fetched_at": "2026-09-08T09:15:51.991967+08:00",
       "data_date": null,
       "age_minutes": 0.4,
       "error_summary": null,
@@ -142,7 +148,7 @@
         "pressplay"
       ],
       "status": "ok",
-      "fetched_at": "2026-09-08T02:58:39.395147+08:00",
+      "fetched_at": "2026-09-08T09:15:51.986279+08:00",
       "data_date": "2026/09/07",
       "age_minutes": 0.4,
       "error_summary": null,
@@ -164,14 +170,16 @@
       "notification_level": "warning",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-09-07T23:24:41.422669+08:00",
+      "fetched_at": "2026-09-08T09:15:51.986279+08:00",
       "data_date": "2026-09-07",
       "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "缺少今日重磅總經數據與事件日程倒數",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 720 分鐘內"
     },
     "financials": {
       "source_id": "financials",
@@ -204,14 +212,16 @@
       "notification_level": "notice",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-09-07T23:24:42.042280+08:00",
+      "fetched_at": "2026-09-08T09:15:51.991967+08:00",
       "data_date": null,
       "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "缺少隔夜美股與產業焦點新聞快訊",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 180 分鐘內"
     },
     "chengwaye_stock_history": {
       "source_id": "chengwaye_stock_history",
@@ -227,7 +237,7 @@
         "chengwaye_daily"
       ],
       "status": "ok",
-      "fetched_at": "2026-09-08T02:58:39.400133+08:00",
+      "fetched_at": "2026-09-08T09:15:51.991967+08:00",
       "data_date": null,
       "age_minutes": 0.4,
       "error_summary": null,
