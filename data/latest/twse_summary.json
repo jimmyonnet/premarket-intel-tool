@@ -1,13 +1,13 @@
 {
   "twii": {
-    "price": 47326.27,
-    "change": 775.14,
-    "change_pct": 1.67,
+    "price": 47105.78,
+    "change": 554.68,
+    "change_pct": 1.19,
     "volume": 0
   },
   "inst": {
-    "dealer": 156.87,
-    "trust": 87.24,
-    "foreign": 883.08
+    "dealer": -185.4,
+    "trust": -72.43,
+    "foreign": 132.69
   }
 }

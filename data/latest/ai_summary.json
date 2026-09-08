@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-08T12:37:46.578557+08:00",
-  "status": "ok",
-  "provider": "Gemini API",
-  "model": "gemini-2.5-flash",
-  "fallback_reason": null,
+  "generated_at": "2026-09-08T21:01:12.805437+08:00",
+  "status": "fallback",
+  "provider": "確定性降級整理",
+  "model": null,
+  "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 503: This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.",
   "news_stats": {
-    "count": 6,
-    "unique_topics": 4,
-    "unique_sources": 3,
+    "count": 10,
+    "unique_topics": 5,
+    "unique_sources": 4,
     "nvidia_count": 0
   },
   "data_quality": {
@@ -18,12 +18,12 @@
       {
         "name": "新聞數量",
         "status": "ok",
-        "detail": "6 則"
+        "detail": "10 則"
       },
       {
         "name": "主題分布",
         "status": "ok",
-        "detail": "4 類"
+        "detail": "5 類"
       },
       {
         "name": "公司／事件集中度",
@@ -42,74 +42,76 @@
       }
     ],
     "issues": [],
-    "news_count": 6,
-    "unique_topics": 4,
-    "unique_sources": 3,
+    "news_count": 10,
+    "unique_topics": 5,
+    "unique_sources": 4,
     "nvidia_count": 0,
     "topic_counts": {
-      "global_market": 2,
-      "taiwan_market": 2,
       "sector_technology": 1,
-      "company_earnings": 1
+      "taiwan_market": 2,
+      "currency_commodities": 2,
+      "global_market": 1,
+      "company_earnings": 4
     },
     "source_counts": {
-      "Yahoo股市": 4,
+      "news.cnyes.com": 7,
+      "Yahoo新聞": 1,
       "鉅亨網": 1,
-      "news.cnyes.com": 1
+      "Yahoo股市": 1
     }
   },
   "news_summary": {
-    "headline": "外資大舉買超台股，押寶台積電8月營收，台股8月表現強勁。",
+    "headline": "目前整理 10 則新聞，涵蓋 5 類主題；同一公司或事件不應主導全部清單。",
     "topic_summary": [
       {
-        "topic": "美股／全球市場",
+        "topic": "公司／財報",
+        "count": 4,
+        "summary": "公司／財報"
+      },
+      {
+        "topic": "美元／債券／商品",
         "count": 2,
-        "summary": "外資狂掃台股883億元，創史上第四大買超，並連續兩日買超逾1445億元，分析師推測與押寶台積電8月營收有關，且美股休市一天。"
+        "summary": "美元／債券／商品"
       },
       {
         "topic": "台股市場",
         "count": 2,
-        "summary": "台股8月上漲逾3千點，重返4萬7點並收在史上次高，140萬人獲利了結，退場人數一個月內翻6倍。個股表現分歧，信驊漲停，大立光跌停。"
+        "summary": "台股市場"
+      },
+      {
+        "topic": "美股／全球市場",
+        "count": 1,
+        "summary": "美股／全球市場"
       },
       {
         "topic": "科技／產業",
         "count": 1,
-        "summary": "樺漢8月營收創同期新高，預計Physical AI營收將大幅提升。"
-      },
-      {
-        "topic": "公司／財報",
-        "count": 1,
-        "summary": "威剛8月營收達189億元續創新高，前8月營收突破千億元。"
+        "summary": "科技／產業"
       }
     ],
     "key_points": [
-      "外資單日買超台股883億元，為史上第四大。",
-      "外資連續兩日買超台股逾1445億元。",
-      "台股8月上漲逾3千點，收盤重返4萬7點，創史上次高。",
-      "140萬人獲利了結，退場人數一個月內翻6倍。",
-      "樺漢與威剛8月營收均創同期或歷史新高。"
+      "〈電子五哥營收〉廣達AI伺服器業務動能強勁 8月營收續創新高與前8月年增同翻倍（news.cnyes.com，09/08 17:27）",
+      "外資買超百億撐台股仍翻黑！川湖重挫逾9% 資金轉進金融、內需（Yahoo新聞，09/08 18:31）",
+      "鉅亨雙週報》利率、油價與AI牽動市場震盪，股市聚焦實質成長（鉅亨網，09/08 16:36）",
+      "外資百億撐腰台股仍翻黑 穎崴亮燈號召千金股、記憶體三雄救火守住4萬7｜Yahoo財經掃描（Yahoo股市，09/08 17:21）",
+      "亞股有望連四紅！伯恩斯坦示警：美債殖利率上升對亞股構成巨大風險（news.cnyes.com，09/08 13:30）"
     ]
   },
   "market_summary": {
-    "headline": "美股主要指數漲跌互見，費半指數與半導體ADR表現強勁，亞股普遍下跌。",
+    "headline": "隔夜市場風險情緒偏強，但不同市場與產業之間仍有分化。",
     "observations": [
-      "美股主要指數漲跌互見，道瓊、S&P 500及NASDAQ小幅下跌，但費城半導體指數逆勢大漲逾3%。",
-      "半導體相關ADR表現強勁，台積電、美光、聯電ADR均有顯著漲幅，輝達ADR亦上揚。",
-      "蘋果ADR則呈現下跌，與半導體類股走勢分歧。",
-      "日韓股市呈現大幅下跌，與美股主要指數的跌幅相比更為顯著，台指期夜盤亦小幅收黑。"
+      "市場廣度：上漲標的多於下跌標的，整體不是所有市場同步同幅度變動。",
+      "相對強弱：ADR／跨海標的 相對有支撐，台指期夜盤 相對承壓，市場表現呈現分化。",
+      "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。",
+      "亞股資料僅作前一交易時段收盤結果，非當下盤中行情。"
     ],
     "drivers": [
-      "外資大舉買超台股，可能與市場對台積電8月營收的預期有關。",
-      "費城半導體指數與多數半導體ADR的強勁表現，可能反映市場對科技產業特定領域的樂觀情緒。",
-      "台股8月強勁表現及重返4萬7點，可能吸引資金持續關注。",
-      "部分個股如信驊漲停，可能受特定利多消息或資金追捧影響。"
+      "新聞題材主要集中在：公司／財報、台股市場、美元／債券／商品；這是資訊分布，不代表已確認的因果關係。"
     ],
     "risks": [
-      "美股主要指數普遍下跌，可能對台股開盤情緒造成壓力。",
-      "日韓股市大幅下挫，顯示亞洲市場可能面臨較大賣壓，需留意其對台股的傳導效應。",
-      "台股8月獲利了結人數大增，可能暗示市場短期有修正壓力。",
-      "個股表現分歧，如大立光跌停，顯示市場資金流向可能快速輪動，增加選股難度。"
+      "亞股資料僅作前一交易時段收盤結果，非當下盤中行情。",
+      "以上為快照關係整理，不代表價格方向預測。"
     ]
   },
-  "quality_note": "本報告所引用之美股指數與ADR行情資料更新時間為2026年9月5日，可能未能反映最新市場動態。日韓股市資料未提供更新時間。"
+  "quality_note": "目前使用確定性整理；完成 AI 服務設定後，會補上語意摘要。"
 }
