@@ -1,9 +1,9 @@
 {
-  "build_time": "2026-09-09 23:15",
-  "build_version": "20260909_2315",
+  "build_time": "2026-09-10 00:59",
+  "build_version": "20260910_0059",
   "data_date": "09/09",
-  "stale_hours": 14.7,
-  "hours_since_us_close": 19.3,
+  "stale_hours": 16.4,
+  "hours_since_us_close": 21.0,
   "us_market_context": {
     "session_key": "regular",
     "label": "美股盤中快照",
@@ -11,14 +11,14 @@
     "badge_short": "盤中",
     "pill_class": "pill-live",
     "updated_label": "09/09 05:15",
-    "detail": "Yahoo Finance · 來源更新 09/09 05:15（18.0 小時前）· 延遲分鐘數未提供 · 美國正常交易時段",
+    "detail": "Yahoo Finance · 來源更新 09/09 05:15（19.7 小時前）· 延遲分鐘數未提供 · 美國正常交易時段",
     "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
   },
-  "overall_status": "ready",
-  "status_label": "可用",
-  "status_badge_class": "is-ready",
+  "overall_status": "unsafe",
+  "status_label": "不建議依此頁判讀",
+  "status_badge_class": "is-unsafe",
   "summary_reasons": [
-    "所有必要與次要資料來源均正常取得且在時限內"
+    "處置資料日期不符：處置來源標註適用 09/09，但目標交易日為 09/11（相差 -1 天）"
   ],
   "sources": [
     {
@@ -126,7 +126,7 @@
       "name": "PressPlay 盤前族群與標的",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-09-09T09:19:57.832056+08:00",
+      "fetched_at": "2026-09-10T00:58:07.358395+08:00",
       "data_date": null,
       "age_minutes": 0.4,
       "error_summary": null,
@@ -151,7 +151,7 @@
       "name": "主力券商與當沖籌碼明細",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-09-09T09:19:57.826200+08:00",
+      "fetched_at": "2026-09-10T00:58:07.353955+08:00",
       "data_date": "2026/09/08",
       "age_minutes": 0.4,
       "error_summary": null,
@@ -178,7 +178,7 @@
       "name": "Chengwaye 個股漲停履歷",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-09-09T09:19:57.832056+08:00",
+      "fetched_at": "2026-09-10T00:58:07.359395+08:00",
       "data_date": null,
       "age_minutes": 0.4,
       "error_summary": null,
@@ -278,8 +278,8 @@
     }
   ],
   "schema_version": 1,
-  "data_revision": "0274971ceeec413e",
-  "built_at": "2026-09-09T15:15:06.670386+00:00",
+  "data_revision": "24edeb52ac785644",
+  "built_at": "2026-09-09T16:59:19.191227+00:00",
   "hash": {
     "disposition": "87e3406229c9",
     "candidates": "4259313effc2",
@@ -288,7 +288,7 @@
     "macro": "eb9886863986",
     "calendar": "5aa786826e98",
     "news": "107eb9a9bab2",
-    "ai_summary": "e161cbe9fde2",
+    "ai_summary": "02465d409124",
     "opening_forecast": "a6b8ca8f0e29",
     "opening_result": "0111d65af8d5",
     "learning_status": "a75b0b54d02c"
