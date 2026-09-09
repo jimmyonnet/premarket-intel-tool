@@ -1,98 +1,66 @@
 {
   "source_article": {
-    "title": "0908盤前",
-    "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/B13028B625BE61FEFD596DE95A99EFCE",
+    "title": "0909盤前",
+    "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/99EA2656AA44D80B6CC76C6B98A4FA69",
     "fetch_mode": "live_browser",
-    "collected_at": "2026-09-08T21:00:42.767257+08:00"
+    "collected_at": "2026-09-09T08:32:45.929396+08:00"
   },
   "chengwaye_date": null,
   "not_found_group": {
     "raw_tokens": [
-      "聯電",
-      "3167",
-      "8039"
+      "1721",
+      "5314",
+      "8227"
     ],
     "matched": [
       {
         "market": "市",
-        "code": "2303",
-        "name": "聯電",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄族群標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_name",
-        "raw_token": "聯電"
+        "code": "1721",
+        "name": "國慶科技",
+        "close": "24.6",
+        "volume": "1,839",
+        "foreign": "-154",
+        "trust": "0",
+        "dealer": "-7",
+        "ai_reason": "化工原料與材料應用題材延續，塑化化工族群買盤集中。",
+        "group": "🛢️ 塑化化工",
+        "match_type": "code",
+        "raw_token": "1721"
       },
       {
-        "market": "市",
-        "code": "3167",
-        "name": "大量",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_code",
-        "raw_token": "3167"
+        "market": "櫃",
+        "code": "5314",
+        "name": "世紀*",
+        "close": "38.7",
+        "volume": "10,137",
+        "foreign": "+883",
+        "trust": "-42",
+        "dealer": "-142",
+        "ai_reason": "光碟與光儲存產品題材延續，光碟片族群買盤集中。",
+        "group": "💿 光碟片",
+        "match_type": "code",
+        "raw_token": "5314"
       },
       {
-        "market": "市",
-        "code": "8039",
-        "name": "台虹",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_code",
-        "raw_token": "8039"
+        "market": "櫃",
+        "code": "8227",
+        "name": "巨有科技",
+        "close": "180",
+        "volume": "1,593",
+        "foreign": "+60",
+        "trust": "0",
+        "dealer": "+21",
+        "ai_reason": "ASIC與高階晶片設計題材輪動，IC設計族群獲買盤關注。",
+        "group": "💡 IC設計",
+        "match_type": "code",
+        "raw_token": "8227"
       }
     ],
     "unmatched": []
   },
   "found_group": {
-    "raw_tokens": [
-      "信昌電",
-      "禾伸堂"
-    ],
-    "matched": [
-      {
-        "market": "市",
-        "code": "6173",
-        "name": "信昌電",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄族群標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_name",
-        "raw_token": "信昌電"
-      },
-      {
-        "market": "市",
-        "code": "3026",
-        "name": "禾伸堂",
-        "close": "—",
-        "volume": "—",
-        "foreign": "—",
-        "trust": "—",
-        "dealer": "—",
-        "ai_reason": "PressPlay 專欄族群標的",
-        "group": "📌 專欄標的",
-        "match_type": "dict_name",
-        "raw_token": "禾伸堂"
-      }
-    ],
+    "raw_tokens": [],
+    "matched": [],
     "unmatched": []
   }
 }
