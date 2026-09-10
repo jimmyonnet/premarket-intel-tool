@@ -1,59 +1,59 @@
 {
   "source_article": {
-    "title": "0909盤前",
-    "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/99EA2656AA44D80B6CC76C6B98A4FA69",
+    "title": "0910盤前",
+    "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/EA13CD6A7D1191E1298E620523A4522B",
     "fetch_mode": "live_browser",
-    "collected_at": "2026-09-09T08:32:45.929396+08:00"
+    "collected_at": "2026-09-10T08:09:18.751222+08:00"
   },
   "chengwaye_date": null,
   "not_found_group": {
     "raw_tokens": [
-      "1721",
-      "5314",
-      "8227"
+      "1409",
+      "3042",
+      "5314"
     ],
     "matched": [
       {
         "market": "市",
-        "code": "1721",
-        "name": "國慶科技",
-        "close": "24.6",
-        "volume": "1,839",
-        "foreign": "-154",
+        "code": "1409",
+        "name": "新纖",
+        "close": "26.85",
+        "volume": "89,006",
+        "foreign": "+17,976",
         "trust": "0",
-        "dealer": "-7",
-        "ai_reason": "化工原料與材料應用題材延續，塑化化工族群買盤集中。",
-        "group": "🛢️ 塑化化工",
+        "dealer": "+489",
+        "ai_reason": "聚酯化纖與紡織材料題材輪動，紡織族群受到資金關注。",
+        "group": "🧵 紡織",
         "match_type": "code",
-        "raw_token": "1721"
+        "raw_token": "1409"
+      },
+      {
+        "market": "市",
+        "code": "3042",
+        "name": "晶技",
+        "close": "—",
+        "volume": "—",
+        "foreign": "—",
+        "trust": "—",
+        "dealer": "—",
+        "ai_reason": "PressPlay 專欄標的",
+        "group": "📌 專欄標的",
+        "match_type": "dict_code",
+        "raw_token": "3042"
       },
       {
         "market": "櫃",
         "code": "5314",
         "name": "世紀*",
-        "close": "38.7",
-        "volume": "10,137",
-        "foreign": "+883",
-        "trust": "-42",
-        "dealer": "-142",
+        "close": "42.55",
+        "volume": "49,416",
+        "foreign": "+1,827",
+        "trust": "0",
+        "dealer": "-617",
         "ai_reason": "光碟與光儲存產品題材延續，光碟片族群買盤集中。",
         "group": "💿 光碟片",
         "match_type": "code",
         "raw_token": "5314"
-      },
-      {
-        "market": "櫃",
-        "code": "8227",
-        "name": "巨有科技",
-        "close": "180",
-        "volume": "1,593",
-        "foreign": "+60",
-        "trust": "0",
-        "dealer": "+21",
-        "ai_reason": "ASIC與高階晶片設計題材輪動，IC設計族群獲買盤關注。",
-        "group": "💡 IC設計",
-        "match_type": "code",
-        "raw_token": "8227"
       }
     ],
     "unmatched": []
