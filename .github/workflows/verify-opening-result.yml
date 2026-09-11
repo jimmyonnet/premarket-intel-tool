@@ -149,3 +149,27 @@ jobs:
           done
           echo "Unable to push opening result after 3 attempts" >&2
           exit 1
+
+  notify-failure:
+    needs: [verify]
+    if: >-
+      always() &&
+      (needs.verify.result == 'failure' || needs.verify.result == 'cancelled')
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - name: Send Failure Notification Webhook
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          ERROR_WEBHOOK_URL: ${{ secrets.ERROR_WEBHOOK_URL }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+          FAILED_JOBS: verify=${{ needs.verify.result }}
+        run: python scripts/notify_summary.py --mode failure
