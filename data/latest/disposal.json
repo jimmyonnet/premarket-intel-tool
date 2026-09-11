@@ -1,165 +1,20 @@
 {
   "source": "https://chengwaye.com/disposal-forecast",
   "date_check": {
-    "today": "2026-09-10",
-    "effective_market_day": "2026-09-10",
-    "expected_previous_trading_day": "2026-09-09",
-    "page_says_applies_to": "09/10",
+    "today": "2026-09-11",
+    "effective_market_day": "2026-09-11",
+    "expected_previous_trading_day": "2026-09-10",
+    "page_says_applies_to": "09/11",
     "page_dropdown_selected": null,
     "applies_to_matches_today": true
   },
   "one_flag_from_disposal": [
     {
-      "market": "櫃",
-      "code": "4979",
-      "name": "華星光",
-      "close": "610",
-      "condition": "① 09-10不符合③④⑤⑦ 09-10不符合⑥ 收盤≥598元(-1.97%)且量≥7,140張（含產業PB條件）；或收盤≥598元且量≥7,140張，且符合其一：單一投資人當日買進或賣出占該股總成交金額≥10%且金額≥1億元，或單一券商占比達門檻且金額≥1億元（占比門檻10%起，每分支加1百分點，最高25%）；上櫃股本未滿8,000萬元者，金額門檻減半",
-      "earliest_disposal": "09-11 第2次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 0/3",
-          "current": 0,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 4/5",
-          "current": 4,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 4/6",
-          "current": 4,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 4/12",
-          "current": 4,
-          "threshold": 12
-        }
-      ],
-      "condition_segments": [
-        {
-          "text": "① 09-10不符合",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "③④⑤⑦ 09-10不符合",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "⑥ 收盤≥598元(-1.97%)且量≥7,140張（含產業PB條件）；或收盤≥598元且量≥7,140張，且符合其一：單一投資人當日買進或賣出占該股總成交金額≥10%且金額≥1億元，或單一券商占比達門檻且金額≥1億元（占比門檻10%起，每分支加1百分點，最高25%）；上櫃股本未滿8,000萬元者，金額門檻減半",
-          "color": "var(--amber)",
-          "bold": false
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "⏸6538",
-      "name": "倉和",
-      "close": "349.0",
-      "condition": "①符合（即使跌停仍符合）",
-      "earliest_disposal": "09-11 第2次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 2/3",
-          "current": 2,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 2/5",
-          "current": 2,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 2/6",
-          "current": 2,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 2/12",
-          "current": 2,
-          "threshold": 12
-        }
-      ],
-      "condition_segments": [
-        {
-          "text": "①",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "符合（即使跌停仍符合）",
-          "color": "var(--text)",
-          "bold": true
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "7772",
-      "name": "耀穎",
-      "close": "130.0",
-      "condition": "①120.0↑(-7.7%)",
-      "earliest_disposal": "09-11 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 2/3",
-          "current": 2,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 2/5",
-          "current": 2,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 2/6",
-          "current": 2,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 2/12",
-          "current": 2,
-          "threshold": 12
-        }
-      ],
-      "condition_segments": [
-        {
-          "text": "①",
-          "color": "var(--muted)",
-          "bold": false
-        },
-        {
-          "text": "120.0↑(-7.7%)",
-          "color": "var(--fall)",
-          "bold": false
-        }
-      ]
-    }
-  ],
-  "two_flags_from_disposal": [
-    {
       "market": "市",
       "code": "3055",
       "name": "蔚華科",
-      "close": "149.5",
-      "condition": "① 09-10不符合③④⑤⑦ 09-10不符合⑥ 量≥5,749張（PE/PB及產業PB即使跌停仍滿足）",
+      "close": "160.0",
+      "condition": "①② 09-11不符合③ 收盤≥167.5元；量≥15,813張，量放大倍數比全市場平均高≥4倍，6日漲跌差幅≥20個百分點④ 收盤≥167.5元；量≥11,498張（週轉率≥10%），週轉率比全市場平均高≥5個百分點，6日漲跌差幅≥20個百分點⑤ 收盤≥167.5元；單一券商當日受託買進或賣出量>500張，且占總量>25%（每分支加1百分點，上限35%），6日漲跌差幅≥20個百分點⑦ 收盤≥167.5元；前一交易日券資比≥20%且≥近6日最低值4倍，融資使用率≥25%、融券使用率≥15%，券資比不低於前二交易日，6日漲跌差幅≥20個百分點⑥ 量≥5,749張（PE/PB及產業PB即使跌停仍滿足）",
       "earliest_disposal": "09-14 第1次2分",
       "badges": [
         {
@@ -170,14 +25,14 @@
         },
         {
           "short": "5",
-          "title": "連續5日（第1~7款） 2/5",
-          "current": 2,
+          "title": "連續5日（第1~7款） 3/5",
+          "current": 3,
           "threshold": 5
         },
         {
           "short": "6",
-          "title": "10日內6次（第1~7款） 4/6",
-          "current": 4,
+          "title": "10日內6次（第1~7款） 5/6",
+          "current": 5,
           "threshold": 6
         },
         {
@@ -186,83 +41,29 @@
           "current": 6,
           "threshold": 12
         }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "5475",
-      "name": "德宏",
-      "close": "193.0",
-      "condition": "① 09-10不符合③④⑤⑦ 09-10不符合⑥ 量≥6,356張（PE/PB及產業PB即使跌停仍滿足）",
-      "earliest_disposal": "09-14 第2次2分",
-      "badges": [
+      ],
+      "condition_segments": [
         {
-          "short": "3①",
-          "title": "連續3日第1款 0/3",
-          "current": 0,
-          "threshold": 3
+          "text": "①② 09-11不符合",
+          "color": "var(--muted)",
+          "bold": false
         },
         {
-          "short": "5",
-          "title": "連續5日（第1~7款） 0/5",
-          "current": 0,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 4/6",
-          "current": 4,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 5/12",
-          "current": 5,
-          "threshold": 12
+          "text": "⑥ 量≥5,749張（PE/PB及產業PB即使跌停仍滿足）",
+          "color": "var(--amber)",
+          "bold": false
         }
       ]
-    },
+    }
+  ],
+  "two_flags_from_disposal": [
     {
       "market": "櫃",
-      "code": "6510",
-      "name": "精測",
-      "close": "3610",
-      "condition": "① 09-10不符合③④⑤⑦ 09-10不符合⑥ 收盤≥4150元且量≥2,000張，且符合其一：單一投資人當日買進或賣出占該股總成交金額≥10%且金額≥1億元，或單一券商占比達門檻且金額≥1億元（占比門檻10%起，每分支加1百分點，最高25%）；上櫃股本未滿8,000萬元者，金額門檻減半（產業PB所需股價明日不可達）",
-      "earliest_disposal": "09-14 第1次2分",
-      "badges": [
-        {
-          "short": "3①",
-          "title": "連續3日第1款 0/3",
-          "current": 0,
-          "threshold": 3
-        },
-        {
-          "short": "5",
-          "title": "連續5日（第1~7款） 0/5",
-          "current": 0,
-          "threshold": 5
-        },
-        {
-          "short": "6",
-          "title": "10日內6次（第1~7款） 4/6",
-          "current": 4,
-          "threshold": 6
-        },
-        {
-          "short": "12",
-          "title": "30日內12次（第1~7款） 4/12",
-          "current": 4,
-          "threshold": 12
-        }
-      ]
-    },
-    {
-      "market": "櫃",
-      "code": "⏸6620",
-      "name": "漢達",
-      "close": "132.0",
-      "condition": "①127.5↑(-3.4%)②不符合③ 收盤≥123.5元；量≥6,512張，量放大倍數比全市場平均高≥4倍，6日漲跌差幅≥20個百分點④ 收盤≥123.5元；量≥8,300張（週轉率≥5%），週轉率比全市場平均高≥3個百分點，6日漲跌差幅≥20個百分點⑤ 收盤≥123.5元；單一券商當日受託買進或賣出量>300張，且占總量>20%（每分支加1百分點，上限30%），6日漲跌差幅≥20個百分點⑦ 收盤≥123.5元；前一交易日券資比≥10%且≥近6日最低值4倍，融資使用率≥20%、融券使用率≥10%，券資比不低於前二交易日，6日漲跌差幅≥20個百分點⑥ 不符合（PE/PB明日不可達，量未達）",
-      "earliest_disposal": "09-14 第2次2分",
+      "code": "5314",
+      "name": "世紀*",
+      "close": "46.80",
+      "condition": "①符合（即使跌停仍符合）②46.85↑(+0.1%)③ 跌停仍過價格條件；量≥32,759張，量放大倍數比全市場平均高≥4倍，6日漲跌差幅≥20個百分點④ 跌停仍過價格條件；量≥14,600張（週轉率≥5%），週轉率比全市場平均高≥3個百分點，6日漲跌差幅≥20個百分點⑤ 跌停仍過價格條件；單一券商當日受託買進或賣出量>300張，且占總量>20%（每分支加1百分點，上限30%），6日漲跌差幅≥20個百分點⑦ 跌停仍過價格條件；前一交易日券資比≥10%且≥近6日最低值4倍，融資使用率≥20%、融券使用率≥10%，券資比不低於前二交易日，6日漲跌差幅≥20個百分點⑥ 不符合（PE明日不可達，量已達標）",
+      "earliest_disposal": "09-15 第2次2分",
       "badges": [
         {
           "short": "3①",
@@ -289,42 +90,213 @@
           "threshold": 12
         }
       ]
-    }
-  ],
-  "currently_in_disposal": [
+    },
     {
       "market": "櫃",
-      "code": "4939",
-      "name": "亞電",
-      "matching": "2分",
-      "start_date": "09-01",
-      "end_date": "09-09",
-      "exit_date": "09-10",
-      "trading_days_left": "出關",
-      "reason": "連續3日及沖銷標準｜第1次處置"
+      "code": "6103",
+      "name": "合邦",
+      "close": "32.30",
+      "condition": "①29.90↓(-7.4%)③ 收盤≤30.90元；量≥104張，量放大倍數比全市場平均高≥4倍，6日漲跌差幅≥20個百分點④ 收盤≤30.90元；量≥681張（週轉率≥5%），週轉率比全市場平均高≥3個百分點，6日漲跌差幅≥20個百分點⑤ 收盤≤30.90元；單一券商當日受託買進或賣出量>300張，且占總量>20%（每分支加1百分點，上限30%），6日漲跌差幅≥20個百分點⑦ 收盤≤30.90元；前一交易日券資比≥10%且≥近6日最低值4倍，融資使用率≥20%、融券使用率≥10%，券資比不低於前二交易日，6日漲跌差幅≥20個百分點⑥ 不符合（PB明日不可達，量未達）",
+      "earliest_disposal": "09-15 第2次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 1/3",
+          "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 1/5",
+          "current": 1,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 4/6",
+          "current": 4,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 4/12",
+          "current": 4,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "櫃",
+      "code": "6510",
+      "name": "精測",
+      "close": "3670",
+      "condition": "① 09-11不符合③④⑤⑦ 09-11不符合⑥ 收盤≥4150元且量≥2,000張，且符合其一：單一投資人當日買進或賣出占該股總成交金額≥10%且金額≥1億元，或單一券商占比達門檻且金額≥1億元（占比門檻10%起，每分支加1百分點，最高25%）；上櫃股本未滿8,000萬元者，金額門檻減半（產業PB所需股價明日不可達）",
+      "earliest_disposal": "09-15 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 0/3",
+          "current": 0,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 0/5",
+          "current": 0,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 4/6",
+          "current": 4,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 4/12",
+          "current": 4,
+          "threshold": 12
+        }
+      ]
+    },
+    {
+      "market": "櫃",
+      "code": "⏸6872",
+      "name": "浩宇生醫",
+      "close": "26.75",
+      "condition": "①符合（即使跌停仍符合）②不符合③ 跌停仍過價格條件；量≥372張，量放大倍數比全市場平均高≥4倍，6日漲跌差幅≥20個百分點④ 跌停仍過價格條件；量≥3,538張（週轉率≥5%），週轉率比全市場平均高≥3個百分點，6日漲跌差幅≥20個百分點⑤ 跌停仍過價格條件；單一券商當日受託買進或賣出量>300張，且占總量>20%（每分支加1百分點，上限30%），6日漲跌差幅≥20個百分點⑦ 跌停仍過價格條件；前一交易日券資比≥10%且≥近6日最低值4倍，融資使用率≥20%、融券使用率≥10%，券資比不低於前二交易日，6日漲跌差幅≥20個百分點⑥ 不符合（PB明日不可達，量未達）",
+      "earliest_disposal": "09-15 第2次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 1/3",
+          "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 1/5",
+          "current": 1,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 1/6",
+          "current": 1,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 1/12",
+          "current": 1,
+          "threshold": 12
+        }
+      ]
     },
     {
       "market": "市",
-      "code": "3008",
-      "name": "大立光",
-      "matching": "2分",
-      "start_date": "09-03",
-      "end_date": "09-09",
-      "exit_date": "09-10",
-      "trading_days_left": "出關",
-      "reason": "連續3日第1款｜第1次處置"
+      "code": "7610",
+      "name": "聯友金屬-創",
+      "close": "2035",
+      "condition": "①②2105↑(+3.4%)③ 收盤≥2105元；量≥3,237張，量放大倍數比全市場平均高≥4倍，6日漲跌差幅≥20個百分點④ 收盤≥2105元；量≥5,831張（週轉率≥10%），週轉率比全市場平均高≥5個百分點，6日漲跌差幅≥20個百分點⑤ 收盤≥2105元；單一券商當日受託買進或賣出量>500張，且占總量>25%（每分支加1百分點，上限35%），6日漲跌差幅≥20個百分點⑦ 收盤≥2105元；前一交易日券資比≥20%且≥近6日最低值4倍，融資使用率≥25%、融券使用率≥15%，券資比不低於前二交易日，6日漲跌差幅≥20個百分點⑥ 收盤≥2095元(+2.95%)且量≥3,000張（含產業PB條件）；或收盤≥2095元且量≥3,000張，且符合其一：單一投資人當日買進或賣出占該股總成交金額≥10%且金額≥1億元，或單一券商占比達門檻且金額≥1億元（占比門檻10%起，每分支加1百分點，最高25%）",
+      "earliest_disposal": "09-15 第2次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 1/3",
+          "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 1/5",
+          "current": 1,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 3/6",
+          "current": 3,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 5/12",
+          "current": 5,
+          "threshold": 12
+        }
+      ]
     },
     {
       "market": "櫃",
-      "code": "4908",
-      "name": "前鼎",
-      "matching": "2分",
-      "start_date": "09-03",
-      "end_date": "09-09",
-      "exit_date": "09-10",
-      "trading_days_left": "出關",
-      "reason": "連續3日第一款｜第1次處置"
+      "code": "8227",
+      "name": "巨有科技",
+      "close": "217.5",
+      "condition": "①199.0↑(-8.5%)②不符合③ 收盤≥202.0元；量≥5,719張，量放大倍數比全市場平均高≥4倍，6日漲跌差幅≥20個百分點④ 收盤≥202.0元；量≥1,978張（週轉率≥5%），週轉率比全市場平均高≥3個百分點，6日漲跌差幅≥20個百分點⑤ 收盤≥202.0元；單一券商當日受託買進或賣出量>300張，且占總量>20%（每分支加1百分點，上限30%），6日漲跌差幅≥20個百分點⑦ 收盤≥202.0元；前一交易日券資比≥10%且≥近6日最低值4倍，融資使用率≥20%、融券使用率≥10%，券資比不低於前二交易日，6日漲跌差幅≥20個百分點⑥ 不符合（PE明日不可達，量已達標）",
+      "earliest_disposal": "09-15 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 1/3",
+          "current": 1,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 1/5",
+          "current": 1,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 1/6",
+          "current": 1,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 1/12",
+          "current": 1,
+          "threshold": 12
+        }
+      ]
     },
+    {
+      "market": "市",
+      "code": "8996",
+      "name": "高力",
+      "close": "1300",
+      "condition": "① 09-11不符合③④⑤⑦ 09-11不符合⑥ 量≥4,675張（PE/PB及產業PB即使跌停仍滿足）",
+      "earliest_disposal": "09-15 第1次2分",
+      "badges": [
+        {
+          "short": "3①",
+          "title": "連續3日第1款 0/3",
+          "current": 0,
+          "threshold": 3
+        },
+        {
+          "short": "5",
+          "title": "連續5日（第1~7款） 2/5",
+          "current": 2,
+          "threshold": 5
+        },
+        {
+          "short": "6",
+          "title": "10日內6次（第1~7款） 4/6",
+          "current": 4,
+          "threshold": 6
+        },
+        {
+          "short": "12",
+          "title": "30日內12次（第1~7款） 10/12",
+          "current": 10,
+          "threshold": 12
+        }
+      ]
+    }
+  ],
+  "currently_in_disposal": [
     {
       "market": "櫃",
       "code": "3374",
@@ -333,7 +305,7 @@
       "start_date": "09-02",
       "end_date": "09-10",
       "exit_date": "09-11",
-      "trading_days_left": 1,
+      "trading_days_left": "出關",
       "reason": "連續3日及沖銷標準｜第1次處置"
     },
     {
@@ -344,7 +316,7 @@
       "start_date": "09-02",
       "end_date": "09-10",
       "exit_date": "09-11",
-      "trading_days_left": 1,
+      "trading_days_left": "出關",
       "reason": "連續5日及沖銷標準｜第1次處置"
     },
     {
@@ -355,7 +327,7 @@
       "start_date": "09-04",
       "end_date": "09-10",
       "exit_date": "09-11",
-      "trading_days_left": 1,
+      "trading_days_left": "出關",
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -366,7 +338,7 @@
       "start_date": "09-04",
       "end_date": "09-10",
       "exit_date": "09-11",
-      "trading_days_left": 1,
+      "trading_days_left": "出關",
       "reason": "10日內6次｜第2次處置"
     },
     {
@@ -377,7 +349,7 @@
       "start_date": "09-03",
       "end_date": "09-11",
       "exit_date": "09-14",
-      "trading_days_left": 2,
+      "trading_days_left": 1,
       "reason": "連續五次及當日沖銷標準｜第2次處置"
     },
     {
@@ -388,7 +360,7 @@
       "start_date": "09-07",
       "end_date": "09-11",
       "exit_date": "09-14",
-      "trading_days_left": 2,
+      "trading_days_left": 1,
       "reason": "連續3日第1款｜第2次處置"
     },
     {
@@ -399,19 +371,8 @@
       "start_date": "09-08",
       "end_date": "09-14",
       "exit_date": "09-15",
-      "trading_days_left": 3,
+      "trading_days_left": 2,
       "reason": "連續3日第一款｜第2次處置"
-    },
-    {
-      "market": "櫃",
-      "code": "6538",
-      "name": "倉和",
-      "matching": "2分",
-      "start_date": "09-08",
-      "end_date": "09-14",
-      "exit_date": "09-15",
-      "trading_days_left": 3,
-      "reason": "連續3日第一款｜第1次處置"
     },
     {
       "market": "市",
@@ -421,7 +382,7 @@
       "start_date": "09-07",
       "end_date": "09-15",
       "exit_date": "09-16",
-      "trading_days_left": 4,
+      "trading_days_left": 3,
       "reason": "連續五次及當日沖銷標準｜第2次處置"
     },
     {
@@ -432,7 +393,7 @@
       "start_date": "09-09",
       "end_date": "09-15",
       "exit_date": "09-16",
-      "trading_days_left": 4,
+      "trading_days_left": 3,
       "reason": "連續3日第一款｜第1次處置"
     },
     {
@@ -443,7 +404,7 @@
       "start_date": "09-09",
       "end_date": "09-15",
       "exit_date": "09-16",
-      "trading_days_left": 4,
+      "trading_days_left": 3,
       "reason": "10日內6次（第1~7款）｜第2次處置"
     },
     {
@@ -454,7 +415,7 @@
       "start_date": "09-10",
       "end_date": "09-16",
       "exit_date": "09-17",
-      "trading_days_left": 5,
+      "trading_days_left": 4,
       "reason": "連續3日第一款｜第2次處置"
     },
     {
@@ -465,6 +426,39 @@
       "start_date": "09-10",
       "end_date": "09-16",
       "exit_date": "09-17",
+      "trading_days_left": 4,
+      "reason": "連續3日第一款｜第1次處置"
+    },
+    {
+      "market": "櫃",
+      "code": "4979",
+      "name": "華星光",
+      "matching": "2分",
+      "start_date": "09-11",
+      "end_date": "09-17",
+      "exit_date": "09-18",
+      "trading_days_left": 5,
+      "reason": "連續5日｜第2次處置"
+    },
+    {
+      "market": "櫃",
+      "code": "6538",
+      "name": "倉和",
+      "matching": "2分",
+      "start_date": "09-11",
+      "end_date": "09-17",
+      "exit_date": "09-18",
+      "trading_days_left": 5,
+      "reason": "連續3日第一款｜第2次處置"
+    },
+    {
+      "market": "櫃",
+      "code": "7772",
+      "name": "耀穎",
+      "matching": "2分",
+      "start_date": "09-11",
+      "end_date": "09-17",
+      "exit_date": "09-18",
       "trading_days_left": 5,
       "reason": "連續3日第一款｜第1次處置"
     }

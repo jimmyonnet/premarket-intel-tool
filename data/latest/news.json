@@ -1,46 +1,18 @@
 [
   {
-    "title": "AI開始變成真金白銀！標普500今年獲利估暴增32% 華爾街再喊漲",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBWNExieUh0aWhUdjRTeFItRmNNYWo5SFAxOS1QVG5OcG9pZi1ERWVIZDVvVVRsU29ZX3Ywem9DTWRkU2lyTkc5YjI2czhXcHc?oc=5",
+    "title": "【美股收盤】油價單日暴漲7%、美債殖利率突破4.95% 美股連4黑 英特爾重挫逾5.5%",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE4yTWtaREN6Y2hQUDIwdjQ2dHBMTG52aERnWWxkTFc2ZnhiWEhYaDdjQTJ0eHQ5T0FjOE1xaEM2YkxfZ1FPRU5aajdIejdjMHc?oc=5",
     "source": "news.cnyes.com",
-    "time": "09/10 00:31",
-    "timestamp": 1788971509.0,
-    "score": 12,
+    "time": "09/11 08:30",
+    "timestamp": 1789086605.0,
+    "score": 14,
     "quality_score": 4,
-    "impact_score": 8,
-    "release_bonus": 0,
-    "matched_groups": [
-      "market_benchmark",
-      "earnings_financial",
-      "sector_supply_chain"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "global_market",
-      "sector_technology",
-      "company_earnings"
-    ],
-    "primary_topic": "global_market",
-    "named_entities": [
-      "us_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "美股收盤／油價破百美債殖利率連升打壓美股 費半逆勢四連漲",
-    "link": "https://news.google.com/rss/articles/CBMiXEFVX3lxTE4yTHVHUF9mRjF1akZLNkFvWjFMRHczSTJjN3JHVkdvaWJ4cFpaUTRsYzAzZFBDVHNNaHhITUZHZHZtQ2xac1VJUTNnZkpoUzBrVWRHTTZodDhCUEZK0gFiQVVfeXFMTlpqTU9GSEtXaURaVWlHQm15TjQ5eHZ6d0VQUlUwQlZOZ3BDR2FUMW5Gd05vTGt5ejZSakNGSWtWMmFBdzZxQnV2dXVoeWVsTE9CcDFnUFVjUG94N0J4RmZSd1E?oc=5",
-    "source": "經濟日報",
-    "time": "09/10 06:58",
-    "timestamp": 1788994690.0,
-    "score": 11,
-    "quality_score": 4,
-    "impact_score": 7,
+    "impact_score": 10,
     "release_bonus": 0,
     "matched_groups": [
       "macro_policy",
-      "market_benchmark"
+      "market_benchmark",
+      "market_move"
     ],
     "low_signal_hits": [],
     "topic_groups": [
@@ -57,22 +29,107 @@
     "qualified": true
   },
   {
-    "title": "晶片愈複雜、設備用量愈多！馬來西亞半導體設備接單爆量 ATE接單指標創高",
-    "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBBSUVsNFM1OTZJRThpaHlXcFcySExTdU14RndpQzlfcTNpTExmbF9fd0czdVlLX0t0bE9lRzAtdUxlX19ZSUdGX3d6dG1Sdk10T25v?oc=5",
-    "source": "news.cnyes.com",
-    "time": "09/09 15:52",
-    "timestamp": 1788940358.0,
+    "title": "台積電8月營收創史高激勵台股？最新分析看這邊",
+    "link": "https://news.google.com/rss/articles/CBMizgJBVV95cUxNcDNockVWdGNIaE9nU1BhMEVqZE1rT0s4REVHelRiZmVrWFl1M01LUFAwMWhiMTVRQ3FxZjI0VWxzejAzYUJtTjh5ak56eU0yNFVYeFAxczNHVm5LTzVJUzZJS2NCOVF4aDMwaFpwUXVTNndBNzdCQnk0MVlJVGdENXU3SjI1Znhpci16MWZnd2RoRk14WGFldVoyV0xYV2FYQUU2Vkc0Y2hiTUpucFdieWxtSngwMGtGTzRyekdvZUdtYndLamhJXzNNYjVUUXNTaVp4MW1zNV8tbkNzMjFPZlMwd2Y1MEd0ZGh6RGNOLWRWQllmMy1ickNLMngtNzhqb2ptZ2RLeDVDSm13OUVjRWdNVU5iTVYzMUxhRlo1U2dNbU9kRVBOSl82RXU4WFgyTnFKX25RNm4tRWQzLW1KS2ZMNGlZbkZ5YkstTXFn?oc=5",
+    "source": "Yahoo股市",
+    "time": "09/10 21:23",
+    "timestamp": 1789046617.0,
+    "score": 12,
+    "quality_score": 3,
+    "impact_score": 9,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "company_earnings"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "tsmc",
+      "taiwan_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "外資翻臉砍383億台股掉下4萬7 聯發科、被動元件兩路救火｜Yahoo財經掃描",
+    "link": "https://news.google.com/rss/articles/CBMiugNBVV95cUxQb3g4MFFoXzFDYkprbjJRYVNBcXFTbW5fa05IVHh4V09rNkpaR0VZR1p4YVE5TXJJQ1NmNU0xeWNZYUlqV0o4Z0JJd1l3VzJxbTVVSDE5UFBFdmNkZFN5enRIcWQ0dWx6UEEwU1g3X1pZemtxdVpibVR0S2U2Z2Y4QmlXdW9QbHNMNG96SG1pUl9LRXRrYzJjNk5EWm1iSHVUSVlxNlJiaVVZTVVZZm1IYlRfaUl3ZG1TdTVVaVJwcFZhaEx3WXFhcDBHSnJYaXJRY1M5N21rUldIUVNSbHJ4UTU5YjU2MEMyRm1zRDhmcENKY0JNNGh4Z0xXN1IxbVhUS0tUT0NrSHg1VGxZZExlbkpLa0Y4d0N6b2ZnYk5oTW5aZk9NYmh1cklJd3J5OERlbjlyVHpFb1E5MENMaGM2OXNiNmpkMC1DNDhVeXYyM3BhVElJLUJPelZJdVZiNmVNTHdtM3I3dVF0X1duWG5VZUV1UFlLc2NyTUowZThZS21qdWNYaklzdS1ER081S3gyRHJLdjBYZjZJWFZSMS1sV0g1ZjR4dnJNNjJqc3l2bmJOSG9oeUU5RzBB?oc=5",
+    "source": "Yahoo股市",
+    "time": "09/10 17:28",
+    "timestamp": 1789032487.0,
+    "score": 11,
+    "quality_score": 3,
+    "impact_score": 8,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_benchmark",
+      "systemic_company",
+      "market_structure"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "company_earnings",
+      "market_structure"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "taiwan_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "台股下跌242點！量縮至7100億 被動「2檔」逆勢收漲停",
+    "link": "https://news.google.com/rss/articles/CBMitwJBVV95cUxPMUtUakRZYkYxS0xvRHJJNjloMWJOUjBmcVVKcS1jN1A0SzZtS3o0dEllYkU0eEZfWmhqb3VvUXVPcm9ENWpOc3RvaXdmYXY3bmtOb0E1aHk4NmNINnpCeC1BSTlDVkVqQXNub3QtenVuLWJubzV3SHB4U2hhb3dhelVKendQd1EtSTdZTENTYmJ6RXJwTGJLLTNsVDZieGx3YWRZX2p4bWVKQ1dJb0RiLV9aSHE4cGstVlhxeTA1aFVveXFFbWRUeldJOVJnVjY2OVJsY0dyRExpbV91YnlGTVlPSFhkQzRfamc3czhZUnM0SERUSlNlWHhVeEdPS1pSaGo3aFZHVmJIc1dzRzIwM0h3Ylp5VWZLcHlwM3F5RE10dUp3OERwempmNkxseWZvVjA2N2VMZw?oc=5",
+    "source": "Yahoo股市",
+    "time": "09/10 14:31",
+    "timestamp": 1789021860.0,
     "score": 9,
-    "quality_score": 4,
+    "quality_score": 3,
+    "impact_score": 6,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_benchmark",
+      "market_move"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market"
+    ],
+    "primary_topic": "taiwan_market",
+    "named_entities": [
+      "taiwan_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "美光科技Q2營收年增346% AI助記憶體市場創佳績",
+    "link": "https://news.google.com/rss/articles/CBMisgJBVV95cUxORDlIX0s2WTVqZ3Q5X1BUQ1BEUzA4VEJjdXdqbG9xNEFkR1EzLTAxS3RJd21rRVRBcnl6RlF0MGh3VzJzSmtZNnhHZWo5ZE9DbnJEUmVNcF8yM1N6alhFTzJER09NYWZtZEJyMFNmR09kZHBlME9IX2dkSnYtVGt0ZUdudHM5OE9hNmM5VzVPcGRBdzFBOGVsSjBXaEczT2J4TkRmSmdnd0x2T282Yjk4SHdtTTJ0ZjBnaTdnZk53U0pEVFp3TE14aW1KYkJhaWlUeU5Jb0t2ZGUzYmo1STJyRVhOS2doN3kxUEc0enZlc0w3bU0yMW1pYXhqc3RScklkOUZheUhRUExoOVA1Z2RyNDNSSk9oUXF4bWNfS0YtUzhEU1Zjc1NPRzRfdDloYzhJZkE?oc=5",
+    "source": "Yahoo股市",
+    "time": "09/11 08:16",
+    "timestamp": 1789085778.0,
+    "score": 8,
+    "quality_score": 3,
     "impact_score": 5,
     "release_bonus": 0,
     "matched_groups": [
-      "market_move",
+      "earnings_financial",
       "sector_supply_chain"
     ],
     "low_signal_hits": [],
     "topic_groups": [
-      "sector_technology"
+      "sector_technology",
+      "company_earnings"
     ],
     "primary_topic": "sector_technology",
     "named_entities": [],
@@ -81,68 +138,13 @@
     "qualified": true
   },
   {
-    "title": "穩定幣、RWA重塑全球金融 台股AI護國神山後，下一座「群山」在哪？",
-    "link": "https://news.google.com/rss/articles/CBMitwJBVV95cUxQWm1GcDJMVzU3aXI1QVNKRU5yUS14RFdacEFHb0hMYnNPSzdDUmJjNmlHZU9kQVMyY1hnZTY4VENlZlpRQnJlbnZaM1ZSbmdpTDR6aXRpRWZCZ1g0bnZrU0oxbjBpYTI1R2xrM1BjbThrenpiY0dQMEJScU8tc19jb052RHl2cGZXVkxKdEtEMzQ1ZjRsRE5CeFl5bTllb1hlMERKU2lYOFdHV3VzUUNzbmd6bGREZWJBeWhOU1R5ajZrRWpzdjVKemZZYk51cVNZX3ZMS0p4eGYzSTVkS2FUcGtKX3hQOGItV3poMGljUFdFc2g0MUYxa1BRRk9CYm4yS2E4Z2RheFdfTVZkT09wR0luaXh5MlpUU0Joa25BSkNFNzRfeXpudGZIRVd3U2IyVmFHNU5VZw?oc=5",
-    "source": "Yahoo新聞",
-    "time": "09/09 21:10",
-    "timestamp": 1788959458.0,
+    "title": "〈貴金屬盤後〉PPI數據提高Fed升息機率 黃金挫逾1%",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1ZaGxZMjFRUjZVa2Fualk4aW5UUGpvM1BBV0tXenU0VFUtX3Y5ZzZ1ci1tekhFS3RtOGcxb004U1AteENVOGt6a2NJcVNXTW8?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/11 08:22",
+    "timestamp": 1789086127.0,
     "score": 8,
-    "quality_score": 3,
-    "impact_score": 5,
-    "release_bonus": 0,
-    "matched_groups": [
-      "market_benchmark",
-      "sector_supply_chain"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "taiwan_market",
-      "sector_technology"
-    ],
-    "primary_topic": "taiwan_market",
-    "named_entities": [
-      "taiwan_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "外資大買209億助台股多頭續航！台塑四寶催油門攜面板雙雄守住77點紅盤｜Yahoo財經掃描",
-    "link": "https://news.google.com/rss/articles/CBMijARBVV95cUxQVlJlaENCTnl0Smx0VGtrb0hDSlRvNzBBeTRlX0hzQ1AtOFJaV1FtVEpSNDVMZEFKaU9XeTNmRkxCbzdYZUpRTGliVkd6d1JaWnhhaFB0Tm1xYTJtMGpnWUtaempYQzBqZXlpMU9pOHNScTRSSW5QYWdabGlBSV9Pak5nWGRhbkFtNHBWNVhVcDBwYVg3eWZ6cF9Tc2J4T0ZBZXdOX2Y1dmVyMFN0amp6Z2NrMURLOUcwY0l5TXl5R2pOU1AxYy0yOS1yVmtjXzBQT1o0RXBSQlVWNXNNTE8yVXNYWjZDYkowQTdoN29rYTVHMzFVUnJTS0FLU2FpdzFzLWJRVXo1Vlg0dFQ2V2FNcFFHU21XZ3ZaMGNIcVNvT1BRci1WVE1ZOS1JOWN6S0w4YXdDTnVUTDhuRGNTdkpaaERucUQ4TFJYa0NiRjFSX0V5cUZaN0Q1U2QxWWI1cmtGLWpUdHFtVG1RT1NxemtoOVZQX09YWDBwNTFfa3gxQlpTX3BZNTdiTFpyeHdNU1NnWWYwVEhoMnJwaGhPNW5kbjViUGZ5bkgwN08zQUFNWG9USVJNTlE2bnpPWlptdVFoX05jb0NyOFR6RWdGaS1sbTN1SWhiTGduLV9GOTIzcjhoUGRCdGdvS3dLR0ZnNE44bHpBZmVfY1cyVlBicWFqdDBfWFoxTXBEX0kyaA?oc=5",
-    "source": "Yahoo股市",
-    "time": "09/09 17:14",
-    "timestamp": 1788945290.0,
-    "score": 8,
-    "quality_score": 3,
-    "impact_score": 5,
-    "release_bonus": 0,
-    "matched_groups": [
-      "market_benchmark",
-      "market_structure"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "taiwan_market",
-      "sector_technology",
-      "market_structure"
-    ],
-    "primary_topic": "taiwan_market",
-    "named_entities": [
-      "taiwan_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "存股助理第846期—「本態性通膨」來臨，債券殖利率居高難下，存股族如何面對挑戰?",
-    "link": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOVnRDamJqdTBMZmRES29HQjZiTTBOM3A1c09IMDEtWlg2VkstbGFKenNWTFZBTUZfUWR0dVVGeW1XMXNPT0wwYmN2dmhOdnpzY2pHOTA5dDFMeGpJeDZCR1JyNDdQalhONDNDZnF0YUFMNWVSekxDUXVTZGREUkFnWjdmNWtGUmU0d3FWenpyaHdhZw?oc=5",
-    "source": "今周刊",
-    "time": "09/09 20:00",
-    "timestamp": 1788955200.0,
-    "score": 7,
-    "quality_score": 3,
+    "quality_score": 4,
     "impact_score": 4,
     "release_bonus": 0,
     "matched_groups": [
@@ -160,37 +162,35 @@
     "qualified": true
   },
   {
-    "title": "〈美股盤後〉美債回購規模遜預期 油價升破100美元 三大指數三連黑",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE4tWC16bmhTQTY3b1R3dGFpOHhncEtkbnR3N0dCNzFtWXc4dHFubURpMEoyeWljXzhwdFBUdjVVamtvQzJCNXFWLWRQUEdzNkk?oc=5",
+    "title": "油價破百！全球債市再掀拋售潮 美英長債殖利率創近20年高",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE4xYl91ckJPU3QxOGk4WE5tMGowU3ZQQldRU1k2RHRlV0YycWtXRGsxWGhDcEE0cGx2ME1WZTZOSVl0R2ZxRmhVaUJUelRPOHc?oc=5",
     "source": "news.cnyes.com",
-    "time": "09/10 05:30",
-    "timestamp": 1788989409.0,
-    "score": 7,
+    "time": "09/11 07:11",
+    "timestamp": 1789081863.0,
+    "score": 8,
     "quality_score": 4,
-    "impact_score": 3,
+    "impact_score": 4,
     "release_bonus": 0,
     "matched_groups": [
-      "market_benchmark"
+      "macro_policy"
     ],
     "low_signal_hits": [],
     "topic_groups": [
       "currency_commodities",
-      "global_market"
+      "macro_policy"
     ],
     "primary_topic": "currency_commodities",
-    "named_entities": [
-      "us_market"
-    ],
+    "named_entities": [],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
   },
   {
-    "title": "旭然國際8月營收6445萬元改寫史上同期新高 年增18.73%",
-    "link": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBqX2lUTEtiZldOY01IM3d1TFloSEtOMERJRjVnX25KVktXSHdVN0ZMQjNraFBUS2ZrU1l0eUxnWjZ0SVpCb0VYUkhPWG01SUR2M0Q0?oc=5",
+    "title": "甲骨文財報登場 股價預計大幅波動11%？",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBMSzhBdFpwQWVVVGJERUgzdWtzemlDZkxSSmxzU2hnNm0yaXk1aVFpMGtfcUp1ZGxLNHpfTWlEVGpKSzBJcDZ3bHZCRHkyc28?oc=5",
     "source": "news.cnyes.com",
-    "time": "09/09 18:19",
-    "timestamp": 1788949141.0,
+    "time": "09/10 21:30",
+    "timestamp": 1789047004.0,
     "score": 7,
     "quality_score": 4,
     "impact_score": 3,
@@ -209,26 +209,52 @@
     "qualified": true
   },
   {
-    "title": "逾2000美元摺疊iPhone亮相後 蘋果股價會跌嗎？美銀揭「60天規律」",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE4xUjZBVVBxeVNxOG9GczN3c3lqc1RKTHNULUIwS2NVWGl1dzVDbWtpYnBqQ0Q3TmFUQWVia3l4TWNUSmxKT2k4TW02d1VVWms?oc=5",
-    "source": "news.cnyes.com",
-    "time": "09/09 22:30",
-    "timestamp": 1788964203.0,
+    "title": "迎戰美股新格局！ 元大期貨美股選擇權跨平台行動下單更便利",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5WUXVrQ2hQdEJLNmVBSkNCbmlJVzFZLUVvZG9wWm5Yc1MwV0RzWGM1Y3RPY2tkUmhQSHd3NFJOWG1PUnhMV0MxY3hDVktxc0w4M2M5MVdxM2xRUQ?oc=5",
+    "source": "中央社 CNA",
+    "time": "09/10 14:33",
+    "timestamp": 1789022003.0,
     "score": 7,
     "quality_score": 4,
     "impact_score": 3,
     "release_bonus": 0,
     "matched_groups": [
-      "systemic_company"
+      "market_benchmark"
     ],
     "low_signal_hits": [],
     "topic_groups": [
-      "currency_commodities",
-      "company_earnings"
+      "global_market"
     ],
-    "primary_topic": "currency_commodities",
+    "primary_topic": "global_market",
     "named_entities": [
-      "apple"
+      "us_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "12萬元變2.3萬元！規模破千億元「美股ETF」00662要拆股",
+    "link": "https://news.google.com/rss/articles/CBMizwJBVV95cUxQYlcyVXR2RnlCdl9ncDFzVGotbjJKWnVoUTFrVTlaQ281Q0Itdlp6MHhDc2tacUdrVVIxVERyeDdNRVZpLVZtZ0x2cXNDNDhVNGZWZE50SVp6cmM2YUV3aUZ4ZURJNVVFWnVpajVmWlNqbkNxT3E4NUZiX3d3TTFfdFB5QWNTYXRVTmVJWjkwSzlnc3ZJSEhOYjVTcktMQ2RjZU9mMnpNRXNxcWhZVnpvM09YcnJicUtEWDdodTYtYjFfRkhNQWdQSjdaRnhxVUplZ01BVHZ3SXhvU3ZlR2lXdkVJUHdqVU01Qm1lMlhwSzRCZVZVVHdFbHRvSURmRFQwRl9IQ0JnS0xrcUlKVnU2RjRVNjNXWlpwMzhCNXcxS3RfdHJrUkhyZXBENmFBYnQxUDJfNEZDZE9zZnl4aXV2c2FMMEk3Z1lVcEtXZnIzVQ?oc=5",
+    "source": "Yahoo股市",
+    "time": "09/10 17:47",
+    "timestamp": 1789033644.0,
+    "score": 8,
+    "quality_score": 3,
+    "impact_score": 5,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_benchmark",
+      "market_structure"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "global_market",
+      "market_structure"
+    ],
+    "primary_topic": "global_market",
+    "named_entities": [
+      "us_market"
     ],
     "quality_pass": true,
     "impact_pass": true,
