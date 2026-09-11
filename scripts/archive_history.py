@@ -13,10 +13,16 @@ from pathlib import Path
 
 TAIPEI = timezone(timedelta(hours=8))
 DEFAULT_RETENTION_DAYS = 60
+# PressPlay articles are derived from a paid subscription and this repository is
+# public, so only the same-day fallback cache is kept. fetch_pressplay_groups.py
+# reads today's file when a later run's login fails; older files serve no
+# purpose. The window covers the evening/morning build boundary.
+DEFAULT_PRESSPLAY_RETENTION_DAYS = 3
+PRESSPLAY_DIR = "data/pressplay"
 
 
-def prune_history(history_dir: str | Path = "history", *, today: str, retain_days: int = DEFAULT_RETENTION_DAYS) -> list[str]:
-    """Delete dated JSON archives older than the inclusive retention window."""
+def prune_history(history_dir: str | Path = "history", *, today: str, retain_days: int = DEFAULT_RETENTION_DAYS, suffix: str = ".json") -> list[str]:
+    """Delete dated archives older than the inclusive retention window."""
     if retain_days < 1:
         raise ValueError("retain_days must be at least 1")
     root = Path(history_dir)
@@ -28,7 +34,7 @@ def prune_history(history_dir: str | Path = "history", *, today: str, retain_day
         raise ValueError("today must use YYYY-MM-DD") from exc
 
     removed: list[str] = []
-    for archive in root.glob("????-??-??.json"):
+    for archive in root.glob(f"????-??-??{suffix}"):
         try:
             archive_date = datetime.strptime(archive.stem, "%Y-%m-%d").date()
         except ValueError:
@@ -45,6 +51,7 @@ def archive_daily_data(
     history_dir: str = "history",
     date_override: str | None = None,
     retain_days: int = DEFAULT_RETENTION_DAYS,
+    pressplay_retain_days: int = DEFAULT_PRESSPLAY_RETENTION_DAYS,
 ) -> str:
     now = datetime.now(TAIPEI)
     date_str = date_override or now.strftime("%Y-%m-%d")
@@ -77,9 +84,14 @@ def archive_daily_data(
 
     archive_file.write_text(json.dumps(combined, ensure_ascii=False, indent=2), encoding="utf-8")
     removed = prune_history(dst_dir, today=date_str, retain_days=retain_days)
+    removed_articles = prune_history(
+        PRESSPLAY_DIR, today=date_str, retain_days=pressplay_retain_days, suffix=".md"
+    )
     print(f"Archived daily snapshot to {archive_file} ({archive_file.stat().st_size} bytes)")
     if removed:
         print(f"Pruned {len(removed)} history archive(s) older than {retain_days} days")
+    if removed_articles:
+        print(f"Pruned {len(removed_articles)} PressPlay article(s) older than {pressplay_retain_days} days")
     return str(archive_file)
 
 
@@ -89,5 +101,8 @@ if __name__ == "__main__":
     parser.add_argument("--data-dir", default="data/latest")
     parser.add_argument("--history-dir", default="history")
     parser.add_argument("--retain-days", type=int, default=DEFAULT_RETENTION_DAYS)
+    parser.add_argument("--pressplay-retain-days", type=int, default=DEFAULT_PRESSPLAY_RETENTION_DAYS)
     args = parser.parse_args()
-    archive_daily_data(args.data_dir, args.history_dir, args.date, args.retain_days)
+    archive_daily_data(
+        args.data_dir, args.history_dir, args.date, args.retain_days, args.pressplay_retain_days
+    )
