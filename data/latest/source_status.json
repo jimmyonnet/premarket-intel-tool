@@ -1,6 +1,6 @@
 {
   "schema_version": "source-status.v2",
-  "updated_at": "2026-09-15T02:18:51.970374+08:00",
+  "updated_at": "2026-09-15T03:43:26.928095+08:00",
   "reliability_tiers": {
     "core_stable": {
       "label": "核心穩定",
@@ -124,7 +124,7 @@
       "notification_level": "notice",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-09-15T02:18:30.311062+08:00",
+      "fetched_at": "2026-09-15T03:43:05.418741+08:00",
       "data_date": null,
       "age_minutes": 0.4,
       "error_summary": null,
@@ -148,7 +148,7 @@
         "pressplay"
       ],
       "status": "ok",
-      "fetched_at": "2026-09-15T02:18:30.311062+08:00",
+      "fetched_at": "2026-09-15T03:43:05.418741+08:00",
       "data_date": "2026/09/11",
       "age_minutes": 0.4,
       "error_summary": null,
@@ -237,7 +237,7 @@
         "chengwaye_daily"
       ],
       "status": "ok",
-      "fetched_at": "2026-09-15T02:18:30.311062+08:00",
+      "fetched_at": "2026-09-15T03:43:05.418741+08:00",
       "data_date": null,
       "age_minutes": 0.4,
       "error_summary": null,
