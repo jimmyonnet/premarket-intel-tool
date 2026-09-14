@@ -1,5 +1,5 @@
 {
-  "archived_at": "2026-09-14 09:18:52",
+  "archived_at": "2026-09-14 12:05:20",
   "data_date": "2026-09-14",
   "retention_days": 60,
   "sources": {
@@ -1548,11 +1548,11 @@
     },
     "ai_summary": {
       "schema_version": 1,
-      "generated_at": "2026-09-14T09:18:52.144347+08:00",
-      "status": "fallback",
-      "provider": "確定性降級整理",
-      "model": null,
-      "fallback_reason": "Gemini 摘要暫時失敗：The read operation timed out",
+      "generated_at": "2026-09-14T12:05:19.477501+08:00",
+      "status": "ok",
+      "provider": "Gemini API",
+      "model": "gemini-2.5-flash",
+      "fallback_reason": null,
       "news_stats": {
         "count": 10,
         "unique_topics": 3,
@@ -1606,48 +1606,53 @@
         }
       },
       "news_summary": {
-        "headline": "目前整理 10 則新聞，涵蓋 3 類主題；同一公司或事件不應主導全部清單。",
+        "headline": "美債殖利率與油價引發市場關注，美日央行會議將登場，台股聚焦AI與金融。",
         "topic_summary": [
           {
             "topic": "美元／債券／商品",
             "count": 7,
-            "summary": "美元／債券／商品"
-          },
-          {
-            "topic": "台股市場",
-            "count": 2,
-            "summary": "台股市場"
+            "summary": "美債殖利率逼近5%引發市場對美股影響的討論，高盛與經濟學家認為不必然導致崩盤。同時，油價破百與債券殖利率飆升導致美股基金單週贖回規模創今年新高。花旗示警Fed連續升息風險，美元上漲，美科技相關企業資本支出與獲利表現亮眼。"
           },
           {
             "topic": "總經／央行政策",
             "count": 1,
-            "summary": "總經／央行政策"
+            "summary": "本週美日利率會議將登場，市場關注Fed與日銀的升息動向，並評估對台股可能的三情境與五劇本應對。"
+          },
+          {
+            "topic": "台股市場",
+            "count": 2,
+            "summary": "法人看好台股第四季在「AI+金融」雙引擎帶動下攻堅，高息ETF成為避風港。在台股行情趨於震盪之際，金融股躍升為避險寵兒。"
           }
         ],
         "key_points": [
-          "美債殖利率逼近5%不等於美股崩盤！高盛點出「多頭關鍵」（news.cnyes.com，09/14 06:10）",
-          "322.7億美元！油價破百+債券殖利率飆升 美股基金單周贖回規模創今年高（news.cnyes.com，09/14 08:01）",
-          "美日利率會議本周登場 台股三情境 五劇本應對（經濟日報，09/14 02:50）",
-          "本週操盤筆記：超級央行週來了！Fed、日銀升息箭在弦上 美股、美債繃緊神經（news.cnyes.com，09/13 21:50）",
-          "台股Q4攻堅有靠山！法人力挺「AI+金融」雙引擎 高息ETF成避風港（news.cnyes.com，09/13 12:24）"
+          "美債殖利率逼近5%與油價破百引發市場對美股的擔憂。",
+          "本週美日央行利率會議為市場焦點，Fed升息可能性提高。",
+          "美股基金單週贖回規模創今年新高，顯示資金流出壓力。",
+          "台股第四季法人力挺「AI+金融」雙引擎，金融股與高息ETF受青睞。"
         ]
       },
       "market_summary": {
-        "headline": "隔夜市場風險情緒偏強，但不同市場與產業之間仍有分化。",
+        "headline": "美股主要指數全面上漲，費半指數領漲，台指期夜盤同步走高，亞股日經指數則下跌。",
         "observations": [
-          "市場廣度：上漲標的多於下跌標的，整體不是所有市場同步同幅度變動。",
-          "相對強弱：美股指數 相對有支撐，亞股 相對承壓，市場表現呈現分化。",
-          "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
+          "美股四大指數全面收紅，其中費城半導體指數漲幅達1.81%，表現最為強勁。",
+          "ADR表現分歧，台積電ADR與聯電ADR漲幅超過1%，蘋果ADR亦上漲，但輝達、美光及日月光ADR則小幅下跌。",
+          "台指期夜盤跟隨美股上漲，漲幅0.87%，顯示市場對開盤持樂觀態度。",
+          "亞洲市場表現不一，日經225指數顯著下跌1.73%，而韓國綜合指數則持平。"
         ],
         "drivers": [
-          "新聞題材主要集中在：美元／債券／商品、台股市場、總經／央行政策；這是資訊分布，不代表已確認的因果關係。"
+          "美股主要指數上漲，可能與高盛及經濟學家認為美債殖利率逼近5%不必然導致美股崩盤的觀點有關。",
+          "費城半導體指數與部分科技ADR上漲，可能受美科技相關企業資本支出維持高檔、獲利亮眼新聞的提振。",
+          "台指期夜盤上漲，可能反映了美股普遍上漲的正面情緒。",
+          "美元上漲及Fed下週升息可能性提高，可能影響全球資金流向。"
         ],
         "risks": [
-          "行情時間與資料延遲請以各卡片標示為準。",
-          "以上為快照關係整理，不代表價格方向預測。"
+          "美債殖利率持續飆升，以及油價破百，可能導致資金持續從美股基金流出。",
+          "花旗示警Fed「連續」升息風險，可能對全球經濟及股市造成壓力。",
+          "本週美日利率會議結果的不確定性，可能引發市場波動。",
+          "日經指數顯著下跌，顯示亞洲部分市場存在下行壓力。"
         ]
       },
-      "quality_note": "目前使用確定性整理；完成 AI 服務設定後，會補上語意摘要。"
+      "quality_note": "資料由多個來源彙整，部分數據可能因來源更新時間而有延遲。"
     },
     "news": [
       {
@@ -1997,7 +2002,7 @@
     },
     "source_status": {
       "schema_version": "source-status.v2",
-      "updated_at": "2026-09-14T09:18:06.889020+08:00",
+      "updated_at": "2026-09-14T12:04:55.267646+08:00",
       "reliability_tiers": {
         "core_stable": {
           "label": "核心穩定",
@@ -2033,7 +2038,7 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-09-14T09:17:41.867418+08:00",
+          "fetched_at": "2026-09-14T12:04:31.476891+08:00",
           "data_date": null,
           "age_minutes": 0.4,
           "error_summary": null,
@@ -11484,11 +11489,11 @@
     }
   },
   "meta": {
-    "build_time": "2026-09-14 09:18",
-    "build_version": "20260914_0918",
+    "build_time": "2026-09-14 12:05",
+    "build_version": "20260914_1205",
     "data_date": "09/14",
-    "stale_hours": 0.8,
-    "hours_since_us_close": 5.3,
+    "stale_hours": 3.6,
+    "hours_since_us_close": 8.1,
     "us_market_context": {
       "session_key": "closed",
       "label": "最新收盤快照",
@@ -11496,7 +11501,7 @@
       "badge_short": "收盤",
       "pill_class": "pill-fresh",
       "updated_label": "09/12 05:15",
-      "detail": "Yahoo Finance · 來源更新 09/12 05:15（52.0 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
+      "detail": "Yahoo Finance · 來源更新 09/12 05:15（54.8 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "ready",
@@ -11511,7 +11516,7 @@
         "name": "指數行情 (美股/亞股/ADR)",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-09-14T09:17:41.867418+08:00",
+        "fetched_at": "2026-09-14T12:04:31.476891+08:00",
         "data_date": null,
         "age_minutes": 0.4,
         "error_summary": null,
@@ -11763,8 +11768,8 @@
       }
     ],
     "schema_version": 1,
-    "data_revision": "66a0f5a8a3535cd2",
-    "built_at": "2026-09-14T01:18:52.446401+00:00",
+    "data_revision": "9e9e36f735e5a90f",
+    "built_at": "2026-09-14T04:05:19.862505+00:00",
     "hash": {
       "disposition": "b811bca45309",
       "candidates": "2167f3b339db",
@@ -11773,7 +11778,7 @@
       "macro": "a797e3036e4f",
       "calendar": "0f6e01904687",
       "news": "c4b9f21c4b28",
-      "ai_summary": "fdfb59b266e1",
+      "ai_summary": "2a37e9106b3b",
       "opening_forecast": "a6b8ca8f0e29",
       "opening_result": "0111d65af8d5",
       "learning_status": "a75b0b54d02c"
