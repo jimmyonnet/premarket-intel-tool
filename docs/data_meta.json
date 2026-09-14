@@ -1,24 +1,24 @@
 {
-  "build_time": "2026-09-14 12:58",
-  "build_version": "20260914_1258",
+  "build_time": "2026-09-15 01:01",
+  "build_version": "20260915_0101",
   "data_date": "09/14",
-  "stale_hours": 4.4,
-  "hours_since_us_close": 9.0,
+  "stale_hours": 16.5,
+  "hours_since_us_close": 21.0,
   "us_market_context": {
-    "session_key": "closed",
-    "label": "最新收盤快照",
-    "badge": "收盤",
-    "badge_short": "收盤",
-    "pill_class": "pill-fresh",
+    "session_key": "regular",
+    "label": "美股盤中快照",
+    "badge": "盤中",
+    "badge_short": "盤中",
+    "pill_class": "pill-live",
     "updated_label": "09/12 05:15",
-    "detail": "Yahoo Finance · 來源更新 09/12 05:15（55.7 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
+    "detail": "Yahoo Finance · 來源更新 09/12 05:15（67.8 小時前）· 延遲分鐘數未提供 · 美國正常交易時段",
     "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
   },
-  "overall_status": "ready",
-  "status_label": "可用",
-  "status_badge_class": "is-ready",
+  "overall_status": "unsafe",
+  "status_label": "不建議依此頁判讀",
+  "status_badge_class": "is-unsafe",
   "summary_reasons": [
-    "所有必要與次要資料來源均正常取得且在時限內"
+    "處置資料日期不符：處置來源標註適用 09/14，但目標交易日為 09/16（相差 -1 天）"
   ],
   "sources": [
     {
@@ -51,7 +51,7 @@
       "name": "處置股與出關預警",
       "is_required": true,
       "status": "ok",
-      "fetched_at": "2026-09-14T08:31:47.352058+08:00",
+      "fetched_at": "2026-09-15T01:00:58.706774+08:00",
       "data_date": "09/14",
       "age_minutes": 0.4,
       "error_summary": null,
@@ -278,8 +278,8 @@
     }
   ],
   "schema_version": 1,
-  "data_revision": "fd4c7d45a68a3e14",
-  "built_at": "2026-09-14T04:58:28.092747+00:00",
+  "data_revision": "4d69c4edb9d6ed3c",
+  "built_at": "2026-09-14T17:01:46.301929+00:00",
   "hash": {
     "disposition": "b811bca45309",
     "candidates": "2167f3b339db",
@@ -288,7 +288,7 @@
     "macro": "a797e3036e4f",
     "calendar": "0f6e01904687",
     "news": "c4b9f21c4b28",
-    "ai_summary": "b5b470393a6a",
+    "ai_summary": "305fc5190d34",
     "opening_forecast": "a6b8ca8f0e29",
     "opening_result": "0111d65af8d5",
     "learning_status": "a75b0b54d02c"
