@@ -1,10 +1,70 @@
 [
   {
+    "title": "升息疑慮+AI發展降速壓力罩頂！台股量縮失守4萬6 光學雙雄遭降低吞跌停金融指數刷新高撐盤｜Yahoo財經掃描",
+    "link": "https://news.google.com/rss/articles/CBMi-gRBVV95cUxQUzJtdFNMRHplLVh5X0wxRnB6OENucF9CZW14RzRxb0FyU1BXZm1hSGN2RGQwRFYxRXREQVRHR3g4T0VfcEhyWTFhb0dzbWpVbDRsVlRMdjFCUnQ4QWtZbEdlNmV2MTJLUUdaRy01MWhLUUVNclJ1cGR0QkcxLUhyVG9VLUpDMW5TYldyNXYyNFVMaXhabjlSaFV3UXZVeFNLZEJQbV8yN0VTZ1lWVFhRYnMwRFdIMUQzQ2pVcjZCRE5qM29FOENmblZJRFBIaWtCMGR3S0Y4OExPOXNQWDFTdkJDeUxQeTNNRlpkSWRzZlNjdVNLUjRfck85ZmNvSVVEZ05Nc3hrd1lIZmZlS0xpNk1EV3FQazd1WUtzQUZ5bl8weVNiUGd2TTFBZEVGcVB1LVZUdTk0Z2M1OXVVeWVvUTdyM3ctWG1nSGNHZWdlQW5kRjBhREcwNkVSeEpUWmRiMW5SeTVTOU1zRmZXbVc0VnZGb0ZKbWVzMmJ6cVQwamVjelJaaFcyZjA2TTBPVElidExQcktONkwtZndIU2JTVzVRaEQ2TV9LNTNMVjNFYklhbFc4N1gxZC14RGZYcVlDOU9LMGZ0dnQ5dWM3NEJCZmxCVm56LW5BVy1SVFdrVFNPRzZRNFRoWWMwWU5zRjNkYmYxdGNCbVlJbGVkRVlrelAySjhqbHdEeEpWb2NadFRpSno5OUFKVDBBZ2lfUVduYVJHY3M1cXBaWEl3T010NzM0ajZJbmEyZEY4MnJzb29lWE5telRleTdUWHBObWktcDZaTlJiZmFVd3dIc1htb0NKTFNSSzlZOVRLSHFaaFhpdVN6Mks3SGZB?oc=5",
+    "source": "Yahoo股市",
+    "time": "09/14 17:05",
+    "timestamp": 1789376723.0,
+    "score": 15,
+    "quality_score": 3,
+    "impact_score": 12,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy",
+      "market_benchmark",
+      "market_move",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "macro_policy",
+      "taiwan_market",
+      "sector_technology"
+    ],
+    "primary_topic": "macro_policy",
+    "named_entities": [
+      "taiwan_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "國泰台大：美債殖利率衝5% 美股有壓 評價與企業獲利成觀察指標",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5LTE54bnFVYll4LVZNNDVmdG1wdmdnTHp0dVdMVGFYdHBtYmY1dkYxdk9nSXo3dkVHNjNSZURCUno5T1VQODN5QkQwcDdzNW40NjJreWFJZThZQdIBX0FVX3lxTE04MkxwNFMzX2hwTmd1OHFJSE03NFNVTlFRN0tUb3BGUlEwNTBvUW5WTVBzcTN4SkVJVDNoMExzbVpreDVvZkxMTDA0NXREMFc2YklsYk9kUDFCX25OZGVJ?oc=5",
+    "source": "經濟日報",
+    "time": "09/15 02:09",
+    "timestamp": 1789409389.0,
+    "score": 14,
+    "quality_score": 4,
+    "impact_score": 10,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy",
+      "market_benchmark",
+      "earnings_financial"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "currency_commodities",
+      "macro_policy",
+      "global_market",
+      "company_earnings"
+    ],
+    "primary_topic": "currency_commodities",
+    "named_entities": [
+      "us_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
     "title": "美債殖利率逼近5%不等於美股崩盤！高盛點出「多頭關鍵」",
     "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1nSEFIQ2ZGTXFJWHRXNUlXY0ZkS3BuWUwtaW1EMmdqVHlDWWlEcDdyd0hkelpCdnBPRTVxMGdxLUJRc3FUc05DQmhadzBKVUk?oc=5",
     "source": "news.cnyes.com",
-    "time": "09/14 06:10",
-    "timestamp": 1789337443.0,
+    "time": "09/14 14:17",
+    "timestamp": 1789366645.0,
     "score": 14,
     "quality_score": 4,
     "impact_score": 10,
@@ -29,107 +89,74 @@
     "qualified": true
   },
   {
-    "title": "322.7億美元！油價破百+債券殖利率飆升 美股基金單周贖回規模創今年高",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9nZjRZaUdHV3B0Z0tQSVhmalZUUzRZc2luR1NhbS1iVVlXQ2EybDZGcl82QXNwUkdYbDk1RE5GOHdIdHl3ZnN3VHVibmF5OTA?oc=5",
+    "title": "〈貴金屬盤後〉油價大漲+Fed本周恐升息 黃金跌到逾一個月低點",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA5VE5jUmlwQlNVZjRjMlkzeWoyd29KbENyZ2dZSlVSbnhhdFVXRng0dnlESXpjV0tiaGEtbnJSWGpNQmNkS05sWWhIM2cxeVU?oc=5",
     "source": "news.cnyes.com",
-    "time": "09/14 08:01",
-    "timestamp": 1789344091.0,
+    "time": "09/15 06:52",
+    "timestamp": 1789426350.0,
     "score": 11,
     "quality_score": 4,
     "impact_score": 7,
     "release_bonus": 0,
     "matched_groups": [
       "macro_policy",
-      "market_benchmark"
+      "market_move"
     ],
     "low_signal_hits": [],
     "topic_groups": [
       "currency_commodities",
-      "macro_policy",
-      "global_market"
+      "macro_policy"
     ],
     "primary_topic": "currency_commodities",
-    "named_entities": [
-      "us_market"
-    ],
+    "named_entities": [],
     "quality_pass": true,
     "impact_pass": true,
     "qualified": true
   },
   {
-    "title": "美日利率會議本周登場 台股三情境 五劇本應對",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE9wTjYxelotV3JOMEtyc1BQbTNUY28waVJLVzB4QVVVLVpkdWJEZzMwYXdib3FKcTBSWUFDOUNpMnA4cnBpaGdYVkMxRlh5RHUyUWR5WWJ6RmtwQdIBX0FVX3lxTE5Sdld6Ty1PV090d241RlN6QklqRnVUbTU1NGVWS0k1elN0Q28tNnY0RTRrM3c3Vmc1dTdGR2Z1Q1AxM0VJR1FhZG9oR3ZKZ3pYYjU1Y2YzR3VxZmllS1lB?oc=5",
+    "title": "聯準會升息時間？利率會議時間9/17！美債逼5%、美伊戰爭再加AI踩煞車拉扯…壓力鍋要炸了？｜全球瞭望",
+    "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQWUJoZ0JCX2lVaXRXRFY1eXRDc0tQMi1HWWUyTmtuTVNvbWFNQ2Vmel9WWlhIMTVOSmdPcmtZejVFaWpqTk5lWmdvbTFGYVFIYUxzZHo3ZWdtcDIwNkFIQ2NaLWZWLWRKb0JiX2RCeDBqeF9YZjhqcXBnNTN1VnNDdg?oc=5",
+    "source": "今周刊",
+    "time": "09/14 14:00",
+    "timestamp": 1789365600.0,
+    "score": 9,
+    "quality_score": 3,
+    "impact_score": 6,
+    "release_bonus": 0,
+    "matched_groups": [
+      "macro_policy",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "geopolitics_trade",
+      "currency_commodities",
+      "macro_policy",
+      "sector_technology"
+    ],
+    "primary_topic": "geopolitics_trade",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "今日最夯 ETF／台股高檔修正、金融股逆勢上揚 0055漲近2%",
+    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE92YU4tWV96QjkyNUVZRDljNG9oQmYzOElSa0FNVXJFZV9lb1M1S2QwbnNFcnhocl9yQ1RLcW9aMnJnbFJaRlJSS1d2ZFg0MGR1VEtwS0dJS2ZiUdIBX0FVX3lxTFBqN3VSOVZRMFFVd256V0E3SzZOVkVlalRNV29tUVpfVHBQNno2alRhMmc5dzNYU05teUdXVVdqb09uZ1c1SXhwSlctX2lLSDZzZUN2NXhhVmVGR09lcGg4?oc=5",
     "source": "經濟日報",
-    "time": "09/14 02:50",
-    "timestamp": 1789325438.0,
-    "score": 11,
+    "time": "09/14 21:17",
+    "timestamp": 1789391839.0,
+    "score": 9,
     "quality_score": 4,
-    "impact_score": 7,
-    "release_bonus": 0,
-    "matched_groups": [
-      "macro_policy",
-      "market_benchmark"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "macro_policy",
-      "taiwan_market"
-    ],
-    "primary_topic": "macro_policy",
-    "named_entities": [
-      "taiwan_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "本週操盤筆記：超級央行週來了！Fed、日銀升息箭在弦上 美股、美債繃緊神經",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5VaHR3Tzhyd2hPNjE0MmJHUF9kc0tHVzFGZnlxV0Iwd3djbnJZY1BtUUY0MzJPRGdocENzQUh1M3JPbkRvcnBFZTJWUE9Yalk?oc=5",
-    "source": "news.cnyes.com",
-    "time": "09/13 21:50",
-    "timestamp": 1789307403.0,
-    "score": 11,
-    "quality_score": 4,
-    "impact_score": 7,
-    "release_bonus": 0,
-    "matched_groups": [
-      "macro_policy",
-      "market_benchmark"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "currency_commodities",
-      "macro_policy",
-      "global_market"
-    ],
-    "primary_topic": "currency_commodities",
-    "named_entities": [
-      "us_market"
-    ],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "台股Q4攻堅有靠山！法人力挺「AI+金融」雙引擎 高息ETF成避風港",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE9VT0hxbVQxMWNBTC0tajI3d1k3WXNCVnNoT2JoMXIwOEZORk1hQTktZnBKVnZtbnZ3cnJGcHJrbDVvUHhybGJQSURna2Nqd0E?oc=5",
-    "source": "news.cnyes.com",
-    "time": "09/13 12:24",
-    "timestamp": 1789273465.0,
-    "score": 11,
-    "quality_score": 4,
-    "impact_score": 7,
+    "impact_score": 5,
     "release_bonus": 0,
     "matched_groups": [
       "market_benchmark",
-      "sector_supply_chain",
       "market_structure"
     ],
     "low_signal_hits": [],
     "topic_groups": [
       "taiwan_market",
-      "sector_technology",
       "market_structure"
     ],
     "primary_topic": "taiwan_market",
@@ -141,21 +168,76 @@
     "qualified": true
   },
   {
-    "title": "台股行情趨於震盪之際 金融股躍避險寵兒",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE8yREpkX3BLYXZocVhkQThYX19zc1pjaGFWZ0NXYXFSMUZIcVdVZ2h2YU1MMmJXZkZmcEphVURYZFVoWEE3d3p5S3N6cEY3Q0pFNGZPN0Q3RmNPZ9IBX0FVX3lxTE1NN1Y0YU1oOGZCWmtLeGNpS0FvWWVjNjA4R1BMbGhjZnB0T2Nlb3g5b3hZMG92eldEOWR1MTctSC1lbGlnSUpmZmp4alpsdTNfZWkwcHVtT045OFFhR09Z?oc=5",
-    "source": "經濟日報",
-    "time": "09/13 14:00",
-    "timestamp": 1789279200.0,
-    "score": 7,
+    "title": "標普500ETF大比拼：美股「三巨頭」vs 港股 香港投資者點揀至抵？",
+    "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE02MFoyeWRXVjFDeE1zVEpMUE1VUzZZSFc4SkxQMVJpNGJCdDVBTXF6XzlzNzJXNHZ0TUhGR1RQOGxNSG1XZVNQaFlGMUtDeWJtbGNmMg?oc=5",
+    "source": "香港經濟日報HKET",
+    "time": "09/14 17:08",
+    "timestamp": 1789376908.0,
+    "score": 9,
     "quality_score": 4,
-    "impact_score": 3,
+    "impact_score": 5,
     "release_bonus": 0,
     "matched_groups": [
-      "market_benchmark"
+      "market_benchmark",
+      "market_structure"
     ],
     "low_signal_hits": [],
     "topic_groups": [
-      "taiwan_market"
+      "global_market",
+      "asia_market",
+      "market_structure"
+    ],
+    "primary_topic": "global_market",
+    "named_entities": [
+      "us_market"
+    ],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "AI高成長預期開始鬆動日經盤中重挫逾1,200點、科技股成重災區",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5vUFhGVDZ0cFYtd0kzZ1Q4VkhHbzVzdlptV0FIUm5RcHV2UFdqdld5SkxUQWhwY1FUZ3Nwc0N2MUFhQy1aek16emJ6UHFMQ2s?oc=5",
+    "source": "news.cnyes.com",
+    "time": "09/14 15:00",
+    "timestamp": 1789369206.0,
+    "score": 9,
+    "quality_score": 4,
+    "impact_score": 5,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_move",
+      "sector_supply_chain"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "asia_market",
+      "sector_technology"
+    ],
+    "primary_topic": "asia_market",
+    "named_entities": [],
+    "quality_pass": true,
+    "impact_pass": true,
+    "qualified": true
+  },
+  {
+    "title": "台股量縮收跌322點！ 網見「三大法人買賣」憂：明天更便宜",
+    "link": "https://news.google.com/rss/articles/CBMi4AJBVV95cUxNd0JRX0hTZXhwbUl2c0RvNUYxT0x0LVdFR2ZqYk9OcG1GZlBUV0VFanFLVDh2NEJhUnc1STZQX1dfOENCdndxTTdkaGYxWHY1WERXS3FBTElSTGhIb3BIYzFIenQxZC0waF9jbU5LQ3lqM25hS0FaQTBOX0ZXNmdTc2d3VEtrLWczZWY2cEZyel94bkVleEZLNmtybW9IZGVBamY3NVBZNjlBWWN1SHVZbzBlWFlXWEhMQ3QzdUJJeENLV3YxMFNvTGtoQ290cVUyZlNKSmg4ZXRVMzczNXBCZTQwTVZnSG13QTZIYkZhZkkzc0lyT2EtWG92NHhTeHlSaVo1NjlaQmtVU05kYWttREpjVjAyV0dydllfMmtWYmxtLXhESGtfQVJLVHlnVk1vNVRlWHpDc0gtdEtNTnkxMjJnc0hOLUk3VzlGcXRrekEwTkpsZzRIZWduNnNBUXBM?oc=5",
+    "source": "Yahoo股市",
+    "time": "09/14 16:00",
+    "timestamp": 1789372800.0,
+    "score": 8,
+    "quality_score": 3,
+    "impact_score": 5,
+    "release_bonus": 0,
+    "matched_groups": [
+      "market_benchmark",
+      "market_structure"
+    ],
+    "low_signal_hits": [],
+    "topic_groups": [
+      "taiwan_market",
+      "market_structure"
     ],
     "primary_topic": "taiwan_market",
     "named_entities": [
@@ -166,11 +248,11 @@
     "qualified": true
   },
   {
-    "title": "花旗示警Fed「連續」升息風險！美國經濟驚似1988年 能源、美元成首選",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFBTRm5FZE45M1FKWDZJbXhoR0p3SkNfMDRTU2JxdG56NG1lNXRTLWdKRnRpWWd5U0RELTFnVERWOFNyVXFYSzE1VjJsWkdsUkk?oc=5",
+    "title": "戰爭、百元油價、美債狂飆三大逆風都扛住 基金經理：新興市場可承受Fed升息風險",
+    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFAyc2RhanVOdUJIdjJWZk53Y3JUSlBPMEZOX0s4WXZlTjFuSHJUcVFSMk90ZjRkc0N3OFFXNnZEaC05YVdZVGdIci15eFJDWkU?oc=5",
     "source": "news.cnyes.com",
-    "time": "09/14 07:20",
-    "timestamp": 1789341619.0,
+    "time": "09/15 06:29",
+    "timestamp": 1789424999.0,
     "score": 8,
     "quality_score": 4,
     "impact_score": 4,
@@ -180,82 +262,11 @@
     ],
     "low_signal_hits": [],
     "topic_groups": [
+      "geopolitics_trade",
       "currency_commodities",
       "macro_policy"
     ],
-    "primary_topic": "currency_commodities",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "美債殖利率逼近5%仍非股市「殺手」？經濟學家：並非經濟過熱",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5wT3VsNXRaRHNMZlZkLWNjaGxHU2wwOFJCbjh0RXlHajJsMndzMjl6NXJTV1E1dGdnT0VxbDl5MXdlMUNpMFY4VF9id2h5a3M?oc=5",
-    "source": "news.cnyes.com",
-    "time": "09/14 06:40",
-    "timestamp": 1789339204.0,
-    "score": 8,
-    "quality_score": 4,
-    "impact_score": 4,
-    "release_bonus": 0,
-    "matched_groups": [
-      "macro_policy"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "currency_commodities",
-      "macro_policy"
-    ],
-    "primary_topic": "currency_commodities",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "〈紐約匯市〉美元上漲 Fed下周升息可能性提高",
-    "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA1SGkzOXZQZjIxUHA5S0ZRMm1WejdVMEZkenVfcHdINW9uNXBWT0FnME84RkdQc3dhaDlNUHZMbS15Tmt1TC1jWC1lQmlSV2M?oc=5",
-    "source": "鉅亨網",
-    "time": "09/13 17:11",
-    "timestamp": 1789290675.0,
-    "score": 8,
-    "quality_score": 4,
-    "impact_score": 4,
-    "release_bonus": 0,
-    "matched_groups": [
-      "macro_policy"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "currency_commodities",
-      "macro_policy"
-    ],
-    "primary_topic": "currency_commodities",
-    "named_entities": [],
-    "quality_pass": true,
-    "impact_pass": true,
-    "qualified": true
-  },
-  {
-    "title": "相關企業資本支出維持高檔、獲利亮眼 美科技商品伺機投資",
-    "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE82LXV5QnpGVUFYVVpybWt3QWVVQTdhTXBiWTA1N0xDTjRsZEl1WGc5YlNoSkRtWWYzRXg1QWYtR2JYczJqYTF3Z2pOOWszRElHNlQyZVpDRUVWd9IBX0FVX3lxTE1KYzlxNTN0SVBiS0xWelhLMjduWDd3ZTJWU0lhTXNnT2Q5MFNDQXFrRVRHTUNLcXlka1U2TUtNUllybmNNdnJHZE0zSWdYNzVVRE9aUnVNcVhtVmV4bU9B?oc=5",
-    "source": "經濟日報",
-    "time": "09/14 00:36",
-    "timestamp": 1789317361.0,
-    "score": 7,
-    "quality_score": 4,
-    "impact_score": 3,
-    "release_bonus": 0,
-    "matched_groups": [
-      "earnings_financial"
-    ],
-    "low_signal_hits": [],
-    "topic_groups": [
-      "currency_commodities",
-      "company_earnings"
-    ],
-    "primary_topic": "currency_commodities",
+    "primary_topic": "geopolitics_trade",
     "named_entities": [],
     "quality_pass": true,
     "impact_pass": true,
