@@ -1,6 +1,6 @@
 {
   "schema_version": "source-status.v2",
-  "updated_at": "2026-09-15T12:55:49.320172+08:00",
+  "updated_at": "2026-09-15T23:39:23.103480+08:00",
   "reliability_tiers": {
     "core_stable": {
       "label": "核心穩定",
@@ -102,14 +102,16 @@
       "notification_level": "critical",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-09-15T08:25:50.681537+08:00",
+      "fetched_at": "2026-09-15T23:39:00.353577+08:00",
       "data_date": "09/15",
       "age_minutes": 0.4,
       "error_summary": null,
       "fallback_used": false,
       "retry_attempts": 0,
       "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險",
-      "notification": null
+      "notification": null,
+      "refresh_skipped": true,
+      "skip_reason": "現有快照仍在 TTL 720 分鐘內"
     },
     "pressplay": {
       "source_id": "pressplay",
