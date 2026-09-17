@@ -1,5 +1,5 @@
 {
-  "archived_at": "2026-09-17 12:08:42",
+  "archived_at": "2026-09-17 12:54:32",
   "data_date": "2026-09-17",
   "retention_days": 60,
   "sources": {
@@ -1976,11 +1976,11 @@
     },
     "ai_summary": {
       "schema_version": 1,
-      "generated_at": "2026-09-17T12:08:41.917716+08:00",
-      "status": "fallback",
-      "provider": "確定性降級整理",
-      "model": null,
-      "fallback_reason": "Gemini 摘要暫時失敗：The read operation timed out",
+      "generated_at": "2026-09-17T12:54:32.074446+08:00",
+      "status": "ok",
+      "provider": "Gemini API",
+      "model": "gemini-2.5-flash",
+      "fallback_reason": null,
       "news_stats": {
         "count": 10,
         "unique_topics": 6,
@@ -2039,63 +2039,68 @@
         }
       },
       "news_summary": {
-        "headline": "目前整理 10 則新聞，涵蓋 6 類主題；同一公司或事件不應主導全部清單。",
+        "headline": "升息疑慮與AI發展降速壓力籠罩，美債殖利率逼近5%引發市場關注。",
         "topic_summary": [
+          {
+            "topic": "總經／央行政策",
+            "count": 1,
+            "summary": "台股因升息疑慮與AI發展降速壓力失守4萬6。"
+          },
           {
             "topic": "美元／債券／商品",
             "count": 3,
-            "summary": "美元／債券／商品"
+            "summary": "美債殖利率衝高至5%對美股有壓，油價大漲與升息預期導致黃金跌至逾一個月低點。"
           },
           {
             "topic": "地緣政治／貿易",
             "count": 2,
-            "summary": "地緣政治／貿易"
+            "summary": "聯準會升息時間、美伊戰爭與AI踩煞車等因素形成壓力，但新興市場可承受升息風險。"
           },
           {
             "topic": "台股市場",
             "count": 2,
-            "summary": "台股市場"
-          },
-          {
-            "topic": "亞股市場",
-            "count": 1,
-            "summary": "亞股市場"
+            "summary": "台股量縮收跌，金融股逆勢上揚，三大法人買賣動向受關注。"
           },
           {
             "topic": "美股／全球市場",
             "count": 1,
-            "summary": "美股／全球市場"
+            "summary": "美債殖利率逼近5%不等於美股崩盤，高盛點出多頭關鍵，並比較標普500 ETF。"
           },
           {
-            "topic": "總經／央行政策",
+            "topic": "亞股市場",
             "count": 1,
-            "summary": "總經／央行政策"
+            "summary": "AI高成長預期鬆動，日經盤中重挫逾1,200點，科技股成重災區。"
           }
         ],
         "key_points": [
-          "升息疑慮+AI發展降速壓力罩頂！台股量縮失守4萬6 光學雙雄遭降低吞跌停金融指數刷新高撐盤｜Yahoo財經掃描（Yahoo股市，09/14 17:05）",
-          "國泰台大：美債殖利率衝5% 美股有壓 評價與企業獲利成觀察指標（經濟日報，09/15 02:09）",
-          "美債殖利率逼近5%不等於美股崩盤！高盛點出「多頭關鍵」（news.cnyes.com，09/14 14:17）",
-          "〈貴金屬盤後〉油價大漲+Fed本周恐升息 黃金跌到逾一個月低點（news.cnyes.com，09/15 06:52）",
-          "聯準會升息時間？利率會議時間9/17！美債逼5%、美伊戰爭再加AI踩煞車拉扯…壓力鍋要炸了？｜全球瞭望（今周刊，09/14 14:00）"
+          "升息疑慮與AI發展降速對台股造成壓力，台股量縮失守4萬6。",
+          "美債殖利率逼近5%對美股構成壓力，但高盛點出多頭關鍵。",
+          "油價大漲與聯準會升息預期導致黃金跌至逾一個月低點。",
+          "日經指數因AI預期鬆動而重挫，科技股成為重災區。"
         ]
       },
       "market_summary": {
-        "headline": "隔夜市場風險情緒偏弱，但仍有部分非科技標的相對抗跌。",
+        "headline": "美股主要指數普遍下跌，費半指數與科技相關ADR跌幅顯著，台指期夜盤亦承壓。",
         "observations": [
-          "市場廣度：下跌標的多於上漲標的，整體不是所有市場同步同幅度變動。",
-          "相對強弱：台指期夜盤 相對有支撐，ADR／跨海標的 相對承壓，市場表現呈現分化。",
-          "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
+          "美股四大指數全面收黑，其中費城半導體指數跌幅最深，顯示半導體板塊承壓。",
+          "多數科技相關ADR如台積電、輝達、美光、聯電、日月光均呈現顯著跌幅，與費半指數走勢一致。",
+          "蘋果公司ADR逆勢小幅上漲，顯示市場資金流向可能存在分歧。",
+          "亞洲股市如日經225指數與韓國綜合指數亦呈現下跌，市場情緒普遍偏向保守。"
         ],
         "drivers": [
-          "新聞題材主要集中在：美元／債券／商品、地緣政治／貿易、台股市場；這是資訊分布，不代表已確認的因果關係。"
+          "市場對聯準會升息的疑慮持續升高，影響投資人信心。",
+          "美國公債殖利率逼近5%，對股市估值構成壓力。",
+          "AI產業發展降速的預期，可能導致科技股面臨修正。",
+          "地緣政治緊張局勢，如美伊戰爭的討論，也可能增加市場不確定性。"
         ],
         "risks": [
-          "行情時間與資料延遲請以各卡片標示為準。",
-          "以上為快照關係整理，不代表價格方向預測。"
+          "聯準會未來升息路徑的不確定性。",
+          "美國公債殖利率若持續攀升，可能進一步壓抑股市表現。",
+          "AI產業成長動能若不如預期，可能導致相關科技股持續修正。",
+          "地緣政治風險升溫，可能引發避險情緒並影響全球供應鏈。"
         ]
       },
-      "quality_note": "目前使用確定性整理；完成 AI 服務設定後，會補上語意摘要。"
+      "quality_note": "所有資料來源均為最新狀態。"
     },
     "news": [
       {
@@ -2563,7 +2568,7 @@
     },
     "source_status": {
       "schema_version": "source-status.v2",
-      "updated_at": "2026-09-17T12:07:56.708222+08:00",
+      "updated_at": "2026-09-17T12:54:13.761030+08:00",
       "reliability_tiers": {
         "core_stable": {
           "label": "核心穩定",
@@ -2599,9 +2604,9 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-09-17T12:07:27.415911+08:00",
+          "fetched_at": "2026-09-17T12:53:51.339257+08:00",
           "data_date": null,
-          "age_minutes": 0.5,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2623,7 +2628,7 @@
           "status": "ok",
           "fetched_at": "2026-09-17T09:33:42.435220+08:00",
           "data_date": null,
-          "age_minutes": 0.5,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2645,7 +2650,7 @@
           "status": "ok",
           "fetched_at": "2026-09-17T09:33:42.435220+08:00",
           "data_date": "2026-09-15",
-          "age_minutes": 0.5,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2667,7 +2672,7 @@
           "status": "ok",
           "fetched_at": "2026-09-16T23:29:48.059374+08:00",
           "data_date": "09/15",
-          "age_minutes": 0.5,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2713,7 +2718,7 @@
           "status": "ok",
           "fetched_at": "2026-09-17T09:33:42.435168+08:00",
           "data_date": "2026/09/14",
-          "age_minutes": 0.5,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2735,7 +2740,7 @@
           "status": "ok",
           "fetched_at": "2026-09-17T09:33:42.435168+08:00",
           "data_date": "2026-09-15",
-          "age_minutes": 0.5,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2757,7 +2762,7 @@
           "status": "ok",
           "fetched_at": "2026-09-15T08:25:50.682524+08:00",
           "data_date": null,
-          "age_minutes": 0.5,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2777,7 +2782,7 @@
           "status": "ok",
           "fetched_at": "2026-09-17T09:33:42.435220+08:00",
           "data_date": null,
-          "age_minutes": 0.5,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -2802,7 +2807,7 @@
           "status": "ok",
           "fetched_at": "2026-09-17T09:33:42.435220+08:00",
           "data_date": null,
-          "age_minutes": 0.5,
+          "age_minutes": 0.4,
           "error_summary": null,
           "fallback_used": false,
           "retry_attempts": 0,
@@ -16261,11 +16266,11 @@
     }
   },
   "meta": {
-    "build_time": "2026-09-17 12:08",
-    "build_version": "20260917_1208",
+    "build_time": "2026-09-17 12:54",
+    "build_version": "20260917_1254",
     "data_date": "09/15",
-    "stale_hours": 51.7,
-    "hours_since_us_close": 8.1,
+    "stale_hours": 52.5,
+    "hours_since_us_close": 8.9,
     "us_market_context": {
       "session_key": "closed",
       "label": "最新收盤快照",
@@ -16273,7 +16278,7 @@
       "badge_short": "收盤",
       "pill_class": "pill-fresh",
       "updated_label": "09/15 05:15",
-      "detail": "Yahoo Finance · 來源更新 09/15 05:15（54.9 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
+      "detail": "Yahoo Finance · 來源更新 09/15 05:15（55.6 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "unsafe",
@@ -16288,9 +16293,9 @@
         "name": "指數行情 (美股/亞股/ADR)",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-09-17T12:07:27.415911+08:00",
+        "fetched_at": "2026-09-17T12:53:51.339257+08:00",
         "data_date": null,
-        "age_minutes": 0.5,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向",
@@ -16315,7 +16320,7 @@
         "status": "ok",
         "fetched_at": "2026-09-16T23:29:48.059374+08:00",
         "data_date": "09/15",
-        "age_minutes": 0.5,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險",
@@ -16340,7 +16345,7 @@
         "status": "ok",
         "fetched_at": "2026-09-17T09:33:42.435220+08:00",
         "data_date": null,
-        "age_minutes": 0.5,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整",
@@ -16365,7 +16370,7 @@
         "status": "ok",
         "fetched_at": "2026-09-17T09:33:42.435220+08:00",
         "data_date": "2026-09-15",
-        "age_minutes": 0.5,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數",
@@ -16415,7 +16420,7 @@
         "status": "ok",
         "fetched_at": "2026-09-17T09:33:42.435168+08:00",
         "data_date": "2026/09/14",
-        "age_minutes": 0.5,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行",
@@ -16442,7 +16447,7 @@
         "status": "ok",
         "fetched_at": "2026-09-17T09:33:42.435220+08:00",
         "data_date": null,
-        "age_minutes": 0.5,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
@@ -16470,7 +16475,7 @@
         "status": "ok",
         "fetched_at": "2026-09-17T09:33:42.435168+08:00",
         "data_date": "2026-09-15",
-        "age_minutes": 0.5,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少今日重磅總經數據與事件日程倒數",
@@ -16495,7 +16500,7 @@
         "status": "ok",
         "fetched_at": "2026-09-15T08:25:50.682524+08:00",
         "data_date": null,
-        "age_minutes": 0.5,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少昨日盤後自結損益與營收公告統計",
@@ -16520,7 +16525,7 @@
         "status": "ok",
         "fetched_at": "2026-09-17T09:33:42.435220+08:00",
         "data_date": null,
-        "age_minutes": 0.5,
+        "age_minutes": 0.4,
         "error_summary": null,
         "fallback_used": false,
         "impact_desc": "缺少隔夜美股與產業焦點新聞快訊",
@@ -16540,8 +16545,8 @@
       }
     ],
     "schema_version": 1,
-    "data_revision": "89a9634e6cdcf757",
-    "built_at": "2026-09-17T04:08:42.290730+00:00",
+    "data_revision": "7f91a931aaae03af",
+    "built_at": "2026-09-17T04:54:32.441497+00:00",
     "hash": {
       "disposition": "0d5a91213d31",
       "candidates": "cc73ddd1b59d",
@@ -16550,7 +16555,7 @@
       "macro": "8bd1c810e397",
       "calendar": "9138bb269084",
       "news": "d9ab46f3bbc6",
-      "ai_summary": "207c83d1fd35",
+      "ai_summary": "96fe4aff8af5",
       "opening_forecast": "a6b8ca8f0e29",
       "opening_result": "0111d65af8d5",
       "learning_status": "a75b0b54d02c"
