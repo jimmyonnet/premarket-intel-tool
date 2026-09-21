@@ -1,24 +1,24 @@
 {
-  "build_time": "2026-09-21 12:57",
-  "build_version": "20260921_1257",
+  "build_time": "2026-09-22 01:10",
+  "build_version": "20260922_0110",
   "data_date": "09/15",
-  "stale_hours": 148.5,
-  "hours_since_us_close": 9.0,
+  "stale_hours": 160.7,
+  "hours_since_us_close": 21.2,
   "us_market_context": {
-    "session_key": "closed",
-    "label": "最新收盤快照",
-    "badge": "收盤",
-    "badge_short": "收盤",
-    "pill_class": "pill-fresh",
+    "session_key": "regular",
+    "label": "美股盤中快照",
+    "badge": "盤中",
+    "badge_short": "盤中",
+    "pill_class": "pill-live",
     "updated_label": "09/15 05:15",
-    "detail": "Yahoo Finance · 來源更新 09/15 05:15（151.7 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
+    "detail": "Yahoo Finance · 來源更新 09/15 05:15（163.9 小時前）· 延遲分鐘數未提供 · 美國正常交易時段",
     "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
   },
   "overall_status": "unsafe",
   "status_label": "不建議依此頁判讀",
   "status_badge_class": "is-unsafe",
   "summary_reasons": [
-    "處置資料日期不符：處置來源標註適用 09/15，但目標交易日為 09/22（相差 -6 天）"
+    "處置資料日期不符：處置來源標註適用 09/15，但目標交易日為 09/23（相差 -7 天）"
   ],
   "sources": [
     {
@@ -51,7 +51,7 @@
       "name": "處置股與出關預警",
       "is_required": true,
       "status": "ok",
-      "fetched_at": "2026-09-18T23:05:21.390351+08:00",
+      "fetched_at": "2026-09-22T01:09:01.957454+08:00",
       "data_date": "09/15",
       "age_minutes": 0.4,
       "error_summary": null,
@@ -278,8 +278,8 @@
     }
   ],
   "schema_version": 1,
-  "data_revision": "fde456270ddbe884",
-  "built_at": "2026-09-21T04:57:16.597080+00:00",
+  "data_revision": "d0dd51e182b569a8",
+  "built_at": "2026-09-21T17:10:13.986272+00:00",
   "hash": {
     "disposition": "0d5a91213d31",
     "candidates": "cc73ddd1b59d",
@@ -288,7 +288,7 @@
     "macro": "8bd1c810e397",
     "calendar": "9138bb269084",
     "news": "d9ab46f3bbc6",
-    "ai_summary": "ea29cc4bef98",
+    "ai_summary": "4163dbc80755",
     "opening_forecast": "a6b8ca8f0e29",
     "opening_result": "0111d65af8d5",
     "learning_status": "a75b0b54d02c"
