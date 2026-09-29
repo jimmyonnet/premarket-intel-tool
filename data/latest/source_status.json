@@ -1,6 +1,6 @@
 {
   "schema_version": "source-status.v2",
-  "updated_at": "2026-09-29T13:44:58.930111+08:00",
+  "updated_at": "2026-09-30T00:57:59.160107+08:00",
   "reliability_tiers": {
     "core_stable": {
       "label": "核心穩定",
@@ -102,7 +102,7 @@
       "notification_level": "critical",
       "dependencies": [],
       "status": "ok",
-      "fetched_at": "2026-09-29T02:40:44.855994+08:00",
+      "fetched_at": "2026-09-30T00:57:32.474524+08:00",
       "data_date": "09/15",
       "age_minutes": 0.4,
       "error_summary": null,
