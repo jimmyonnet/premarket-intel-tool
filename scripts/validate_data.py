@@ -73,6 +73,11 @@ MARKET_ROW_GROUPS = {
 }
 MARKET_NUMERIC_KEYS = ("close", "volume", "foreign", "trust", "dealer")
 DATE_KEYS = ("date", "today", "page_date", "data_date", "chengwaye_date", "effective_market_day")
+# Sources whose dates legitimately differ from the current session: event
+# calendars, news and the previous trading day's market data.
+DATE_CONSISTENCY_EXCLUDED_SOURCES = frozenset(
+    {"calendar", "news", "stock_history", "financials", "chengwaye_daily"}
+)
 # A deliberately conservative bound: TWSE index limit-up/limit-down is usually
 # much narrower, but 50% avoids rejecting special no-price-limit sessions.
 INDEX_CHANGE_WARNING_PCT = 30.0
@@ -267,9 +272,13 @@ def _validate_date_consistency(payloads: dict[str, Any], errors: list[str], warn
         candidates = _collect_date_candidates(name, payload, reference.year if reference else None)
         # Only compare explicit report/source dates. Event calendars and news
         # naturally contain many dates and are excluded from this cross-source check.
-        if name in {"calendar", "news", "stock_history", "financials", "chengwaye_daily"}:
+        if name in DATE_CONSISTENCY_EXCLUDED_SOURCES:
             continue
         for path, value in candidates:
+            # source_status nests a copy of every source's date, which would
+            # otherwise smuggle excluded sources back into the comparison.
+            if DATE_CONSISTENCY_EXCLUDED_SOURCES.intersection(path.split(".")):
+                continue
             if reference is None:
                 reference, reference_source = value, path
             elif value != reference:
