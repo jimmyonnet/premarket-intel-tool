@@ -169,3 +169,24 @@ def test_explicit_schema_catches_nonempty_field_drift(tmp_path):
     report = validate_data_dir(tmp_path)
     assert report["ok"] is False
     assert any("schema violation in disposal" in error and "date_check" in error for error in report["errors"])
+
+
+def test_date_consistency_ignores_excluded_sources_nested_in_source_status(tmp_path):
+    # chengwaye_daily reports the previous trading day's close, so its date is
+    # expected to differ from the current night session. The top-level exclusion
+    # list must not be bypassed by the copy nested inside source_status.
+    root = tmp_path / "data" / "latest"
+    root.mkdir(parents=True)
+    _write_payloads(root)
+    _write_calendar_for(root)
+    (root / "night_session.json").write_text(
+        json.dumps({"date": "2026-08-25", "latest": {}}), encoding="utf-8"
+    )
+    (root / "source_status.json").write_text(
+        json.dumps({"sources": {"chengwaye_daily": {"status": "ok", "data_date": "2026-08-24"}}}),
+        encoding="utf-8",
+    )
+
+    report = validate_data_dir(root)
+
+    assert not any("資料日期不一致" in warning for warning in report["warnings"])
