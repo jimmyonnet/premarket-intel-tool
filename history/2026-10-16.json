@@ -1,5 +1,5 @@
 {
-  "archived_at": "2026-10-16 12:32:56",
+  "archived_at": "2026-10-16 23:27:29",
   "data_date": "2026-10-16",
   "retention_days": 60,
   "sources": {
@@ -11335,11 +11335,11 @@
     },
     "ai_summary": {
       "schema_version": 1,
-      "generated_at": "2026-10-16T12:32:55.915115+08:00",
+      "generated_at": "2026-10-16T23:27:28.763131+08:00",
       "status": "fallback",
       "provider": "確定性降級整理",
       "model": null,
-      "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 429: You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev",
+      "fallback_reason": "Gemini 摘要暫時失敗：Gemini HTTP 503: The service is currently unavailable.",
       "news_stats": {
         "count": 10,
         "unique_topics": 6,
@@ -11444,13 +11444,14 @@
         "observations": [
           "市場廣度：下跌標的多於上漲標的，整體不是所有市場同步同幅度變動。",
           "相對強弱：台指期夜盤 相對有支撐，ADR／跨海標的 相對承壓，市場表現呈現分化。",
-          "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。"
+          "跨市場觀察：台指期夜盤與美股／ADR 平均表現方向一致，可用來觀察台股開盤情緒是否延續。",
+          "亞股資料僅作前一交易時段收盤結果，非當下盤中行情。"
         ],
         "drivers": [
           "新聞題材主要集中在：美元／債券／商品、地緣政治／貿易、台股市場；這是資訊分布，不代表已確認的因果關係。"
         ],
         "risks": [
-          "行情時間與資料延遲請以各卡片標示為準。",
+          "亞股資料僅作前一交易時段收盤結果，非當下盤中行情。",
           "以上為快照關係整理，不代表價格方向預測。"
         ]
       },
@@ -12574,7 +12575,7 @@
     },
     "source_status": {
       "schema_version": "source-status.v2",
-      "updated_at": "2026-10-16T12:32:55.628090+08:00",
+      "updated_at": "2026-10-16T23:27:28.416300+08:00",
       "reliability_tiers": {
         "core_stable": {
           "label": "核心穩定",
@@ -12676,7 +12677,7 @@
           "notification_level": "critical",
           "dependencies": [],
           "status": "ok",
-          "fetched_at": "2026-10-15T23:41:34.342349+08:00",
+          "fetched_at": "2026-10-16T23:27:03.430680+08:00",
           "data_date": "09/15",
           "age_minutes": 0.4,
           "error_summary": null,
@@ -16261,19 +16262,19 @@
     }
   },
   "meta": {
-    "build_time": "2026-10-16 12:32",
-    "build_version": "20261016_1232",
+    "build_time": "2026-10-16 23:27",
+    "build_version": "20261016_2327",
     "data_date": "09/15",
-    "stale_hours": 748.1,
-    "hours_since_us_close": 8.5,
+    "stale_hours": 759.0,
+    "hours_since_us_close": 19.5,
     "us_market_context": {
-      "session_key": "closed",
-      "label": "最新收盤快照",
-      "badge": "收盤",
-      "badge_short": "收盤",
-      "pill_class": "pill-fresh",
+      "session_key": "regular",
+      "label": "美股盤中快照",
+      "badge": "盤中",
+      "badge_short": "盤中",
+      "pill_class": "pill-live",
       "updated_label": "09/15 05:15",
-      "detail": "Yahoo Finance · 來源更新 09/15 05:15（751.3 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
+      "detail": "Yahoo Finance · 來源更新 09/15 05:15（762.2 小時前）· 延遲分鐘數未提供 · 美國正常交易時段",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "unsafe",
@@ -16313,7 +16314,7 @@
         "name": "處置股與出關預警",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-10-15T23:41:34.342349+08:00",
+        "fetched_at": "2026-10-16T23:27:03.430680+08:00",
         "data_date": "09/15",
         "age_minutes": 0.4,
         "error_summary": null,
@@ -16540,8 +16541,8 @@
       }
     ],
     "schema_version": 1,
-    "data_revision": "2032a8373c3fa026",
-    "built_at": "2026-10-16T04:32:56.456139+00:00",
+    "data_revision": "8a2fc31e3eb7b59f",
+    "built_at": "2026-10-16T15:27:29.486911+00:00",
     "hash": {
       "disposition": "0d5a91213d31",
       "candidates": "cc73ddd1b59d",
@@ -16550,7 +16551,7 @@
       "macro": "8bd1c810e397",
       "calendar": "9138bb269084",
       "news": "d9ab46f3bbc6",
-      "ai_summary": "2c61cc0583af",
+      "ai_summary": "0321950b0240",
       "opening_forecast": "a6b8ca8f0e29",
       "opening_result": "0111d65af8d5",
       "learning_status": "a75b0b54d02c"
