@@ -1,24 +1,24 @@
 {
-  "build_time": "2026-10-16 23:27",
-  "build_version": "20261016_2327",
+  "build_time": "2026-10-19 00:19",
+  "build_version": "20261019_0019",
   "data_date": "09/15",
-  "stale_hours": 759.0,
-  "hours_since_us_close": 19.5,
+  "stale_hours": 807.9,
+  "hours_since_us_close": 20.3,
   "us_market_context": {
-    "session_key": "regular",
-    "label": "美股盤中快照",
-    "badge": "盤中",
-    "badge_short": "盤中",
-    "pill_class": "pill-live",
+    "session_key": "closed",
+    "label": "最新收盤快照",
+    "badge": "收盤",
+    "badge_short": "收盤",
+    "pill_class": "pill-fresh",
     "updated_label": "09/15 05:15",
-    "detail": "Yahoo Finance · 來源更新 09/15 05:15（762.2 小時前）· 延遲分鐘數未提供 · 美國正常交易時段",
+    "detail": "Yahoo Finance · 來源更新 09/15 05:15（811.1 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
     "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
   },
   "overall_status": "unsafe",
   "status_label": "不建議依此頁判讀",
   "status_badge_class": "is-unsafe",
   "summary_reasons": [
-    "處置資料日期不符：處置來源標註適用 09/15，但目標交易日為 10/19（相差 -31 天）"
+    "處置資料日期不符：處置來源標註適用 09/15，但目標交易日為 10/20（相差 -34 天）"
   ],
   "sources": [
     {
@@ -126,7 +126,7 @@
       "name": "PressPlay 盤前族群與標的",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-10-16T09:32:53.584110+08:00",
+      "fetched_at": "2026-10-19T00:19:40.251681+08:00",
       "data_date": null,
       "age_minutes": 0.0,
       "error_summary": null,
@@ -151,7 +151,7 @@
       "name": "主力券商與當沖籌碼明細",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-10-16T09:32:29.450224+08:00",
+      "fetched_at": "2026-10-19T00:19:15.767132+08:00",
       "data_date": "2026/09/14",
       "age_minutes": 0.4,
       "error_summary": null,
@@ -178,7 +178,7 @@
       "name": "Chengwaye 個股漲停履歷",
       "is_required": false,
       "status": "ok",
-      "fetched_at": "2026-10-16T09:32:29.450870+08:00",
+      "fetched_at": "2026-10-19T00:19:15.767882+08:00",
       "data_date": null,
       "age_minutes": 0.4,
       "error_summary": null,
@@ -278,8 +278,8 @@
     }
   ],
   "schema_version": 1,
-  "data_revision": "8a2fc31e3eb7b59f",
-  "built_at": "2026-10-16T15:27:29.486911+00:00",
+  "data_revision": "81c24aa42e366927",
+  "built_at": "2026-10-18T16:19:54.002408+00:00",
   "hash": {
     "disposition": "0d5a91213d31",
     "candidates": "cc73ddd1b59d",
@@ -288,7 +288,7 @@
     "macro": "8bd1c810e397",
     "calendar": "9138bb269084",
     "news": "d9ab46f3bbc6",
-    "ai_summary": "0321950b0240",
+    "ai_summary": "2b6642180d99",
     "opening_forecast": "a6b8ca8f0e29",
     "opening_result": "0111d65af8d5",
     "learning_status": "a75b0b54d02c"
