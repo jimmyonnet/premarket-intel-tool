@@ -1,2184 +1,8 @@
 {
-  "archived_at": "2026-11-05 05:03:23",
+  "archived_at": "2026-11-05 11:35:50",
   "data_date": "2026-11-05",
   "retention_days": 60,
   "sources": {
-    "opening_result": {
-      "schema_version": "opening-result.v1",
-      "prediction_id": "2026-08-26T08:30+08:00-opening-v1",
-      "market_date": "2026-08-26",
-      "status": "verified",
-      "target_time": "09:00:00+08:00",
-      "verified_at": "2026-08-26T10:45:08.941930+08:00",
-      "attempts": 1,
-      "attempt_log": [
-        {
-          "attempted_at": "2026-08-26T10:45:07+08:00",
-          "status": "verified",
-          "observed_open": 45157.64,
-          "message": null
-        }
-      ],
-      "actual_open": 45157.64,
-      "actual_change_points": -11.82,
-      "actual_direction": "flat",
-      "direction_correct": false,
-      "signed_error_points": 272.46,
-      "absolute_error_points": 272.46,
-      "source": {
-        "name": "TWSE MIS TAIEX",
-        "url": "https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_t00.tw&json=1&delay=0",
-        "observed_at": "2026-08-26T09:00:00+08:00",
-        "fetched_at": "2026-08-26T10:45:08.941930+08:00",
-        "official": true
-      },
-      "error": null
-    },
-    "taiex_reference": {
-      "schema_version": "taiex-reference.v1",
-      "market_date": "2026-08-26",
-      "previous_trade_date": "2026-08-25",
-      "status": "ok",
-      "previous_close": 45169.46,
-      "source": {
-        "name": "TWSE TAIEX historical index",
-        "url": "https://www.twse.com.tw/indicesReport/MI_5MINS_HIST?response=json&date=20260825",
-        "observed_at": "2026-08-25T13:30:00+08:00",
-        "fetched_at": "2026-08-26T08:33:34.743777+08:00",
-        "official": true
-      },
-      "error": null
-    },
-    "stock_history": {
-      "source": "https://chengwaye.com/stock/",
-      "fetched_at": "2026-09-15T08:26:17.621905+08:00",
-      "requested_codes": [
-        "6226",
-        "2305",
-        "1528",
-        "2351",
-        "8358",
-        "6112",
-        "6148",
-        "6140",
-        "2468"
-      ],
-      "codes": {
-        "6226": {
-          "code": "6226",
-          "name": "光鼎",
-          "source_url": "https://chengwaye.com/stock/6226",
-          "summary": {
-            "limit_up_count": "26 次",
-            "latest_limit_up": "2026/09/14",
-            "avg_next_open": "+5.92%",
-            "avg_next_close": "+4.87%"
-          },
-          "records": [
-            {
-              "date": "2026/09/14",
-              "close": "33",
-              "group": "面板光電",
-              "next_open": "—",
-              "next_avg": "—",
-              "next_close": "—",
-              "next_trend": "—"
-            },
-            {
-              "date": "2026/09/10",
-              "close": "32.6",
-              "group": "面板光電",
-              "next_open": "+1.38%",
-              "next_avg": "-3.09%",
-              "next_close": "-7.98%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/08/28",
-              "close": "34",
-              "group": "面板光電",
-              "next_open": "+3.68%",
-              "next_avg": "-0.90%",
-              "next_close": "-7.06%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/08/27",
-              "close": "30.95",
-              "group": "面板光電",
-              "next_open": "+9.53%",
-              "next_avg": "+9.74%",
-              "next_close": "+9.85%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/08/26",
-              "close": "28.15",
-              "group": "面板光電",
-              "next_open": "+9.95%",
-              "next_avg": "+9.13%",
-              "next_close": "+9.95%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/08/25",
-              "close": "25.6",
-              "group": "面板光電",
-              "next_open": "+8.59%",
-              "next_avg": "+9.41%",
-              "next_close": "+9.96%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/08/24",
-              "close": "23.3",
-              "group": "面板光電",
-              "next_open": "+0.21%",
-              "next_avg": "+5.38%",
-              "next_close": "+9.87%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/08/18",
-              "close": "21.1",
-              "group": "面板光電",
-              "next_open": "0.00%",
-              "next_avg": "+4.81%",
-              "next_close": "+0.95%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/08/06",
-              "close": "22.85",
-              "group": "面板光電",
-              "next_open": "-0.44%",
-              "next_avg": "-1.89%",
-              "next_close": "-3.50%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/08/03",
-              "close": "21.55",
-              "group": "面板光電",
-              "next_open": "+3.02%",
-              "next_avg": "+2.35%",
-              "next_close": "+2.09%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/07/29",
-              "close": "22.55",
-              "group": "面板光電",
-              "next_open": "+5.10%",
-              "next_avg": "-1.74%",
-              "next_close": "-9.98%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/07/28",
-              "close": "20.5",
-              "group": "面板光電",
-              "next_open": "+5.12%",
-              "next_avg": "+9.33%",
-              "next_close": "+10.00%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/07/02",
-              "close": "26.65",
-              "group": "面板光電",
-              "next_open": "+8.63%",
-              "next_avg": "-5.84%",
-              "next_close": "-9.94%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/07/01",
-              "close": "24.25",
-              "group": "面板光電",
-              "next_open": "+9.90%",
-              "next_avg": "+9.90%",
-              "next_close": "+9.90%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/30",
-              "close": "22.05",
-              "group": "面板光電",
-              "next_open": "+9.98%",
-              "next_avg": "+9.98%",
-              "next_close": "+9.98%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/29",
-              "close": "20.05",
-              "group": "面板光電",
-              "next_open": "+9.73%",
-              "next_avg": "+9.82%",
-              "next_close": "+9.98%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/26",
-              "close": "18.25",
-              "group": "面板光電",
-              "next_open": "+6.03%",
-              "next_avg": "+7.31%",
-              "next_close": "+9.86%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/25",
-              "close": "16.6",
-              "group": "面板光電",
-              "next_open": "+2.41%",
-              "next_avg": "+7.81%",
-              "next_close": "+9.94%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/24",
-              "close": "15.1",
-              "group": "面板光電",
-              "next_open": "+9.93%",
-              "next_avg": "+9.93%",
-              "next_close": "+9.93%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/23",
-              "close": "13.75",
-              "group": "面板光電",
-              "next_open": "+6.91%",
-              "next_avg": "+8.94%",
-              "next_close": "+9.82%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/04/17",
-              "close": "14.6",
-              "group": "面板光電",
-              "next_open": "+6.16%",
-              "next_avg": "+8.34%",
-              "next_close": "+9.59%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/04/09",
-              "close": "13.5",
-              "group": "光通訊",
-              "next_open": "+9.63%",
-              "next_avg": "+2.51%",
-              "next_close": "-2.22%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/04/08",
-              "close": "12.3",
-              "group": "面板光電",
-              "next_open": "+6.91%",
-              "next_avg": "+7.67%",
-              "next_close": "+9.76%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/03/19",
-              "close": "14.65",
-              "group": "面板光電",
-              "next_open": "+1.71%",
-              "next_avg": "+3.21%",
-              "next_close": "+1.37%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/03/18",
-              "close": "13.35",
-              "group": "光通訊",
-              "next_open": "+4.12%",
-              "next_avg": "+6.98%",
-              "next_close": "+9.74%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/03/17",
-              "close": "12.15",
-              "group": "面板光電",
-              "next_open": "+9.88%",
-              "next_avg": "+9.88%",
-              "next_close": "+9.88%",
-              "next_trend": "續漲停"
-            }
-          ],
-          "period_note": "上市｜族群：面板光電、光通訊｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 26
-        },
-        "2305": {
-          "code": "2305",
-          "name": "全友",
-          "source_url": "https://chengwaye.com/stock/2305",
-          "summary": {
-            "limit_up_count": "15 次",
-            "latest_limit_up": "2026/09/14",
-            "avg_next_open": "+3.49%",
-            "avg_next_close": "+1.43%"
-          },
-          "records": [
-            {
-              "date": "2026/09/14",
-              "close": "45.15",
-              "group": "電腦週邊",
-              "next_open": "—",
-              "next_avg": "—",
-              "next_close": "—",
-              "next_trend": "—"
-            },
-            {
-              "date": "2026/09/10",
-              "close": "38.5",
-              "group": "電腦週邊",
-              "next_open": "+0.39%",
-              "next_avg": "+2.18%",
-              "next_close": "+6.62%",
-              "next_trend": "強續漲"
-            },
-            {
-              "date": "2026/08/26",
-              "close": "31",
-              "group": "電腦週邊",
-              "next_open": "0.00%",
-              "next_avg": "-2.80%",
-              "next_close": "-5.00%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/08/13",
-              "close": "30.55",
-              "group": "電腦週邊",
-              "next_open": "+3.27%",
-              "next_avg": "-0.86%",
-              "next_close": "-3.93%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/07/13",
-              "close": "39.6",
-              "group": "電腦週邊",
-              "next_open": "+1.89%",
-              "next_avg": "-5.28%",
-              "next_close": "-6.69%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/07/06",
-              "close": "42.65",
-              "group": "電腦週邊",
-              "next_open": "-0.35%",
-              "next_avg": "-5.85%",
-              "next_close": "-9.96%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/06/22",
-              "close": "37",
-              "group": "電腦週邊",
-              "next_open": "-0.27%",
-              "next_avg": "-0.50%",
-              "next_close": "+0.27%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/06/18",
-              "close": "33.65",
-              "group": "電腦週邊",
-              "next_open": "+9.96%",
-              "next_avg": "+9.18%",
-              "next_close": "+9.96%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/16",
-              "close": "30.35",
-              "group": "電腦週邊",
-              "next_open": "-1.15%",
-              "next_avg": "+2.40%",
-              "next_close": "+0.82%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/06/15",
-              "close": "27.6",
-              "group": "電腦週邊",
-              "next_open": "+9.96%",
-              "next_avg": "+9.96%",
-              "next_close": "+9.96%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/12",
-              "close": "25.1",
-              "group": "電腦週邊",
-              "next_open": "+9.96%",
-              "next_avg": "+9.96%",
-              "next_close": "+9.96%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/05/27",
-              "close": "22.85",
-              "group": "電腦週邊",
-              "next_open": "+9.19%",
-              "next_avg": "+4.46%",
-              "next_close": "+1.53%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/05/25",
-              "close": "20.65",
-              "group": "電腦週邊",
-              "next_open": "+7.02%",
-              "next_avg": "-0.40%",
-              "next_close": "+0.73%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/05/08",
-              "close": "17.8",
-              "group": "電腦週邊",
-              "next_open": "-1.97%",
-              "next_avg": "+0.53%",
-              "next_close": "-1.40%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/03/26",
-              "close": "16.15",
-              "group": "電子設備",
-              "next_open": "+0.93%",
-              "next_avg": "+3.73%",
-              "next_close": "+7.12%",
-              "next_trend": "強續漲"
-            }
-          ],
-          "period_note": "上市｜族群：電腦週邊、電子設備｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 15
-        },
-        "1528": {
-          "code": "1528",
-          "name": "恩德",
-          "source_url": "https://chengwaye.com/stock/1528",
-          "summary": {
-            "limit_up_count": "8 次",
-            "latest_limit_up": "2026/09/14",
-            "avg_next_open": "+4.06%",
-            "avg_next_close": "+1.35%"
-          },
-          "records": [
-            {
-              "date": "2026/09/14",
-              "close": "23.3",
-              "group": "機械",
-              "next_open": "—",
-              "next_avg": "—",
-              "next_close": "—",
-              "next_trend": "—"
-            },
-            {
-              "date": "2026/09/11",
-              "close": "21.2",
-              "group": "機械",
-              "next_open": "+1.65%",
-              "next_avg": "+7.24%",
-              "next_close": "+9.91%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/09/08",
-              "close": "21.05",
-              "group": "機械",
-              "next_open": "+3.56%",
-              "next_avg": "-1.21%",
-              "next_close": "-3.80%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/06/02",
-              "close": "30.05",
-              "group": "機械",
-              "next_open": "+8.82%",
-              "next_avg": "+4.75%",
-              "next_close": "+2.16%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/06/01",
-              "close": "27.35",
-              "group": "機械",
-              "next_open": "+9.32%",
-              "next_avg": "+9.76%",
-              "next_close": "+9.87%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/04/15",
-              "close": "30.35",
-              "group": "電力設備",
-              "next_open": "+3.13%",
-              "next_avg": "-0.98%",
-              "next_close": "-1.81%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/03/31",
-              "close": "26.95",
-              "group": "塑化化工",
-              "next_open": "+3.71%",
-              "next_avg": "+0.75%",
-              "next_close": "-3.15%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/03/27",
-              "close": "25.45",
-              "group": "塑化化工",
-              "next_open": "-1.77%",
-              "next_avg": "-3.42%",
-              "next_close": "-3.73%",
-              "next_trend": "直接跌"
-            }
-          ],
-          "period_note": "上市｜族群：機械、電力設備、塑化化工｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 8
-        },
-        "2351": {
-          "code": "2351",
-          "name": "順德",
-          "source_url": "https://chengwaye.com/stock/2351",
-          "summary": {
-            "limit_up_count": "10 次",
-            "latest_limit_up": "2026/09/14",
-            "avg_next_open": "+1.38%",
-            "avg_next_close": "-0.48%"
-          },
-          "records": [
-            {
-              "date": "2026/09/14",
-              "close": "257",
-              "group": "封測",
-              "next_open": "—",
-              "next_avg": "—",
-              "next_close": "—",
-              "next_trend": "—"
-            },
-            {
-              "date": "2026/08/26",
-              "close": "219",
-              "group": "半導體材料",
-              "next_open": "-2.05%",
-              "next_avg": "+3.82%",
-              "next_close": "+9.59%",
-              "next_trend": "強續漲"
-            },
-            {
-              "date": "2026/07/06",
-              "close": "228",
-              "group": "半導體材料",
-              "next_open": "+1.54%",
-              "next_avg": "-3.12%",
-              "next_close": "-6.36%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/06/24",
-              "close": "217.5",
-              "group": "半導體材料",
-              "next_open": "+3.68%",
-              "next_avg": "-0.52%",
-              "next_close": "-3.91%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/06/22",
-              "close": "214.5",
-              "group": "半導體材料",
-              "next_open": "0.00%",
-              "next_avg": "-3.07%",
-              "next_close": "-7.69%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/05/26",
-              "close": "216",
-              "group": "精密零組件",
-              "next_open": "+5.32%",
-              "next_avg": "+4.40%",
-              "next_close": "+6.02%",
-              "next_trend": "強續漲"
-            },
-            {
-              "date": "2026/05/08",
-              "close": "183",
-              "group": "電子材料",
-              "next_open": "+1.09%",
-              "next_avg": "+1.69%",
-              "next_close": "+4.10%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/04/22",
-              "close": "166",
-              "group": "汽車",
-              "next_open": "+1.81%",
-              "next_avg": "-4.38%",
-              "next_close": "-9.04%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/04/20",
-              "close": "141.5",
-              "group": "半導體材料",
-              "next_open": "+1.06%",
-              "next_avg": "+2.74%",
-              "next_close": "+6.71%",
-              "next_trend": "強續漲"
-            },
-            {
-              "date": "2026/04/01",
-              "close": "103.5",
-              "group": "AI伺服器",
-              "next_open": "0.00%",
-              "next_avg": "-0.83%",
-              "next_close": "-3.77%",
-              "next_trend": "直接跌"
-            }
-          ],
-          "period_note": "上市｜族群：封測、半導體材料、精密零組件、電子材料｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 10
-        },
-        "8358": {
-          "code": "8358",
-          "name": "金居",
-          "source_url": "https://chengwaye.com/stock/8358",
-          "summary": {
-            "limit_up_count": "16 次",
-            "latest_limit_up": "2026/08/28",
-            "avg_next_open": "+1.91%",
-            "avg_next_close": "+2.32%"
-          },
-          "records": [
-            {
-              "date": "2026/08/28",
-              "close": "543",
-              "group": "PCB",
-              "next_open": "-0.92%",
-              "next_avg": "-1.60%",
-              "next_close": "-0.55%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/08/27",
-              "close": "494",
-              "group": "PCB",
-              "next_open": "+6.28%",
-              "next_avg": "+6.60%",
-              "next_close": "+9.92%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/08/12",
-              "close": "418.5",
-              "group": "PCB",
-              "next_open": "+6.33%",
-              "next_avg": "+2.29%",
-              "next_close": "+0.60%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/08/11",
-              "close": "380.5",
-              "group": "PCB",
-              "next_open": "+5.78%",
-              "next_avg": "+8.42%",
-              "next_close": "+9.99%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/08/06",
-              "close": "384",
-              "group": "PCB",
-              "next_open": "+2.34%",
-              "next_avg": "-3.89%",
-              "next_close": "-8.33%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/08/03",
-              "close": "327.5",
-              "group": "PCB",
-              "next_open": "+0.61%",
-              "next_avg": "+2.60%",
-              "next_close": "+4.12%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/07/31",
-              "close": "298",
-              "group": "PCB",
-              "next_open": "+0.34%",
-              "next_avg": "+8.43%",
-              "next_close": "+9.90%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/06/30",
-              "close": "600",
-              "group": "PCB",
-              "next_open": "+4.33%",
-              "next_avg": "+1.76%",
-              "next_close": "-2.17%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/06/01",
-              "close": "668",
-              "group": "PCB",
-              "next_open": "-0.90%",
-              "next_avg": "-2.38%",
-              "next_close": "-6.14%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/05/29",
-              "close": "608",
-              "group": "PCB",
-              "next_open": "+4.77%",
-              "next_avg": "+8.33%",
-              "next_close": "+9.87%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/05/18",
-              "close": "428",
-              "group": "PCB",
-              "next_open": "+0.47%",
-              "next_avg": "-1.35%",
-              "next_close": "+0.23%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/04/20",
-              "close": "404",
-              "group": "PCB",
-              "next_open": "0.00%",
-              "next_avg": "-1.57%",
-              "next_close": "-2.60%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/04/17",
-              "close": "367.5",
-              "group": "PCB",
-              "next_open": "+1.50%",
-              "next_avg": "+5.61%",
-              "next_close": "+9.93%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/04/14",
-              "close": "315.5",
-              "group": "PCB",
-              "next_open": "+1.43%",
-              "next_avg": "+2.61%",
-              "next_close": "+5.71%",
-              "next_trend": "強續漲"
-            },
-            {
-              "date": "2026/04/08",
-              "close": "267.5",
-              "group": "PCB材料",
-              "next_open": "+0.75%",
-              "next_avg": "+2.48%",
-              "next_close": "+1.68%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/03/26",
-              "close": "249.5",
-              "group": "PCB",
-              "next_open": "-2.61%",
-              "next_avg": "-5.81%",
-              "next_close": "-5.01%",
-              "next_trend": "直接跌"
-            }
-          ],
-          "period_note": "上櫃｜族群：PCB、PCB材料｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 16
-        },
-        "6112": {
-          "code": "6112",
-          "name": "邁達特",
-          "source_url": "https://chengwaye.com/stock/6112",
-          "summary": {
-            "limit_up_count": "2 次",
-            "latest_limit_up": "2026/09/14",
-            "avg_next_open": "+0.96%",
-            "avg_next_close": "+2.34%"
-          },
-          "records": [
-            {
-              "date": "2026/09/14",
-              "close": "50.6",
-              "group": "軟體",
-              "next_open": "—",
-              "next_avg": "—",
-              "next_close": "—",
-              "next_trend": "—"
-            },
-            {
-              "date": "2026/06/01",
-              "close": "47.05",
-              "group": "軟體",
-              "next_open": "+0.96%",
-              "next_avg": "+2.95%",
-              "next_close": "+2.34%",
-              "next_trend": "弱續漲"
-            }
-          ],
-          "period_note": "上市｜族群：軟體｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 2
-        },
-        "6148": {
-          "code": "6148",
-          "name": "驊宏資",
-          "source_url": "https://chengwaye.com/stock/6148",
-          "summary": {
-            "limit_up_count": "9 次",
-            "latest_limit_up": "2026/09/14",
-            "avg_next_open": "+1.85%",
-            "avg_next_close": "+0.32%"
-          },
-          "records": [
-            {
-              "date": "2026/09/14",
-              "close": "34.1",
-              "group": "軟體",
-              "next_open": "—",
-              "next_avg": "—",
-              "next_close": "—",
-              "next_trend": "—"
-            },
-            {
-              "date": "2026/09/11",
-              "close": "31",
-              "group": "軟體",
-              "next_open": "+7.42%",
-              "next_avg": "+8.92%",
-              "next_close": "+10.00%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/08/05",
-              "close": "29.7",
-              "group": "軟體",
-              "next_open": "-1.85%",
-              "next_avg": "-4.47%",
-              "next_close": "-5.56%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/07/02",
-              "close": "33.55",
-              "group": "軟體",
-              "next_open": "-1.49%",
-              "next_avg": "+2.51%",
-              "next_close": "+1.34%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/06/08",
-              "close": "38.5",
-              "group": "軟體",
-              "next_open": "+0.13%",
-              "next_avg": "+2.09%",
-              "next_close": "-4.55%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/06/04",
-              "close": "37.25",
-              "group": "軟體",
-              "next_open": "0.00%",
-              "next_avg": "+0.52%",
-              "next_close": "-6.04%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/06/02",
-              "close": "34.8",
-              "group": "軟體",
-              "next_open": "+1.29%",
-              "next_avg": "+0.37%",
-              "next_close": "-2.59%",
-              "next_trend": "開高走低"
-            },
-            {
-              "date": "2026/06/01",
-              "close": "31.65",
-              "group": "軟體",
-              "next_open": "+6.16%",
-              "next_avg": "+8.66%",
-              "next_close": "+9.95%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/03/17",
-              "close": "38.3",
-              "group": "電子通路",
-              "next_open": "+3.13%",
-              "next_avg": "-0.81%",
-              "next_close": "0.00%",
-              "next_trend": "開高走低"
-            }
-          ],
-          "period_note": "上櫃｜族群：軟體、電子通路｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 9
-        },
-        "6140": {
-          "code": "6140",
-          "name": "訊達",
-          "source_url": "https://chengwaye.com/stock/6140",
-          "summary": {
-            "limit_up_count": "5 次",
-            "latest_limit_up": "2026/09/14",
-            "avg_next_open": "+7.40%",
-            "avg_next_close": "+6.31%"
-          },
-          "records": [
-            {
-              "date": "2026/09/14",
-              "close": "18.25",
-              "group": "軟體",
-              "next_open": "—",
-              "next_avg": "—",
-              "next_close": "—",
-              "next_trend": "—"
-            },
-            {
-              "date": "2026/06/02",
-              "close": "22.7",
-              "group": "軟體",
-              "next_open": "+5.73%",
-              "next_avg": "+3.84%",
-              "next_close": "+2.20%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/06/01",
-              "close": "20.65",
-              "group": "軟體",
-              "next_open": "+4.12%",
-              "next_avg": "+8.56%",
-              "next_close": "+9.93%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/05/07",
-              "close": "22.55",
-              "group": "軟體",
-              "next_open": "+9.76%",
-              "next_avg": "+4.91%",
-              "next_close": "+3.10%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/05/06",
-              "close": "20.5",
-              "group": "軟體",
-              "next_open": "+10.00%",
-              "next_avg": "+10.00%",
-              "next_close": "+10.00%",
-              "next_trend": "續漲停"
-            }
-          ],
-          "period_note": "上櫃｜族群：軟體｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 5
-        },
-        "2468": {
-          "code": "2468",
-          "name": "華經",
-          "source_url": "https://chengwaye.com/stock/2468",
-          "summary": {
-            "limit_up_count": "8 次",
-            "latest_limit_up": "2026/09/14",
-            "avg_next_open": "+4.11%",
-            "avg_next_close": "+0.86%"
-          },
-          "records": [
-            {
-              "date": "2026/09/14",
-              "close": "39.35",
-              "group": "軟體",
-              "next_open": "—",
-              "next_avg": "—",
-              "next_close": "—",
-              "next_trend": "—"
-            },
-            {
-              "date": "2026/09/11",
-              "close": "35.8",
-              "group": "軟體",
-              "next_open": "+8.38%",
-              "next_avg": "+9.31%",
-              "next_close": "+9.92%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/07/02",
-              "close": "38.3",
-              "group": "軟體",
-              "next_open": "+3.26%",
-              "next_avg": "+2.44%",
-              "next_close": "+1.17%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/06/08",
-              "close": "44.95",
-              "group": "軟體",
-              "next_open": "0.00%",
-              "next_avg": "+2.03%",
-              "next_close": "-4.12%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/06/04",
-              "close": "44.75",
-              "group": "軟體",
-              "next_open": "-0.56%",
-              "next_avg": "-0.61%",
-              "next_close": "-8.60%",
-              "next_trend": "直接跌"
-            },
-            {
-              "date": "2026/06/02",
-              "close": "40.15",
-              "group": "軟體",
-              "next_open": "+4.61%",
-              "next_avg": "+3.26%",
-              "next_close": "+1.37%",
-              "next_trend": "弱續漲"
-            },
-            {
-              "date": "2026/06/01",
-              "close": "36.5",
-              "group": "軟體",
-              "next_open": "+9.73%",
-              "next_avg": "+9.24%",
-              "next_close": "+10.00%",
-              "next_trend": "續漲停"
-            },
-            {
-              "date": "2026/03/17",
-              "close": "41.8",
-              "group": "其他題材",
-              "next_open": "+3.35%",
-              "next_avg": "-1.84%",
-              "next_close": "-3.71%",
-              "next_trend": "開高走低"
-            }
-          ],
-          "period_note": "上市｜族群：軟體、其他題材｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
-          "record_count": 8
-        }
-      },
-      "failed_codes": [],
-      "_status": "ok"
-    },
-    "source_status": {
-      "schema_version": "source-status.v2",
-      "updated_at": "2026-11-05T05:03:09.879056+08:00",
-      "reliability_tiers": {
-        "core_stable": {
-          "label": "核心穩定",
-          "default_ttl_minutes": 720,
-          "default_hard_expiry_minutes": 1440,
-          "fallback_policy": "previous_snapshot_with_warning",
-          "notification_level": "critical"
-        },
-        "important_short_stale": {
-          "label": "重要但可短暫過期",
-          "default_ttl_minutes": 360,
-          "default_hard_expiry_minutes": 1440,
-          "fallback_policy": "previous_snapshot_with_warning",
-          "notification_level": "warning"
-        },
-        "high_risk": {
-          "label": "高風險來源",
-          "default_ttl_minutes": 180,
-          "default_hard_expiry_minutes": 720,
-          "fallback_policy": "fixture_or_previous_snapshot_with_warning",
-          "notification_level": "notice"
-        }
-      },
-      "sources": {
-        "indices": {
-          "source_id": "indices",
-          "name": "指數行情 (美股/亞股/ADR)",
-          "is_required": true,
-          "reliability_tier": "core_stable",
-          "ttl_minutes": 720,
-          "hard_expiry_minutes": 1440,
-          "fallback_policy": "previous_snapshot_with_warning",
-          "notification_level": "critical",
-          "dependencies": [],
-          "status": "ok",
-          "fetched_at": "2026-11-04T14:22:57.110269+08:00",
-          "data_date": null,
-          "age_minutes": 0.4,
-          "error_summary": null,
-          "fallback_used": false,
-          "retry_attempts": 0,
-          "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向",
-          "notification": null,
-          "refresh_skipped": true,
-          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
-        },
-        "twse_summary": {
-          "source_id": "twse_summary",
-          "name": "大盤昨收與三大法人",
-          "is_required": false,
-          "reliability_tier": "core_stable",
-          "ttl_minutes": 720,
-          "hard_expiry_minutes": 1440,
-          "fallback_policy": "previous_snapshot_with_warning",
-          "notification_level": "warning",
-          "dependencies": [],
-          "status": "ok",
-          "fetched_at": "2026-11-04T11:04:08.128344+08:00",
-          "data_date": null,
-          "age_minutes": 0.4,
-          "error_summary": null,
-          "fallback_used": false,
-          "retry_attempts": 0,
-          "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整",
-          "notification": null,
-          "refresh_skipped": true,
-          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
-        },
-        "night_session": {
-          "source_id": "night_session",
-          "name": "台指期夜盤走勢",
-          "is_required": false,
-          "reliability_tier": "important_short_stale",
-          "ttl_minutes": 180,
-          "hard_expiry_minutes": 720,
-          "fallback_policy": "previous_snapshot_with_warning",
-          "notification_level": "warning",
-          "dependencies": [],
-          "status": "ok",
-          "fetched_at": "2026-11-04T11:04:08.128344+08:00",
-          "data_date": "2026-09-15",
-          "age_minutes": 0.4,
-          "error_summary": null,
-          "fallback_used": false,
-          "retry_attempts": 0,
-          "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數",
-          "notification": null,
-          "refresh_skipped": true,
-          "skip_reason": "現有快照仍在 TTL 180 分鐘內"
-        },
-        "disposal": {
-          "source_id": "disposal",
-          "name": "處置股與出關預警",
-          "is_required": true,
-          "reliability_tier": "core_stable",
-          "ttl_minutes": 720,
-          "hard_expiry_minutes": 1440,
-          "fallback_policy": "previous_snapshot_with_warning",
-          "notification_level": "critical",
-          "dependencies": [],
-          "status": "ok",
-          "fetched_at": "2026-11-05T02:45:43.186051+08:00",
-          "data_date": "09/15",
-          "age_minutes": 0.4,
-          "error_summary": null,
-          "fallback_used": false,
-          "retry_attempts": 0,
-          "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險",
-          "notification": null,
-          "refresh_skipped": true,
-          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
-        },
-        "pressplay": {
-          "source_id": "pressplay",
-          "name": "PressPlay 盤前族群與標的",
-          "is_required": false,
-          "reliability_tier": "high_risk",
-          "ttl_minutes": 360,
-          "hard_expiry_minutes": 720,
-          "fallback_policy": "fixture_or_previous_snapshot_with_warning",
-          "notification_level": "notice",
-          "dependencies": [],
-          "status": "ok",
-          "fetched_at": "2026-11-05T05:03:09.599563+08:00",
-          "data_date": null,
-          "age_minutes": 0.0,
-          "error_summary": null,
-          "fallback_used": false,
-          "retry_attempts": 0,
-          "impact_desc": "缺少每日專欄族群整理，候選股清單將呈現空白",
-          "notification": null,
-          "refresh_skipped": true,
-          "skip_reason": "現有快照仍在 TTL 360 分鐘內"
-        },
-        "chengwaye_daily": {
-          "source_id": "chengwaye_daily",
-          "name": "主力券商與當沖籌碼明細",
-          "is_required": false,
-          "reliability_tier": "high_risk",
-          "ttl_minutes": 360,
-          "hard_expiry_minutes": 720,
-          "fallback_policy": "previous_snapshot_with_warning",
-          "notification_level": "notice",
-          "dependencies": [
-            "pressplay"
-          ],
-          "status": "ok",
-          "fetched_at": "2026-11-05T05:02:45.073993+08:00",
-          "data_date": "2026/09/14",
-          "age_minutes": 0.4,
-          "error_summary": null,
-          "fallback_used": false,
-          "retry_attempts": 0,
-          "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行",
-          "notification": null,
-          "refresh_skipped": true,
-          "skip_reason": "現有快照仍在 TTL 360 分鐘內"
-        },
-        "calendar": {
-          "source_id": "calendar",
-          "name": "總經財經行事曆",
-          "is_required": false,
-          "reliability_tier": "important_short_stale",
-          "ttl_minutes": 720,
-          "hard_expiry_minutes": 1440,
-          "fallback_policy": "previous_snapshot_with_warning",
-          "notification_level": "warning",
-          "dependencies": [],
-          "status": "ok",
-          "fetched_at": "2026-11-04T11:04:08.127961+08:00",
-          "data_date": "2026-09-15",
-          "age_minutes": 0.4,
-          "error_summary": null,
-          "fallback_used": false,
-          "retry_attempts": 0,
-          "impact_desc": "缺少今日重磅總經數據與事件日程倒數",
-          "notification": null,
-          "refresh_skipped": true,
-          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
-        },
-        "financials": {
-          "source_id": "financials",
-          "name": "市場未反映重大公告 (財報/營收/處分)",
-          "is_required": false,
-          "reliability_tier": "important_short_stale",
-          "ttl_minutes": 720,
-          "hard_expiry_minutes": 1440,
-          "fallback_policy": "previous_snapshot_with_warning",
-          "notification_level": "warning",
-          "dependencies": [],
-          "status": "ok",
-          "fetched_at": "2026-09-15T08:25:50.682524+08:00",
-          "data_date": null,
-          "age_minutes": 0.4,
-          "error_summary": null,
-          "fallback_used": false,
-          "retry_attempts": 0,
-          "impact_desc": "缺少昨日盤後自結損益與營收公告統計",
-          "notification": null
-        },
-        "news": {
-          "source_id": "news",
-          "name": "盤前即時新聞聚合",
-          "is_required": false,
-          "reliability_tier": "high_risk",
-          "ttl_minutes": 180,
-          "hard_expiry_minutes": 720,
-          "fallback_policy": "previous_snapshot_with_warning",
-          "notification_level": "notice",
-          "dependencies": [],
-          "status": "ok",
-          "fetched_at": "2026-11-04T11:04:08.128344+08:00",
-          "data_date": null,
-          "age_minutes": 0.4,
-          "error_summary": null,
-          "fallback_used": false,
-          "retry_attempts": 0,
-          "impact_desc": "缺少隔夜美股與產業焦點新聞快訊",
-          "notification": null,
-          "refresh_skipped": true,
-          "skip_reason": "現有快照仍在 TTL 180 分鐘內"
-        },
-        "chengwaye_stock_history": {
-          "source_id": "chengwaye_stock_history",
-          "name": "Chengwaye 個股漲停履歷",
-          "is_required": false,
-          "reliability_tier": "high_risk",
-          "ttl_minutes": 1440,
-          "hard_expiry_minutes": 2880,
-          "fallback_policy": "previous_snapshot_with_warning",
-          "notification_level": "notice",
-          "dependencies": [
-            "pressplay",
-            "chengwaye_daily"
-          ],
-          "status": "ok",
-          "fetched_at": "2026-11-05T05:02:45.073993+08:00",
-          "data_date": null,
-          "age_minutes": 0.4,
-          "error_summary": null,
-          "fallback_used": false,
-          "retry_attempts": 0,
-          "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
-          "notification": null,
-          "refresh_skipped": true,
-          "skip_reason": "現有快照仍在 TTL 1440 分鐘內"
-        }
-      }
-    },
-    "night_session": {
-      "date": "2026-09-15",
-      "provider": "wantgoo",
-      "provider_name": "Wantgoo / TAIFEX",
-      "points": [],
-      "open": 45774.0,
-      "prev_close": 45777.0,
-      "high": 45844.0,
-      "low": 45361.0,
-      "latest": {
-        "provider": "wantgoo",
-        "provider_name": "Wantgoo / TAIFEX",
-        "collected_at": "2026-09-15T08:25:52.891556+08:00",
-        "symbol": "臺指期096",
-        "price": 45556.0,
-        "change": -221.0,
-        "change_pct": -0.48,
-        "open": 45774.0,
-        "prev_close": 45777.0,
-        "high": 45844.0,
-        "low": 45361.0,
-        "volume": 28281
-      }
-    },
-    "indices": {
-      "source": {
-        "markets": "https://tw.stock.yahoo.com/markets/",
-        "world_indices": "https://tw.stock.yahoo.com/world-indices",
-        "asia_quote_pages": {
-          "nikkei225": "https://tw.stock.yahoo.com/quote/%5EN225",
-          "kospi": "https://tw.stock.yahoo.com/quote/%5EKS11"
-        }
-      },
-      "adrs": {
-        "tsmc": {
-          "name": "台積電 ADR",
-          "ticker": "TSM",
-          "value": 418.01,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:03+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": -15.23,
-          "change_pct": -3.52
-        },
-        "nvda": {
-          "name": "輝達 (NVDA)",
-          "ticker": "NVDA",
-          "value": 210.96,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:00+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": -7.33,
-          "change_pct": -3.36
-        },
-        "aapl": {
-          "name": "蘋果 (AAPL)",
-          "ticker": "AAPL",
-          "value": 333.08,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:01+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": 0.81,
-          "change_pct": 0.24
-        },
-        "micron": {
-          "name": "美光",
-          "ticker": "MU",
-          "value": 924.03,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": "https://tw.stock.yahoo.com/quote/MU",
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:01+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": -51.23,
-          "change_pct": -5.25
-        },
-        "umc": {
-          "name": "聯電 ADR",
-          "ticker": "UMC",
-          "value": 21.9,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:03+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": -0.74,
-          "change_pct": -3.27
-        },
-        "ase": {
-          "name": "日月光 ADR",
-          "ticker": "ASX",
-          "value": 37.08,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:03+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": -2.39,
-          "change_pct": -6.06
-        }
-      },
-      "key_stocks": {
-        "tsmc": {
-          "name": "台積電 ADR",
-          "ticker": "TSM",
-          "value": 418.01,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:03+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": -15.23,
-          "change_pct": -3.52
-        },
-        "nvda": {
-          "name": "輝達 (NVDA)",
-          "ticker": "NVDA",
-          "value": 210.96,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:00+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": -7.33,
-          "change_pct": -3.36
-        },
-        "aapl": {
-          "name": "蘋果 (AAPL)",
-          "ticker": "AAPL",
-          "value": 333.08,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:01+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": 0.81,
-          "change_pct": 0.24
-        },
-        "micron": {
-          "name": "美光",
-          "ticker": "MU",
-          "value": 924.03,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": "https://tw.stock.yahoo.com/quote/MU",
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:01+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": -51.23,
-          "change_pct": -5.25
-        },
-        "umc": {
-          "name": "聯電 ADR",
-          "ticker": "UMC",
-          "value": 21.9,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:03+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": -0.74,
-          "change_pct": -3.27
-        },
-        "ase": {
-          "name": "日月光 ADR",
-          "ticker": "ASX",
-          "value": 37.08,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:00:03+08:00",
-          "updated_taipei": "2026-09-15 04:00",
-          "change": -2.39,
-          "change_pct": -6.06
-        }
-      },
-      "us_indices": {
-        "dow": {
-          "name": "道瓊工業指數",
-          "ticker": "^DJI",
-          "value": 52421.2,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:34:53+08:00",
-          "updated_taipei": "2026-09-15 04:34",
-          "change": -152.09,
-          "change_pct": -0.29
-        },
-        "sp500": {
-          "name": "S&P 500指數",
-          "ticker": "^GSPC",
-          "value": 7619.98,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T04:34:48+08:00",
-          "updated_taipei": "2026-09-15 04:34",
-          "change": -37.0,
-          "change_pct": -0.48
-        },
-        "nasdaq": {
-          "name": "NASDAQ指數",
-          "ticker": "^IXIC",
-          "value": 26186.41,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T05:15:59+08:00",
-          "updated_taipei": "2026-09-15 05:15",
-          "change": -146.62,
-          "change_pct": -0.56
-        },
-        "sox": {
-          "name": "費城半導體指數",
-          "ticker": "^SOX",
-          "value": 11131.28,
-          "is_missing": false,
-          "source_label": "Yahoo Finance Chart",
-          "source_url": null,
-          "market_state": null,
-          "updated_at": "2026-09-15T05:15:59+08:00",
-          "updated_taipei": "2026-09-15 05:15",
-          "change": -692.72,
-          "change_pct": -5.86
-        }
-      },
-      "asia_open": {
-        "nikkei225": {
-          "name": "日經225指數",
-          "value": 63311.25,
-          "change": -181.74,
-          "change_pct": -0.29,
-          "updated_cst": "09/15 08:10",
-          "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
-          "source_label": "Yahoo 個別指數頁"
-        },
-        "kospi": {
-          "name": "韓國綜合指數",
-          "value": 6625.15,
-          "change": -59.22,
-          "change_pct": -0.89,
-          "updated_cst": "09/15 08:05",
-          "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
-          "source_label": "Yahoo 個別指數頁"
-        }
-      },
-      "_missing_fields": []
-    },
-    "pressplay": {
-      "source_article": {
-        "title": "0915盤前",
-        "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/C0184385804B8D65A0048D61A1D5C3C3",
-        "fetch_mode": "live_browser",
-        "collected_at": "2026-09-15T08:25:53.492225+08:00"
-      },
-      "chengwaye_date": null,
-      "not_found_group": {
-        "raw_tokens": [
-          "6226",
-          "2305",
-          "1528",
-          "2351",
-          "8358"
-        ],
-        "matched": [
-          {
-            "market": "市",
-            "code": "6226",
-            "name": "光鼎",
-            "close": "33",
-            "volume": "33,484",
-            "foreign": "+2,114",
-            "trust": "0",
-            "dealer": "-70",
-            "ai_reason": "LED與顯示光電應用題材輪動，面板光電族群買盤升溫。",
-            "group": "📺 面板光電",
-            "match_type": "code",
-            "raw_token": "6226"
-          },
-          {
-            "market": "市",
-            "code": "2305",
-            "name": "全友",
-            "close": "45.15",
-            "volume": "33,465",
-            "foreign": "+583",
-            "trust": "0",
-            "dealer": "+165",
-            "ai_reason": "數位影像與電腦週邊應用題材輪動，相關族群受到資金關注。",
-            "group": "🖨️ 電腦週邊",
-            "match_type": "code",
-            "raw_token": "2305"
-          },
-          {
-            "market": "市",
-            "code": "1528",
-            "name": "恩德",
-            "close": "23.3",
-            "volume": "15,628",
-            "foreign": "+801",
-            "trust": "0",
-            "dealer": "-7",
-            "ai_reason": "機械設備題材輪動，工具機與自動化相關族群買盤集中。",
-            "group": "🏭 機械",
-            "match_type": "code",
-            "raw_token": "1528"
-          },
-          {
-            "market": "市",
-            "code": "2351",
-            "name": "順德",
-            "close": "257",
-            "volume": "13,792",
-            "foreign": "-13",
-            "trust": "0",
-            "dealer": "+86",
-            "ai_reason": "半導體封裝材料與精密製程題材輪動，封測族群買盤升溫。",
-            "group": "🔬 封測",
-            "match_type": "code",
-            "raw_token": "2351"
-          },
-          {
-            "market": "市",
-            "code": "8358",
-            "name": "金居",
-            "close": "—",
-            "volume": "—",
-            "foreign": "—",
-            "trust": "—",
-            "dealer": "—",
-            "ai_reason": "PressPlay 專欄標的",
-            "group": "📌 專欄標的",
-            "match_type": "dict_code",
-            "raw_token": "8358"
-          }
-        ],
-        "unmatched": []
-      },
-      "found_group": {
-        "raw_tokens": [
-          "邁達特",
-          "6148",
-          "6140",
-          "2468"
-        ],
-        "matched": [
-          {
-            "market": "市",
-            "code": "6112",
-            "name": "邁達特",
-            "close": "50.6",
-            "volume": "10,922",
-            "foreign": "-668",
-            "trust": "0",
-            "dealer": "+50",
-            "ai_reason": "雲端服務與企業數位轉型題材輪動，軟體族群受到關注。",
-            "group": "💻 軟體",
-            "match_type": "name",
-            "raw_token": "邁達特"
-          },
-          {
-            "market": "櫃",
-            "code": "6148",
-            "name": "驊宏資",
-            "close": "34.1",
-            "volume": "1,342",
-            "foreign": "+201",
-            "trust": "0",
-            "dealer": "+2",
-            "ai_reason": "企業數位應用與資訊服務題材輪動，軟體族群受到資金關注。",
-            "group": "💻 軟體",
-            "match_type": "code",
-            "raw_token": "6148"
-          },
-          {
-            "market": "櫃",
-            "code": "6140",
-            "name": "訊達",
-            "close": "18.25",
-            "volume": "289",
-            "foreign": "-2",
-            "trust": "0",
-            "dealer": "+5",
-            "ai_reason": "資訊服務與系統整合題材輪動，軟體族群買盤升溫。",
-            "group": "💻 軟體",
-            "match_type": "code",
-            "raw_token": "6140"
-          },
-          {
-            "market": "市",
-            "code": "2468",
-            "name": "華經",
-            "close": "39.35",
-            "volume": "2,185",
-            "foreign": "+238",
-            "trust": "0",
-            "dealer": "+9",
-            "ai_reason": "資訊服務與系統整合題材輪動，軟體與數位應用族群受到關注。",
-            "group": "💻 軟體",
-            "match_type": "code",
-            "raw_token": "2468"
-          }
-        ],
-        "unmatched": []
-      }
-    },
-    "news": [
-      {
-        "title": "升息疑慮+AI發展降速壓力罩頂！台股量縮失守4萬6 光學雙雄遭降低吞跌停金融指數刷新高撐盤｜Yahoo財經掃描",
-        "link": "https://news.google.com/rss/articles/CBMi-gRBVV95cUxQUzJtdFNMRHplLVh5X0wxRnB6OENucF9CZW14RzRxb0FyU1BXZm1hSGN2RGQwRFYxRXREQVRHR3g4T0VfcEhyWTFhb0dzbWpVbDRsVlRMdjFCUnQ4QWtZbEdlNmV2MTJLUUdaRy01MWhLUUVNclJ1cGR0QkcxLUhyVG9VLUpDMW5TYldyNXYyNFVMaXhabjlSaFV3UXZVeFNLZEJQbV8yN0VTZ1lWVFhRYnMwRFdIMUQzQ2pVcjZCRE5qM29FOENmblZJRFBIaWtCMGR3S0Y4OExPOXNQWDFTdkJDeUxQeTNNRlpkSWRzZlNjdVNLUjRfck85ZmNvSVVEZ05Nc3hrd1lIZmZlS0xpNk1EV3FQazd1WUtzQUZ5bl8weVNiUGd2TTFBZEVGcVB1LVZUdTk0Z2M1OXVVeWVvUTdyM3ctWG1nSGNHZWdlQW5kRjBhREcwNkVSeEpUWmRiMW5SeTVTOU1zRmZXbVc0VnZGb0ZKbWVzMmJ6cVQwamVjelJaaFcyZjA2TTBPVElidExQcktONkwtZndIU2JTVzVRaEQ2TV9LNTNMVjNFYklhbFc4N1gxZC14RGZYcVlDOU9LMGZ0dnQ5dWM3NEJCZmxCVm56LW5BVy1SVFdrVFNPRzZRNFRoWWMwWU5zRjNkYmYxdGNCbVlJbGVkRVlrelAySjhqbHdEeEpWb2NadFRpSno5OUFKVDBBZ2lfUVduYVJHY3M1cXBaWEl3T010NzM0ajZJbmEyZEY4MnJzb29lWE5telRleTdUWHBObWktcDZaTlJiZmFVd3dIc1htb0NKTFNSSzlZOVRLSHFaaFhpdVN6Mks3SGZB?oc=5",
-        "source": "Yahoo股市",
-        "time": "09/14 17:05",
-        "timestamp": 1789376723.0,
-        "score": 15,
-        "quality_score": 3,
-        "impact_score": 12,
-        "release_bonus": 0,
-        "matched_groups": [
-          "macro_policy",
-          "market_benchmark",
-          "market_move",
-          "sector_supply_chain"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "macro_policy",
-          "taiwan_market",
-          "sector_technology"
-        ],
-        "primary_topic": "macro_policy",
-        "named_entities": [
-          "taiwan_market"
-        ],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "國泰台大：美債殖利率衝5% 美股有壓 評價與企業獲利成觀察指標",
-        "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5LTE54bnFVYll4LVZNNDVmdG1wdmdnTHp0dVdMVGFYdHBtYmY1dkYxdk9nSXo3dkVHNjNSZURCUno5T1VQODN5QkQwcDdzNW40NjJreWFJZThZQdIBX0FVX3lxTE04MkxwNFMzX2hwTmd1OHFJSE03NFNVTlFRN0tUb3BGUlEwNTBvUW5WTVBzcTN4SkVJVDNoMExzbVpreDVvZkxMTDA0NXREMFc2YklsYk9kUDFCX25OZGVJ?oc=5",
-        "source": "經濟日報",
-        "time": "09/15 02:09",
-        "timestamp": 1789409389.0,
-        "score": 14,
-        "quality_score": 4,
-        "impact_score": 10,
-        "release_bonus": 0,
-        "matched_groups": [
-          "macro_policy",
-          "market_benchmark",
-          "earnings_financial"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "currency_commodities",
-          "macro_policy",
-          "global_market",
-          "company_earnings"
-        ],
-        "primary_topic": "currency_commodities",
-        "named_entities": [
-          "us_market"
-        ],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "美債殖利率逼近5%不等於美股崩盤！高盛點出「多頭關鍵」",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1nSEFIQ2ZGTXFJWHRXNUlXY0ZkS3BuWUwtaW1EMmdqVHlDWWlEcDdyd0hkelpCdnBPRTVxMGdxLUJRc3FUc05DQmhadzBKVUk?oc=5",
-        "source": "news.cnyes.com",
-        "time": "09/14 14:17",
-        "timestamp": 1789366645.0,
-        "score": 14,
-        "quality_score": 4,
-        "impact_score": 10,
-        "release_bonus": 0,
-        "matched_groups": [
-          "macro_policy",
-          "market_benchmark",
-          "market_move"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "currency_commodities",
-          "macro_policy",
-          "global_market"
-        ],
-        "primary_topic": "currency_commodities",
-        "named_entities": [
-          "us_market"
-        ],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "〈貴金屬盤後〉油價大漲+Fed本周恐升息 黃金跌到逾一個月低點",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA5VE5jUmlwQlNVZjRjMlkzeWoyd29KbENyZ2dZSlVSbnhhdFVXRng0dnlESXpjV0tiaGEtbnJSWGpNQmNkS05sWWhIM2cxeVU?oc=5",
-        "source": "news.cnyes.com",
-        "time": "09/15 06:52",
-        "timestamp": 1789426350.0,
-        "score": 11,
-        "quality_score": 4,
-        "impact_score": 7,
-        "release_bonus": 0,
-        "matched_groups": [
-          "macro_policy",
-          "market_move"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "currency_commodities",
-          "macro_policy"
-        ],
-        "primary_topic": "currency_commodities",
-        "named_entities": [],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "聯準會升息時間？利率會議時間9/17！美債逼5%、美伊戰爭再加AI踩煞車拉扯…壓力鍋要炸了？｜全球瞭望",
-        "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQWUJoZ0JCX2lVaXRXRFY1eXRDc0tQMi1HWWUyTmtuTVNvbWFNQ2Vmel9WWlhIMTVOSmdPcmtZejVFaWpqTk5lWmdvbTFGYVFIYUxzZHo3ZWdtcDIwNkFIQ2NaLWZWLWRKb0JiX2RCeDBqeF9YZjhqcXBnNTN1VnNDdg?oc=5",
-        "source": "今周刊",
-        "time": "09/14 14:00",
-        "timestamp": 1789365600.0,
-        "score": 9,
-        "quality_score": 3,
-        "impact_score": 6,
-        "release_bonus": 0,
-        "matched_groups": [
-          "macro_policy",
-          "sector_supply_chain"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "geopolitics_trade",
-          "currency_commodities",
-          "macro_policy",
-          "sector_technology"
-        ],
-        "primary_topic": "geopolitics_trade",
-        "named_entities": [],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "今日最夯 ETF／台股高檔修正、金融股逆勢上揚 0055漲近2%",
-        "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE92YU4tWV96QjkyNUVZRDljNG9oQmYzOElSa0FNVXJFZV9lb1M1S2QwbnNFcnhocl9yQ1RLcW9aMnJnbFJaRlJSS1d2ZFg0MGR1VEtwS0dJS2ZiUdIBX0FVX3lxTFBqN3VSOVZRMFFVd256V0E3SzZOVkVlalRNV29tUVpfVHBQNno2alRhMmc5dzNYU05teUdXVVdqb09uZ1c1SXhwSlctX2lLSDZzZUN2NXhhVmVGR09lcGg4?oc=5",
-        "source": "經濟日報",
-        "time": "09/14 21:17",
-        "timestamp": 1789391839.0,
-        "score": 9,
-        "quality_score": 4,
-        "impact_score": 5,
-        "release_bonus": 0,
-        "matched_groups": [
-          "market_benchmark",
-          "market_structure"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "taiwan_market",
-          "market_structure"
-        ],
-        "primary_topic": "taiwan_market",
-        "named_entities": [
-          "taiwan_market"
-        ],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "標普500ETF大比拼：美股「三巨頭」vs 港股 香港投資者點揀至抵？",
-        "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE02MFoyeWRXVjFDeE1zVEpMUE1VUzZZSFc4SkxQMVJpNGJCdDVBTXF6XzlzNzJXNHZ0TUhGR1RQOGxNSG1XZVNQaFlGMUtDeWJtbGNmMg?oc=5",
-        "source": "香港經濟日報HKET",
-        "time": "09/14 17:08",
-        "timestamp": 1789376908.0,
-        "score": 9,
-        "quality_score": 4,
-        "impact_score": 5,
-        "release_bonus": 0,
-        "matched_groups": [
-          "market_benchmark",
-          "market_structure"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "global_market",
-          "asia_market",
-          "market_structure"
-        ],
-        "primary_topic": "global_market",
-        "named_entities": [
-          "us_market"
-        ],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "AI高成長預期開始鬆動日經盤中重挫逾1,200點、科技股成重災區",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5vUFhGVDZ0cFYtd0kzZ1Q4VkhHbzVzdlptV0FIUm5RcHV2UFdqdld5SkxUQWhwY1FUZ3Nwc0N2MUFhQy1aek16emJ6UHFMQ2s?oc=5",
-        "source": "news.cnyes.com",
-        "time": "09/14 15:00",
-        "timestamp": 1789369206.0,
-        "score": 9,
-        "quality_score": 4,
-        "impact_score": 5,
-        "release_bonus": 0,
-        "matched_groups": [
-          "market_move",
-          "sector_supply_chain"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "asia_market",
-          "sector_technology"
-        ],
-        "primary_topic": "asia_market",
-        "named_entities": [],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "台股量縮收跌322點！ 網見「三大法人買賣」憂：明天更便宜",
-        "link": "https://news.google.com/rss/articles/CBMi4AJBVV95cUxNd0JRX0hTZXhwbUl2c0RvNUYxT0x0LVdFR2ZqYk9OcG1GZlBUV0VFanFLVDh2NEJhUnc1STZQX1dfOENCdndxTTdkaGYxWHY1WERXS3FBTElSTGhIb3BIYzFIenQxZC0waF9jbU5LQ3lqM25hS0FaQTBOX0ZXNmdTc2d3VEtrLWczZWY2cEZyel94bkVleEZLNmtybW9IZGVBamY3NVBZNjlBWWN1SHVZbzBlWFlXWEhMQ3QzdUJJeENLV3YxMFNvTGtoQ290cVUyZlNKSmg4ZXRVMzczNXBCZTQwTVZnSG13QTZIYkZhZkkzc0lyT2EtWG92NHhTeHlSaVo1NjlaQmtVU05kYWttREpjVjAyV0dydllfMmtWYmxtLXhESGtfQVJLVHlnVk1vNVRlWHpDc0gtdEtNTnkxMjJnc0hOLUk3VzlGcXRrekEwTkpsZzRIZWduNnNBUXBM?oc=5",
-        "source": "Yahoo股市",
-        "time": "09/14 16:00",
-        "timestamp": 1789372800.0,
-        "score": 8,
-        "quality_score": 3,
-        "impact_score": 5,
-        "release_bonus": 0,
-        "matched_groups": [
-          "market_benchmark",
-          "market_structure"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "taiwan_market",
-          "market_structure"
-        ],
-        "primary_topic": "taiwan_market",
-        "named_entities": [
-          "taiwan_market"
-        ],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      },
-      {
-        "title": "戰爭、百元油價、美債狂飆三大逆風都扛住 基金經理：新興市場可承受Fed升息風險",
-        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFAyc2RhanVOdUJIdjJWZk53Y3JUSlBPMEZOX0s4WXZlTjFuSHJUcVFSMk90ZjRkc0N3OFFXNnZEaC05YVdZVGdIci15eFJDWkU?oc=5",
-        "source": "news.cnyes.com",
-        "time": "09/15 06:29",
-        "timestamp": 1789424999.0,
-        "score": 8,
-        "quality_score": 4,
-        "impact_score": 4,
-        "release_bonus": 0,
-        "matched_groups": [
-          "macro_policy"
-        ],
-        "low_signal_hits": [],
-        "topic_groups": [
-          "geopolitics_trade",
-          "currency_commodities",
-          "macro_policy"
-        ],
-        "primary_topic": "geopolitics_trade",
-        "named_entities": [],
-        "quality_pass": true,
-        "impact_pass": true,
-        "qualified": true
-      }
-    ],
-    "opening_forecast": {
-      "schema_version": "opening-forecast.v1",
-      "prediction_id": "2026-08-26T08:30+08:00-opening-v1",
-      "market_date": "2026-08-26",
-      "status": "generated",
-      "locked_at": "2026-08-26T08:33:32+08:00",
-      "model_version": "opening-v1",
-      "previous_close": 45169.46,
-      "predicted_change_points": 260.64,
-      "predicted_open": 45430.1,
-      "direction": "up",
-      "gap_label": "gap_up",
-      "confidence": "high",
-      "confidence_reasons": [
-        "關鍵市場資料均已取得，訊號一致性良好"
-      ],
-      "evidence": [
-        {
-          "evidence_id": "opening-twse-previous-close",
-          "kind": "market_data",
-          "label": "前一交易日加權指數收盤（TWSE 官方歷史資料）",
-          "value": 45169.46,
-          "unit": "index_points",
-          "observed_at": "2026-08-25T13:30:00+08:00",
-          "fetched_at": "2026-08-26T08:33:34.743777+08:00",
-          "source_name": "TWSE TAIEX historical index",
-          "source_url": "https://www.twse.com.tw/indicesReport/MI_5MINS_HIST?response=json&date=20260825",
-          "cache_used": false,
-          "conflict_group": null,
-          "supports": "neutral"
-        },
-        {
-          "evidence_id": "opening-night_session_points-1",
-          "kind": "market_data",
-          "label": "台指期夜盤點數變化",
-          "value": 405.0,
-          "unit": "points",
-          "observed_at": "2026-08-26T08:27:31.968724+08:00",
-          "fetched_at": "2026-08-26T08:27:31.968724+08:00",
-          "source_name": "Wantgoo / TAIFEX",
-          "source_url": "https://www.wantgoo.com/futures/wtxp",
-          "cache_used": false,
-          "conflict_group": "market-signal",
-          "supports": "up"
-        },
-        {
-          "evidence_id": "opening-nasdaq_pct-2",
-          "kind": "market_data",
-          "label": "NASDAQ 漲跌幅",
-          "value": 0.66,
-          "unit": "percent",
-          "observed_at": "2026-08-26T05:15:59+08:00",
-          "fetched_at": "2026-08-26T05:15:59+08:00",
-          "source_name": "Yahoo Finance Chart",
-          "source_url": "https://finance.yahoo.com/quote/%5EIXIC/",
-          "cache_used": false,
-          "conflict_group": "market-signal",
-          "supports": "up"
-        },
-        {
-          "evidence_id": "opening-sp500_pct-3",
-          "kind": "market_data",
-          "label": "S&P 500 漲跌幅",
-          "value": 0.32,
-          "unit": "percent",
-          "observed_at": "2026-08-26T05:43:49+08:00",
-          "fetched_at": "2026-08-26T05:43:49+08:00",
-          "source_name": "Yahoo Finance Chart",
-          "source_url": "https://finance.yahoo.com/quote/%5EGSPC/",
-          "cache_used": false,
-          "conflict_group": "market-signal",
-          "supports": "up"
-        },
-        {
-          "evidence_id": "opening-dow_pct-4",
-          "kind": "market_data",
-          "label": "道瓊漲跌幅",
-          "value": 0.3,
-          "unit": "percent",
-          "observed_at": "2026-08-26T05:43:49+08:00",
-          "fetched_at": "2026-08-26T05:43:49+08:00",
-          "source_name": "Yahoo Finance Chart",
-          "source_url": "https://finance.yahoo.com/quote/%5EDJI/",
-          "cache_used": false,
-          "conflict_group": "market-signal",
-          "supports": "up"
-        }
-      ],
-      "data_quality": {
-        "missing_factors": [],
-        "conflicts": [],
-        "conflict_directions": [
-          "up"
-        ],
-        "cache_used": false
-      },
-      "formula": {
-        "threshold_points": 100.0,
-        "available_weight": 1.0,
-        "features": [
-          {
-            "key": "night_session_points",
-            "weight": 0.6,
-            "conversion": 1.0,
-            "input": 405.0,
-            "contribution": 243.0
-          },
-          {
-            "key": "nasdaq_pct",
-            "weight": 0.2,
-            "conversion": 100.0,
-            "input": 0.66,
-            "contribution": 13.2
-          },
-          {
-            "key": "sp500_pct",
-            "weight": 0.15,
-            "conversion": 80.0,
-            "input": 0.32,
-            "contribution": 3.84
-          },
-          {
-            "key": "dow_pct",
-            "weight": 0.05,
-            "conversion": 40.0,
-            "input": 0.3,
-            "contribution": 0.6
-          }
-        ]
-      }
-    },
     "learning_status": {
       "schema_version": "learning-status.v1",
       "status": "warmup",
@@ -2198,134 +22,6 @@
       "manual_pause_remaining_days": 0,
       "last_change": null,
       "message": "學習資料累積中，滿 20 個已驗證交易日後才顯示正式統計"
-    },
-    "ai_summary": {
-      "schema_version": 1,
-      "generated_at": "2026-11-05T05:03:22.515615+08:00",
-      "status": "ok",
-      "provider": "Gemini API",
-      "model": "gemini-2.5-flash",
-      "fallback_reason": null,
-      "news_stats": {
-        "count": 10,
-        "unique_topics": 6,
-        "unique_sources": 5,
-        "nvidia_count": 0
-      },
-      "data_quality": {
-        "status": "ok",
-        "label": "資料正常",
-        "checks": [
-          {
-            "name": "新聞數量",
-            "status": "ok",
-            "detail": "10 則"
-          },
-          {
-            "name": "主題分布",
-            "status": "ok",
-            "detail": "6 類"
-          },
-          {
-            "name": "公司／事件集中度",
-            "status": "ok",
-            "detail": "輝達 0 則"
-          },
-          {
-            "name": "行情可用性",
-            "status": "ok",
-            "detail": "13 筆可比對行情"
-          },
-          {
-            "name": "來源健康度",
-            "status": "ok",
-            "detail": "0 項提醒"
-          }
-        ],
-        "issues": [],
-        "news_count": 10,
-        "unique_topics": 6,
-        "unique_sources": 5,
-        "nvidia_count": 0,
-        "topic_counts": {
-          "macro_policy": 1,
-          "currency_commodities": 3,
-          "geopolitics_trade": 2,
-          "taiwan_market": 2,
-          "global_market": 1,
-          "asia_market": 1
-        },
-        "source_counts": {
-          "Yahoo股市": 2,
-          "經濟日報": 2,
-          "news.cnyes.com": 4,
-          "今周刊": 1,
-          "香港經濟日報HKET": 1
-        }
-      },
-      "news_summary": {
-        "headline": "聯準會升息疑慮與美債殖利率飆升，AI發展降速壓力罩頂，全球科技股面臨賣壓。",
-        "topic_summary": [
-          {
-            "topic": "總經／央行政策",
-            "count": 1,
-            "summary": "聯準會升息疑慮與美債殖利率飆升，對全球市場構成壓力，市場關注聯準會利率會議時間。"
-          },
-          {
-            "topic": "美元／債券／商品",
-            "count": 3,
-            "summary": "美債殖利率逼近5%引發市場關注，油價大漲與黃金跌至逾一個月低點。"
-          },
-          {
-            "topic": "地緣政治／貿易",
-            "count": 2,
-            "summary": "地緣政治緊張與油價上漲，新興市場可承受聯準會升息風險。"
-          },
-          {
-            "topic": "台股市場",
-            "count": 2,
-            "summary": "台股量縮失守4萬6，金融股逆勢上揚撐盤，三大法人買賣動向受關注。"
-          },
-          {
-            "topic": "美股／全球市場",
-            "count": 1,
-            "summary": "美債殖利率衝高對美股有壓，評價與企業獲利成觀察指標。"
-          },
-          {
-            "topic": "亞股市場",
-            "count": 1,
-            "summary": "AI高成長預期鬆動，日經盤中重挫逾1,200點，科技股成重災區。"
-          }
-        ],
-        "key_points": [
-          "升息疑慮與AI發展降速壓力罩頂，台股量縮失守4萬6，光學雙雄跌停，金融指數刷新高撐盤。",
-          "美債殖利率逼近5%對美股構成壓力，但高盛點出「多頭關鍵」在於評價與企業獲利。",
-          "聯準會升息時間與美債逼近5%、美伊戰爭再加AI踩煞車等多重因素拉扯，市場面臨壓力。",
-          "AI高成長預期開始鬆動，日經盤中重挫逾1,200點，科技股成為重災區。"
-        ]
-      },
-      "market_summary": {
-        "headline": "美股主要指數普遍下跌，費半指數與科技相關ADR跌幅顯著，台指期夜盤亦收黑。",
-        "observations": [
-          "美股主要指數全面收黑，其中NASDAQ指數與S&P 500指數跌幅較大。",
-          "費城半導體指數跌幅高達5.86%，顯示半導體產業面臨顯著賣壓。",
-          "多數台灣相關ADR，如台積電、聯電、日月光、美光及輝達，均呈現大幅下跌，與費半指數走勢一致。",
-          "台指期夜盤亦呈現下跌，反映市場對隔日開盤的保守情緒。"
-        ],
-        "drivers": [
-          "聯準會升息疑慮持續籠罩市場，美債殖利率逼近5%對股市造成壓力。",
-          "AI產業高成長預期可能鬆動，導致科技股成為主要賣壓來源。",
-          "油價大漲與地緣政治緊張，可能加劇市場對通膨和經濟前景的擔憂。",
-          "亞洲市場如日經指數也因AI成長預期鬆動而重挫，顯示全球科技股面臨共同壓力。"
-        ],
-        "risks": [
-          "聯準會未來升息路徑的不確定性，可能導致市場持續波動。",
-          "美債殖利率若持續攀升，可能進一步壓縮企業估值並影響資金流向。",
-          "AI產業發展若不如預期，可能對相關科技股造成長期壓力。",
-          "地緣政治風險及原物料價格波動，可能對全球經濟復甦構成挑戰。"
-        ]
-      },
-      "quality_note": "資料皆取自於指定來源，若有資料缺失，將明確標示「資料未提供」。"
     },
     "financials": {
       "cutoff_str": "09/14 13:30",
@@ -5702,6 +3398,2318 @@
           "fetched_at": "2026-09-15 08:02:15"
         }
       }
+    },
+    "twse_summary": {
+      "twii": {
+        "price": 45862.52,
+        "change": -322.33,
+        "change_pct": -0.7,
+        "volume": 0
+      },
+      "inst": {
+        "dealer": -150.93,
+        "trust": 36.96,
+        "foreign": -369.64
+      }
+    },
+    "news": [
+      {
+        "title": "升息疑慮+AI發展降速壓力罩頂！台股量縮失守4萬6 光學雙雄遭降低吞跌停金融指數刷新高撐盤｜Yahoo財經掃描",
+        "link": "https://news.google.com/rss/articles/CBMi-gRBVV95cUxQUzJtdFNMRHplLVh5X0wxRnB6OENucF9CZW14RzRxb0FyU1BXZm1hSGN2RGQwRFYxRXREQVRHR3g4T0VfcEhyWTFhb0dzbWpVbDRsVlRMdjFCUnQ4QWtZbEdlNmV2MTJLUUdaRy01MWhLUUVNclJ1cGR0QkcxLUhyVG9VLUpDMW5TYldyNXYyNFVMaXhabjlSaFV3UXZVeFNLZEJQbV8yN0VTZ1lWVFhRYnMwRFdIMUQzQ2pVcjZCRE5qM29FOENmblZJRFBIaWtCMGR3S0Y4OExPOXNQWDFTdkJDeUxQeTNNRlpkSWRzZlNjdVNLUjRfck85ZmNvSVVEZ05Nc3hrd1lIZmZlS0xpNk1EV3FQazd1WUtzQUZ5bl8weVNiUGd2TTFBZEVGcVB1LVZUdTk0Z2M1OXVVeWVvUTdyM3ctWG1nSGNHZWdlQW5kRjBhREcwNkVSeEpUWmRiMW5SeTVTOU1zRmZXbVc0VnZGb0ZKbWVzMmJ6cVQwamVjelJaaFcyZjA2TTBPVElidExQcktONkwtZndIU2JTVzVRaEQ2TV9LNTNMVjNFYklhbFc4N1gxZC14RGZYcVlDOU9LMGZ0dnQ5dWM3NEJCZmxCVm56LW5BVy1SVFdrVFNPRzZRNFRoWWMwWU5zRjNkYmYxdGNCbVlJbGVkRVlrelAySjhqbHdEeEpWb2NadFRpSno5OUFKVDBBZ2lfUVduYVJHY3M1cXBaWEl3T010NzM0ajZJbmEyZEY4MnJzb29lWE5telRleTdUWHBObWktcDZaTlJiZmFVd3dIc1htb0NKTFNSSzlZOVRLSHFaaFhpdVN6Mks3SGZB?oc=5",
+        "source": "Yahoo股市",
+        "time": "09/14 17:05",
+        "timestamp": 1789376723.0,
+        "score": 15,
+        "quality_score": 3,
+        "impact_score": 12,
+        "release_bonus": 0,
+        "matched_groups": [
+          "macro_policy",
+          "market_benchmark",
+          "market_move",
+          "sector_supply_chain"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "macro_policy",
+          "taiwan_market",
+          "sector_technology"
+        ],
+        "primary_topic": "macro_policy",
+        "named_entities": [
+          "taiwan_market"
+        ],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "國泰台大：美債殖利率衝5% 美股有壓 評價與企業獲利成觀察指標",
+        "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5LTE54bnFVYll4LVZNNDVmdG1wdmdnTHp0dVdMVGFYdHBtYmY1dkYxdk9nSXo3dkVHNjNSZURCUno5T1VQODN5QkQwcDdzNW40NjJreWFJZThZQdIBX0FVX3lxTE04MkxwNFMzX2hwTmd1OHFJSE03NFNVTlFRN0tUb3BGUlEwNTBvUW5WTVBzcTN4SkVJVDNoMExzbVpreDVvZkxMTDA0NXREMFc2YklsYk9kUDFCX25OZGVJ?oc=5",
+        "source": "經濟日報",
+        "time": "09/15 02:09",
+        "timestamp": 1789409389.0,
+        "score": 14,
+        "quality_score": 4,
+        "impact_score": 10,
+        "release_bonus": 0,
+        "matched_groups": [
+          "macro_policy",
+          "market_benchmark",
+          "earnings_financial"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "currency_commodities",
+          "macro_policy",
+          "global_market",
+          "company_earnings"
+        ],
+        "primary_topic": "currency_commodities",
+        "named_entities": [
+          "us_market"
+        ],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "美債殖利率逼近5%不等於美股崩盤！高盛點出「多頭關鍵」",
+        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE1nSEFIQ2ZGTXFJWHRXNUlXY0ZkS3BuWUwtaW1EMmdqVHlDWWlEcDdyd0hkelpCdnBPRTVxMGdxLUJRc3FUc05DQmhadzBKVUk?oc=5",
+        "source": "news.cnyes.com",
+        "time": "09/14 14:17",
+        "timestamp": 1789366645.0,
+        "score": 14,
+        "quality_score": 4,
+        "impact_score": 10,
+        "release_bonus": 0,
+        "matched_groups": [
+          "macro_policy",
+          "market_benchmark",
+          "market_move"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "currency_commodities",
+          "macro_policy",
+          "global_market"
+        ],
+        "primary_topic": "currency_commodities",
+        "named_entities": [
+          "us_market"
+        ],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "〈貴金屬盤後〉油價大漲+Fed本周恐升息 黃金跌到逾一個月低點",
+        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFA5VE5jUmlwQlNVZjRjMlkzeWoyd29KbENyZ2dZSlVSbnhhdFVXRng0dnlESXpjV0tiaGEtbnJSWGpNQmNkS05sWWhIM2cxeVU?oc=5",
+        "source": "news.cnyes.com",
+        "time": "09/15 06:52",
+        "timestamp": 1789426350.0,
+        "score": 11,
+        "quality_score": 4,
+        "impact_score": 7,
+        "release_bonus": 0,
+        "matched_groups": [
+          "macro_policy",
+          "market_move"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "currency_commodities",
+          "macro_policy"
+        ],
+        "primary_topic": "currency_commodities",
+        "named_entities": [],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "聯準會升息時間？利率會議時間9/17！美債逼5%、美伊戰爭再加AI踩煞車拉扯…壓力鍋要炸了？｜全球瞭望",
+        "link": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQWUJoZ0JCX2lVaXRXRFY1eXRDc0tQMi1HWWUyTmtuTVNvbWFNQ2Vmel9WWlhIMTVOSmdPcmtZejVFaWpqTk5lWmdvbTFGYVFIYUxzZHo3ZWdtcDIwNkFIQ2NaLWZWLWRKb0JiX2RCeDBqeF9YZjhqcXBnNTN1VnNDdg?oc=5",
+        "source": "今周刊",
+        "time": "09/14 14:00",
+        "timestamp": 1789365600.0,
+        "score": 9,
+        "quality_score": 3,
+        "impact_score": 6,
+        "release_bonus": 0,
+        "matched_groups": [
+          "macro_policy",
+          "sector_supply_chain"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "geopolitics_trade",
+          "currency_commodities",
+          "macro_policy",
+          "sector_technology"
+        ],
+        "primary_topic": "geopolitics_trade",
+        "named_entities": [],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "今日最夯 ETF／台股高檔修正、金融股逆勢上揚 0055漲近2%",
+        "link": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE92YU4tWV96QjkyNUVZRDljNG9oQmYzOElSa0FNVXJFZV9lb1M1S2QwbnNFcnhocl9yQ1RLcW9aMnJnbFJaRlJSS1d2ZFg0MGR1VEtwS0dJS2ZiUdIBX0FVX3lxTFBqN3VSOVZRMFFVd256V0E3SzZOVkVlalRNV29tUVpfVHBQNno2alRhMmc5dzNYU05teUdXVVdqb09uZ1c1SXhwSlctX2lLSDZzZUN2NXhhVmVGR09lcGg4?oc=5",
+        "source": "經濟日報",
+        "time": "09/14 21:17",
+        "timestamp": 1789391839.0,
+        "score": 9,
+        "quality_score": 4,
+        "impact_score": 5,
+        "release_bonus": 0,
+        "matched_groups": [
+          "market_benchmark",
+          "market_structure"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "taiwan_market",
+          "market_structure"
+        ],
+        "primary_topic": "taiwan_market",
+        "named_entities": [
+          "taiwan_market"
+        ],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "標普500ETF大比拼：美股「三巨頭」vs 港股 香港投資者點揀至抵？",
+        "link": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE02MFoyeWRXVjFDeE1zVEpMUE1VUzZZSFc4SkxQMVJpNGJCdDVBTXF6XzlzNzJXNHZ0TUhGR1RQOGxNSG1XZVNQaFlGMUtDeWJtbGNmMg?oc=5",
+        "source": "香港經濟日報HKET",
+        "time": "09/14 17:08",
+        "timestamp": 1789376908.0,
+        "score": 9,
+        "quality_score": 4,
+        "impact_score": 5,
+        "release_bonus": 0,
+        "matched_groups": [
+          "market_benchmark",
+          "market_structure"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "global_market",
+          "asia_market",
+          "market_structure"
+        ],
+        "primary_topic": "global_market",
+        "named_entities": [
+          "us_market"
+        ],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "AI高成長預期開始鬆動日經盤中重挫逾1,200點、科技股成重災區",
+        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTE5vUFhGVDZ0cFYtd0kzZ1Q4VkhHbzVzdlptV0FIUm5RcHV2UFdqdld5SkxUQWhwY1FUZ3Nwc0N2MUFhQy1aek16emJ6UHFMQ2s?oc=5",
+        "source": "news.cnyes.com",
+        "time": "09/14 15:00",
+        "timestamp": 1789369206.0,
+        "score": 9,
+        "quality_score": 4,
+        "impact_score": 5,
+        "release_bonus": 0,
+        "matched_groups": [
+          "market_move",
+          "sector_supply_chain"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "asia_market",
+          "sector_technology"
+        ],
+        "primary_topic": "asia_market",
+        "named_entities": [],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "台股量縮收跌322點！ 網見「三大法人買賣」憂：明天更便宜",
+        "link": "https://news.google.com/rss/articles/CBMi4AJBVV95cUxNd0JRX0hTZXhwbUl2c0RvNUYxT0x0LVdFR2ZqYk9OcG1GZlBUV0VFanFLVDh2NEJhUnc1STZQX1dfOENCdndxTTdkaGYxWHY1WERXS3FBTElSTGhIb3BIYzFIenQxZC0waF9jbU5LQ3lqM25hS0FaQTBOX0ZXNmdTc2d3VEtrLWczZWY2cEZyel94bkVleEZLNmtybW9IZGVBamY3NVBZNjlBWWN1SHVZbzBlWFlXWEhMQ3QzdUJJeENLV3YxMFNvTGtoQ290cVUyZlNKSmg4ZXRVMzczNXBCZTQwTVZnSG13QTZIYkZhZkkzc0lyT2EtWG92NHhTeHlSaVo1NjlaQmtVU05kYWttREpjVjAyV0dydllfMmtWYmxtLXhESGtfQVJLVHlnVk1vNVRlWHpDc0gtdEtNTnkxMjJnc0hOLUk3VzlGcXRrekEwTkpsZzRIZWduNnNBUXBM?oc=5",
+        "source": "Yahoo股市",
+        "time": "09/14 16:00",
+        "timestamp": 1789372800.0,
+        "score": 8,
+        "quality_score": 3,
+        "impact_score": 5,
+        "release_bonus": 0,
+        "matched_groups": [
+          "market_benchmark",
+          "market_structure"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "taiwan_market",
+          "market_structure"
+        ],
+        "primary_topic": "taiwan_market",
+        "named_entities": [
+          "taiwan_market"
+        ],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      },
+      {
+        "title": "戰爭、百元油價、美債狂飆三大逆風都扛住 基金經理：新興市場可承受Fed升息風險",
+        "link": "https://news.google.com/rss/articles/CBMiT0FVX3lxTFAyc2RhanVOdUJIdjJWZk53Y3JUSlBPMEZOX0s4WXZlTjFuSHJUcVFSMk90ZjRkc0N3OFFXNnZEaC05YVdZVGdIci15eFJDWkU?oc=5",
+        "source": "news.cnyes.com",
+        "time": "09/15 06:29",
+        "timestamp": 1789424999.0,
+        "score": 8,
+        "quality_score": 4,
+        "impact_score": 4,
+        "release_bonus": 0,
+        "matched_groups": [
+          "macro_policy"
+        ],
+        "low_signal_hits": [],
+        "topic_groups": [
+          "geopolitics_trade",
+          "currency_commodities",
+          "macro_policy"
+        ],
+        "primary_topic": "geopolitics_trade",
+        "named_entities": [],
+        "quality_pass": true,
+        "impact_pass": true,
+        "qualified": true
+      }
+    ],
+    "taiex_reference": {
+      "schema_version": "taiex-reference.v1",
+      "market_date": "2026-08-26",
+      "previous_trade_date": "2026-08-25",
+      "status": "ok",
+      "previous_close": 45169.46,
+      "source": {
+        "name": "TWSE TAIEX historical index",
+        "url": "https://www.twse.com.tw/indicesReport/MI_5MINS_HIST?response=json&date=20260825",
+        "observed_at": "2026-08-25T13:30:00+08:00",
+        "fetched_at": "2026-08-26T08:33:34.743777+08:00",
+        "official": true
+      },
+      "error": null
+    },
+    "disposal": {
+      "source": "https://chengwaye.com/disposal-forecast",
+      "date_check": {
+        "today": "2026-09-15",
+        "effective_market_day": "2026-09-15",
+        "expected_previous_trading_day": "2026-09-14",
+        "page_says_applies_to": "09/15",
+        "page_dropdown_selected": null,
+        "applies_to_matches_today": true
+      },
+      "one_flag_from_disposal": [
+        {
+          "market": "市",
+          "code": "2305",
+          "name": "全友",
+          "close": "45.15",
+          "condition": "①45.45↑(+0.7%)",
+          "earliest_disposal": "09-16 第1次2分",
+          "badges": [
+            {
+              "short": "3①",
+              "title": "連續3日第1款 2/3",
+              "current": 2,
+              "threshold": 3
+            },
+            {
+              "short": "5",
+              "title": "連續5日（第1~7款） 2/5",
+              "current": 2,
+              "threshold": 5
+            },
+            {
+              "short": "6",
+              "title": "10日內6次（第1~7款） 2/6",
+              "current": 2,
+              "threshold": 6
+            },
+            {
+              "short": "12",
+              "title": "30日內12次（第1~7款） 2/12",
+              "current": 2,
+              "threshold": 12
+            }
+          ],
+          "condition_segments": [
+            {
+              "text": "①",
+              "color": "var(--muted)",
+              "bold": false
+            },
+            {
+              "text": "45.45↑(+0.7%)",
+              "color": "var(--rise)",
+              "bold": false
+            }
+          ]
+        }
+      ],
+      "two_flags_from_disposal": [
+        {
+          "market": "櫃",
+          "code": "6510",
+          "name": "精測",
+          "close": "3375",
+          "condition": "① 09-15不符合③④⑤⑦ 09-15不符合⑥ 收盤≥4050元且量≥2,000張，且符合其一：單一投資人當日買進或賣出占該股總成交金額≥10%且金額≥1億元，或單一券商占比達門檻且金額≥1億元（占比門檻10%起，每分支加1百分點，最高25%）；上櫃股本未滿8,000萬元者，金額門檻減半（產業PB所需股價明日不可達）",
+          "earliest_disposal": "09-17 第1次2分",
+          "badges": [
+            {
+              "short": "3①",
+              "title": "連續3日第1款 0/3",
+              "current": 0,
+              "threshold": 3
+            },
+            {
+              "short": "5",
+              "title": "連續5日（第1~7款） 0/5",
+              "current": 0,
+              "threshold": 5
+            },
+            {
+              "short": "6",
+              "title": "10日內6次（第1~7款） 4/6",
+              "current": 4,
+              "threshold": 6
+            },
+            {
+              "short": "12",
+              "title": "30日內12次（第1~7款） 4/12",
+              "current": 4,
+              "threshold": 12
+            }
+          ]
+        },
+        {
+          "market": "市",
+          "code": "7711",
+          "name": "永擎",
+          "close": "478.0",
+          "condition": "①504↓(+5.4%)③ 收盤≤504元；量≥6,686張，量放大倍數比全市場平均高≥4倍，6日漲跌差幅≥20個百分點④ 收盤≤504元；量≥7,171張（週轉率≥10%），週轉率比全市場平均高≥5個百分點，6日漲跌差幅≥20個百分點⑤ 收盤≤504元；單一券商當日受託買進或賣出量>500張，且占總量>25%（每分支加1百分點，上限35%），6日漲跌差幅≥20個百分點⑦ 收盤≤504元；前一交易日券資比≥20%且≥近6日最低值4倍，融資使用率≥25%、融券使用率≥15%，券資比不低於前二交易日，6日漲跌差幅≥20個百分點⑥ 不符合（PE明日不可達，量未達）",
+          "earliest_disposal": "09-17 第2次2分",
+          "badges": [
+            {
+              "short": "3①",
+              "title": "連續3日第1款 1/3",
+              "current": 1,
+              "threshold": 3
+            },
+            {
+              "short": "5",
+              "title": "連續5日（第1~7款） 1/5",
+              "current": 1,
+              "threshold": 5
+            },
+            {
+              "short": "6",
+              "title": "10日內6次（第1~7款） 3/6",
+              "current": 3,
+              "threshold": 6
+            },
+            {
+              "short": "12",
+              "title": "30日內12次（第1~7款） 5/12",
+              "current": 5,
+              "threshold": 12
+            }
+          ]
+        }
+      ],
+      "currently_in_disposal": [
+        {
+          "market": "櫃",
+          "code": "3324",
+          "name": "雙鴻",
+          "matching": "2分",
+          "start_date": "09-08",
+          "end_date": "09-14",
+          "exit_date": "09-15",
+          "trading_days_left": "出關",
+          "reason": "連續3日第一款｜第2次處置"
+        },
+        {
+          "market": "市",
+          "code": "2455",
+          "name": "全新",
+          "matching": "2分",
+          "start_date": "09-07",
+          "end_date": "09-15",
+          "exit_date": "09-16",
+          "trading_days_left": 1,
+          "reason": "連續五次及當日沖銷標準｜第2次處置"
+        },
+        {
+          "market": "櫃",
+          "code": "6620",
+          "name": "漢達",
+          "matching": "2分",
+          "start_date": "09-09",
+          "end_date": "09-15",
+          "exit_date": "09-16",
+          "trading_days_left": 1,
+          "reason": "連續3日第一款｜第1次處置"
+        },
+        {
+          "market": "市",
+          "code": "8021",
+          "name": "尖點",
+          "matching": "2分",
+          "start_date": "09-09",
+          "end_date": "09-15",
+          "exit_date": "09-16",
+          "trading_days_left": 1,
+          "reason": "10日內6次（第1~7款）｜第2次處置"
+        },
+        {
+          "market": "櫃",
+          "code": "4304",
+          "name": "勝昱",
+          "matching": "2分",
+          "start_date": "09-10",
+          "end_date": "09-16",
+          "exit_date": "09-17",
+          "trading_days_left": 2,
+          "reason": "連續3日第一款｜第2次處置"
+        },
+        {
+          "market": "櫃",
+          "code": "6872",
+          "name": "浩宇生醫",
+          "matching": "2分",
+          "start_date": "09-10",
+          "end_date": "09-16",
+          "exit_date": "09-17",
+          "trading_days_left": 2,
+          "reason": "連續3日第一款｜第1次處置"
+        },
+        {
+          "market": "櫃",
+          "code": "4979",
+          "name": "華星光",
+          "matching": "2分",
+          "start_date": "09-11",
+          "end_date": "09-17",
+          "exit_date": "09-18",
+          "trading_days_left": 3,
+          "reason": "連續5日｜第2次處置"
+        },
+        {
+          "market": "櫃",
+          "code": "6538",
+          "name": "倉和",
+          "matching": "2分",
+          "start_date": "09-11",
+          "end_date": "09-17",
+          "exit_date": "09-18",
+          "trading_days_left": 3,
+          "reason": "連續3日第一款｜第2次處置"
+        },
+        {
+          "market": "櫃",
+          "code": "7772",
+          "name": "耀穎",
+          "matching": "2分",
+          "start_date": "09-11",
+          "end_date": "09-17",
+          "exit_date": "09-18",
+          "trading_days_left": 3,
+          "reason": "連續3日第一款｜第1次處置"
+        },
+        {
+          "market": "市",
+          "code": "3055",
+          "name": "蔚華科",
+          "matching": "2分",
+          "start_date": "09-14",
+          "end_date": "09-18",
+          "exit_date": "09-21",
+          "trading_days_left": 4,
+          "reason": "10日內6次（第1~7款）｜第1次處置"
+        },
+        {
+          "market": "櫃",
+          "code": "8227",
+          "name": "巨有科技",
+          "matching": "2分",
+          "start_date": "09-15",
+          "end_date": "09-21",
+          "exit_date": "09-22",
+          "trading_days_left": 5,
+          "reason": "連續3日第一款｜第1次處置"
+        },
+        {
+          "market": "市",
+          "code": "8996",
+          "name": "高力",
+          "matching": "2分",
+          "start_date": "09-15",
+          "end_date": "09-21",
+          "exit_date": "09-22",
+          "trading_days_left": 5,
+          "reason": "已達處置標準：10日內6次（第1~7款）｜第1次處置"
+        }
+      ]
+    },
+    "pressplay": {
+      "source_article": {
+        "title": "0915盤前",
+        "url": "https://www.pressplay.cc/project/1002F3D338218A43A3A65E8D2A80376F/articles/C0184385804B8D65A0048D61A1D5C3C3",
+        "fetch_mode": "live_browser",
+        "collected_at": "2026-09-15T08:25:53.492225+08:00"
+      },
+      "chengwaye_date": null,
+      "not_found_group": {
+        "raw_tokens": [
+          "6226",
+          "2305",
+          "1528",
+          "2351",
+          "8358"
+        ],
+        "matched": [
+          {
+            "market": "市",
+            "code": "6226",
+            "name": "光鼎",
+            "close": "33",
+            "volume": "33,484",
+            "foreign": "+2,114",
+            "trust": "0",
+            "dealer": "-70",
+            "ai_reason": "LED與顯示光電應用題材輪動，面板光電族群買盤升溫。",
+            "group": "📺 面板光電",
+            "match_type": "code",
+            "raw_token": "6226"
+          },
+          {
+            "market": "市",
+            "code": "2305",
+            "name": "全友",
+            "close": "45.15",
+            "volume": "33,465",
+            "foreign": "+583",
+            "trust": "0",
+            "dealer": "+165",
+            "ai_reason": "數位影像與電腦週邊應用題材輪動，相關族群受到資金關注。",
+            "group": "🖨️ 電腦週邊",
+            "match_type": "code",
+            "raw_token": "2305"
+          },
+          {
+            "market": "市",
+            "code": "1528",
+            "name": "恩德",
+            "close": "23.3",
+            "volume": "15,628",
+            "foreign": "+801",
+            "trust": "0",
+            "dealer": "-7",
+            "ai_reason": "機械設備題材輪動，工具機與自動化相關族群買盤集中。",
+            "group": "🏭 機械",
+            "match_type": "code",
+            "raw_token": "1528"
+          },
+          {
+            "market": "市",
+            "code": "2351",
+            "name": "順德",
+            "close": "257",
+            "volume": "13,792",
+            "foreign": "-13",
+            "trust": "0",
+            "dealer": "+86",
+            "ai_reason": "半導體封裝材料與精密製程題材輪動，封測族群買盤升溫。",
+            "group": "🔬 封測",
+            "match_type": "code",
+            "raw_token": "2351"
+          },
+          {
+            "market": "市",
+            "code": "8358",
+            "name": "金居",
+            "close": "—",
+            "volume": "—",
+            "foreign": "—",
+            "trust": "—",
+            "dealer": "—",
+            "ai_reason": "PressPlay 專欄標的",
+            "group": "📌 專欄標的",
+            "match_type": "dict_code",
+            "raw_token": "8358"
+          }
+        ],
+        "unmatched": []
+      },
+      "found_group": {
+        "raw_tokens": [
+          "邁達特",
+          "6148",
+          "6140",
+          "2468"
+        ],
+        "matched": [
+          {
+            "market": "市",
+            "code": "6112",
+            "name": "邁達特",
+            "close": "50.6",
+            "volume": "10,922",
+            "foreign": "-668",
+            "trust": "0",
+            "dealer": "+50",
+            "ai_reason": "雲端服務與企業數位轉型題材輪動，軟體族群受到關注。",
+            "group": "💻 軟體",
+            "match_type": "name",
+            "raw_token": "邁達特"
+          },
+          {
+            "market": "櫃",
+            "code": "6148",
+            "name": "驊宏資",
+            "close": "34.1",
+            "volume": "1,342",
+            "foreign": "+201",
+            "trust": "0",
+            "dealer": "+2",
+            "ai_reason": "企業數位應用與資訊服務題材輪動，軟體族群受到資金關注。",
+            "group": "💻 軟體",
+            "match_type": "code",
+            "raw_token": "6148"
+          },
+          {
+            "market": "櫃",
+            "code": "6140",
+            "name": "訊達",
+            "close": "18.25",
+            "volume": "289",
+            "foreign": "-2",
+            "trust": "0",
+            "dealer": "+5",
+            "ai_reason": "資訊服務與系統整合題材輪動，軟體族群買盤升溫。",
+            "group": "💻 軟體",
+            "match_type": "code",
+            "raw_token": "6140"
+          },
+          {
+            "market": "市",
+            "code": "2468",
+            "name": "華經",
+            "close": "39.35",
+            "volume": "2,185",
+            "foreign": "+238",
+            "trust": "0",
+            "dealer": "+9",
+            "ai_reason": "資訊服務與系統整合題材輪動，軟體與數位應用族群受到關注。",
+            "group": "💻 軟體",
+            "match_type": "code",
+            "raw_token": "2468"
+          }
+        ],
+        "unmatched": []
+      }
+    },
+    "ai_summary": {
+      "schema_version": 1,
+      "generated_at": "2026-11-05T11:35:50.434897+08:00",
+      "status": "ok",
+      "provider": "Gemini API",
+      "model": "gemini-2.5-flash",
+      "fallback_reason": null,
+      "news_stats": {
+        "count": 10,
+        "unique_topics": 6,
+        "unique_sources": 5,
+        "nvidia_count": 0
+      },
+      "data_quality": {
+        "status": "ok",
+        "label": "資料正常",
+        "checks": [
+          {
+            "name": "新聞數量",
+            "status": "ok",
+            "detail": "10 則"
+          },
+          {
+            "name": "主題分布",
+            "status": "ok",
+            "detail": "6 類"
+          },
+          {
+            "name": "公司／事件集中度",
+            "status": "ok",
+            "detail": "輝達 0 則"
+          },
+          {
+            "name": "行情可用性",
+            "status": "ok",
+            "detail": "13 筆可比對行情"
+          },
+          {
+            "name": "來源健康度",
+            "status": "ok",
+            "detail": "0 項提醒"
+          }
+        ],
+        "issues": [],
+        "news_count": 10,
+        "unique_topics": 6,
+        "unique_sources": 5,
+        "nvidia_count": 0,
+        "topic_counts": {
+          "macro_policy": 1,
+          "currency_commodities": 3,
+          "geopolitics_trade": 2,
+          "taiwan_market": 2,
+          "global_market": 1,
+          "asia_market": 1
+        },
+        "source_counts": {
+          "Yahoo股市": 2,
+          "經濟日報": 2,
+          "news.cnyes.com": 4,
+          "今周刊": 1,
+          "香港經濟日報HKET": 1
+        }
+      },
+      "news_summary": {
+        "headline": "美債殖利率逼近5%與聯準會升息疑慮籠罩，AI發展降速壓力使科技股承壓，台股量縮修正。",
+        "topic_summary": [
+          {
+            "topic": "總經／央行政策",
+            "count": 1,
+            "summary": "市場對升息疑慮加劇，台股量縮失守4萬6，金融指數逆勢刷新高點。"
+          },
+          {
+            "topic": "美元／債券／商品",
+            "count": 3,
+            "summary": "美債殖利率逼近5%對美股構成壓力，油價大漲與聯準會升息預期導致黃金跌至逾一個月低點。"
+          },
+          {
+            "topic": "地緣政治／貿易",
+            "count": 2,
+            "summary": "美伊戰爭與百元油價等三大逆風下，新興市場被認為可承受聯準會升息風險。"
+          },
+          {
+            "topic": "台股市場",
+            "count": 2,
+            "summary": "台股高檔修正，量縮收跌322點，金融股逆勢上揚。"
+          },
+          {
+            "topic": "美股／全球市場",
+            "count": 1,
+            "summary": "市場關注標普500ETF與港股的表現比較。"
+          },
+          {
+            "topic": "亞股市場",
+            "count": 1,
+            "summary": "AI高成長預期鬆動，日經盤中重挫逾1,200點，科技股成為重災區。"
+          }
+        ],
+        "key_points": [
+          "美債殖利率逼近5%引發市場對聯準會升息的擔憂。",
+          "AI高成長預期開始鬆動，導致科技股面臨降速壓力。",
+          "台股在升息疑慮與AI降速壓力下量縮修正，失守4萬6關卡。",
+          "金融股逆勢上揚，而光學雙雄則遭降低評價吞跌停。",
+          "油價大漲與地緣政治風險亦為市場關注焦點。"
+        ]
+      },
+      "market_summary": {
+        "headline": "美股主要指數普遍下跌，費城半導體指數領跌，台指期夜盤同步收黑。",
+        "observations": [
+          "美股主要指數普遍下跌，其中道瓊、S&P 500與NASDAQ指數跌幅介於0.29%至0.56%。",
+          "費城半導體指數重挫5.86%，顯示半導體類股面臨顯著賣壓。",
+          "多數台灣相關ADR如台積電、聯電、日月光及美光均呈現下跌，跌幅介於3.27%至6.06%，與費半指數走勢一致。",
+          "蘋果ADR逆勢上漲0.24%，與整體科技股的疲弱表現形成對比。"
+        ],
+        "drivers": [
+          "美債殖利率逼近5%引發市場對聯準會升息路徑的擔憂，可能影響股市評價。",
+          "AI高成長預期鬆動，可能導致科技股及半導體類股承壓。",
+          "油價大漲與地緣政治風險，可能對全球經濟展望造成不確定性。",
+          "台股在升息疑慮與AI發展降速壓力下，可能面臨量縮修正。"
+        ],
+        "risks": [
+          "聯準會未來升息決策的不確定性，可能持續影響市場情緒。",
+          "AI產業發展速度若不如預期，可能對相關科技股造成進一步衝擊。",
+          "地緣政治緊張局勢，如美伊戰爭，可能加劇市場波動與油價壓力。",
+          "美債殖利率持續攀升，可能對企業獲利與股市評價構成壓力。"
+        ]
+      },
+      "quality_note": "此份盤前分析係根據截至2026-11-05T11:35:35.806896+08:00所取得之市場資料與新聞資訊彙整而成。部分亞股行情更新時間資料未提供，但漲跌幅數據仍可供參考。"
+    },
+    "source_status": {
+      "schema_version": "source-status.v2",
+      "updated_at": "2026-11-05T11:35:35.751406+08:00",
+      "reliability_tiers": {
+        "core_stable": {
+          "label": "核心穩定",
+          "default_ttl_minutes": 720,
+          "default_hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "critical"
+        },
+        "important_short_stale": {
+          "label": "重要但可短暫過期",
+          "default_ttl_minutes": 360,
+          "default_hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "warning"
+        },
+        "high_risk": {
+          "label": "高風險來源",
+          "default_ttl_minutes": 180,
+          "default_hard_expiry_minutes": 720,
+          "fallback_policy": "fixture_or_previous_snapshot_with_warning",
+          "notification_level": "notice"
+        }
+      },
+      "sources": {
+        "indices": {
+          "source_id": "indices",
+          "name": "指數行情 (美股/亞股/ADR)",
+          "is_required": true,
+          "reliability_tier": "core_stable",
+          "ttl_minutes": 720,
+          "hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "critical",
+          "dependencies": [],
+          "status": "ok",
+          "fetched_at": "2026-11-05T11:35:11.742061+08:00",
+          "data_date": null,
+          "age_minutes": 0.4,
+          "error_summary": null,
+          "fallback_used": false,
+          "retry_attempts": 0,
+          "impact_desc": "無法掌握美股收盤與日韓開盤走勢，難以評估早盤開盤連動方向",
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
+        },
+        "twse_summary": {
+          "source_id": "twse_summary",
+          "name": "大盤昨收與三大法人",
+          "is_required": false,
+          "reliability_tier": "core_stable",
+          "ttl_minutes": 720,
+          "hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "warning",
+          "dependencies": [],
+          "status": "ok",
+          "fetched_at": "2026-11-05T11:35:11.742061+08:00",
+          "data_date": null,
+          "age_minutes": 0.4,
+          "error_summary": null,
+          "fallback_used": false,
+          "retry_attempts": 0,
+          "impact_desc": "缺少昨日加權指數與外資/投信買賣超金額彙整",
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
+        },
+        "night_session": {
+          "source_id": "night_session",
+          "name": "台指期夜盤走勢",
+          "is_required": false,
+          "reliability_tier": "important_short_stale",
+          "ttl_minutes": 180,
+          "hard_expiry_minutes": 720,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "warning",
+          "dependencies": [],
+          "status": "ok",
+          "fetched_at": "2026-11-05T11:35:11.742061+08:00",
+          "data_date": "2026-09-15",
+          "age_minutes": 0.4,
+          "error_summary": null,
+          "fallback_used": false,
+          "retry_attempts": 0,
+          "impact_desc": "缺少期貨夜盤行情與點位走向，可改參考美股指數",
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 180 分鐘內"
+        },
+        "disposal": {
+          "source_id": "disposal",
+          "name": "處置股與出關預警",
+          "is_required": true,
+          "reliability_tier": "core_stable",
+          "ttl_minutes": 720,
+          "hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "critical",
+          "dependencies": [],
+          "status": "ok",
+          "fetched_at": "2026-11-05T02:45:43.186051+08:00",
+          "data_date": "09/15",
+          "age_minutes": 0.4,
+          "error_summary": null,
+          "fallback_used": false,
+          "retry_attempts": 0,
+          "impact_desc": "無法取得即時處置管制標準與出關名單，無法進行風險避險",
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
+        },
+        "pressplay": {
+          "source_id": "pressplay",
+          "name": "PressPlay 盤前族群與標的",
+          "is_required": false,
+          "reliability_tier": "high_risk",
+          "ttl_minutes": 360,
+          "hard_expiry_minutes": 720,
+          "fallback_policy": "fixture_or_previous_snapshot_with_warning",
+          "notification_level": "notice",
+          "dependencies": [],
+          "status": "ok",
+          "fetched_at": "2026-11-05T11:35:35.560266+08:00",
+          "data_date": null,
+          "age_minutes": 0.0,
+          "error_summary": null,
+          "fallback_used": false,
+          "retry_attempts": 0,
+          "impact_desc": "缺少每日專欄族群整理，候選股清單將呈現空白",
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 360 分鐘內"
+        },
+        "chengwaye_daily": {
+          "source_id": "chengwaye_daily",
+          "name": "主力券商與當沖籌碼明細",
+          "is_required": false,
+          "reliability_tier": "high_risk",
+          "ttl_minutes": 360,
+          "hard_expiry_minutes": 720,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "notice",
+          "dependencies": [
+            "pressplay"
+          ],
+          "status": "ok",
+          "fetched_at": "2026-11-05T11:35:11.742061+08:00",
+          "data_date": "2026/09/14",
+          "age_minutes": 0.4,
+          "error_summary": null,
+          "fallback_used": false,
+          "retry_attempts": 0,
+          "impact_desc": "缺少重點個股之分點買賣與當沖籌碼排行",
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 360 分鐘內"
+        },
+        "calendar": {
+          "source_id": "calendar",
+          "name": "總經財經行事曆",
+          "is_required": false,
+          "reliability_tier": "important_short_stale",
+          "ttl_minutes": 720,
+          "hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "warning",
+          "dependencies": [],
+          "status": "ok",
+          "fetched_at": "2026-11-05T11:35:11.742061+08:00",
+          "data_date": "2026-09-15",
+          "age_minutes": 0.4,
+          "error_summary": null,
+          "fallback_used": false,
+          "retry_attempts": 0,
+          "impact_desc": "缺少今日重磅總經數據與事件日程倒數",
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 720 分鐘內"
+        },
+        "financials": {
+          "source_id": "financials",
+          "name": "市場未反映重大公告 (財報/營收/處分)",
+          "is_required": false,
+          "reliability_tier": "important_short_stale",
+          "ttl_minutes": 720,
+          "hard_expiry_minutes": 1440,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "warning",
+          "dependencies": [],
+          "status": "ok",
+          "fetched_at": "2026-09-15T08:25:50.682524+08:00",
+          "data_date": null,
+          "age_minutes": 0.4,
+          "error_summary": null,
+          "fallback_used": false,
+          "retry_attempts": 0,
+          "impact_desc": "缺少昨日盤後自結損益與營收公告統計",
+          "notification": null
+        },
+        "news": {
+          "source_id": "news",
+          "name": "盤前即時新聞聚合",
+          "is_required": false,
+          "reliability_tier": "high_risk",
+          "ttl_minutes": 180,
+          "hard_expiry_minutes": 720,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "notice",
+          "dependencies": [],
+          "status": "ok",
+          "fetched_at": "2026-11-05T11:35:11.742061+08:00",
+          "data_date": null,
+          "age_minutes": 0.4,
+          "error_summary": null,
+          "fallback_used": false,
+          "retry_attempts": 0,
+          "impact_desc": "缺少隔夜美股與產業焦點新聞快訊",
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 180 分鐘內"
+        },
+        "chengwaye_stock_history": {
+          "source_id": "chengwaye_stock_history",
+          "name": "Chengwaye 個股漲停履歷",
+          "is_required": false,
+          "reliability_tier": "high_risk",
+          "ttl_minutes": 1440,
+          "hard_expiry_minutes": 2880,
+          "fallback_policy": "previous_snapshot_with_warning",
+          "notification_level": "notice",
+          "dependencies": [
+            "pressplay",
+            "chengwaye_daily"
+          ],
+          "status": "ok",
+          "fetched_at": "2026-11-05T11:35:11.742061+08:00",
+          "data_date": null,
+          "age_minutes": 0.4,
+          "error_summary": null,
+          "fallback_used": false,
+          "retry_attempts": 0,
+          "impact_desc": "缺少候選股漲停次數、最近漲停與隔日表現履歷",
+          "notification": null,
+          "refresh_skipped": true,
+          "skip_reason": "現有快照仍在 TTL 1440 分鐘內"
+        }
+      }
+    },
+    "opening_result": {
+      "schema_version": "opening-result.v1",
+      "prediction_id": "2026-08-26T08:30+08:00-opening-v1",
+      "market_date": "2026-08-26",
+      "status": "verified",
+      "target_time": "09:00:00+08:00",
+      "verified_at": "2026-08-26T10:45:08.941930+08:00",
+      "attempts": 1,
+      "attempt_log": [
+        {
+          "attempted_at": "2026-08-26T10:45:07+08:00",
+          "status": "verified",
+          "observed_open": 45157.64,
+          "message": null
+        }
+      ],
+      "actual_open": 45157.64,
+      "actual_change_points": -11.82,
+      "actual_direction": "flat",
+      "direction_correct": false,
+      "signed_error_points": 272.46,
+      "absolute_error_points": 272.46,
+      "source": {
+        "name": "TWSE MIS TAIEX",
+        "url": "https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=tse_t00.tw&json=1&delay=0",
+        "observed_at": "2026-08-26T09:00:00+08:00",
+        "fetched_at": "2026-08-26T10:45:08.941930+08:00",
+        "official": true
+      },
+      "error": null
+    },
+    "opening_forecast": {
+      "schema_version": "opening-forecast.v1",
+      "prediction_id": "2026-08-26T08:30+08:00-opening-v1",
+      "market_date": "2026-08-26",
+      "status": "generated",
+      "locked_at": "2026-08-26T08:33:32+08:00",
+      "model_version": "opening-v1",
+      "previous_close": 45169.46,
+      "predicted_change_points": 260.64,
+      "predicted_open": 45430.1,
+      "direction": "up",
+      "gap_label": "gap_up",
+      "confidence": "high",
+      "confidence_reasons": [
+        "關鍵市場資料均已取得，訊號一致性良好"
+      ],
+      "evidence": [
+        {
+          "evidence_id": "opening-twse-previous-close",
+          "kind": "market_data",
+          "label": "前一交易日加權指數收盤（TWSE 官方歷史資料）",
+          "value": 45169.46,
+          "unit": "index_points",
+          "observed_at": "2026-08-25T13:30:00+08:00",
+          "fetched_at": "2026-08-26T08:33:34.743777+08:00",
+          "source_name": "TWSE TAIEX historical index",
+          "source_url": "https://www.twse.com.tw/indicesReport/MI_5MINS_HIST?response=json&date=20260825",
+          "cache_used": false,
+          "conflict_group": null,
+          "supports": "neutral"
+        },
+        {
+          "evidence_id": "opening-night_session_points-1",
+          "kind": "market_data",
+          "label": "台指期夜盤點數變化",
+          "value": 405.0,
+          "unit": "points",
+          "observed_at": "2026-08-26T08:27:31.968724+08:00",
+          "fetched_at": "2026-08-26T08:27:31.968724+08:00",
+          "source_name": "Wantgoo / TAIFEX",
+          "source_url": "https://www.wantgoo.com/futures/wtxp",
+          "cache_used": false,
+          "conflict_group": "market-signal",
+          "supports": "up"
+        },
+        {
+          "evidence_id": "opening-nasdaq_pct-2",
+          "kind": "market_data",
+          "label": "NASDAQ 漲跌幅",
+          "value": 0.66,
+          "unit": "percent",
+          "observed_at": "2026-08-26T05:15:59+08:00",
+          "fetched_at": "2026-08-26T05:15:59+08:00",
+          "source_name": "Yahoo Finance Chart",
+          "source_url": "https://finance.yahoo.com/quote/%5EIXIC/",
+          "cache_used": false,
+          "conflict_group": "market-signal",
+          "supports": "up"
+        },
+        {
+          "evidence_id": "opening-sp500_pct-3",
+          "kind": "market_data",
+          "label": "S&P 500 漲跌幅",
+          "value": 0.32,
+          "unit": "percent",
+          "observed_at": "2026-08-26T05:43:49+08:00",
+          "fetched_at": "2026-08-26T05:43:49+08:00",
+          "source_name": "Yahoo Finance Chart",
+          "source_url": "https://finance.yahoo.com/quote/%5EGSPC/",
+          "cache_used": false,
+          "conflict_group": "market-signal",
+          "supports": "up"
+        },
+        {
+          "evidence_id": "opening-dow_pct-4",
+          "kind": "market_data",
+          "label": "道瓊漲跌幅",
+          "value": 0.3,
+          "unit": "percent",
+          "observed_at": "2026-08-26T05:43:49+08:00",
+          "fetched_at": "2026-08-26T05:43:49+08:00",
+          "source_name": "Yahoo Finance Chart",
+          "source_url": "https://finance.yahoo.com/quote/%5EDJI/",
+          "cache_used": false,
+          "conflict_group": "market-signal",
+          "supports": "up"
+        }
+      ],
+      "data_quality": {
+        "missing_factors": [],
+        "conflicts": [],
+        "conflict_directions": [
+          "up"
+        ],
+        "cache_used": false
+      },
+      "formula": {
+        "threshold_points": 100.0,
+        "available_weight": 1.0,
+        "features": [
+          {
+            "key": "night_session_points",
+            "weight": 0.6,
+            "conversion": 1.0,
+            "input": 405.0,
+            "contribution": 243.0
+          },
+          {
+            "key": "nasdaq_pct",
+            "weight": 0.2,
+            "conversion": 100.0,
+            "input": 0.66,
+            "contribution": 13.2
+          },
+          {
+            "key": "sp500_pct",
+            "weight": 0.15,
+            "conversion": 80.0,
+            "input": 0.32,
+            "contribution": 3.84
+          },
+          {
+            "key": "dow_pct",
+            "weight": 0.05,
+            "conversion": 40.0,
+            "input": 0.3,
+            "contribution": 0.6
+          }
+        ]
+      }
+    },
+    "stock_history": {
+      "source": "https://chengwaye.com/stock/",
+      "fetched_at": "2026-09-15T08:26:17.621905+08:00",
+      "requested_codes": [
+        "6226",
+        "2305",
+        "1528",
+        "2351",
+        "8358",
+        "6112",
+        "6148",
+        "6140",
+        "2468"
+      ],
+      "codes": {
+        "6226": {
+          "code": "6226",
+          "name": "光鼎",
+          "source_url": "https://chengwaye.com/stock/6226",
+          "summary": {
+            "limit_up_count": "26 次",
+            "latest_limit_up": "2026/09/14",
+            "avg_next_open": "+5.92%",
+            "avg_next_close": "+4.87%"
+          },
+          "records": [
+            {
+              "date": "2026/09/14",
+              "close": "33",
+              "group": "面板光電",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
+            },
+            {
+              "date": "2026/09/10",
+              "close": "32.6",
+              "group": "面板光電",
+              "next_open": "+1.38%",
+              "next_avg": "-3.09%",
+              "next_close": "-7.98%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/08/28",
+              "close": "34",
+              "group": "面板光電",
+              "next_open": "+3.68%",
+              "next_avg": "-0.90%",
+              "next_close": "-7.06%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/08/27",
+              "close": "30.95",
+              "group": "面板光電",
+              "next_open": "+9.53%",
+              "next_avg": "+9.74%",
+              "next_close": "+9.85%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/08/26",
+              "close": "28.15",
+              "group": "面板光電",
+              "next_open": "+9.95%",
+              "next_avg": "+9.13%",
+              "next_close": "+9.95%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/08/25",
+              "close": "25.6",
+              "group": "面板光電",
+              "next_open": "+8.59%",
+              "next_avg": "+9.41%",
+              "next_close": "+9.96%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/08/24",
+              "close": "23.3",
+              "group": "面板光電",
+              "next_open": "+0.21%",
+              "next_avg": "+5.38%",
+              "next_close": "+9.87%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/08/18",
+              "close": "21.1",
+              "group": "面板光電",
+              "next_open": "0.00%",
+              "next_avg": "+4.81%",
+              "next_close": "+0.95%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/08/06",
+              "close": "22.85",
+              "group": "面板光電",
+              "next_open": "-0.44%",
+              "next_avg": "-1.89%",
+              "next_close": "-3.50%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/08/03",
+              "close": "21.55",
+              "group": "面板光電",
+              "next_open": "+3.02%",
+              "next_avg": "+2.35%",
+              "next_close": "+2.09%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/07/29",
+              "close": "22.55",
+              "group": "面板光電",
+              "next_open": "+5.10%",
+              "next_avg": "-1.74%",
+              "next_close": "-9.98%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/07/28",
+              "close": "20.5",
+              "group": "面板光電",
+              "next_open": "+5.12%",
+              "next_avg": "+9.33%",
+              "next_close": "+10.00%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/07/02",
+              "close": "26.65",
+              "group": "面板光電",
+              "next_open": "+8.63%",
+              "next_avg": "-5.84%",
+              "next_close": "-9.94%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/07/01",
+              "close": "24.25",
+              "group": "面板光電",
+              "next_open": "+9.90%",
+              "next_avg": "+9.90%",
+              "next_close": "+9.90%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/30",
+              "close": "22.05",
+              "group": "面板光電",
+              "next_open": "+9.98%",
+              "next_avg": "+9.98%",
+              "next_close": "+9.98%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/29",
+              "close": "20.05",
+              "group": "面板光電",
+              "next_open": "+9.73%",
+              "next_avg": "+9.82%",
+              "next_close": "+9.98%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/26",
+              "close": "18.25",
+              "group": "面板光電",
+              "next_open": "+6.03%",
+              "next_avg": "+7.31%",
+              "next_close": "+9.86%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/25",
+              "close": "16.6",
+              "group": "面板光電",
+              "next_open": "+2.41%",
+              "next_avg": "+7.81%",
+              "next_close": "+9.94%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/24",
+              "close": "15.1",
+              "group": "面板光電",
+              "next_open": "+9.93%",
+              "next_avg": "+9.93%",
+              "next_close": "+9.93%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/23",
+              "close": "13.75",
+              "group": "面板光電",
+              "next_open": "+6.91%",
+              "next_avg": "+8.94%",
+              "next_close": "+9.82%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/04/17",
+              "close": "14.6",
+              "group": "面板光電",
+              "next_open": "+6.16%",
+              "next_avg": "+8.34%",
+              "next_close": "+9.59%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/04/09",
+              "close": "13.5",
+              "group": "光通訊",
+              "next_open": "+9.63%",
+              "next_avg": "+2.51%",
+              "next_close": "-2.22%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/04/08",
+              "close": "12.3",
+              "group": "面板光電",
+              "next_open": "+6.91%",
+              "next_avg": "+7.67%",
+              "next_close": "+9.76%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/03/19",
+              "close": "14.65",
+              "group": "面板光電",
+              "next_open": "+1.71%",
+              "next_avg": "+3.21%",
+              "next_close": "+1.37%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/03/18",
+              "close": "13.35",
+              "group": "光通訊",
+              "next_open": "+4.12%",
+              "next_avg": "+6.98%",
+              "next_close": "+9.74%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/03/17",
+              "close": "12.15",
+              "group": "面板光電",
+              "next_open": "+9.88%",
+              "next_avg": "+9.88%",
+              "next_close": "+9.88%",
+              "next_trend": "續漲停"
+            }
+          ],
+          "period_note": "上市｜族群：面板光電、光通訊｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 26
+        },
+        "2305": {
+          "code": "2305",
+          "name": "全友",
+          "source_url": "https://chengwaye.com/stock/2305",
+          "summary": {
+            "limit_up_count": "15 次",
+            "latest_limit_up": "2026/09/14",
+            "avg_next_open": "+3.49%",
+            "avg_next_close": "+1.43%"
+          },
+          "records": [
+            {
+              "date": "2026/09/14",
+              "close": "45.15",
+              "group": "電腦週邊",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
+            },
+            {
+              "date": "2026/09/10",
+              "close": "38.5",
+              "group": "電腦週邊",
+              "next_open": "+0.39%",
+              "next_avg": "+2.18%",
+              "next_close": "+6.62%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/08/26",
+              "close": "31",
+              "group": "電腦週邊",
+              "next_open": "0.00%",
+              "next_avg": "-2.80%",
+              "next_close": "-5.00%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/08/13",
+              "close": "30.55",
+              "group": "電腦週邊",
+              "next_open": "+3.27%",
+              "next_avg": "-0.86%",
+              "next_close": "-3.93%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/07/13",
+              "close": "39.6",
+              "group": "電腦週邊",
+              "next_open": "+1.89%",
+              "next_avg": "-5.28%",
+              "next_close": "-6.69%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/07/06",
+              "close": "42.65",
+              "group": "電腦週邊",
+              "next_open": "-0.35%",
+              "next_avg": "-5.85%",
+              "next_close": "-9.96%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/06/22",
+              "close": "37",
+              "group": "電腦週邊",
+              "next_open": "-0.27%",
+              "next_avg": "-0.50%",
+              "next_close": "+0.27%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/06/18",
+              "close": "33.65",
+              "group": "電腦週邊",
+              "next_open": "+9.96%",
+              "next_avg": "+9.18%",
+              "next_close": "+9.96%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/16",
+              "close": "30.35",
+              "group": "電腦週邊",
+              "next_open": "-1.15%",
+              "next_avg": "+2.40%",
+              "next_close": "+0.82%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/06/15",
+              "close": "27.6",
+              "group": "電腦週邊",
+              "next_open": "+9.96%",
+              "next_avg": "+9.96%",
+              "next_close": "+9.96%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/12",
+              "close": "25.1",
+              "group": "電腦週邊",
+              "next_open": "+9.96%",
+              "next_avg": "+9.96%",
+              "next_close": "+9.96%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/05/27",
+              "close": "22.85",
+              "group": "電腦週邊",
+              "next_open": "+9.19%",
+              "next_avg": "+4.46%",
+              "next_close": "+1.53%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/05/25",
+              "close": "20.65",
+              "group": "電腦週邊",
+              "next_open": "+7.02%",
+              "next_avg": "-0.40%",
+              "next_close": "+0.73%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/05/08",
+              "close": "17.8",
+              "group": "電腦週邊",
+              "next_open": "-1.97%",
+              "next_avg": "+0.53%",
+              "next_close": "-1.40%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/03/26",
+              "close": "16.15",
+              "group": "電子設備",
+              "next_open": "+0.93%",
+              "next_avg": "+3.73%",
+              "next_close": "+7.12%",
+              "next_trend": "強續漲"
+            }
+          ],
+          "period_note": "上市｜族群：電腦週邊、電子設備｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 15
+        },
+        "1528": {
+          "code": "1528",
+          "name": "恩德",
+          "source_url": "https://chengwaye.com/stock/1528",
+          "summary": {
+            "limit_up_count": "8 次",
+            "latest_limit_up": "2026/09/14",
+            "avg_next_open": "+4.06%",
+            "avg_next_close": "+1.35%"
+          },
+          "records": [
+            {
+              "date": "2026/09/14",
+              "close": "23.3",
+              "group": "機械",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
+            },
+            {
+              "date": "2026/09/11",
+              "close": "21.2",
+              "group": "機械",
+              "next_open": "+1.65%",
+              "next_avg": "+7.24%",
+              "next_close": "+9.91%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/09/08",
+              "close": "21.05",
+              "group": "機械",
+              "next_open": "+3.56%",
+              "next_avg": "-1.21%",
+              "next_close": "-3.80%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/06/02",
+              "close": "30.05",
+              "group": "機械",
+              "next_open": "+8.82%",
+              "next_avg": "+4.75%",
+              "next_close": "+2.16%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/06/01",
+              "close": "27.35",
+              "group": "機械",
+              "next_open": "+9.32%",
+              "next_avg": "+9.76%",
+              "next_close": "+9.87%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/04/15",
+              "close": "30.35",
+              "group": "電力設備",
+              "next_open": "+3.13%",
+              "next_avg": "-0.98%",
+              "next_close": "-1.81%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/03/31",
+              "close": "26.95",
+              "group": "塑化化工",
+              "next_open": "+3.71%",
+              "next_avg": "+0.75%",
+              "next_close": "-3.15%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/03/27",
+              "close": "25.45",
+              "group": "塑化化工",
+              "next_open": "-1.77%",
+              "next_avg": "-3.42%",
+              "next_close": "-3.73%",
+              "next_trend": "直接跌"
+            }
+          ],
+          "period_note": "上市｜族群：機械、電力設備、塑化化工｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 8
+        },
+        "2351": {
+          "code": "2351",
+          "name": "順德",
+          "source_url": "https://chengwaye.com/stock/2351",
+          "summary": {
+            "limit_up_count": "10 次",
+            "latest_limit_up": "2026/09/14",
+            "avg_next_open": "+1.38%",
+            "avg_next_close": "-0.48%"
+          },
+          "records": [
+            {
+              "date": "2026/09/14",
+              "close": "257",
+              "group": "封測",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
+            },
+            {
+              "date": "2026/08/26",
+              "close": "219",
+              "group": "半導體材料",
+              "next_open": "-2.05%",
+              "next_avg": "+3.82%",
+              "next_close": "+9.59%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/07/06",
+              "close": "228",
+              "group": "半導體材料",
+              "next_open": "+1.54%",
+              "next_avg": "-3.12%",
+              "next_close": "-6.36%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/06/24",
+              "close": "217.5",
+              "group": "半導體材料",
+              "next_open": "+3.68%",
+              "next_avg": "-0.52%",
+              "next_close": "-3.91%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/06/22",
+              "close": "214.5",
+              "group": "半導體材料",
+              "next_open": "0.00%",
+              "next_avg": "-3.07%",
+              "next_close": "-7.69%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/05/26",
+              "close": "216",
+              "group": "精密零組件",
+              "next_open": "+5.32%",
+              "next_avg": "+4.40%",
+              "next_close": "+6.02%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/05/08",
+              "close": "183",
+              "group": "電子材料",
+              "next_open": "+1.09%",
+              "next_avg": "+1.69%",
+              "next_close": "+4.10%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/04/22",
+              "close": "166",
+              "group": "汽車",
+              "next_open": "+1.81%",
+              "next_avg": "-4.38%",
+              "next_close": "-9.04%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/04/20",
+              "close": "141.5",
+              "group": "半導體材料",
+              "next_open": "+1.06%",
+              "next_avg": "+2.74%",
+              "next_close": "+6.71%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/04/01",
+              "close": "103.5",
+              "group": "AI伺服器",
+              "next_open": "0.00%",
+              "next_avg": "-0.83%",
+              "next_close": "-3.77%",
+              "next_trend": "直接跌"
+            }
+          ],
+          "period_note": "上市｜族群：封測、半導體材料、精密零組件、電子材料｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 10
+        },
+        "8358": {
+          "code": "8358",
+          "name": "金居",
+          "source_url": "https://chengwaye.com/stock/8358",
+          "summary": {
+            "limit_up_count": "16 次",
+            "latest_limit_up": "2026/08/28",
+            "avg_next_open": "+1.91%",
+            "avg_next_close": "+2.32%"
+          },
+          "records": [
+            {
+              "date": "2026/08/28",
+              "close": "543",
+              "group": "PCB",
+              "next_open": "-0.92%",
+              "next_avg": "-1.60%",
+              "next_close": "-0.55%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/08/27",
+              "close": "494",
+              "group": "PCB",
+              "next_open": "+6.28%",
+              "next_avg": "+6.60%",
+              "next_close": "+9.92%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/08/12",
+              "close": "418.5",
+              "group": "PCB",
+              "next_open": "+6.33%",
+              "next_avg": "+2.29%",
+              "next_close": "+0.60%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/08/11",
+              "close": "380.5",
+              "group": "PCB",
+              "next_open": "+5.78%",
+              "next_avg": "+8.42%",
+              "next_close": "+9.99%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/08/06",
+              "close": "384",
+              "group": "PCB",
+              "next_open": "+2.34%",
+              "next_avg": "-3.89%",
+              "next_close": "-8.33%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/08/03",
+              "close": "327.5",
+              "group": "PCB",
+              "next_open": "+0.61%",
+              "next_avg": "+2.60%",
+              "next_close": "+4.12%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/07/31",
+              "close": "298",
+              "group": "PCB",
+              "next_open": "+0.34%",
+              "next_avg": "+8.43%",
+              "next_close": "+9.90%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/06/30",
+              "close": "600",
+              "group": "PCB",
+              "next_open": "+4.33%",
+              "next_avg": "+1.76%",
+              "next_close": "-2.17%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/06/01",
+              "close": "668",
+              "group": "PCB",
+              "next_open": "-0.90%",
+              "next_avg": "-2.38%",
+              "next_close": "-6.14%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/05/29",
+              "close": "608",
+              "group": "PCB",
+              "next_open": "+4.77%",
+              "next_avg": "+8.33%",
+              "next_close": "+9.87%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/05/18",
+              "close": "428",
+              "group": "PCB",
+              "next_open": "+0.47%",
+              "next_avg": "-1.35%",
+              "next_close": "+0.23%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/04/20",
+              "close": "404",
+              "group": "PCB",
+              "next_open": "0.00%",
+              "next_avg": "-1.57%",
+              "next_close": "-2.60%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/04/17",
+              "close": "367.5",
+              "group": "PCB",
+              "next_open": "+1.50%",
+              "next_avg": "+5.61%",
+              "next_close": "+9.93%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/04/14",
+              "close": "315.5",
+              "group": "PCB",
+              "next_open": "+1.43%",
+              "next_avg": "+2.61%",
+              "next_close": "+5.71%",
+              "next_trend": "強續漲"
+            },
+            {
+              "date": "2026/04/08",
+              "close": "267.5",
+              "group": "PCB材料",
+              "next_open": "+0.75%",
+              "next_avg": "+2.48%",
+              "next_close": "+1.68%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/03/26",
+              "close": "249.5",
+              "group": "PCB",
+              "next_open": "-2.61%",
+              "next_avg": "-5.81%",
+              "next_close": "-5.01%",
+              "next_trend": "直接跌"
+            }
+          ],
+          "period_note": "上櫃｜族群：PCB、PCB材料｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 16
+        },
+        "6112": {
+          "code": "6112",
+          "name": "邁達特",
+          "source_url": "https://chengwaye.com/stock/6112",
+          "summary": {
+            "limit_up_count": "2 次",
+            "latest_limit_up": "2026/09/14",
+            "avg_next_open": "+0.96%",
+            "avg_next_close": "+2.34%"
+          },
+          "records": [
+            {
+              "date": "2026/09/14",
+              "close": "50.6",
+              "group": "軟體",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
+            },
+            {
+              "date": "2026/06/01",
+              "close": "47.05",
+              "group": "軟體",
+              "next_open": "+0.96%",
+              "next_avg": "+2.95%",
+              "next_close": "+2.34%",
+              "next_trend": "弱續漲"
+            }
+          ],
+          "period_note": "上市｜族群：軟體｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 2
+        },
+        "6148": {
+          "code": "6148",
+          "name": "驊宏資",
+          "source_url": "https://chengwaye.com/stock/6148",
+          "summary": {
+            "limit_up_count": "9 次",
+            "latest_limit_up": "2026/09/14",
+            "avg_next_open": "+1.85%",
+            "avg_next_close": "+0.32%"
+          },
+          "records": [
+            {
+              "date": "2026/09/14",
+              "close": "34.1",
+              "group": "軟體",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
+            },
+            {
+              "date": "2026/09/11",
+              "close": "31",
+              "group": "軟體",
+              "next_open": "+7.42%",
+              "next_avg": "+8.92%",
+              "next_close": "+10.00%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/08/05",
+              "close": "29.7",
+              "group": "軟體",
+              "next_open": "-1.85%",
+              "next_avg": "-4.47%",
+              "next_close": "-5.56%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/07/02",
+              "close": "33.55",
+              "group": "軟體",
+              "next_open": "-1.49%",
+              "next_avg": "+2.51%",
+              "next_close": "+1.34%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/06/08",
+              "close": "38.5",
+              "group": "軟體",
+              "next_open": "+0.13%",
+              "next_avg": "+2.09%",
+              "next_close": "-4.55%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/06/04",
+              "close": "37.25",
+              "group": "軟體",
+              "next_open": "0.00%",
+              "next_avg": "+0.52%",
+              "next_close": "-6.04%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/06/02",
+              "close": "34.8",
+              "group": "軟體",
+              "next_open": "+1.29%",
+              "next_avg": "+0.37%",
+              "next_close": "-2.59%",
+              "next_trend": "開高走低"
+            },
+            {
+              "date": "2026/06/01",
+              "close": "31.65",
+              "group": "軟體",
+              "next_open": "+6.16%",
+              "next_avg": "+8.66%",
+              "next_close": "+9.95%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/03/17",
+              "close": "38.3",
+              "group": "電子通路",
+              "next_open": "+3.13%",
+              "next_avg": "-0.81%",
+              "next_close": "0.00%",
+              "next_trend": "開高走低"
+            }
+          ],
+          "period_note": "上櫃｜族群：軟體、電子通路｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 9
+        },
+        "6140": {
+          "code": "6140",
+          "name": "訊達",
+          "source_url": "https://chengwaye.com/stock/6140",
+          "summary": {
+            "limit_up_count": "5 次",
+            "latest_limit_up": "2026/09/14",
+            "avg_next_open": "+7.40%",
+            "avg_next_close": "+6.31%"
+          },
+          "records": [
+            {
+              "date": "2026/09/14",
+              "close": "18.25",
+              "group": "軟體",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
+            },
+            {
+              "date": "2026/06/02",
+              "close": "22.7",
+              "group": "軟體",
+              "next_open": "+5.73%",
+              "next_avg": "+3.84%",
+              "next_close": "+2.20%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/06/01",
+              "close": "20.65",
+              "group": "軟體",
+              "next_open": "+4.12%",
+              "next_avg": "+8.56%",
+              "next_close": "+9.93%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/05/07",
+              "close": "22.55",
+              "group": "軟體",
+              "next_open": "+9.76%",
+              "next_avg": "+4.91%",
+              "next_close": "+3.10%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/05/06",
+              "close": "20.5",
+              "group": "軟體",
+              "next_open": "+10.00%",
+              "next_avg": "+10.00%",
+              "next_close": "+10.00%",
+              "next_trend": "續漲停"
+            }
+          ],
+          "period_note": "上櫃｜族群：軟體｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 5
+        },
+        "2468": {
+          "code": "2468",
+          "name": "華經",
+          "source_url": "https://chengwaye.com/stock/2468",
+          "summary": {
+            "limit_up_count": "8 次",
+            "latest_limit_up": "2026/09/14",
+            "avg_next_open": "+4.11%",
+            "avg_next_close": "+0.86%"
+          },
+          "records": [
+            {
+              "date": "2026/09/14",
+              "close": "39.35",
+              "group": "軟體",
+              "next_open": "—",
+              "next_avg": "—",
+              "next_close": "—",
+              "next_trend": "—"
+            },
+            {
+              "date": "2026/09/11",
+              "close": "35.8",
+              "group": "軟體",
+              "next_open": "+8.38%",
+              "next_avg": "+9.31%",
+              "next_close": "+9.92%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/07/02",
+              "close": "38.3",
+              "group": "軟體",
+              "next_open": "+3.26%",
+              "next_avg": "+2.44%",
+              "next_close": "+1.17%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/06/08",
+              "close": "44.95",
+              "group": "軟體",
+              "next_open": "0.00%",
+              "next_avg": "+2.03%",
+              "next_close": "-4.12%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/06/04",
+              "close": "44.75",
+              "group": "軟體",
+              "next_open": "-0.56%",
+              "next_avg": "-0.61%",
+              "next_close": "-8.60%",
+              "next_trend": "直接跌"
+            },
+            {
+              "date": "2026/06/02",
+              "close": "40.15",
+              "group": "軟體",
+              "next_open": "+4.61%",
+              "next_avg": "+3.26%",
+              "next_close": "+1.37%",
+              "next_trend": "弱續漲"
+            },
+            {
+              "date": "2026/06/01",
+              "close": "36.5",
+              "group": "軟體",
+              "next_open": "+9.73%",
+              "next_avg": "+9.24%",
+              "next_close": "+10.00%",
+              "next_trend": "續漲停"
+            },
+            {
+              "date": "2026/03/17",
+              "close": "41.8",
+              "group": "其他題材",
+              "next_open": "+3.35%",
+              "next_avg": "-1.84%",
+              "next_close": "-3.71%",
+              "next_trend": "開高走低"
+            }
+          ],
+          "period_note": "上市｜族群：軟體、其他題材｜統計自 2026/03/17 起的漲停紀錄與隔日表現，每日收盤後更新。",
+          "record_count": 8
+        }
+      },
+      "failed_codes": [],
+      "_status": "ok"
     },
     "chengwaye_daily": {
       "source": "https://chengwaye.com/daily",
@@ -15325,269 +15333,6 @@
         }
       }
     },
-    "disposal": {
-      "source": "https://chengwaye.com/disposal-forecast",
-      "date_check": {
-        "today": "2026-09-15",
-        "effective_market_day": "2026-09-15",
-        "expected_previous_trading_day": "2026-09-14",
-        "page_says_applies_to": "09/15",
-        "page_dropdown_selected": null,
-        "applies_to_matches_today": true
-      },
-      "one_flag_from_disposal": [
-        {
-          "market": "市",
-          "code": "2305",
-          "name": "全友",
-          "close": "45.15",
-          "condition": "①45.45↑(+0.7%)",
-          "earliest_disposal": "09-16 第1次2分",
-          "badges": [
-            {
-              "short": "3①",
-              "title": "連續3日第1款 2/3",
-              "current": 2,
-              "threshold": 3
-            },
-            {
-              "short": "5",
-              "title": "連續5日（第1~7款） 2/5",
-              "current": 2,
-              "threshold": 5
-            },
-            {
-              "short": "6",
-              "title": "10日內6次（第1~7款） 2/6",
-              "current": 2,
-              "threshold": 6
-            },
-            {
-              "short": "12",
-              "title": "30日內12次（第1~7款） 2/12",
-              "current": 2,
-              "threshold": 12
-            }
-          ],
-          "condition_segments": [
-            {
-              "text": "①",
-              "color": "var(--muted)",
-              "bold": false
-            },
-            {
-              "text": "45.45↑(+0.7%)",
-              "color": "var(--rise)",
-              "bold": false
-            }
-          ]
-        }
-      ],
-      "two_flags_from_disposal": [
-        {
-          "market": "櫃",
-          "code": "6510",
-          "name": "精測",
-          "close": "3375",
-          "condition": "① 09-15不符合③④⑤⑦ 09-15不符合⑥ 收盤≥4050元且量≥2,000張，且符合其一：單一投資人當日買進或賣出占該股總成交金額≥10%且金額≥1億元，或單一券商占比達門檻且金額≥1億元（占比門檻10%起，每分支加1百分點，最高25%）；上櫃股本未滿8,000萬元者，金額門檻減半（產業PB所需股價明日不可達）",
-          "earliest_disposal": "09-17 第1次2分",
-          "badges": [
-            {
-              "short": "3①",
-              "title": "連續3日第1款 0/3",
-              "current": 0,
-              "threshold": 3
-            },
-            {
-              "short": "5",
-              "title": "連續5日（第1~7款） 0/5",
-              "current": 0,
-              "threshold": 5
-            },
-            {
-              "short": "6",
-              "title": "10日內6次（第1~7款） 4/6",
-              "current": 4,
-              "threshold": 6
-            },
-            {
-              "short": "12",
-              "title": "30日內12次（第1~7款） 4/12",
-              "current": 4,
-              "threshold": 12
-            }
-          ]
-        },
-        {
-          "market": "市",
-          "code": "7711",
-          "name": "永擎",
-          "close": "478.0",
-          "condition": "①504↓(+5.4%)③ 收盤≤504元；量≥6,686張，量放大倍數比全市場平均高≥4倍，6日漲跌差幅≥20個百分點④ 收盤≤504元；量≥7,171張（週轉率≥10%），週轉率比全市場平均高≥5個百分點，6日漲跌差幅≥20個百分點⑤ 收盤≤504元；單一券商當日受託買進或賣出量>500張，且占總量>25%（每分支加1百分點，上限35%），6日漲跌差幅≥20個百分點⑦ 收盤≤504元；前一交易日券資比≥20%且≥近6日最低值4倍，融資使用率≥25%、融券使用率≥15%，券資比不低於前二交易日，6日漲跌差幅≥20個百分點⑥ 不符合（PE明日不可達，量未達）",
-          "earliest_disposal": "09-17 第2次2分",
-          "badges": [
-            {
-              "short": "3①",
-              "title": "連續3日第1款 1/3",
-              "current": 1,
-              "threshold": 3
-            },
-            {
-              "short": "5",
-              "title": "連續5日（第1~7款） 1/5",
-              "current": 1,
-              "threshold": 5
-            },
-            {
-              "short": "6",
-              "title": "10日內6次（第1~7款） 3/6",
-              "current": 3,
-              "threshold": 6
-            },
-            {
-              "short": "12",
-              "title": "30日內12次（第1~7款） 5/12",
-              "current": 5,
-              "threshold": 12
-            }
-          ]
-        }
-      ],
-      "currently_in_disposal": [
-        {
-          "market": "櫃",
-          "code": "3324",
-          "name": "雙鴻",
-          "matching": "2分",
-          "start_date": "09-08",
-          "end_date": "09-14",
-          "exit_date": "09-15",
-          "trading_days_left": "出關",
-          "reason": "連續3日第一款｜第2次處置"
-        },
-        {
-          "market": "市",
-          "code": "2455",
-          "name": "全新",
-          "matching": "2分",
-          "start_date": "09-07",
-          "end_date": "09-15",
-          "exit_date": "09-16",
-          "trading_days_left": 1,
-          "reason": "連續五次及當日沖銷標準｜第2次處置"
-        },
-        {
-          "market": "櫃",
-          "code": "6620",
-          "name": "漢達",
-          "matching": "2分",
-          "start_date": "09-09",
-          "end_date": "09-15",
-          "exit_date": "09-16",
-          "trading_days_left": 1,
-          "reason": "連續3日第一款｜第1次處置"
-        },
-        {
-          "market": "市",
-          "code": "8021",
-          "name": "尖點",
-          "matching": "2分",
-          "start_date": "09-09",
-          "end_date": "09-15",
-          "exit_date": "09-16",
-          "trading_days_left": 1,
-          "reason": "10日內6次（第1~7款）｜第2次處置"
-        },
-        {
-          "market": "櫃",
-          "code": "4304",
-          "name": "勝昱",
-          "matching": "2分",
-          "start_date": "09-10",
-          "end_date": "09-16",
-          "exit_date": "09-17",
-          "trading_days_left": 2,
-          "reason": "連續3日第一款｜第2次處置"
-        },
-        {
-          "market": "櫃",
-          "code": "6872",
-          "name": "浩宇生醫",
-          "matching": "2分",
-          "start_date": "09-10",
-          "end_date": "09-16",
-          "exit_date": "09-17",
-          "trading_days_left": 2,
-          "reason": "連續3日第一款｜第1次處置"
-        },
-        {
-          "market": "櫃",
-          "code": "4979",
-          "name": "華星光",
-          "matching": "2分",
-          "start_date": "09-11",
-          "end_date": "09-17",
-          "exit_date": "09-18",
-          "trading_days_left": 3,
-          "reason": "連續5日｜第2次處置"
-        },
-        {
-          "market": "櫃",
-          "code": "6538",
-          "name": "倉和",
-          "matching": "2分",
-          "start_date": "09-11",
-          "end_date": "09-17",
-          "exit_date": "09-18",
-          "trading_days_left": 3,
-          "reason": "連續3日第一款｜第2次處置"
-        },
-        {
-          "market": "櫃",
-          "code": "7772",
-          "name": "耀穎",
-          "matching": "2分",
-          "start_date": "09-11",
-          "end_date": "09-17",
-          "exit_date": "09-18",
-          "trading_days_left": 3,
-          "reason": "連續3日第一款｜第1次處置"
-        },
-        {
-          "market": "市",
-          "code": "3055",
-          "name": "蔚華科",
-          "matching": "2分",
-          "start_date": "09-14",
-          "end_date": "09-18",
-          "exit_date": "09-21",
-          "trading_days_left": 4,
-          "reason": "10日內6次（第1~7款）｜第1次處置"
-        },
-        {
-          "market": "櫃",
-          "code": "8227",
-          "name": "巨有科技",
-          "matching": "2分",
-          "start_date": "09-15",
-          "end_date": "09-21",
-          "exit_date": "09-22",
-          "trading_days_left": 5,
-          "reason": "連續3日第一款｜第1次處置"
-        },
-        {
-          "market": "市",
-          "code": "8996",
-          "name": "高力",
-          "matching": "2分",
-          "start_date": "09-15",
-          "end_date": "09-21",
-          "exit_date": "09-22",
-          "trading_days_left": 5,
-          "reason": "已達處置標準：10日內6次（第1~7款）｜第1次處置"
-        }
-      ]
-    },
     "calendar": {
       "source": "https://calendar.google.com/calendar/ical/c_c040a8d14375de55799b6fdd8ece2ee2f32aa85fd0e5b39d14b1e07f90df424e%40group.calendar.google.com/public/basic.ics",
       "today": "2026-09-15",
@@ -16251,34 +15996,290 @@
         }
       ]
     },
-    "twse_summary": {
-      "twii": {
-        "price": 45862.52,
-        "change": -322.33,
-        "change_pct": -0.7,
-        "volume": 0
+    "indices": {
+      "source": {
+        "markets": "https://tw.stock.yahoo.com/markets/",
+        "world_indices": "https://tw.stock.yahoo.com/world-indices",
+        "asia_quote_pages": {
+          "nikkei225": "https://tw.stock.yahoo.com/quote/%5EN225",
+          "kospi": "https://tw.stock.yahoo.com/quote/%5EKS11"
+        }
       },
-      "inst": {
-        "dealer": -150.93,
-        "trust": 36.96,
-        "foreign": -369.64
+      "adrs": {
+        "tsmc": {
+          "name": "台積電 ADR",
+          "ticker": "TSM",
+          "value": 418.01,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:03+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": -15.23,
+          "change_pct": -3.52
+        },
+        "nvda": {
+          "name": "輝達 (NVDA)",
+          "ticker": "NVDA",
+          "value": 210.96,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:00+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": -7.33,
+          "change_pct": -3.36
+        },
+        "aapl": {
+          "name": "蘋果 (AAPL)",
+          "ticker": "AAPL",
+          "value": 333.08,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:01+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": 0.81,
+          "change_pct": 0.24
+        },
+        "micron": {
+          "name": "美光",
+          "ticker": "MU",
+          "value": 924.03,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": "https://tw.stock.yahoo.com/quote/MU",
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:01+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": -51.23,
+          "change_pct": -5.25
+        },
+        "umc": {
+          "name": "聯電 ADR",
+          "ticker": "UMC",
+          "value": 21.9,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:03+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": -0.74,
+          "change_pct": -3.27
+        },
+        "ase": {
+          "name": "日月光 ADR",
+          "ticker": "ASX",
+          "value": 37.08,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:03+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": -2.39,
+          "change_pct": -6.06
+        }
+      },
+      "key_stocks": {
+        "tsmc": {
+          "name": "台積電 ADR",
+          "ticker": "TSM",
+          "value": 418.01,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:03+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": -15.23,
+          "change_pct": -3.52
+        },
+        "nvda": {
+          "name": "輝達 (NVDA)",
+          "ticker": "NVDA",
+          "value": 210.96,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:00+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": -7.33,
+          "change_pct": -3.36
+        },
+        "aapl": {
+          "name": "蘋果 (AAPL)",
+          "ticker": "AAPL",
+          "value": 333.08,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:01+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": 0.81,
+          "change_pct": 0.24
+        },
+        "micron": {
+          "name": "美光",
+          "ticker": "MU",
+          "value": 924.03,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": "https://tw.stock.yahoo.com/quote/MU",
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:01+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": -51.23,
+          "change_pct": -5.25
+        },
+        "umc": {
+          "name": "聯電 ADR",
+          "ticker": "UMC",
+          "value": 21.9,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:03+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": -0.74,
+          "change_pct": -3.27
+        },
+        "ase": {
+          "name": "日月光 ADR",
+          "ticker": "ASX",
+          "value": 37.08,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:00:03+08:00",
+          "updated_taipei": "2026-09-15 04:00",
+          "change": -2.39,
+          "change_pct": -6.06
+        }
+      },
+      "us_indices": {
+        "dow": {
+          "name": "道瓊工業指數",
+          "ticker": "^DJI",
+          "value": 52421.2,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:34:53+08:00",
+          "updated_taipei": "2026-09-15 04:34",
+          "change": -152.09,
+          "change_pct": -0.29
+        },
+        "sp500": {
+          "name": "S&P 500指數",
+          "ticker": "^GSPC",
+          "value": 7619.98,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T04:34:48+08:00",
+          "updated_taipei": "2026-09-15 04:34",
+          "change": -37.0,
+          "change_pct": -0.48
+        },
+        "nasdaq": {
+          "name": "NASDAQ指數",
+          "ticker": "^IXIC",
+          "value": 26186.41,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T05:15:59+08:00",
+          "updated_taipei": "2026-09-15 05:15",
+          "change": -146.62,
+          "change_pct": -0.56
+        },
+        "sox": {
+          "name": "費城半導體指數",
+          "ticker": "^SOX",
+          "value": 11131.28,
+          "is_missing": false,
+          "source_label": "Yahoo Finance Chart",
+          "source_url": null,
+          "market_state": null,
+          "updated_at": "2026-09-15T05:15:59+08:00",
+          "updated_taipei": "2026-09-15 05:15",
+          "change": -692.72,
+          "change_pct": -5.86
+        }
+      },
+      "asia_open": {
+        "nikkei225": {
+          "name": "日經225指數",
+          "value": 63311.25,
+          "change": -181.74,
+          "change_pct": -0.29,
+          "updated_cst": "09/15 08:10",
+          "source_url": "https://tw.stock.yahoo.com/quote/%5EN225",
+          "source_label": "Yahoo 個別指數頁"
+        },
+        "kospi": {
+          "name": "韓國綜合指數",
+          "value": 6625.15,
+          "change": -59.22,
+          "change_pct": -0.89,
+          "updated_cst": "09/15 08:05",
+          "source_url": "https://tw.stock.yahoo.com/quote/%5EKS11",
+          "source_label": "Yahoo 個別指數頁"
+        }
+      },
+      "_missing_fields": []
+    },
+    "night_session": {
+      "date": "2026-09-15",
+      "provider": "wantgoo",
+      "provider_name": "Wantgoo / TAIFEX",
+      "points": [],
+      "open": 45774.0,
+      "prev_close": 45777.0,
+      "high": 45844.0,
+      "low": 45361.0,
+      "latest": {
+        "provider": "wantgoo",
+        "provider_name": "Wantgoo / TAIFEX",
+        "collected_at": "2026-09-15T08:25:52.891556+08:00",
+        "symbol": "臺指期096",
+        "price": 45556.0,
+        "change": -221.0,
+        "change_pct": -0.48,
+        "open": 45774.0,
+        "prev_close": 45777.0,
+        "high": 45844.0,
+        "low": 45361.0,
+        "volume": 28281
       }
     }
   },
   "meta": {
-    "build_time": "2026-11-05 05:03",
-    "build_version": "20261105_0503",
+    "build_time": "2026-11-05 11:35",
+    "build_version": "20261105_1135",
     "data_date": "09/15",
-    "stale_hours": 1220.6,
-    "hours_since_us_close": 1.1,
+    "stale_hours": 1227.2,
+    "hours_since_us_close": 7.6,
     "us_market_context": {
-      "session_key": "after",
-      "label": "美股盤後",
-      "badge": "盤後",
-      "badge_short": "盤後",
-      "pill_class": "pill-amber",
+      "session_key": "closed",
+      "label": "最新收盤快照",
+      "badge": "收盤",
+      "badge_short": "收盤",
+      "pill_class": "pill-fresh",
       "updated_label": "09/15 05:15",
-      "detail": "Yahoo Finance · 來源更新 09/15 05:15（1223.8 小時前）· 延遲分鐘數未提供 · 正常交易時段已結束",
+      "detail": "Yahoo Finance · 來源更新 09/15 05:15（1230.3 小時前）· 延遲分鐘數未提供 · 美國非正常交易時段",
       "title": "Yahoo Finance Chart 提供來源更新時間；未提供可驗證的延遲分鐘數"
     },
     "overall_status": "unsafe",
@@ -16293,7 +16294,7 @@
         "name": "指數行情 (美股/亞股/ADR)",
         "is_required": true,
         "status": "ok",
-        "fetched_at": "2026-11-04T14:22:57.110269+08:00",
+        "fetched_at": "2026-11-05T11:35:11.742061+08:00",
         "data_date": null,
         "age_minutes": 0.4,
         "error_summary": null,
@@ -16343,7 +16344,7 @@
         "name": "大盤昨收與三大法人",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-11-04T11:04:08.128344+08:00",
+        "fetched_at": "2026-11-05T11:35:11.742061+08:00",
         "data_date": null,
         "age_minutes": 0.4,
         "error_summary": null,
@@ -16368,7 +16369,7 @@
         "name": "台指期夜盤走勢",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-11-04T11:04:08.128344+08:00",
+        "fetched_at": "2026-11-05T11:35:11.742061+08:00",
         "data_date": "2026-09-15",
         "age_minutes": 0.4,
         "error_summary": null,
@@ -16393,7 +16394,7 @@
         "name": "PressPlay 盤前族群與標的",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-11-05T05:03:09.599563+08:00",
+        "fetched_at": "2026-11-05T11:35:35.560266+08:00",
         "data_date": null,
         "age_minutes": 0.0,
         "error_summary": null,
@@ -16418,7 +16419,7 @@
         "name": "主力券商與當沖籌碼明細",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-11-05T05:02:45.073993+08:00",
+        "fetched_at": "2026-11-05T11:35:11.742061+08:00",
         "data_date": "2026/09/14",
         "age_minutes": 0.4,
         "error_summary": null,
@@ -16445,7 +16446,7 @@
         "name": "Chengwaye 個股漲停履歷",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-11-05T05:02:45.073993+08:00",
+        "fetched_at": "2026-11-05T11:35:11.742061+08:00",
         "data_date": null,
         "age_minutes": 0.4,
         "error_summary": null,
@@ -16473,7 +16474,7 @@
         "name": "總經財經行事曆",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-11-04T11:04:08.127961+08:00",
+        "fetched_at": "2026-11-05T11:35:11.742061+08:00",
         "data_date": "2026-09-15",
         "age_minutes": 0.4,
         "error_summary": null,
@@ -16523,7 +16524,7 @@
         "name": "盤前即時新聞聚合",
         "is_required": false,
         "status": "ok",
-        "fetched_at": "2026-11-04T11:04:08.128344+08:00",
+        "fetched_at": "2026-11-05T11:35:11.742061+08:00",
         "data_date": null,
         "age_minutes": 0.4,
         "error_summary": null,
@@ -16545,8 +16546,8 @@
       }
     ],
     "schema_version": 1,
-    "data_revision": "4c9bab54478e2da2",
-    "built_at": "2026-11-04T21:03:22.893189+00:00",
+    "data_revision": "d68b29c341dfc85c",
+    "built_at": "2026-11-05T03:35:50.770994+00:00",
     "hash": {
       "disposition": "0d5a91213d31",
       "candidates": "cc73ddd1b59d",
@@ -16555,7 +16556,7 @@
       "macro": "8bd1c810e397",
       "calendar": "9138bb269084",
       "news": "d9ab46f3bbc6",
-      "ai_summary": "d5fb6defe4f6",
+      "ai_summary": "14d32075227e",
       "opening_forecast": "a6b8ca8f0e29",
       "opening_result": "0111d65af8d5",
       "learning_status": "a75b0b54d02c"
